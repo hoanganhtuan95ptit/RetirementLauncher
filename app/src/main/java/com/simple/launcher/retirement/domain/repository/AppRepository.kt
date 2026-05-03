@@ -17,4 +17,8 @@ interface AppRepository {
     fun cleanMemory(): Long
     fun isOnboardingCompleted(): Boolean
     fun setOnboardingCompleted(completed: Boolean)
+    fun isAppBlockEnabled(): Boolean
+    fun setAppBlockEnabled(enabled: Boolean)
+    fun isFileCleanupEnabled(): Boolean
+    fun setFileCleanupEnabled(enabled: Boolean)
 }

@@ -42,7 +42,7 @@ class ContactListFragment : Fragment() {
         if (isGranted) {
             loadContacts()
         } else {
-            Toast.makeText(context, "Cần quyền truy cập danh bạ để sử dụng tính năng này", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, R.string.contact_permission_denied, Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -58,7 +58,7 @@ class ContactListFragment : Fragment() {
         repository = AppRepositoryImpl(requireContext())
 
         val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
-        toolbar.title = "Chọn liên hệ nhanh"
+        toolbar.title = getString(R.string.contact_list_title)
         toolbar.setNavigationIcon(R.drawable.ic_back)
         toolbar.setNavigationOnClickListener { parentFragmentManager.popBackStack() }
 
@@ -112,7 +112,7 @@ class ContactListFragment : Fragment() {
     private fun saveAndExit() {
         val selected = contacts.filter { it.isSelected }.map { it.contact }
         repository.saveSelectedContacts(selected)
-        Toast.makeText(context, "Đã lưu danh sách liên hệ", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, R.string.contact_list_saved, Toast.LENGTH_SHORT).show()
         parentFragmentManager.popBackStack()
     }
 

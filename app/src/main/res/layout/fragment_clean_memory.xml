@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white">
+    android:background="?android:attr/colorBackground">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="0dp"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
-        app:title="Giải phóng bộ nhớ"
+        app:title="@string/clean_memory_title"
         app:titleTextColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,6 +22,7 @@
         android:layout_height="120dp"
         android:layout_marginTop="64dp"
         android:src="@android:drawable/ic_menu_manage"
+        android:contentDescription="@null"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar" />
@@ -32,7 +33,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="32dp"
         android:gravity="center"
-        android:text="Tối ưu hóa hệ thống bằng cách đóng các ứng dụng chạy ngầm không cần thiết để tăng tốc điện thoại."
+        android:text="@string/clean_memory_desc"
+        android:textColor="?android:attr/textColorPrimary"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -57,7 +59,7 @@
         android:layout_marginTop="32dp"
         android:paddingStart="32dp"
         android:paddingEnd="32dp"
-        android:text="Tăng tốc ngay"
+        android:text="@string/clean_memory_start"
         app:layout_constraintTop_toBottomOf="@id/progressBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

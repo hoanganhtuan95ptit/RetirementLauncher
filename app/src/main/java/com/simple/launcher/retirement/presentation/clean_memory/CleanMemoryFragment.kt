@@ -43,7 +43,7 @@ class CleanMemoryFragment : Fragment() {
         btnClean.setOnClickListener {
             btnClean.isEnabled = false
             progressBar.visibility = View.VISIBLE
-            tvStatus.text = "Đang tối ưu hệ thống..."
+            tvStatus.text = getString(R.string.clean_memory_running)
 
             lifecycleScope.launch {
                 val repository = AppRepositoryImpl(requireContext())
@@ -57,15 +57,15 @@ class CleanMemoryFragment : Fragment() {
                 progressBar.visibility = View.GONE
                 
                 if (freedMB > 0) {
-                    tvStatus.text = "Hệ thống đã được tối ưu!\nĐã giải phóng khoảng $freedMB MB RAM"
+                    tvStatus.text = getString(R.string.clean_memory_completed, freedMB)
                 } else {
-                    tvStatus.text = "Hệ thống đang ở trạng thái tối ưu nhất!"
+                    tvStatus.text = getString(R.string.clean_memory_optimal)
                 }
                 
                 btnClean.isEnabled = true
-                btnClean.text = "Tối ưu lại"
+                btnClean.text = getString(R.string.clean_memory_retry)
                 
-                Toast.makeText(requireContext(), "Đã giải phóng $freedMB MB RAM", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.clean_memory_toast, freedMB), Toast.LENGTH_SHORT).show()
             }
         }
     }

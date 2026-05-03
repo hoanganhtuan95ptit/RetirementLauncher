@@ -105,7 +105,7 @@ class AppListFragment : Fragment() {
 
     private fun saveAndExit() {
         viewModel.saveSelection()
-        Toast.makeText(context, "Đã lưu danh sách ứng dụng", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, R.string.app_list_saved, Toast.LENGTH_SHORT).show()
         parentFragmentManager.popBackStack()
     }
 

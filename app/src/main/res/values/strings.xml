@@ -1,3 +1,46 @@
 <resources>
     <string name="app_name">RetirementLauncher</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Cài đặt</string>
+    <string name="setting_pin">Thiết lập mã PIN</string>
+    <string name="setting_app_list">Thiết lập danh sách app</string>
+    <string name="setting_default_launcher">Thiết lập launcher mặc định</string>
+    <string name="setting_contact_list">Thiết lập liên hệ nhanh</string>
+    <string name="setting_clean_files">Dọn dẹp file lạ</string>
+    <string name="setting_clean_memory">Giải phóng bộ nhớ</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_title">Chào mừng bạn đến với Retirement Launcher</string>
+    <string name="onboarding_desc">Ứng dụng giúp đơn giản hóa giao diện điện thoại và bảo vệ an toàn cho thiết bị của bạn.</string>
+    <string name="onboarding_start">Bắt đầu ngay</string>
+
+    <!-- Clean Files -->
+    <string name="clean_files_title">Dọn dẹp file lạ</string>
+    <string name="clean_files_desc">Hệ thống sẽ quét và xóa các file không thuộc định dạng tài liệu, ảnh, nhạc, video để bảo vệ thiết bị của bạn.</string>
+    <string name="clean_files_start">Bắt đầu dọn dẹp</string>
+    <string name="clean_files_running">Đang quét và dọn dẹp...</string>
+    <string name="clean_files_completed">Đã dọn dẹp hoàn tất!</string>
+    <string name="clean_files_retry">Dọn dẹp lại</string>
+    <string name="clean_files_toast">Đã dọn dẹp các file lạ</string>
+
+    <!-- Clean Memory -->
+    <string name="clean_memory_title">Giải phóng bộ nhớ</string>
+    <string name="clean_memory_desc">Tối ưu hóa hệ thống bằng cách đóng các ứng dụng chạy ngầm không cần thiết để tăng tốc điện thoại.</string>
+    <string name="clean_memory_start">Tăng tốc ngay</string>
+    <string name="clean_memory_running">Đang tối ưu hệ thống...</string>
+    <string name="clean_memory_completed">Hệ thống đã được tối ưu!\nĐã giải phóng khoảng %1$d MB RAM</string>
+    <string name="clean_memory_optimal">Hệ thống đang ở trạng thái tối ưu nhất!</string>
+    <string name="clean_memory_retry">Tối ưu lại</string>
+    <string name="clean_memory_toast">Đã giải phóng %1$d MB RAM</string>
+
+    <!-- Contacts -->
+    <string name="contact_list_title">Chọn liên hệ nhanh</string>
+    <string name="contact_list_saved">Đã lưu danh sách liên hệ</string>
+    <string name="contact_permission_denied">Cần quyền truy cập danh bạ để sử dụng tính năng này</string>
+    <string name="app_list_saved">Đã lưu danh sách ứng dụng</string>
+
+    <!-- Common -->
+    <string name="save">Lưu</string>
+    <string name="back">Quay lại</string>
 </resources>

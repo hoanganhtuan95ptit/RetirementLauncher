@@ -42,7 +42,7 @@ class CleanFilesFragment : Fragment() {
         btnClean.setOnClickListener {
             btnClean.isEnabled = false
             progressBar.visibility = View.VISIBLE
-            tvStatus.text = "Đang quét và dọn dẹp..."
+            tvStatus.text = getString(R.string.clean_files_running)
 
             lifecycleScope.launch {
                 val repository = AppRepositoryImpl(requireContext())
@@ -51,11 +51,11 @@ class CleanFilesFragment : Fragment() {
                 }
                 
                 progressBar.visibility = View.GONE
-                tvStatus.text = "Đã dọn dẹp hoàn tất!"
+                tvStatus.text = getString(R.string.clean_files_completed)
                 btnClean.isEnabled = true
-                btnClean.text = "Dọn dẹp lại"
+                btnClean.text = getString(R.string.clean_files_retry)
                 
-                Toast.makeText(requireContext(), "Đã dọn dẹp các file lạ", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), R.string.clean_files_toast, Toast.LENGTH_SHORT).show()
             }
         }
     }

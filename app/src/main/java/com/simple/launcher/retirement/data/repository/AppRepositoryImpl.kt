@@ -18,6 +18,8 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
     private val KEY_PIN = "app_pin"
     private val KEY_ONBOARDING_COMPLETED = "onboarding_completed"
     private val KEY_SELECTED_CONTACTS = "selected_contacts"
+    private val KEY_APP_BLOCK_ENABLED = "app_block_enabled"
+    private val KEY_FILE_CLEANUP_ENABLED = "file_cleanup_enabled"
 
     private val gson = Gson()
 
@@ -77,6 +79,22 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
 
     override fun setOnboardingCompleted(completed: Boolean) {
         sharedPrefs.edit().putBoolean(KEY_ONBOARDING_COMPLETED, completed).apply()
+    }
+
+    override fun isAppBlockEnabled(): Boolean {
+        return sharedPrefs.getBoolean(KEY_APP_BLOCK_ENABLED, true)
+    }
+
+    override fun setAppBlockEnabled(enabled: Boolean) {
+        sharedPrefs.edit().putBoolean(KEY_APP_BLOCK_ENABLED, enabled).apply()
+    }
+
+    override fun isFileCleanupEnabled(): Boolean {
+        return sharedPrefs.getBoolean(KEY_FILE_CLEANUP_ENABLED, true)
+    }
+
+    override fun setFileCleanupEnabled(enabled: Boolean) {
+        sharedPrefs.edit().putBoolean(KEY_FILE_CLEANUP_ENABLED, enabled).apply()
     }
 
     override fun scanAndDeleteUnwantedFiles() {

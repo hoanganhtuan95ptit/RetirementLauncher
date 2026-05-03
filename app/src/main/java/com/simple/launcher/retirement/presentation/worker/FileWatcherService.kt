@@ -7,6 +7,7 @@ import android.os.Environment
 import android.os.FileObserver
 import android.os.IBinder
 import android.util.Log
+import com.simple.launcher.retirement.data.repository.AppRepositoryImpl
 import java.io.File
 import java.util.*
 
@@ -14,8 +15,18 @@ class FileWatcherService : Service() {
 
     private val TAG = "FileWatcherService"
     private val observers = mutableMapOf<String, FileObserver>()
+    private lateinit var repository: AppRepositoryImpl
+
+    override fun onCreate() {
+        super.onCreate()
+        repository = AppRepositoryImpl(applicationContext)
+    }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        if (!repository.isFileCleanupEnabled()) {
+            stopSelf()
+            return START_NOT_STICKY
+        }
         startRecursiveWatching()
         return START_STICKY
     }

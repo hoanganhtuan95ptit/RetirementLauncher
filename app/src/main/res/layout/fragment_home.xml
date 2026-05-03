@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F5"
+    android:background="#40000000"
     android:fitsSystemWindows="true">
 
     <!-- Header for Clock and Date -->
@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:format12Hour="hh:mm"
             android:format24Hour="HH:mm"
-            android:textColor="@android:color/black"
+            android:textColor="?android:attr/textColorPrimary"
             android:textSize="64sp"
             android:textStyle="bold" />
 
@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:format12Hour="EEEE, dd MMMM"
             android:format24Hour="EEEE, dd MMMM"
-            android:textColor="#616161"
+            android:textColor="?android:attr/textColorSecondary"
             android:textSize="20sp" />
     </LinearLayout>
 

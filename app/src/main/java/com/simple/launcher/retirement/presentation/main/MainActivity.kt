@@ -31,13 +31,15 @@ class MainActivity : AppCompatActivity() {
         // Quét toàn bộ một lần lúc khởi động
         scheduleInitialFileCleanup()
         
-        // Bắt đầu lắng nghe sự thay đổi file ngầm nếu đã có quyền
-        if (hasFilePermission()) {
+        val repository = AppRepositoryImpl(this)
+        
+        // Bắt đầu lắng nghe sự thay đổi file ngầm nếu đã có quyền và được bật
+        if (hasFilePermission() && repository.isFileCleanupEnabled()) {
             startFileWatcherService()
         }
         
-        // Khởi động service giám sát nếu đã có quyền
-        if (hasUsageStatsPermission() && hasOverlayPermission()) {
+        // Khởi động service giám sát nếu đã có quyền và được bật
+        if (hasUsageStatsPermission() && hasOverlayPermission() && repository.isAppBlockEnabled()) {
             startAppMonitoringService()
         }
 
@@ -89,18 +91,19 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
-    private fun startFileWatcherService() {
+    fun startFileWatcherService() {
         val intent = Intent(this, FileWatcherService::class.java)
         startService(intent)
     }
 
     override fun onResume() {
         super.onResume()
-        // Khởi động service nếu đã có quyền (không tự động xin ở đây nữa)
-        if (hasFilePermission()) {
+        val repository = AppRepositoryImpl(this)
+        // Khởi động service nếu đã có quyền và được bật
+        if (hasFilePermission() && repository.isFileCleanupEnabled()) {
             startFileWatcherService()
         }
-        if (hasUsageStatsPermission() && hasOverlayPermission()) {
+        if (hasUsageStatsPermission() && hasOverlayPermission() && repository.isAppBlockEnabled()) {
             startAppMonitoringService()
         }
     }
@@ -127,7 +130,7 @@ class MainActivity : AppCompatActivity() {
         return Settings.canDrawOverlays(this)
     }
 
-    private fun startAppMonitoringService() {
+    fun startAppMonitoringService() {
         val intent = Intent(this, AppMonitoringService::class.java)
         startService(intent)
     }

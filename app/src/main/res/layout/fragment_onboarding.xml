@@ -3,13 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="24dp">
+    android:padding="24dp"
+    android:background="?android:attr/colorBackground">
 
     <ImageView
         android:id="@+id/ivOnboarding"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:src="@mipmap/ic_launcher"
+        android:contentDescription="@null"
         app:layout_constraintBottom_toTopOf="@+id/tvTitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,9 +23,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="Chào mừng bạn đến với Retirement Launcher"
+        android:text="@string/onboarding_title"
         android:textAlignment="center"
-        android:textColor="@android:color/black"
+        android:textColor="?android:attr/textColorPrimary"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/tvDescription"
@@ -36,8 +38,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Ứng dụng giúp đơn giản hóa giao diện điện thoại và bảo vệ an toàn cho thiết bị của bạn."
+        android:text="@string/onboarding_desc"
         android:textAlignment="center"
+        android:textColor="?android:attr/textColorSecondary"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/btnStart"
         app:layout_constraintEnd_toEndOf="parent"
@@ -49,7 +52,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
-        android:text="Bắt đầu ngay"
+        android:text="@string/onboarding_start"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

@@ -37,7 +37,8 @@ class HomeAdapter(
                 if (item.entity.photoUri != null) {
                     holder.ivIcon.setImageURI(Uri.parse(item.entity.photoUri))
                 } else {
-                    holder.ivIcon.setImageResource(android.R.drawable.ic_menu_call)
+                    holder.ivIcon.setImageResource(android.R.drawable.sym_action_call)
+                    holder.ivIcon.setBackgroundResource(android.R.color.holo_green_light)
                 }
             }
         }

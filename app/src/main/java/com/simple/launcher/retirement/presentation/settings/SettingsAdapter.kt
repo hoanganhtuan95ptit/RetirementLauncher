@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.switchmaterial.SwitchMaterial
 import com.simple.launcher.retirement.R
 
 class SettingsAdapter(
@@ -16,6 +17,7 @@ class SettingsAdapter(
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val ivIcon: ImageView = view.findViewById(R.id.ivSettingIcon)
         val tvTitle: TextView = view.findViewById(R.id.tvSettingTitle)
+        val swSetting: SwitchMaterial = view.findViewById(R.id.swSetting)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -27,7 +29,22 @@ class SettingsAdapter(
         val item = items[position]
         holder.tvTitle.text = item.title
         holder.ivIcon.setImageResource(item.iconRes)
-        holder.itemView.setOnClickListener { onItemClick(item) }
+        
+        if (item.isSwitch) {
+            holder.swSetting.visibility = View.VISIBLE
+            holder.swSetting.isChecked = item.isChecked
+            holder.swSetting.setOnCheckedChangeListener { _, isChecked ->
+                item.isChecked = isChecked
+                onItemClick(item)
+            }
+            holder.itemView.setOnClickListener {
+                holder.swSetting.toggle()
+            }
+        } else {
+            holder.swSetting.visibility = View.GONE
+            holder.swSetting.setOnCheckedChangeListener(null)
+            holder.itemView.setOnClickListener { onItemClick(item) }
+        }
     }
 
     override fun getItemCount() = items.size
