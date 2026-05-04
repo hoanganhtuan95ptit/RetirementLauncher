@@ -94,6 +94,8 @@ class AppMonitoringService : Service() {
             "com.android.systemui",
             "android",
             "android.keyguard",
+            "com.google.android.gms",
+            "com.google.android.gsf",
             "com.google.android.apps.nexuslauncher",
             "com.sec.android.app.launcher",
             "com.miui.home",
