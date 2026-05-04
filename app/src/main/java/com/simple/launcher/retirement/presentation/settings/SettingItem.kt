@@ -16,5 +16,6 @@ data class SettingItem(
         const val ID_CONTACT_LIST = 6
         const val ID_TOGGLE_BLOCK = 7
         const val ID_TOGGLE_CLEANUP = 8
+        const val ID_TOGGLE_CALL_BLOCK = 9
     }
 }

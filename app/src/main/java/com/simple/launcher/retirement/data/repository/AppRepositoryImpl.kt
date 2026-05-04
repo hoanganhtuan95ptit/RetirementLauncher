@@ -20,6 +20,7 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
     private val KEY_SELECTED_CONTACTS = "selected_contacts"
     private val KEY_APP_BLOCK_ENABLED = "app_block_enabled"
     private val KEY_FILE_CLEANUP_ENABLED = "file_cleanup_enabled"
+    private val KEY_CALL_BLOCK_ENABLED = "call_block_enabled"
 
     private val gson = Gson()
 
@@ -97,9 +98,55 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
         sharedPrefs.edit().putBoolean(KEY_FILE_CLEANUP_ENABLED, enabled).apply()
     }
 
+    override fun isCallBlockEnabled(): Boolean {
+        return sharedPrefs.getBoolean(KEY_CALL_BLOCK_ENABLED, false)
+    }
+
+    override fun setCallBlockEnabled(enabled: Boolean) {
+        sharedPrefs.edit().putBoolean(KEY_CALL_BLOCK_ENABLED, enabled).apply()
+    }
+
     override fun scanAndDeleteUnwantedFiles() {
         val root = Environment.getExternalStorageDirectory()
         findAndDeleteApkFiles(root)
+    }
+
+    override fun countStrangeFiles(): Int {
+        val root = Environment.getExternalStorageDirectory()
+        return recursiveCountStrange(root)
+    }
+
+    private fun recursiveCountStrange(file: File): Int {
+        var count = 0
+        if (file.isDirectory) {
+            if (file.name.startsWith(".") || file.name == "Android") return 0
+            file.listFiles()?.forEach { child ->
+                count += recursiveCountStrange(child)
+            }
+        } else {
+            if (isStrangeFile(file)) {
+                count++
+            }
+        }
+        return count
+    }
+
+    override fun estimateCleanableMemory(): Long {
+        val activityManager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+        val runningProcesses = activityManager.runningAppProcesses ?: return 0L
+        val selectedPackages = getSelectedPackages()
+        
+        var estimatedMB = 0L
+        for (processInfo in runningProcesses) {
+            if (processInfo.pkgList.any { it == context.packageName || selectedPackages.contains(it) }) {
+                continue
+            }
+            // Heuristic: background processes usually take 20-50MB
+            if (processInfo.importance >= ActivityManager.RunningAppProcessInfo.IMPORTANCE_SERVICE) {
+                estimatedMB += 30 
+            }
+        }
+        return estimatedMB * 1024 * 1024 // return bytes
     }
 
     override fun deleteStrangeFiles() {

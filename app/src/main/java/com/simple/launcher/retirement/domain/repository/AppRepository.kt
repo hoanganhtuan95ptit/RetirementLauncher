@@ -15,10 +15,14 @@ interface AppRepository {
     fun scanAndDeleteUnwantedFiles()
     fun deleteStrangeFiles()
     fun cleanMemory(): Long
+    fun countStrangeFiles(): Int
+    fun estimateCleanableMemory(): Long
     fun isOnboardingCompleted(): Boolean
     fun setOnboardingCompleted(completed: Boolean)
     fun isAppBlockEnabled(): Boolean
     fun setAppBlockEnabled(enabled: Boolean)
     fun isFileCleanupEnabled(): Boolean
     fun setFileCleanupEnabled(enabled: Boolean)
+    fun isCallBlockEnabled(): Boolean
+    fun setCallBlockEnabled(enabled: Boolean)
 }

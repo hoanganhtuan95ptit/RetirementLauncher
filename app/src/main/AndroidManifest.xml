@@ -17,6 +17,8 @@
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ANSWER_PHONE_CALLS" />
 
     <uses-feature android:name="android.hardware.telephony" android:required="false" />
 
@@ -53,6 +55,15 @@
             android:name=".presentation.worker.AppMonitoringService"
             android:enabled="true"
             android:exported="false" />
+
+        <receiver
+            android:name=".presentation.worker.CallReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.PHONE_STATE" />
+            </intent-filter>
+        </receiver>
 
         <activity
             android:name=".presentation.block.BlockActivity"

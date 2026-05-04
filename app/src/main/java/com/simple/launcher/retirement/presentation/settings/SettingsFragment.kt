@@ -18,6 +18,11 @@ import com.simple.launcher.retirement.presentation.clean_memory.CleanMemoryFragm
 import com.simple.launcher.retirement.presentation.default_launcher.DefaultLauncherBottomSheet
 import com.simple.launcher.retirement.presentation.pin_setup.PinSetupFragment
 import com.simple.launcher.retirement.presentation.pin_setup.PinVerifyBottomSheet
+import com.simple.launcher.retirement.presentation.permissions.CallBlockPermissionBottomSheet
+import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Build
+import androidx.core.content.ContextCompat
 
 class SettingsFragment : Fragment() {
 
@@ -56,6 +61,10 @@ class SettingsFragment : Fragment() {
             SettingItem(SettingItem.ID_TOGGLE_BLOCK, "Giám sát ứng dụng", android.R.drawable.ic_lock_lock, true, repository.isAppBlockEnabled()),
             SettingItem(SettingItem.ID_TOGGLE_CLEANUP, "Tự động xóa APK", android.R.drawable.ic_menu_save, true, repository.isFileCleanupEnabled())
         ))
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            settingsItems.add(SettingItem(SettingItem.ID_TOGGLE_CALL_BLOCK, "Chặn cuộc gọi lạ", android.R.drawable.ic_menu_call, true, repository.isCallBlockEnabled()))
+        }
 
         rvSettings.adapter = SettingsAdapter(settingsItems) { item ->
             when (item.id) {
@@ -117,7 +126,39 @@ class SettingsFragment : Fragment() {
                         }
                     }
                 }
+                SettingItem.ID_TOGGLE_CALL_BLOCK -> {
+                    if (item.isChecked && !hasCallBlockPermissions()) {
+                        CallBlockPermissionBottomSheet {
+                            if (hasCallBlockPermissions()) {
+                                handleToggleAction(repository, item) {
+                                    repository.setCallBlockEnabled(item.isChecked)
+                                }
+                            } else {
+                                item.isChecked = false
+                                (view?.findViewById<RecyclerView>(R.id.rvSettings)?.adapter as? SettingsAdapter)?.notifyDataSetChanged()
+                            }
+                        }.show(childFragmentManager, CallBlockPermissionBottomSheet.TAG)
+                    } else {
+                        handleToggleAction(repository, item) {
+                            repository.setCallBlockEnabled(item.isChecked)
+                        }
+                    }
+                }
             }
+        }
+    }
+
+    private fun hasCallBlockPermissions(): Boolean {
+        val permissions = mutableListOf(
+            Manifest.permission.READ_PHONE_STATE,
+            Manifest.permission.READ_CONTACTS
+        )
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            permissions.add(Manifest.permission.ANSWER_PHONE_CALLS)
+        }
+        
+        return permissions.all {
+            ContextCompat.checkSelfPermission(requireContext(), it) == PackageManager.PERMISSION_GRANTED
         }
     }
 

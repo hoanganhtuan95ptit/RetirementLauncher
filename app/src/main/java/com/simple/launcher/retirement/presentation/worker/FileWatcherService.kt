@@ -99,6 +99,11 @@ class FileWatcherService : Service() {
                 Log.d(TAG, "Automatically deleted: $childPath, success: $deleted")
             }
         }
+
+        // Gửi broadcast thông báo có sự thay đổi file để UI cập nhật
+        val intent = Intent("com.simple.launcher.retirement.FILE_CHANGED")
+        intent.setPackage(packageName)
+        sendBroadcast(intent)
     }
 
     private fun stopWatchingAll() {

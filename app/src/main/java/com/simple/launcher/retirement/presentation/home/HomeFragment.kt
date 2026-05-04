@@ -7,13 +7,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.IntentFilter
+import android.os.Build
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.data.repository.AppRepositoryImpl
 import com.simple.launcher.retirement.domain.model.HomeItem
 import com.simple.launcher.retirement.domain.usecase.GetHomeAppsUseCase
+import com.simple.launcher.retirement.presentation.clean_files.CleanFilesFragment
+import com.simple.launcher.retirement.presentation.clean_memory.CleanMemoryFragment
 import com.simple.launcher.retirement.presentation.settings.SettingsFragment
 
 class HomeFragment : Fragment() {
@@ -21,7 +29,13 @@ class HomeFragment : Fragment() {
     private val viewModel: HomeViewModel by viewModels {
         val repository = AppRepositoryImpl(requireContext())
         val getHomeAppsUseCase = GetHomeAppsUseCase(repository)
-        HomeViewModelFactory(getHomeAppsUseCase)
+        HomeViewModelFactory(getHomeAppsUseCase, repository)
+    }
+
+    private val fileChangeReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            viewModel.loadSystemStatus()
+        }
     }
 
     override fun onCreateView(
@@ -36,6 +50,15 @@ class HomeFragment : Fragment() {
 
         val rvApps = view.findViewById<RecyclerView>(R.id.rvApps)
         val btnSettings = view.findViewById<ImageButton>(R.id.btnSettings)
+
+        // Setup LayoutManager
+        val layoutManager = GridLayoutManager(requireContext(), 2)
+        layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+            override fun getSpanSize(position: Int): Int {
+                return if (rvApps.adapter?.getItemViewType(position) == 0) 2 else 1
+            }
+        }
+        rvApps.layoutManager = layoutManager
 
         btnSettings.setOnClickListener {
             parentFragmentManager.beginTransaction()
@@ -64,10 +87,43 @@ class HomeFragment : Fragment() {
                             startActivity(dialIntent)
                         }
                     }
+                    is HomeItem.CleanFiles -> {
+                        parentFragmentManager.beginTransaction()
+                            .replace(R.id.fragment_container, CleanFilesFragment())
+                            .addToBackStack(null)
+                            .commit()
+                    }
+                    is HomeItem.CleanMemory -> {
+                        parentFragmentManager.beginTransaction()
+                            .replace(R.id.fragment_container, CleanMemoryFragment())
+                            .addToBackStack(null)
+                            .commit()
+                    }
+                    is HomeItem.Clock -> {
+                        // Do nothing
+                    }
                 }
             }
         }
 
         viewModel.loadApps()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.loadSystemStatus()
+        
+        val filter = IntentFilter("com.simple.launcher.retirement.FILE_CHANGED")
+        ContextCompat.registerReceiver(
+            requireContext(),
+            fileChangeReceiver,
+            filter,
+            ContextCompat.RECEIVER_NOT_EXPORTED
+        )
+    }
+
+    override fun onPause() {
+        super.onPause()
+        requireContext().unregisterReceiver(fileChangeReceiver)
     }
 }
