@@ -10,34 +10,42 @@ import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.Toast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.simple.launcher.retirement.R
+import com.simple.launcher.retirement.databinding.BottomSheetBlockPermissionBinding
 
 class BlockPermissionBottomSheet(private val onResult: () -> Unit) : BottomSheetDialogFragment() {
+
+    private var _binding: BottomSheetBlockPermissionBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.bottom_sheet_block_permission, container, false)
+    ): View {
+        _binding = BottomSheetBlockPermissionBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        view.findViewById<Button>(R.id.btnGrant).setOnClickListener {
+        binding.btnGrant.setOnClickListener {
             requestBlockPermissions()
             dismiss()
             onResult()
         }
 
-        view.findViewById<Button>(R.id.btnSkip).setOnClickListener {
+        binding.btnSkip.setOnClickListener {
             dismiss()
             onResult()
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun requestBlockPermissions() {

@@ -15,15 +15,13 @@ import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.data.repository.AppRepositoryImpl
+import com.simple.launcher.retirement.databinding.FragmentAppListBinding
 import com.simple.launcher.retirement.domain.model.ContactEntity
 import com.simple.launcher.retirement.domain.model.SelectableContactEntity
 import com.simple.launcher.retirement.presentation.default_launcher.DefaultLauncherBottomSheet
@@ -31,6 +29,9 @@ import com.simple.launcher.retirement.presentation.permissions.BlockPermissionBo
 import com.simple.launcher.retirement.presentation.permissions.FilePermissionBottomSheet
 
 class ContactListFragment : Fragment() {
+
+    private var _binding: FragmentAppListBinding? = null
+    private val binding get() = _binding!!
 
     private lateinit var repository: AppRepositoryImpl
     private val contacts = mutableListOf<SelectableContactEntity>()
@@ -49,30 +50,32 @@ class ContactListFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_app_list, container, false)
+    ): View {
+        _binding = FragmentAppListBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         repository = AppRepositoryImpl(requireContext())
 
-        val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
-        toolbar.title = getString(R.string.contact_list_title)
-        toolbar.setNavigationIcon(R.drawable.ic_back)
-        toolbar.setNavigationOnClickListener { parentFragmentManager.popBackStack() }
-
-        val rvContactList = view.findViewById<RecyclerView>(R.id.rvAppList)
-        val btnSave = view.findViewById<Button>(R.id.btnSave)
+        binding.toolbar.title = getString(R.string.contact_list_title)
+        binding.toolbar.setNavigationIcon(R.drawable.ic_back)
+        binding.toolbar.setNavigationOnClickListener { parentFragmentManager.popBackStack() }
 
         adapter = ContactListAdapter(contacts)
-        rvContactList.adapter = adapter
+        binding.rvAppList.adapter = adapter
 
-        btnSave.setOnClickListener {
+        binding.btnSave.setOnClickListener {
             checkPermissionsAndSave()
         }
 
         checkPermissionAndLoad()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun checkPermissionsAndSave() {

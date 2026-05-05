@@ -3,47 +3,42 @@ package com.simple.launcher.retirement.presentation.settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.switchmaterial.SwitchMaterial
-import com.simple.launcher.retirement.R
+import com.simple.launcher.retirement.databinding.ItemSettingBinding
 
 class SettingsAdapter(
     private val items: List<SettingItem>,
     private val onItemClick: (SettingItem) -> Unit
 ) : RecyclerView.Adapter<SettingsAdapter.ViewHolder>() {
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val ivIcon: ImageView = view.findViewById(R.id.ivSettingIcon)
-        val tvTitle: TextView = view.findViewById(R.id.tvSettingTitle)
-        val swSetting: SwitchMaterial = view.findViewById(R.id.swSetting)
-    }
+    class ViewHolder(val binding: ItemSettingBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_setting, parent, false)
-        return ViewHolder(view)
+        val binding = ItemSettingBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
-        holder.tvTitle.text = item.title
-        holder.ivIcon.setImageResource(item.iconRes)
-        
-        if (item.isSwitch) {
-            holder.swSetting.visibility = View.VISIBLE
-            holder.swSetting.isChecked = item.isChecked
-            holder.swSetting.setOnCheckedChangeListener { _, isChecked ->
-                item.isChecked = isChecked
-                onItemClick(item)
+        with(holder.binding) {
+            tvSettingTitle.text = item.title
+            ivSettingIcon.setImageResource(item.iconRes)
+            
+            if (item.isSwitch) {
+                swSetting.visibility = View.VISIBLE
+                swSetting.isChecked = item.isChecked
+                swSetting.setOnCheckedChangeListener { _, isChecked ->
+                    item.isChecked = isChecked
+                    onItemClick(item)
+                }
+                root.setOnClickListener {
+                    swSetting.toggle()
+                }
+            } else {
+                swSetting.visibility = View.GONE
+                swSetting.setOnCheckedChangeListener(null)
+                root.setOnClickListener { onItemClick(item) }
             }
-            holder.itemView.setOnClickListener {
-                holder.swSetting.toggle()
-            }
-        } else {
-            holder.swSetting.visibility = View.GONE
-            holder.swSetting.setOnCheckedChangeListener(null)
-            holder.itemView.setOnClickListener { onItemClick(item) }
         }
     }
 

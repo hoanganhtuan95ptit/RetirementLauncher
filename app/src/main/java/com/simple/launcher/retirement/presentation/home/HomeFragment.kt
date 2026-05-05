@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.IntentFilter
@@ -15,9 +14,9 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.data.repository.AppRepositoryImpl
+import com.simple.launcher.retirement.databinding.FragmentHomeBinding
 import com.simple.launcher.retirement.domain.model.HomeItem
 import com.simple.launcher.retirement.domain.usecase.GetHomeAppsUseCase
 import com.simple.launcher.retirement.presentation.clean_files.CleanFilesFragment
@@ -25,6 +24,9 @@ import com.simple.launcher.retirement.presentation.clean_memory.CleanMemoryFragm
 import com.simple.launcher.retirement.presentation.settings.SettingsFragment
 
 class HomeFragment : Fragment() {
+
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
 
     private val viewModel: HomeViewModel by viewModels {
         val repository = AppRepositoryImpl(requireContext())
@@ -41,26 +43,24 @@ class HomeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_home, container, false)
+    ): View {
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val rvApps = view.findViewById<RecyclerView>(R.id.rvApps)
-        val btnSettings = view.findViewById<ImageButton>(R.id.btnSettings)
-
         // Setup LayoutManager
         val layoutManager = GridLayoutManager(requireContext(), 2)
         layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
-                return if (rvApps.adapter?.getItemViewType(position) == 0) 2 else 1
+                return if (binding.rvApps.adapter?.getItemViewType(position) == 0) 2 else 1
             }
         }
-        rvApps.layoutManager = layoutManager
+        binding.rvApps.layoutManager = layoutManager
 
-        btnSettings.setOnClickListener {
+        binding.btnSettings.setOnClickListener {
             parentFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, SettingsFragment())
                 .addToBackStack(null)
@@ -68,7 +68,7 @@ class HomeFragment : Fragment() {
         }
 
         viewModel.items.observe(viewLifecycleOwner) { items ->
-            rvApps.adapter = HomeAdapter(items) { item ->
+            binding.rvApps.adapter = HomeAdapter(items) { item ->
                 when (item) {
                     is HomeItem.App -> {
                         val launchIntent = requireContext().packageManager.getLaunchIntentForPackage(item.entity.packageName)
@@ -125,5 +125,10 @@ class HomeFragment : Fragment() {
     override fun onPause() {
         super.onPause()
         requireContext().unregisterReceiver(fileChangeReceiver)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

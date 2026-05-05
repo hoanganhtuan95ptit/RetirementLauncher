@@ -12,14 +12,13 @@ import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.RecyclerView
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.data.repository.AppRepositoryImpl
+import com.simple.launcher.retirement.databinding.FragmentAppListBinding
 import com.simple.launcher.retirement.domain.usecase.GetSelectableAppsUseCase
 import com.simple.launcher.retirement.domain.usecase.SaveSelectedAppsUseCase
 import com.simple.launcher.retirement.presentation.default_launcher.DefaultLauncherBottomSheet
@@ -27,6 +26,9 @@ import com.simple.launcher.retirement.presentation.permissions.BlockPermissionBo
 import com.simple.launcher.retirement.presentation.permissions.FilePermissionBottomSheet
 
 class AppListFragment : Fragment() {
+
+    private var _binding: FragmentAppListBinding? = null
+    private val binding get() = _binding!!
 
     private val viewModel: AppListViewModel by viewModels {
         val repository = AppRepositoryImpl(requireContext())
@@ -38,31 +40,33 @@ class AppListFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_app_list, container, false)
+    ): View {
+        _binding = FragmentAppListBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
-        toolbar.setNavigationIcon(R.drawable.ic_back)
-        toolbar.setNavigationOnClickListener {
+        binding.toolbar.setNavigationIcon(R.drawable.ic_back)
+        binding.toolbar.setNavigationOnClickListener {
             parentFragmentManager.popBackStack()
         }
 
-        val rvAppList = view.findViewById<RecyclerView>(R.id.rvAppList)
-        val btnSave = view.findViewById<Button>(R.id.btnSave)
-
         viewModel.apps.observe(viewLifecycleOwner) { apps ->
-            rvAppList.adapter = AppListAdapter(apps)
+            binding.rvAppList.adapter = AppListAdapter(apps)
         }
 
-        btnSave.setOnClickListener {
+        binding.btnSave.setOnClickListener {
             checkPermissionsAndSave()
         }
 
         viewModel.loadApps()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun checkPermissionsAndSave() {

@@ -9,13 +9,15 @@ import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.simple.launcher.retirement.R
+import com.simple.launcher.retirement.databinding.BottomSheetDefaultLauncherBinding
 
 class DefaultLauncherBottomSheet(private val onResult: (() -> Unit)? = null) : BottomSheetDialogFragment() {
+
+    private var _binding: BottomSheetDefaultLauncherBinding? = null
+    private val binding get() = _binding!!
 
     private val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         dismiss()
@@ -26,21 +28,27 @@ class DefaultLauncherBottomSheet(private val onResult: (() -> Unit)? = null) : B
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.bottom_sheet_default_launcher, container, false)
+    ): View {
+        _binding = BottomSheetDefaultLauncherBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        view.findViewById<Button>(R.id.btnSetDefault).setOnClickListener {
+        binding.btnSetDefault.setOnClickListener {
             openDefaultLauncherSettings()
         }
 
-        view.findViewById<Button>(R.id.btnCancel).setOnClickListener {
+        binding.btnCancel.setOnClickListener {
             dismiss()
             onResult?.invoke()
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun openDefaultLauncherSettings() {

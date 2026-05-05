@@ -6,13 +6,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContextCompat
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.simple.launcher.retirement.R
+import com.simple.launcher.retirement.databinding.BottomSheetCallPermissionBinding
 
 class CallBlockPermissionBottomSheet(private val onResult: () -> Unit) : BottomSheetDialogFragment() {
+
+    private var _binding: BottomSheetCallPermissionBinding? = null
+    private val binding get() = _binding!!
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
@@ -25,14 +26,15 @@ class CallBlockPermissionBottomSheet(private val onResult: () -> Unit) : BottomS
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.bottom_sheet_call_permission, container, false)
+    ): View {
+        _binding = BottomSheetCallPermissionBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        view.findViewById<Button>(R.id.btnGrant).setOnClickListener {
+        binding.btnGrant.setOnClickListener {
             val permissions = arrayOf(
                 Manifest.permission.READ_PHONE_STATE,
                 Manifest.permission.ANSWER_PHONE_CALLS,
@@ -41,10 +43,15 @@ class CallBlockPermissionBottomSheet(private val onResult: () -> Unit) : BottomS
             requestPermissionLauncher.launch(permissions)
         }
 
-        view.findViewById<Button>(R.id.btnSkip).setOnClickListener {
+        binding.btnSkip.setOnClickListener {
             dismiss()
             onResult()
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     companion object {

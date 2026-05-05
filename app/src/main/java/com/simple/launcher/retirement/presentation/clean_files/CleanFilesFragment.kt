@@ -4,45 +4,41 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ProgressBar
-import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.data.repository.AppRepositoryImpl
+import com.simple.launcher.retirement.databinding.FragmentCleanFilesBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class CleanFilesFragment : Fragment() {
 
+    private var _binding: FragmentCleanFilesBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_clean_files, container, false)
+    ): View {
+        _binding = FragmentCleanFilesBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
-        toolbar.setNavigationIcon(R.drawable.ic_back)
-        toolbar.setNavigationOnClickListener {
+        binding.toolbar.setNavigationIcon(R.drawable.ic_back)
+        binding.toolbar.setNavigationOnClickListener {
             parentFragmentManager.popBackStack()
         }
 
-        val btnClean = view.findViewById<Button>(R.id.btnClean)
-        val progressBar = view.findViewById<ProgressBar>(R.id.progressBar)
-        val tvStatus = view.findViewById<TextView>(R.id.tvStatus)
-
-        btnClean.setOnClickListener {
-            btnClean.isEnabled = false
-            progressBar.visibility = View.VISIBLE
-            tvStatus.text = getString(R.string.clean_files_running)
+        binding.btnClean.setOnClickListener {
+            binding.btnClean.isEnabled = false
+            binding.progressBar.visibility = View.VISIBLE
+            binding.tvStatus.text = getString(R.string.clean_files_running)
 
             lifecycleScope.launch {
                 val repository = AppRepositoryImpl(requireContext())
@@ -50,13 +46,18 @@ class CleanFilesFragment : Fragment() {
                     repository.deleteStrangeFiles()
                 }
                 
-                progressBar.visibility = View.GONE
-                tvStatus.text = getString(R.string.clean_files_completed)
-                btnClean.isEnabled = true
-                btnClean.text = getString(R.string.clean_files_retry)
+                binding.progressBar.visibility = View.GONE
+                binding.tvStatus.text = getString(R.string.clean_files_completed)
+                binding.btnClean.isEnabled = true
+                binding.btnClean.text = getString(R.string.clean_files_retry)
                 
                 Toast.makeText(requireContext(), R.string.clean_files_toast, Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
