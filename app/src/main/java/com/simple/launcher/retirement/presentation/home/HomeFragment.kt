@@ -14,6 +14,8 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import android.graphics.Rect
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.data.repository.AppRepositoryImpl
 import com.simple.launcher.retirement.databinding.FragmentHomeBinding
@@ -59,6 +61,14 @@ class HomeFragment : Fragment() {
             }
         }
         binding.rvApps.layoutManager = layoutManager
+        
+        // Thêm khoảng cách giữa các item
+        binding.rvApps.addItemDecoration(object : RecyclerView.ItemDecoration() {
+            override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
+                val spacing = 24 // Khoảng cách 20px
+                outRect.set(spacing, spacing, spacing, spacing)
+            }
+        })
 
         binding.btnSettings.setOnClickListener {
             parentFragmentManager.beginTransaction()
