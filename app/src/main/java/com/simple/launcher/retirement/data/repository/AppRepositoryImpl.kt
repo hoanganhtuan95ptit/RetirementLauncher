@@ -1,6 +1,5 @@
 package com.simple.launcher.retirement.data.repository
 
-import android.app.ActivityManager
 import android.content.ContentUris
 import android.content.Context
 import android.content.Intent
@@ -10,13 +9,12 @@ import android.os.Environment
 import android.os.storage.StorageManager
 import android.provider.MediaStore
 import android.util.Log
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.simple.launcher.retirement.domain.model.AppEntity
 import com.simple.launcher.retirement.domain.model.ContactEntity
 import com.simple.launcher.retirement.domain.repository.AppRepository
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import java.io.File
-import java.io.IOException
 
 class AppRepositoryImpl(private val context: Context) : AppRepository {
 
@@ -139,7 +137,18 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
     }
 
     override fun estimateCleanableMemory(): Long {
-        return getJunkFiles().sumOf { it.second }
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            return 0L
+        }
+
+        val storageManager = context.getSystemService(StorageManager::class.java)
+        val uuid = storageManager.getUuidForPath(context.filesDir)
+
+        val currentFree = context.filesDir.usableSpace
+        val allocatable = storageManager.getAllocatableBytes(uuid)
+
+        return maxOf(0L, allocatable - currentFree)
     }
 
     override fun deleteStrangeFiles() {
@@ -154,18 +163,23 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
     }
 
     override fun cleanMemory(): Long {
-        val junkFiles = getJunkFiles()
-        var freedBytes = 0L
 
-        for ((uri, size) in junkFiles) {
-            try {
-                val deleted = context.contentResolver.delete(uri, null, null)
-                if (deleted > 0) freedBytes += size
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            return 0L
         }
-        return freedBytes
+
+        val storageManager = context.getSystemService(StorageManager::class.java)
+
+        val uuid = storageManager.getUuidForPath(context.filesDir)
+        val freeableBytes = estimateCleanableMemory()
+
+        if (freeableBytes <= 0) {
+            return 0L
+        }
+
+        storageManager.allocateBytes(uuid, freeableBytes)
+
+        return freeableBytes
     }
 
     private fun recursiveDeleteStrange(file: File) {
@@ -198,10 +212,10 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
             // Video
             "mp4", "mkv", "avi", "mov", "3gp"
         )
-        
+
         val extension = name.substringAfterLast('.', "")
         if (extension.isEmpty()) return true // File không có đuôi cũng coi là lạ
-        
+
         return !allowedExtensions.contains(extension)
     }
 
@@ -225,41 +239,5 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
                 }
             }
         }
-    }
-    private fun getJunkFiles(): List<Pair<Uri, Long>> {
-        val junkFiles = mutableListOf<Pair<Uri, Long>>()
-        val projection = arrayOf(
-            MediaStore.Files.FileColumns._ID,
-            MediaStore.Files.FileColumns.SIZE,
-            MediaStore.Files.FileColumns.MIME_TYPE
-        )
-        val junkMimeTypes = listOf(
-            "application/vnd.android.package-archive", // APK
-            "application/zip",                         // ZIP
-            "application/octet-stream"                 // file rác khác
-        )
-        val selection = junkMimeTypes.joinToString(" OR ") {
-            "${MediaStore.Files.FileColumns.MIME_TYPE} = ?"
-        }
-
-        context.contentResolver.query(
-            MediaStore.Files.getContentUri("external"),
-            projection,
-            selection,
-            junkMimeTypes.toTypedArray(),
-            null
-        )?.use { cursor ->
-            val idCol = cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns._ID)
-            val sizeCol = cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns.SIZE)
-            while (cursor.moveToNext()) {
-                val uri = ContentUris.withAppendedId(
-                    MediaStore.Files.getContentUri("external"),
-                    cursor.getLong(idCol)
-                )
-                val size = cursor.getLong(sizeCol)
-                junkFiles.add(Pair(uri, size))
-            }
-        }
-        return junkFiles
     }
 }
