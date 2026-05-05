@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="24dp"
+    android:padding="32dp"
     android:gravity="center">
 
     <TextClock
@@ -13,15 +13,16 @@
         android:format12Hour="hh:mm"
         android:format24Hour="HH:mm"
         android:textColor="?android:attr/textColorPrimary"
-        android:textSize="64sp"
+        android:textSize="100sp"
         android:textStyle="bold" />
 
     <TextClock
         android:id="@+id/textDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="-16dp"
         android:format12Hour="EEEE, dd MMMM"
         android:format24Hour="EEEE, dd MMMM"
         android:textColor="?android:attr/textColorSecondary"
-        android:textSize="20sp" />
+        android:textSize="28sp" />
 </LinearLayout>

@@ -18,11 +18,13 @@ class HomeAdapter(
     companion object {
         private const val TYPE_CLOCK = 0
         private const val TYPE_APP = 1
+        private const val TYPE_UTILITY = 2
     }
 
     override fun getItemViewType(position: Int): Int {
         return when (items[position]) {
             is HomeItem.Clock -> TYPE_CLOCK
+            is HomeItem.CleanFiles, is HomeItem.CleanMemory -> TYPE_UTILITY
             else -> TYPE_APP
         }
     }
@@ -32,6 +34,10 @@ class HomeAdapter(
             TYPE_CLOCK -> {
                 val view = LayoutInflater.from(parent.context).inflate(R.layout.item_clock, parent, false)
                 ClockViewHolder(view)
+            }
+            TYPE_UTILITY -> {
+                val view = LayoutInflater.from(parent.context).inflate(R.layout.item_utility, parent, false)
+                AppViewHolder(view)
             }
             else -> {
                 val view = LayoutInflater.from(parent.context).inflate(R.layout.item_app, parent, false)

@@ -69,6 +69,8 @@
             android:name=".presentation.block.BlockActivity"
             android:exported="false"
             android:launchMode="singleInstance"
+            android:excludeFromRecents="true"
+            android:noHistory="true"
             android:theme="@style/Theme.RetirementLauncher.NoActionBar" />
 
     </application>

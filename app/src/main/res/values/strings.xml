@@ -50,6 +50,6 @@
     <string name="call_block_grant">Cấp quyền ngay</string>
     <string name="call_block_skip">Để sau</string>
     <!-- Home Status -->
-    <string name="home_strange_files">Dọn dẹp\n(%1$d file lạ)</string>
-    <string name="home_memory_status">Tăng tốc\n(%1$d MB)</string>
+    <string name="home_strange_files">Dọn dẹp (%1$d)</string>
+    <string name="home_memory_status">Tăng tốc (%1$dMB)</string>
 </resources>
