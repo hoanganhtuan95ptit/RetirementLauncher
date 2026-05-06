@@ -1,6 +1,7 @@
 package com.simple.launcher.retirement.presentation.home
 
 import android.net.Uri
+import android.view.HapticFeedbackConstants
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -74,7 +75,10 @@ class HomeAdapter(
                         }
                         else -> {}
                     }
-                    root.setOnClickListener { onItemClick(item) }
+                    root.setOnClickListener {
+                        it.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
+                        onItemClick(item)
+                    }
                 }
             }
             is AppViewHolder -> {
@@ -99,7 +103,10 @@ class HomeAdapter(
                         }
                         else -> {}
                     }
-                    root.setOnClickListener { onItemClick(item) }
+                    root.setOnClickListener {
+                        it.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
+                        onItemClick(item)
+                    }
                 }
             }
         }

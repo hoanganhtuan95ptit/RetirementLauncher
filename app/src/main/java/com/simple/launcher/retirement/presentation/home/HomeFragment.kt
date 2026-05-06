@@ -10,6 +10,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.IntentFilter
 import android.os.Build
+import android.view.HapticFeedbackConstants
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -71,6 +72,7 @@ class HomeFragment : Fragment() {
         })
 
         binding.btnSettings.setOnClickListener {
+            it.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
             parentFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, SettingsFragment())
                 .addToBackStack(null)
