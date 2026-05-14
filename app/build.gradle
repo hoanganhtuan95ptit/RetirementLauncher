@@ -48,6 +48,10 @@ dependencies {
     implementation libs.gson
     implementation libs.adapter
     ksp libs.adapter.processor
+    implementation libs.deeplink
+    ksp libs.deeplink.processor
+    implementation libs.auto.register
+    ksp libs.auto.register.processor
     implementation libs.glide
     implementation "androidx.work:work-runtime-ktx:2.9.1"
     testImplementation libs.junit

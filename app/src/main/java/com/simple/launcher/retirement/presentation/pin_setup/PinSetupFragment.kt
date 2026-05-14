@@ -7,7 +7,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
+import com.simple.deeplink.Deeplink
+import com.simple.deeplink.DeeplinkHandler
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.data.repository.AppRepositoryImpl
 import com.simple.launcher.retirement.databinding.FragmentPinSetupBinding
@@ -80,5 +83,27 @@ class PinSetupFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+}
+
+@Deeplink
+class PinSetupDeeplinkHandler : DeeplinkHandler {
+    override val deeplink: String = "app://pin_setup"
+
+    override suspend fun navigate(
+        fragmentActivity: FragmentActivity,
+        deeplink: String,
+        extras: Map<String, Any?>?,
+        sharedElement: Map<String, View>?
+    ): Boolean {
+        val transaction = fragmentActivity.supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, PinSetupFragment())
+        
+        if (extras?.get("addToBackStack") == true) {
+            transaction.addToBackStack(null)
+        }
+        
+        transaction.commit()
+        return true
     }
 }

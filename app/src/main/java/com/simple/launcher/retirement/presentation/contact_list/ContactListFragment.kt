@@ -19,6 +19,9 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import com.simple.deeplink.Deeplink
+import com.simple.deeplink.DeeplinkHandler
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.data.repository.AppRepositoryImpl
 import com.simple.launcher.retirement.databinding.FragmentAppListBinding
@@ -194,5 +197,27 @@ class ContactListFragment : Fragment() {
             }
         }
         adapter.notifyDataSetChanged()
+    }
+}
+
+@Deeplink
+class ContactListDeeplinkHandler : DeeplinkHandler {
+    override val deeplink: String = "app://contact_list"
+
+    override suspend fun navigate(
+        fragmentActivity: FragmentActivity,
+        deeplink: String,
+        extras: Map<String, Any?>?,
+        sharedElement: Map<String, View>?
+    ): Boolean {
+        val transaction = fragmentActivity.supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, ContactListFragment())
+        
+        if (extras?.get("addToBackStack") == true) {
+            transaction.addToBackStack(null)
+        }
+        
+        transaction.commit()
+        return true
     }
 }

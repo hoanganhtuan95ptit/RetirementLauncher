@@ -14,6 +14,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.lifecycleScope
@@ -23,12 +25,13 @@ import com.simple.adapter.ViewItemAdapterProvider
 import com.simple.adapter.utils.attachAdapter
 import com.simple.adapter.utils.submitListAndAwait
 import com.simple.auto.register.AutoRegisterManager
+import com.simple.deeplink.Deeplink
+import com.simple.deeplink.DeeplinkHandler
+import com.simple.deeplink.sendDeeplink
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.data.repository.AppRepositoryImpl
 import com.simple.launcher.retirement.databinding.FragmentHomeBinding
 import com.simple.launcher.retirement.domain.usecase.GetHomeAppsUseCase
-import com.simple.launcher.retirement.presentation.clean_files.CleanFilesFragment
-import com.simple.launcher.retirement.presentation.clean_memory.CleanMemoryFragment
 import com.simple.launcher.retirement.presentation.home.adapter.AppHomeItem
 import com.simple.launcher.retirement.presentation.home.adapter.CleanFilesHomeItem
 import com.simple.launcher.retirement.presentation.home.adapter.CleanMemoryHomeItem
@@ -37,7 +40,7 @@ import com.simple.launcher.retirement.presentation.home.adapter.ContactHomeItem
 import com.simple.launcher.retirement.presentation.home.adapter.HeaderHomeItem
 import com.simple.launcher.retirement.presentation.home.adapter.HomeEventBus
 import com.simple.launcher.retirement.presentation.home.adapter.HomeItem
-import com.simple.launcher.retirement.presentation.settings.SettingsFragment
+import com.simple.launcher.retirement.presentation.main.MainActivity
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -99,14 +102,12 @@ class HomeFragment : Fragment() {
 
         binding.btnSettings.setOnClickListener {
             it.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, SettingsFragment())
-                .addToBackStack(null)
-                .commit()
+            sendDeeplink("app://settings", extras = mapOf("addToBackStack" to true))
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.items.asFlow().attachAdapter().collectLatest { (items, adapters) ->
+                Log.d("tuanha", "onViewCreated: $adapters")
                 binding.rvApps.submitListAndAwait(items, adapters, true)
             }
         }
@@ -124,10 +125,7 @@ class HomeFragment : Fragment() {
         when (item) {
             is AppHomeItem -> {
                 if (item.entity.packageName == requireContext().packageName) {
-                    parentFragmentManager.beginTransaction()
-                        .replace(R.id.fragment_container, SettingsFragment())
-                        .addToBackStack(null)
-                        .commit()
+                    sendDeeplink("app://settings", extras = mapOf("addToBackStack" to true))
                 } else {
                     val launchIntent =
                         requireContext().packageManager.getLaunchIntentForPackage(item.entity.packageName)
@@ -150,17 +148,11 @@ class HomeFragment : Fragment() {
             }
 
             is CleanFilesHomeItem -> {
-                parentFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, CleanFilesFragment())
-                    .addToBackStack(null)
-                    .commit()
+                sendDeeplink("app://clean_files", extras = mapOf("addToBackStack" to true))
             }
 
             is CleanMemoryHomeItem -> {
-                parentFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, CleanMemoryFragment())
-                    .addToBackStack(null)
-                    .commit()
+                sendDeeplink("app://clean_memory", extras = mapOf("addToBackStack" to true))
             }
 
             is ClockHomeItem -> {
@@ -190,5 +182,31 @@ class HomeFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+}
+
+@Deeplink
+class HomeDeeplinkHandler : DeeplinkHandler {
+    override val deeplink: String = "app://home"
+
+    override suspend fun navigate(
+        fragmentActivity: FragmentActivity,
+        deeplink: String,
+        extras: Map<String, Any?>?,
+        sharedElement: Map<String, View>?
+    ): Boolean {
+        if (fragmentActivity is MainActivity) {
+            val fragmentManager = fragmentActivity.supportFragmentManager
+            val currentFragment = fragmentManager.findFragmentById(R.id.fragment_container)
+            if (currentFragment !is HomeFragment) {
+                // Xóa backstack và chuyển về HomeFragment
+                fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                fragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, HomeFragment())
+                    .commit()
+            }
+            return true
+        }
+        return false
     }
 }

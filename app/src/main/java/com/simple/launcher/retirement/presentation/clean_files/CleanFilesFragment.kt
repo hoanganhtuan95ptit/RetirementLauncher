@@ -6,7 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
+import com.simple.deeplink.Deeplink
+import com.simple.deeplink.DeeplinkHandler
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.data.repository.AppRepositoryImpl
 import com.simple.launcher.retirement.databinding.FragmentCleanFilesBinding
@@ -59,5 +62,27 @@ class CleanFilesFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+}
+
+@Deeplink
+class CleanFilesDeeplinkHandler : DeeplinkHandler {
+    override val deeplink: String = "app://clean_files"
+
+    override suspend fun navigate(
+        fragmentActivity: FragmentActivity,
+        deeplink: String,
+        extras: Map<String, Any?>?,
+        sharedElement: Map<String, View>?
+    ): Boolean {
+        val transaction = fragmentActivity.supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, CleanFilesFragment())
+        
+        if (extras?.get("addToBackStack") == true) {
+            transaction.addToBackStack(null)
+        }
+        
+        transaction.commit()
+        return true
     }
 }

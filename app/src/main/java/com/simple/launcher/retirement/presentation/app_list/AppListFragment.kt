@@ -15,7 +15,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
+import com.simple.deeplink.Deeplink
+import com.simple.deeplink.DeeplinkHandler
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.data.repository.AppRepositoryImpl
 import com.simple.launcher.retirement.databinding.FragmentAppListBinding
@@ -146,5 +149,27 @@ class AppListFragment : Fragment() {
             val resolveInfo = requireContext().packageManager.resolveActivity(intent, 0)
             resolveInfo?.activityInfo?.packageName == requireContext().packageName
         }
+    }
+}
+
+@Deeplink
+class AppListDeeplinkHandler : DeeplinkHandler {
+    override val deeplink: String = "app://app_list"
+
+    override suspend fun navigate(
+        fragmentActivity: FragmentActivity,
+        deeplink: String,
+        extras: Map<String, Any?>?,
+        sharedElement: Map<String, View>?
+    ): Boolean {
+        val transaction = fragmentActivity.supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, AppListFragment())
+        
+        if (extras?.get("addToBackStack") == true) {
+            transaction.addToBackStack(null)
+        }
+        
+        transaction.commit()
+        return true
     }
 }

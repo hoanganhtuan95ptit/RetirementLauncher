@@ -8,19 +8,16 @@ import android.os.Bundle
 import android.os.Environment
 import android.os.Process
 import android.provider.Settings
+import android.util.Log
 import android.view.LayoutInflater
 import androidx.activity.OnBackPressedCallback
-import androidx.fragment.app.FragmentManager
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
-import com.simple.launcher.retirement.R
+import com.simple.deeplink.sendDeeplink
 import com.simple.launcher.retirement.data.repository.AppRepositoryImpl
 import com.simple.launcher.retirement.databinding.ActivityMainBinding
 import com.simple.launcher.retirement.presentation.base.BaseActivity
-import com.simple.launcher.retirement.presentation.home.HomeFragment
-import com.simple.launcher.retirement.presentation.onboarding.OnboardingFragment
-import com.simple.launcher.retirement.presentation.settings.SettingsFragment
 import com.simple.launcher.retirement.presentation.worker.AppMonitoringService
 import com.simple.launcher.retirement.presentation.worker.FileCleanupWorker
 import com.simple.launcher.retirement.presentation.worker.FileWatcherService
@@ -48,15 +45,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         if (savedInstanceState == null) {
             val isHomeIntent = intent.hasCategory(Intent.CATEGORY_HOME)
             
-            val fragment = when {
-                !repository.isOnboardingCompleted() -> OnboardingFragment()
-                isHomeIntent -> HomeFragment()
-                else -> SettingsFragment()
+            val deeplink = when {
+                !repository.isOnboardingCompleted() -> "app://onboarding"
+                isHomeIntent -> "app://home"
+                else -> "app://settings"
             }
-            
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, fragment)
-                .commit()
+
+            Log.d("tuanha", "setupViews: $deeplink")
+            sendDeeplink(deeplink)
         }
 
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
@@ -72,14 +68,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         super.onNewIntent(intent)
         // Khi nhấn nút Home
         if (Intent.ACTION_MAIN == intent.action && intent.hasCategory(Intent.CATEGORY_HOME)) {
-            val currentFragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
-            if (currentFragment !is HomeFragment) {
-                // Xóa backstack và chuyển về HomeFragment
-                supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, HomeFragment())
-                    .commit()
-            }
+            Log.d("tuanha", "onNewIntent: ")
+            sendDeeplink("app://home")
         }
     }
 

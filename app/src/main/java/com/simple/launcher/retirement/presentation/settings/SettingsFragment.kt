@@ -7,15 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.GridLayoutManager
+import com.simple.deeplink.Deeplink
+import com.simple.deeplink.DeeplinkHandler
+import com.simple.deeplink.sendDeeplink
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.data.repository.AppRepositoryImpl
 import com.simple.launcher.retirement.databinding.FragmentSettingsBinding
-import com.simple.launcher.retirement.presentation.app_list.AppListFragment
-import com.simple.launcher.retirement.presentation.clean_files.CleanFilesFragment
-import com.simple.launcher.retirement.presentation.clean_memory.CleanMemoryFragment
 import com.simple.launcher.retirement.presentation.default_launcher.DefaultLauncherBottomSheet
-import com.simple.launcher.retirement.presentation.pin_setup.PinSetupFragment
 import com.simple.launcher.retirement.presentation.pin_setup.PinVerifyBottomSheet
 import com.simple.launcher.retirement.presentation.permissions.CallBlockPermissionBottomSheet
 import android.Manifest
@@ -71,39 +71,23 @@ class SettingsFragment : Fragment() {
             when (item.id) {
                 SettingItem.ID_PIN -> {
                     PinVerifyBottomSheet {
-                        parentFragmentManager.beginTransaction()
-                            .replace(R.id.fragment_container, PinSetupFragment())
-                            .addToBackStack(null)
-                            .commit()
+                        sendDeeplink("app://pin_setup", extras = mapOf("addToBackStack" to true))
                     }.show(childFragmentManager, PinVerifyBottomSheet.TAG)
                 }
                 SettingItem.ID_APP_LIST -> {
-                    parentFragmentManager.beginTransaction()
-                        .replace(R.id.fragment_container, AppListFragment())
-                        .addToBackStack(null)
-                        .commit()
+                    sendDeeplink("app://app_list", extras = mapOf("addToBackStack" to true))
                 }
                 SettingItem.ID_CONTACT_LIST -> {
-                    // Navigate to ContactListFragment
-                    parentFragmentManager.beginTransaction()
-                        .replace(R.id.fragment_container, com.simple.launcher.retirement.presentation.contact_list.ContactListFragment())
-                        .addToBackStack(null)
-                        .commit()
+                    sendDeeplink("app://contact_list", extras = mapOf("addToBackStack" to true))
                 }
                 SettingItem.ID_DEFAULT_LAUNCHER -> {
                     DefaultLauncherBottomSheet().show(childFragmentManager, DefaultLauncherBottomSheet.TAG)
                 }
                 SettingItem.ID_CLEAN_FILES -> {
-                    parentFragmentManager.beginTransaction()
-                        .replace(R.id.fragment_container, CleanFilesFragment())
-                        .addToBackStack(null)
-                        .commit()
+                    sendDeeplink("app://clean_files", extras = mapOf("addToBackStack" to true))
                 }
                 SettingItem.ID_CLEAN_MEMORY -> {
-                    parentFragmentManager.beginTransaction()
-                        .replace(R.id.fragment_container, CleanMemoryFragment())
-                        .addToBackStack(null)
-                        .commit()
+                    sendDeeplink("app://clean_memory", extras = mapOf("addToBackStack" to true))
                 }
                 SettingItem.ID_TOGGLE_BLOCK -> {
                     handleToggleAction(repository, item) {
@@ -182,10 +166,7 @@ class SettingsFragment : Fragment() {
                 item.isChecked = true // Hoàn trả trạng thái ON
                 (binding.rvSettings.adapter as? SettingsAdapter)?.notifyDataSetChanged()
                 
-                parentFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, PinSetupFragment())
-                    .addToBackStack(null)
-                    .commit()
+                sendDeeplink("app://pin_setup", extras = mapOf("addToBackStack" to true))
             } else {
                 // Hoàn trả trạng thái ON tạm thời, chỉ tắt khi verify thành công
                 item.isChecked = true
@@ -198,5 +179,27 @@ class SettingsFragment : Fragment() {
                 }.show(childFragmentManager, PinVerifyBottomSheet.TAG)
             }
         }
+    }
+}
+
+@Deeplink
+class SettingsDeeplinkHandler : DeeplinkHandler {
+    override val deeplink: String = "app://settings"
+
+    override suspend fun navigate(
+        fragmentActivity: FragmentActivity,
+        deeplink: String,
+        extras: Map<String, Any?>?,
+        sharedElement: Map<String, View>?
+    ): Boolean {
+        val transaction = fragmentActivity.supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, SettingsFragment())
+        
+        if (extras?.get("addToBackStack") == true) {
+            transaction.addToBackStack(null)
+        }
+        
+        transaction.commit()
+        return true
     }
 }
