@@ -2,20 +2,17 @@ package com.simple.launcher.retirement.presentation.block
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import android.view.LayoutInflater
+import androidx.activity.OnBackPressedCallback
 import com.simple.launcher.retirement.databinding.ActivityBlockBinding
+import com.simple.launcher.retirement.presentation.base.BaseActivity
 import com.simple.launcher.retirement.presentation.main.MainActivity
 
-import androidx.activity.OnBackPressedCallback
+class BlockActivity : BaseActivity<ActivityBlockBinding>() {
 
-class BlockActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityBlockBinding
+    override fun inflateBinding(inflater: LayoutInflater) = ActivityBlockBinding.inflate(inflater)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityBlockBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
+    override fun setupViews(savedInstanceState: Bundle?) {
         binding.btnGoHome.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             intent.action = Intent.ACTION_MAIN

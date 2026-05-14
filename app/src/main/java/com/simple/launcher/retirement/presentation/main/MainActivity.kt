@@ -1,37 +1,35 @@
 package com.simple.launcher.retirement.presentation.main
 
+import android.app.AppOpsManager
+import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
+import android.os.Process
+import android.provider.Settings
+import android.view.LayoutInflater
 import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.simple.launcher.retirement.R
+import com.simple.launcher.retirement.data.repository.AppRepositoryImpl
 import com.simple.launcher.retirement.databinding.ActivityMainBinding
+import com.simple.launcher.retirement.presentation.base.BaseActivity
 import com.simple.launcher.retirement.presentation.home.HomeFragment
 import com.simple.launcher.retirement.presentation.onboarding.OnboardingFragment
 import com.simple.launcher.retirement.presentation.settings.SettingsFragment
+import com.simple.launcher.retirement.presentation.worker.AppMonitoringService
 import com.simple.launcher.retirement.presentation.worker.FileCleanupWorker
 import com.simple.launcher.retirement.presentation.worker.FileWatcherService
-import com.simple.launcher.retirement.presentation.worker.AppMonitoringService
-import com.simple.launcher.retirement.data.repository.AppRepositoryImpl
-import android.app.AppOpsManager
-import android.content.Context
-import android.provider.Settings
-import android.os.Process
-import android.os.Build
-import android.os.Environment
 
-class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
+class MainActivity : BaseActivity<ActivityMainBinding>() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override fun inflateBinding(inflater: LayoutInflater) = ActivityMainBinding.inflate(inflater)
 
+    override fun setupViews(savedInstanceState: Bundle?) {
         // Quét toàn bộ một lần lúc khởi động
         scheduleInitialFileCleanup()
         
@@ -48,7 +46,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         if (savedInstanceState == null) {
-            val repository = AppRepositoryImpl(this)
             val isHomeIntent = intent.hasCategory(Intent.CATEGORY_HOME)
             
             val fragment = when {
