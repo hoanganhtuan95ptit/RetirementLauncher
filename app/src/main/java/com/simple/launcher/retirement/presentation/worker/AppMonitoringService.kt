@@ -10,6 +10,7 @@ import android.os.IBinder
 import android.os.Looper
 import android.os.PowerManager
 import android.util.Log
+import android.os.Build
 import com.simple.launcher.retirement.data.repository.AppRepositoryImpl
 import com.simple.launcher.retirement.presentation.block.BlockActivity
 
@@ -108,6 +109,11 @@ class AppMonitoringService : Service() {
         )
 
         if (systemPackages.contains(foregroundPackage) || foregroundPackage.contains("launcher")) {
+            return
+        }
+
+        // Bỏ qua các ứng dụng mặc định
+        if (repository.isDefaultApp(foregroundPackage)) {
             return
         }
 

@@ -9,6 +9,10 @@ import android.os.Environment
 import android.os.storage.StorageManager
 import android.provider.MediaStore
 import android.util.Log
+import android.content.pm.ApplicationInfo
+import android.content.pm.PackageManager
+import android.provider.Telephony
+import android.telecom.TelecomManager
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simple.launcher.retirement.domain.model.AppEntity
@@ -35,9 +39,7 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
         val i = Intent(Intent.ACTION_MAIN, null)
         i.addCategory(Intent.CATEGORY_LAUNCHER)
         val allApps = pm.queryIntentActivities(i, 0)
-        val currentPackage = context.packageName
         for (ri in allApps) {
-            if (ri.activityInfo.packageName == currentPackage) continue
             val app = AppEntity(
                 ri.loadLabel(pm).toString(),
                 ri.activityInfo.packageName,
@@ -46,6 +48,16 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
             apps.add(app)
         }
         return apps.sortedBy { it.label.lowercase() }
+    }
+
+    override fun getCurrentApp(): AppEntity {
+        val pm = context.packageManager
+        val info = context.applicationInfo
+        return AppEntity(
+            label = info.loadLabel(pm).toString(),
+            packageName = context.packageName,
+            icon = info.loadIcon(pm)
+        )
     }
 
     override fun getSelectedPackages(): Set<String> {
@@ -57,9 +69,23 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
     }
 
     override fun getSelectedContacts(): List<ContactEntity> {
-        val json = sharedPrefs.getString(KEY_SELECTED_CONTACTS, null) ?: return emptyList()
-        val type = object : TypeToken<List<ContactEntity>>() {}.type
-        return gson.fromJson(json, type)
+        val json = sharedPrefs.getString(KEY_SELECTED_CONTACTS, null)
+        val contacts = if (json != null) {
+            val type = object : TypeToken<List<ContactEntity>>() {}.type
+            gson.fromJson<List<ContactEntity>>(json, type)
+        } else {
+            emptyList()
+        }
+
+        val isDebug = (context.applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE) != 0
+        if (contacts.isEmpty() && isDebug) {
+            return listOf(
+                ContactEntity("1", "Con gái", "0123456789"),
+                ContactEntity("2", "Con trai", "0987654321"),
+                ContactEntity("3", "Bác sĩ", "0112233445")
+            )
+        }
+        return contacts
     }
 
     override fun saveSelectedContacts(contacts: List<ContactEntity>) {
@@ -109,6 +135,26 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
 
     override fun setCallBlockEnabled(enabled: Boolean) {
         sharedPrefs.edit().putBoolean(KEY_CALL_BLOCK_ENABLED, enabled).apply()
+    }
+
+    override fun isDefaultApp(packageName: String): Boolean {
+        val pm = context.packageManager
+
+        // Default Launcher
+        val intent = Intent(Intent.ACTION_MAIN)
+        intent.addCategory(Intent.CATEGORY_HOME)
+        val resolveInfo = pm.resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY)
+        if (resolveInfo?.activityInfo?.packageName == packageName) return true
+
+        // Default Dialer
+        val telecomManager = context.getSystemService(Context.TELECOM_SERVICE) as? TelecomManager
+        if (telecomManager?.defaultDialerPackage == packageName) return true
+
+        // Default SMS
+        val defaultSms = Telephony.Sms.getDefaultSmsPackage(context)
+        if (defaultSms == packageName) return true
+
+        return false
     }
 
     override fun scanAndDeleteUnwantedFiles() {

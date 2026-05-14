@@ -4,9 +4,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.simple.launcher.retirement.domain.model.HomeItem
+import com.simple.adapter.ViewItem
+import com.simple.launcher.retirement.domain.model.HomeContentEntity
 import com.simple.launcher.retirement.domain.repository.AppRepository
 import com.simple.launcher.retirement.domain.usecase.GetHomeAppsUseCase
+import com.simple.launcher.retirement.presentation.home.adapter.AppHomeItem
+import com.simple.launcher.retirement.presentation.home.adapter.CleanFilesHomeItem
+import com.simple.launcher.retirement.presentation.home.adapter.CleanMemoryHomeItem
+import com.simple.launcher.retirement.presentation.home.adapter.ClockHomeItem
+import com.simple.launcher.retirement.presentation.home.adapter.ContactHomeItem
+import com.simple.launcher.retirement.presentation.home.adapter.HeaderHomeItem
+import com.simple.launcher.retirement.presentation.home.adapter.HomeItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -16,16 +24,16 @@ class HomeViewModel(
     private val repository: AppRepository
 ) : ViewModel() {
 
-    private val _items = MutableLiveData<List<HomeItem>>()
-    val items: LiveData<List<HomeItem>> = _items
+    private val _items = MutableLiveData<List<ViewItem>>()
+    val items: LiveData<List<ViewItem>> = _items
 
-    private var baseItems: List<HomeItem> = emptyList()
+    private var baseEntities: List<HomeContentEntity> = emptyList()
     private var strangeFilesCount: Int = 0
     private var cleanableMemoryMB: Long = 0
 
     fun loadApps() {
         viewModelScope.launch {
-            baseItems = withContext(Dispatchers.IO) {
+            baseEntities = withContext(Dispatchers.IO) {
                 getHomeAppsUseCase()
             }
             updateItems()
@@ -45,11 +53,23 @@ class HomeViewModel(
     }
 
     private fun updateItems() {
-        val allItems = mutableListOf<HomeItem>()
-        allItems.add(HomeItem.Clock)
-        allItems.add(HomeItem.CleanFiles(strangeFilesCount))
-        allItems.add(HomeItem.CleanMemory(cleanableMemoryMB))
-        allItems.addAll(baseItems)
+        val allItems = mutableListOf<ViewItem>()
+        allItems.add(ClockHomeItem)
+        allItems.add(CleanFilesHomeItem(strangeFilesCount))
+        allItems.add(CleanMemoryHomeItem(cleanableMemoryMB))
+
+        val apps = baseEntities.filterIsInstance<HomeContentEntity.App>()
+        if (apps.isNotEmpty()) {
+            allItems.add(HeaderHomeItem("Quick Actions"))
+            allItems.addAll(apps.map { AppHomeItem(it.entity) })
+        }
+
+        val contacts = baseEntities.filterIsInstance<HomeContentEntity.Contact>()
+        if (contacts.isNotEmpty()) {
+            allItems.add(HeaderHomeItem("Quick Calls"))
+            allItems.addAll(contacts.map { ContactHomeItem(it.entity) })
+        }
+
         _items.value = allItems
     }
 }

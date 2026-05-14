@@ -5,6 +5,7 @@ import com.simple.launcher.retirement.domain.model.ContactEntity
 
 interface AppRepository {
     fun getInstalledApps(): List<AppEntity>
+    fun getCurrentApp(): AppEntity
     fun getSelectedPackages(): Set<String>
     fun saveSelectedPackages(packages: Set<String>)
     fun getSelectedContacts(): List<ContactEntity>
@@ -25,4 +26,5 @@ interface AppRepository {
     fun setFileCleanupEnabled(enabled: Boolean)
     fun isCallBlockEnabled(): Boolean
     fun setCallBlockEnabled(enabled: Boolean)
+    fun isDefaultApp(packageName: String): Boolean
 }
