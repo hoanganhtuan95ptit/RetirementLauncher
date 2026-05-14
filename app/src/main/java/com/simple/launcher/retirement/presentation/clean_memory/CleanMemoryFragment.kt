@@ -11,7 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import com.simple.deeplink.Deeplink
 import com.simple.deeplink.DeeplinkHandler
 import com.simple.launcher.retirement.R
-import com.simple.launcher.retirement.data.repository.AppRepositoryImpl
+import com.simple.launcher.retirement.domain.repository.AppRepository
 import com.simple.launcher.retirement.databinding.FragmentCleanMemoryBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -45,7 +45,7 @@ class CleanMemoryFragment : Fragment() {
             binding.tvStatus.text = getString(R.string.clean_memory_running)
 
             lifecycleScope.launch {
-                val repository = AppRepositoryImpl(requireContext())
+                val repository = AppRepository.instance
                 val freedBytes = withContext(Dispatchers.IO) {
                     val result = repository.cleanMemory()
                     delay(1500) // Tạo hiệu ứng quét cho người dùng

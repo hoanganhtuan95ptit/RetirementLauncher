@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.simple.launcher.retirement.data.repository.AppRepositoryImpl
+import com.simple.launcher.retirement.domain.repository.AppRepository
 import com.simple.launcher.retirement.databinding.BottomSheetPinVerifyBinding
 
 class PinVerifyBottomSheet(private val onSuccess: () -> Unit) : BottomSheetDialogFragment() {
@@ -26,7 +26,7 @@ class PinVerifyBottomSheet(private val onSuccess: () -> Unit) : BottomSheetDialo
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val repository = AppRepositoryImpl(requireContext())
+        val repository = AppRepository.instance
 
         binding.btnVerify.setOnClickListener {
             val inputPin = binding.etPin.text.toString()

@@ -13,7 +13,7 @@ import com.simple.deeplink.Deeplink
 import com.simple.deeplink.DeeplinkHandler
 import com.simple.deeplink.sendDeeplink
 import com.simple.launcher.retirement.R
-import com.simple.launcher.retirement.data.repository.AppRepositoryImpl
+import com.simple.launcher.retirement.domain.repository.AppRepository
 import com.simple.launcher.retirement.databinding.FragmentSettingsBinding
 import com.simple.launcher.retirement.presentation.default_launcher.DefaultLauncherBottomSheet
 import com.simple.launcher.retirement.presentation.pin_setup.PinVerifyBottomSheet
@@ -46,7 +46,7 @@ class SettingsFragment : Fragment() {
 
         binding.rvSettings.layoutManager = GridLayoutManager(requireContext(), 2)
         
-        val repository = AppRepositoryImpl(requireContext())
+        val repository = AppRepository.instance
         
         val settingsItems = mutableListOf<SettingItem>()
         if (repository.hasPin()) {
@@ -152,7 +152,7 @@ class SettingsFragment : Fragment() {
         }
     }
 
-    private fun handleToggleAction(repository: AppRepositoryImpl, item: SettingItem, action: () -> Unit) {
+    private fun handleToggleAction(repository: AppRepository, item: SettingItem, action: () -> Unit) {
         val isTurningOn = item.isChecked
         
         if (isTurningOn) {

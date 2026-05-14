@@ -20,7 +20,6 @@ import androidx.fragment.app.viewModels
 import com.simple.deeplink.Deeplink
 import com.simple.deeplink.DeeplinkHandler
 import com.simple.launcher.retirement.R
-import com.simple.launcher.retirement.data.repository.AppRepositoryImpl
 import com.simple.launcher.retirement.databinding.FragmentAppListBinding
 import com.simple.launcher.retirement.domain.usecase.GetSelectableAppsUseCase
 import com.simple.launcher.retirement.domain.usecase.SaveSelectedAppsUseCase
@@ -34,10 +33,7 @@ class AppListFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: AppListViewModel by viewModels {
-        val repository = AppRepositoryImpl(requireContext())
-        val getSelectableAppsUseCase = GetSelectableAppsUseCase(repository)
-        val saveSelectedAppsUseCase = SaveSelectedAppsUseCase(repository)
-        AppListViewModelFactory(getSelectableAppsUseCase, saveSelectedAppsUseCase)
+        AppListViewModelFactory(GetSelectableAppsUseCase.instance, SaveSelectedAppsUseCase.instance)
     }
 
     override fun onCreateView(

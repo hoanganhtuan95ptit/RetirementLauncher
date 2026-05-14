@@ -11,7 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import com.simple.deeplink.Deeplink
 import com.simple.deeplink.DeeplinkHandler
 import com.simple.launcher.retirement.R
-import com.simple.launcher.retirement.data.repository.AppRepositoryImpl
+import com.simple.launcher.retirement.domain.repository.AppRepository
 import com.simple.launcher.retirement.databinding.FragmentCleanFilesBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -44,7 +44,7 @@ class CleanFilesFragment : Fragment() {
             binding.tvStatus.text = getString(R.string.clean_files_running)
 
             lifecycleScope.launch {
-                val repository = AppRepositoryImpl(requireContext())
+                val repository = AppRepository.instance
                 withContext(Dispatchers.IO) {
                     repository.deleteStrangeFiles()
                 }

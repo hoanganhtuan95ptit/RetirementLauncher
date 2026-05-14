@@ -6,4 +6,8 @@ class CleanStorageUseCase(private val repository: AppRepository) {
     operator fun invoke() {
         repository.scanAndDeleteUnwantedFiles()
     }
+
+    companion object {
+        val instance: CleanStorageUseCase by lazy { CleanStorageUseCase(AppRepository.instance) }
+    }
 }

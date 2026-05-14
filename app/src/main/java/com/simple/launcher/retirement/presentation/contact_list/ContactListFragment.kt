@@ -23,7 +23,7 @@ import androidx.fragment.app.FragmentActivity
 import com.simple.deeplink.Deeplink
 import com.simple.deeplink.DeeplinkHandler
 import com.simple.launcher.retirement.R
-import com.simple.launcher.retirement.data.repository.AppRepositoryImpl
+import com.simple.launcher.retirement.domain.repository.AppRepository
 import com.simple.launcher.retirement.databinding.FragmentAppListBinding
 import com.simple.launcher.retirement.domain.model.ContactEntity
 import com.simple.launcher.retirement.domain.model.SelectableContactEntity
@@ -36,7 +36,7 @@ class ContactListFragment : Fragment() {
     private var _binding: FragmentAppListBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var repository: AppRepositoryImpl
+    private lateinit var repository: AppRepository
     private val contacts = mutableListOf<SelectableContactEntity>()
     private lateinit var adapter: ContactListAdapter
 
@@ -60,7 +60,7 @@ class ContactListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        repository = AppRepositoryImpl(requireContext())
+        repository = AppRepository.instance
 
         binding.toolbar.title = getString(R.string.contact_list_title)
         binding.toolbar.setNavigationIcon(R.drawable.ic_back)

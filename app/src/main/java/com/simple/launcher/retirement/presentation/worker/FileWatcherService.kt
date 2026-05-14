@@ -7,7 +7,7 @@ import android.os.Environment
 import android.os.FileObserver
 import android.os.IBinder
 import android.util.Log
-import com.simple.launcher.retirement.data.repository.AppRepositoryImpl
+import com.simple.launcher.retirement.domain.repository.AppRepository
 import java.io.File
 import java.util.*
 
@@ -15,11 +15,11 @@ class FileWatcherService : Service() {
 
     private val TAG = "FileWatcherService"
     private val observers = mutableMapOf<String, FileObserver>()
-    private lateinit var repository: AppRepositoryImpl
+    private lateinit var repository: AppRepository
 
     override fun onCreate() {
         super.onCreate()
-        repository = AppRepositoryImpl(applicationContext)
+        repository = AppRepository.instance
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {

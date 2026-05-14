@@ -12,7 +12,6 @@ import androidx.fragment.app.viewModels
 import com.simple.deeplink.Deeplink
 import com.simple.deeplink.DeeplinkHandler
 import com.simple.launcher.retirement.R
-import com.simple.launcher.retirement.data.repository.AppRepositoryImpl
 import com.simple.launcher.retirement.databinding.FragmentPinSetupBinding
 import com.simple.launcher.retirement.domain.usecase.CheckPinUseCase
 import com.simple.launcher.retirement.domain.usecase.HasPinUseCase
@@ -24,11 +23,10 @@ class PinSetupFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: PinSetupViewModel by viewModels {
-        val repository = AppRepositoryImpl(requireContext())
         PinSetupViewModelFactory(
-            HasPinUseCase(repository),
-            CheckPinUseCase(repository),
-            SavePinUseCase(repository)
+            HasPinUseCase.instance,
+            CheckPinUseCase.instance,
+            SavePinUseCase.instance
         )
     }
 

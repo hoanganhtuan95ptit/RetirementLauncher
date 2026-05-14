@@ -29,8 +29,8 @@ import com.simple.deeplink.Deeplink
 import com.simple.deeplink.DeeplinkHandler
 import com.simple.deeplink.sendDeeplink
 import com.simple.launcher.retirement.R
-import com.simple.launcher.retirement.data.repository.AppRepositoryImpl
 import com.simple.launcher.retirement.databinding.FragmentHomeBinding
+import com.simple.launcher.retirement.domain.repository.AppRepository
 import com.simple.launcher.retirement.domain.usecase.GetHomeAppsUseCase
 import com.simple.launcher.retirement.presentation.home.adapter.AppHomeItem
 import com.simple.launcher.retirement.presentation.home.adapter.CleanFilesHomeItem
@@ -51,9 +51,7 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: HomeViewModel by viewModels {
-        val repository = AppRepositoryImpl(requireContext())
-        val getHomeAppsUseCase = GetHomeAppsUseCase(repository)
-        HomeViewModelFactory(getHomeAppsUseCase, repository)
+        HomeViewModelFactory(GetHomeAppsUseCase.instance, AppRepository.instance)
     }
 
     private val fileChangeReceiver = object : BroadcastReceiver() {

@@ -24,4 +24,8 @@ class GetHomeAppsUseCase(private val repository: AppRepository) {
         
         return apps + contacts
     }
+
+    companion object {
+        val instance: GetHomeAppsUseCase by lazy { GetHomeAppsUseCase(AppRepository.instance) }
+    }
 }

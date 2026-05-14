@@ -13,7 +13,7 @@ import android.telecom.TelecomManager
 import android.telephony.TelephonyManager
 import android.util.Log
 import androidx.core.content.ContextCompat
-import com.simple.launcher.retirement.data.repository.AppRepositoryImpl
+import com.simple.launcher.retirement.domain.repository.AppRepository
 
 class CallReceiver : BroadcastReceiver() {
 
@@ -22,7 +22,7 @@ class CallReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action != TelephonyManager.ACTION_PHONE_STATE_CHANGED) return
 
-        val repository = AppRepositoryImpl(context)
+        val repository = AppRepository.instance
         if (!repository.isCallBlockEnabled()) return
 
         val state = intent.getStringExtra(TelephonyManager.EXTRA_STATE)

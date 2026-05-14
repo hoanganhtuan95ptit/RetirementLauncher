@@ -11,14 +11,14 @@ import android.os.Looper
 import android.os.PowerManager
 import android.util.Log
 import android.os.Build
-import com.simple.launcher.retirement.data.repository.AppRepositoryImpl
+import com.simple.launcher.retirement.domain.repository.AppRepository
 import com.simple.launcher.retirement.presentation.block.BlockActivity
 
 class AppMonitoringService : Service() {
 
     private val TAG = "AppMonitoringService"
     private val handler = Handler(Looper.getMainLooper())
-    private lateinit var repository: AppRepositoryImpl
+    private lateinit var repository: AppRepository
     private lateinit var powerManager: PowerManager
     
     private val monitorRunnable = object : Runnable {
@@ -31,7 +31,7 @@ class AppMonitoringService : Service() {
     override fun onCreate() {
         super.onCreate()
         Log.d(TAG, "Service onCreate")
-        repository = AppRepositoryImpl(applicationContext)
+        repository = AppRepository.instance
         powerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
     }
 

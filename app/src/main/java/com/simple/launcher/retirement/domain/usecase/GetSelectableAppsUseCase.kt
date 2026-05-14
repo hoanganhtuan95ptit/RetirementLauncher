@@ -12,4 +12,8 @@ class GetSelectableAppsUseCase(private val repository: AppRepository) {
             SelectableAppEntity(it, selectedPackages.contains(it.packageName))
         }
     }
+
+    companion object {
+        val instance: GetSelectableAppsUseCase by lazy { GetSelectableAppsUseCase(AppRepository.instance) }
+    }
 }

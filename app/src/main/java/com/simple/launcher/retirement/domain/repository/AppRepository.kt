@@ -1,5 +1,7 @@
 package com.simple.launcher.retirement.domain.repository
 
+import com.simple.launcher.retirement.MainApplication
+import com.simple.launcher.retirement.data.repository.AppRepositoryImpl
 import com.simple.launcher.retirement.domain.model.AppEntity
 import com.simple.launcher.retirement.domain.model.ContactEntity
 
@@ -27,4 +29,8 @@ interface AppRepository {
     fun isCallBlockEnabled(): Boolean
     fun setCallBlockEnabled(enabled: Boolean)
     fun isDefaultApp(packageName: String): Boolean
+
+    companion object {
+        val instance: AppRepository by lazy { AppRepositoryImpl(MainApplication.instance) }
+    }
 }
