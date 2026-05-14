@@ -9,6 +9,10 @@
     <string name="setting_contact_list">Thiết lập liên hệ nhanh</string>
     <string name="setting_clean_files">Dọn dẹp file lạ</string>
     <string name="setting_clean_memory">Giải phóng bộ nhớ</string>
+    <string name="setting_app_monitoring">Giám sát ứng dụng</string>
+    <string name="setting_auto_cleanup_apk">Tự động xóa APK</string>
+    <string name="setting_call_block">Chặn cuộc gọi lạ</string>
+    <string name="setting_pin_required">Bạn cần thiết lập mã PIN trước khi tắt tính năng này</string>
 
     <!-- Onboarding -->
     <string name="onboarding_title">Chào mừng bạn đến với Retirement Launcher</string>

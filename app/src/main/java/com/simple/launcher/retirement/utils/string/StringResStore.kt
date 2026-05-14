@@ -1,19 +1,17 @@
-package com.simple.launcher.retirement.utils.text
+package com.simple.launcher.retirement.utils.string
 
 import android.content.Context
 import androidx.annotation.StringRes
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.simple.launcher.retirement.presentation.base.BaseViewModel
 import com.simple.launcher.retirement.R
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 
 object StringResStore {
 
@@ -93,34 +91,27 @@ fun String.asFormattedStringRes(vararg args: Any): String {
 /**
  * Skill: Observe một string cụ thể dưới dạng Flow
  */
-fun String.observeStringRes(): kotlinx.coroutines.flow.Flow<String> =
+fun String.observeStringRes(): Flow<String> =
     StringResStore.stringMapFlow.map { it[this].orEmpty() }
 
-class Test : ViewModel() {
+class Test : BaseViewModel() {
 
 
     /**
-     * Flow chứa toàn bộ string resource
+     * Flow test sử dụng các Skill mới
      */
-    val strings: StateFlow<Map<String, String>> =
-        StringResStore.stringMapFlow
-
-    /**
-     * Flow test
-     */
-    val test: StateFlow<String?> =
-        strings
-            .map {
-
-                // Theo tên resource
-                StringResStore.getString("app_name")
-
-                // Theo resId
-                StringResStore.getString(R.string.app_name)
-            }
+    val testName: StateFlow<String> =
+        "app_name".observeStringRes()
             .stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.WhileSubscribed(5_000),
-                initialValue = null
+                initialValue = R.string.app_name.asStringRes()
             )
+
+    /**
+     * Ví dụ sử dụng format
+     */
+    fun getWelcome(name: String): String {
+        return "welcome_msg".asFormattedStringRes(name)
+    }
 }

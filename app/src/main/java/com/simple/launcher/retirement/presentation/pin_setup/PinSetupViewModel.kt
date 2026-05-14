@@ -2,7 +2,7 @@ package com.simple.launcher.retirement.presentation.pin_setup
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.simple.launcher.retirement.presentation.base.BaseViewModel
 import com.simple.launcher.retirement.domain.usecase.CheckPinUseCase
 import com.simple.launcher.retirement.domain.usecase.HasPinUseCase
 import com.simple.launcher.retirement.domain.usecase.SavePinUseCase
@@ -11,7 +11,7 @@ class PinSetupViewModel(
     private val hasPinUseCase: HasPinUseCase,
     private val checkPinUseCase: CheckPinUseCase,
     private val savePinUseCase: SavePinUseCase
-) : ViewModel() {
+) : BaseViewModel() {
 
     enum class State {
         ENTER_OLD_PIN,

@@ -27,6 +27,7 @@ import androidx.lifecycle.lifecycleScope
 import com.simple.launcher.retirement.presentation.base.BaseFragment
 import com.simple.adapter.utils.submitListAndAwait
 import com.simple.adapter.utils.attachAdapter
+import com.simple.launcher.retirement.utils.string.asStringRes
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -50,14 +51,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
 
         binding.rvSettings.layoutManager = GridLayoutManager(requireContext(), 2)
         
-        viewModel.loadSettings(
-            pinLabel = getString(R.string.setting_pin),
-            appListLabel = getString(R.string.setting_app_list),
-            defaultLauncherLabel = getString(R.string.setting_default_launcher),
-            contactListLabel = getString(R.string.setting_contact_list),
-            cleanFilesLabel = getString(R.string.setting_clean_files),
-            cleanMemoryLabel = getString(R.string.setting_clean_memory)
-        )
+        viewModel.loadSettings()
     }
 
     override fun observeData() {
@@ -167,7 +161,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
         } else {
             // Khi tắt: yêu cầu mã PIN
             if (!repository.hasPin()) {
-                Toast.makeText(requireContext(), "Bạn cần thiết lập mã PIN trước khi tắt tính năng này", Toast.LENGTH_LONG).show()
+                Toast.makeText(requireContext(), R.string.setting_pin_required.asStringRes(), Toast.LENGTH_LONG).show()
                 item.isChecked = true // Hoàn trả trạng thái ON
                 viewModel.updateItem(item)
                 

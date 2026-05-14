@@ -1,7 +1,8 @@
 package com.simple.launcher.retirement
 
 import android.app.Application
-import com.simple.launcher.retirement.utils.text.StringResStore
+import com.simple.launcher.retirement.utils.string.StringResStore
+import com.simple.launcher.retirement.utils.theme.ThemeColorStore
 
 class MainApplication : Application() {
 
@@ -10,6 +11,7 @@ class MainApplication : Application() {
         instance = this
 
         StringResStore.load(this)
+        ThemeColorStore.load(this)
     }
 
     companion object {

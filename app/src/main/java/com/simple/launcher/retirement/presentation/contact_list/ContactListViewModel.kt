@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.simple.launcher.retirement.presentation.base.BaseViewModel
 import com.simple.launcher.retirement.domain.model.ContactEntity
 import com.simple.launcher.retirement.domain.model.SelectableContactEntity
 import com.simple.launcher.retirement.domain.repository.AppRepository
@@ -16,7 +17,7 @@ import kotlinx.coroutines.withContext
 
 class ContactListViewModel(
     private val repository: AppRepository
-) : ViewModel() {
+) : BaseViewModel() {
 
     private val _contacts = MutableLiveData<List<SelectableContactEntity>>()
     val contacts: LiveData<List<SelectableContactEntity>> = _contacts

@@ -2,8 +2,8 @@ package com.simple.launcher.retirement.presentation.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.simple.launcher.retirement.presentation.base.BaseViewModel
 import com.simple.adapter.ViewItem
 import com.simple.launcher.retirement.domain.model.HomeContentEntity
 import com.simple.launcher.retirement.domain.repository.AppRepository
@@ -22,7 +22,7 @@ import kotlinx.coroutines.withContext
 class HomeViewModel(
     private val getHomeAppsUseCase: GetHomeAppsUseCase,
     private val repository: AppRepository
-) : ViewModel() {
+) : BaseViewModel() {
 
     private val _items = MutableLiveData<List<ViewItem>>()
     val items: LiveData<List<ViewItem>> = _items
