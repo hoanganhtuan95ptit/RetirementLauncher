@@ -11,30 +11,25 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.simple.launcher.retirement.databinding.BottomSheetDefaultLauncherBinding
+import com.simple.launcher.retirement.presentation.base.BaseBottomSheetDialogFragment
 
-class DefaultLauncherBottomSheet(private val onResult: (() -> Unit)? = null) : BottomSheetDialogFragment() {
-
-    private var _binding: BottomSheetDefaultLauncherBinding? = null
-    private val binding get() = _binding!!
+class DefaultLauncherBottomSheet(private val onResult: (() -> Unit)? = null) : BaseBottomSheetDialogFragment<BottomSheetDefaultLauncherBinding>() {
 
     private val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         dismiss()
         onResult?.invoke()
     }
 
-    override fun onCreateView(
+    override fun inflateBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = BottomSheetDefaultLauncherBinding.inflate(inflater, container, false)
-        return binding.root
+        container: ViewGroup?
+    ): BottomSheetDefaultLauncherBinding {
+        return BottomSheetDefaultLauncherBinding.inflate(inflater, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun setupViews(view: View, savedInstanceState: Bundle?) {
+        super.setupViews(view, savedInstanceState)
 
         binding.btnSetDefault.setOnClickListener {
             openDefaultLauncherSettings()
@@ -44,11 +39,6 @@ class DefaultLauncherBottomSheet(private val onResult: (() -> Unit)? = null) : B
             dismiss()
             onResult?.invoke()
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     private fun openDefaultLauncherSettings() {

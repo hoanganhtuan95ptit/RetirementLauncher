@@ -45,10 +45,9 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
-class HomeFragment : Fragment() {
+import com.simple.launcher.retirement.presentation.base.BaseFragment
 
-    private var _binding: FragmentHomeBinding? = null
-    private val binding get() = _binding!!
+class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     private val viewModel: HomeViewModel by viewModels {
         HomeViewModelFactory(GetHomeAppsUseCase.instance, AppRepository.instance)
@@ -60,16 +59,12 @@ class HomeFragment : Fragment() {
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        return binding.root
+    override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentHomeBinding {
+        return FragmentHomeBinding.inflate(inflater, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun setupViews(view: View, savedInstanceState: Bundle?) {
+        super.setupViews(view, savedInstanceState)
 
         // Setup LayoutManager
         val layoutManager = GridLayoutManager(requireContext(), 6)
@@ -103,6 +98,11 @@ class HomeFragment : Fragment() {
             sendDeeplink("app://settings", extras = mapOf("addToBackStack" to true))
         }
 
+        viewModel.loadApps()
+    }
+
+    override fun observeData() {
+        super.observeData()
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.items.asFlow().attachAdapter().collectLatest { (items, adapters) ->
                 Log.d("tuanha", "onViewCreated: $adapters")
@@ -115,8 +115,6 @@ class HomeFragment : Fragment() {
                 handleHomeItemClick(item)
             }
         }
-
-        viewModel.loadApps()
     }
 
     private fun handleHomeItemClick(item: HomeItem) {
@@ -175,11 +173,6 @@ class HomeFragment : Fragment() {
     override fun onPause() {
         super.onPause()
         requireContext().unregisterReceiver(fileChangeReceiver)
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }
 

@@ -7,13 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.simple.launcher.retirement.databinding.BottomSheetCallPermissionBinding
+import com.simple.launcher.retirement.presentation.base.BaseBottomSheetDialogFragment
 
-class CallBlockPermissionBottomSheet(private val onResult: () -> Unit) : BottomSheetDialogFragment() {
-
-    private var _binding: BottomSheetCallPermissionBinding? = null
-    private val binding get() = _binding!!
+class CallBlockPermissionBottomSheet(private val onResult: () -> Unit) : BaseBottomSheetDialogFragment<BottomSheetCallPermissionBinding>() {
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
@@ -22,17 +19,15 @@ class CallBlockPermissionBottomSheet(private val onResult: () -> Unit) : BottomS
         dismiss()
     }
 
-    override fun onCreateView(
+    override fun inflateBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = BottomSheetCallPermissionBinding.inflate(inflater, container, false)
-        return binding.root
+        container: ViewGroup?
+    ): BottomSheetCallPermissionBinding {
+        return BottomSheetCallPermissionBinding.inflate(inflater, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun setupViews(view: View, savedInstanceState: Bundle?) {
+        super.setupViews(view, savedInstanceState)
 
         binding.btnGrant.setOnClickListener {
             val permissions = arrayOf(
@@ -47,11 +42,6 @@ class CallBlockPermissionBottomSheet(private val onResult: () -> Unit) : BottomS
             dismiss()
             onResult()
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     companion object {

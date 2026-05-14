@@ -5,26 +5,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.simple.launcher.retirement.domain.repository.AppRepository
 import com.simple.launcher.retirement.databinding.BottomSheetPinVerifyBinding
+import com.simple.launcher.retirement.presentation.base.BaseBottomSheetDialogFragment
 
-class PinVerifyBottomSheet(private val onSuccess: () -> Unit) : BottomSheetDialogFragment() {
+class PinVerifyBottomSheet(private val onSuccess: () -> Unit) : BaseBottomSheetDialogFragment<BottomSheetPinVerifyBinding>() {
 
-    private var _binding: BottomSheetPinVerifyBinding? = null
-    private val binding get() = _binding!!
-
-    override fun onCreateView(
+    override fun inflateBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = BottomSheetPinVerifyBinding.inflate(inflater, container, false)
-        return binding.root
+        container: ViewGroup?
+    ): BottomSheetPinVerifyBinding {
+        return BottomSheetPinVerifyBinding.inflate(inflater, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun setupViews(view: View, savedInstanceState: Bundle?) {
+        super.setupViews(view, savedInstanceState)
 
         val repository = AppRepository.instance
 
@@ -39,11 +34,6 @@ class PinVerifyBottomSheet(private val onSuccess: () -> Unit) : BottomSheetDialo
                 Toast.makeText(context, "Mã PIN không chính xác", Toast.LENGTH_SHORT).show()
             }
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     companion object {

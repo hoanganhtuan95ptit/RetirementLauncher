@@ -9,25 +9,20 @@ import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.simple.launcher.retirement.databinding.BottomSheetFilePermissionBinding
+import com.simple.launcher.retirement.presentation.base.BaseBottomSheetDialogFragment
 
-class FilePermissionBottomSheet(private val onResult: () -> Unit) : BottomSheetDialogFragment() {
+class FilePermissionBottomSheet(private val onResult: () -> Unit) : BaseBottomSheetDialogFragment<BottomSheetFilePermissionBinding>() {
 
-    private var _binding: BottomSheetFilePermissionBinding? = null
-    private val binding get() = _binding!!
-
-    override fun onCreateView(
+    override fun inflateBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = BottomSheetFilePermissionBinding.inflate(inflater, container, false)
-        return binding.root
+        container: ViewGroup?
+    ): BottomSheetFilePermissionBinding {
+        return BottomSheetFilePermissionBinding.inflate(inflater, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun setupViews(view: View, savedInstanceState: Bundle?) {
+        super.setupViews(view, savedInstanceState)
 
         binding.btnGrant.setOnClickListener {
             requestFilePermission()
@@ -39,11 +34,6 @@ class FilePermissionBottomSheet(private val onResult: () -> Unit) : BottomSheetD
             dismiss()
             onResult()
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     private fun requestFilePermission() {

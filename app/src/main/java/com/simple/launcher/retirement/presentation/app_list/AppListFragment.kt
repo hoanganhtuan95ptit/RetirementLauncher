@@ -27,33 +27,24 @@ import com.simple.launcher.retirement.presentation.default_launcher.DefaultLaunc
 import com.simple.launcher.retirement.presentation.permissions.BlockPermissionBottomSheet
 import com.simple.launcher.retirement.presentation.permissions.FilePermissionBottomSheet
 
-class AppListFragment : Fragment() {
+import com.simple.launcher.retirement.presentation.base.BaseFragment
 
-    private var _binding: FragmentAppListBinding? = null
-    private val binding get() = _binding!!
+class AppListFragment : BaseFragment<FragmentAppListBinding>() {
 
     private val viewModel: AppListViewModel by viewModels {
         AppListViewModelFactory(GetSelectableAppsUseCase.instance, SaveSelectedAppsUseCase.instance)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentAppListBinding.inflate(inflater, container, false)
-        return binding.root
+    override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentAppListBinding {
+        return FragmentAppListBinding.inflate(inflater, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun setupViews(view: View, savedInstanceState: Bundle?) {
+        super.setupViews(view, savedInstanceState)
 
         binding.toolbar.setNavigationIcon(R.drawable.ic_back)
         binding.toolbar.setNavigationOnClickListener {
             parentFragmentManager.popBackStack()
-        }
-
-        viewModel.apps.observe(viewLifecycleOwner) { apps ->
-            binding.rvAppList.adapter = AppListAdapter(apps)
         }
 
         binding.btnSave.setOnClickListener {
@@ -63,9 +54,11 @@ class AppListFragment : Fragment() {
         viewModel.loadApps()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    override fun observeData() {
+        super.observeData()
+        viewModel.apps.observe(viewLifecycleOwner) { apps ->
+            binding.rvAppList.adapter = AppListAdapter(apps)
+        }
     }
 
     private fun checkPermissionsAndSave() {
