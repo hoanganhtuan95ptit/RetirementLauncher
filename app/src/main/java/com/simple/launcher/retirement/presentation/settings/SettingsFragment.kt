@@ -21,10 +21,20 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Build
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 
 import com.simple.launcher.retirement.presentation.base.BaseFragment
+import com.simple.adapter.utils.submitListAndAwait
+import com.simple.adapter.utils.attachAdapter
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
+
+    private val viewModel: SettingsViewModel by viewModels {
+        SettingsViewModelFactory(AppRepository.instance)
+    }
 
     override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentSettingsBinding {
         return FragmentSettingsBinding.inflate(inflater, container, false)
@@ -40,87 +50,92 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
 
         binding.rvSettings.layoutManager = GridLayoutManager(requireContext(), 2)
         
+        viewModel.loadSettings(
+            pinLabel = getString(R.string.setting_pin),
+            appListLabel = getString(R.string.setting_app_list),
+            defaultLauncherLabel = getString(R.string.setting_default_launcher),
+            contactListLabel = getString(R.string.setting_contact_list),
+            cleanFilesLabel = getString(R.string.setting_clean_files),
+            cleanMemoryLabel = getString(R.string.setting_clean_memory)
+        )
+    }
+
+    override fun observeData() {
+        super.observeData()
+        
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.items.attachAdapter().collectLatest { (items, adapters) ->
+                binding.rvSettings.submitListAndAwait(items, adapters, true)
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            SettingsEventBus.events.collectLatest { item ->
+                handleSettingItemClick(item)
+            }
+        }
+    }
+
+    private fun handleSettingItemClick(item: SettingItem) {
         val repository = AppRepository.instance
-        
-        val settingsItems = mutableListOf<SettingItem>()
-        if (repository.hasPin()) {
-            settingsItems.add(SettingItem(SettingItem.ID_PIN, getString(R.string.setting_pin), android.R.drawable.ic_lock_idle_lock))
-        }
-        
-        settingsItems.addAll(listOf(
-            SettingItem(SettingItem.ID_APP_LIST, getString(R.string.setting_app_list), android.R.drawable.ic_menu_agenda),
-            SettingItem(SettingItem.ID_DEFAULT_LAUNCHER, getString(R.string.setting_default_launcher), android.R.drawable.ic_menu_manage),
-            SettingItem(SettingItem.ID_CONTACT_LIST, getString(R.string.setting_contact_list), android.R.drawable.ic_menu_call),
-            SettingItem(SettingItem.ID_CLEAN_FILES, getString(R.string.setting_clean_files), android.R.drawable.ic_menu_delete),
-            SettingItem(SettingItem.ID_CLEAN_MEMORY, getString(R.string.setting_clean_memory), android.R.drawable.ic_media_play),
-            SettingItem(SettingItem.ID_TOGGLE_BLOCK, "Giám sát ứng dụng", android.R.drawable.ic_lock_lock, true, repository.isAppBlockEnabled()),
-            SettingItem(SettingItem.ID_TOGGLE_CLEANUP, "Tự động xóa APK", android.R.drawable.ic_menu_save, true, repository.isFileCleanupEnabled())
-        ))
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            settingsItems.add(SettingItem(SettingItem.ID_TOGGLE_CALL_BLOCK, "Chặn cuộc gọi lạ", android.R.drawable.ic_menu_call, true, repository.isCallBlockEnabled()))
-        }
-
-        binding.rvSettings.adapter = SettingsAdapter(settingsItems) { item ->
-            when (item.id) {
-                SettingItem.ID_PIN -> {
-                    PinVerifyBottomSheet {
-                        sendDeeplink("app://pin_setup", extras = mapOf("addToBackStack" to true))
-                    }.show(childFragmentManager, PinVerifyBottomSheet.TAG)
-                }
-                SettingItem.ID_APP_LIST -> {
-                    sendDeeplink("app://app_list", extras = mapOf("addToBackStack" to true))
-                }
-                SettingItem.ID_CONTACT_LIST -> {
-                    sendDeeplink("app://contact_list", extras = mapOf("addToBackStack" to true))
-                }
-                SettingItem.ID_DEFAULT_LAUNCHER -> {
-                    DefaultLauncherBottomSheet().show(childFragmentManager, DefaultLauncherBottomSheet.TAG)
-                }
-                SettingItem.ID_CLEAN_FILES -> {
-                    sendDeeplink("app://clean_files", extras = mapOf("addToBackStack" to true))
-                }
-                SettingItem.ID_CLEAN_MEMORY -> {
-                    sendDeeplink("app://clean_memory", extras = mapOf("addToBackStack" to true))
-                }
-                SettingItem.ID_TOGGLE_BLOCK -> {
-                    handleToggleAction(repository, item) {
-                        repository.setAppBlockEnabled(item.isChecked)
-                        if (item.isChecked) {
-                            (activity as? com.simple.launcher.retirement.presentation.main.MainActivity)?.startAppMonitoringService()
-                        } else {
-                            val intent = Intent(requireContext(), com.simple.launcher.retirement.presentation.worker.AppMonitoringService::class.java)
-                            requireContext().stopService(intent)
-                        }
-                    }
-                }
-                SettingItem.ID_TOGGLE_CLEANUP -> {
-                    handleToggleAction(repository, item) {
-                        repository.setFileCleanupEnabled(item.isChecked)
-                        if (item.isChecked) {
-                            (activity as? com.simple.launcher.retirement.presentation.main.MainActivity)?.startFileWatcherService()
-                        } else {
-                            val intent = Intent(requireContext(), com.simple.launcher.retirement.presentation.worker.FileWatcherService::class.java)
-                            requireContext().stopService(intent)
-                        }
-                    }
-                }
-                SettingItem.ID_TOGGLE_CALL_BLOCK -> {
-                    if (item.isChecked && !hasCallBlockPermissions()) {
-                        CallBlockPermissionBottomSheet {
-                            if (hasCallBlockPermissions()) {
-                                handleToggleAction(repository, item) {
-                                    repository.setCallBlockEnabled(item.isChecked)
-                                }
-                            } else {
-                                item.isChecked = false
-                                (binding.rvSettings.adapter as? SettingsAdapter)?.notifyDataSetChanged()
-                            }
-                        }.show(childFragmentManager, CallBlockPermissionBottomSheet.TAG)
+        when (item.id) {
+            SettingItem.ID_PIN -> {
+                PinVerifyBottomSheet {
+                    sendDeeplink("app://pin_setup", extras = mapOf("addToBackStack" to true))
+                }.show(childFragmentManager, PinVerifyBottomSheet.TAG)
+            }
+            SettingItem.ID_APP_LIST -> {
+                sendDeeplink("app://app_list", extras = mapOf("addToBackStack" to true))
+            }
+            SettingItem.ID_CONTACT_LIST -> {
+                sendDeeplink("app://contact_list", extras = mapOf("addToBackStack" to true))
+            }
+            SettingItem.ID_DEFAULT_LAUNCHER -> {
+                DefaultLauncherBottomSheet().show(childFragmentManager, DefaultLauncherBottomSheet.TAG)
+            }
+            SettingItem.ID_CLEAN_FILES -> {
+                sendDeeplink("app://clean_files", extras = mapOf("addToBackStack" to true))
+            }
+            SettingItem.ID_CLEAN_MEMORY -> {
+                sendDeeplink("app://clean_memory", extras = mapOf("addToBackStack" to true))
+            }
+            SettingItem.ID_TOGGLE_BLOCK -> {
+                handleToggleAction(item) {
+                    repository.setAppBlockEnabled(item.isChecked)
+                    if (item.isChecked) {
+                        (activity as? com.simple.launcher.retirement.presentation.main.MainActivity)?.startAppMonitoringService()
                     } else {
-                        handleToggleAction(repository, item) {
-                            repository.setCallBlockEnabled(item.isChecked)
+                        val intent = Intent(requireContext(), com.simple.launcher.retirement.presentation.worker.AppMonitoringService::class.java)
+                        requireContext().stopService(intent)
+                    }
+                }
+            }
+            SettingItem.ID_TOGGLE_CLEANUP -> {
+                handleToggleAction(item) {
+                    repository.setFileCleanupEnabled(item.isChecked)
+                    if (item.isChecked) {
+                        (activity as? com.simple.launcher.retirement.presentation.main.MainActivity)?.startFileWatcherService()
+                    } else {
+                        val intent = Intent(requireContext(), com.simple.launcher.retirement.presentation.worker.FileWatcherService::class.java)
+                        requireContext().stopService(intent)
+                    }
+                }
+            }
+            SettingItem.ID_TOGGLE_CALL_BLOCK -> {
+                if (item.isChecked && !hasCallBlockPermissions()) {
+                    CallBlockPermissionBottomSheet {
+                        if (hasCallBlockPermissions()) {
+                            handleToggleAction(item) {
+                                repository.setCallBlockEnabled(item.isChecked)
+                            }
+                        } else {
+                            item.isChecked = false
+                            viewModel.updateItem(item)
                         }
+                    }.show(childFragmentManager, CallBlockPermissionBottomSheet.TAG)
+                } else {
+                    handleToggleAction(item) {
+                        repository.setCallBlockEnabled(item.isChecked)
                     }
                 }
             }
@@ -141,30 +156,31 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
         }
     }
 
-    private fun handleToggleAction(repository: AppRepository, item: SettingItem, action: () -> Unit) {
+    private fun handleToggleAction(item: SettingItem, action: () -> Unit) {
+        val repository = AppRepository.instance
         val isTurningOn = item.isChecked
         
         if (isTurningOn) {
             // Khi bật: không cần mã PIN
             action()
-            (binding.rvSettings.adapter as? SettingsAdapter)?.notifyDataSetChanged()
+            viewModel.updateItem(item)
         } else {
             // Khi tắt: yêu cầu mã PIN
             if (!repository.hasPin()) {
                 Toast.makeText(requireContext(), "Bạn cần thiết lập mã PIN trước khi tắt tính năng này", Toast.LENGTH_LONG).show()
                 item.isChecked = true // Hoàn trả trạng thái ON
-                (binding.rvSettings.adapter as? SettingsAdapter)?.notifyDataSetChanged()
+                viewModel.updateItem(item)
                 
                 sendDeeplink("app://pin_setup", extras = mapOf("addToBackStack" to true))
             } else {
                 // Hoàn trả trạng thái ON tạm thời, chỉ tắt khi verify thành công
                 item.isChecked = true
-                (binding.rvSettings.adapter as? SettingsAdapter)?.notifyDataSetChanged()
+                viewModel.updateItem(item)
 
                 PinVerifyBottomSheet {
                     item.isChecked = false // Xác nhận tắt
                     action()
-                    (binding.rvSettings.adapter as? SettingsAdapter)?.notifyDataSetChanged()
+                    viewModel.updateItem(item)
                 }.show(childFragmentManager, PinVerifyBottomSheet.TAG)
             }
         }

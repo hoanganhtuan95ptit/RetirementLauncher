@@ -17,6 +17,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 import com.simple.launcher.retirement.presentation.base.BaseFragment
+import com.simple.launcher.retirement.utils.text.setText
+import com.simple.launcher.retirement.utils.text.toRich
 
 class CleanFilesFragment : BaseFragment<FragmentCleanFilesBinding>() {
 
@@ -35,7 +37,7 @@ class CleanFilesFragment : BaseFragment<FragmentCleanFilesBinding>() {
         binding.btnClean.setOnClickListener {
             binding.btnClean.isEnabled = false
             binding.progressBar.visibility = View.VISIBLE
-            binding.tvStatus.text = getString(R.string.clean_files_running)
+            binding.tvStatus.setText(getString(R.string.clean_files_running).toRich())
 
             lifecycleScope.launch {
                 val repository = AppRepository.instance
@@ -44,9 +46,9 @@ class CleanFilesFragment : BaseFragment<FragmentCleanFilesBinding>() {
                 }
                 
                 binding.progressBar.visibility = View.GONE
-                binding.tvStatus.text = getString(R.string.clean_files_completed)
+                binding.tvStatus.setText(getString(R.string.clean_files_completed).toRich())
                 binding.btnClean.isEnabled = true
-                binding.btnClean.text = getString(R.string.clean_files_retry)
+                binding.btnClean.setText(getString(R.string.clean_files_retry).toRich())
                 
                 Toast.makeText(requireContext(), R.string.clean_files_toast, Toast.LENGTH_SHORT).show()
             }

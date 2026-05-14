@@ -17,6 +17,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import com.simple.launcher.retirement.utils.text.setText
+import com.simple.launcher.retirement.utils.text.toRich
 
 class CleanMemoryFragment : Fragment() {
 
@@ -42,7 +44,7 @@ class CleanMemoryFragment : Fragment() {
         binding.btnClean.setOnClickListener {
             binding.btnClean.isEnabled = false
             binding.progressBar.visibility = View.VISIBLE
-            binding.tvStatus.text = getString(R.string.clean_memory_running)
+            binding.tvStatus.setText(getString(R.string.clean_memory_running).toRich())
 
             lifecycleScope.launch {
                 val repository = AppRepository.instance
@@ -56,13 +58,13 @@ class CleanMemoryFragment : Fragment() {
                 binding.progressBar.visibility = View.GONE
                 
                 if (freedMB > 0) {
-                    binding.tvStatus.text = getString(R.string.clean_memory_completed, freedMB)
+                    binding.tvStatus.setText(getString(R.string.clean_memory_completed, freedMB).toRich())
                 } else {
-                    binding.tvStatus.text = getString(R.string.clean_memory_optimal)
+                    binding.tvStatus.setText(getString(R.string.clean_memory_optimal).toRich())
                 }
                 
                 binding.btnClean.isEnabled = true
-                binding.btnClean.text = getString(R.string.clean_memory_retry)
+                binding.btnClean.setText(getString(R.string.clean_memory_retry).toRich())
                 
                 Toast.makeText(requireContext(), getString(R.string.clean_memory_toast, freedMB), Toast.LENGTH_SHORT).show()
             }

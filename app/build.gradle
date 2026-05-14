@@ -52,6 +52,8 @@ dependencies {
     ksp libs.deeplink.processor
     implementation libs.auto.register
     ksp libs.auto.register.processor
+    implementation libs.auto.service
+    ksp libs.auto.service.ksp
     implementation libs.glide
     implementation "androidx.work:work-runtime-ktx:2.9.1"
     testImplementation libs.junit

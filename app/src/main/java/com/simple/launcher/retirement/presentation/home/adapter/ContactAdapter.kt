@@ -1,6 +1,5 @@
 package com.simple.launcher.retirement.presentation.home.adapter
 
-import android.net.Uri
 import android.view.HapticFeedbackConstants
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,6 +9,11 @@ import com.simple.adapter.ViewItemAdapter
 import com.simple.adapter.base.BaseBindingViewHolder
 import com.simple.launcher.retirement.databinding.ItemContactBinding
 import com.simple.launcher.retirement.domain.model.ContactEntity
+import com.simple.launcher.retirement.utils.image.ImagePath
+import com.simple.launcher.retirement.utils.image.ImageRes
+import com.simple.launcher.retirement.utils.image.setImage
+import com.simple.launcher.retirement.utils.text.setText
+import com.simple.launcher.retirement.utils.text.toRich
 
 data class ContactHomeItem(val entity: ContactEntity) : HomeItem {
     override fun areItemsTheSame(): List<Any> = listOf(entity.id)
@@ -44,15 +48,16 @@ class ContactAdapter : ViewItemAdapter<ContactHomeItem, ItemContactBinding>() {
         super.onBindViewHolder(binding, viewType, position, item, payloads)
 
         if (payloads.isEmpty() || payloads.contains("name")) {
-            binding.tvName.text = item.entity.name
+            binding.tvName.setText(item.entity.name.toRich())
         }
 
         if (payloads.isEmpty() || payloads.contains("photoUri") || payloads.contains("phoneNumber")) {
-            if (item.entity.photoUri != null) {
-                binding.ivPhoto.setImageURI(Uri.parse(item.entity.photoUri))
+            val image = if (item.entity.photoUri != null) {
+                ImagePath(item.entity.photoUri)
             } else {
-                binding.ivPhoto.setImageResource(android.R.drawable.sym_def_app_icon)
+                ImageRes(android.R.drawable.sym_def_app_icon)
             }
+            binding.ivPhoto.setImage(image)
         }
     }
 }

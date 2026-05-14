@@ -4,14 +4,15 @@ import android.view.HapticFeedbackConstants
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
-import androidx.viewbinding.ViewBinding
 import com.simple.adapter.Adapter
 import com.simple.adapter.ViewItemAdapter
 import com.simple.adapter.base.BaseBindingViewHolder
 import com.simple.launcher.retirement.databinding.ItemAppBinding
 import com.simple.launcher.retirement.domain.model.AppEntity
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.simple.launcher.retirement.utils.image.ImageDrawable
+import com.simple.launcher.retirement.utils.image.setImage
+import com.simple.launcher.retirement.utils.text.setText
+import com.simple.launcher.retirement.utils.text.toRich
 
 data class AppHomeItem(val entity: AppEntity) : HomeItem {
 
@@ -45,13 +46,10 @@ class AppAdapter : ViewItemAdapter<AppHomeItem, ItemAppBinding>() {
     override fun onBindViewHolder(binding: ItemAppBinding, viewType: Int, position: Int, item: AppHomeItem, payloads: List<String>) {
         super.onBindViewHolder(binding, viewType, position, item, payloads)
         if (payloads.isEmpty() || payloads.contains("label")) {
-            binding.tvLabel.text = item.entity.label
+            binding.tvLabel.setText(item.entity.label.toRich())
         }
         if (payloads.isEmpty() || payloads.contains("packageName")) {
-            Glide.with(binding.ivIcon.context)
-                .load(item.entity.icon)
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(binding.ivIcon)
+            binding.ivIcon.setImage(ImageDrawable(item.entity.icon))
         }
     }
 }

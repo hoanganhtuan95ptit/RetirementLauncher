@@ -16,6 +16,8 @@ import com.simple.launcher.retirement.databinding.FragmentPinSetupBinding
 import com.simple.launcher.retirement.domain.usecase.CheckPinUseCase
 import com.simple.launcher.retirement.domain.usecase.HasPinUseCase
 import com.simple.launcher.retirement.domain.usecase.SavePinUseCase
+import com.simple.launcher.retirement.utils.text.setText
+import com.simple.launcher.retirement.utils.text.toRich
 
 class PinSetupFragment : Fragment() {
 
@@ -50,16 +52,16 @@ class PinSetupFragment : Fragment() {
             binding.etPin.text.clear()
             when (state) {
                 PinSetupViewModel.State.ENTER_OLD_PIN -> {
-                    binding.tvInstruction.text = "Nhập mã PIN hiện tại"
-                    binding.btnNext.text = "Xác nhận"
+                    binding.tvInstruction.setText("Nhập mã PIN hiện tại".toRich())
+                    binding.btnNext.setText("Xác nhận".toRich())
                 }
                 PinSetupViewModel.State.ENTER_NEW_PIN -> {
-                    binding.tvInstruction.text = "Nhập mã PIN mới (6 chữ số)"
-                    binding.btnNext.text = "Tiếp tục"
+                    binding.tvInstruction.setText("Nhập mã PIN mới (6 chữ số)".toRich())
+                    binding.btnNext.setText("Tiếp tục".toRich())
                 }
                 PinSetupViewModel.State.CONFIRM_NEW_PIN -> {
-                    binding.tvInstruction.text = "Xác nhận mã PIN mới"
-                    binding.btnNext.text = "Lưu"
+                    binding.tvInstruction.setText("Xác nhận mã PIN mới".toRich())
+                    binding.btnNext.setText("Lưu".toRich())
                 }
                 PinSetupViewModel.State.SUCCESS -> {
                     Toast.makeText(context, "Thiết lập mã PIN thành công", Toast.LENGTH_SHORT).show()
@@ -69,7 +71,7 @@ class PinSetupFragment : Fragment() {
         }
 
         viewModel.error.observe(viewLifecycleOwner) { error ->
-            binding.tvError.text = error
+            binding.tvError.setText(error?.toRich())
         }
 
         binding.btnNext.setOnClickListener {

@@ -13,10 +13,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.widget.Toolbar
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.asFlow
+import androidx.lifecycle.lifecycleScope
+import com.simple.adapter.utils.attachAdapter
+import com.simple.adapter.utils.submitListAndAwait
 import com.simple.deeplink.Deeplink
 import com.simple.deeplink.DeeplinkHandler
 import com.simple.launcher.retirement.R
@@ -28,6 +30,8 @@ import com.simple.launcher.retirement.presentation.permissions.BlockPermissionBo
 import com.simple.launcher.retirement.presentation.permissions.FilePermissionBottomSheet
 
 import com.simple.launcher.retirement.presentation.base.BaseFragment
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class AppListFragment : BaseFragment<FragmentAppListBinding>() {
 
@@ -56,8 +60,16 @@ class AppListFragment : BaseFragment<FragmentAppListBinding>() {
 
     override fun observeData() {
         super.observeData()
-        viewModel.apps.observe(viewLifecycleOwner) { apps ->
-            binding.rvAppList.adapter = AppListAdapter(apps)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.apps.asFlow().attachAdapter().collectLatest { (items, adapters) ->
+                binding.rvAppList.submitListAndAwait(items, adapters, true)
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            AppListEventBus.events.collectLatest { item ->
+                viewModel.updateItem(item)
+            }
         }
     }
 

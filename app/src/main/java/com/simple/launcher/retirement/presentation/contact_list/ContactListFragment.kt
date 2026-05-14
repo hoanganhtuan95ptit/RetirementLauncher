@@ -10,7 +10,6 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.os.Process
-import android.provider.ContactsContract
 import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
@@ -18,56 +17,51 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.asFlow
+import androidx.lifecycle.lifecycleScope
+import com.simple.adapter.utils.attachAdapter
+import com.simple.adapter.utils.submitListAndAwait
 import com.simple.deeplink.Deeplink
 import com.simple.deeplink.DeeplinkHandler
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.domain.repository.AppRepository
 import com.simple.launcher.retirement.databinding.FragmentAppListBinding
-import com.simple.launcher.retirement.domain.model.ContactEntity
-import com.simple.launcher.retirement.domain.model.SelectableContactEntity
 import com.simple.launcher.retirement.presentation.default_launcher.DefaultLauncherBottomSheet
 import com.simple.launcher.retirement.presentation.permissions.BlockPermissionBottomSheet
 import com.simple.launcher.retirement.presentation.permissions.FilePermissionBottomSheet
 
-class ContactListFragment : Fragment() {
+import com.simple.launcher.retirement.presentation.base.BaseFragment
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
-    private var _binding: FragmentAppListBinding? = null
-    private val binding get() = _binding!!
+class ContactListFragment : BaseFragment<FragmentAppListBinding>() {
 
-    private lateinit var repository: AppRepository
-    private val contacts = mutableListOf<SelectableContactEntity>()
-    private lateinit var adapter: ContactListAdapter
+    private val viewModel: ContactListViewModel by viewModels {
+        ContactListViewModelFactory(AppRepository.instance)
+    }
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
         if (isGranted) {
-            loadContacts()
+            viewModel.loadContacts(requireContext())
         } else {
             Toast.makeText(context, R.string.contact_permission_denied, Toast.LENGTH_SHORT).show()
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentAppListBinding.inflate(inflater, container, false)
-        return binding.root
+    override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentAppListBinding {
+        return FragmentAppListBinding.inflate(inflater, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        repository = AppRepository.instance
+    override fun setupViews(view: View, savedInstanceState: Bundle?) {
+        super.setupViews(view, savedInstanceState)
 
         binding.toolbar.title = getString(R.string.contact_list_title)
         binding.toolbar.setNavigationIcon(R.drawable.ic_back)
         binding.toolbar.setNavigationOnClickListener { parentFragmentManager.popBackStack() }
-
-        adapter = ContactListAdapter(contacts)
-        binding.rvAppList.adapter = adapter
 
         binding.btnSave.setOnClickListener {
             checkPermissionsAndSave()
@@ -76,9 +70,19 @@ class ContactListFragment : Fragment() {
         checkPermissionAndLoad()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    override fun observeData() {
+        super.observeData()
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.contacts.asFlow().attachAdapter().collectLatest { (items, adapters) ->
+                binding.rvAppList.submitListAndAwait(items, adapters, true)
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            ContactListEventBus.events.collectLatest { item ->
+                viewModel.updateItem(item)
+            }
+        }
     }
 
     private fun checkPermissionsAndSave() {
@@ -116,8 +120,7 @@ class ContactListFragment : Fragment() {
     }
 
     private fun saveAndExit() {
-        val selected = contacts.filter { it.isSelected }.map { it.contact }
-        repository.saveSelectedContacts(selected)
+        viewModel.saveSelection()
         Toast.makeText(context, R.string.contact_list_saved, Toast.LENGTH_SHORT).show()
         parentFragmentManager.popBackStack()
     }
@@ -161,42 +164,8 @@ class ContactListFragment : Fragment() {
             != PackageManager.PERMISSION_GRANTED) {
             requestPermissionLauncher.launch(Manifest.permission.READ_CONTACTS)
         } else {
-            loadContacts()
+            viewModel.loadContacts(requireContext())
         }
-    }
-
-    private fun loadContacts() {
-        val selectedIds = repository.getSelectedContacts().map { it.id }.toSet()
-        val contentResolver = requireContext().contentResolver
-        val cursor = contentResolver.query(
-            ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-            null, null, null,
-            ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " ASC"
-        )
-
-        contacts.clear()
-        cursor?.use {
-            val idIndex = it.getColumnIndex(ContactsContract.CommonDataKinds.Phone.CONTACT_ID)
-            val nameIndex = it.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)
-            val numberIndex = it.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)
-            val photoIndex = it.getColumnIndex(ContactsContract.CommonDataKinds.Phone.PHOTO_THUMBNAIL_URI)
-
-            val processedIds = mutableSetOf<String>()
-
-            while (it.moveToNext()) {
-                val id = it.getString(idIndex)
-                if (processedIds.contains(id)) continue
-                
-                val name = it.getString(nameIndex)
-                val number = it.getString(numberIndex)
-                val photoUri = it.getString(photoIndex)
-
-                val contact = ContactEntity(id, name, number, photoUri)
-                contacts.add(SelectableContactEntity(contact, selectedIds.contains(id)))
-                processedIds.add(id)
-            }
-        }
-        adapter.notifyDataSetChanged()
     }
 }
 

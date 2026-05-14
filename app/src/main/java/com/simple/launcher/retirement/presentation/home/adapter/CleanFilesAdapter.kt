@@ -9,7 +9,11 @@ import com.simple.adapter.ViewItemAdapter
 import com.simple.adapter.base.BaseBindingViewHolder
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.databinding.ItemUtilityBinding
-import com.bumptech.glide.Glide
+import com.simple.launcher.retirement.utils.image.ImageRes
+import com.simple.launcher.retirement.utils.image.setImage
+import com.simple.launcher.retirement.utils.text.Bold
+import com.simple.launcher.retirement.utils.text.setText
+import com.simple.launcher.retirement.utils.text.withFirst
 import com.bumptech.glide.load.resource.bitmap.CenterInside
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 
@@ -44,11 +48,9 @@ class CleanFilesAdapter : ViewItemAdapter<CleanFilesHomeItem, ItemUtilityBinding
         super.onBindViewHolder(binding, viewType, position, item, payloads)
 
         if (payloads.isEmpty() || payloads.contains("fileCount")) {
-            binding.tvLabel.text = "Clean up (${item.fileCount})"
-            Glide.with(binding.ivIcon.context)
-                .load(R.drawable.ic_home_cleanup_24dp)
-                .transform(CenterInside(), RoundedCorners(24))
-                .into(binding.ivIcon)
+            val count = "(${item.fileCount})"
+            binding.tvLabel.setText("Clean up $count".withFirst(count, Bold))
+            binding.ivIcon.setImage(ImageRes(R.drawable.ic_home_cleanup_24dp), CenterInside(), RoundedCorners(24))
         }
     }
 }

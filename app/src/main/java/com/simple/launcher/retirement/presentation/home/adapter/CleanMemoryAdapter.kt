@@ -8,7 +8,11 @@ import com.simple.adapter.Adapter
 import com.simple.adapter.ViewItemAdapter
 import com.simple.adapter.base.BaseBindingViewHolder
 import com.simple.launcher.retirement.databinding.ItemUtilityBinding
-import com.bumptech.glide.Glide
+import com.simple.launcher.retirement.utils.image.ImageRes
+import com.simple.launcher.retirement.utils.image.setImage
+import com.simple.launcher.retirement.utils.text.Bold
+import com.simple.launcher.retirement.utils.text.setText
+import com.simple.launcher.retirement.utils.text.withFirst
 import com.bumptech.glide.load.resource.bitmap.CenterInside
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 
@@ -43,11 +47,9 @@ class CleanMemoryAdapter : ViewItemAdapter<CleanMemoryHomeItem, ItemUtilityBindi
         super.onBindViewHolder(binding, viewType, position, item, payloads)
 
         if (payloads.isEmpty() || payloads.contains("memoryMB")) {
-            binding.tvLabel.text = "Boost (${item.memoryMB})"
-            Glide.with(binding.ivIcon.context)
-                .load(android.R.drawable.ic_lock_power_off)
-                .transform(CenterInside(), CircleCrop())
-                .into(binding.ivIcon)
+            val memory = "(${item.memoryMB})"
+            binding.tvLabel.setText("Boost $memory".withFirst(memory, Bold))
+            binding.ivIcon.setImage(ImageRes(android.R.drawable.ic_lock_power_off), CenterInside(), CircleCrop())
         }
     }
 }

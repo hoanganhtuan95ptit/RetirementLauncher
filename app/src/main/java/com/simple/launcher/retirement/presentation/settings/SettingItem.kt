@@ -1,12 +1,24 @@
 package com.simple.launcher.retirement.presentation.settings
 
+import com.simple.adapter.ViewItem
+import com.simple.launcher.retirement.utils.image.RichImage
+
 data class SettingItem(
     val id: Int,
     val title: String,
-    val iconRes: Int,
+    val icon: RichImage,
     val isSwitch: Boolean = false,
     var isChecked: Boolean = false
-) {
+) : ViewItem {
+
+    override fun areItemsTheSame(): List<Any> = listOf(id)
+
+    override fun getContentsCompare(): List<Pair<Any, String>> = listOf(
+        title to "title",
+        icon to "icon",
+        isSwitch to "isSwitch",
+        isChecked to "isChecked"
+    )
     companion object {
         const val ID_PIN = 1
         const val ID_APP_LIST = 2

@@ -5,6 +5,8 @@ import android.view.ViewGroup
 import com.simple.adapter.Adapter
 import com.simple.adapter.ViewItemAdapter
 import com.simple.launcher.retirement.databinding.ItemHeaderBinding
+import com.simple.launcher.retirement.utils.text.setText
+import com.simple.launcher.retirement.utils.text.toRich
 
 data class HeaderHomeItem(val title: String) : HomeItem {
     override fun areItemsTheSame(): List<Any> = listOf(title)
@@ -22,6 +24,6 @@ class HeaderAdapter : ViewItemAdapter<HeaderHomeItem, ItemHeaderBinding>() {
 
     override fun onBindViewHolder(binding: ItemHeaderBinding, viewType: Int, position: Int, item: HeaderHomeItem, payloads: List<String>) {
         super.onBindViewHolder(binding, viewType, position, item, payloads)
-        binding.tvTitle.text = item.title
+        binding.tvTitle.setText(item.title.toRich())
     }
 }

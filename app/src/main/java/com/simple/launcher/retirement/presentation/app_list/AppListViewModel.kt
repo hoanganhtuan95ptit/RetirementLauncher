@@ -19,6 +19,15 @@ class AppListViewModel(
         _apps.value = getSelectableAppsUseCase()
     }
 
+    fun updateItem(item: SelectableAppEntity) {
+        val currentList = _apps.value?.toMutableList() ?: return
+        val index = currentList.indexOfFirst { it.app.packageName == item.app.packageName }
+        if (index != -1) {
+            currentList[index] = item.copy()
+            _apps.value = currentList
+        }
+    }
+
     fun saveSelection() {
         val selectedPackages = _apps.value?.filter { it.isSelected }?.map { it.app.packageName }?.toSet()
         if (selectedPackages != null) {
