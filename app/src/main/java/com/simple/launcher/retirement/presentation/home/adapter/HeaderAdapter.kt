@@ -10,6 +10,7 @@ import com.simple.launcher.retirement.utils.text.toRich
 
 data class HeaderHomeItem(val title: String) : HomeItem {
     override fun areItemsTheSame(): List<Any> = listOf(title)
+    override val spanSize: Int = HomeItem.TOTAL_COLUMNS // full width
 }
 
 @Adapter

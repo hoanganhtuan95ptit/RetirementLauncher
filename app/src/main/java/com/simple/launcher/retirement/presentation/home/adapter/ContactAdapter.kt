@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import com.simple.adapter.Adapter
 import com.simple.adapter.ViewItemAdapter
 import com.simple.adapter.base.BaseBindingViewHolder
+import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.databinding.ItemContactBinding
 import com.simple.launcher.retirement.domain.model.ContactEntity
 import com.simple.launcher.retirement.utils.image.ImagePath
@@ -22,6 +23,7 @@ data class ContactHomeItem(val entity: ContactEntity) : HomeItem {
         entity.phoneNumber to "phoneNumber",
         (entity.photoUri ?: "") to "photoUri"
     )
+    override val spanSize: Int = HomeItem.TOTAL_COLUMNS / 2 // half width
 }
 
 @Adapter
@@ -55,7 +57,7 @@ class ContactAdapter : ViewItemAdapter<ContactHomeItem, ItemContactBinding>() {
             val image = if (item.entity.photoUri != null) {
                 ImagePath(item.entity.photoUri)
             } else {
-                ImageRes(android.R.drawable.sym_def_app_icon)
+                ImageRes(R.drawable.ic_home_contact_24dp)
             }
             binding.ivPhoto.setImage(image)
         }

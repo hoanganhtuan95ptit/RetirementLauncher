@@ -27,9 +27,9 @@ class AppListAdapter : ViewItemAdapter<SelectableAppEntity, ItemSelectableAppBin
     override fun createViewHolder(parent: ViewGroup, viewType: Int): BaseBindingViewHolder<ItemSelectableAppBinding> {
         val viewHolder = super.createViewHolder(parent, viewType)
         viewHolder.itemView.setOnClickListener {
-            val item = (viewHolder.bindingAdapter as? ListAdapter<*, *>)?.currentList?.getOrNull(viewHolder.absoluteAdapterPosition) as? SelectableAppEntity ?: return@setOnClickListener
-            item.isSelected = !item.isSelected
-            AppListEventBus.post(item)
+            val item = (viewHolder.bindingAdapter as? ListAdapter<*, *>)?.currentList?.getOrNull(viewHolder.bindingAdapterPosition) as? SelectableAppEntity ?: return@setOnClickListener
+            val updatedItem = item.copy(isSelected = !item.isSelected)
+            AppListEventBus.post(updatedItem)
         }
         return viewHolder
     }

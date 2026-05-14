@@ -2,8 +2,18 @@ package com.simple.launcher.retirement.domain.usecase
 
 import com.simple.launcher.retirement.domain.model.HomeContentEntity
 import com.simple.launcher.retirement.domain.repository.AppRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 
 class GetHomeAppsUseCase(private val repository: AppRepository) {
+
+    fun asFlow(): Flow<List<HomeContentEntity>> = repository.homeDataFlow()
+        .map { invoke() }
+        .flowOn(Dispatchers.IO)
+
     operator fun invoke(): List<HomeContentEntity> {
         val allApps = repository.getInstalledApps()
         val selectedPackages = repository.getSelectedPackages()

@@ -13,18 +13,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.asFlow
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.simple.adapter.ViewItemAdapterProvider
+import com.simple.adapter.MultiAdapter
 import com.simple.adapter.utils.attachAdapter
 import com.simple.adapter.utils.submitListAndAwait
-import com.simple.auto.register.AutoRegisterManager
 import com.simple.deeplink.Deeplink
 import com.simple.deeplink.DeeplinkHandler
 import com.simple.deeplink.sendDeeplink
@@ -35,23 +33,24 @@ import com.simple.launcher.retirement.domain.usecase.GetHomeAppsUseCase
 import com.simple.launcher.retirement.presentation.home.adapter.AppHomeItem
 import com.simple.launcher.retirement.presentation.home.adapter.CleanFilesHomeItem
 import com.simple.launcher.retirement.presentation.home.adapter.CleanMemoryHomeItem
-import com.simple.launcher.retirement.presentation.home.adapter.ClockHomeItem
 import com.simple.launcher.retirement.presentation.home.adapter.ContactHomeItem
-import com.simple.launcher.retirement.presentation.home.adapter.HeaderHomeItem
 import com.simple.launcher.retirement.presentation.home.adapter.HomeEventBus
 import com.simple.launcher.retirement.presentation.home.adapter.HomeItem
 import com.simple.launcher.retirement.presentation.main.MainActivity
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 import com.simple.launcher.retirement.presentation.base.BaseFragment
+import com.simple.launcher.retirement.presentation.home.adapter.ClockHomeItem
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
-    private val viewModel: HomeViewModel by viewModels {
+    private val viewModel: HomeViewModel by activityViewModels {
         HomeViewModelFactory(GetHomeAppsUseCase.instance, AppRepository.instance)
     }
+
+    // Flag để tránh crash khi unregisterReceiver gọi trước registerReceiver
+    private var isReceiverRegistered = false
 
     private val fileChangeReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
@@ -67,29 +66,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         super.setupViews(view, savedInstanceState)
 
         // Setup LayoutManager
-        val layoutManager = GridLayoutManager(requireContext(), 6)
+        val layoutManager = GridLayoutManager(requireContext(), HomeItem.TOTAL_COLUMNS)
         layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
-                val adapter = binding.rvApps.adapter as? com.simple.adapter.MultiAdapter
-                val item = adapter?.currentList?.getOrNull(position)
-                return when (item) {
-                    is ClockHomeItem -> 6
-                    is HeaderHomeItem -> 6
-                    is CleanFilesHomeItem -> 3
-                    is CleanMemoryHomeItem -> 3
-                    is AppHomeItem -> 2
-                    is ContactHomeItem -> 3
-                    else -> 2
-                }
+                return ((binding.rvApps.adapter as? MultiAdapter)?.currentList?.getOrNull(position) as? HomeItem)?.spanSize ?: 2
             }
         }
         binding.rvApps.layoutManager = layoutManager
-        
-        // Thêm khoảng cách giữa các item
+
+        // Thêm khoảng cách giữa các item (dùng dp thay vì pixel cứng)
+        val spacingDp = (12 * resources.displayMetrics.density).toInt()
         binding.rvApps.addItemDecoration(object : RecyclerView.ItemDecoration() {
             override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
-                val spacing = 12 // Khoảng cách
-                outRect.set(spacing, spacing, spacing, spacing)
+                outRect.set(spacingDp, spacingDp, spacingDp, spacingDp)
             }
         })
 
@@ -98,14 +87,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             sendDeeplink("app://settings", extras = mapOf("addToBackStack" to true))
         }
 
-        viewModel.loadApps()
     }
 
     override fun observeData() {
         super.observeData()
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.items.asFlow().attachAdapter().collectLatest { (items, adapters) ->
-                Log.d("tuanha", "onViewCreated: $adapters")
+            viewModel.items.attachAdapter().collectLatest { (items, adapters) ->
                 binding.rvApps.submitListAndAwait(items, adapters, true)
             }
         }
@@ -160,7 +147,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     override fun onResume() {
         super.onResume()
         viewModel.loadSystemStatus()
-        
+
         val filter = IntentFilter("com.simple.launcher.retirement.FILE_CHANGED")
         ContextCompat.registerReceiver(
             requireContext(),
@@ -168,11 +155,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             filter,
             ContextCompat.RECEIVER_NOT_EXPORTED
         )
+        isReceiverRegistered = true
     }
 
     override fun onPause() {
         super.onPause()
-        requireContext().unregisterReceiver(fileChangeReceiver)
+        if (isReceiverRegistered) {
+            requireContext().unregisterReceiver(fileChangeReceiver)
+            isReceiverRegistered = false
+        }
     }
 }
 

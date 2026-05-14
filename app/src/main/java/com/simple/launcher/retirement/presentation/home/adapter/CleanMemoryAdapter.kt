@@ -1,11 +1,8 @@
 package com.simple.launcher.retirement.presentation.home.adapter
 
-import android.view.HapticFeedbackConstants
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.ListAdapter
 import com.simple.adapter.Adapter
-import com.simple.adapter.ViewItemAdapter
 import com.simple.adapter.base.BaseBindingViewHolder
 import com.simple.launcher.retirement.databinding.ItemUtilityBinding
 import com.simple.launcher.retirement.utils.image.ImageRes
@@ -21,26 +18,17 @@ data class CleanMemoryHomeItem(val memoryMB: Long) : HomeItem {
     override fun getContentsCompare(): List<Pair<Any, String>> = listOf(
         memoryMB to "memoryMB"
     )
+    override val spanSize: Int = HomeItem.TOTAL_COLUMNS / 2 // half width
 }
 
 @Adapter
-class CleanMemoryAdapter : ViewItemAdapter<CleanMemoryHomeItem, ItemUtilityBinding>() {
+class CleanMemoryAdapter : UtilityAdapter<CleanMemoryHomeItem>() {
     override val viewItemClass: Class<CleanMemoryHomeItem> by lazy {
         CleanMemoryHomeItem::class.java
     }
 
     override fun createViewBinding(layoutInflater: LayoutInflater, parent: ViewGroup, viewType: Int): ItemUtilityBinding {
         return ItemUtilityBinding.inflate(layoutInflater, parent, false)
-    }
-
-    override fun createViewHolder(parent: ViewGroup, viewType: Int): BaseBindingViewHolder<ItemUtilityBinding> {
-        val viewHolder = super.createViewHolder(parent, viewType)
-        viewHolder.itemView.setOnClickListener {
-            val item = (viewHolder.bindingAdapter as? ListAdapter<*, *>)?.currentList?.getOrNull(viewHolder.absoluteAdapterPosition) as? CleanMemoryHomeItem ?: return@setOnClickListener
-            it.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
-            HomeEventBus.post(item)
-        }
-        return viewHolder
     }
 
     override fun onBindViewHolder(binding: ItemUtilityBinding, viewType: Int, position: Int, item: CleanMemoryHomeItem, payloads: List<String>) {

@@ -4,6 +4,7 @@ import com.simple.launcher.retirement.MainApplication
 import com.simple.launcher.retirement.data.repository.AppRepositoryImpl
 import com.simple.launcher.retirement.domain.model.AppEntity
 import com.simple.launcher.retirement.domain.model.ContactEntity
+import kotlinx.coroutines.flow.Flow
 
 interface AppRepository {
     fun getInstalledApps(): List<AppEntity>
@@ -29,6 +30,14 @@ interface AppRepository {
     fun isCallBlockEnabled(): Boolean
     fun setCallBlockEnabled(enabled: Boolean)
     fun isDefaultApp(packageName: String): Boolean
+
+    // Flow API — mỗi nguồn data tự phát giá trị mới khi được trigger
+    fun countStrangeFilesFlow(): Flow<Int>
+    fun estimateCleanableMemoryMBFlow(): Flow<Long>
+    fun refreshSystemStatus()
+
+    // Flow phát lại khi danh sách app / contact thay đổi
+    fun homeDataFlow(): Flow<Unit>
 
     companion object {
         val instance: AppRepository by lazy { AppRepositoryImpl(MainApplication.instance) }

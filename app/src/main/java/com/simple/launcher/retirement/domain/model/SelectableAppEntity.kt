@@ -4,7 +4,7 @@ import com.simple.adapter.ViewItem
 
 data class SelectableAppEntity(
     val app: AppEntity,
-    var isSelected: Boolean
+    val isSelected: Boolean
 ) : ViewItem {
 
     override fun areItemsTheSame(): List<Any> = listOf(app.packageName)

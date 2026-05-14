@@ -18,11 +18,37 @@ import com.google.gson.reflect.TypeToken
 import com.simple.launcher.retirement.domain.model.AppEntity
 import com.simple.launcher.retirement.domain.model.ContactEntity
 import com.simple.launcher.retirement.domain.repository.AppRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.flowOn
 import java.io.File
 
 class AppRepositoryImpl(private val context: Context) : AppRepository {
 
     private val sharedPrefs = context.getSharedPreferences("launcher_prefs", Context.MODE_PRIVATE)
+
+    // Trigger để các flow system status phát lại giá trị mới
+    // replay = 1 đảm bảo subscriber mới nhận ngay giá trị gần nhất
+    private val _systemTrigger = MutableSharedFlow<Unit>(replay = 1).also { it.tryEmit(Unit) }
+
+    // Trigger để home data (app + contact) phát lại khi có thay đổi
+    private val _dataTrigger = MutableSharedFlow<Unit>(replay = 1).also { it.tryEmit(Unit) }
+
+    override fun countStrangeFilesFlow(): Flow<Int> = _systemTrigger
+        .map { countStrangeFiles() }
+        .flowOn(Dispatchers.IO)
+
+    override fun estimateCleanableMemoryMBFlow(): Flow<Long> = _systemTrigger
+        .map { estimateCleanableMemory() / (1024 * 1024) }
+        .flowOn(Dispatchers.IO)
+
+    override fun refreshSystemStatus() {
+        _systemTrigger.tryEmit(Unit)
+    }
+
+    override fun homeDataFlow(): Flow<Unit> = _dataTrigger
     private val KEY_SELECTED_APPS = "selected_apps"
     private val KEY_PIN = "app_pin"
     private val KEY_ONBOARDING_COMPLETED = "onboarding_completed"
@@ -66,6 +92,7 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
 
     override fun saveSelectedPackages(packages: Set<String>) {
         sharedPrefs.edit().putStringSet(KEY_SELECTED_APPS, packages).apply()
+        _dataTrigger.tryEmit(Unit)
     }
 
     override fun getSelectedContacts(): List<ContactEntity> {
@@ -91,6 +118,7 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
     override fun saveSelectedContacts(contacts: List<ContactEntity>) {
         val json = gson.toJson(contacts)
         sharedPrefs.edit().putString(KEY_SELECTED_CONTACTS, json).apply()
+        _dataTrigger.tryEmit(Unit)
     }
 
     override fun getPin(): String? {

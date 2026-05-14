@@ -28,9 +28,9 @@ class ContactListAdapter : ViewItemAdapter<SelectableContactEntity, ItemSelectab
     override fun createViewHolder(parent: ViewGroup, viewType: Int): BaseBindingViewHolder<ItemSelectableAppBinding> {
         val viewHolder = super.createViewHolder(parent, viewType)
         viewHolder.itemView.setOnClickListener {
-            val item = (viewHolder.bindingAdapter as? ListAdapter<*, *>)?.currentList?.getOrNull(viewHolder.absoluteAdapterPosition) as? SelectableContactEntity ?: return@setOnClickListener
-            item.isSelected = !item.isSelected
-            ContactListEventBus.post(item)
+            val item = (viewHolder.bindingAdapter as? ListAdapter<*, *>)?.currentList?.getOrNull(viewHolder.bindingAdapterPosition) as? SelectableContactEntity ?: return@setOnClickListener
+            val updatedItem = item.copy(isSelected = !item.isSelected)
+            ContactListEventBus.post(updatedItem)
         }
         return viewHolder
     }

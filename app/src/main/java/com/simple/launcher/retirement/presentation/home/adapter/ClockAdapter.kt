@@ -8,6 +8,7 @@ import com.simple.launcher.retirement.databinding.ItemClockBinding
 
 object ClockHomeItem : HomeItem {
     override fun areItemsTheSame(): List<Any> = listOf("Clock")
+    override val spanSize: Int = HomeItem.TOTAL_COLUMNS // full width
 }
 
 @Adapter
