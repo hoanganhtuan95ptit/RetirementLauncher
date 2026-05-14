@@ -50,8 +50,6 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
         }
 
         binding.rvSettings.layoutManager = GridLayoutManager(requireContext(), 2)
-        
-        viewModel.loadSettings()
     }
 
     override fun observeData() {

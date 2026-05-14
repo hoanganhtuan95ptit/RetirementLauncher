@@ -36,17 +36,14 @@ You can retrieve colors directly using the attribute name or the resource ID.
     ```
 
 ### Step 3: Reactive Usage in ViewModel
-To make the UI reactive to theme changes, observe the `colorMapFlow`.
+To make the UI reactive to theme changes, observe the `colorMapFlow` (exposed as `themes` in `BaseViewModel`). Use the `getColor` extension for `Map` to access colors via resource IDs safely.
 
 ```kotlin
-class HomeViewModel : ViewModel() {
-    val primaryColor = ThemeColorStore.colorMapFlow
-        .map { map -> map["colorPrimary"] ?: Color.BLACK }
-        .stateIn(
-            viewModelScope,
-            SharingStarted.WhileSubscribed(5_000),
-            Color.BLACK
-        )
+class HomeViewModel : BaseViewModel() {
+    val items = combine(strings, themes) { stringMap, themeMap ->
+        val textColor = themeMap.getColor(android.R.attr.textColorPrimary) ?: Color.BLACK
+        // Build your items here
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 }
 ```
 
@@ -62,11 +59,10 @@ val color = context.getThemeColor(R.attr.colorSurface)
 
 ### `ThemeColorStore` Object
 *   **`fun load(context: Context)`**: Scans `R.attr` and populates the store with current theme colors.
-*   **`fun getColor(attrName: String): Int?`**: Returns the color integer for a given attribute name (e.g., "colorPrimary").
-*   **`fun getColor(@AttrRes attrId: Int): Int?`**: Returns the color integer for a given attribute resource ID.
 *   **`val colorMapFlow: StateFlow<Map<String, Int>>`**: A flow that emits the entire color map whenever `load()` is called.
 
 ### Extensions
+*   **`Map<String, Int>.getColor(@AttrRes attrId: Int): Int?`**: **(Recommended)** Resolves color from the map using attribute ID. It handles both system (`android.R.attr`) and app attributes.
 *   **`Context.getThemeColor(@AttrRes attrId: Int): Int`**: Resolves a theme attribute to a color integer directly from the context.
 
 ---

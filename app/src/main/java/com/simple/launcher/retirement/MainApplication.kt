@@ -9,9 +9,6 @@ class MainApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
-
-        StringResStore.load(this)
-        ThemeColorStore.load(this)
     }
 
     companion object {

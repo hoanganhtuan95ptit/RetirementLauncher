@@ -2,10 +2,11 @@ package com.simple.launcher.retirement.presentation.settings
 
 import com.simple.adapter.ViewItem
 import com.simple.launcher.retirement.utils.image.RichImage
+import com.simple.launcher.retirement.utils.text.RichText
 
 data class SettingItem(
     val id: Int,
-    val title: String,
+    val title: RichText,
     val icon: RichImage,
     val isSwitch: Boolean = false,
     var isChecked: Boolean = false
@@ -14,7 +15,7 @@ data class SettingItem(
     override fun areItemsTheSame(): List<Any> = listOf(id)
 
     override fun getContentsCompare(): List<Pair<Any, String>> = listOf(
-        title to "title",
+        title.text to "title",
         icon to "icon",
         isSwitch to "isSwitch",
         isChecked to "isChecked"

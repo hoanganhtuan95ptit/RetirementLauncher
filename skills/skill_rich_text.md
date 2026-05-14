@@ -74,13 +74,23 @@ binding.tvHeader.setText(richText)
 
 Rất hữu ích khi cần hiển thị văn bản có highlight từ khóa tìm kiếm hoặc định dạng giá tiền trong item.
 
+### Ví dụ 1: Định dạng tiền tệ
 ```kotlin
-data class TransactionItem(
-    val title: String,
-    val amount: String
-) : ViewItem
-
-// Trong ViewHolder bind:
 val formattedAmount = item.amount.withFirst("$", Bold, RelativeSize(0.7f))
 binding.tvAmount.setText(formattedAmount)
+```
+
+### Ví dụ 2: Settings Item với màu từ Theme
+```kotlin
+data class SettingItem(
+    val title: RichText,
+    ...
+)
+
+// Trong ViewModel:
+val textColor = themeMap.getColor(android.R.attr.textColorPrimary) ?: Color.BLACK
+val item = SettingItem(
+    title = stringMap.getString(R.string.setting_pin).toRich().with(ForegroundColor(textColor)),
+    ...
+)
 ```

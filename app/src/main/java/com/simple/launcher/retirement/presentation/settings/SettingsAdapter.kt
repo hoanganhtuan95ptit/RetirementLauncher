@@ -10,7 +10,6 @@ import com.simple.adapter.base.BaseBindingViewHolder
 import com.simple.launcher.retirement.databinding.ItemSettingBinding
 import com.simple.launcher.retirement.utils.image.setImage
 import com.simple.launcher.retirement.utils.text.setText
-import com.simple.launcher.retirement.utils.text.toRich
 
 @Adapter
 class SettingsAdapter : ViewItemAdapter<SettingItem, ItemSettingBinding>() {
@@ -49,7 +48,7 @@ class SettingsAdapter : ViewItemAdapter<SettingItem, ItemSettingBinding>() {
         super.onBindViewHolder(binding, viewType, position, item, payloads)
         with(binding) {
             if (payloads.isEmpty() || payloads.contains("title")) {
-                tvSettingTitle.setText(item.title.toRich())
+                tvSettingTitle.setText(item.title)
             }
             if (payloads.isEmpty() || payloads.contains("icon")) {
                 ivSettingIcon.setImage(item.icon)

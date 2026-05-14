@@ -13,8 +13,9 @@ Hệ thống sử dụng Reflection để quét lớp `R.string` khi ứng dụn
 | Thành phần | Mô tả |
 |---|---|
 | `StringResStore.load(context)` | Quét và tải toàn bộ string resources vào bộ nhớ. Cần được gọi ở Application class hoặc khi khởi tạo app. |
-| `Int.asStringRes()` | Hàm mở rộng lấy giá trị string từ Resource ID (e.g., `R.string.app_name.asStringRes()`). |
-| `String.asStringRes()` | Hàm mở rộng lấy giá trị string từ tên resource (e.g., `"app_name".asStringRes()`). |
+| `Map<String, String>.getString(resId)` | **(Mới)** Lấy string từ map dựa trên ID, dùng trong `combine` của ViewModel để đảm bảo tính reactive. |
+| `Int.asStringRes()` | Hàm mở rộng lấy giá trị string từ Resource ID dựa trên trạng thái mới nhất của Store. |
+| `String.asStringRes()` | Hàm mở rộng lấy giá trị string từ tên resource dựa trên trạng thái mới nhất của Store. |
 | `String.asFormattedStringRes()` | Lấy string theo tên và format với các tham số (e.g., `"welcome_msg".asFormattedStringRes(name)`). |
 | `String.observeStringRes()` | Trả về một `Flow<String>` quan sát giá trị của một string key cụ thể. |
 
@@ -56,12 +57,13 @@ val welcome = "welcome_msg".asFormattedStringRes("Hoàng Anh Tuấn")
 
 ### 5. Quan sát sự thay đổi (Reactive UI)
 
-Sử dụng Flow để UI tự động cập nhật nếu `StringResStore` được load lại (ví dụ khi đổi ngôn ngữ thủ công):
+Sử dụng Flow để UI tự động cập nhật nếu `StringResStore` được load lại (ví dụ khi đổi ngôn ngữ thủ công). Cách tốt nhất là dùng `combine` trong ViewModel:
 
 ```kotlin
-val titleFlow: StateFlow<String> = "header_title"
-    .observeStringRes()
-    .stateIn(viewModelScope, SharingStarted.Lazily, "")
+val items = combine(strings, themes) { stringMap, themeMap ->
+    val title = stringMap.getString(R.string.title_settings)
+    // Khởi tạo list items dựa trên stringMap hiện tại
+}.stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 ```
 
 ## Tại sao nên dùng StringResStore?

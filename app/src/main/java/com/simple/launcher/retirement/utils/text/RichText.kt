@@ -7,6 +7,7 @@ import android.text.style.CharacterStyle
 import android.text.style.ForegroundColorSpan
 import android.text.style.RelativeSizeSpan
 import android.text.style.StyleSpan
+import android.util.Log
 import android.widget.TextView
 import com.google.auto.service.AutoService
 import java.util.ServiceLoader
@@ -17,6 +18,7 @@ fun emptyText() = RichText("")
 
 fun String.toRich(): RichText {
 
+    Log.d("tuanha", "toRich: $this")
     return RichText(this)
 }
 

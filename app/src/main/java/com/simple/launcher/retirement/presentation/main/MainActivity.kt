@@ -21,12 +21,17 @@ import com.simple.launcher.retirement.presentation.base.BaseActivity
 import com.simple.launcher.retirement.presentation.worker.AppMonitoringService
 import com.simple.launcher.retirement.presentation.worker.FileCleanupWorker
 import com.simple.launcher.retirement.presentation.worker.FileWatcherService
+import com.simple.launcher.retirement.utils.string.StringResStore
+import com.simple.launcher.retirement.utils.theme.ThemeColorStore
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     override fun inflateBinding(inflater: LayoutInflater) = ActivityMainBinding.inflate(inflater)
 
     override fun setupViews(savedInstanceState: Bundle?) {
+        StringResStore.load(this)
+        ThemeColorStore.load(this)
+
         // Quét toàn bộ một lần lúc khởi động
         scheduleInitialFileCleanup()
         

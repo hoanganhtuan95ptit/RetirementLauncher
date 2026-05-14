@@ -4,115 +4,90 @@ import android.content.Context
 import android.util.TypedValue
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.simple.launcher.retirement.presentation.base.BaseViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
 
 object ThemeColorStore {
 
     private val _colorMapFlow = MutableStateFlow<Map<String, Int>>(emptyMap())
     val colorMapFlow: StateFlow<Map<String, Int>> = _colorMapFlow.asStateFlow()
 
-    private val colorByAttrMap = mutableMapOf<Int, Int>()
+    val attrIdMap = mutableMapOf<Int, Int>()
 
     /**
      * Load toàn bộ color attr từ theme
-     *
-     * key   = tên attr
-     * value = color int
      */
     fun load(context: Context) {
-
         val packageName = context.packageName
-
         val nameMap = mutableMapOf<String, Int>()
-        val attrMap = mutableMapOf<Int, Int>()
+        val idToNameMap = mutableMapOf<Int, Int>()
 
+        // 1. Load System Attributes (Luôn ưu tiên)
+        loadFromClass(context, android.R.attr::class.java, nameMap, idToNameMap)
+
+        // 2. Load Material Attributes (Nếu có)
         try {
-
-            val attrClass = Class.forName("$packageName.R\$attr")
-
-            attrClass.fields.forEach { field ->
-
-                runCatching {
-
-                    val attrId = field.getInt(null)
-
-                    val color = context.getThemeColor(attrId)
-
-                    nameMap[field.name] = color
-                    attrMap[attrId] = color
-                }
-            }
-
+            val materialAttrClass = Class.forName("com.google.android.material.R\$attr")
+            loadFromClass(context, materialAttrClass, nameMap, idToNameMap)
         } catch (_: Exception) {
         }
 
-        colorByAttrMap.clear()
-        colorByAttrMap.putAll(attrMap)
+        // 3. Load App Attributes
+        try {
+            val appAttrClass = Class.forName("$packageName.R\$attr")
+            loadFromClass(context, appAttrClass, nameMap, idToNameMap)
+        } catch (_: Exception) {
+        }
+
+        attrIdMap.clear()
+        attrIdMap.putAll(idToNameMap)
 
         _colorMapFlow.value = nameMap
     }
 
-    /**
-     * Lấy color theo tên attr
-     *
-     * Ví dụ:
-     * getColor("colorPrimary")
-     */
-    @ColorInt
-    fun getColor(attrName: String): Int? {
-
-        return _colorMapFlow.value[attrName]
-    }
-
-    /**
-     * Lấy color theo attr id
-     *
-     * Ví dụ:
-     * getColor(R.attr.colorPrimary)
-     */
-    @ColorInt
-    fun getColor(@AttrRes attrId: Int): Int? {
-
-        return colorByAttrMap[attrId]
+    private fun loadFromClass(
+        context: Context,
+        clazz: Class<*>,
+        nameMap: MutableMap<String, Int>,
+        idMap: MutableMap<Int, Int>
+    ) {
+        clazz.fields.forEach { field ->
+            runCatching {
+                val attrId = field.getInt(null)
+                val color = context.getThemeColorOrNull(attrId)
+                if (color != null) {
+                    nameMap[field.name] = color
+                    idMap[attrId] = color
+                }
+            }
+        }
     }
 }
 
 /**
- * Resolve color từ theme attr
+ * Extension giúp lấy màu từ themeMap thông qua R.attr ID
  */
-@ColorInt
-fun Context.getThemeColor(@AttrRes attrId: Int): Int {
-
-    val typedValue = TypedValue()
-
-    theme.resolveAttribute(
-        attrId,
-        typedValue,
-        true
-    )
-
-    return typedValue.data
+fun Map<String, Int>.getColor(@AttrRes attrId: Int): Int? {
+    return ThemeColorStore.attrIdMap[attrId]
 }
 
-class TestViewModel : BaseViewModel() {
+/**
+ * Resolve color từ theme attr, trả về null nếu không phải color hoặc không tồn tại
+ */
+@ColorInt
+fun Context.getThemeColorOrNull(@AttrRes attrId: Int): Int? {
+    val typedValue = TypedValue()
+    if (theme.resolveAttribute(attrId, typedValue, true)) {
+        // Kiểm tra xem attribute có phải là màu sắc không
+        if (typedValue.type >= TypedValue.TYPE_FIRST_COLOR_INT && typedValue.type <= TypedValue.TYPE_LAST_COLOR_INT) {
+            return typedValue.data
+        }
+    }
+    return null
+}
 
-    val primaryColor =
-        themes
-            .map { map ->
-
-                map["colorPrimary"]
-            }
-            .stateIn(
-                viewModelScope,
-                SharingStarted.WhileSubscribed(5_000),
-                null
-            )
+@ColorInt
+fun Context.getThemeColor(@AttrRes attrId: Int): Int {
+    return getThemeColorOrNull(attrId) ?: android.graphics.Color.TRANSPARENT
 }
