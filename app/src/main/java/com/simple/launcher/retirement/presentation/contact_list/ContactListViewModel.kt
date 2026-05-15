@@ -6,11 +6,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
-import com.simple.launcher.retirement.presentation.base.BaseViewModel
+import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.domain.model.ContactEntity
 import com.simple.launcher.retirement.domain.model.SelectableContactEntity
 import com.simple.launcher.retirement.domain.repository.AppRepository
+import com.simple.launcher.retirement.presentation.base.BaseViewModel
+import com.simple.launcher.retirement.utils.image.ImagePath
+import com.simple.launcher.retirement.utils.image.ImageRes
+import com.simple.launcher.retirement.utils.text.toRich
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -19,8 +24,25 @@ class ContactListViewModel(
     private val repository: AppRepository
 ) : BaseViewModel() {
 
+    // Nội bộ: domain entities
     private val _contacts = MutableLiveData<List<SelectableContactEntity>>()
-    val contacts: LiveData<List<SelectableContactEntity>> = _contacts
+
+    // Expose ra ngoài: ViewItems đã được xử lý sẵn, adapter chỉ set data
+    val items: LiveData<List<SelectableContactItem>> = _contacts.map { entities ->
+        entities.map { entity ->
+            val photo = if (entity.contact.photoUri != null) {
+                ImagePath(entity.contact.photoUri)
+            } else {
+                ImageRes(R.drawable.ic_home_contact_24dp)
+            }
+            SelectableContactItem(
+                name = entity.contact.name.toRich(),
+                photo = photo,
+                isSelected = entity.isSelected,
+                entity = entity
+            )
+        }
+    }
 
     fun loadContacts(context: Context) {
         viewModelScope.launch {
@@ -45,7 +67,7 @@ class ContactListViewModel(
                     while (it.moveToNext()) {
                         val id = it.getString(idIndex)
                         if (processedIds.contains(id)) continue
-                        
+
                         val name = it.getString(nameIndex)
                         val number = it.getString(numberIndex)
                         val photoUri = it.getString(photoIndex)
@@ -61,11 +83,12 @@ class ContactListViewModel(
         }
     }
 
-    fun updateItem(item: SelectableContactEntity) {
+    // Nhận entity từ EventBus (adapter gửi nguyên entity, không toggle), ViewModel xử lý toggle
+    fun updateItem(entity: SelectableContactEntity) {
         val currentList = _contacts.value?.toMutableList() ?: return
-        val index = currentList.indexOfFirst { it.contact.id == item.contact.id }
+        val index = currentList.indexOfFirst { it.contact.id == entity.contact.id }
         if (index != -1) {
-            currentList[index] = item.copy()
+            currentList[index] = currentList[index].copy(isSelected = !currentList[index].isSelected)
             _contacts.value = currentList
         }
     }

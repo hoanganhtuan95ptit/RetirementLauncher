@@ -73,14 +73,14 @@ class ContactListFragment : BaseFragment<FragmentAppListBinding>() {
     override fun observeData() {
         super.observeData()
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.contacts.asFlow().attachAdapter().collectLatest { (items, adapters) ->
+            viewModel.items.asFlow().attachAdapter().collectLatest { (items, adapters) ->
                 binding.rvAppList.submitListAndAwait(items, adapters, true)
             }
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            ContactListEventBus.events.collectLatest { item ->
-                viewModel.updateItem(item)
+            ContactListEventBus.events.collectLatest { entity ->
+                viewModel.updateItem(entity)
             }
         }
     }

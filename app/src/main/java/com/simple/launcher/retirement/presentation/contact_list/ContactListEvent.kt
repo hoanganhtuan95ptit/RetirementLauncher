@@ -8,7 +8,7 @@ object ContactListEventBus {
     private val _events = MutableSharedFlow<SelectableContactEntity>(extraBufferCapacity = 1)
     val events = _events.asSharedFlow()
 
-    fun post(item: SelectableContactEntity) {
-        _events.tryEmit(item)
+    fun post(entity: SelectableContactEntity) {
+        _events.tryEmit(entity)
     }
 }

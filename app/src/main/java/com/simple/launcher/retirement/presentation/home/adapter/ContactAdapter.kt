@@ -7,21 +7,22 @@ import androidx.recyclerview.widget.ListAdapter
 import com.simple.adapter.Adapter
 import com.simple.adapter.ViewItemAdapter
 import com.simple.adapter.base.BaseBindingViewHolder
-import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.databinding.ItemContactBinding
 import com.simple.launcher.retirement.domain.model.ContactEntity
-import com.simple.launcher.retirement.utils.image.ImagePath
-import com.simple.launcher.retirement.utils.image.ImageRes
+import com.simple.launcher.retirement.utils.image.RichImage
 import com.simple.launcher.retirement.utils.image.setImage
+import com.simple.launcher.retirement.utils.text.RichText
 import com.simple.launcher.retirement.utils.text.setText
-import com.simple.launcher.retirement.utils.text.toRich
 
-data class ContactHomeItem(val entity: ContactEntity) : HomeItem {
+data class ContactHomeItem(
+    val name: RichText,
+    val photo: RichImage,
+    val entity: ContactEntity  // chỉ dùng cho onclick
+) : HomeItem {
     override fun areItemsTheSame(): List<Any> = listOf(entity.id)
     override fun getContentsCompare(): List<Pair<Any, String>> = listOf(
-        entity.name to "name",
-        entity.phoneNumber to "phoneNumber",
-        (entity.photoUri ?: "") to "photoUri"
+        name to "name",
+        photo to "photo"
     )
     override val spanSize: Int = HomeItem.TOTAL_COLUMNS / 2 // half width
 }
@@ -48,18 +49,11 @@ class ContactAdapter : ViewItemAdapter<ContactHomeItem, ItemContactBinding>() {
 
     override fun onBindViewHolder(binding: ItemContactBinding, viewType: Int, position: Int, item: ContactHomeItem, payloads: List<String>) {
         super.onBindViewHolder(binding, viewType, position, item, payloads)
-
         if (payloads.isEmpty() || payloads.contains("name")) {
-            binding.tvName.setText(item.entity.name.toRich())
+            binding.tvName.setText(item.name)
         }
-
-        if (payloads.isEmpty() || payloads.contains("photoUri") || payloads.contains("phoneNumber")) {
-            val image = if (item.entity.photoUri != null) {
-                ImagePath(item.entity.photoUri)
-            } else {
-                ImageRes(R.drawable.ic_home_contact_24dp)
-            }
-            binding.ivPhoto.setImage(image)
+        if (payloads.isEmpty() || payloads.contains("photo")) {
+            binding.ivPhoto.setImage(item.photo)
         }
     }
 }

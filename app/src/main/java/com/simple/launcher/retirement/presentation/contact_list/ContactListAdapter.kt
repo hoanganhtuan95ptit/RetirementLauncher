@@ -4,21 +4,37 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.simple.adapter.Adapter
+import com.simple.adapter.ViewItem
 import com.simple.adapter.ViewItemAdapter
 import com.simple.adapter.base.BaseBindingViewHolder
 import com.simple.launcher.retirement.databinding.ItemSelectableAppBinding
 import com.simple.launcher.retirement.domain.model.SelectableContactEntity
-import com.simple.launcher.retirement.utils.image.ImagePath
-import com.simple.launcher.retirement.utils.image.ImageRes
+import com.simple.launcher.retirement.utils.image.RichImage
 import com.simple.launcher.retirement.utils.image.setImage
+import com.simple.launcher.retirement.utils.text.RichText
 import com.simple.launcher.retirement.utils.text.setText
-import com.simple.launcher.retirement.utils.text.toRich
+
+data class SelectableContactItem(
+    val name: RichText,
+    val photo: RichImage,
+    val isSelected: Boolean,
+    val entity: SelectableContactEntity  // chỉ dùng cho onclick
+) : ViewItem {
+
+    override fun areItemsTheSame(): List<Any> = listOf(entity.contact.id)
+
+    override fun getContentsCompare(): List<Pair<Any, String>> = listOf(
+        name to "name",
+        photo to "photo",
+        isSelected to "isSelected"
+    )
+}
 
 @Adapter
-class ContactListAdapter : ViewItemAdapter<SelectableContactEntity, ItemSelectableAppBinding>() {
+class ContactListAdapter : ViewItemAdapter<SelectableContactItem, ItemSelectableAppBinding>() {
 
-    override val viewItemClass: Class<SelectableContactEntity> by lazy {
-        SelectableContactEntity::class.java
+    override val viewItemClass: Class<SelectableContactItem> by lazy {
+        SelectableContactItem::class.java
     }
 
     override fun createViewBinding(layoutInflater: LayoutInflater, parent: ViewGroup, viewType: Int): ItemSelectableAppBinding {
@@ -28,24 +44,18 @@ class ContactListAdapter : ViewItemAdapter<SelectableContactEntity, ItemSelectab
     override fun createViewHolder(parent: ViewGroup, viewType: Int): BaseBindingViewHolder<ItemSelectableAppBinding> {
         val viewHolder = super.createViewHolder(parent, viewType)
         viewHolder.itemView.setOnClickListener {
-            val item = (viewHolder.bindingAdapter as? ListAdapter<*, *>)?.currentList?.getOrNull(viewHolder.bindingAdapterPosition) as? SelectableContactEntity ?: return@setOnClickListener
-            val updatedItem = item.copy(isSelected = !item.isSelected)
-            ContactListEventBus.post(updatedItem)
+            val item = (viewHolder.bindingAdapter as? ListAdapter<*, *>)?.currentList?.getOrNull(viewHolder.bindingAdapterPosition) as? SelectableContactItem ?: return@setOnClickListener
+            ContactListEventBus.post(item.entity)  // chỉ gửi entity, ViewModel xử lý toggle
         }
         return viewHolder
     }
 
-    override fun onBindViewHolder(binding: ItemSelectableAppBinding, viewType: Int, position: Int, item: SelectableContactEntity, payloads: List<String>) {
+    override fun onBindViewHolder(binding: ItemSelectableAppBinding, viewType: Int, position: Int, item: SelectableContactItem, payloads: List<String>) {
         super.onBindViewHolder(binding, viewType, position, item, payloads)
         with(binding) {
             if (payloads.isEmpty()) {
-                tvLabel.setText(item.contact.name.toRich())
-                val image = if (item.contact.photoUri != null) {
-                    ImagePath(item.contact.photoUri)
-                } else {
-                    ImageRes(android.R.drawable.ic_menu_call)
-                }
-                ivIcon.setImage(image)
+                tvLabel.setText(item.name)
+                ivIcon.setImage(item.photo)
             }
             if (payloads.isEmpty() || payloads.contains("isSelected")) {
                 cbSelected.isChecked = item.isSelected

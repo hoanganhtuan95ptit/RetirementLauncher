@@ -5,18 +5,17 @@ import android.view.ViewGroup
 import com.simple.adapter.Adapter
 import com.simple.adapter.base.BaseBindingViewHolder
 import com.simple.launcher.retirement.databinding.ItemUtilityBinding
-import com.simple.launcher.retirement.utils.image.ImageRes
+import com.simple.launcher.retirement.utils.image.RichImage
 import com.simple.launcher.retirement.utils.image.setImage
-import com.simple.launcher.retirement.utils.text.Bold
+import com.simple.launcher.retirement.utils.text.RichText
 import com.simple.launcher.retirement.utils.text.setText
-import com.simple.launcher.retirement.utils.text.withFirst
 import com.bumptech.glide.load.resource.bitmap.CenterInside
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 
-data class CleanMemoryHomeItem(val memoryMB: Long) : HomeItem {
+data class CleanMemoryHomeItem(val label: RichText, val icon: RichImage) : HomeItem {
     override fun areItemsTheSame(): List<Any> = listOf("CleanMemory")
     override fun getContentsCompare(): List<Pair<Any, String>> = listOf(
-        memoryMB to "memoryMB"
+        label to "label"
     )
     override val spanSize: Int = HomeItem.TOTAL_COLUMNS / 2 // half width
 }
@@ -33,11 +32,11 @@ class CleanMemoryAdapter : UtilityAdapter<CleanMemoryHomeItem>() {
 
     override fun onBindViewHolder(binding: ItemUtilityBinding, viewType: Int, position: Int, item: CleanMemoryHomeItem, payloads: List<String>) {
         super.onBindViewHolder(binding, viewType, position, item, payloads)
-
-        if (payloads.isEmpty() || payloads.contains("memoryMB")) {
-            val memory = "(${item.memoryMB})"
-            binding.tvLabel.setText("Boost $memory".withFirst(memory, Bold))
-            binding.ivIcon.setImage(ImageRes(android.R.drawable.ic_lock_power_off), CenterInside(), CircleCrop())
+        if (payloads.isEmpty()) {
+            binding.ivIcon.setImage(item.icon, CenterInside(), CircleCrop())
+        }
+        if (payloads.isEmpty() || payloads.contains("label")) {
+            binding.tvLabel.setText(item.label)
         }
     }
 }

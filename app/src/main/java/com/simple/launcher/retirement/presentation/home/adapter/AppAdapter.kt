@@ -9,17 +9,21 @@ import com.simple.adapter.ViewItemAdapter
 import com.simple.adapter.base.BaseBindingViewHolder
 import com.simple.launcher.retirement.databinding.ItemAppBinding
 import com.simple.launcher.retirement.domain.model.AppEntity
-import com.simple.launcher.retirement.utils.image.ImageDrawable
+import com.simple.launcher.retirement.utils.image.RichImage
 import com.simple.launcher.retirement.utils.image.setImage
+import com.simple.launcher.retirement.utils.text.RichText
 import com.simple.launcher.retirement.utils.text.setText
-import com.simple.launcher.retirement.utils.text.toRich
 
-data class AppHomeItem(val entity: AppEntity) : HomeItem {
+data class AppHomeItem(
+    val label: RichText,
+    val icon: RichImage,
+    val entity: AppEntity  // chỉ dùng cho onclick
+) : HomeItem {
 
     override fun areItemsTheSame(): List<Any> = listOf(entity.packageName)
     override fun getContentsCompare(): List<Pair<Any, String>> = listOf(
-        entity.label to "label",
-        entity.packageName to "packageName"
+        label to "label",
+        icon to "icon"
     )
 }
 
@@ -46,10 +50,10 @@ class AppAdapter : ViewItemAdapter<AppHomeItem, ItemAppBinding>() {
     override fun onBindViewHolder(binding: ItemAppBinding, viewType: Int, position: Int, item: AppHomeItem, payloads: List<String>) {
         super.onBindViewHolder(binding, viewType, position, item, payloads)
         if (payloads.isEmpty() || payloads.contains("label")) {
-            binding.tvLabel.setText(item.entity.label.toRich())
+            binding.tvLabel.setText(item.label)
         }
-        if (payloads.isEmpty() || payloads.contains("packageName")) {
-            binding.ivIcon.setImage(ImageDrawable(item.entity.icon))
+        if (payloads.isEmpty() || payloads.contains("icon")) {
+            binding.ivIcon.setImage(item.icon)
         }
     }
 }

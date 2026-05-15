@@ -5,11 +5,44 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.simple.adapter.Adapter
+import com.simple.adapter.ViewItem
 import com.simple.adapter.ViewItemAdapter
 import com.simple.adapter.base.BaseBindingViewHolder
 import com.simple.launcher.retirement.databinding.ItemSettingBinding
+import com.simple.launcher.retirement.utils.image.RichImage
 import com.simple.launcher.retirement.utils.image.setImage
+import com.simple.launcher.retirement.utils.text.RichText
 import com.simple.launcher.retirement.utils.text.setText
+
+data class SettingItem(
+    val id: Int,
+    val title: RichText,
+    val icon: RichImage,
+    val isSwitch: Boolean = false,
+    var isChecked: Boolean = false
+) : ViewItem {
+
+    override fun areItemsTheSame(): List<Any> = listOf(id)
+
+    override fun getContentsCompare(): List<Pair<Any, String>> = listOf(
+        title.text to "title",
+        icon to "icon",
+        isSwitch to "isSwitch",
+        isChecked to "isChecked"
+    )
+
+    companion object {
+        const val ID_PIN = 1
+        const val ID_APP_LIST = 2
+        const val ID_DEFAULT_LAUNCHER = 3
+        const val ID_CLEAN_FILES = 4
+        const val ID_CLEAN_MEMORY = 5
+        const val ID_CONTACT_LIST = 6
+        const val ID_TOGGLE_BLOCK = 7
+        const val ID_TOGGLE_CLEANUP = 8
+        const val ID_TOGGLE_CALL_BLOCK = 9
+    }
+}
 
 @Adapter
 class SettingsAdapter : ViewItemAdapter<SettingItem, ItemSettingBinding>() {

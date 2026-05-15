@@ -8,7 +8,7 @@ object AppListEventBus {
     private val _events = MutableSharedFlow<SelectableAppEntity>(extraBufferCapacity = 1)
     val events = _events.asSharedFlow()
 
-    fun post(item: SelectableAppEntity) {
-        _events.tryEmit(item)
+    fun post(entity: SelectableAppEntity) {
+        _events.tryEmit(entity)
     }
 }
