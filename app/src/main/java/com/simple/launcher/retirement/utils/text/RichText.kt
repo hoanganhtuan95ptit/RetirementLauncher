@@ -10,6 +10,7 @@ import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.TextPaint
+import android.text.style.AbsoluteSizeSpan
 import android.text.style.CharacterStyle
 import android.text.style.ForegroundColorSpan
 import android.text.style.LineBackgroundSpan
@@ -167,6 +168,44 @@ class ForegroundColorConvert : RichSpanConvert {
         return if (richSpan is ForegroundColor) ForegroundColorSpan(richSpan.color) else null
     }
 }
+
+/**
+ * Span đặt kích thước chữ tuyệt đối theo đơn vị dp (device-independent pixels).
+ * Dùng để kiểm soát font size của title toolbar, header... từ ViewModel.
+ */
+data class TextSize(val sizeDip: Int) : RichSpan()
+
+@AutoService(RichSpanConvert::class)
+class TextSizeConvert : RichSpanConvert {
+    override fun getAndroidSpan(richSpan: RichSpan): CharacterStyle? {
+        return if (richSpan is TextSize) AbsoluteSizeSpan(richSpan.sizeDip, true) else null
+    }
+}
+
+
+/**
+ * Span áp dụng custom Typeface (font) cho đoạn text.
+ * Dùng để kiểm soát font của title toolbar, header... từ ViewModel.
+ * Ví dụ: CustomFont(Typeface.create("sans-serif-medium", Typeface.NORMAL))
+ */
+data class CustomFont(val typeface: Typeface) : RichSpan()
+
+@AutoService(RichSpanConvert::class)
+class CustomFontConvert : RichSpanConvert {
+    override fun getAndroidSpan(richSpan: RichSpan): CharacterStyle? {
+        return (richSpan as? CustomFont)?.let { CustomFontAndroidSpan(it.typeface) }
+    }
+}
+
+private class CustomFontAndroidSpan(private val typeface: Typeface) : MetricAffectingSpan() {
+    override fun updateMeasureState(paint: TextPaint) {
+        paint.typeface = typeface
+    }
+    override fun updateDrawState(tp: TextPaint) {
+        tp.typeface = typeface
+    }
+}
+
 
 data class RoundedOutline(
     val textSize: Float,

@@ -27,7 +27,9 @@ import androidx.lifecycle.lifecycleScope
 import com.simple.launcher.retirement.presentation.base.BaseFragment
 import com.simple.adapter.utils.submitListAndAwait
 import com.simple.adapter.utils.attachAdapter
+import com.simple.launcher.retirement.utils.image.setImage
 import com.simple.launcher.retirement.utils.string.asStringRes
+import com.simple.launcher.retirement.utils.text.setText
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -44,17 +46,27 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
     override fun setupViews(view: View, savedInstanceState: Bundle?) {
         super.setupViews(view, savedInstanceState)
 
-        binding.toolbar.setNavigationIcon(R.drawable.ic_back)
-        binding.toolbar.setNavigationOnClickListener {
-            parentFragmentManager.popBackStack()
-        }
+        binding.toolbar.ivLeft.setOnClickListener { parentFragmentManager.popBackStack() }
 
         binding.rvSettings.layoutManager = GridLayoutManager(requireContext(), 2)
     }
 
     override fun observeData() {
         super.observeData()
-        
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.toolbar.collectLatest { state ->
+                binding.toolbar.tvTitle.setText(state.title)
+                val backIcon = state.backIcon
+                if (backIcon != null) {
+                    binding.toolbar.ivLeft.visibility = View.VISIBLE
+                    binding.toolbar.ivLeft.setImage(backIcon)
+                } else {
+                    binding.toolbar.ivLeft.visibility = View.GONE
+                }
+            }
+        }
+
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.items.attachAdapter().collectLatest { (items, adapters) ->
                 binding.rvSettings.submitListAndAwait(items, adapters, true)

@@ -1,28 +1,34 @@
 package com.simple.launcher.retirement.presentation.settings
 
 import android.os.Build
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.simple.launcher.retirement.presentation.base.BaseViewModel
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.domain.repository.AppRepository
+import com.simple.launcher.retirement.presentation.base.BaseViewModel
+import com.simple.launcher.retirement.presentation.base.ToolbarState
 import com.simple.launcher.retirement.utils.image.ImageRes
 import com.simple.launcher.retirement.utils.string.getString
 import com.simple.launcher.retirement.utils.text.ForegroundColor
 import com.simple.launcher.retirement.utils.text.toRich
 import com.simple.launcher.retirement.utils.text.with
+import com.simple.launcher.retirement.utils.theme.getColor
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
-import com.simple.launcher.retirement.utils.theme.getColor
 
 class SettingsViewModel(
     private val repository: AppRepository
 ) : BaseViewModel() {
+
+    val toolbar: StateFlow<ToolbarState> = combine(strings, themes) { stringMap, themeMap ->
+        val color = themeMap.getColor(android.R.attr.textColorPrimary) ?: android.graphics.Color.BLACK
+        val title = buildToolbarTitle(stringMap.getString(R.string.settings_title), color)
+        ToolbarState(title = title, backIcon = buildBackIcon(color))
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, ToolbarState.empty())
 
     private val _refreshTrigger = MutableStateFlow(0)
 

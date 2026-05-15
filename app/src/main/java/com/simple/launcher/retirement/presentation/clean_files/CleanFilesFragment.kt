@@ -6,21 +6,25 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.simple.deeplink.Deeplink
 import com.simple.deeplink.DeeplinkHandler
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.domain.repository.AppRepository
 import com.simple.launcher.retirement.databinding.FragmentCleanFilesBinding
+import com.simple.launcher.retirement.presentation.base.BaseFragment
+import com.simple.launcher.retirement.utils.image.setImage
+import com.simple.launcher.retirement.utils.text.setText
+import com.simple.launcher.retirement.utils.text.toRich
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-import com.simple.launcher.retirement.presentation.base.BaseFragment
-import com.simple.launcher.retirement.utils.text.setText
-import com.simple.launcher.retirement.utils.text.toRich
-
 class CleanFilesFragment : BaseFragment<FragmentCleanFilesBinding>() {
+
+    private val viewModel: CleanFilesViewModel by viewModels()
 
     override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentCleanFilesBinding {
         return FragmentCleanFilesBinding.inflate(inflater, container, false)
@@ -29,10 +33,7 @@ class CleanFilesFragment : BaseFragment<FragmentCleanFilesBinding>() {
     override fun setupViews(view: View, savedInstanceState: Bundle?) {
         super.setupViews(view, savedInstanceState)
 
-        binding.toolbar.setNavigationIcon(R.drawable.ic_back)
-        binding.toolbar.setNavigationOnClickListener {
-            parentFragmentManager.popBackStack()
-        }
+        binding.toolbar.ivLeft.setOnClickListener { parentFragmentManager.popBackStack() }
 
         binding.btnClean.setOnClickListener {
             binding.btnClean.isEnabled = false
@@ -40,17 +41,32 @@ class CleanFilesFragment : BaseFragment<FragmentCleanFilesBinding>() {
             binding.tvStatus.setText(getString(R.string.clean_files_running).toRich())
 
             lifecycleScope.launch {
-                val repository = AppRepository.instance
                 withContext(Dispatchers.IO) {
-                    repository.deleteStrangeFiles()
+                    AppRepository.instance.deleteStrangeFiles()
                 }
-                
+
                 binding.progressBar.visibility = View.GONE
                 binding.tvStatus.setText(getString(R.string.clean_files_completed).toRich())
                 binding.btnClean.isEnabled = true
                 binding.btnClean.setText(getString(R.string.clean_files_retry).toRich())
-                
+
                 Toast.makeText(requireContext(), R.string.clean_files_toast, Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    override fun observeData() {
+        super.observeData()
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.toolbar.collectLatest { state ->
+                binding.toolbar.tvTitle.setText(state.title)
+                val backIcon = state.backIcon
+                if (backIcon != null) {
+                    binding.toolbar.ivLeft.visibility = View.VISIBLE
+                    binding.toolbar.ivLeft.setImage(backIcon)
+                } else {
+                    binding.toolbar.ivLeft.visibility = View.GONE
+                }
             }
         }
     }
@@ -68,11 +84,11 @@ class CleanFilesDeeplinkHandler : DeeplinkHandler {
     ): Boolean {
         val transaction = fragmentActivity.supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, CleanFilesFragment())
-        
+
         if (extras?.get("addToBackStack") == true) {
             transaction.addToBackStack(null)
         }
-        
+
         transaction.commit()
         return true
     }

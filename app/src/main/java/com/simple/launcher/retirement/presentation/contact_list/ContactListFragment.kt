@@ -33,6 +33,8 @@ import com.simple.launcher.retirement.presentation.permissions.BlockPermissionBo
 import com.simple.launcher.retirement.presentation.permissions.FilePermissionBottomSheet
 
 import com.simple.launcher.retirement.presentation.base.BaseFragment
+import com.simple.launcher.retirement.utils.image.setImage
+import com.simple.launcher.retirement.utils.text.setText
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -59,9 +61,7 @@ class ContactListFragment : BaseFragment<FragmentAppListBinding>() {
     override fun setupViews(view: View, savedInstanceState: Bundle?) {
         super.setupViews(view, savedInstanceState)
 
-        binding.toolbar.title = getString(R.string.contact_list_title)
-        binding.toolbar.setNavigationIcon(R.drawable.ic_back)
-        binding.toolbar.setNavigationOnClickListener { parentFragmentManager.popBackStack() }
+        binding.toolbar.ivLeft.setOnClickListener { parentFragmentManager.popBackStack() }
 
         binding.btnSave.setOnClickListener {
             checkPermissionsAndSave()
@@ -72,6 +72,19 @@ class ContactListFragment : BaseFragment<FragmentAppListBinding>() {
 
     override fun observeData() {
         super.observeData()
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.toolbar.collectLatest { state ->
+                binding.toolbar.tvTitle.setText(state.title)
+                val backIcon = state.backIcon
+                if (backIcon != null) {
+                    binding.toolbar.ivLeft.visibility = View.VISIBLE
+                    binding.toolbar.ivLeft.setImage(backIcon)
+                } else {
+                    binding.toolbar.ivLeft.visibility = View.GONE
+                }
+            }
+        }
+
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.items.asFlow().attachAdapter().collectLatest { (items, adapters) ->
                 binding.rvAppList.submitListAndAwait(items, adapters, true)

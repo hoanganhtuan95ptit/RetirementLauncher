@@ -5,13 +5,11 @@
     android:layout_height="match_parent"
     android:background="?android:attr/colorBackground">
 
-    <androidx.appcompat.widget.Toolbar
+    <include
         android:id="@+id/toolbar"
+        layout="@layout/layout_toolbar"
         android:layout_width="0dp"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        app:title="@string/clean_memory_title"
-        app:titleTextColor="@android:color/white"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

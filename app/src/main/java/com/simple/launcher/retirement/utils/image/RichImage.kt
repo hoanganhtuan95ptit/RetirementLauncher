@@ -6,17 +6,18 @@ import android.graphics.drawable.Drawable
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.Transformation
+import jp.wasabeef.glide.transformations.ColorFilterTransformation
 
 fun ImageView.setImage(source: RichImage, vararg transformations: Transformation<Bitmap>) = when (source) {
+
+    is ImageRes -> Glide.with(context)
+        .load(source.data)
+        .transform(*transformations, ColorFilterTransformation(source.colorFilter))
+        .into(this)
 
     is RichImageData -> Glide.with(context)
         .load(source.data)
         .transform(*transformations)
-        .into(this)
-
-    else -> Glide.with(context).asBitmap()
-        .transform(*transformations)
-        .load(source)
         .into(this)
 }
 

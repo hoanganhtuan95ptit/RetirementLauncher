@@ -13,16 +13,30 @@ import com.simple.launcher.retirement.domain.model.ContactEntity
 import com.simple.launcher.retirement.domain.model.SelectableContactEntity
 import com.simple.launcher.retirement.domain.repository.AppRepository
 import com.simple.launcher.retirement.presentation.base.BaseViewModel
+import com.simple.launcher.retirement.presentation.base.ToolbarState
 import com.simple.launcher.retirement.utils.image.ImagePath
 import com.simple.launcher.retirement.utils.image.ImageRes
+import com.simple.launcher.retirement.utils.string.getString
 import com.simple.launcher.retirement.utils.text.toRich
+import com.simple.launcher.retirement.utils.theme.getColor
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class ContactListViewModel(
     private val repository: AppRepository
 ) : BaseViewModel() {
+
+    // Toolbar state — title với màu, size, font từ theme; backIcon với màu từ theme
+    val toolbar: StateFlow<ToolbarState> = combine(strings, themes) { stringMap, themeMap ->
+        val color = themeMap.getColor(android.R.attr.textColorPrimary) ?: android.graphics.Color.BLACK
+        val title = buildToolbarTitle(stringMap.getString(R.string.contact_list_title), color)
+        ToolbarState(title = title, backIcon = buildBackIcon(color))
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, ToolbarState.empty())
 
     // Nội bộ: domain entities
     private val _contacts = MutableLiveData<List<SelectableContactEntity>>()
