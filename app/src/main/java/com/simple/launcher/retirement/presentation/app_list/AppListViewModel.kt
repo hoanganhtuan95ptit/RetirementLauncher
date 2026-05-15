@@ -1,6 +1,7 @@
 package com.simple.launcher.retirement.presentation.app_list
 
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.domain.model.SelectableAppEntity
 import com.simple.launcher.retirement.domain.usecase.GetSelectableAppsUseCase
@@ -13,15 +14,13 @@ import com.simple.launcher.retirement.presentation.base.buildActionState
 import com.simple.launcher.retirement.presentation.base.buildBackIcon
 import com.simple.launcher.retirement.presentation.base.buildSearchState
 import com.simple.launcher.retirement.presentation.base.buildToolbarTitle
+import com.simple.launcher.retirement.utils.combineState
 import com.simple.launcher.retirement.utils.image.ImageDrawable
 import com.simple.launcher.retirement.utils.string.getString
 import com.simple.launcher.retirement.utils.text.toRich
 import com.simple.launcher.retirement.utils.theme.getColor
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.stateIn
 
 class AppListViewModel(
     private val getSelectableAppsUseCase: GetSelectableAppsUseCase,
@@ -29,13 +28,23 @@ class AppListViewModel(
 ) : BaseViewModel() {
 
     // Toolbar state — title với màu, size, font từ theme; backIcon với màu từ theme
-    val toolbar: StateFlow<ToolbarState> = combine(strings, themes) { stringMap, themeMap ->
+    val toolbar: StateFlow<ToolbarState> = combineState(
+        flow1 = strings,
+        flow2 = themes,
+        initialValue = ToolbarState.empty()
+    ) { stringMap, themeMap ->
         val color = themeMap.getColor(android.R.attr.textColorPrimary) ?: android.graphics.Color.BLACK
-        val title = buildToolbarTitle(stringMap.getString(R.string.setting_app_list), color)
-        ToolbarState(title = title, backIcon = buildBackIcon(color))
-    }.stateIn(viewModelScope, SharingStarted.Eagerly, ToolbarState.empty())
+        ToolbarState(
+            title = buildToolbarTitle(stringMap.getString(R.string.setting_app_list), color),
+            backIcon = buildBackIcon(color)
+        )
+    }
 
-    val searchState: StateFlow<SearchState> = combine(strings, themes) { stringMap, themeMap ->
+    val searchState: StateFlow<SearchState> = combineState(
+        flow1 = strings,
+        flow2 = themes,
+        initialValue = SearchState.empty()
+    ) { stringMap, themeMap ->
         val textColor = themeMap.getColor(android.R.attr.textColorPrimary) ?: android.graphics.Color.BLACK
         val hintColor = themeMap.getColor(android.R.attr.textColorSecondary) ?: android.graphics.Color.GRAY
         val backgroundColor = themeMap.getColor(android.R.attr.colorControlHighlight) ?: android.graphics.Color.LTGRAY
@@ -46,9 +55,13 @@ class AppListViewModel(
             hintColor = hintColor,
             backgroundColor = backgroundColor
         )
-    }.stateIn(viewModelScope, SharingStarted.Eagerly, SearchState.empty())
+    }
 
-    val saveAction: StateFlow<ActionState> = combine(strings, themes) { stringMap, themeMap ->
+    val saveAction: StateFlow<ActionState> = combineState(
+        flow1 = strings,
+        flow2 = themes,
+        initialValue = ActionState.empty()
+    ) { stringMap, themeMap ->
         val color = themeMap.getColor(android.R.attr.textColorPrimary) ?: android.graphics.Color.BLACK
         val backgroundColor = themeMap.getColor(android.R.attr.colorControlHighlight) ?: android.graphics.Color.LTGRAY
 
@@ -57,19 +70,19 @@ class AppListViewModel(
             textColor = color,
             backgroundColor = backgroundColor
         )
-    }.stateIn(viewModelScope, SharingStarted.Eagerly, ActionState.empty())
+    }
 
     // Nội bộ: domain entities
     private val _apps = MutableStateFlow<List<SelectableAppEntity>>(emptyList())
     private val _query = MutableStateFlow("")
 
     // Expose ra ngoài: ViewItems đã được xử lý sẵn, adapter chỉ set data
-    val items: StateFlow<List<SelectableAppItem>> = combine(_apps, _query) { apps, query ->
-        filterApps(apps, query)
-    }.stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
-
-    private fun filterApps(entities: List<SelectableAppEntity>, query: String): List<SelectableAppItem> {
-        return entities.filter {
+    val items: StateFlow<List<SelectableAppItem>> = combineState(
+        flow1 = _apps,
+        flow2 = _query,
+        initialValue = emptyList()
+    ) { apps, query ->
+        apps.filter {
             query.isBlank() || it.app.label.contains(query, ignoreCase = true)
         }.map { entity ->
             SelectableAppItem(
@@ -102,5 +115,18 @@ class AppListViewModel(
     fun saveSelection() {
         val selectedPackages = _apps.value.filter { it.isSelected }.map { it.app.packageName }.toSet()
         saveSelectedAppsUseCase(selectedPackages)
+    }
+}
+
+class AppListViewModelFactory(
+    private val getSelectableAppsUseCase: GetSelectableAppsUseCase,
+    private val saveSelectedAppsUseCase: SaveSelectedAppsUseCase
+) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(AppListViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return AppListViewModel(getSelectableAppsUseCase, saveSelectedAppsUseCase) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }

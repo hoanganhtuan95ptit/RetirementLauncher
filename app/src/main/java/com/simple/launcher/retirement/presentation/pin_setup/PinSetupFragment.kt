@@ -56,7 +56,7 @@ class PinSetupFragment : BaseFragment<FragmentPinSetupBinding>() {
             binding.root.setBackground(background)
         }
 
-        viewModel.state.observe(viewLifecycleOwner) { state ->
+        viewModel.state.observe(this) { state ->
             binding.etPin.text.clear()
             when (state) {
                 PinSetupViewModel.State.ENTER_OLD_PIN -> {
@@ -75,7 +75,7 @@ class PinSetupFragment : BaseFragment<FragmentPinSetupBinding>() {
             }
         }
 
-        viewModel.error.observe(viewLifecycleOwner) { error ->
+        viewModel.error.observe(this) { error ->
             binding.tvError.setText(error?.toRich())
         }
 

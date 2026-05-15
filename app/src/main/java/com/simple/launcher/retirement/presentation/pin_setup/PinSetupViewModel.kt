@@ -1,8 +1,5 @@
 package com.simple.launcher.retirement.presentation.pin_setup
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.domain.usecase.CheckPinUseCase
 import com.simple.launcher.retirement.domain.usecase.HasPinUseCase
@@ -10,22 +7,14 @@ import com.simple.launcher.retirement.domain.usecase.SavePinUseCase
 import com.simple.launcher.retirement.presentation.base.ActionState
 import com.simple.launcher.retirement.presentation.base.BaseViewModel
 import com.simple.launcher.retirement.presentation.base.ToolbarState
+import com.simple.launcher.retirement.presentation.base.buildActionState
 import com.simple.launcher.retirement.presentation.base.buildBackIcon
 import com.simple.launcher.retirement.presentation.base.buildToolbarTitle
-import com.simple.launcher.retirement.utils.background.Background
-import com.simple.launcher.retirement.utils.size.DP
+import com.simple.launcher.retirement.utils.combineState
 import com.simple.launcher.retirement.utils.string.getString
-import com.simple.launcher.retirement.utils.text.Bold
-import com.simple.launcher.retirement.utils.text.ForegroundColor
-import com.simple.launcher.retirement.utils.text.TextSize
-import com.simple.launcher.retirement.utils.text.toRich
-import com.simple.launcher.retirement.utils.text.with
 import com.simple.launcher.retirement.utils.theme.getColor
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.stateIn
 
 class PinSetupViewModel(
     private val hasPinUseCase: HasPinUseCase,
@@ -40,50 +29,51 @@ class PinSetupViewModel(
         SUCCESS
     }
 
-    private val _state = MutableLiveData<State>()
-    val state: LiveData<State> = _state
+    private val _state = MutableStateFlow<State>(State.ENTER_NEW_PIN)
+    val state: StateFlow<State> = _state
 
-    private val _actionRes = MutableStateFlow(R.string.back) // Sẽ update theo state
+    private val _actionRes = MutableStateFlow(R.string.back)
 
-    val toolbar: StateFlow<ToolbarState> = combine(strings, themes) { stringMap, themeMap ->
+    val toolbar: StateFlow<ToolbarState> = combineState(
+        flow1 = strings,
+        flow2 = themes,
+        initialValue = ToolbarState.empty()
+    ) { stringMap, themeMap ->
         val color = themeMap.getColor(android.R.attr.textColorPrimary) ?: android.graphics.Color.BLACK
         ToolbarState(
             title = buildToolbarTitle(stringMap.getString(R.string.setting_pin), color),
             backIcon = buildBackIcon(color)
         )
-    }.stateIn(viewModelScope, SharingStarted.Eagerly, ToolbarState.empty())
+    }
 
-    val action: StateFlow<ActionState> = combine(strings, themes, _actionRes) { stringMap, themeMap, actionRes ->
+    val action: StateFlow<ActionState> = combineState(
+        flow1 = strings,
+        flow2 = themes,
+        flow3 = _actionRes,
+        initialValue = ActionState.empty()
+    ) { stringMap, themeMap, actionRes ->
         val color = themeMap.getColor(android.R.attr.textColorPrimary) ?: android.graphics.Color.BLACK
         val backgroundColor = themeMap.getColor(android.R.attr.colorControlHighlight) ?: android.graphics.Color.LTGRAY
 
-        val text = stringMap.getString(actionRes)
-            .toRich()
-            .with(ForegroundColor(color), TextSize(18), Bold)
-            
-        val background = Background(
-            backgroundColor = backgroundColor,
-            cornerRadius_TL = DP.DP_12,
-            cornerRadius_TR = DP.DP_12,
-            cornerRadius_BL = DP.DP_12,
-            cornerRadius_BR = DP.DP_12
+        buildActionState(
+            text = stringMap.getString(actionRes),
+            textColor = color,
+            backgroundColor = backgroundColor
         )
-            
-        ActionState(text = text, background = background)
-    }.stateIn(viewModelScope, SharingStarted.Eagerly, ActionState.empty())
+    }
 
-    private val _error = MutableLiveData<String?>()
-    val error: LiveData<String?> = _error
+    private val _error = MutableStateFlow<String?>(null)
+    val error: StateFlow<String?> = _error
 
     private var tempPin: String = ""
 
     init {
         if (hasPinUseCase()) {
             _state.value = State.ENTER_OLD_PIN
-            _actionRes.value = R.string.back // Hoặc "Xác nhận" tùy ý, ví dụ R.string.save
+            _actionRes.value = R.string.back
         } else {
             _state.value = State.ENTER_NEW_PIN
-            _actionRes.value = R.string.onboarding_start // Hoặc text phù hợp
+            _actionRes.value = R.string.onboarding_start
         }
     }
 
@@ -98,7 +88,7 @@ class PinSetupViewModel(
             State.ENTER_OLD_PIN -> {
                 if (checkPinUseCase(pin)) {
                     _state.value = State.ENTER_NEW_PIN
-                    _actionRes.value = R.string.back // Cập nhật text nút nếu cần
+                    _actionRes.value = R.string.back
                 } else {
                     _error.value = "Mã PIN cũ không chính xác"
                 }

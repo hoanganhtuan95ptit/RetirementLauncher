@@ -6,15 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import com.simple.launcher.retirement.databinding.BottomSheetPinVerifyBinding
 import com.simple.launcher.retirement.domain.repository.AppRepository
 import com.simple.launcher.retirement.presentation.base.BaseBottomSheetDialogFragment
 import com.simple.launcher.retirement.utils.background.setBackground
+import com.simple.launcher.retirement.utils.lifecycle.observe
 import com.simple.launcher.retirement.utils.text.setText
 import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 class PinVerifyBottomSheet(private val onSuccess: () -> Unit) : BaseBottomSheetDialogFragment<BottomSheetPinVerifyBinding, PinVerifyViewModel>() {
 
@@ -47,11 +45,9 @@ class PinVerifyBottomSheet(private val onSuccess: () -> Unit) : BaseBottomSheetD
 
     override fun observeData() {
         super.observeData()
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.action.collectLatest { state ->
-                binding.btnVerify.tvAction.setText(state.text)
-                binding.btnVerify.tvAction.setBackground(state.background)
-            }
+        viewModel.action.observe(this) { state ->
+            binding.btnVerify.tvAction.setText(state.text)
+            binding.btnVerify.tvAction.setBackground(state.background)
         }
     }
 

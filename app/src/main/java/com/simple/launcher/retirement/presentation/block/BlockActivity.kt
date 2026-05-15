@@ -5,15 +5,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
-import androidx.lifecycle.lifecycleScope
 import com.simple.launcher.retirement.databinding.ActivityBlockBinding
 import com.simple.launcher.retirement.presentation.base.BaseActivity
 import com.simple.launcher.retirement.presentation.main.MainActivity
 import com.simple.launcher.retirement.utils.background.setBackground
+import com.simple.launcher.retirement.utils.lifecycle.observe
 import com.simple.launcher.retirement.utils.text.setText
 import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 class BlockActivity : BaseActivity<ActivityBlockBinding>() {
 
@@ -40,11 +38,10 @@ class BlockActivity : BaseActivity<ActivityBlockBinding>() {
 
     override fun observeData() {
         super.observeData()
-        lifecycleScope.launch {
-            viewModel.action.collectLatest { state ->
-                binding.btnGoHome.tvAction.setText(state.text)
-                binding.btnGoHome.tvAction.setBackground(state.background)
-            }
+        // Activity implement LifecycleOwner → dùng overload observe(lifecycleOwner)
+        viewModel.action.observe(this) { state ->
+            binding.btnGoHome.tvAction.setText(state.text)
+            binding.btnGoHome.tvAction.setBackground(state.background)
         }
     }
 }

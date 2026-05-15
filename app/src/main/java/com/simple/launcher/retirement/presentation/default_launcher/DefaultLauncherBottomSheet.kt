@@ -12,14 +12,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import com.simple.launcher.retirement.databinding.BottomSheetDefaultLauncherBinding
 import com.simple.launcher.retirement.presentation.base.BaseBottomSheetDialogFragment
 import com.simple.launcher.retirement.utils.background.setBackground
+import com.simple.launcher.retirement.utils.lifecycle.observe
 import com.simple.launcher.retirement.utils.text.setText
 import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 class DefaultLauncherBottomSheet(private val onResult: (() -> Unit)? = null) : BaseBottomSheetDialogFragment<BottomSheetDefaultLauncherBinding, DefaultLauncherViewModel>() {
 
@@ -52,17 +50,13 @@ class DefaultLauncherBottomSheet(private val onResult: (() -> Unit)? = null) : B
 
     override fun observeData() {
         super.observeData()
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.action.collectLatest { state ->
-                binding.btnSetDefault.tvAction.setText(state.text)
-                binding.btnSetDefault.tvAction.setBackground(state.background)
-            }
+        viewModel.action.observe(this) { state ->
+            binding.btnSetDefault.tvAction.setText(state.text)
+            binding.btnSetDefault.tvAction.setBackground(state.background)
         }
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.cancelAction.collectLatest { state ->
-                binding.btnCancel.tvAction.setText(state.text)
-                binding.btnCancel.tvAction.setBackground(state.background)
-            }
+        viewModel.cancelAction.observe(this) { state ->
+            binding.btnCancel.tvAction.setText(state.text)
+            binding.btnCancel.tvAction.setBackground(state.background)
         }
     }
 

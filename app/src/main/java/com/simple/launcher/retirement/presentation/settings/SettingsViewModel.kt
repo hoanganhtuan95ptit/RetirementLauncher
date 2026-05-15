@@ -3,13 +3,13 @@ package com.simple.launcher.retirement.presentation.settings
 import android.os.Build
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.domain.repository.AppRepository
 import com.simple.launcher.retirement.presentation.base.BaseViewModel
 import com.simple.launcher.retirement.presentation.base.ToolbarState
 import com.simple.launcher.retirement.presentation.base.buildBackIcon
 import com.simple.launcher.retirement.presentation.base.buildToolbarTitle
+import com.simple.launcher.retirement.utils.combineState
 import com.simple.launcher.retirement.utils.image.ImageRes
 import com.simple.launcher.retirement.utils.string.getString
 import com.simple.launcher.retirement.utils.text.ForegroundColor
@@ -17,27 +17,35 @@ import com.simple.launcher.retirement.utils.text.toRich
 import com.simple.launcher.retirement.utils.text.with
 import com.simple.launcher.retirement.utils.theme.getColor
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.stateIn
 
 class SettingsViewModel(
     private val repository: AppRepository
 ) : BaseViewModel() {
 
-    val toolbar: StateFlow<ToolbarState> = combine(strings, themes) { stringMap, themeMap ->
+    val toolbar: StateFlow<ToolbarState> = combineState(
+        flow1 = strings,
+        flow2 = themes,
+        initialValue = ToolbarState.empty()
+    ) { stringMap, themeMap ->
         val color = themeMap.getColor(android.R.attr.textColorPrimary) ?: android.graphics.Color.BLACK
-        val title = buildToolbarTitle(stringMap.getString(R.string.settings_title), color)
-        ToolbarState(title = title, backIcon = buildBackIcon(color))
-    }.stateIn(viewModelScope, SharingStarted.Eagerly, ToolbarState.empty())
+        ToolbarState(
+            title = buildToolbarTitle(stringMap.getString(R.string.settings_title), color),
+            backIcon = buildBackIcon(color)
+        )
+    }
 
     private val _refreshTrigger = MutableStateFlow(0)
 
-    val items: StateFlow<List<SettingItem>> = combine(strings, themes, _refreshTrigger) { stringMap, themeMap, _ ->
+    val items: StateFlow<List<SettingItem>> = combineState(
+        flow1 = strings,
+        flow2 = themes,
+        flow3 = _refreshTrigger,
+        initialValue = emptyList()
+    ) { stringMap, themeMap, _ ->
         val textColor = themeMap.getColor(android.R.attr.textColorPrimary) ?: android.graphics.Color.BLACK
         val settingsItems = mutableListOf<SettingItem>()
-        
+
         fun Int.toSettingRichText() = stringMap.getString(this).toRich().with(ForegroundColor(textColor))
 
         if (repository.hasPin()) {
@@ -58,12 +66,12 @@ class SettingsViewModel(
             settingsItems.add(SettingItem(SettingItem.ID_TOGGLE_CALL_BLOCK, R.string.setting_call_block.toSettingRichText(), ImageRes(android.R.drawable.ic_menu_call), true, repository.isCallBlockEnabled()))
         }
         settingsItems
-    }.stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
+    }
 
     fun loadSettings() {
         _refreshTrigger.value++
     }
-    
+
     fun updateItem(item: SettingItem) {
         _refreshTrigger.value++
     }

@@ -17,6 +17,7 @@ import com.simple.launcher.retirement.presentation.base.buildActionState
 import com.simple.launcher.retirement.presentation.base.buildBackIcon
 import com.simple.launcher.retirement.presentation.base.buildSearchState
 import com.simple.launcher.retirement.presentation.base.buildToolbarTitle
+import com.simple.launcher.retirement.utils.combineState
 import com.simple.launcher.retirement.utils.image.ImagePath
 import com.simple.launcher.retirement.utils.image.ImageRes
 import com.simple.launcher.retirement.utils.string.getString
@@ -24,10 +25,7 @@ import com.simple.launcher.retirement.utils.text.toRich
 import com.simple.launcher.retirement.utils.theme.getColor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -36,13 +34,23 @@ class ContactListViewModel(
 ) : BaseViewModel() {
 
     // Toolbar state — title với màu, size, font từ theme; backIcon với màu từ theme
-    val toolbar: StateFlow<ToolbarState> = combine(strings, themes) { stringMap, themeMap ->
+    val toolbar: StateFlow<ToolbarState> = combineState(
+        flow1 = strings,
+        flow2 = themes,
+        initialValue = ToolbarState.empty()
+    ) { stringMap, themeMap ->
         val color = themeMap.getColor(android.R.attr.textColorPrimary) ?: android.graphics.Color.BLACK
-        val title = buildToolbarTitle(stringMap.getString(R.string.contact_list_title), color)
-        ToolbarState(title = title, backIcon = buildBackIcon(color))
-    }.stateIn(viewModelScope, SharingStarted.Eagerly, ToolbarState.empty())
+        ToolbarState(
+            title = buildToolbarTitle(stringMap.getString(R.string.contact_list_title), color),
+            backIcon = buildBackIcon(color)
+        )
+    }
 
-    val searchState: StateFlow<SearchState> = combine(strings, themes) { stringMap, themeMap ->
+    val searchState: StateFlow<SearchState> = combineState(
+        flow1 = strings,
+        flow2 = themes,
+        initialValue = SearchState.empty()
+    ) { stringMap, themeMap ->
         val textColor = themeMap.getColor(android.R.attr.textColorPrimary) ?: android.graphics.Color.BLACK
         val hintColor = themeMap.getColor(android.R.attr.textColorSecondary) ?: android.graphics.Color.GRAY
         val backgroundColor = themeMap.getColor(android.R.attr.colorControlHighlight) ?: android.graphics.Color.LTGRAY
@@ -53,9 +61,13 @@ class ContactListViewModel(
             hintColor = hintColor,
             backgroundColor = backgroundColor
         )
-    }.stateIn(viewModelScope, SharingStarted.Eagerly, SearchState.empty())
+    }
 
-    val saveAction: StateFlow<ActionState> = combine(strings, themes) { stringMap, themeMap ->
+    val saveAction: StateFlow<ActionState> = combineState(
+        flow1 = strings,
+        flow2 = themes,
+        initialValue = ActionState.empty()
+    ) { stringMap, themeMap ->
         val color = themeMap.getColor(android.R.attr.textColorPrimary) ?: android.graphics.Color.BLACK
         val backgroundColor = themeMap.getColor(android.R.attr.colorControlHighlight) ?: android.graphics.Color.LTGRAY
 
@@ -64,19 +76,19 @@ class ContactListViewModel(
             textColor = color,
             backgroundColor = backgroundColor
         )
-    }.stateIn(viewModelScope, SharingStarted.Eagerly, ActionState.empty())
+    }
 
     // Nội bộ: domain entities
     private val _contacts = MutableStateFlow<List<SelectableContactEntity>>(emptyList())
     private val _query = MutableStateFlow("")
 
     // Expose ra ngoài: ViewItems đã được xử lý sẵn, adapter chỉ set data
-    val items: StateFlow<List<SelectableContactItem>> = combine(_contacts, _query) { contacts, query ->
-        filterContacts(contacts, query)
-    }.stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
-
-    private fun filterContacts(entities: List<SelectableContactEntity>, query: String): List<SelectableContactItem> {
-        return entities.filter {
+    val items: StateFlow<List<SelectableContactItem>> = combineState(
+        flow1 = _contacts,
+        flow2 = _query,
+        initialValue = emptyList()
+    ) { contacts, query ->
+        contacts.filter {
             query.isBlank() || it.contact.name.contains(query, ignoreCase = true)
         }.map { entity ->
             val photo = if (entity.contact.photoUri != null) {
