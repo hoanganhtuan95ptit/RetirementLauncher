@@ -14,7 +14,7 @@ Dự án sử dụng cơ chế Generics kết hợp với ViewBinding để tự
 |---|---|---|
 | `BaseFragment<VB>` | `com.simple.launcher.retirement.presentation.base` | Base class cho tất cả các Fragment thông thường |
 | `BaseDialogFragment<VB>` | `com.simple.launcher.retirement.presentation.base` | Base class cho các DialogFragment |
-| `BaseBottomSheetDialogFragment<VB>` | `com.simple.launcher.retirement.presentation.base` | Base class cho các BottomSheet (Material Design) |
+| `BaseBottomSheetDialogFragment<VB, VM>` | `com.simple.launcher.retirement.presentation.base` | Base class cho các BottomSheet (Material Design) — yêu cầu 2 type params: ViewBinding và ViewModel |
 
 ## Hướng dẫn sử dụng
 
@@ -53,7 +53,9 @@ override fun setupViews(view: View, savedInstanceState: Bundle?) {
 
 override fun observeData() {
     super.observeData()
-    viewModel.data.observe(viewLifecycleOwner) { /* ... */ }
+    // Dùng extension function Flow<T>.observe(Fragment) từ utils/lifecycle/LifecycleExt.kt
+    // KHÔNG dùng viewLifecycleOwner.lifecycleScope.launch { ... } thủ công
+    viewModel.data.observe(this) { /* ... */ }
 }
 ```
 
@@ -65,20 +67,53 @@ override fun observeData() {
 
 ## Ví dụ đầy đủ (BottomSheet)
 
+`BaseBottomSheetDialogFragment` có **2 type params**: `<VB : ViewBinding, VM : BaseViewModel>`. Subclass **bắt buộc** khai báo `override val viewModel: VM` — đây là property abstract mà base class dùng để tự observe `bottomSheet` state (background, anchor).
+
 ```kotlin
-class MyBottomSheet : BaseBottomSheetDialogFragment<BottomSheetMyBinding>() {
+class MyBottomSheet : BaseBottomSheetDialogFragment<BottomSheetMyBinding, MyViewModel>() {
+
+    // BẮT BUỘC: base class dùng viewModel để observe bottomSheet state
+    override val viewModel: MyViewModel by viewModels()
 
     override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?) =
         BottomSheetMyBinding.inflate(inflater, container, false)
 
     override fun setupViews(view: View, savedInstanceState: Bundle?) {
         super.setupViews(view, savedInstanceState)
-        binding.tvTitle.text = "Hello World"
+        binding.btnConfirm.root.setOnSafeClickListener { /* ... */ }
     }
 
     override fun observeData() {
         super.observeData()
-        // Collect flows here
+        // Dùng extension Flow<T>.observe(Fragment) — import từ utils.lifecycle.observe
+        viewModel.action.observe(this) { state ->
+            binding.btnConfirm.tvAction.setText(state.text)
+            binding.btnConfirm.tvAction.setBackground(state.background)
+        }
+    }
+}
+```
+
+**Lý do phải có `viewModel`**: `BaseBottomSheetDialogFragment.onViewCreated()` tự gọi `observeBottomSheetState()` — hàm này collect `viewModel.bottomSheet` để set background, bo góc, anchor color cho BottomSheet. Nếu thiếu property này sẽ lỗi compile.
+
+## Ví dụ đầy đủ (Fragment)
+
+```kotlin
+class HomeFragment : BaseFragment<FragmentHomeBinding>() {
+
+    private val viewModel: HomeViewModel by viewModels { HomeViewModelFactory(...) }
+
+    override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?) =
+        FragmentHomeBinding.inflate(inflater, container, false)
+
+    override fun setupViews(view: View, savedInstanceState: Bundle?) {
+        super.setupViews(view, savedInstanceState)
+        binding.btnAction.setOnSafeClickListener { /* ... */ }
+    }
+
+    override fun observeData() {
+        super.observeData()
+        viewModel.items.observe(this) { /* bind to RecyclerView */ }
     }
 }
 ```
@@ -87,4 +122,16 @@ class MyBottomSheet : BaseBottomSheetDialogFragment<BottomSheetMyBinding>() {
 
 - **Không override `onCreateView` hoặc `onViewCreated`** trừ khi thực sự cần thiết. Nếu override, phải gọi `super`.
 - **Luôn sử dụng `binding`** thay vì `_binding` để tránh null check không cần thiết.
-- **`BaseActivity`** cũng có sẵn trong gói `base` nhưng có signature hơi khác (không có `container` trong `inflateBinding`).
+- **`BaseBottomSheetDialogFragment` yêu cầu 2 type params** `<VB, VM>` và property `abstract val viewModel: VM`. Thiếu một trong hai sẽ lỗi compile.
+- **`BaseActivity`** cũng có sẵn trong gói `base` nhưng có signature hơi khác: `inflateBinding(inflater: LayoutInflater)` — không có `container`.
+- **Để observe Flow trong Fragment/BottomSheet**, dùng extension function `Flow<T>.observe(this) { }` từ `com.simple.launcher.retirement.utils.lifecycle` — KHÔNG dùng `lifecycleScope.launch { collectLatest { } }` thủ công.
+
+## Import cần thiết
+
+```kotlin
+import com.simple.launcher.retirement.utils.lifecycle.observe  // Flow<T>.observe(Fragment)
+import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
+import com.simple.launcher.retirement.utils.text.setText
+import com.simple.launcher.retirement.utils.image.setImage
+import com.simple.launcher.retirement.utils.background.setBackground
+```

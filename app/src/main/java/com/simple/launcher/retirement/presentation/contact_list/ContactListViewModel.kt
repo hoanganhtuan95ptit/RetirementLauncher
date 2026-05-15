@@ -2,11 +2,8 @@ package com.simple.launcher.retirement.presentation.contact_list
 
 import android.content.Context
 import android.provider.ContactsContract
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.domain.model.ContactEntity
@@ -14,13 +11,19 @@ import com.simple.launcher.retirement.domain.model.SelectableContactEntity
 import com.simple.launcher.retirement.domain.repository.AppRepository
 import com.simple.launcher.retirement.presentation.base.ActionState
 import com.simple.launcher.retirement.presentation.base.BaseViewModel
+import com.simple.launcher.retirement.presentation.base.SearchState
 import com.simple.launcher.retirement.presentation.base.ToolbarState
+import com.simple.launcher.retirement.presentation.base.buildActionState
+import com.simple.launcher.retirement.presentation.base.buildBackIcon
+import com.simple.launcher.retirement.presentation.base.buildSearchState
+import com.simple.launcher.retirement.presentation.base.buildToolbarTitle
 import com.simple.launcher.retirement.utils.image.ImagePath
 import com.simple.launcher.retirement.utils.image.ImageRes
 import com.simple.launcher.retirement.utils.string.getString
 import com.simple.launcher.retirement.utils.text.toRich
 import com.simple.launcher.retirement.utils.theme.getColor
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -39,6 +42,19 @@ class ContactListViewModel(
         ToolbarState(title = title, backIcon = buildBackIcon(color))
     }.stateIn(viewModelScope, SharingStarted.Eagerly, ToolbarState.empty())
 
+    val searchState: StateFlow<SearchState> = combine(strings, themes) { stringMap, themeMap ->
+        val textColor = themeMap.getColor(android.R.attr.textColorPrimary) ?: android.graphics.Color.BLACK
+        val hintColor = themeMap.getColor(android.R.attr.textColorSecondary) ?: android.graphics.Color.GRAY
+        val backgroundColor = themeMap.getColor(android.R.attr.colorControlHighlight) ?: android.graphics.Color.LTGRAY
+
+        buildSearchState(
+            hint = stringMap.getString(R.string.search),
+            textColor = textColor,
+            hintColor = hintColor,
+            backgroundColor = backgroundColor
+        )
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, SearchState.empty())
+
     val saveAction: StateFlow<ActionState> = combine(strings, themes) { stringMap, themeMap ->
         val color = themeMap.getColor(android.R.attr.textColorPrimary) ?: android.graphics.Color.BLACK
         val backgroundColor = themeMap.getColor(android.R.attr.colorControlHighlight) ?: android.graphics.Color.LTGRAY
@@ -51,11 +67,18 @@ class ContactListViewModel(
     }.stateIn(viewModelScope, SharingStarted.Eagerly, ActionState.empty())
 
     // Nội bộ: domain entities
-    private val _contacts = MutableLiveData<List<SelectableContactEntity>>()
+    private val _contacts = MutableStateFlow<List<SelectableContactEntity>>(emptyList())
+    private val _query = MutableStateFlow("")
 
     // Expose ra ngoài: ViewItems đã được xử lý sẵn, adapter chỉ set data
-    val items: LiveData<List<SelectableContactItem>> = _contacts.map { entities ->
-        entities.map { entity ->
+    val items: StateFlow<List<SelectableContactItem>> = combine(_contacts, _query) { contacts, query ->
+        filterContacts(contacts, query)
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
+
+    private fun filterContacts(entities: List<SelectableContactEntity>, query: String): List<SelectableContactItem> {
+        return entities.filter {
+            query.isBlank() || it.contact.name.contains(query, ignoreCase = true)
+        }.map { entity ->
             val photo = if (entity.contact.photoUri != null) {
                 ImagePath(entity.contact.photoUri)
             } else {
@@ -68,6 +91,10 @@ class ContactListViewModel(
                 entity = entity
             )
         }
+    }
+
+    fun search(text: String) {
+        _query.value = text
     }
 
     fun loadContacts(context: Context) {
@@ -111,7 +138,7 @@ class ContactListViewModel(
 
     // Nhận entity từ EventBus (adapter gửi nguyên entity, không toggle), ViewModel xử lý toggle
     fun updateItem(entity: SelectableContactEntity) {
-        val currentList = _contacts.value?.toMutableList() ?: return
+        val currentList = _contacts.value.toMutableList()
         val index = currentList.indexOfFirst { it.contact.id == entity.contact.id }
         if (index != -1) {
             currentList[index] = currentList[index].copy(isSelected = !currentList[index].isSelected)
@@ -120,7 +147,7 @@ class ContactListViewModel(
     }
 
     fun saveSelection() {
-        val selected = _contacts.value?.filter { it.isSelected }?.map { it.contact } ?: emptyList()
+        val selected = _contacts.value.filter { it.isSelected }.map { it.contact }
         repository.saveSelectedContacts(selected)
     }
 }

@@ -149,23 +149,27 @@ AppListEventBus.post(item.copy(isSelected = !item.isSelected))
 
 ### Quy tắc 5 — ViewModel giữ domain entities nội bộ, expose ViewItems ra ngoài
 
+Dùng `MutableStateFlow` (không phải `MutableLiveData`) cho state nội bộ, expose bằng `StateFlow`.
+
 ```kotlin
 class AppListViewModel : BaseViewModel() {
 
     // Nội bộ: domain entities (để saveSelection, updateItem dễ xử lý)
-    private val _apps = MutableLiveData<List<SelectableAppEntity>>()
+    private val _apps = MutableStateFlow<List<SelectableAppEntity>>(emptyList())
+    private val _query = MutableStateFlow("")
 
     // Expose: ViewItems đã map sẵn — Fragment/Adapter chỉ nhận ViewItems
-    val items: LiveData<List<SelectableAppItem>> = _apps.map { entities ->
-        entities.map { entity ->
-            SelectableAppItem(
-                label    = entity.app.label.toRich(),
-                icon     = ImageDrawable(entity.app.icon),
-                isSelected = entity.isSelected,
-                entity   = entity
-            )
-        }
-    }
+    val items: StateFlow<List<SelectableAppItem>> = combine(_apps, _query) { apps, query ->
+        apps.filter { query.isBlank() || it.app.label.contains(query, ignoreCase = true) }
+            .map { entity ->
+                SelectableAppItem(
+                    label      = entity.app.label.toRich(),
+                    icon       = ImageDrawable(entity.app.icon),
+                    isSelected = entity.isSelected,
+                    entity     = entity
+                )
+            }
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 }
 ```
 
@@ -224,8 +228,9 @@ class TestAdapter : com.simple.adapter.ViewItemAdapter<TestViewItem, AdapterItem
     override fun createViewHolder(parent: ViewGroup, viewType: Int): BaseBindingViewHolder<AdapterItemNoneBinding> {
         val viewHolder = super.createViewHolder(parent, viewType)
 
-        viewHolder.itemView.setOnClickListener {
-            val item = (viewHolder.bindingAdapter as ListAdapter<*, *>).currentList.getOrNull(viewHolder.absoluteAdapterPosition) as? TestViewItem ?: return@setOnClickListener
+        viewHolder.itemView.setOnSafeClickListener {
+            // Dùng extension getItem<T>() từ com.simple.launcher.retirement.utils.getItem
+            val item = viewHolder.getItem<TestViewItem>() ?: return@setOnSafeClickListener
             TestEventBus.post(item.entity)  // gửi entity, không tự xử lý
         }
 
@@ -421,9 +426,13 @@ import com.simple.adapter.base.BaseBindingViewHolder           // ViewHolder bas
 import com.simple.adapter.utils.submitListAndAwait             // Extension function submit list
 import com.simple.adapter.utils.attachAdapter                  // Extension function combine với adapter
 import com.simple.auto.register.AutoRegisterManager            // Subscribe danh sách adapter
-import androidx.lifecycle.MutableLiveData                      // LiveData (dùng cho Cách 2)
-import androidx.lifecycle.asFlow                               // Chuyển LiveData thành Flow
-import kotlinx.coroutines.flow.map                            // Flow operator
+import com.simple.launcher.retirement.utils.getItem            // Extension: viewHolder.getItem<T>()
+import com.simple.launcher.retirement.utils.lifecycle.observe  // Flow<T>.observe(Fragment)
+import com.simple.launcher.retirement.utils.view.setOnSafeClickListener // Click listener an toàn
+import kotlinx.coroutines.flow.MutableStateFlow                // State nội bộ ViewModel
+import kotlinx.coroutines.flow.StateFlow                       // Expose state ra Fragment
+import kotlinx.coroutines.flow.combine                         // Kết hợp flows
+import kotlinx.coroutines.flow.stateIn                         // Chuyển Flow thành StateFlow
 import com.simple.launcher.retirement.utils.EventBus           // Base EventBus class
 ```
 
@@ -436,7 +445,7 @@ import com.simple.launcher.retirement.utils.EventBus           // Base EventBus 
 5. [ ] Tạo `@Adapter class XxxAdapter : ViewItemAdapter<XxxViewItem, XxxBinding>()` **trong cùng file với ViewItem** — override `viewItemClass`, `createViewBinding(...)`.
 6. [ ] Override `createViewHolder(...)` để gắn click: `XxxEventBus.post(item.entity)`.
 7. [ ] Override `onBindViewHolder(...)`: mỗi field dùng `if (payloads.isEmpty() || payloads.contains("tag"))`.
-8. [ ] Trong ViewModel: giữ `List<XxxEntity>` nội bộ, expose `LiveData<List<XxxViewItem>>` (map có xử lý data).
+8. [ ] Trong ViewModel: giữ `MutableStateFlow<List<XxxEntity>>` nội bộ, expose `StateFlow<List<XxxViewItem>>` (combine + map có xử lý data).
 9. [ ] Build project để KSP sinh code đăng ký tự động.
 10. [ ] Thêm `XxxViewItem` vào danh sách truyền cho `submitListAndAwait`.
 

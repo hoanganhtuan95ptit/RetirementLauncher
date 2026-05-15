@@ -17,6 +17,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asFlow
@@ -64,6 +65,16 @@ class ContactListFragment : BaseFragment<FragmentAppListBinding>() {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
+        binding.layoutSearch.etSearch.doAfterTextChanged {
+            val text = it?.toString() ?: ""
+            viewModel.search(text)
+            binding.layoutSearch.ivClear.visibility = if (text.isEmpty()) View.GONE else View.VISIBLE
+        }
+
+        binding.layoutSearch.ivClear.setOnSafeClickListener {
+            binding.layoutSearch.etSearch.text = null
+        }
+
         binding.btnSave.root.setOnSafeClickListener {
             checkPermissionsAndSave()
         }
@@ -88,12 +99,20 @@ class ContactListFragment : BaseFragment<FragmentAppListBinding>() {
             }
         }
 
+        viewModel.searchState.observe(this) { state ->
+            binding.layoutSearch.root.setBackground(state.background)
+            binding.layoutSearch.etSearch.hint = state.hint
+            binding.layoutSearch.etSearch.setHintTextColor(state.hintColor)
+            binding.layoutSearch.etSearch.setTextColor(state.textColor)
+            state.clearIcon?.let { binding.layoutSearch.ivClear.setImage(it) }
+        }
+
         viewModel.saveAction.observe(this) { state ->
             binding.btnSave.tvAction.setText(state.text)
             binding.btnSave.tvAction.setBackground(state.background)
         }
 
-        viewModel.items.asFlow().attachAdapter().observe(this) { (items, adapters) ->
+        viewModel.items.attachAdapter().observe(this) { (items, adapters) ->
             binding.rvAppList.submitListAndAwait(items, adapters, true)
         }
 

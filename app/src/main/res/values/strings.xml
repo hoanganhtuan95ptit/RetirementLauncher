@@ -49,6 +49,7 @@
     <string name="save">Lưu</string>
     <string name="back">Quay lại</string>
     <string name="cancel">Hủy</string>
+    <string name="search">Tìm kiếm...</string>
 
     <!-- Call Block -->
     <string name="call_block_title">Quyền chặn cuộc gọi</string>

@@ -38,24 +38,34 @@ Không cần khai báo `MutableSharedFlow`, `asSharedFlow()`, hay hàm `post()` 
 XxxEventBus.post(item)
 ```
 
-### Nhận event (từ Fragment, trong `viewLifecycleOwner.lifecycleScope.launch`)
+### Nhận event (từ Fragment) — dùng extension `observe`
 
 ```kotlin
-viewLifecycleOwner.lifecycleScope.launch {
-    XxxEventBus.events.collectLatest { item ->
-        // xử lý item
-    }
+// Trong observeData() của Fragment — import com.simple.launcher.retirement.utils.lifecycle.observe
+XxxEventBus.events.observe(this) { item ->
+    viewModel.updateItem(item)
 }
 ```
+
+**KHÔNG** dùng `viewLifecycleOwner.lifecycleScope.launch { collectLatest { } }` thủ công — hãy dùng extension `observe(fragment)`.
 
 ### Nhận event trong ViewModel (dùng `listenerSources`)
 
+`listenerSources` trả về `MutableSharedFlow<T>` — trigger lại block mỗi khi một trong các source emit. Phù hợp khi ViewModel cần phản ứng với EventBus mà không cần Fragment trung gian.
+
 ```kotlin
-val result = listenerSources(XxxEventBus.events) {
-    val item = XxxEventBus.events.first()
-    // xử lý và emit kết quả
+// Ví dụ: ViewModel tự lắng nghe EventBus và cập nhật state
+val updateResult: MutableSharedFlow<List<SelectableAppEntity>> = listenerSources(XxxEventBus.events) {
+    val entity = XxxEventBus.events.first()  // lấy event mới nhất
+    val updated = _apps.value.toMutableList().apply {
+        val index = indexOfFirst { it.app.packageName == entity.app.packageName }
+        if (index != -1) this[index] = this[index].copy(isSelected = !this[index].isSelected)
+    }
+    emit(updated)  // emit kết quả vào MutableSharedFlow
 }
 ```
+
+> **Quan trọng**: `listenerSources` nhận `vararg sources: Flow<*>` — các flow chỉ dùng làm trigger, không phải input. Luôn phải gọi `.first()` hoặc `.value` trên flow gốc để lấy giá trị thực sự bên trong block.
 
 ## Ví dụ thực tế trong project
 
