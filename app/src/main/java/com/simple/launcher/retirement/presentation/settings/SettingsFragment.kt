@@ -31,6 +31,7 @@ import com.simple.adapter.utils.attachAdapter
 import com.simple.launcher.retirement.utils.image.setImage
 import com.simple.launcher.retirement.utils.string.asStringRes
 import com.simple.launcher.retirement.utils.text.setText
+import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -47,7 +48,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
     override fun setupViews(view: View, savedInstanceState: Bundle?) {
         super.setupViews(view, savedInstanceState)
 
-        binding.toolbar.ivLeft.setOnClickListener {
+        binding.toolbar.ivLeft.setOnSafeClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 

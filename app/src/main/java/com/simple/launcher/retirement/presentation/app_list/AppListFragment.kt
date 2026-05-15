@@ -33,6 +33,7 @@ import com.simple.launcher.retirement.presentation.base.BaseFragment
 import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.image.setImage
 import com.simple.launcher.retirement.utils.text.setText
+import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -49,11 +50,11 @@ class AppListFragment : BaseFragment<FragmentAppListBinding>() {
     override fun setupViews(view: View, savedInstanceState: Bundle?) {
         super.setupViews(view, savedInstanceState)
 
-        binding.toolbar.ivLeft.setOnClickListener {
+        binding.toolbar.ivLeft.setOnSafeClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
-        binding.btnSave.root.setOnClickListener {
+        binding.btnSave.root.setOnSafeClickListener {
             checkPermissionsAndSave()
         }
 

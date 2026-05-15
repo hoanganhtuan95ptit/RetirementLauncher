@@ -3,16 +3,17 @@ package com.simple.launcher.retirement.presentation.settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.ListAdapter
 import com.simple.adapter.Adapter
 import com.simple.adapter.ViewItem
 import com.simple.adapter.ViewItemAdapter
 import com.simple.adapter.base.BaseBindingViewHolder
 import com.simple.launcher.retirement.databinding.ItemSettingBinding
+import com.simple.launcher.retirement.utils.getItem
 import com.simple.launcher.retirement.utils.image.RichImage
 import com.simple.launcher.retirement.utils.image.setImage
 import com.simple.launcher.retirement.utils.text.RichText
 import com.simple.launcher.retirement.utils.text.setText
+import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
 
 data class SettingItem(
     val id: Int,
@@ -58,8 +59,8 @@ class SettingsAdapter : ViewItemAdapter<SettingItem, ItemSettingBinding>() {
     override fun createViewHolder(parent: ViewGroup, viewType: Int): BaseBindingViewHolder<ItemSettingBinding> {
         val viewHolder = super.createViewHolder(parent, viewType)
         with(viewHolder.binding) {
-            root.setOnClickListener {
-                val item = (viewHolder.bindingAdapter as? ListAdapter<*, *>)?.currentList?.getOrNull(viewHolder.absoluteAdapterPosition) as? SettingItem ?: return@setOnClickListener
+            root.setOnSafeClickListener {
+                val item = viewHolder.getItem<SettingItem>() ?: return@setOnSafeClickListener
                 if (item.isSwitch) {
                     swSetting.toggle()
                 } else {
@@ -67,7 +68,7 @@ class SettingsAdapter : ViewItemAdapter<SettingItem, ItemSettingBinding>() {
                 }
             }
             swSetting.setOnCheckedChangeListener { _, isChecked ->
-                val item = (viewHolder.bindingAdapter as? ListAdapter<*, *>)?.currentList?.getOrNull(viewHolder.absoluteAdapterPosition) as? SettingItem ?: return@setOnCheckedChangeListener
+                val item = viewHolder.getItem<SettingItem>() ?: return@setOnCheckedChangeListener
                 if (item.isChecked != isChecked) {
                     item.isChecked = isChecked
                     SettingsEventBus.post(item)

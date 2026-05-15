@@ -2,17 +2,18 @@ package com.simple.launcher.retirement.presentation.contact_list
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.ListAdapter
 import com.simple.adapter.Adapter
 import com.simple.adapter.ViewItem
 import com.simple.adapter.ViewItemAdapter
 import com.simple.adapter.base.BaseBindingViewHolder
 import com.simple.launcher.retirement.databinding.ItemSelectableAppBinding
 import com.simple.launcher.retirement.domain.model.SelectableContactEntity
+import com.simple.launcher.retirement.utils.getItem
 import com.simple.launcher.retirement.utils.image.RichImage
 import com.simple.launcher.retirement.utils.image.setImage
 import com.simple.launcher.retirement.utils.text.RichText
 import com.simple.launcher.retirement.utils.text.setText
+import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
 
 data class SelectableContactItem(
     val name: RichText,
@@ -43,8 +44,8 @@ class ContactListAdapter : ViewItemAdapter<SelectableContactItem, ItemSelectable
 
     override fun createViewHolder(parent: ViewGroup, viewType: Int): BaseBindingViewHolder<ItemSelectableAppBinding> {
         val viewHolder = super.createViewHolder(parent, viewType)
-        viewHolder.itemView.setOnClickListener {
-            val item = (viewHolder.bindingAdapter as? ListAdapter<*, *>)?.currentList?.getOrNull(viewHolder.bindingAdapterPosition) as? SelectableContactItem ?: return@setOnClickListener
+        viewHolder.itemView.setOnSafeClickListener {
+            val item = viewHolder.getItem<SelectableContactItem>() ?: return@setOnSafeClickListener
             ContactListEventBus.post(item.entity)  // chỉ gửi entity, ViewModel xử lý toggle
         }
         return viewHolder

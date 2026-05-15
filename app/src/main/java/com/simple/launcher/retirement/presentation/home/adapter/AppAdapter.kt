@@ -3,16 +3,17 @@ package com.simple.launcher.retirement.presentation.home.adapter
 import android.view.HapticFeedbackConstants
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.ListAdapter
 import com.simple.adapter.Adapter
 import com.simple.adapter.ViewItemAdapter
 import com.simple.adapter.base.BaseBindingViewHolder
 import com.simple.launcher.retirement.databinding.ItemAppBinding
 import com.simple.launcher.retirement.domain.model.AppEntity
+import com.simple.launcher.retirement.utils.getItem
 import com.simple.launcher.retirement.utils.image.RichImage
 import com.simple.launcher.retirement.utils.image.setImage
 import com.simple.launcher.retirement.utils.text.RichText
 import com.simple.launcher.retirement.utils.text.setText
+import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
 
 data class AppHomeItem(
     val label: RichText,
@@ -39,8 +40,8 @@ class AppAdapter : ViewItemAdapter<AppHomeItem, ItemAppBinding>() {
 
     override fun createViewHolder(parent: ViewGroup, viewType: Int): BaseBindingViewHolder<ItemAppBinding> {
         val viewHolder = super.createViewHolder(parent, viewType)
-        viewHolder.itemView.setOnClickListener {
-            val item = (viewHolder.bindingAdapter as? ListAdapter<*, *>)?.currentList?.getOrNull(viewHolder.absoluteAdapterPosition) as? AppHomeItem ?: return@setOnClickListener
+        viewHolder.itemView.setOnSafeClickListener {
+            val item = viewHolder.getItem<AppHomeItem>() ?: return@setOnSafeClickListener
             it.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
             HomeEventBus.post(item)
         }

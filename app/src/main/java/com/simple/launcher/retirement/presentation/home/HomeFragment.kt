@@ -42,6 +42,7 @@ import kotlinx.coroutines.launch
 
 import com.simple.launcher.retirement.presentation.base.BaseFragment
 import com.simple.launcher.retirement.presentation.home.adapter.ClockHomeItem
+import androidx.core.net.toUri
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
@@ -81,12 +82,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 outRect.set(spacingDp, spacingDp, spacingDp, spacingDp)
             }
         })
-
-        binding.btnSettings.setOnClickListener {
-            it.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
-            sendDeeplink("app://settings", extras = mapOf("addToBackStack" to true))
-        }
-
     }
 
     override fun observeData() {
@@ -120,12 +115,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
             is ContactHomeItem -> {
                 val callIntent = Intent(Intent.ACTION_CALL)
-                callIntent.data = Uri.parse("tel:${item.entity.phoneNumber}")
+                callIntent.data = "tel:${item.entity.phoneNumber}".toUri()
                 try {
                     startActivity(callIntent)
                 } catch (e: Exception) {
                     val dialIntent = Intent(Intent.ACTION_DIAL)
-                    dialIntent.data = Uri.parse("tel:${item.entity.phoneNumber}")
+                    dialIntent.data = "tel:${item.entity.phoneNumber}".toUri()
                     startActivity(dialIntent)
                 }
             }
