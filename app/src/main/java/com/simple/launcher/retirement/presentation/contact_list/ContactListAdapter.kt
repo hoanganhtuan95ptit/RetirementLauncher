@@ -53,8 +53,10 @@ class ContactListAdapter : ViewItemAdapter<SelectableContactItem, ItemSelectable
     override fun onBindViewHolder(binding: ItemSelectableAppBinding, viewType: Int, position: Int, item: SelectableContactItem, payloads: List<String>) {
         super.onBindViewHolder(binding, viewType, position, item, payloads)
         with(binding) {
-            if (payloads.isEmpty()) {
+            if (payloads.isEmpty() || payloads.contains("name")) {
                 tvLabel.setText(item.name)
+            }
+            if (payloads.isEmpty() || payloads.contains("photo")) {
                 ivIcon.setImage(item.photo)
             }
             if (payloads.isEmpty() || payloads.contains("isSelected")) {

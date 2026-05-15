@@ -53,8 +53,10 @@ class AppListAdapter : ViewItemAdapter<SelectableAppItem, ItemSelectableAppBindi
     override fun onBindViewHolder(binding: ItemSelectableAppBinding, viewType: Int, position: Int, item: SelectableAppItem, payloads: List<String>) {
         super.onBindViewHolder(binding, viewType, position, item, payloads)
         with(binding) {
-            if (payloads.isEmpty()) {
+            if (payloads.isEmpty() || payloads.contains("label")) {
                 tvLabel.setText(item.label)
+            }
+            if (payloads.isEmpty() || payloads.contains("icon")) {
                 ivIcon.setImage(item.icon)
             }
             if (payloads.isEmpty() || payloads.contains("isSelected")) {

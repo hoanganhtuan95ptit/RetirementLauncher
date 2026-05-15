@@ -65,6 +65,110 @@ MultiRecyclerView hiển thị đúng adapter cho từng ViewItem
 | `submitListAndAwait` | `com.simple.adapter.utils` | Extension function suspend, submit list và chờ DiffUtil + animation xong |
 | `attachAdapter` | `com.simple.adapter.utils` | Extension function trên Flow, tự combine với danh sách adapter đã đăng ký |
 
+## Convention kiến trúc trong project này
+
+### Quy tắc 1 — ViewItem cùng file với Adapter
+
+ViewItem và Adapter tương ứng phải nằm **trong cùng một file `.kt`**. ViewItem khai báo trước, Adapter ngay sau.
+
+```kotlin
+// AppAdapter.kt
+data class AppHomeItem(...) : HomeItem { ... }
+
+@Adapter
+class AppAdapter : ViewItemAdapter<AppHomeItem, ItemAppBinding>() { ... }
+```
+
+### Quy tắc 2 — ViewItem chỉ chứa dữ liệu cơ bản
+
+ViewItem **chỉ được chứa**: `RichText`, `RichImage`, `Boolean`, `Int`, `String`, v.v. — dữ liệu đã sẵn sàng để set vào view.
+
+**Entity (domain object) chỉ được giữ trong ViewItem nếu cần cho onclick**, không được dùng để adapter tự extract dữ liệu từ đó.
+
+```kotlin
+// ✅ Đúng
+data class AppHomeItem(
+    val label: RichText,   // đã xử lý sẵn, adapter chỉ setText
+    val icon: RichImage,   // đã xử lý sẵn, adapter chỉ setImage
+    val entity: AppEntity  // chỉ dùng trong onClick để mở app
+) : HomeItem
+
+// ❌ Sai — adapter phải tự extract và xử lý
+data class AppHomeItem(val entity: AppEntity) : HomeItem
+```
+
+### Quy tắc 3 — Adapter không xử lý dữ liệu
+
+Adapter **chỉ được gọi** `setText(item.xxx)`, `setImage(item.xxx)`, `item.xxx.isChecked` — không được có logic transform, toRich(), ImageDrawable(), điều kiện if/else trên dữ liệu.
+
+Toàn bộ xử lý (`.toRich()`, `ImageDrawable()`, `ImagePath()`, conditional image selection...) phải nằm trong **ViewModel**.
+
+```kotlin
+// ✅ Đúng — ViewModel xử lý
+// HomeViewModel.kt
+AppHomeItem(
+    label = entity.label.toRich(),
+    icon  = ImageDrawable(entity.icon),
+    entity = entity
+)
+
+// ✅ Đúng — Adapter chỉ set
+override fun onBindViewHolder(...) {
+    binding.tvLabel.setText(item.label)
+    binding.ivIcon.setImage(item.icon)
+}
+
+// ❌ Sai — Adapter tự xử lý
+override fun onBindViewHolder(...) {
+    binding.tvLabel.setText(item.entity.label.toRich())
+    binding.ivIcon.setImage(ImageDrawable(item.entity.icon))
+}
+```
+
+### Quy tắc 4 — Adapter gửi entity qua EventBus khi click, ViewModel xử lý toggle/logic
+
+Adapter **chỉ gửi entity gốc** (không được tự toggle hay tạo state mới). ViewModel nhận entity và xử lý logic.
+
+```kotlin
+// ✅ Đúng — Adapter chỉ gửi entity
+viewHolder.itemView.setOnClickListener {
+    val item = ... as? SelectableAppItem ?: return@setOnClickListener
+    AppListEventBus.post(item.entity)  // gửi entity gốc
+}
+
+// ✅ Đúng — ViewModel xử lý toggle
+fun updateItem(entity: SelectableAppEntity) {
+    val index = currentList.indexOfFirst { it.app.packageName == entity.app.packageName }
+    currentList[index] = currentList[index].copy(isSelected = !currentList[index].isSelected)
+    _apps.value = currentList
+}
+
+// ❌ Sai — Adapter tự toggle
+AppListEventBus.post(item.copy(isSelected = !item.isSelected))
+```
+
+### Quy tắc 5 — ViewModel giữ domain entities nội bộ, expose ViewItems ra ngoài
+
+```kotlin
+class AppListViewModel : BaseViewModel() {
+
+    // Nội bộ: domain entities (để saveSelection, updateItem dễ xử lý)
+    private val _apps = MutableLiveData<List<SelectableAppEntity>>()
+
+    // Expose: ViewItems đã map sẵn — Fragment/Adapter chỉ nhận ViewItems
+    val items: LiveData<List<SelectableAppItem>> = _apps.map { entities ->
+        entities.map { entity ->
+            SelectableAppItem(
+                label    = entity.app.label.toRich(),
+                icon     = ImageDrawable(entity.app.icon),
+                isSelected = entity.isSelected,
+                entity   = entity
+            )
+        }
+    }
+}
+```
+
 ## Hướng dẫn từng bước
 
 ### Bước 1 — Tạo ViewItem
@@ -91,7 +195,7 @@ data class TestViewItem(
 
 **Quy tắc:**
 - `areItemsTheSame()` — nên chứa ID hoặc tổ hợp trường duy nhất.
-- `getContentsCompare()` — mỗi trường cần theo dõi thay đổi sẽ là một cặp `giáTrị to "tag"`. Tag nên đặt trùng tên property cho dễ đọc.
+- `getContentsCompare()` — **mỗi field hiển thị** đều phải có entry. Tag đặt trùng tên property. Nếu field là `RichText`, so sánh toàn bộ object (`title to "title"`), không chỉ `.text` — để detect cả thay đổi span (ForegroundColor, Bold...).
 
 ### Bước 2 — Tạo ViewItemAdapter
 
@@ -121,10 +225,8 @@ class TestAdapter : com.simple.adapter.ViewItemAdapter<TestViewItem, AdapterItem
         val viewHolder = super.createViewHolder(parent, viewType)
 
         viewHolder.itemView.setOnClickListener {
-
             val item = (viewHolder.bindingAdapter as ListAdapter<*, *>).currentList.getOrNull(viewHolder.absoluteAdapterPosition) as? TestViewItem ?: return@setOnClickListener
-
-            // todo gửi sự kiện
+            TestEventBus.post(item.entity)  // gửi entity, không tự xử lý
         }
 
         return viewHolder
@@ -134,7 +236,7 @@ class TestAdapter : com.simple.adapter.ViewItemAdapter<TestViewItem, AdapterItem
         super.onBindViewHolder(binding, viewType, position, item, payloads)
 
         if (payloads.isEmpty() || payloads.contains("text")) {
-            // todo set text
+            binding.tvText.setText(item.text)
         }
     }
 }
@@ -144,9 +246,48 @@ class TestAdapter : com.simple.adapter.ViewItemAdapter<TestViewItem, AdapterItem
 - `payloads` là danh sách các tag từ `getContentsCompare()` của những trường **thực sự thay đổi**.
 - Khi `payloads.isEmpty()` → bind lần đầu hoặc full rebind → cập nhật tất cả.
 - Khi `payloads.contains("tag")` → chỉ trường đó thay đổi → cập nhật riêng trường đó.
-- Pattern chuẩn: `if (payloads.isEmpty() || payloads.contains("tag")) { ... }`.
+- **Pattern chuẩn cho mọi field có tag**: `if (payloads.isEmpty() || payloads.contains("tag")) { ... }`.
+- **Field không có trong `getContentsCompare()`** (không bao giờ thay đổi): chỉ set khi `payloads.isEmpty()`.
+- **Không được gộp nhiều field vào cùng một `if (payloads.isEmpty())`** nếu chúng có tag riêng — sẽ miss update khi chỉ một trong số đó thay đổi.
 
-### Bước 3 — Hiển thị bằng MultiRecyclerView
+```kotlin
+// ✅ Đúng — mỗi field một guard riêng theo tag của nó
+if (payloads.isEmpty() || payloads.contains("label")) { binding.tvLabel.setText(item.label) }
+if (payloads.isEmpty() || payloads.contains("icon"))  { binding.ivIcon.setImage(item.icon) }
+if (payloads.isEmpty() || payloads.contains("isSelected")) { binding.cbSelected.isChecked = item.isSelected }
+
+// ❌ Sai — label và icon có tag nhưng bị gộp vào payloads.isEmpty() → miss update
+if (payloads.isEmpty()) {
+    binding.tvLabel.setText(item.label)
+    binding.ivIcon.setImage(item.icon)
+}
+```
+
+### Bước 3 — Tạo EventBus
+
+Mỗi màn hình có một EventBus riêng. Dùng base class `EventBus<T>` trong `utils/EventBus.kt`.
+
+```kotlin
+// AppListEvent.kt (cùng package với adapter/fragment)
+object AppListEventBus : EventBus<SelectableAppEntity>()
+```
+
+**Quy tắc:**
+- EventBus emit **entity** (domain object), không emit ViewItem.
+- Adapter gọi `XxxEventBus.post(item.entity)` trong onClick.
+- Fragment/ViewModel nhận event qua `XxxEventBus.events.collectLatest { entity -> viewModel.updateItem(entity) }`.
+- ViewModel xử lý toàn bộ logic (toggle, update list...).
+
+```kotlin
+// Trong Fragment
+viewLifecycleOwner.lifecycleScope.launch {
+    AppListEventBus.events.collectLatest { entity ->
+        viewModel.updateItem(entity)
+    }
+}
+```
+
+### Bước 4 — Hiển thị bằng MultiRecyclerView
 
 Có 2 cách submit list vào `MultiRecyclerView`:
 
@@ -171,35 +312,17 @@ suspend fun test(fragment: Fragment) {
 }
 ```
 
-**Giải thích flow Cách 1:**
-1. `AutoRegisterManager.subscribe(ViewItemAdapterProvider::class.java)` → trả về `Flow<List<ViewItemAdapterProvider>>` chứa tất cả provider đã đăng ký.
-2. `.map { it.flatMap { it.provider() } }` → biến thành `Flow<List<String>>` — danh sách tên class adapter.
-3. `.collect { ... }` → mỗi khi có adapter mới đăng ký, tự động submit lại list.
-4. `submitListAndAwait(viewItemList, adapterList, isAnimation)` → suspend cho đến khi DiffUtil xử lý xong và animation hoàn tất.
+#### Cách 2 — Dùng với LiveData + `attachAdapter()` (khuyến khích)
 
-#### Cách 2 — Dùng với LiveData + `attachAdapter()`
-
-Phù hợp khi dữ liệu đến từ `LiveData` hoặc `StateFlow` trong ViewModel. `attachAdapter()` tự động combine flow dữ liệu với danh sách adapter đã đăng ký.
+Phù hợp khi dữ liệu đến từ `LiveData` hoặc `StateFlow` trong ViewModel.
 
 ```kotlin
-suspend fun testWithLivedata(fragment: Fragment) {
-
-    val viewItemListLiveData = MutableLiveData(arrayListOf(TestViewItem()))
-
-    val recyclerView = MultiRecyclerView(fragment.requireContext())
-    recyclerView.layoutManager = LinearLayoutManager(fragment.requireContext())
-
-    viewItemListLiveData.asFlow().attachAdapter().collect { (viewItemList, adapterList) ->
-
-        recyclerView.submitListAndAwait(viewItemList = viewItemList, adapterList = adapterList, isAnimation = true)
+viewLifecycleOwner.lifecycleScope.launch {
+    viewModel.items.asFlow().attachAdapter().collectLatest { (items, adapters) ->
+        binding.recyclerView.submitListAndAwait(items, adapters, true)
     }
 }
 ```
-
-**Giải thích flow Cách 2:**
-1. `viewItemListLiveData.asFlow()` → chuyển `LiveData<List<ViewItem>>` thành `Flow<List<ViewItem>>`.
-2. `.attachAdapter()` → combine với `adapterStateFlow` (danh sách adapter đã đăng ký), trả về `Flow<Pair<List<ViewItem>, List<String>>>`.
-3. `.collect { (viewItemList, adapterList) -> ... }` → destructure và truyền vào `submitListAndAwait`.
 
 **Khi nào dùng cách nào:**
 - **Cách 1**: Khi danh sách item cố định hoặc muốn kiểm soát thủ công.
@@ -225,6 +348,22 @@ abstract class ViewItemAdapter<VI : ViewItem, VB : ViewBinding>() : ViewItemAdap
     open fun createViewHolder(parent: ViewGroup, viewType: Int): BaseBindingViewHolder<VB>
     open fun onBindViewHolder(binding: VB, viewType: Int, position: Int, item: VI, payloads: List<String>)
 }
+```
+
+### `EventBus<T>` base class (`utils/EventBus.kt`)
+
+```kotlin
+open class EventBus<T> {
+    private val _events = MutableSharedFlow<T>(extraBufferCapacity = 1)
+    val events: SharedFlow<T> = _events.asSharedFlow()
+    fun post(item: T) { _events.tryEmit(item) }
+}
+```
+
+Khai báo EventBus cho một màn hình:
+
+```kotlin
+object AppListEventBus : EventBus<SelectableAppEntity>()
 ```
 
 ### `submitListAndAwait` extension function
@@ -253,25 +392,6 @@ fun Flow<List<ViewItem>>.attachAdapter(): Flow<Pair<List<ViewItem>, List<String>
 
 Combine flow dữ liệu `List<ViewItem>` với `adapterStateFlow` (danh sách tên class adapter đã đăng ký qua AutoRegister). Trả về `Flow<Pair<List<ViewItem>, List<String>>>` — destructure thành `(viewItemList, adapterList)` để truyền vào `submitListAndAwait`.
 
-Bên trong, `adapterStateFlow` là một `StateFlow<List<String>>` được khởi tạo eagerly:
-
-```kotlin
-val adapterStateFlow: StateFlow<List<String>> = AutoRegisterManager
-    .subscribe(ViewItemAdapterProvider::class.java)
-    .map { providers -> providers.flatMap { it.provider() } }
-    .stateIn(adapterScope, SharingStarted.Eagerly, emptyList())
-```
-
-### `@Adapter` annotation
-
-```kotlin
-@Target(AnnotationTarget.CLASS)
-@Retention(AnnotationRetention.SOURCE)
-annotation class Adapter
-```
-
-Chỉ dùng trên class cụ thể (không phải abstract/sealed). KSP sẽ sinh `{ModuleName}ViewItemAdapterProvider` tự động.
-
 ## Code được sinh tự động bởi KSP
 
 Khi build, KSP quét tất cả class có `@Adapter` trong module và sinh ra:
@@ -291,8 +411,6 @@ Ví dụ: module `feature-payment` → `FeaturePaymentViewItemAdapterProvider`.
 
 ## Import cần thiết
 
-Khi sử dụng thư viện, các import thường cần:
-
 ```kotlin
 import com.simple.adapter.Adapter                              // @Adapter annotation
 import com.simple.adapter.ViewItem                             // ViewItem interface
@@ -306,17 +424,21 @@ import com.simple.auto.register.AutoRegisterManager            // Subscribe danh
 import androidx.lifecycle.MutableLiveData                      // LiveData (dùng cho Cách 2)
 import androidx.lifecycle.asFlow                               // Chuyển LiveData thành Flow
 import kotlinx.coroutines.flow.map                            // Flow operator
+import com.simple.launcher.retirement.utils.EventBus           // Base EventBus class
 ```
 
 ## Checklist khi tạo mới một item type
 
-1. [ ] Tạo `data class XxxViewItem(...) : ViewItem` — override `areItemsTheSame()` và `getContentsCompare()`.
-2. [ ] Tạo layout XML cho item → sẽ sinh ra ViewBinding class.
-3. [ ] Tạo `@Adapter class XxxAdapter : ViewItemAdapter<XxxViewItem, XxxBinding>()` — override `viewItemClass`, `createViewBinding(...)`.
-4. [ ] (Tuỳ chọn) Override `createViewHolder(...)` để gắn click listener.
-5. [ ] (Tuỳ chọn) Override `onBindViewHolder(...)` để bind dữ liệu, dùng `payloads` cho partial bind.
-6. [ ] Build project để KSP sinh code đăng ký tự động.
-7. [ ] Thêm `XxxViewItem` vào danh sách truyền cho `submitListAndAwait`.
+1. [ ] Tạo `data class XxxViewItem(...) : ViewItem` — chỉ chứa `RichText`/`RichImage`/primitive. Override `areItemsTheSame()` và `getContentsCompare()` (mỗi field hiển thị một entry, `RichText` so sánh full object không chỉ `.text`).
+2. [ ] Nếu cần onclick: giữ thêm `val entity: XxxEntity` trong ViewItem.
+3. [ ] Tạo `object XxxEventBus : EventBus<XxxEntity>()` nếu có onclick.
+4. [ ] Tạo layout XML cho item → sẽ sinh ra ViewBinding class.
+5. [ ] Tạo `@Adapter class XxxAdapter : ViewItemAdapter<XxxViewItem, XxxBinding>()` **trong cùng file với ViewItem** — override `viewItemClass`, `createViewBinding(...)`.
+6. [ ] Override `createViewHolder(...)` để gắn click: `XxxEventBus.post(item.entity)`.
+7. [ ] Override `onBindViewHolder(...)`: mỗi field dùng `if (payloads.isEmpty() || payloads.contains("tag"))`.
+8. [ ] Trong ViewModel: giữ `List<XxxEntity>` nội bộ, expose `LiveData<List<XxxViewItem>>` (map có xử lý data).
+9. [ ] Build project để KSP sinh code đăng ký tự động.
+10. [ ] Thêm `XxxViewItem` vào danh sách truyền cho `submitListAndAwait`.
 
 ## Lưu ý quan trọng
 
@@ -327,3 +449,4 @@ import kotlinx.coroutines.flow.map                            // Flow operator
 - **Luôn gọi `super.onBindViewHolder(...)`** ở đầu hàm `onBindViewHolder` nếu override.
 - **`MultiRecyclerView` đã tự gắn `MultiAdapter`** trong `init` block — không cần set adapter thủ công.
 - **Ưu tiên dùng `attachAdapter()`** (Cách 2) khi dữ liệu đến từ ViewModel — code ngắn gọn hơn và tự xử lý combine.
+- **Entity không implement `ViewItem`** — domain entity và ViewItem là hai tầng riêng biệt.

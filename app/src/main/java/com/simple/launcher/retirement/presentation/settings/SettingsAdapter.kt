@@ -25,7 +25,7 @@ data class SettingItem(
     override fun areItemsTheSame(): List<Any> = listOf(id)
 
     override fun getContentsCompare(): List<Pair<Any, String>> = listOf(
-        title.text to "title",
+        title to "title",   // so sánh full RichText để detect cả thay đổi span (ForegroundColor, ...)
         icon to "icon",
         isSwitch to "isSwitch",
         isChecked to "isChecked"

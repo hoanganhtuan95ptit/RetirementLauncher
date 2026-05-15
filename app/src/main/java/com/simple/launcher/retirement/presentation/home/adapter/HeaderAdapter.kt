@@ -10,6 +10,9 @@ import com.simple.launcher.retirement.utils.text.setText
 
 data class HeaderHomeItem(val title: RichText) : HomeItem {
     override fun areItemsTheSame(): List<Any> = listOf(title.text)
+    override fun getContentsCompare(): List<Pair<Any, String>> = listOf(
+        title to "title"
+    )
     override val spanSize: Int = HomeItem.TOTAL_COLUMNS // full width
 }
 
@@ -25,6 +28,8 @@ class HeaderAdapter : ViewItemAdapter<HeaderHomeItem, ItemHeaderBinding>() {
 
     override fun onBindViewHolder(binding: ItemHeaderBinding, viewType: Int, position: Int, item: HeaderHomeItem, payloads: List<String>) {
         super.onBindViewHolder(binding, viewType, position, item, payloads)
-        binding.tvTitle.setText(item.title)
+        if (payloads.isEmpty() || payloads.contains("title")) {
+            binding.tvTitle.setText(item.title)
+        }
     }
 }

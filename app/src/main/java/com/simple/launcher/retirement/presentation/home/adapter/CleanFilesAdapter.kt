@@ -15,7 +15,8 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 data class CleanFilesHomeItem(val label: RichText, val icon: RichImage) : HomeItem {
     override fun areItemsTheSame(): List<Any> = listOf("CleanFiles")
     override fun getContentsCompare(): List<Pair<Any, String>> = listOf(
-        label to "label"
+        label to "label",
+        icon to "icon"
     )
     override val spanSize: Int = HomeItem.TOTAL_COLUMNS / 2 // half width
 }
@@ -32,7 +33,7 @@ class CleanFilesAdapter : UtilityAdapter<CleanFilesHomeItem>() {
 
     override fun onBindViewHolder(binding: ItemUtilityBinding, viewType: Int, position: Int, item: CleanFilesHomeItem, payloads: List<String>) {
         super.onBindViewHolder(binding, viewType, position, item, payloads)
-        if (payloads.isEmpty()) {
+        if (payloads.isEmpty() || payloads.contains("icon")) {
             binding.ivIcon.setImage(item.icon, CenterInside(), RoundedCorners(24))
         }
         if (payloads.isEmpty() || payloads.contains("label")) {
