@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/tvTitle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingHorizontal="16dp"
-    android:paddingTop="24dp"
-    android:paddingBottom="8dp"
-    android:textColor="#FFFFFF"
     android:shadowColor="#000000"
+    android:paddingTop="8dp"
     android:shadowDx="1"
     android:shadowDy="1"
     android:shadowRadius="2"
+    android:textColor="#FFFFFF"
     android:textSize="20sp"
-    android:textStyle="bold" />
+    android:textStyle="bold"
+    tools:text="Header" />

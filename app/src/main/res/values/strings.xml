@@ -56,8 +56,10 @@
     <string name="call_block_grant">Cấp quyền ngay</string>
     <string name="call_block_skip">Để sau</string>
     <!-- Home Status -->
-    <string name="home_strange_files">Dọn dẹp (%1$d)</string>
-    <string name="home_memory_status">Tăng tốc (%1$dMB)</string>
+    <string name="home_strange_files">Dọn dẹp ($file_number)</string>
+    <string name="home_memory_status">Tăng tốc ($memory_mb)</string>
+    <string name="home_header_apps">Ứng dụng</string>
+    <string name="home_header_contacts">Liên hệ nhanh</string>
 
     <!-- Block -->
     <string name="block_go_home">Quay về màn hình chính</string>

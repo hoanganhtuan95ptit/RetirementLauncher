@@ -23,10 +23,8 @@ import com.simple.launcher.retirement.utils.theme.getColor
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.stateIn
-
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 
 open class BaseViewModel : ViewModel() {
 
@@ -34,7 +32,7 @@ open class BaseViewModel : ViewModel() {
 
     val themes = ThemeColorStore.colorMapFlow
 
-    open val bottomSheet: Flow<BottomSheetState> = themes.map { themeMap ->
+    open val bottomSheet: StateFlow<BottomSheetState> = themes.map { themeMap ->
         val backgroundColor = themeMap.getColor(android.R.attr.colorBackground) ?: Color.WHITE
         val anchorColor = themeMap.getColor(android.R.attr.textColorSecondary) ?: Color.LTGRAY
 

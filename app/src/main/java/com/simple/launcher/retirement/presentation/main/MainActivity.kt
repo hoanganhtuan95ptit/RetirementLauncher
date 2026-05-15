@@ -3,6 +3,7 @@ package com.simple.launcher.retirement.presentation.main
 import android.app.AppOpsManager
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
@@ -33,6 +34,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun setupViews(savedInstanceState: Bundle?) {
         StringResStore.load(this)
         ThemeColorStore.load(this)
+
+
+        window.navigationBarColor = Color.TRANSPARENT
 
         // Quét toàn bộ một lần lúc khởi động
         scheduleInitialFileCleanup()
