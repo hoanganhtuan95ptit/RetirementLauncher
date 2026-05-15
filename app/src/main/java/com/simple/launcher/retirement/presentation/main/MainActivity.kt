@@ -37,6 +37,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
 
         window.navigationBarColor = Color.TRANSPARENT
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            window.isNavigationBarContrastEnforced = false
+        }
 
         // Quét toàn bộ một lần lúc khởi động
         scheduleInitialFileCleanup()

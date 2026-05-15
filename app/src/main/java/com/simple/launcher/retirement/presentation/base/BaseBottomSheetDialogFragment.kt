@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.Outline
 import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -11,7 +12,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewOutlineProvider
 import android.widget.LinearLayout
+import androidx.core.graphics.ColorUtils
 import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.viewbinding.ViewBinding
@@ -80,20 +83,29 @@ abstract class BaseBottomSheetDialogFragment<VB : ViewBinding, VM : BaseViewMode
                 anchorView.visibility = if (state.showAnchor) View.VISIBLE else View.GONE
                 anchorView.setBackground(state.anchorBackground)
 
-                (dialog as? BottomSheetDialog)?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)?.let { designBottomSheet ->
-                    view?.setBackground(state.background)
+                (dialog as? BottomSheetDialog)?.let { bottomSheetDialog ->
+                    bottomSheetDialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)?.let { designBottomSheet ->
+                        view?.setBackground(state.background)
 
-                    val radius = state.background?.cornerRadius_TL ?: 0
-                    if (radius > 0) {
-                        designBottomSheet.clipToOutline = true
-                        designBottomSheet.outlineProvider = object : ViewOutlineProvider() {
-                            override fun getOutline(view: View, outline: Outline) {
-                                outline.setRoundRect(0, 0, view.width, view.height + radius, radius.toFloat())
+                        state.background?.let { background ->
+                            val isLight = ColorUtils.calculateLuminance(background.backgroundColor) > 0.5
+                            bottomSheetDialog.window?.let { window ->
+                                WindowCompat.getInsetsController(window, window.decorView).isAppearanceLightNavigationBars = isLight
                             }
                         }
-                    } else {
-                        designBottomSheet.clipToOutline = false
-                        designBottomSheet.outlineProvider = null
+
+                        val radius = state.background?.cornerRadius_TL ?: 0
+                        if (radius > 0) {
+                            designBottomSheet.clipToOutline = true
+                            designBottomSheet.outlineProvider = object : ViewOutlineProvider() {
+                                override fun getOutline(view: View, outline: Outline) {
+                                    outline.setRoundRect(0, 0, view.width, view.height + radius, radius.toFloat())
+                                }
+                            }
+                        } else {
+                            designBottomSheet.clipToOutline = false
+                            designBottomSheet.outlineProvider = null
+                        }
                     }
                 }
             }
@@ -106,6 +118,9 @@ abstract class BaseBottomSheetDialogFragment<VB : ViewBinding, VM : BaseViewMode
             val window = bottomSheetDialog.window ?: return@let
             window.statusBarColor = Color.TRANSPARENT
             window.navigationBarColor = Color.TRANSPARENT
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                window.isNavigationBarContrastEnforced = false
+            }
 
             val designBottomSheet = bottomSheetDialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
             designBottomSheet?.let {

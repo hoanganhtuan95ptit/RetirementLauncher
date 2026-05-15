@@ -1,10 +1,14 @@
 package com.simple.launcher.retirement.presentation.home.adapter
 
+import android.view.HapticFeedbackConstants
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.simple.adapter.Adapter
 import com.simple.adapter.base.BaseBindingViewHolder
+import com.simple.deeplink.sendDeeplink
 import com.simple.launcher.retirement.databinding.ItemUtilityBinding
+import com.simple.launcher.retirement.utils.getItem
+import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
 import com.simple.launcher.retirement.utils.image.RichImage
 import com.simple.launcher.retirement.utils.image.setImage
 import com.simple.launcher.retirement.utils.text.RichText
@@ -29,6 +33,15 @@ class CleanFilesAdapter : UtilityAdapter<CleanFilesHomeItem>() {
 
     override fun createViewBinding(layoutInflater: LayoutInflater, parent: ViewGroup, viewType: Int): ItemUtilityBinding {
         return ItemUtilityBinding.inflate(layoutInflater, parent, false)
+    }
+
+    override fun createViewHolder(parent: ViewGroup, viewType: Int): BaseBindingViewHolder<ItemUtilityBinding> {
+        val viewHolder = super.createViewHolder(parent, viewType)
+        viewHolder.itemView.setOnSafeClickListener {
+            it.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
+            sendDeeplink("app://clean_files", extras = mapOf("addToBackStack" to true))
+        }
+        return viewHolder
     }
 
     override fun onBindViewHolder(binding: ItemUtilityBinding, viewType: Int, position: Int, item: CleanFilesHomeItem, payloads: List<String>) {

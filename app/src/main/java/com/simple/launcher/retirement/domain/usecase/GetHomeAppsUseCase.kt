@@ -27,11 +27,15 @@ class GetHomeAppsUseCase(private val repository: AppRepository) {
 
         val currentApp = repository.getCurrentApp()
         if (apps.none { it.entity.packageName == currentApp.packageName }) {
-            apps.add(0, HomeContentEntity.App(currentApp))
+            apps.add(HomeContentEntity.App(currentApp))
         }
 
-        val contacts = repository.getSelectedContacts().map { HomeContentEntity.Contact(it) }
-        
+        apps.sortBy { it.entity.label.lowercase() }
+
+        val contacts = repository.getSelectedContacts()
+            .map { HomeContentEntity.Contact(it) }
+            .sortedBy { it.entity.name.lowercase() }
+
         return apps + contacts
     }
 

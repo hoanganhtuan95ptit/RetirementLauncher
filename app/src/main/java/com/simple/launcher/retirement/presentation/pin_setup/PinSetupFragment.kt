@@ -21,6 +21,7 @@ import com.simple.launcher.retirement.utils.image.setImage
 import com.simple.launcher.retirement.utils.text.setText
 import com.simple.launcher.retirement.utils.text.toRich
 import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
+import com.simple.launcher.retirement.utils.lifecycle.observe
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -53,6 +54,11 @@ class PinSetupFragment : BaseFragment<FragmentPinSetupBinding>() {
 
     override fun observeData() {
         super.observeData()
+
+        viewModel.background.observe(this) { background ->
+            binding.root.setBackground(background)
+        }
+
         viewModel.state.observe(viewLifecycleOwner) { state ->
             binding.etPin.text.clear()
             when (state) {
@@ -76,24 +82,20 @@ class PinSetupFragment : BaseFragment<FragmentPinSetupBinding>() {
             binding.tvError.setText(error?.toRich())
         }
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.toolbar.collectLatest { state ->
-                binding.toolbar.tvTitle.setText(state.title)
-                val backIcon = state.backIcon
-                if (backIcon != null) {
-                    binding.toolbar.ivLeft.visibility = View.VISIBLE
-                    binding.toolbar.ivLeft.setImage(backIcon)
-                } else {
-                    binding.toolbar.ivLeft.visibility = View.GONE
-                }
+        viewModel.toolbar.observe(this) { state ->
+            binding.toolbar.tvTitle.setText(state.title)
+            val backIcon = state.backIcon
+            if (backIcon != null) {
+                binding.toolbar.ivLeft.visibility = View.VISIBLE
+                binding.toolbar.ivLeft.setImage(backIcon)
+            } else {
+                binding.toolbar.ivLeft.visibility = View.GONE
             }
         }
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.action.collectLatest { state ->
-                binding.btnNext.tvAction.setText(state.text)
-                binding.btnNext.tvAction.setBackground(state.background)
-            }
+        viewModel.action.observe(this) { state ->
+            binding.btnNext.tvAction.setText(state.text)
+            binding.btnNext.tvAction.setBackground(state.background)
         }
     }
 }

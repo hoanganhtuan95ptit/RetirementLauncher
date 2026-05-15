@@ -18,6 +18,7 @@ import com.simple.launcher.retirement.presentation.base.BaseFragment
 import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.text.setText
 import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
+import com.simple.launcher.retirement.utils.lifecycle.observe
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -42,11 +43,14 @@ class OnboardingFragment : BaseFragment<FragmentOnboardingBinding>() {
 
     override fun observeData() {
         super.observeData()
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.action.collectLatest { state ->
-                binding.btnStart.tvAction.setText(state.text)
-                binding.btnStart.tvAction.setBackground(state.background)
-            }
+
+        viewModel.background.observe(this) { background ->
+            binding.root.setBackground(background)
+        }
+
+        viewModel.action.observe(this) { state ->
+            binding.btnStart.tvAction.setText(state.text)
+            binding.btnStart.tvAction.setBackground(state.background)
         }
     }
 }

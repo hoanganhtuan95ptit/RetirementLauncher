@@ -34,7 +34,6 @@ import com.simple.launcher.retirement.presentation.home.adapter.AppHomeItem
 import com.simple.launcher.retirement.presentation.home.adapter.CleanFilesHomeItem
 import com.simple.launcher.retirement.presentation.home.adapter.CleanMemoryHomeItem
 import com.simple.launcher.retirement.presentation.home.adapter.ContactHomeItem
-import com.simple.launcher.retirement.presentation.home.adapter.HomeEventBus
 import com.simple.launcher.retirement.presentation.home.adapter.HomeItem
 import com.simple.launcher.retirement.presentation.main.MainActivity
 import kotlinx.coroutines.flow.collectLatest
@@ -42,6 +41,8 @@ import kotlinx.coroutines.launch
 
 import com.simple.launcher.retirement.presentation.base.BaseFragment
 import com.simple.launcher.retirement.presentation.home.adapter.ClockHomeItem
+import com.simple.launcher.retirement.utils.background.setBackground
+import com.simple.launcher.retirement.utils.lifecycle.observe
 import androidx.core.net.toUri
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
@@ -86,56 +87,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     override fun observeData() {
         super.observeData()
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.items.attachAdapter().collectLatest { (items, adapters) ->
-                binding.rvApps.submitListAndAwait(items, adapters, true)
-            }
-        }
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            HomeEventBus.events.collectLatest { item ->
-                handleHomeItemClick(item)
-            }
-        }
-    }
-
-    private fun handleHomeItemClick(item: HomeItem) {
-        when (item) {
-            is AppHomeItem -> {
-                if (item.entity.packageName == requireContext().packageName) {
-                    sendDeeplink("app://settings", extras = mapOf("addToBackStack" to true))
-                } else {
-                    val launchIntent =
-                        requireContext().packageManager.getLaunchIntentForPackage(item.entity.packageName)
-                    if (launchIntent != null) {
-                        startActivity(launchIntent)
-                    }
-                }
-            }
-
-            is ContactHomeItem -> {
-                val callIntent = Intent(Intent.ACTION_CALL)
-                callIntent.data = "tel:${item.entity.phoneNumber}".toUri()
-                try {
-                    startActivity(callIntent)
-                } catch (e: Exception) {
-                    val dialIntent = Intent(Intent.ACTION_DIAL)
-                    dialIntent.data = "tel:${item.entity.phoneNumber}".toUri()
-                    startActivity(dialIntent)
-                }
-            }
-
-            is CleanFilesHomeItem -> {
-                sendDeeplink("app://clean_files", extras = mapOf("addToBackStack" to true))
-            }
-
-            is CleanMemoryHomeItem -> {
-                sendDeeplink("app://clean_memory", extras = mapOf("addToBackStack" to true))
-            }
-
-            is ClockHomeItem -> {
-                // Do nothing
-            }
+        viewModel.items.attachAdapter().observe(this) { (items, adapters) ->
+            binding.rvApps.submitListAndAwait(items, adapters, true)
         }
     }
 

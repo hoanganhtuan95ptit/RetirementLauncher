@@ -19,6 +19,7 @@ import com.simple.launcher.retirement.utils.image.setImage
 import com.simple.launcher.retirement.utils.text.setText
 import com.simple.launcher.retirement.utils.text.toRich
 import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
+import com.simple.launcher.retirement.utils.lifecycle.observe
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -61,24 +62,25 @@ class CleanFilesFragment : BaseFragment<FragmentCleanFilesBinding>() {
 
     override fun observeData() {
         super.observeData()
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.toolbar.collectLatest { state ->
-                binding.toolbar.tvTitle.setText(state.title)
-                val backIcon = state.backIcon
-                if (backIcon != null) {
-                    binding.toolbar.ivLeft.visibility = View.VISIBLE
-                    binding.toolbar.ivLeft.setImage(backIcon)
-                } else {
-                    binding.toolbar.ivLeft.visibility = View.GONE
-                }
+
+        viewModel.background.observe(this) { background ->
+            binding.root.setBackground(background)
+        }
+
+        viewModel.toolbar.observe(this) { state ->
+            binding.toolbar.tvTitle.setText(state.title)
+            val backIcon = state.backIcon
+            if (backIcon != null) {
+                binding.toolbar.ivLeft.visibility = View.VISIBLE
+                binding.toolbar.ivLeft.setImage(backIcon)
+            } else {
+                binding.toolbar.ivLeft.visibility = View.GONE
             }
         }
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.action.collectLatest { state ->
-                binding.btnClean.tvAction.setText(state.text)
-                binding.btnClean.tvAction.setBackground(state.background)
-            }
+        viewModel.action.observe(this) { state ->
+            binding.btnClean.tvAction.setText(state.text)
+            binding.btnClean.tvAction.setBackground(state.background)
         }
     }
 }

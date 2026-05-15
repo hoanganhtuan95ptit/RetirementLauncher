@@ -26,6 +26,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 
 import com.simple.launcher.retirement.presentation.base.BaseFragment
+import com.simple.launcher.retirement.utils.background.setBackground
+import com.simple.launcher.retirement.utils.lifecycle.observe
 import com.simple.adapter.utils.submitListAndAwait
 import com.simple.adapter.utils.attachAdapter
 import com.simple.launcher.retirement.utils.image.setImage
@@ -58,29 +60,27 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
     override fun observeData() {
         super.observeData()
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.toolbar.collectLatest { state ->
-                binding.toolbar.tvTitle.setText(state.title)
-                val backIcon = state.backIcon
-                if (backIcon != null) {
-                    binding.toolbar.ivLeft.visibility = View.VISIBLE
-                    binding.toolbar.ivLeft.setImage(backIcon)
-                } else {
-                    binding.toolbar.ivLeft.visibility = View.GONE
-                }
+        viewModel.background.observe(this) { background ->
+            binding.root.setBackground(background)
+        }
+
+        viewModel.toolbar.observe(this) { state ->
+            binding.toolbar.tvTitle.setText(state.title)
+            val backIcon = state.backIcon
+            if (backIcon != null) {
+                binding.toolbar.ivLeft.visibility = View.VISIBLE
+                binding.toolbar.ivLeft.setImage(backIcon)
+            } else {
+                binding.toolbar.ivLeft.visibility = View.GONE
             }
         }
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.items.attachAdapter().collectLatest { (items, adapters) ->
-                binding.rvSettings.submitListAndAwait(items, adapters, true)
-            }
+        viewModel.items.attachAdapter().observe(this) { (items, adapters) ->
+            binding.rvSettings.submitListAndAwait(items, adapters, true)
         }
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            SettingsEventBus.events.collectLatest { item ->
-                handleSettingItemClick(item)
-            }
+        SettingsEventBus.events.observe(this) { item ->
+            handleSettingItemClick(item)
         }
     }
 

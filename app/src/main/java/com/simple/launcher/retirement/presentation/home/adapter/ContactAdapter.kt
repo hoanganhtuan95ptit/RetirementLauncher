@@ -1,5 +1,7 @@
 package com.simple.launcher.retirement.presentation.home.adapter
 
+import android.content.Intent
+import android.net.Uri
 import android.view.HapticFeedbackConstants
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -43,7 +45,16 @@ class ContactAdapter : ViewItemAdapter<ContactHomeItem, ItemContactBinding>() {
         viewHolder.itemView.setOnSafeClickListener {
             val item = viewHolder.getItem<ContactHomeItem>() ?: return@setOnSafeClickListener
             it.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
-            HomeEventBus.post(item)
+            val context = it.context
+            val callIntent = Intent(Intent.ACTION_CALL)
+            callIntent.data = Uri.parse("tel:${item.entity.phoneNumber}")
+            try {
+                context.startActivity(callIntent)
+            } catch (e: Exception) {
+                val dialIntent = Intent(Intent.ACTION_DIAL)
+                dialIntent.data = Uri.parse("tel:${item.entity.phoneNumber}")
+                context.startActivity(dialIntent)
+            }
         }
         return viewHolder
     }
