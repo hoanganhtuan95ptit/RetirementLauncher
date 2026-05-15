@@ -19,9 +19,12 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         _binding = inflateBinding(layoutInflater)
         setContentView(binding.root)
         setupViews(savedInstanceState)
+        observeData()
     }
 
     open fun setupViews(savedInstanceState: Bundle?) {}
+
+    open fun observeData() {}
 
     override fun onDestroy() {
         super.onDestroy()

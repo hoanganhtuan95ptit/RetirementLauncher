@@ -48,6 +48,7 @@
     <!-- Common -->
     <string name="save">Lưu</string>
     <string name="back">Quay lại</string>
+    <string name="cancel">Hủy</string>
 
     <!-- Call Block -->
     <string name="call_block_title">Quyền chặn cuộc gọi</string>
@@ -57,4 +58,13 @@
     <!-- Home Status -->
     <string name="home_strange_files">Dọn dẹp (%1$d)</string>
     <string name="home_memory_status">Tăng tốc (%1$dMB)</string>
+
+    <!-- Block -->
+    <string name="block_go_home">Quay về màn hình chính</string>
+
+    <!-- Permissions & Setup -->
+    <string name="default_launcher_setup">Thiết lập ngay</string>
+    <string name="permission_grant">Cấp quyền ngay</string>
+    <string name="permission_skip">Bỏ qua</string>
+    <string name="pin_verify_action">Xác nhận</string>
 </resources>

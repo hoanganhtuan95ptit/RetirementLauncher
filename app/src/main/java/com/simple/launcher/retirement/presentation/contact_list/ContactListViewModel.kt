@@ -15,17 +15,10 @@ import com.simple.launcher.retirement.domain.repository.AppRepository
 import com.simple.launcher.retirement.presentation.base.ActionState
 import com.simple.launcher.retirement.presentation.base.BaseViewModel
 import com.simple.launcher.retirement.presentation.base.ToolbarState
-import com.simple.launcher.retirement.utils.background.Background
 import com.simple.launcher.retirement.utils.image.ImagePath
 import com.simple.launcher.retirement.utils.image.ImageRes
 import com.simple.launcher.retirement.utils.string.getString
-import com.simple.launcher.retirement.utils.text.Bold
-import com.simple.launcher.retirement.utils.text.ForegroundColor
-import com.simple.launcher.retirement.utils.text.RichText
-import com.simple.launcher.retirement.utils.text.TextSize
-import com.simple.launcher.retirement.utils.text.emptyText
 import com.simple.launcher.retirement.utils.text.toRich
-import com.simple.launcher.retirement.utils.text.with
 import com.simple.launcher.retirement.utils.theme.getColor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharingStarted
@@ -48,20 +41,13 @@ class ContactListViewModel(
 
     val saveAction: StateFlow<ActionState> = combine(strings, themes) { stringMap, themeMap ->
         val color = themeMap.getColor(android.R.attr.textColorPrimary) ?: android.graphics.Color.BLACK
-        
-        val text = stringMap.getString(R.string.save)
-            .toRich()
-            .with(ForegroundColor(color), TextSize(18), Bold)
-            
-        val background = Background(
-            backgroundColor = android.graphics.Color.LTGRAY,
-            cornerRadius_TL = 12,
-            cornerRadius_TR = 12,
-            cornerRadius_BL = 12,
-            cornerRadius_BR = 12
+        val backgroundColor = themeMap.getColor(android.R.attr.colorControlHighlight) ?: android.graphics.Color.LTGRAY
+
+        buildActionState(
+            text = stringMap.getString(R.string.save),
+            textColor = color,
+            backgroundColor = backgroundColor
         )
-            
-        ActionState(text = text, background = background)
     }.stateIn(viewModelScope, SharingStarted.Eagerly, ActionState.empty())
 
     // Nội bộ: domain entities

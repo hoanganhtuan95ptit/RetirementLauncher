@@ -7,10 +7,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.simple.launcher.retirement.databinding.BottomSheetCallPermissionBinding
 import com.simple.launcher.retirement.presentation.base.BaseBottomSheetDialogFragment
+import com.simple.launcher.retirement.utils.background.setBackground
+import com.simple.launcher.retirement.utils.text.setText
+import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
-class CallBlockPermissionBottomSheet(private val onResult: () -> Unit) : BaseBottomSheetDialogFragment<BottomSheetCallPermissionBinding>() {
+class CallBlockPermissionBottomSheet(private val onResult: () -> Unit) : BaseBottomSheetDialogFragment<BottomSheetCallPermissionBinding, CallBlockPermissionViewModel>() {
+
+    override val viewModel: CallBlockPermissionViewModel by viewModels()
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
@@ -29,7 +38,7 @@ class CallBlockPermissionBottomSheet(private val onResult: () -> Unit) : BaseBot
     override fun setupViews(view: View, savedInstanceState: Bundle?) {
         super.setupViews(view, savedInstanceState)
 
-        binding.btnGrant.setOnClickListener {
+        binding.btnGrant.root.setOnSafeClickListener {
             val permissions = arrayOf(
                 Manifest.permission.READ_PHONE_STATE,
                 Manifest.permission.ANSWER_PHONE_CALLS,
@@ -38,9 +47,19 @@ class CallBlockPermissionBottomSheet(private val onResult: () -> Unit) : BaseBot
             requestPermissionLauncher.launch(permissions)
         }
 
-        binding.btnSkip.setOnClickListener {
+        binding.btnSkip.setOnSafeClickListener {
             dismiss()
             onResult()
+        }
+    }
+
+    override fun observeData() {
+        super.observeData()
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.action.collectLatest { state ->
+                binding.btnGrant.tvAction.setText(state.text)
+                binding.btnGrant.tvAction.setBackground(state.background)
+            }
         }
     }
 

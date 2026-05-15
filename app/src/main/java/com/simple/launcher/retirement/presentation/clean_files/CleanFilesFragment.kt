@@ -18,6 +18,7 @@ import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.image.setImage
 import com.simple.launcher.retirement.utils.text.setText
 import com.simple.launcher.retirement.utils.text.toRich
+import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -34,11 +35,11 @@ class CleanFilesFragment : BaseFragment<FragmentCleanFilesBinding>() {
     override fun setupViews(view: View, savedInstanceState: Bundle?) {
         super.setupViews(view, savedInstanceState)
 
-        binding.toolbar.ivLeft.setOnClickListener {
+        binding.toolbar.ivLeft.setOnSafeClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
-        binding.btnClean.root.setOnClickListener {
+        binding.btnClean.root.setOnSafeClickListener {
             binding.btnClean.root.isEnabled = false
             binding.progressBar.visibility = View.VISIBLE
             binding.tvStatus.setText(getString(R.string.clean_files_running).toRich())

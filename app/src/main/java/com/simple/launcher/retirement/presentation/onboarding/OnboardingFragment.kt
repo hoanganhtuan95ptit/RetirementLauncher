@@ -17,6 +17,7 @@ import com.simple.launcher.retirement.databinding.FragmentOnboardingBinding
 import com.simple.launcher.retirement.presentation.base.BaseFragment
 import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.text.setText
+import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -31,7 +32,7 @@ class OnboardingFragment : BaseFragment<FragmentOnboardingBinding>() {
     override fun setupViews(view: View, savedInstanceState: Bundle?) {
         super.setupViews(view, savedInstanceState)
 
-        binding.btnStart.root.setOnClickListener {
+        binding.btnStart.root.setOnSafeClickListener {
             val repository = AppRepository.instance
             repository.setOnboardingCompleted(true)
 

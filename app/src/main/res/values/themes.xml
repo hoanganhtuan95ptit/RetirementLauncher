@@ -24,4 +24,13 @@
     <style name="CircleImage">
         <item name="cornerSize">50%</item>
     </style>
+
+    <style name="BaseBottomSheetDialog" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/BaseBottomSheetStyle</item>
+    </style>
+
+    <style name="BaseBottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="backgroundTint">@android:color/transparent</item>
+    </style>
 </resources>

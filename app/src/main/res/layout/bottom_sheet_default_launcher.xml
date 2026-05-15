@@ -21,21 +21,18 @@
         android:textColor="@android:color/darker_gray"
         android:textSize="14sp" />
 
-    <Button
+    <include
         android:id="@+id/btnSetDefault"
+        layout="@layout/layout_action"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="Thiết lập ngay"
-        android:textAllCaps="false" />
+        android:layout_marginTop="24dp" />
 
-    <Button
+    <include
         android:id="@+id/btnCancel"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
+        layout="@layout/layout_action"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Hủy"
-        android:textAllCaps="false" />
+        android:layout_marginTop="8dp" />
 
 </LinearLayout>

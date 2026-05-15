@@ -5,8 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.widget.Toolbar
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -19,8 +17,10 @@ import com.simple.launcher.retirement.domain.usecase.HasPinUseCase
 import com.simple.launcher.retirement.domain.usecase.SavePinUseCase
 import com.simple.launcher.retirement.presentation.base.BaseFragment
 import com.simple.launcher.retirement.utils.background.setBackground
+import com.simple.launcher.retirement.utils.image.setImage
 import com.simple.launcher.retirement.utils.text.setText
 import com.simple.launcher.retirement.utils.text.toRich
+import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -41,12 +41,11 @@ class PinSetupFragment : BaseFragment<FragmentPinSetupBinding>() {
     override fun setupViews(view: View, savedInstanceState: Bundle?) {
         super.setupViews(view, savedInstanceState)
 
-        binding.toolbar.setNavigationIcon(R.drawable.ic_back)
-        binding.toolbar.setNavigationOnClickListener {
+        binding.toolbar.ivLeft.setOnSafeClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
-        binding.btnNext.root.setOnClickListener {
+        binding.btnNext.root.setOnSafeClickListener {
             val pin = binding.etPin.text.toString()
             viewModel.handlePinInput(pin)
         }
@@ -75,6 +74,19 @@ class PinSetupFragment : BaseFragment<FragmentPinSetupBinding>() {
 
         viewModel.error.observe(viewLifecycleOwner) { error ->
             binding.tvError.setText(error?.toRich())
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.toolbar.collectLatest { state ->
+                binding.toolbar.tvTitle.setText(state.title)
+                val backIcon = state.backIcon
+                if (backIcon != null) {
+                    binding.toolbar.ivLeft.visibility = View.VISIBLE
+                    binding.toolbar.ivLeft.setImage(backIcon)
+                } else {
+                    binding.toolbar.ivLeft.visibility = View.GONE
+                }
+            }
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
