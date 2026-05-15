@@ -11,17 +11,16 @@ import androidx.lifecycle.lifecycleScope
 import com.simple.deeplink.Deeplink
 import com.simple.deeplink.DeeplinkHandler
 import com.simple.launcher.retirement.R
-import com.simple.launcher.retirement.domain.repository.AppRepository
 import com.simple.launcher.retirement.databinding.FragmentCleanFilesBinding
+import com.simple.launcher.retirement.domain.repository.AppRepository
 import com.simple.launcher.retirement.presentation.base.BaseFragment
 import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.image.setImage
+import com.simple.launcher.retirement.utils.lifecycle.observe
 import com.simple.launcher.retirement.utils.text.setText
 import com.simple.launcher.retirement.utils.text.toRich
 import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
-import com.simple.launcher.retirement.utils.lifecycle.observe
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 

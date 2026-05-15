@@ -3,18 +3,17 @@ package com.simple.launcher.retirement.presentation.home.adapter
 import android.view.HapticFeedbackConstants
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.bumptech.glide.load.resource.bitmap.CenterInside
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.simple.adapter.Adapter
 import com.simple.adapter.base.BaseBindingViewHolder
 import com.simple.deeplink.sendDeeplink
 import com.simple.launcher.retirement.databinding.ItemUtilityBinding
-import com.simple.launcher.retirement.utils.getItem
-import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
 import com.simple.launcher.retirement.utils.image.RichImage
 import com.simple.launcher.retirement.utils.image.setImage
 import com.simple.launcher.retirement.utils.text.RichText
 import com.simple.launcher.retirement.utils.text.setText
-import com.bumptech.glide.load.resource.bitmap.CenterInside
-import com.bumptech.glide.load.resource.bitmap.CircleCrop
+import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
 
 data class CleanMemoryHomeItem(val label: RichText, val icon: RichImage) : HomeItem {
     override fun areItemsTheSame(): List<Any> = listOf("CleanMemory")

@@ -1,9 +1,6 @@
 package com.simple.launcher.retirement.utils.string
 
 import android.content.Context
-import android.util.Log
-import androidx.annotation.StringRes
-import com.simple.launcher.retirement.R
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

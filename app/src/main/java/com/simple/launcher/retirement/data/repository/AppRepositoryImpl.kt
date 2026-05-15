@@ -1,16 +1,12 @@
 package com.simple.launcher.retirement.data.repository
 
-import android.content.ContentUris
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
+import android.content.pm.ApplicationInfo
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Environment
 import android.os.storage.StorageManager
-import android.provider.MediaStore
-import android.util.Log
-import android.content.pm.ApplicationInfo
-import android.content.pm.PackageManager
 import android.provider.Telephony
 import android.telecom.TelecomManager
 import com.google.gson.Gson
@@ -21,8 +17,8 @@ import com.simple.launcher.retirement.domain.repository.AppRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import java.io.File
 
 class AppRepositoryImpl(private val context: Context) : AppRepository {

@@ -1,41 +1,36 @@
 package com.simple.launcher.retirement.presentation.settings
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
+import com.simple.adapter.utils.attachAdapter
+import com.simple.adapter.utils.submitListAndAwait
 import com.simple.deeplink.Deeplink
 import com.simple.deeplink.DeeplinkHandler
 import com.simple.deeplink.sendDeeplink
 import com.simple.launcher.retirement.R
-import com.simple.launcher.retirement.domain.repository.AppRepository
 import com.simple.launcher.retirement.databinding.FragmentSettingsBinding
-import com.simple.launcher.retirement.presentation.default_launcher.DefaultLauncherBottomSheet
-import com.simple.launcher.retirement.presentation.pin_setup.PinVerifyBottomSheet
-import com.simple.launcher.retirement.presentation.permissions.CallBlockPermissionBottomSheet
-import android.Manifest
-import android.content.pm.PackageManager
-import android.os.Build
-import android.util.Log
-import androidx.core.content.ContextCompat
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
-
+import com.simple.launcher.retirement.domain.repository.AppRepository
 import com.simple.launcher.retirement.presentation.base.BaseFragment
+import com.simple.launcher.retirement.presentation.default_launcher.DefaultLauncherBottomSheet
+import com.simple.launcher.retirement.presentation.permissions.CallBlockPermissionBottomSheet
+import com.simple.launcher.retirement.presentation.pin_setup.PinVerifyBottomSheet
 import com.simple.launcher.retirement.utils.background.setBackground
-import com.simple.launcher.retirement.utils.lifecycle.observe
-import com.simple.adapter.utils.submitListAndAwait
-import com.simple.adapter.utils.attachAdapter
 import com.simple.launcher.retirement.utils.image.setImage
+import com.simple.launcher.retirement.utils.lifecycle.observe
 import com.simple.launcher.retirement.utils.string.asStringRes
 import com.simple.launcher.retirement.utils.text.setText
 import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
 

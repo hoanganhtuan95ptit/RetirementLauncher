@@ -10,7 +10,6 @@ import android.os.IBinder
 import android.os.Looper
 import android.os.PowerManager
 import android.util.Log
-import android.os.Build
 import com.simple.launcher.retirement.domain.repository.AppRepository
 import com.simple.launcher.retirement.presentation.block.BlockActivity
 

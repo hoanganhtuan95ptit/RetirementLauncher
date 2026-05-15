@@ -7,7 +7,6 @@ import android.graphics.RectF
 import android.graphics.Typeface
 import android.text.Spannable
 import android.text.SpannableString
-import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.TextPaint
 import android.text.style.AbsoluteSizeSpan
@@ -17,7 +16,6 @@ import android.text.style.LineBackgroundSpan
 import android.text.style.MetricAffectingSpan
 import android.text.style.RelativeSizeSpan
 import android.text.style.StyleSpan
-import android.util.Log
 import android.widget.TextView
 import com.google.auto.service.AutoService
 import java.util.ServiceLoader

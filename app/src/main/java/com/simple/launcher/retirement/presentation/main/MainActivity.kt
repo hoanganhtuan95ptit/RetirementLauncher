@@ -17,8 +17,8 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.simple.deeplink.sendDeeplink
 import com.simple.launcher.retirement.R
-import com.simple.launcher.retirement.domain.repository.AppRepository
 import com.simple.launcher.retirement.databinding.ActivityMainBinding
+import com.simple.launcher.retirement.domain.repository.AppRepository
 import com.simple.launcher.retirement.presentation.base.BaseActivity
 import com.simple.launcher.retirement.presentation.home.HomeFragment
 import com.simple.launcher.retirement.presentation.worker.AppMonitoringService

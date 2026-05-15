@@ -1,9 +1,7 @@
 package com.simple.launcher.retirement.presentation.base
 
-import android.app.Dialog
 import android.graphics.Color
 import android.graphics.Outline
-import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.view.Gravity

@@ -20,7 +20,6 @@ import com.simple.launcher.retirement.utils.text.toRich
 import com.simple.launcher.retirement.utils.text.with
 import com.simple.launcher.retirement.utils.theme.ThemeColorStore
 import com.simple.launcher.retirement.utils.theme.getColor
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map

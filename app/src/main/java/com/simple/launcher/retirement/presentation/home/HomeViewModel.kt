@@ -26,7 +26,6 @@ import com.simple.launcher.retirement.utils.text.TextSize
 import com.simple.launcher.retirement.utils.text.toRich
 import com.simple.launcher.retirement.utils.text.with
 import com.simple.launcher.retirement.utils.text.withFirst
-import com.simple.launcher.retirement.utils.theme.getColor
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 

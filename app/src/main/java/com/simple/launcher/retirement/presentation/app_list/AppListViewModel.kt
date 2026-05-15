@@ -13,7 +13,6 @@ import com.simple.launcher.retirement.presentation.base.BaseViewModel
 import com.simple.launcher.retirement.presentation.base.ToolbarState
 import com.simple.launcher.retirement.utils.image.ImageDrawable
 import com.simple.launcher.retirement.utils.string.getString
-import com.simple.launcher.retirement.utils.text.RichText
 import com.simple.launcher.retirement.utils.text.toRich
 import com.simple.launcher.retirement.utils.theme.getColor
 import kotlinx.coroutines.flow.SharingStarted
