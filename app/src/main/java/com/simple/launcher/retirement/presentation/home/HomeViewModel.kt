@@ -1,5 +1,6 @@
 package com.simple.launcher.retirement.presentation.home
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.simple.adapter.ViewItem
 import com.simple.launcher.retirement.R

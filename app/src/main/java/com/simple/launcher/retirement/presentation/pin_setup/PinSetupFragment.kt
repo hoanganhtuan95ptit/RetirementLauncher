@@ -9,6 +9,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.simple.deeplink.Deeplink
 import com.simple.deeplink.DeeplinkHandler
 import com.simple.launcher.retirement.R
@@ -16,13 +17,14 @@ import com.simple.launcher.retirement.databinding.FragmentPinSetupBinding
 import com.simple.launcher.retirement.domain.usecase.CheckPinUseCase
 import com.simple.launcher.retirement.domain.usecase.HasPinUseCase
 import com.simple.launcher.retirement.domain.usecase.SavePinUseCase
+import com.simple.launcher.retirement.presentation.base.BaseFragment
+import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.text.setText
 import com.simple.launcher.retirement.utils.text.toRich
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
-class PinSetupFragment : Fragment() {
-
-    private var _binding: FragmentPinSetupBinding? = null
-    private val binding get() = _binding!!
+class PinSetupFragment : BaseFragment<FragmentPinSetupBinding>() {
 
     private val viewModel: PinSetupViewModel by viewModels {
         PinSetupViewModelFactory(
@@ -32,40 +34,41 @@ class PinSetupFragment : Fragment() {
         )
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentPinSetupBinding.inflate(inflater, container, false)
-        return binding.root
+    override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentPinSetupBinding {
+        return FragmentPinSetupBinding.inflate(inflater, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun setupViews(view: View, savedInstanceState: Bundle?) {
+        super.setupViews(view, savedInstanceState)
 
         binding.toolbar.setNavigationIcon(R.drawable.ic_back)
         binding.toolbar.setNavigationOnClickListener {
-            parentFragmentManager.popBackStack()
+            requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
+        binding.btnNext.root.setOnClickListener {
+            val pin = binding.etPin.text.toString()
+            viewModel.handlePinInput(pin)
+        }
+    }
+
+    override fun observeData() {
+        super.observeData()
         viewModel.state.observe(viewLifecycleOwner) { state ->
             binding.etPin.text.clear()
             when (state) {
                 PinSetupViewModel.State.ENTER_OLD_PIN -> {
                     binding.tvInstruction.setText("Nhập mã PIN hiện tại".toRich())
-                    binding.btnNext.setText("Xác nhận".toRich())
                 }
                 PinSetupViewModel.State.ENTER_NEW_PIN -> {
                     binding.tvInstruction.setText("Nhập mã PIN mới (6 chữ số)".toRich())
-                    binding.btnNext.setText("Tiếp tục".toRich())
                 }
                 PinSetupViewModel.State.CONFIRM_NEW_PIN -> {
                     binding.tvInstruction.setText("Xác nhận mã PIN mới".toRich())
-                    binding.btnNext.setText("Lưu".toRich())
                 }
                 PinSetupViewModel.State.SUCCESS -> {
                     Toast.makeText(context, "Thiết lập mã PIN thành công", Toast.LENGTH_SHORT).show()
-                    parentFragmentManager.popBackStack()
+                    requireActivity().onBackPressedDispatcher.onBackPressed()
                 }
             }
         }
@@ -74,15 +77,12 @@ class PinSetupFragment : Fragment() {
             binding.tvError.setText(error?.toRich())
         }
 
-        binding.btnNext.setOnClickListener {
-            val pin = binding.etPin.text.toString()
-            viewModel.handlePinInput(pin)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.action.collectLatest { state ->
+                binding.btnNext.tvAction.setText(state.text)
+                binding.btnNext.tvAction.setBackground(state.background)
+            }
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }
 

@@ -28,7 +28,6 @@ fun emptyText() = RichText("")
 
 fun String.toRich(): RichText {
 
-    Log.d("tuanha", "toRich: $this")
     return RichText(this)
 }
 

@@ -20,6 +20,7 @@ import com.simple.launcher.retirement.presentation.permissions.CallBlockPermissi
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Build
+import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -46,7 +47,9 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
     override fun setupViews(view: View, savedInstanceState: Bundle?) {
         super.setupViews(view, savedInstanceState)
 
-        binding.toolbar.ivLeft.setOnClickListener { parentFragmentManager.popBackStack() }
+        binding.toolbar.ivLeft.setOnClickListener {
+            requireActivity().onBackPressedDispatcher.onBackPressed()
+        }
 
         binding.rvSettings.layoutManager = GridLayoutManager(requireContext(), 2)
     }

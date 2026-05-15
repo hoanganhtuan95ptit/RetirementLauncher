@@ -1,40 +1,28 @@
-package com.simple.launcher.retirement.presentation.clean_files
+package com.simple.launcher.retirement.presentation.onboarding
 
 import androidx.lifecycle.viewModelScope
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.presentation.base.ActionState
 import com.simple.launcher.retirement.presentation.base.BaseViewModel
-import com.simple.launcher.retirement.presentation.base.ToolbarState
 import com.simple.launcher.retirement.utils.background.Background
 import com.simple.launcher.retirement.utils.string.getString
-import com.simple.launcher.retirement.utils.theme.getColor
 import com.simple.launcher.retirement.utils.text.Bold
 import com.simple.launcher.retirement.utils.text.ForegroundColor
-import com.simple.launcher.retirement.utils.text.RichText
 import com.simple.launcher.retirement.utils.text.TextSize
-import com.simple.launcher.retirement.utils.text.emptyText
 import com.simple.launcher.retirement.utils.text.toRich
 import com.simple.launcher.retirement.utils.text.with
-import kotlinx.coroutines.flow.MutableStateFlow
+import com.simple.launcher.retirement.utils.theme.getColor
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 
-class CleanFilesViewModel : BaseViewModel() {
+class OnboardingViewModel : BaseViewModel() {
 
-    val toolbar: StateFlow<ToolbarState> = combine(strings, themes) { stringMap, themeMap ->
-        val color = themeMap.getColor(android.R.attr.textColorPrimary) ?: android.graphics.Color.BLACK
-        val title = buildToolbarTitle(stringMap.getString(R.string.clean_files_title), color)
-        ToolbarState(title = title, backIcon = buildBackIcon(color))
-    }.stateIn(viewModelScope, SharingStarted.Eagerly, ToolbarState.empty())
-
-    private val _actionState = MutableStateFlow(R.string.clean_files_start)
-    
-    val action: StateFlow<ActionState> = combine(strings, themes, _actionState) { stringMap, themeMap, actionRes ->
+    val action: StateFlow<ActionState> = combine(strings, themes) { stringMap, themeMap ->
         val color = themeMap.getColor(android.R.attr.textColorPrimary) ?: android.graphics.Color.BLACK
         
-        val text = stringMap.getString(actionRes)
+        val text = stringMap.getString(R.string.onboarding_start)
             .toRich()
             .with(ForegroundColor(color), TextSize(18), Bold)
             
@@ -48,8 +36,4 @@ class CleanFilesViewModel : BaseViewModel() {
             
         ActionState(text = text, background = background)
     }.stateIn(viewModelScope, SharingStarted.Eagerly, ActionState.empty())
-
-    fun setActionState(resId: Int) {
-        _actionState.value = resId
-    }
 }

@@ -15,9 +15,11 @@ import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.simple.deeplink.sendDeeplink
+import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.domain.repository.AppRepository
 import com.simple.launcher.retirement.databinding.ActivityMainBinding
 import com.simple.launcher.retirement.presentation.base.BaseActivity
+import com.simple.launcher.retirement.presentation.home.HomeFragment
 import com.simple.launcher.retirement.presentation.worker.AppMonitoringService
 import com.simple.launcher.retirement.presentation.worker.FileCleanupWorker
 import com.simple.launcher.retirement.presentation.worker.FileWatcherService
@@ -56,7 +58,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 else -> "app://settings"
             }
 
-            Log.d("tuanha", "setupViews: $deeplink")
             sendDeeplink(deeplink)
         }
 
@@ -64,6 +65,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             override fun handleOnBackPressed() {
                 if (supportFragmentManager.backStackEntryCount > 0) {
                     supportFragmentManager.popBackStack()
+                } else if (supportFragmentManager.findFragmentById(R.id.fragment_container) !is HomeFragment) {
+                    sendDeeplink("app://home")
                 }
             }
         })

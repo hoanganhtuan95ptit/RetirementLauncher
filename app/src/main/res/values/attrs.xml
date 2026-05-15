@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="WindowInsetsFrameLayout">
+        <attr name="insetStatusBars" format="boolean" />
+        <attr name="insetNavigationBars" format="boolean" />
+    </declare-styleable>
+</resources>

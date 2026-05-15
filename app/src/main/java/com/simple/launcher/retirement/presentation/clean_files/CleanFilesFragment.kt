@@ -14,6 +14,7 @@ import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.domain.repository.AppRepository
 import com.simple.launcher.retirement.databinding.FragmentCleanFilesBinding
 import com.simple.launcher.retirement.presentation.base.BaseFragment
+import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.image.setImage
 import com.simple.launcher.retirement.utils.text.setText
 import com.simple.launcher.retirement.utils.text.toRich
@@ -33,10 +34,12 @@ class CleanFilesFragment : BaseFragment<FragmentCleanFilesBinding>() {
     override fun setupViews(view: View, savedInstanceState: Bundle?) {
         super.setupViews(view, savedInstanceState)
 
-        binding.toolbar.ivLeft.setOnClickListener { parentFragmentManager.popBackStack() }
+        binding.toolbar.ivLeft.setOnClickListener {
+            requireActivity().onBackPressedDispatcher.onBackPressed()
+        }
 
-        binding.btnClean.setOnClickListener {
-            binding.btnClean.isEnabled = false
+        binding.btnClean.root.setOnClickListener {
+            binding.btnClean.root.isEnabled = false
             binding.progressBar.visibility = View.VISIBLE
             binding.tvStatus.setText(getString(R.string.clean_files_running).toRich())
 
@@ -47,8 +50,8 @@ class CleanFilesFragment : BaseFragment<FragmentCleanFilesBinding>() {
 
                 binding.progressBar.visibility = View.GONE
                 binding.tvStatus.setText(getString(R.string.clean_files_completed).toRich())
-                binding.btnClean.isEnabled = true
-                binding.btnClean.setText(getString(R.string.clean_files_retry).toRich())
+                binding.btnClean.root.isEnabled = true
+                viewModel.setActionState(R.string.clean_files_retry)
 
                 Toast.makeText(requireContext(), R.string.clean_files_toast, Toast.LENGTH_SHORT).show()
             }
@@ -67,6 +70,13 @@ class CleanFilesFragment : BaseFragment<FragmentCleanFilesBinding>() {
                 } else {
                     binding.toolbar.ivLeft.visibility = View.GONE
                 }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.action.collectLatest { state ->
+                binding.btnClean.tvAction.setText(state.text)
+                binding.btnClean.tvAction.setBackground(state.background)
             }
         }
     }

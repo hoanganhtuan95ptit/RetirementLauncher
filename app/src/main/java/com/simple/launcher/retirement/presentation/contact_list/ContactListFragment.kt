@@ -33,6 +33,7 @@ import com.simple.launcher.retirement.presentation.permissions.BlockPermissionBo
 import com.simple.launcher.retirement.presentation.permissions.FilePermissionBottomSheet
 
 import com.simple.launcher.retirement.presentation.base.BaseFragment
+import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.image.setImage
 import com.simple.launcher.retirement.utils.text.setText
 import kotlinx.coroutines.flow.collectLatest
@@ -61,9 +62,11 @@ class ContactListFragment : BaseFragment<FragmentAppListBinding>() {
     override fun setupViews(view: View, savedInstanceState: Bundle?) {
         super.setupViews(view, savedInstanceState)
 
-        binding.toolbar.ivLeft.setOnClickListener { parentFragmentManager.popBackStack() }
+        binding.toolbar.ivLeft.setOnClickListener {
+            requireActivity().onBackPressedDispatcher.onBackPressed()
+        }
 
-        binding.btnSave.setOnClickListener {
+        binding.btnSave.root.setOnClickListener {
             checkPermissionsAndSave()
         }
 
@@ -82,6 +85,13 @@ class ContactListFragment : BaseFragment<FragmentAppListBinding>() {
                 } else {
                     binding.toolbar.ivLeft.visibility = View.GONE
                 }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.saveAction.collectLatest { state ->
+                binding.btnSave.tvAction.setText(state.text)
+                binding.btnSave.tvAction.setBackground(state.background)
             }
         }
 
@@ -135,7 +145,7 @@ class ContactListFragment : BaseFragment<FragmentAppListBinding>() {
     private fun saveAndExit() {
         viewModel.saveSelection()
         Toast.makeText(context, R.string.contact_list_saved, Toast.LENGTH_SHORT).show()
-        parentFragmentManager.popBackStack()
+        requireActivity().onBackPressedDispatcher.onBackPressed()
     }
 
     private fun hasFilePermission(): Boolean {

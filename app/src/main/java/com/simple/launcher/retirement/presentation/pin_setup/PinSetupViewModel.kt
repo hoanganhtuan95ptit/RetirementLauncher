@@ -2,10 +2,26 @@ package com.simple.launcher.retirement.presentation.pin_setup
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import com.simple.launcher.retirement.R
+import com.simple.launcher.retirement.presentation.base.ActionState
 import com.simple.launcher.retirement.presentation.base.BaseViewModel
 import com.simple.launcher.retirement.domain.usecase.CheckPinUseCase
 import com.simple.launcher.retirement.domain.usecase.HasPinUseCase
 import com.simple.launcher.retirement.domain.usecase.SavePinUseCase
+import com.simple.launcher.retirement.utils.background.Background
+import com.simple.launcher.retirement.utils.string.getString
+import com.simple.launcher.retirement.utils.text.Bold
+import com.simple.launcher.retirement.utils.text.ForegroundColor
+import com.simple.launcher.retirement.utils.text.TextSize
+import com.simple.launcher.retirement.utils.text.toRich
+import com.simple.launcher.retirement.utils.text.with
+import com.simple.launcher.retirement.utils.theme.getColor
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 
 class PinSetupViewModel(
     private val hasPinUseCase: HasPinUseCase,
@@ -23,6 +39,26 @@ class PinSetupViewModel(
     private val _state = MutableLiveData<State>()
     val state: LiveData<State> = _state
 
+    private val _actionRes = MutableStateFlow(R.string.back) // Sẽ update theo state
+
+    val action: StateFlow<ActionState> = combine(strings, themes, _actionRes) { stringMap, themeMap, actionRes ->
+        val color = themeMap.getColor(android.R.attr.textColorPrimary) ?: android.graphics.Color.BLACK
+        
+        val text = stringMap.getString(actionRes)
+            .toRich()
+            .with(ForegroundColor(color), TextSize(18), Bold)
+            
+        val background = Background(
+            backgroundColor = android.graphics.Color.LTGRAY,
+            cornerRadius_TL = 12,
+            cornerRadius_TR = 12,
+            cornerRadius_BL = 12,
+            cornerRadius_BR = 12
+        )
+            
+        ActionState(text = text, background = background)
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, ActionState.empty())
+
     private val _error = MutableLiveData<String?>()
     val error: LiveData<String?> = _error
 
@@ -31,8 +67,10 @@ class PinSetupViewModel(
     init {
         if (hasPinUseCase()) {
             _state.value = State.ENTER_OLD_PIN
+            _actionRes.value = R.string.back // Hoặc "Xác nhận" tùy ý, ví dụ R.string.save
         } else {
             _state.value = State.ENTER_NEW_PIN
+            _actionRes.value = R.string.onboarding_start // Hoặc text phù hợp
         }
     }
 
@@ -47,6 +85,7 @@ class PinSetupViewModel(
             State.ENTER_OLD_PIN -> {
                 if (checkPinUseCase(pin)) {
                     _state.value = State.ENTER_NEW_PIN
+                    _actionRes.value = R.string.back // Cập nhật text nút nếu cần
                 } else {
                     _error.value = "Mã PIN cũ không chính xác"
                 }
@@ -54,6 +93,7 @@ class PinSetupViewModel(
             State.ENTER_NEW_PIN -> {
                 tempPin = pin
                 _state.value = State.CONFIRM_NEW_PIN
+                _actionRes.value = R.string.save
             }
             State.CONFIRM_NEW_PIN -> {
                 if (pin == tempPin) {

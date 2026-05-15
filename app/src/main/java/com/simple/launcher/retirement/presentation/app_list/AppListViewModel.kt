@@ -8,11 +8,19 @@ import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.domain.model.SelectableAppEntity
 import com.simple.launcher.retirement.domain.usecase.GetSelectableAppsUseCase
 import com.simple.launcher.retirement.domain.usecase.SaveSelectedAppsUseCase
+import com.simple.launcher.retirement.presentation.base.ActionState
 import com.simple.launcher.retirement.presentation.base.BaseViewModel
 import com.simple.launcher.retirement.presentation.base.ToolbarState
+import com.simple.launcher.retirement.utils.background.Background
 import com.simple.launcher.retirement.utils.image.ImageDrawable
 import com.simple.launcher.retirement.utils.string.getString
+import com.simple.launcher.retirement.utils.text.Bold
+import com.simple.launcher.retirement.utils.text.ForegroundColor
+import com.simple.launcher.retirement.utils.text.RichText
+import com.simple.launcher.retirement.utils.text.TextSize
+import com.simple.launcher.retirement.utils.text.emptyText
 import com.simple.launcher.retirement.utils.text.toRich
+import com.simple.launcher.retirement.utils.text.with
 import com.simple.launcher.retirement.utils.theme.getColor
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -30,6 +38,24 @@ class AppListViewModel(
         val title = buildToolbarTitle(stringMap.getString(R.string.setting_app_list), color)
         ToolbarState(title = title, backIcon = buildBackIcon(color))
     }.stateIn(viewModelScope, SharingStarted.Eagerly, ToolbarState.empty())
+
+    val saveAction: StateFlow<ActionState> = combine(strings, themes) { stringMap, themeMap ->
+        val color = themeMap.getColor(android.R.attr.textColorPrimary) ?: android.graphics.Color.BLACK
+        
+        val text = stringMap.getString(R.string.app_list_save_action)
+            .toRich()
+            .with(ForegroundColor(color), TextSize(18), Bold)
+            
+        val background = Background(
+            backgroundColor = android.graphics.Color.LTGRAY, // Ví dụ
+            cornerRadius_TL = 12,
+            cornerRadius_TR = 12,
+            cornerRadius_BL = 12,
+            cornerRadius_BR = 12
+        )
+        
+        ActionState(text = text, background = background)
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, ActionState.empty())
 
     // Nội bộ: domain entities
     private val _apps = MutableLiveData<List<SelectableAppEntity>>()
