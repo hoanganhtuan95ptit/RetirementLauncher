@@ -3,12 +3,15 @@ package com.simple.launcher.retirement.data.repository
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
 import android.telecom.TelecomManager
+import android.provider.Telephony
+import android.util.Log
 import com.simple.launcher.retirement.domain.model.AppEntity
 import com.simple.launcher.retirement.domain.repository.AppRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
-import android.provider.Telephony
 
 class AppRepositoryImpl(private val context: Context) : AppRepository {
 
@@ -62,21 +65,129 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
 
     override fun isDefaultApp(packageName: String): Boolean {
         val pm = context.packageManager
+        val tag = "DefaultAppCheck"
+
+        Log.d(tag, "--- Checking: $packageName ---")
 
         // Default Launcher
-        val intent = Intent(Intent.ACTION_MAIN)
-        intent.addCategory(Intent.CATEGORY_HOME)
-        val resolveInfo = pm.resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY)
-        if (resolveInfo?.activityInfo?.packageName == packageName) return true
+        try {
+            val intent = Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME)
+            val flags = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                PackageManager.MATCH_ALL
+            } else {
+                PackageManager.MATCH_DEFAULT_ONLY
+            }
+            val resolveInfo = pm.resolveActivity(intent, flags)
+            val launcherPkg = resolveInfo?.activityInfo?.packageName
+            Log.d(tag, "  Launcher default = $launcherPkg")
+            if (launcherPkg == packageName) {
+                Log.d(tag, "  => MATCH: Launcher")
+                return true
+            }
+        } catch (e: Exception) {
+            Log.e(tag, "  Launcher check failed: ${e.message}")
+        }
 
         // Default Dialer
-        val telecomManager = context.getSystemService(Context.TELECOM_SERVICE) as? TelecomManager
-        if (telecomManager?.defaultDialerPackage == packageName) return true
+        try {
+            val telecomManager = context.getSystemService(Context.TELECOM_SERVICE) as? TelecomManager
+            val dialerPkg = telecomManager?.defaultDialerPackage
+            Log.d(tag, "  Dialer default = $dialerPkg")
+            if (dialerPkg == packageName) {
+                Log.d(tag, "  => MATCH: Dialer")
+                return true
+            }
+
+            // sharedUserId check: Samsung tách dialer + incallui thành 2 package
+            // nhưng cùng sharedUserId → đều thuộc nhóm "phone default"
+            if (dialerPkg != null) {
+                try {
+                    val dialerInfo = pm.getPackageInfo(dialerPkg, 0)
+                    val targetInfo = pm.getPackageInfo(packageName, 0)
+                    val dialerSharedUid = dialerInfo.sharedUserId
+                    val targetSharedUid = targetInfo.sharedUserId
+                    Log.d(tag, "  Dialer sharedUserId = $dialerSharedUid, target sharedUserId = $targetSharedUid")
+                    if (dialerSharedUid != null && dialerSharedUid == targetSharedUid) {
+                        Log.d(tag, "  => MATCH: same sharedUserId as default dialer")
+                        return true
+                    }
+                } catch (e: Exception) {
+                    Log.e(tag, "  sharedUserId check failed: ${e.message}")
+                }
+            }
+        } catch (e: Exception) {
+            Log.e(tag, "  Dialer check failed: ${e.message}")
+        }
+
+        // In-Call UI — query tất cả InCallService implementations (không chỉ lấy cái đầu)
+        try {
+            val inCallIntent = Intent("android.telecom.InCallService")
+            val inCallServices = pm.queryIntentServices(inCallIntent, PackageManager.MATCH_ALL)
+            val inCallPackages = inCallServices.map { it.serviceInfo.packageName }
+            Log.d(tag, "  All InCall services = $inCallPackages")
+            if (inCallPackages.contains(packageName)) {
+                Log.d(tag, "  => MATCH: InCall UI")
+                return true
+            }
+        } catch (e: Exception) {
+            Log.e(tag, "  InCall UI check failed: ${e.message}")
+        }
+
+        // Phone process check — package chạy trong android.uid.phone là phone system app
+        // (bắt com.samsung.android.incallui và các package tương tự)
+        try {
+            val targetInfo = pm.getPackageInfo(packageName, 0)
+            val sharedUid = targetInfo.sharedUserId
+            Log.d(tag, "  Package sharedUserId = $sharedUid")
+            if (sharedUid == "android.uid.phone") {
+                Log.d(tag, "  => MATCH: phone system package (android.uid.phone)")
+                return true
+            }
+        } catch (e: Exception) {
+            Log.e(tag, "  Phone UID check failed: ${e.message}")
+        }
 
         // Default SMS
-        val defaultSms = Telephony.Sms.getDefaultSmsPackage(context)
-        if (defaultSms == packageName) return true
+        try {
+            val smsPkg = Telephony.Sms.getDefaultSmsPackage(context)
+            Log.d(tag, "  SMS default = $smsPkg")
+            if (smsPkg == packageName) {
+                Log.d(tag, "  => MATCH: SMS")
+                return true
+            }
+        } catch (e: Exception) {
+            Log.e(tag, "  SMS check failed: ${e.message}")
+        }
 
+        // Default Browser
+        try {
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.example.com"))
+            val browserInfo = pm.resolveActivity(browserIntent, PackageManager.MATCH_DEFAULT_ONLY)
+            val browserPkg = browserInfo?.activityInfo?.packageName
+            Log.d(tag, "  Browser default = $browserPkg")
+            if (browserPkg == packageName) {
+                Log.d(tag, "  => MATCH: Browser")
+                return true
+            }
+        } catch (e: Exception) {
+            Log.e(tag, "  Browser check failed: ${e.message}")
+        }
+
+        // Default Email
+        try {
+            val emailIntent = Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:"))
+            val emailInfo = pm.resolveActivity(emailIntent, PackageManager.MATCH_DEFAULT_ONLY)
+            val emailPkg = emailInfo?.activityInfo?.packageName
+            Log.d(tag, "  Email default = $emailPkg")
+            if (emailPkg == packageName) {
+                Log.d(tag, "  => MATCH: Email")
+                return true
+            }
+        } catch (e: Exception) {
+            Log.e(tag, "  Email check failed: ${e.message}")
+        }
+
+        Log.d(tag, "  => NO MATCH for $packageName")
         return false
     }
 }
