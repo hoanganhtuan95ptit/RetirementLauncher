@@ -14,6 +14,7 @@ import com.google.gson.reflect.TypeToken
 import com.simple.launcher.retirement.domain.model.AppEntity
 import com.simple.launcher.retirement.domain.model.ContactEntity
 import com.simple.launcher.retirement.domain.repository.AppRepository
+import com.simple.launcher.retirement.domain.repository.StrangeFileCategory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -24,6 +25,21 @@ import java.io.File
 class AppRepositoryImpl(private val context: Context) : AppRepository {
 
     private val sharedPrefs = context.getSharedPreferences("launcher_prefs", Context.MODE_PRIVATE)
+
+    companion object {
+        /**
+         * Chỉ giữ lại ảnh / nhạc / video.
+         * Mọi đuôi khác (kể cả tài liệu .pdf, .doc…) đều bị coi là "file lạ" và xóa.
+         */
+        private val ALLOWED_EXTENSIONS = setOf(
+            // Ảnh
+            "jpg", "jpeg", "png", "gif", "webp", "bmp", "heic", "heif",
+            // Nhạc
+            "mp3", "wav", "m4a", "ogg", "flac", "aac",
+            // Video
+            "mp4", "mkv", "avi", "mov", "3gp", "webm"
+        )
+    }
 
     // Trigger để các flow system status phát lại giá trị mới
     // replay = 1 đảm bảo subscriber mới nhận ngay giá trị gần nhất
@@ -232,6 +248,55 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
         }
     }
 
+    override fun deleteStrangeFilesByCategory(category: StrangeFileCategory): Pair<Int, Long> {
+        val roots = listOf(
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
+            Environment.getExternalStorageDirectory()
+        )
+        var count = 0
+        var bytes = 0L
+        roots.forEach { dir ->
+            dir?.let {
+                val result = recursiveDeleteByCategory(it, category)
+                count += result.first
+                bytes += result.second
+            }
+        }
+        return Pair(count, bytes)
+    }
+
+    private fun recursiveDeleteByCategory(file: File, category: StrangeFileCategory): Pair<Int, Long> {
+        if (file.isDirectory) {
+            if (file.name.startsWith(".") || file.name == "Android") return Pair(0, 0L)
+            var count = 0; var bytes = 0L
+            file.listFiles()?.forEach { child ->
+                val r = recursiveDeleteByCategory(child, category)
+                count += r.first; bytes += r.second
+            }
+            return Pair(count, bytes)
+        }
+        if (!belongsToCategory(file, category)) return Pair(0, 0L)
+        val size = file.length()
+        return try {
+            if (file.exists() && file.delete()) Pair(1, size) else Pair(0, 0L)
+        } catch (e: Exception) {
+            e.printStackTrace(); Pair(0, 0L)
+        }
+    }
+
+    private fun belongsToCategory(file: File, category: StrangeFileCategory): Boolean {
+        val ext = file.name.lowercase().substringAfterLast('.', "")
+        // Giữ lại ảnh / nhạc / video — mọi thứ khác đều là "lạ"
+        if (ext.isNotEmpty() && ALLOWED_EXTENSIONS.contains(ext)) return false
+        return when (category) {
+            // File không đuôi + file tạm hệ thống không khớp category nào → vào SYSTEM_TEMP
+            StrangeFileCategory.SYSTEM_TEMP ->
+                ext.isEmpty() || category.extensions.contains(ext) ||
+                StrangeFileCategory.values().none { it != category && it.extensions.contains(ext) }
+            else -> category.extensions.contains(ext)
+        }
+    }
+
     override fun cleanMemory(): Long {
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
@@ -271,22 +336,8 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
     }
 
     private fun isStrangeFile(file: File): Boolean {
-        val name = file.name.lowercase()
-        val allowedExtensions = setOf(
-            // Documents
-            "doc", "docx", "txt", "pdf", "xls", "xlsx", "ppt", "pptx",
-            // Images
-            "jpg", "jpeg", "png", "gif", "webp", "bmp",
-            // Audio
-            "mp3", "wav", "m4a", "ogg", "flac",
-            // Video
-            "mp4", "mkv", "avi", "mov", "3gp"
-        )
-
-        val extension = name.substringAfterLast('.', "")
-        if (extension.isEmpty()) return true // File không có đuôi cũng coi là lạ
-
-        return !allowedExtensions.contains(extension)
+        val ext = file.name.lowercase().substringAfterLast('.', "")
+        return ext.isEmpty() || !ALLOWED_EXTENSIONS.contains(ext)
     }
 
     private fun findAndDeleteApkFiles(file: File) {

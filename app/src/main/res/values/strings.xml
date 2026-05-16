@@ -21,12 +21,22 @@
 
     <!-- Clean Files -->
     <string name="clean_files_title">Dọn dẹp file lạ</string>
-    <string name="clean_files_desc">Hệ thống sẽ quét và xóa các file không thuộc định dạng tài liệu, ảnh, nhạc, video để bảo vệ thiết bị của bạn.</string>
+    <string name="clean_files_desc">Sẵn sàng quét thiết bị</string>
     <string name="clean_files_start">Bắt đầu dọn dẹp</string>
-    <string name="clean_files_running">Đang quét và dọn dẹp...</string>
+    <string name="clean_files_running">Đang quét và dọn dẹp…</string>
     <string name="clean_files_completed">Đã dọn dẹp hoàn tất!</string>
     <string name="clean_files_retry">Dọn dẹp lại</string>
     <string name="clean_files_toast">Đã dọn dẹp các file lạ</string>
+    <!-- Clean Files – categories -->
+    <string name="clean_cat_system_temp">File tạm hệ thống (.tmp, .log…)</string>
+    <string name="clean_cat_compressed">File nén không rõ nguồn</string>
+    <string name="clean_cat_no_extension">Tài liệu (.pdf, .doc, .txt…)</string>
+    <string name="clean_cat_apk_cache">APK &amp; cache cũ</string>
+    <!-- Clean Files – result card -->
+    <string name="clean_result_title">Kết quả dọn dẹp</string>
+    <string name="clean_result_files_deleted">file đã xóa</string>
+    <string name="clean_result_space_freed">đã giải phóng</string>
+    <string name="clean_result_nothing">Thiết bị đã sạch, không tìm thấy file lạ.</string>
 
     <!-- Clean Memory -->
     <string name="clean_memory_title">Giải phóng bộ nhớ</string>

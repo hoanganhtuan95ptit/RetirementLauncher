@@ -7,4 +7,20 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Clean Files – category icon backgrounds -->
+    <color name="clean_cat_purple_bg">#EEEDFE</color>
+    <color name="clean_cat_amber_bg">#FAEEDA</color>
+    <color name="clean_cat_red_bg">#FCEBEB</color>
+    <color name="clean_cat_green_bg">#E1F5EE</color>
+    <!-- Clean Files – category icon tints -->
+    <color name="clean_cat_purple">#534AB7</color>
+    <color name="clean_cat_amber">#BA7517</color>
+    <color name="clean_cat_red">#A32D2D</color>
+    <color name="clean_cat_green">#0F6E56</color>
+    <!-- Scanner ring -->
+    <color name="scanner_ring_idle">#AFA9EC</color>
+    <color name="scanner_ring_scanning">#7F77DD</color>
+    <color name="scanner_ring_done">#639922</color>
+    <color name="scanner_ring_track">#E0E0E0</color>
 </resources>
