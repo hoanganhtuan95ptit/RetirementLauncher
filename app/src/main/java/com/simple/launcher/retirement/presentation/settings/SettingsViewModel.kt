@@ -9,6 +9,7 @@ import com.simple.launcher.retirement.presentation.base.BaseViewModel
 import com.simple.launcher.retirement.presentation.base.ToolbarState
 import com.simple.launcher.retirement.presentation.base.buildBackIcon
 import com.simple.launcher.retirement.presentation.base.buildToolbarTitle
+import com.simple.adapter.ViewItem
 import com.simple.launcher.retirement.utils.combineState
 import com.simple.launcher.retirement.utils.image.ImageRes
 import com.simple.launcher.retirement.utils.string.getString
@@ -37,14 +38,14 @@ class SettingsViewModel(
 
     private val _refreshTrigger = MutableStateFlow(0)
 
-    val items: StateFlow<List<SettingItem>> = combineState(
+    val items: StateFlow<List<ViewItem>> = combineState(
         flow1 = strings,
         flow2 = themes,
         flow3 = _refreshTrigger,
         initialValue = emptyList()
     ) { stringMap, themeMap, _ ->
         val textColor = themeMap.getColor(android.R.attr.textColorPrimary) ?: android.graphics.Color.BLACK
-        val settingsItems = mutableListOf<SettingItem>()
+        val settingsItems = mutableListOf<ViewItem>()
 
         fun Int.toSettingRichText() = stringMap.getString(this).toRich().with(ForegroundColor(textColor))
 

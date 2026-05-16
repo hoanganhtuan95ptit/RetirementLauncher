@@ -72,8 +72,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             override fun handleOnBackPressed() {
                 if (supportFragmentManager.backStackEntryCount > 0) {
                     supportFragmentManager.popBackStack()
-                } else if (supportFragmentManager.findFragmentById(R.id.fragment_container) !is HomeFragment) {
+                } else if (intent.hasCategory(Intent.CATEGORY_HOME) && supportFragmentManager.findFragmentById(R.id.fragment_container) !is HomeFragment) {
                     sendDeeplink("app://home")
+                }else{
+                    finish()
                 }
             }
         })
