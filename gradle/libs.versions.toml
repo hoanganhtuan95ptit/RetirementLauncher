@@ -10,6 +10,7 @@ espressoCore = "3.5.1"
 appcompat = "1.6.1"
 material = "1.10.0"
 androidxStartup = "1.2.0"
+lifecycle = "2.6.1"
 lifecycleRuntimeKtx = "2.6.1"
 lifecycleLivedataKtx = "2.6.1"
 kotlinxCoroutines = "1.10.2"
@@ -23,8 +24,8 @@ glide = "4.16.0"
 glide-transformations = "4.3.0"
 adapter = "1.0.5.2"
 deeplink = "1.0.2.1"
-autoRegister = "1.0.4.7"
 autoService = "1.1.1"
+autoRegister = "1.0.5"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -35,6 +36,7 @@ androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version
 kotlinpoet = { module = "com.squareup:kotlinpoet", version.ref = "kotlinpoet" }
 kotlinpoet-ksp = { module = "com.squareup:kotlinpoet-ksp", version.ref = "kotlinpoet" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+androidx-lifecycle-process = { group = "androidx.lifecycle", name = "lifecycle-process", version.ref = "lifecycle" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycleRuntimeKtx" }
 androidx-lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycleLivedataKtx" }
