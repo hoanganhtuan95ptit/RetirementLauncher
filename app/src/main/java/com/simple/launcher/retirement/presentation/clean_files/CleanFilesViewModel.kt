@@ -1,7 +1,10 @@
 package com.simple.launcher.retirement.presentation.clean_files
 
 import android.graphics.Color
+import androidx.lifecycle.viewModelScope
 import com.simple.launcher.retirement.R
+import com.simple.launcher.retirement.domain.repository.FileRepository
+import com.simple.launcher.retirement.domain.repository.StrangeFileCategory
 import com.simple.launcher.retirement.presentation.base.ActionState
 import com.simple.launcher.retirement.presentation.base.BaseViewModel
 import com.simple.launcher.retirement.presentation.base.ToolbarState
@@ -11,10 +14,21 @@ import com.simple.launcher.retirement.presentation.base.buildToolbarTitle
 import com.simple.launcher.retirement.utils.combineState
 import com.simple.launcher.retirement.utils.string.getString
 import com.simple.launcher.retirement.utils.theme.getColor
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 enum class CleanScreenState { IDLE, SCANNING, DONE }
+
+data class CategoryMeta(
+    val labelRes: Int,
+    val iconRes: Int,
+    val iconBgRes: Int,
+    val iconTintRes: Int
+)
 
 data class CleanResultData(
     val totalFiles: Int,
@@ -25,6 +39,33 @@ data class CleanResultData(
 }
 
 class CleanFilesViewModel : BaseViewModel() {
+
+    val categoryMeta: List<CategoryMeta> = listOf(
+        CategoryMeta(
+            R.string.clean_cat_system_temp,
+            R.drawable.ic_home_drives_24dp,
+            R.drawable.bg_category_icon_purple,
+            R.color.clean_cat_purple
+        ),
+        CategoryMeta(
+            R.string.clean_cat_compressed,
+            R.drawable.ic_home_drives_24dp,
+            R.drawable.bg_category_icon_amber,
+            R.color.clean_cat_amber
+        ),
+        CategoryMeta(
+            R.string.clean_cat_no_extension,
+            R.drawable.ic_home_family_24dp,
+            R.drawable.bg_category_icon_red,
+            R.color.clean_cat_red
+        ),
+        CategoryMeta(
+            R.string.clean_cat_apk_cache,
+            R.drawable.ic_home_boost_24dp,
+            R.drawable.bg_category_icon_green,
+            R.color.clean_cat_green
+        )
+    )
 
     val toolbar: StateFlow<ToolbarState> = combineState(
         flow1 = strings,
@@ -61,22 +102,61 @@ class CleanFilesViewModel : BaseViewModel() {
     private val _result = MutableStateFlow<CleanResultData?>(null)
     val result: StateFlow<CleanResultData?> = _result
 
-    fun setScreenState(state: CleanScreenState) {
-        _screenState.value = state
-        when (state) {
-            CleanScreenState.IDLE    -> _actionRes.value = R.string.clean_files_start
-            CleanScreenState.SCANNING -> _actionRes.value = R.string.clean_files_running
-            CleanScreenState.DONE    -> _actionRes.value = R.string.clean_files_retry
+    /**
+     * List có size = StrangeFileCategory.values().size.
+     * null  = chưa xử lý
+     * non-null = Pair(số file đã xóa, bytes đã xóa)
+     */
+    private val _categoryResults = MutableStateFlow<List<Pair<Int, Long>?>>(emptyList())
+    val categoryResults: StateFlow<List<Pair<Int, Long>?>> = _categoryResults
+
+    // ─── Scan logic ────────────────────────────────────────────────────────────
+
+    fun startScan() {
+        if (_screenState.value == CleanScreenState.SCANNING) return
+
+        viewModelScope.launch {
+            val categories = StrangeFileCategory.values()
+            val results = MutableList<Pair<Int, Long>?>(categories.size) { null }
+
+            _result.value = null
+            _categoryResults.value = results.toList()
+            setScreenState(CleanScreenState.SCANNING)
+
+            var totalFiles = 0
+            var totalBytes = 0L
+
+            categories.forEachIndexed { index, category ->
+                val pair = withContext(Dispatchers.IO) {
+                    FileRepository.instance.deleteStrangeFilesByCategory(category)
+                }
+                totalFiles += pair.first
+                totalBytes += pair.second
+                results[index] = pair
+                _categoryResults.value = results.toList()
+                delay(350)
+            }
+
+            _result.value = CleanResultData(totalFiles, totalBytes)
+            setScreenState(CleanScreenState.DONE)
         }
     }
 
-    fun setResult(totalFiles: Int, totalBytes: Long) {
-        _result.value = CleanResultData(totalFiles, totalBytes)
+    // ─── State helpers ──────────────────────────────────────────────────────────
+
+    fun setScreenState(state: CleanScreenState) {
+        _screenState.value = state
+        when (state) {
+            CleanScreenState.IDLE     -> _actionRes.value = R.string.clean_files_start
+            CleanScreenState.SCANNING -> _actionRes.value = R.string.clean_files_running
+            CleanScreenState.DONE     -> _actionRes.value = R.string.clean_files_retry
+        }
     }
 
     fun reset() {
         _screenState.value = CleanScreenState.IDLE
         _result.value = null
         _actionRes.value = R.string.clean_files_start
+        _categoryResults.value = emptyList()
     }
 }
