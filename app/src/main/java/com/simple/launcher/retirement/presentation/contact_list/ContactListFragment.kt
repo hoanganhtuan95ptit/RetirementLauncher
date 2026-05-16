@@ -29,9 +29,10 @@ import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.databinding.FragmentAppListBinding
 import com.simple.launcher.retirement.domain.repository.ContactRepository
 import com.simple.launcher.retirement.presentation.base.BaseFragment
-import com.simple.launcher.retirement.presentation.default_launcher.DefaultLauncherBottomSheet
-import com.simple.launcher.retirement.presentation.permissions.BlockPermissionBottomSheet
-import com.simple.launcher.retirement.presentation.permissions.FilePermissionBottomSheet
+import com.simple.launcher.retirement.presentation.permissions.file.FilePermissionBottomSheet
+import com.simple.launcher.retirement.presentation.permissions.launcher.DefaultLauncherBottomSheet
+import com.simple.launcher.retirement.presentation.permissions.overlay.OverlayPermissionBottomSheet
+import com.simple.launcher.retirement.presentation.permissions.usage_stats.UsageStatsPermissionBottomSheet
 import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.image.setImage
 import com.simple.launcher.retirement.utils.lifecycle.observe
@@ -135,14 +136,16 @@ class ContactListFragment : BaseFragment<FragmentAppListBinding>() {
 
     private fun checkBlockPermissions() {
         val context = requireContext()
-        if (!PermissionManager.hasUsageStatsPermission(context) || !PermissionManager.hasOverlayPermission(context)) {
-            BlockPermissionBottomSheet {
-                if (PermissionManager.hasUsageStatsPermission(context) && PermissionManager.hasOverlayPermission(context)) {
-                    checkDefaultLauncher()
-                } else {
-                    Toast.makeText(context, "Bạn cần cấp đủ cả 2 quyền để tính năng hoạt động", Toast.LENGTH_SHORT).show()
-                }
-            }.show(childFragmentManager, BlockPermissionBottomSheet.TAG)
+        if (!PermissionManager.hasUsageStatsPermission(context)) {
+            UsageStatsPermissionBottomSheet {
+                checkBlockPermissions()
+            }.show(childFragmentManager, UsageStatsPermissionBottomSheet.TAG)
+            return
+        }
+        if (!PermissionManager.hasOverlayPermission(context)) {
+            OverlayPermissionBottomSheet {
+                checkBlockPermissions()
+            }.show(childFragmentManager, OverlayPermissionBottomSheet.TAG)
             return
         }
         checkDefaultLauncher()
@@ -151,8 +154,9 @@ class ContactListFragment : BaseFragment<FragmentAppListBinding>() {
     private fun checkDefaultLauncher() {
         val context = requireContext()
         if (!PermissionManager.isDefaultLauncher(context)) {
+            viewModel.saveSelection()
             DefaultLauncherBottomSheet {
-                saveAndExit()
+                onSaveSuccess()
             }.show(childFragmentManager, DefaultLauncherBottomSheet.TAG)
             return
         }
@@ -161,6 +165,10 @@ class ContactListFragment : BaseFragment<FragmentAppListBinding>() {
 
     private fun saveAndExit() {
         viewModel.saveSelection()
+        onSaveSuccess()
+    }
+
+    private fun onSaveSuccess() {
         Toast.makeText(context, R.string.contact_list_saved, Toast.LENGTH_SHORT).show()
         requireActivity().onBackPressedDispatcher.onBackPressed()
     }

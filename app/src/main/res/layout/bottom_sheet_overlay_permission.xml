@@ -6,18 +6,20 @@
     android:padding="24dp">
 
     <TextView
+        android:id="@+id/tvTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Kiểm soát ứng dụng"
+        android:gravity="center"
         android:textColor="@android:color/black"
         android:textSize="20sp"
         android:textStyle="bold" />
 
     <TextView
+        android:id="@+id/tvDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Để tính năng chặn ứng dụng hoạt động, bạn cần cấp quyền 'Truy cập dữ liệu sử dụng' và 'Hiển thị trên các ứng dụng khác'. Ứng dụng sẽ dựa vào đó để bảo vệ bạn khỏi các ứng dụng không được phép."
+        android:layout_marginTop="16dp"
+        android:gravity="center"
         android:textColor="@android:color/darker_gray"
         android:textSize="14sp" />
 

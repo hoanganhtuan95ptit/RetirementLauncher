@@ -1,4 +1,4 @@
-package com.simple.launcher.retirement.presentation.default_launcher
+package com.simple.launcher.retirement.presentation.permissions.call_block
 
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.presentation.base.ActionState
@@ -9,7 +9,7 @@ import com.simple.launcher.retirement.utils.string.getString
 import com.simple.launcher.retirement.utils.theme.getColor
 import kotlinx.coroutines.flow.StateFlow
 
-class DefaultLauncherViewModel : BaseViewModel() {
+class CallBlockPermissionViewModel : BaseViewModel() {
 
     val action: StateFlow<ActionState> = combineState(
         flow1 = strings,
@@ -20,7 +20,7 @@ class DefaultLauncherViewModel : BaseViewModel() {
         val backgroundColor = themeMap.getColor(android.R.attr.colorControlHighlight, android.graphics.Color.LTGRAY)
 
         buildActionState(
-            text = stringMap.getString(R.string.default_launcher_setup),
+            text = stringMap.getString(R.string.call_block_grant),
             textColor = color,
             backgroundColor = backgroundColor
         )

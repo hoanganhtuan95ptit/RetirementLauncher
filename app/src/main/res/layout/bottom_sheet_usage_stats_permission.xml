@@ -24,7 +24,7 @@
         android:textSize="14sp" />
 
     <include
-        android:id="@+id/btnSetDefault"
+        android:id="@+id/btnGrant"
         layout="@layout/layout_action"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

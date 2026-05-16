@@ -22,8 +22,8 @@ import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.databinding.FragmentSettingsBinding
 import com.simple.launcher.retirement.domain.repository.PreferenceRepository
 import com.simple.launcher.retirement.presentation.base.BaseFragment
-import com.simple.launcher.retirement.presentation.default_launcher.DefaultLauncherBottomSheet
-import com.simple.launcher.retirement.presentation.permissions.CallBlockPermissionBottomSheet
+import com.simple.launcher.retirement.presentation.permissions.call_block.CallBlockPermissionBottomSheet
+import com.simple.launcher.retirement.presentation.permissions.launcher.DefaultLauncherBottomSheet
 import com.simple.launcher.retirement.presentation.pin_setup.PinVerifyBottomSheet
 import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.image.setImage

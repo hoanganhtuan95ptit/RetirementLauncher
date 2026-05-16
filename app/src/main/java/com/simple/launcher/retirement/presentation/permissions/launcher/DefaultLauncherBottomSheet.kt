@@ -1,4 +1,4 @@
-package com.simple.launcher.retirement.presentation.default_launcher
+package com.simple.launcher.retirement.presentation.permissions.launcher
 
 import android.app.role.RoleManager
 import android.content.Context
@@ -9,13 +9,13 @@ import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import com.simple.launcher.retirement.databinding.BottomSheetDefaultLauncherBinding
 import com.simple.launcher.retirement.presentation.base.BaseBottomSheetDialogFragment
 import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.lifecycle.observe
+import com.simple.launcher.retirement.utils.permission.PermissionManager
 import com.simple.launcher.retirement.utils.text.setText
 import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
 
@@ -24,8 +24,10 @@ class DefaultLauncherBottomSheet(private val onResult: (() -> Unit)? = null) : B
     override val viewModel: DefaultLauncherViewModel by viewModels()
 
     private val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        dismiss()
-        onResult?.invoke()
+        if (PermissionManager.isDefaultLauncher(requireContext())) {
+            dismiss()
+            onResult?.invoke()
+        }
     }
 
     override fun inflateBinding(
@@ -45,6 +47,12 @@ class DefaultLauncherBottomSheet(private val onResult: (() -> Unit)? = null) : B
 
     override fun observeData() {
         super.observeData()
+        viewModel.title.observe(this) { title ->
+            binding.tvTitle.setText(title)
+        }
+        viewModel.description.observe(this) { description ->
+            binding.tvDescription.setText(description)
+        }
         viewModel.action.observe(this) { state ->
             binding.btnSetDefault.tvAction.setText(state.text)
             binding.btnSetDefault.tvAction.setBackground(state.background)
@@ -52,17 +60,17 @@ class DefaultLauncherBottomSheet(private val onResult: (() -> Unit)? = null) : B
     }
 
     private fun openDefaultLauncherSettings() {
+        if (PermissionManager.isDefaultLauncher(requireContext())) {
+            dismiss()
+            onResult?.invoke()
+            return
+        }
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             val roleManager = requireContext().getSystemService(Context.ROLE_SERVICE) as RoleManager
             if (roleManager.isRoleAvailable(RoleManager.ROLE_HOME)) {
-                if (roleManager.isRoleHeld(RoleManager.ROLE_HOME)) {
-                    Toast.makeText(context, "Ứng dụng đã là launcher mặc định", Toast.LENGTH_SHORT).show()
-                    dismiss()
-                    onResult?.invoke()
-                } else {
-                    val intent = roleManager.createRequestRoleIntent(RoleManager.ROLE_HOME)
-                    startForResult.launch(intent)
-                }
+                val intent = roleManager.createRequestRoleIntent(RoleManager.ROLE_HOME)
+                startForResult.launch(intent)
             } else {
                 openHomeSettingsFallback()
             }
@@ -77,9 +85,7 @@ class DefaultLauncherBottomSheet(private val onResult: (() -> Unit)? = null) : B
         } else {
             Intent(Settings.ACTION_SETTINGS)
         }
-        startActivity(intent)
-        dismiss()
-        onResult?.invoke()
+        startForResult.launch(intent)
     }
 
     companion object {

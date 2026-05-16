@@ -1,4 +1,4 @@
-package com.simple.launcher.retirement.presentation.permissions
+package com.simple.launcher.retirement.presentation.permissions.file
 
 import android.content.Intent
 import android.net.Uri
@@ -9,8 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.viewModels
 import com.simple.launcher.retirement.databinding.BottomSheetFilePermissionBinding
 import com.simple.launcher.retirement.presentation.base.BaseBottomSheetDialogFragment

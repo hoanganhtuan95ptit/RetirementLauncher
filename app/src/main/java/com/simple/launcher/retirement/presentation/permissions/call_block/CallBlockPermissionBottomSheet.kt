@@ -1,6 +1,5 @@
-package com.simple.launcher.retirement.presentation.permissions
+package com.simple.launcher.retirement.presentation.permissions.call_block
 
-import android.Manifest
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View

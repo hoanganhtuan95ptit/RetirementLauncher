@@ -77,6 +77,9 @@
 
     <!-- Permissions & Setup -->
     <string name="default_launcher_setup">Thiết lập ngay</string>
+    <string name="default_launcher_title">Thiết lập Launcher mặc định</string>
+    <string name="default_launcher_desc">Để sử dụng Retirement Launcher làm màn hình chính, bạn cần thiết lập nó làm ứng dụng mặc định trong cài đặt hệ thống.</string>
+    <string name="default_launcher_highlight">Retirement Launcher</string>
     <string name="permission_grant">Cấp quyền ngay</string>
     <string name="permission_skip">Bỏ qua</string>
     <string name="pin_verify_action">Xác nhận</string>
@@ -85,4 +88,14 @@
     <string name="file_permission_title">Bảo vệ bộ nhớ</string>
     <string name="file_permission_desc">Để tính năng tự động xóa các file APK/AAB lạ hoạt động, ứng dụng cần quyền truy cập toàn bộ bộ nhớ. Điều này giúp thiết bị của bạn luôn sạch sẽ và an toàn.</string>
     <string name="file_permission_highlight">APK/AAB lạ</string>
+
+    <!-- Usage Stats Permission -->
+    <string name="usage_stats_permission_title">Giám sát ứng dụng</string>
+    <string name="usage_stats_permission_desc">Để tính năng chặn ứng dụng hoạt động, bạn cần cấp quyền \'Truy cập dữ liệu sử dụng\'. Điều này giúp ứng dụng biết khi nào một ứng dụng không được phép được mở.</string>
+    <string name="usage_stats_permission_highlight">\'Truy cập dữ liệu sử dụng\'</string>
+
+    <!-- Overlay Permission -->
+    <string name="overlay_permission_title">Hiển thị trên ứng dụng khác</string>
+    <string name="overlay_permission_desc">Ứng dụng cần quyền \'Hiển thị trên các ứng dụng khác\' để có thể hiển thị màn hình khóa khi một ứng dụng bị chặn được mở.</string>
+    <string name="overlay_permission_highlight">\'Hiển thị trên các ứng dụng khác\'</string>
 </resources>
