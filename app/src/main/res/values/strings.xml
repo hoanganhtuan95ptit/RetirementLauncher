@@ -80,4 +80,9 @@
     <string name="permission_grant">Cấp quyền ngay</string>
     <string name="permission_skip">Bỏ qua</string>
     <string name="pin_verify_action">Xác nhận</string>
+
+    <!-- File Permission -->
+    <string name="file_permission_title">Bảo vệ bộ nhớ</string>
+    <string name="file_permission_desc">Để tính năng tự động xóa các file APK/AAB lạ hoạt động, ứng dụng cần quyền truy cập toàn bộ bộ nhớ. Điều này giúp thiết bị của bạn luôn sạch sẽ và an toàn.</string>
+    <string name="file_permission_highlight">APK/AAB lạ</string>
 </resources>

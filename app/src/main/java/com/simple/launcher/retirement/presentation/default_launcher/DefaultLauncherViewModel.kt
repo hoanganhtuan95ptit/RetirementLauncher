@@ -16,28 +16,13 @@ class DefaultLauncherViewModel : BaseViewModel() {
         flow2 = themes,
         initialValue = ActionState.empty()
     ) { stringMap, themeMap ->
-        val color = themeMap.getColor(android.R.attr.textColorPrimary) ?: android.graphics.Color.BLACK
-        val backgroundColor = themeMap.getColor(android.R.attr.colorControlHighlight) ?: android.graphics.Color.LTGRAY
+        val color = themeMap.getColor(android.R.attr.textColorPrimary)
+        val backgroundColor = themeMap.getColor(android.R.attr.colorControlHighlight, android.graphics.Color.LTGRAY)
 
         buildActionState(
             text = stringMap.getString(R.string.default_launcher_setup),
             textColor = color,
             backgroundColor = backgroundColor
-        )
-    }
-
-    val cancelAction: StateFlow<ActionState> = combineState(
-        flow1 = strings,
-        flow2 = themes,
-        initialValue = ActionState.empty()
-    ) { stringMap, themeMap ->
-        val color = themeMap.getColor(android.R.attr.textColorSecondary) ?: android.graphics.Color.GRAY
-
-        buildActionState(
-            text = stringMap.getString(R.string.cancel),
-            textColor = color,
-            backgroundColor = android.graphics.Color.TRANSPARENT,
-            textSize = 14
         )
     }
 }

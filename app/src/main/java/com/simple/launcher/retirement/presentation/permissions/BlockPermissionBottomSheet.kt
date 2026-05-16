@@ -16,6 +16,7 @@ import com.simple.launcher.retirement.databinding.BottomSheetBlockPermissionBind
 import com.simple.launcher.retirement.presentation.base.BaseBottomSheetDialogFragment
 import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.lifecycle.observe
+import com.simple.launcher.retirement.utils.permission.PermissionManager
 import com.simple.launcher.retirement.utils.text.setText
 import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
 
@@ -38,11 +39,6 @@ class BlockPermissionBottomSheet(private val onResult: () -> Unit) : BaseBottomS
             dismiss()
             onResult()
         }
-
-        binding.btnSkip.setOnSafeClickListener {
-            dismiss()
-            onResult()
-        }
     }
 
     override fun observeData() {
@@ -55,27 +51,17 @@ class BlockPermissionBottomSheet(private val onResult: () -> Unit) : BaseBottomS
 
     private fun requestBlockPermissions() {
         val context = requireContext()
-        if (!hasUsageStatsPermission()) {
+        if (!PermissionManager.hasUsageStatsPermission(context)) {
             // Xin quyền Usage Stats trước
             startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS))
             Toast.makeText(context, "Vui lòng tìm và bật 'Retirement Launcher'", Toast.LENGTH_LONG).show()
-        } else if (!Settings.canDrawOverlays(context)) {
+        } else if (!PermissionManager.hasOverlayPermission(context)) {
             // Sau đó xin quyền Overlay
             val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION)
             intent.data = Uri.parse("package:${context.packageName}")
             startActivity(intent)
             Toast.makeText(context, "Vui lòng cho phép ứng dụng hiển thị trên các ứng dụng khác", Toast.LENGTH_LONG).show()
         }
-    }
-
-    private fun hasUsageStatsPermission(): Boolean {
-        val appOps = requireContext().getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
-        val mode = appOps.checkOpNoThrow(
-            AppOpsManager.OPSTR_GET_USAGE_STATS,
-            Process.myUid(),
-            requireContext().packageName
-        )
-        return mode == AppOpsManager.MODE_ALLOWED
     }
 
     companion object {

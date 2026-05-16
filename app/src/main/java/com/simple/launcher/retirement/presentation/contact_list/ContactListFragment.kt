@@ -35,6 +35,7 @@ import com.simple.launcher.retirement.presentation.permissions.FilePermissionBot
 import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.image.setImage
 import com.simple.launcher.retirement.utils.lifecycle.observe
+import com.simple.launcher.retirement.utils.permission.PermissionManager
 import com.simple.launcher.retirement.utils.text.setText
 import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
 
@@ -122,7 +123,8 @@ class ContactListFragment : BaseFragment<FragmentAppListBinding>() {
     }
 
     private fun checkPermissionsAndSave() {
-        if (!hasFilePermission()) {
+        val context = requireContext()
+        if (!PermissionManager.hasFilePermission(context)) {
             FilePermissionBottomSheet {
                 checkBlockPermissions()
             }.show(childFragmentManager, FilePermissionBottomSheet.TAG)
@@ -132,9 +134,10 @@ class ContactListFragment : BaseFragment<FragmentAppListBinding>() {
     }
 
     private fun checkBlockPermissions() {
-        if (!hasUsageStatsPermission() || !hasOverlayPermission()) {
+        val context = requireContext()
+        if (!PermissionManager.hasUsageStatsPermission(context) || !PermissionManager.hasOverlayPermission(context)) {
             BlockPermissionBottomSheet {
-                if (hasUsageStatsPermission() && hasOverlayPermission()) {
+                if (PermissionManager.hasUsageStatsPermission(context) && PermissionManager.hasOverlayPermission(context)) {
                     checkDefaultLauncher()
                 } else {
                     Toast.makeText(context, "Bạn cần cấp đủ cả 2 quyền để tính năng hoạt động", Toast.LENGTH_SHORT).show()
@@ -146,7 +149,8 @@ class ContactListFragment : BaseFragment<FragmentAppListBinding>() {
     }
 
     private fun checkDefaultLauncher() {
-        if (!isDefaultLauncher()) {
+        val context = requireContext()
+        if (!PermissionManager.isDefaultLauncher(context)) {
             DefaultLauncherBottomSheet {
                 saveAndExit()
             }.show(childFragmentManager, DefaultLauncherBottomSheet.TAG)
@@ -161,46 +165,12 @@ class ContactListFragment : BaseFragment<FragmentAppListBinding>() {
         requireActivity().onBackPressedDispatcher.onBackPressed()
     }
 
-    private fun hasFilePermission(): Boolean {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            Environment.isExternalStorageManager()
-        } else {
-            true
-        }
-    }
-
-    private fun hasUsageStatsPermission(): Boolean {
-        val appOps = requireContext().getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
-        val mode = appOps.checkOpNoThrow(
-            AppOpsManager.OPSTR_GET_USAGE_STATS,
-            Process.myUid(),
-            requireContext().packageName
-        )
-        return mode == AppOpsManager.MODE_ALLOWED
-    }
-
-    private fun hasOverlayPermission(): Boolean {
-        return Settings.canDrawOverlays(requireContext())
-    }
-
-    private fun isDefaultLauncher(): Boolean {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            val roleManager = requireContext().getSystemService(Context.ROLE_SERVICE) as RoleManager
-            roleManager.isRoleHeld(RoleManager.ROLE_HOME)
-        } else {
-            val intent = Intent(Intent.ACTION_MAIN)
-            intent.addCategory(Intent.CATEGORY_HOME)
-            val resolveInfo = requireContext().packageManager.resolveActivity(intent, 0)
-            resolveInfo?.activityInfo?.packageName == requireContext().packageName
-        }
-    }
-
     private fun checkPermissionAndLoad() {
-        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_CONTACTS)
-            != PackageManager.PERMISSION_GRANTED) {
+        val context = requireContext()
+        if (!PermissionManager.hasContactPermission(context)) {
             requestPermissionLauncher.launch(Manifest.permission.READ_CONTACTS)
         } else {
-            viewModel.loadContacts(requireContext())
+            viewModel.loadContacts(context)
         }
     }
 }

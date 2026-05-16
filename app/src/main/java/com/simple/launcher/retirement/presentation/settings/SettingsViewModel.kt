@@ -29,7 +29,7 @@ class SettingsViewModel(
         flow2 = themes,
         initialValue = ToolbarState.empty()
     ) { stringMap, themeMap ->
-        val color = themeMap.getColor(android.R.attr.textColorPrimary) ?: android.graphics.Color.BLACK
+        val color = themeMap.getColor(android.R.attr.textColorPrimary)
         ToolbarState(
             title = buildToolbarTitle(stringMap.getString(R.string.settings_title), color),
             backIcon = buildBackIcon(color)
@@ -44,7 +44,7 @@ class SettingsViewModel(
         flow3 = _refreshTrigger,
         initialValue = emptyList()
     ) { stringMap, themeMap, _ ->
-        val textColor = themeMap.getColor(android.R.attr.textColorPrimary) ?: android.graphics.Color.BLACK
+        val textColor = themeMap.getColor(android.R.attr.textColorPrimary)
         val settingsItems = mutableListOf<ViewItem>()
 
         fun Int.toSettingRichText() = stringMap.getString(this).toRich().with(ForegroundColor(textColor))

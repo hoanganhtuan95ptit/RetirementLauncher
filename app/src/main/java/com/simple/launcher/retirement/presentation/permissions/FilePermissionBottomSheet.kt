@@ -8,17 +8,35 @@ import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.viewModels
 import com.simple.launcher.retirement.databinding.BottomSheetFilePermissionBinding
 import com.simple.launcher.retirement.presentation.base.BaseBottomSheetDialogFragment
 import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.lifecycle.observe
+import com.simple.launcher.retirement.utils.permission.PermissionManager
 import com.simple.launcher.retirement.utils.text.setText
 import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
 
 class FilePermissionBottomSheet(private val onResult: () -> Unit) : BaseBottomSheetDialogFragment<BottomSheetFilePermissionBinding, FilePermissionViewModel>() {
 
     override val viewModel: FilePermissionViewModel by viewModels()
+
+    private val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (PermissionManager.hasFilePermission(requireContext())) {
+            dismiss()
+            onResult()
+        }
+    }
+
+    private val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { results ->
+        if (results.all { it.value }) {
+            dismiss()
+            onResult()
+        }
+    }
 
     override fun inflateBinding(
         inflater: LayoutInflater,
@@ -32,18 +50,20 @@ class FilePermissionBottomSheet(private val onResult: () -> Unit) : BaseBottomSh
 
         binding.btnGrant.root.setOnSafeClickListener {
             requestFilePermission()
-            dismiss()
-            onResult()
-        }
-
-        binding.btnSkip.setOnSafeClickListener {
-            dismiss()
-            onResult()
         }
     }
 
     override fun observeData() {
         super.observeData()
+
+        viewModel.title.observe(this) {
+            binding.tvTitle.setText(it)
+        }
+
+        viewModel.message.observe(this) {
+            binding.tvMessage.setText(it)
+        }
+
         viewModel.action.observe(this) { state ->
             binding.btnGrant.tvAction.setText(state.text)
             binding.btnGrant.tvAction.setBackground(state.background)
@@ -51,23 +71,29 @@ class FilePermissionBottomSheet(private val onResult: () -> Unit) : BaseBottomSh
     }
 
     private fun requestFilePermission() {
+        if (PermissionManager.hasFilePermission(requireContext())) {
+            dismiss()
+            onResult()
+            return
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             try {
                 val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
                 intent.addCategory("android.intent.category.DEFAULT")
                 intent.data = Uri.parse("package:${requireContext().packageName}")
-                startActivity(intent)
+                startForResult.launch(intent)
             } catch (e: Exception) {
                 val intent = Intent()
                 intent.action = Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION
-                startActivity(intent)
+                startForResult.launch(intent)
             }
         } else {
-            // Với Android < 11, quyền này thường được xin lúc runtime bình thường, 
-            // nhưng ở đây ta đơn giản hóa bằng cách mở cài đặt ứng dụng
-            val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-            intent.data = Uri.parse("package:${requireContext().packageName}")
-            startActivity(intent)
+            requestPermissionLauncher.launch(
+                arrayOf(
+                    android.Manifest.permission.READ_EXTERNAL_STORAGE,
+                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+                )
+            )
         }
     }
 

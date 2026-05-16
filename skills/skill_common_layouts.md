@@ -13,7 +13,7 @@ Sử dụng cho thanh tiêu đề ở đầu mỗi màn hình.
 Sử dụng `buildToolbarTitle` và `buildBackIcon` để tạo state.
 ```kotlin
 val toolbar: StateFlow<ToolbarState> = combine(strings, themes) { stringMap, themeMap ->
-    val color = themeMap.getColor(android.R.attr.textColorPrimary) ?: Color.BLACK
+    val color = themeMap.getColor(android.R.attr.textColorPrimary)
     val title = buildToolbarTitle(stringMap.getString(R.string.title_res), color)
     ToolbarState(title = title, backIcon = buildBackIcon(color))
 }.stateIn(viewModelScope, SharingStarted.Eagerly, ToolbarState.empty())
@@ -42,8 +42,8 @@ Sử dụng cho các nút bấm chính (Lưu, Xác nhận, Dọn dẹp).
 Sử dụng hàm `buildActionState`.
 ```kotlin
 val action: StateFlow<ActionState> = combine(strings, themes) { stringMap, themeMap ->
-    val color = themeMap.getColor(android.R.attr.textColorPrimary) ?: Color.BLACK
-    val backgroundColor = themeMap.getColor(android.R.attr.colorControlHighlight) ?: Color.LTGRAY
+    val color = themeMap.getColor(android.R.attr.textColorPrimary)
+    val backgroundColor = themeMap.getColor(android.R.attr.colorControlHighlight, Color.LTGRAY)
 
     buildActionState(
         text = stringMap.getString(R.string.action_res),
@@ -71,9 +71,9 @@ Sử dụng cho ô tìm kiếm.
 Sử dụng hàm `buildSearchState`.
 ```kotlin
 val searchState: StateFlow<SearchState> = combine(strings, themes) { stringMap, themeMap ->
-    val textColor = themeMap.getColor(android.R.attr.textColorPrimary) ?: Color.BLACK
-    val hintColor = themeMap.getColor(android.R.attr.textColorSecondary) ?: Color.GRAY
-    val backgroundColor = themeMap.getColor(android.R.attr.colorControlHighlight) ?: Color.LTGRAY
+    val textColor = themeMap.getColor(android.R.attr.textColorPrimary)
+    val hintColor = themeMap.getColor(android.R.attr.textColorSecondary, Color.GRAY)
+    val backgroundColor = themeMap.getColor(android.R.attr.colorControlHighlight, Color.LTGRAY)
 
     buildSearchState(
         hint = stringMap.getString(R.string.search),
@@ -105,8 +105,8 @@ Sử dụng để quản lý background và thanh kéo (anchor) của BottomShee
 Thường được khai báo trong `BaseViewModel` hoặc override nếu cần tùy chỉnh.
 ```kotlin
 override val bottomSheet: StateFlow<BottomSheetState> = themes.map { themeMap ->
-    val backgroundColor = themeMap.getColor(android.R.attr.colorBackground) ?: Color.WHITE
-    val anchorColor = themeMap.getColor(android.R.attr.textColorSecondary) ?: Color.LTGRAY
+    val backgroundColor = themeMap.getColor(android.R.attr.colorBackground, Color.WHITE)
+    val anchorColor = themeMap.getColor(android.R.attr.textColorSecondary, Color.LTGRAY)
 
     buildBottomSheetState(
         backgroundColor = backgroundColor,

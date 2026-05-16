@@ -68,8 +68,8 @@ object ThemeColorStore {
 /**
  * Extension giúp lấy màu từ themeMap thông qua R.attr ID
  */
-fun Map<String, Int>.getColor(@AttrRes attrId: Int): Int? {
-    return ThemeColorStore.attrIdMap[attrId]
+fun Map<String, Int>.getColor(@AttrRes attrId: Int, @ColorInt defaultColor: Int = android.graphics.Color.BLACK): Int {
+    return ThemeColorStore.attrIdMap[attrId] ?: defaultColor
 }
 
 /**

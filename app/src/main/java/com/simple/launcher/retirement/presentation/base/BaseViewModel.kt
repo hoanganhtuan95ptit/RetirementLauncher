@@ -19,13 +19,13 @@ open class BaseViewModel : ViewModel() {
     val themes = ThemeColorStore.colorMapFlow
 
     val background: StateFlow<Background> = themes.map { themeMap ->
-        val backgroundColor = themeMap.getColor(android.R.attr.colorBackground) ?: Color.WHITE
+        val backgroundColor = themeMap.getColor(android.R.attr.colorBackground, Color.WHITE)
         Background(backgroundColor = backgroundColor)
     }.stateIn(viewModelScope, SharingStarted.Eagerly, Background())
 
     open val bottomSheet: StateFlow<BottomSheetState> = themes.map { themeMap ->
-        val backgroundColor = themeMap.getColor(android.R.attr.colorBackground) ?: Color.WHITE
-        val anchorColor = themeMap.getColor(android.R.attr.textColorSecondary) ?: Color.LTGRAY
+        val backgroundColor = themeMap.getColor(android.R.attr.colorBackground, Color.WHITE)
+        val anchorColor = themeMap.getColor(android.R.attr.textColorSecondary, Color.LTGRAY)
 
         buildBottomSheetState(
             backgroundColor = backgroundColor,

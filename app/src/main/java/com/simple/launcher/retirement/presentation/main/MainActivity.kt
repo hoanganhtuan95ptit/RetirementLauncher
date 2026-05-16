@@ -24,6 +24,7 @@ import com.simple.launcher.retirement.presentation.home.HomeFragment
 import com.simple.launcher.retirement.presentation.worker.AppMonitoringService
 import com.simple.launcher.retirement.presentation.worker.FileCleanupWorker
 import com.simple.launcher.retirement.presentation.worker.FileWatcherService
+import com.simple.launcher.retirement.utils.permission.PermissionManager
 import com.simple.launcher.retirement.utils.string.StringResStore
 import com.simple.launcher.retirement.utils.theme.ThemeColorStore
 
@@ -47,12 +48,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         val repository = PreferenceRepository.instance
         
         // Bắt đầu lắng nghe sự thay đổi file ngầm nếu đã có quyền và được bật
-        if (hasFilePermission() && repository.isFileCleanupEnabled()) {
+        if (PermissionManager.hasFilePermission(this) && repository.isFileCleanupEnabled()) {
             startFileWatcherService()
         }
         
         // Khởi động service giám sát nếu đã có quyền và được bật
-        if (hasUsageStatsPermission() && hasOverlayPermission() && repository.isAppBlockEnabled()) {
+        if (PermissionManager.hasUsageStatsPermission(this) && PermissionManager.hasOverlayPermission(this) && repository.isAppBlockEnabled()) {
             startAppMonitoringService()
         }
 
@@ -108,34 +109,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         super.onResume()
         val repository = PreferenceRepository.instance
         // Khởi động service nếu đã có quyền và được bật
-        if (hasFilePermission() && repository.isFileCleanupEnabled()) {
+        if (PermissionManager.hasFilePermission(this) && repository.isFileCleanupEnabled()) {
             startFileWatcherService()
         }
-        if (hasUsageStatsPermission() && hasOverlayPermission() && repository.isAppBlockEnabled()) {
+        if (PermissionManager.hasUsageStatsPermission(this) && PermissionManager.hasOverlayPermission(this) && repository.isAppBlockEnabled()) {
             startAppMonitoringService()
         }
-    }
-
-    private fun hasFilePermission(): Boolean {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            Environment.isExternalStorageManager()
-        } else {
-            true
-        }
-    }
-
-    private fun hasUsageStatsPermission(): Boolean {
-        val appOps = getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
-        val mode = appOps.checkOpNoThrow(
-            AppOpsManager.OPSTR_GET_USAGE_STATS,
-            Process.myUid(),
-            packageName
-        )
-        return mode == AppOpsManager.MODE_ALLOWED
-    }
-
-    private fun hasOverlayPermission(): Boolean {
-        return Settings.canDrawOverlays(this)
     }
 
     fun startAppMonitoringService() {

@@ -33,7 +33,7 @@ class AppListViewModel(
         flow2 = themes,
         initialValue = ToolbarState.empty()
     ) { stringMap, themeMap ->
-        val color = themeMap.getColor(android.R.attr.textColorPrimary) ?: android.graphics.Color.BLACK
+        val color = themeMap.getColor(android.R.attr.textColorPrimary)
         ToolbarState(
             title = buildToolbarTitle(stringMap.getString(R.string.setting_app_list), color),
             backIcon = buildBackIcon(color)
@@ -45,9 +45,9 @@ class AppListViewModel(
         flow2 = themes,
         initialValue = SearchState.empty()
     ) { stringMap, themeMap ->
-        val textColor = themeMap.getColor(android.R.attr.textColorPrimary) ?: android.graphics.Color.BLACK
-        val hintColor = themeMap.getColor(android.R.attr.textColorSecondary) ?: android.graphics.Color.GRAY
-        val backgroundColor = themeMap.getColor(android.R.attr.colorControlHighlight) ?: android.graphics.Color.LTGRAY
+        val textColor = themeMap.getColor(android.R.attr.textColorPrimary)
+        val hintColor = themeMap.getColor(android.R.attr.textColorSecondary, android.graphics.Color.GRAY)
+        val backgroundColor = themeMap.getColor(android.R.attr.colorControlHighlight, android.graphics.Color.LTGRAY)
 
         buildSearchState(
             hint = stringMap.getString(R.string.search),
@@ -62,8 +62,8 @@ class AppListViewModel(
         flow2 = themes,
         initialValue = ActionState.empty()
     ) { stringMap, themeMap ->
-        val color = themeMap.getColor(android.R.attr.textColorPrimary) ?: android.graphics.Color.BLACK
-        val backgroundColor = themeMap.getColor(android.R.attr.colorControlHighlight) ?: android.graphics.Color.LTGRAY
+        val color = themeMap.getColor(android.R.attr.textColorPrimary)
+        val backgroundColor = themeMap.getColor(android.R.attr.colorControlHighlight, android.graphics.Color.LTGRAY)
 
         buildActionState(
             text = stringMap.getString(R.string.app_list_save_action),

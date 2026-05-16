@@ -32,6 +32,7 @@ import com.simple.launcher.retirement.presentation.permissions.FilePermissionBot
 import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.image.setImage
 import com.simple.launcher.retirement.utils.lifecycle.observe
+import com.simple.launcher.retirement.utils.permission.PermissionManager
 import com.simple.launcher.retirement.utils.text.setText
 import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
 
@@ -109,7 +110,8 @@ class AppListFragment : BaseFragment<FragmentAppListBinding>() {
     }
 
     private fun checkPermissionsAndSave() {
-        if (!hasFilePermission()) {
+        val context = requireContext()
+        if (!PermissionManager.hasFilePermission(context)) {
             FilePermissionBottomSheet {
                 // Sau khi xử lý xong quyền file, check tiếp quyền block
                 checkBlockPermissions()
@@ -120,10 +122,11 @@ class AppListFragment : BaseFragment<FragmentAppListBinding>() {
     }
 
     private fun checkBlockPermissions() {
-        if (!hasUsageStatsPermission() || !hasOverlayPermission()) {
+        val context = requireContext()
+        if (!PermissionManager.hasUsageStatsPermission(context) || !PermissionManager.hasOverlayPermission(context)) {
             BlockPermissionBottomSheet {
                 // Khi quay lại, kiểm tra lại xem đã đủ CẢ HAI chưa
-                if (hasUsageStatsPermission() && hasOverlayPermission()) {
+                if (PermissionManager.hasUsageStatsPermission(context) && PermissionManager.hasOverlayPermission(context)) {
                     checkDefaultLauncher()
                 } else {
                     // Nếu vẫn thiếu, yêu cầu lại (BottomSheet sẽ mở màn hình cài đặt còn thiếu)
@@ -136,7 +139,8 @@ class AppListFragment : BaseFragment<FragmentAppListBinding>() {
     }
 
     private fun checkDefaultLauncher() {
-        if (!isDefaultLauncher()) {
+        val context = requireContext()
+        if (!PermissionManager.isDefaultLauncher(context)) {
             DefaultLauncherBottomSheet {
                 // Cuối cùng mới lưu
                 saveAndExit()
@@ -150,41 +154,6 @@ class AppListFragment : BaseFragment<FragmentAppListBinding>() {
         viewModel.saveSelection()
         Toast.makeText(context, R.string.app_list_saved, Toast.LENGTH_SHORT).show()
         requireActivity().onBackPressedDispatcher.onBackPressed()
-    }
-
-    private fun hasFilePermission(): Boolean {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            Environment.isExternalStorageManager()
-        } else {
-            true // Đơn giản hóa cho các bản cũ
-        }
-    }
-
-    private fun hasUsageStatsPermission(): Boolean {
-        val appOps = requireContext().getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
-        val mode = appOps.checkOpNoThrow(
-            AppOpsManager.OPSTR_GET_USAGE_STATS,
-            Process.myUid(),
-            requireContext().packageName
-        )
-        return mode == AppOpsManager.MODE_ALLOWED
-    }
-
-    private fun hasOverlayPermission(): Boolean {
-        return Settings.canDrawOverlays(requireContext())
-    }
-
-    private fun isDefaultLauncher(): Boolean {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            val roleManager = requireContext().getSystemService(Context.ROLE_SERVICE) as RoleManager
-            roleManager.isRoleHeld(RoleManager.ROLE_HOME)
-        } else {
-            // Check đơn giản cho bản cũ
-            val intent = Intent(Intent.ACTION_MAIN)
-            intent.addCategory(Intent.CATEGORY_HOME)
-            val resolveInfo = requireContext().packageManager.resolveActivity(intent, 0)
-            resolveInfo?.activityInfo?.packageName == requireContext().packageName
-        }
     }
 }
 

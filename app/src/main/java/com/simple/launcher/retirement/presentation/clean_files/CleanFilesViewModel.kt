@@ -31,7 +31,7 @@ class CleanFilesViewModel : BaseViewModel() {
         flow2 = themes,
         initialValue = ToolbarState.empty()
     ) { stringMap, themeMap ->
-        val color = themeMap.getColor(android.R.attr.textColorPrimary) ?: Color.BLACK
+        val color = themeMap.getColor(android.R.attr.textColorPrimary)
         ToolbarState(
             title = buildToolbarTitle(stringMap.getString(R.string.clean_files_title), color),
             backIcon = buildBackIcon(color)
@@ -46,8 +46,8 @@ class CleanFilesViewModel : BaseViewModel() {
         flow3 = _actionRes,
         initialValue = ActionState.empty()
     ) { stringMap, themeMap, actionRes ->
-        val textColor = themeMap.getColor(android.R.attr.textColorPrimary) ?: Color.BLACK
-        val bgColor = themeMap.getColor(android.R.attr.colorControlHighlight) ?: Color.LTGRAY
+        val textColor = themeMap.getColor(android.R.attr.textColorPrimary)
+        val bgColor = themeMap.getColor(android.R.attr.colorControlHighlight, Color.LTGRAY)
         buildActionState(
             text = stringMap.getString(actionRes),
             textColor = textColor,

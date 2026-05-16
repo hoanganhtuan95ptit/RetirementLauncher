@@ -11,6 +11,7 @@ import com.simple.launcher.retirement.databinding.BottomSheetCallPermissionBindi
 import com.simple.launcher.retirement.presentation.base.BaseBottomSheetDialogFragment
 import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.lifecycle.observe
+import com.simple.launcher.retirement.utils.permission.PermissionManager
 import com.simple.launcher.retirement.utils.text.setText
 import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
 
@@ -36,17 +37,7 @@ class CallBlockPermissionBottomSheet(private val onResult: () -> Unit) : BaseBot
         super.setupViews(view, savedInstanceState)
 
         binding.btnGrant.root.setOnSafeClickListener {
-            val permissions = arrayOf(
-                Manifest.permission.READ_PHONE_STATE,
-                Manifest.permission.ANSWER_PHONE_CALLS,
-                Manifest.permission.READ_CONTACTS
-            )
-            requestPermissionLauncher.launch(permissions)
-        }
-
-        binding.btnSkip.setOnSafeClickListener {
-            dismiss()
-            onResult()
+            requestPermissionLauncher.launch(PermissionManager.getCallBlockPermissions())
         }
     }
 

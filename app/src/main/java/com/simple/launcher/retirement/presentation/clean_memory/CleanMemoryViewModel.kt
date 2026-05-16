@@ -20,7 +20,7 @@ class CleanMemoryViewModel : BaseViewModel() {
         flow2 = themes,
         initialValue = ToolbarState.empty()
     ) { stringMap, themeMap ->
-        val color = themeMap.getColor(android.R.attr.textColorPrimary) ?: android.graphics.Color.BLACK
+        val color = themeMap.getColor(android.R.attr.textColorPrimary)
         ToolbarState(
             title = buildToolbarTitle(stringMap.getString(R.string.clean_memory_title), color),
             backIcon = buildBackIcon(color)
@@ -35,8 +35,8 @@ class CleanMemoryViewModel : BaseViewModel() {
         flow3 = _actionState,
         initialValue = ActionState.empty()
     ) { stringMap, themeMap, actionRes ->
-        val color = themeMap.getColor(android.R.attr.textColorPrimary) ?: android.graphics.Color.BLACK
-        val backgroundColor = themeMap.getColor(android.R.attr.colorControlHighlight) ?: android.graphics.Color.LTGRAY
+        val color = themeMap.getColor(android.R.attr.textColorPrimary)
+        val backgroundColor = themeMap.getColor(android.R.attr.colorControlHighlight, android.graphics.Color.LTGRAY)
 
         buildActionState(
             text = stringMap.getString(actionRes),

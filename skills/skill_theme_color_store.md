@@ -41,7 +41,7 @@ To make the UI reactive to theme changes, observe the `colorMapFlow` (exposed as
 ```kotlin
 class HomeViewModel : BaseViewModel() {
     val items = combine(strings, themes) { stringMap, themeMap ->
-        val textColor = themeMap.getColor(android.R.attr.textColorPrimary) ?: Color.BLACK
+        val textColor = themeMap.getColor(android.R.attr.textColorPrimary)
         // Build your items here
     }.stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 }
@@ -62,7 +62,7 @@ val color = context.getThemeColor(R.attr.colorSurface)
 *   **`val colorMapFlow: StateFlow<Map<String, Int>>`**: A flow that emits the entire color map whenever `load()` is called.
 
 ### Extensions
-*   **`Map<String, Int>.getColor(@AttrRes attrId: Int): Int?`**: **(Recommended)** Resolves color from the map using attribute ID. It handles both system (`android.R.attr`) and app attributes.
+*   **`Map<String, Int>.getColor(@AttrRes attrId: Int, @ColorInt defaultColor: Int = Color.BLACK): Int`**: **(Recommended)** Resolves color from the map using attribute ID. It handles both system (`android.R.attr`) and app attributes. Returns `defaultColor` if attribute is not found.
 *   **`Context.getThemeColor(@AttrRes attrId: Int): Int`**: Resolves a theme attribute to a color integer directly from the context.
 
 ---
@@ -75,4 +75,4 @@ val color = context.getThemeColor(R.attr.colorSurface)
         public static <fields>;
     }
     ```
-*   **Null Safety**: `getColor()` returns an optional `Int?`. Always provide a fallback color (e.g., `Color.TRANSPARENT` or a hardcoded default) when using these values in UI components.
+*   **Null Safety**: `getColor()` has a default value (default is `Color.BLACK`). You can override it by passing a second argument: `themeMap.getColor(R.attr.myAttr, Color.RED)`.

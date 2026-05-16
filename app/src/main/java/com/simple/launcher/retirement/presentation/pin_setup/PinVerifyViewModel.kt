@@ -16,8 +16,8 @@ class PinVerifyViewModel : BaseViewModel() {
         flow2 = themes,
         initialValue = ActionState.empty()
     ) { stringMap, themeMap ->
-        val color = themeMap.getColor(android.R.attr.textColorPrimary) ?: android.graphics.Color.BLACK
-        val backgroundColor = themeMap.getColor(android.R.attr.colorControlHighlight) ?: android.graphics.Color.LTGRAY
+        val color = themeMap.getColor(android.R.attr.textColorPrimary)
+        val backgroundColor = themeMap.getColor(android.R.attr.colorControlHighlight, android.graphics.Color.LTGRAY)
 
         buildActionState(
             text = stringMap.getString(R.string.pin_verify_action),

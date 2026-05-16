@@ -41,11 +41,6 @@ class DefaultLauncherBottomSheet(private val onResult: (() -> Unit)? = null) : B
         binding.btnSetDefault.root.setOnSafeClickListener {
             openDefaultLauncherSettings()
         }
-
-        binding.btnCancel.root.setOnSafeClickListener {
-            dismiss()
-            onResult?.invoke()
-        }
     }
 
     override fun observeData() {
@@ -53,10 +48,6 @@ class DefaultLauncherBottomSheet(private val onResult: (() -> Unit)? = null) : B
         viewModel.action.observe(this) { state ->
             binding.btnSetDefault.tvAction.setText(state.text)
             binding.btnSetDefault.tvAction.setBackground(state.background)
-        }
-        viewModel.cancelAction.observe(this) { state ->
-            binding.btnCancel.tvAction.setText(state.text)
-            binding.btnCancel.tvAction.setBackground(state.background)
         }
     }
 

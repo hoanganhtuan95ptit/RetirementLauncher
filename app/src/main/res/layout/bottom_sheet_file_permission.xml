@@ -6,18 +6,20 @@
     android:padding="24dp">
 
     <TextView
+        android:id="@+id/tvTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Bảo vệ bộ nhớ"
+        android:gravity="center"
         android:textColor="@android:color/black"
         android:textSize="20sp"
         android:textStyle="bold" />
 
     <TextView
+        android:id="@+id/tvMessage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Để tính năng tự động xóa các file APK/AAB lạ hoạt động, ứng dụng cần quyền truy cập toàn bộ bộ nhớ. Điều này giúp thiết bị của bạn luôn sạch sẽ và an toàn."
+        android:gravity="center"
         android:textColor="@android:color/darker_gray"
         android:textSize="14sp" />
 
@@ -27,16 +29,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp" />
-
-    <TextView
-        android:id="@+id/btnSkip"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:gravity="center"
-        android:minHeight="48dp"
-        android:text="Bỏ qua"
-        android:textColor="@android:color/darker_gray"
-        android:textSize="14sp" />
 
 </LinearLayout>
