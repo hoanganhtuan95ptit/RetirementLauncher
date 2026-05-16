@@ -39,9 +39,9 @@
         <!-- Circular Gauge -->
         <com.simple.launcher.retirement.utils.view.MemoryGaugeView
             android:id="@+id/memoryGauge"
-            android:layout_width="180dp"
-            android:layout_height="180dp"
-            android:layout_marginTop="4dp"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvGaugeLabel" />
@@ -96,22 +96,22 @@
                 android:background="@drawable/bg_memory_stat_card"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp">
+                android:paddingTop="14dp"
+                android:paddingBottom="14dp">
                 <TextView
                     android:id="@+id/tvStatUsed"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="--"
                     android:textColor="@color/memory_stat_used"
-                    android:textSize="14sp"
+                    android:textSize="18sp"
                     android:fontFamily="sans-serif-medium" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Đang dùng"
                     android:textColor="@color/memory_text_secondary"
-                    android:textSize="10sp"
+                    android:textSize="12sp"
                     android:layout_marginTop="2dp" />
             </LinearLayout>
 
@@ -124,22 +124,22 @@
                 android:background="@drawable/bg_memory_stat_card"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp">
+                android:paddingTop="14dp"
+                android:paddingBottom="14dp">
                 <TextView
                     android:id="@+id/tvStatFree"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="--"
                     android:textColor="@color/memory_stat_free"
-                    android:textSize="14sp"
+                    android:textSize="18sp"
                     android:fontFamily="sans-serif-medium" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Còn trống"
                     android:textColor="@color/memory_text_secondary"
-                    android:textSize="10sp"
+                    android:textSize="12sp"
                     android:layout_marginTop="2dp" />
             </LinearLayout>
 
@@ -151,53 +151,25 @@
                 android:background="@drawable/bg_memory_stat_card"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp">
+                android:paddingTop="14dp"
+                android:paddingBottom="14dp">
                 <TextView
                     android:id="@+id/tvStatTotal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="--"
                     android:textColor="@color/memory_text_primary"
-                    android:textSize="14sp"
+                    android:textSize="18sp"
                     android:fontFamily="sans-serif-medium" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Tổng cộng"
                     android:textColor="@color/memory_text_secondary"
-                    android:textSize="10sp"
+                    android:textSize="12sp"
                     android:layout_marginTop="2dp" />
             </LinearLayout>
         </LinearLayout>
-
-        <!-- Running Apps section title -->
-        <TextView
-            android:id="@+id/tvAppsTitle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginTop="20dp"
-            android:text="Ứng dụng đang chạy ngầm"
-            android:textColor="@color/memory_text_secondary"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/llStats" />
-
-        <!-- App chips container (chips added programmatically) -->
-        <LinearLayout
-            android:id="@+id/llAppsContainer"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginTop="8dp"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvAppsTitle" />
 
         <!-- Result Card (hidden by default, shown after boost) -->
         <LinearLayout
@@ -206,7 +178,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/bg_memory_result_card"
             android:gravity="center_vertical"
             android:orientation="horizontal"
@@ -214,7 +186,7 @@
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/llAppsContainer">
+            app:layout_constraintTop_toBottomOf="@id/llStats">
 
             <ImageView
                 android:layout_width="20dp"
@@ -265,24 +237,42 @@
             app:layout_constraintTop_toBottomOf="@id/cardResult" />
 
         <!-- Boost Button -->
-        <TextView
+        <LinearLayout
             android:id="@+id/btnBoost"
             android:layout_width="0dp"
-            android:layout_height="52dp"
+            android:layout_height="56dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="32dp"
             android:background="@drawable/bg_memory_boost_btn"
             android:gravity="center"
-            android:text="@string/clean_memory_start"
-            android:textColor="@color/memory_text_primary"
-            android:textSize="15sp"
-            android:fontFamily="sans-serif-medium"
+            android:orientation="horizontal"
+            android:clickable="true"
+            android:focusable="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvStatus" />
+            app:layout_constraintTop_toBottomOf="@id/tvStatus">
+
+            <ImageView
+                android:id="@+id/ivBtnIcon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="8dp"
+                android:src="@drawable/ic_lightning"
+                android:contentDescription="@null" />
+
+            <TextView
+                android:id="@+id/tvBtnLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/clean_memory_start"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:fontFamily="sans-serif-medium" />
+
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

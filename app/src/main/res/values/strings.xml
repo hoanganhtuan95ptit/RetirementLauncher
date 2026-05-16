@@ -40,7 +40,7 @@
 
     <!-- Clean Memory -->
     <string name="clean_memory_title">Giải phóng bộ nhớ</string>
-    <string name="clean_memory_desc">Tối ưu hóa hệ thống bằng cách đóng các ứng dụng chạy ngầm không cần thiết để tăng tốc điện thoại.</string>
+    <string name="clean_memory_desc">Tối ưu hóa hệ thống bằng cách đóng các ứng dụng\nchạy ngầm không cần thiết.</string>
     <string name="clean_memory_start">Tăng tốc ngay</string>
     <string name="clean_memory_running">Đang tối ưu hệ thống...</string>
     <string name="clean_memory_completed">Hệ thống đã được tối ưu!\nĐã giải phóng khoảng %1$d MB RAM</string>

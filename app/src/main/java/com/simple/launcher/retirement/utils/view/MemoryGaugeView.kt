@@ -52,22 +52,36 @@ class MemoryGaugeView @JvmOverloads constructor(
                 interpolator = DecelerateInterpolator()
                 addUpdateListener {
                     animatedPercent = it.animatedValue as Float
-                    arcPaint.color = lerpColor(colorNormal, colorOptimal, 1f - animatedPercent)
+                    arcPaint.color = resolveArcColor(animatedPercent)
                     invalidate()
                 }
                 start()
             }
         } else {
             animatedPercent = clamped
-            arcPaint.color = lerpColor(colorNormal, colorOptimal, 1f - clamped)
+            arcPaint.color = resolveArcColor(clamped)
             invalidate()
         }
         currentPercent = clamped
     }
 
+    /**
+     * Giữ màu tím (normal) khi RAM >= 35%.
+     * Chỉ chuyển dần sang xanh lá (optimal) khi RAM xuống dưới 35% (sau khi boost).
+     */
+    private fun resolveArcColor(percent: Float): Int {
+        val threshold = 0.35f
+        return if (percent >= threshold) {
+            colorNormal
+        } else {
+            val t = 1f - (percent / threshold)   // 0 tại 35%, 1 tại 0%
+            lerpColor(colorNormal, colorOptimal, t)
+        }
+    }
+
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
-        strokeWidth = min(w, h) * 0.07f
+        strokeWidth = min(w, h) * 0.10f   // ~20dp tại 200dp — dày hơn, khớp design
         trackPaint.strokeWidth = strokeWidth
         arcPaint.strokeWidth = strokeWidth
 
@@ -77,14 +91,14 @@ class MemoryGaugeView @JvmOverloads constructor(
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
+        // Track: vòng tròn đầy đủ 360°
         trackPaint.color = colorTrack
-        // Track: 270° vòng tròn (bắt đầu từ 135°, tức dưới-trái → qua phải → dưới-phải)
-        canvas.drawArc(oval, 135f, 270f, false, trackPaint)
+        canvas.drawArc(oval, -90f, 360f, false, trackPaint)
 
-        // Arc: phần sử dụng
-        val sweep = animatedPercent * 270f
+        // Arc: bắt đầu từ đỉnh (12 giờ = -90°), quét theo % RAM
+        val sweep = animatedPercent * 360f
         if (sweep > 0f) {
-            canvas.drawArc(oval, 135f, sweep, false, arcPaint)
+            canvas.drawArc(oval, -90f, sweep, false, arcPaint)
         }
     }
 
