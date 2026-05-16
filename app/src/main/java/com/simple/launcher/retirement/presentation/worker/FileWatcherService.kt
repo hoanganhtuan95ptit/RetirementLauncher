@@ -7,18 +7,18 @@ import android.os.Environment
 import android.os.FileObserver
 import android.os.IBinder
 import android.util.Log
-import com.simple.launcher.retirement.domain.repository.AppRepository
+import com.simple.launcher.retirement.domain.repository.PreferenceRepository
 import java.io.File
 
 class FileWatcherService : Service() {
 
     private val TAG = "FileWatcherService"
     private val observers = mutableMapOf<String, FileObserver>()
-    private lateinit var repository: AppRepository
+    private lateinit var repository: PreferenceRepository
 
     override fun onCreate() {
         super.onCreate()
-        repository = AppRepository.instance
+        repository = PreferenceRepository.instance
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {

@@ -5,7 +5,8 @@ import android.graphics.Typeface
 import com.simple.adapter.ViewItem
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.domain.model.HomeContentEntity
-import com.simple.launcher.retirement.domain.repository.AppRepository
+import com.simple.launcher.retirement.domain.repository.FileRepository
+import com.simple.launcher.retirement.domain.repository.MemoryRepository
 import com.simple.launcher.retirement.domain.usecase.GetHomeAppsUseCase
 import com.simple.launcher.retirement.presentation.base.BaseViewModel
 import com.simple.launcher.retirement.presentation.home.adapter.AppHomeItem
@@ -31,12 +32,13 @@ import kotlinx.coroutines.flow.StateFlow
 
 class HomeViewModel(
     private val getHomeAppsUseCase: GetHomeAppsUseCase,
-    private val repository: AppRepository
+    private val fileRepository: FileRepository,
+    private val memoryRepository: MemoryRepository
 ) : BaseViewModel() {
 
     val cleanFilesHomeItem: StateFlow<Pair<Double, List<ViewItem>>> = combineState(
         flow1 = strings,
-        flow2 = repository.countStrangeFilesFlow(),
+        flow2 = fileRepository.countStrangeFilesFlow(),
         initialValue = 1.0 to emptyList()
     ) { strings, fileCount ->
 
@@ -59,7 +61,7 @@ class HomeViewModel(
 
     val cleanMemoryHomeItem: StateFlow<Pair<Double, List<ViewItem>>> = combineState(
         flow1 = strings,
-        flow2 = repository.estimateCleanableMemoryMBFlow(),
+        flow2 = memoryRepository.estimateCleanableMemoryMBFlow(),
         initialValue = 2.0 to emptyList()
     ) { strings, memoryMB ->
 
@@ -161,8 +163,11 @@ class HomeViewModel(
      * Yêu cầu repository phát lại giá trị mới cho các flow system status.
      * Dùng khi nhận broadcast FILE_CHANGED hoặc onResume.
      */
-    fun loadSystemStatus() = repository.refreshSystemStatus()
-    
+    fun loadSystemStatus() {
+        fileRepository.refreshFileStatus()
+        memoryRepository.refreshMemoryStatus()
+    }
+
     fun updateItem(order: Double, list: List<ViewItem>) {
         _itemMap.value = _itemMap.value.toMutableMap().apply {
             put(order, list)

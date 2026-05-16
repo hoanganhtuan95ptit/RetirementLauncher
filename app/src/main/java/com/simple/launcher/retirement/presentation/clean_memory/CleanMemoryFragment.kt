@@ -19,7 +19,7 @@ import com.simple.deeplink.Deeplink
 import com.simple.deeplink.DeeplinkHandler
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.databinding.FragmentCleanMemoryBinding
-import com.simple.launcher.retirement.domain.repository.AppRepository
+import com.simple.launcher.retirement.domain.repository.MemoryRepository
 import com.simple.launcher.retirement.presentation.base.BaseFragment
 import com.simple.launcher.retirement.utils.image.setImage
 import com.simple.launcher.retirement.utils.lifecycle.observe
@@ -207,7 +207,7 @@ class CleanMemoryFragment : BaseFragment<FragmentCleanMemoryBinding>() {
 
         lifecycleScope.launch {
             val freedBytes = withContext(Dispatchers.IO) {
-                val result = AppRepository.instance.cleanMemory()
+                val result = MemoryRepository.instance.cleanMemory()
                 delay(2000)
                 result
             }

@@ -4,7 +4,7 @@ import android.os.Build
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.simple.launcher.retirement.R
-import com.simple.launcher.retirement.domain.repository.AppRepository
+import com.simple.launcher.retirement.domain.repository.PreferenceRepository
 import com.simple.launcher.retirement.presentation.base.BaseViewModel
 import com.simple.launcher.retirement.presentation.base.ToolbarState
 import com.simple.launcher.retirement.presentation.base.buildBackIcon
@@ -21,7 +21,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
 class SettingsViewModel(
-    private val repository: AppRepository
+    private val repository: PreferenceRepository
 ) : BaseViewModel() {
 
     val toolbar: StateFlow<ToolbarState> = combineState(
@@ -78,7 +78,7 @@ class SettingsViewModel(
     }
 }
 
-class SettingsViewModelFactory(private val repository: AppRepository) : ViewModelProvider.Factory {
+class SettingsViewModelFactory(private val repository: PreferenceRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return SettingsViewModel(repository) as T
     }

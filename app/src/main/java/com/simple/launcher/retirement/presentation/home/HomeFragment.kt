@@ -21,7 +21,8 @@ import com.simple.deeplink.Deeplink
 import com.simple.deeplink.DeeplinkHandler
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.databinding.FragmentHomeBinding
-import com.simple.launcher.retirement.domain.repository.AppRepository
+import com.simple.launcher.retirement.domain.repository.FileRepository
+import com.simple.launcher.retirement.domain.repository.MemoryRepository
 import com.simple.launcher.retirement.domain.usecase.GetHomeAppsUseCase
 import com.simple.launcher.retirement.presentation.base.BaseFragment
 import com.simple.launcher.retirement.presentation.home.adapter.HomeItem
@@ -34,7 +35,7 @@ import kotlinx.coroutines.launch
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     private val viewModel: HomeViewModel by activityViewModels {
-        HomeViewModelFactory(GetHomeAppsUseCase.instance, AppRepository.instance)
+        HomeViewModelFactory(GetHomeAppsUseCase.instance, FileRepository.instance, MemoryRepository.instance)
     }
 
     override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentHomeBinding {

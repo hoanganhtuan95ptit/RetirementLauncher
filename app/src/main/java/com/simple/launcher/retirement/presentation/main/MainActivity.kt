@@ -18,7 +18,7 @@ import androidx.work.WorkManager
 import com.simple.deeplink.sendDeeplink
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.databinding.ActivityMainBinding
-import com.simple.launcher.retirement.domain.repository.AppRepository
+import com.simple.launcher.retirement.domain.repository.PreferenceRepository
 import com.simple.launcher.retirement.presentation.base.BaseActivity
 import com.simple.launcher.retirement.presentation.home.HomeFragment
 import com.simple.launcher.retirement.presentation.worker.AppMonitoringService
@@ -44,7 +44,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         // Quét toàn bộ một lần lúc khởi động
         scheduleInitialFileCleanup()
         
-        val repository = AppRepository.instance
+        val repository = PreferenceRepository.instance
         
         // Bắt đầu lắng nghe sự thay đổi file ngầm nếu đã có quyền và được bật
         if (hasFilePermission() && repository.isFileCleanupEnabled()) {
@@ -106,7 +106,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     override fun onResume() {
         super.onResume()
-        val repository = AppRepository.instance
+        val repository = PreferenceRepository.instance
         // Khởi động service nếu đã có quyền và được bật
         if (hasFilePermission() && repository.isFileCleanupEnabled()) {
             startFileWatcherService()

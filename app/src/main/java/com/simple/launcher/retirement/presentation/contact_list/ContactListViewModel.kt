@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.domain.model.ContactEntity
 import com.simple.launcher.retirement.domain.model.SelectableContactEntity
-import com.simple.launcher.retirement.domain.repository.AppRepository
+import com.simple.launcher.retirement.domain.repository.ContactRepository
 import com.simple.launcher.retirement.presentation.base.ActionState
 import com.simple.launcher.retirement.presentation.base.BaseViewModel
 import com.simple.launcher.retirement.presentation.base.SearchState
@@ -30,7 +30,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class ContactListViewModel(
-    private val repository: AppRepository
+    private val repository: ContactRepository
 ) : BaseViewModel() {
 
     // Toolbar state — title với màu, size, font từ theme; backIcon với màu từ theme
@@ -164,7 +164,7 @@ class ContactListViewModel(
     }
 }
 
-class ContactListViewModelFactory(private val repository: AppRepository) : ViewModelProvider.Factory {
+class ContactListViewModelFactory(private val repository: ContactRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return ContactListViewModel(repository) as T
     }

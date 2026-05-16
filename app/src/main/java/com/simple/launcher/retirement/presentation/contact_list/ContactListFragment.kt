@@ -27,7 +27,7 @@ import com.simple.deeplink.Deeplink
 import com.simple.deeplink.DeeplinkHandler
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.databinding.FragmentAppListBinding
-import com.simple.launcher.retirement.domain.repository.AppRepository
+import com.simple.launcher.retirement.domain.repository.ContactRepository
 import com.simple.launcher.retirement.presentation.base.BaseFragment
 import com.simple.launcher.retirement.presentation.default_launcher.DefaultLauncherBottomSheet
 import com.simple.launcher.retirement.presentation.permissions.BlockPermissionBottomSheet
@@ -41,7 +41,7 @@ import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
 class ContactListFragment : BaseFragment<FragmentAppListBinding>() {
 
     private val viewModel: ContactListViewModel by viewModels {
-        ContactListViewModelFactory(AppRepository.instance)
+        ContactListViewModelFactory(ContactRepository.instance)
     }
 
     private val requestPermissionLauncher = registerForActivityResult(

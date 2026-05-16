@@ -11,7 +11,7 @@ import com.simple.deeplink.DeeplinkHandler
 import com.simple.deeplink.sendDeeplink
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.databinding.FragmentOnboardingBinding
-import com.simple.launcher.retirement.domain.repository.AppRepository
+import com.simple.launcher.retirement.domain.repository.PreferenceRepository
 import com.simple.launcher.retirement.presentation.base.BaseFragment
 import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.lifecycle.observe
@@ -30,7 +30,7 @@ class OnboardingFragment : BaseFragment<FragmentOnboardingBinding>() {
         super.setupViews(view, savedInstanceState)
 
         binding.btnStart.root.setOnSafeClickListener {
-            val repository = AppRepository.instance
+            val repository = PreferenceRepository.instance
             repository.setOnboardingCompleted(true)
 
             sendDeeplink("app://settings")

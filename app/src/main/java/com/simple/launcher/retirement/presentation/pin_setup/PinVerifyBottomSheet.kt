@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.simple.launcher.retirement.databinding.BottomSheetPinVerifyBinding
-import com.simple.launcher.retirement.domain.repository.AppRepository
+import com.simple.launcher.retirement.domain.repository.PreferenceRepository
 import com.simple.launcher.retirement.presentation.base.BaseBottomSheetDialogFragment
 import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.lifecycle.observe
@@ -28,7 +28,7 @@ class PinVerifyBottomSheet(private val onSuccess: () -> Unit) : BaseBottomSheetD
     override fun setupViews(view: View, savedInstanceState: Bundle?) {
         super.setupViews(view, savedInstanceState)
 
-        val repository = AppRepository.instance
+        val repository = PreferenceRepository.instance
 
         binding.btnVerify.root.setOnSafeClickListener {
             val inputPin = binding.etPin.text.toString()

@@ -20,7 +20,7 @@ import com.simple.deeplink.DeeplinkHandler
 import com.simple.deeplink.sendDeeplink
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.databinding.FragmentSettingsBinding
-import com.simple.launcher.retirement.domain.repository.AppRepository
+import com.simple.launcher.retirement.domain.repository.PreferenceRepository
 import com.simple.launcher.retirement.presentation.base.BaseFragment
 import com.simple.launcher.retirement.presentation.default_launcher.DefaultLauncherBottomSheet
 import com.simple.launcher.retirement.presentation.permissions.CallBlockPermissionBottomSheet
@@ -35,7 +35,7 @@ import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
 class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
 
     private val viewModel: SettingsViewModel by viewModels {
-        SettingsViewModelFactory(AppRepository.instance)
+        SettingsViewModelFactory(PreferenceRepository.instance)
     }
 
     override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentSettingsBinding {
@@ -80,7 +80,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
     }
 
     private fun handleSettingItemClick(item: SettingItem) {
-        val repository = AppRepository.instance
+        val repository = PreferenceRepository.instance
         when (item.id) {
             SettingItem.ID_PIN -> {
                 PinVerifyBottomSheet {
@@ -160,7 +160,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
     }
 
     private fun handleToggleAction(item: SettingItem, action: () -> Unit) {
-        val repository = AppRepository.instance
+        val repository = PreferenceRepository.instance
         val isTurningOn = item.isChecked
         
         if (isTurningOn) {

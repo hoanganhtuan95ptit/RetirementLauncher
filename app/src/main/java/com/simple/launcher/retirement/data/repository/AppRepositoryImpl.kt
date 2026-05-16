@@ -2,74 +2,26 @@ package com.simple.launcher.retirement.data.repository
 
 import android.content.Context
 import android.content.Intent
-import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
-import android.os.Build
-import android.os.Environment
-import android.os.storage.StorageManager
-import android.provider.Telephony
 import android.telecom.TelecomManager
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.simple.launcher.retirement.domain.model.AppEntity
-import com.simple.launcher.retirement.domain.model.ContactEntity
 import com.simple.launcher.retirement.domain.repository.AppRepository
-import com.simple.launcher.retirement.domain.repository.StrangeFileCategory
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.map
-import java.io.File
+import android.provider.Telephony
 
 class AppRepositoryImpl(private val context: Context) : AppRepository {
 
     private val sharedPrefs = context.getSharedPreferences("launcher_prefs", Context.MODE_PRIVATE)
 
     companion object {
-        /**
-         * Chỉ giữ lại ảnh / nhạc / video.
-         * Mọi đuôi khác (kể cả tài liệu .pdf, .doc…) đều bị coi là "file lạ" và xóa.
-         */
-        private val ALLOWED_EXTENSIONS = setOf(
-            // Ảnh
-            "jpg", "jpeg", "png", "gif", "webp", "bmp", "heic", "heif",
-            // Nhạc
-            "mp3", "wav", "m4a", "ogg", "flac", "aac",
-            // Video
-            "mp4", "mkv", "avi", "mov", "3gp", "webm"
-        )
+        private const val KEY_SELECTED_APPS = "selected_apps"
     }
-
-    // Trigger để các flow system status phát lại giá trị mới
-    // replay = 1 đảm bảo subscriber mới nhận ngay giá trị gần nhất
-    private val _systemTrigger = MutableSharedFlow<Unit>(replay = 1).also { it.tryEmit(Unit) }
 
     // Trigger để home data (app + contact) phát lại khi có thay đổi
     private val _dataTrigger = MutableSharedFlow<Unit>(replay = 1).also { it.tryEmit(Unit) }
 
-    override fun countStrangeFilesFlow(): Flow<Int> = _systemTrigger
-        .map { countStrangeFiles() }
-        .flowOn(Dispatchers.IO)
-
-    override fun estimateCleanableMemoryMBFlow(): Flow<Long> = _systemTrigger
-        .map { estimateCleanableMemory() / (1024 * 1024) }
-        .flowOn(Dispatchers.IO)
-
-    override fun refreshSystemStatus() {
-        _systemTrigger.tryEmit(Unit)
-    }
-
     override fun homeDataFlow(): Flow<Unit> = _dataTrigger
-    private val KEY_SELECTED_APPS = "selected_apps"
-    private val KEY_PIN = "app_pin"
-    private val KEY_ONBOARDING_COMPLETED = "onboarding_completed"
-    private val KEY_SELECTED_CONTACTS = "selected_contacts"
-    private val KEY_APP_BLOCK_ENABLED = "app_block_enabled"
-    private val KEY_FILE_CLEANUP_ENABLED = "file_cleanup_enabled"
-    private val KEY_CALL_BLOCK_ENABLED = "call_block_enabled"
-
-    private val gson = Gson()
 
     override fun getInstalledApps(): List<AppEntity> {
         val pm = context.packageManager
@@ -78,12 +30,13 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
         i.addCategory(Intent.CATEGORY_LAUNCHER)
         val allApps = pm.queryIntentActivities(i, 0)
         for (ri in allApps) {
-            val app = AppEntity(
-                ri.loadLabel(pm).toString(),
-                ri.activityInfo.packageName,
-                ri.activityInfo.loadIcon(pm)
+            apps.add(
+                AppEntity(
+                    ri.loadLabel(pm).toString(),
+                    ri.activityInfo.packageName,
+                    ri.activityInfo.loadIcon(pm)
+                )
             )
-            apps.add(app)
         }
         return apps.sortedBy { it.label.lowercase() }
     }
@@ -107,76 +60,6 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
         _dataTrigger.tryEmit(Unit)
     }
 
-    override fun getSelectedContacts(): List<ContactEntity> {
-        val json = sharedPrefs.getString(KEY_SELECTED_CONTACTS, null)
-        val contacts = if (json != null) {
-            val type = object : TypeToken<List<ContactEntity>>() {}.type
-            gson.fromJson<List<ContactEntity>>(json, type)
-        } else {
-            emptyList()
-        }
-
-        val isDebug = (context.applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE) != 0
-        if (contacts.isEmpty() && isDebug) {
-            return listOf(
-                ContactEntity("1", "Con gái", "0123456789"),
-                ContactEntity("2", "Con trai", "0987654321"),
-                ContactEntity("3", "Bác sĩ", "0112233445")
-            )
-        }
-        return contacts
-    }
-
-    override fun saveSelectedContacts(contacts: List<ContactEntity>) {
-        val json = gson.toJson(contacts)
-        sharedPrefs.edit().putString(KEY_SELECTED_CONTACTS, json).apply()
-        _dataTrigger.tryEmit(Unit)
-    }
-
-    override fun getPin(): String? {
-        return sharedPrefs.getString(KEY_PIN, null)
-    }
-
-    override fun savePin(pin: String) {
-        sharedPrefs.edit().putString(KEY_PIN, pin).apply()
-    }
-
-    override fun hasPin(): Boolean {
-        return sharedPrefs.contains(KEY_PIN)
-    }
-
-    override fun isOnboardingCompleted(): Boolean {
-        return sharedPrefs.getBoolean(KEY_ONBOARDING_COMPLETED, false)
-    }
-
-    override fun setOnboardingCompleted(completed: Boolean) {
-        sharedPrefs.edit().putBoolean(KEY_ONBOARDING_COMPLETED, completed).apply()
-    }
-
-    override fun isAppBlockEnabled(): Boolean {
-        return sharedPrefs.getBoolean(KEY_APP_BLOCK_ENABLED, true)
-    }
-
-    override fun setAppBlockEnabled(enabled: Boolean) {
-        sharedPrefs.edit().putBoolean(KEY_APP_BLOCK_ENABLED, enabled).apply()
-    }
-
-    override fun isFileCleanupEnabled(): Boolean {
-        return sharedPrefs.getBoolean(KEY_FILE_CLEANUP_ENABLED, true)
-    }
-
-    override fun setFileCleanupEnabled(enabled: Boolean) {
-        sharedPrefs.edit().putBoolean(KEY_FILE_CLEANUP_ENABLED, enabled).apply()
-    }
-
-    override fun isCallBlockEnabled(): Boolean {
-        return sharedPrefs.getBoolean(KEY_CALL_BLOCK_ENABLED, false)
-    }
-
-    override fun setCallBlockEnabled(enabled: Boolean) {
-        sharedPrefs.edit().putBoolean(KEY_CALL_BLOCK_ENABLED, enabled).apply()
-    }
-
     override fun isDefaultApp(packageName: String): Boolean {
         val pm = context.packageManager
 
@@ -195,170 +78,5 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
         if (defaultSms == packageName) return true
 
         return false
-    }
-
-    override fun scanAndDeleteUnwantedFiles() {
-        val root = Environment.getExternalStorageDirectory()
-        findAndDeleteApkFiles(root)
-    }
-
-    override fun countStrangeFiles(): Int {
-        val root = Environment.getExternalStorageDirectory()
-        return recursiveCountStrange(root)
-    }
-
-    private fun recursiveCountStrange(file: File): Int {
-        var count = 0
-        if (file.isDirectory) {
-            if (file.name.startsWith(".") || file.name == "Android") return 0
-            file.listFiles()?.forEach { child ->
-                count += recursiveCountStrange(child)
-            }
-        } else {
-            if (isStrangeFile(file)) {
-                count++
-            }
-        }
-        return count
-    }
-
-    override fun estimateCleanableMemory(): Long {
-
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-            return 0L
-        }
-
-        val storageManager = context.getSystemService(StorageManager::class.java)
-        val uuid = storageManager.getUuidForPath(context.filesDir)
-
-        val currentFree = context.filesDir.usableSpace
-        val allocatable = storageManager.getAllocatableBytes(uuid)
-
-        return maxOf(0L, allocatable - currentFree)
-    }
-
-    override fun deleteStrangeFiles() {
-        val directoriesToScan = listOf(
-            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
-            Environment.getExternalStorageDirectory()
-        )
-
-        directoriesToScan.forEach { dir ->
-            dir?.let { recursiveDeleteStrange(it) }
-        }
-    }
-
-    override fun deleteStrangeFilesByCategory(category: StrangeFileCategory): Pair<Int, Long> {
-        val roots = listOf(
-            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
-            Environment.getExternalStorageDirectory()
-        )
-        var count = 0
-        var bytes = 0L
-        roots.forEach { dir ->
-            dir?.let {
-                val result = recursiveDeleteByCategory(it, category)
-                count += result.first
-                bytes += result.second
-            }
-        }
-        return Pair(count, bytes)
-    }
-
-    private fun recursiveDeleteByCategory(file: File, category: StrangeFileCategory): Pair<Int, Long> {
-        if (file.isDirectory) {
-            if (file.name.startsWith(".") || file.name == "Android") return Pair(0, 0L)
-            var count = 0; var bytes = 0L
-            file.listFiles()?.forEach { child ->
-                val r = recursiveDeleteByCategory(child, category)
-                count += r.first; bytes += r.second
-            }
-            return Pair(count, bytes)
-        }
-        if (!belongsToCategory(file, category)) return Pair(0, 0L)
-        val size = file.length()
-        return try {
-            if (file.exists() && file.delete()) Pair(1, size) else Pair(0, 0L)
-        } catch (e: Exception) {
-            e.printStackTrace(); Pair(0, 0L)
-        }
-    }
-
-    private fun belongsToCategory(file: File, category: StrangeFileCategory): Boolean {
-        val ext = file.name.lowercase().substringAfterLast('.', "")
-        // Giữ lại ảnh / nhạc / video — mọi thứ khác đều là "lạ"
-        if (ext.isNotEmpty() && ALLOWED_EXTENSIONS.contains(ext)) return false
-        return when (category) {
-            // File không đuôi + file tạm hệ thống không khớp category nào → vào SYSTEM_TEMP
-            StrangeFileCategory.SYSTEM_TEMP ->
-                ext.isEmpty() || category.extensions.contains(ext) ||
-                StrangeFileCategory.values().none { it != category && it.extensions.contains(ext) }
-            else -> category.extensions.contains(ext)
-        }
-    }
-
-    override fun cleanMemory(): Long {
-
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-            return 0L
-        }
-
-        val storageManager = context.getSystemService(StorageManager::class.java)
-
-        val uuid = storageManager.getUuidForPath(context.filesDir)
-        val freeableBytes = estimateCleanableMemory()
-
-        if (freeableBytes <= 0) {
-            return 0L
-        }
-
-        storageManager.allocateBytes(uuid, freeableBytes)
-
-        return freeableBytes
-    }
-
-    private fun recursiveDeleteStrange(file: File) {
-        if (file.isDirectory) {
-            file.listFiles()?.forEach { child ->
-                recursiveDeleteStrange(child)
-            }
-        } else {
-            if (isStrangeFile(file)) {
-                try {
-                    if (file.exists()) {
-                        file.delete()
-                    }
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            }
-        }
-    }
-
-    private fun isStrangeFile(file: File): Boolean {
-        val ext = file.name.lowercase().substringAfterLast('.', "")
-        return ext.isEmpty() || !ALLOWED_EXTENSIONS.contains(ext)
-    }
-
-    private fun findAndDeleteApkFiles(file: File) {
-        if (file.isDirectory) {
-            // Bỏ qua các thư mục ẩn hoặc hệ thống để tối ưu
-            if (file.name.startsWith(".") || file.name == "Android") return
-
-            file.listFiles()?.forEach { child ->
-                findAndDeleteApkFiles(child)
-            }
-        } else {
-            val name = file.name.lowercase()
-            if (name.endsWith(".apk") || name.endsWith(".aab")) {
-                try {
-                    if (file.exists()) {
-                        file.delete()
-                    }
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            }
-        }
     }
 }

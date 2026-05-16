@@ -11,13 +11,15 @@ import android.os.Looper
 import android.os.PowerManager
 import android.util.Log
 import com.simple.launcher.retirement.domain.repository.AppRepository
+import com.simple.launcher.retirement.domain.repository.PreferenceRepository
 import com.simple.launcher.retirement.presentation.block.BlockActivity
 
 class AppMonitoringService : Service() {
 
     private val TAG = "AppMonitoringService"
     private val handler = Handler(Looper.getMainLooper())
-    private lateinit var repository: AppRepository
+    private lateinit var appRepository: AppRepository
+    private lateinit var prefRepository: PreferenceRepository
     private lateinit var powerManager: PowerManager
     
     private val monitorRunnable = object : Runnable {
@@ -30,7 +32,8 @@ class AppMonitoringService : Service() {
     override fun onCreate() {
         super.onCreate()
         Log.d(TAG, "Service onCreate")
-        repository = AppRepository.instance
+        appRepository = AppRepository.instance
+        prefRepository = PreferenceRepository.instance
         powerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
     }
 
@@ -43,7 +46,7 @@ class AppMonitoringService : Service() {
 
     private fun checkForegroundApp() {
         // Nếu tính năng bị tắt trong cài đặt, tự dừng service
-        if (!repository.isAppBlockEnabled()) {
+        if (!prefRepository.isAppBlockEnabled()) {
             stopSelf()
             return
         }
@@ -112,11 +115,11 @@ class AppMonitoringService : Service() {
         }
 
         // Bỏ qua các ứng dụng mặc định
-        if (repository.isDefaultApp(foregroundPackage)) {
+        if (appRepository.isDefaultApp(foregroundPackage)) {
             return
         }
 
-        val allowedApps = repository.getSelectedPackages()
+        val allowedApps = appRepository.getSelectedPackages()
         Log.d(TAG, "Allowed apps: $allowedApps")
 
         if (allowedApps.isNotEmpty() && !allowedApps.contains(foregroundPackage)) {

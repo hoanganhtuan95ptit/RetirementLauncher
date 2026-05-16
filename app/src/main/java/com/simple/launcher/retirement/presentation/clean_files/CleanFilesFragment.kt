@@ -15,7 +15,7 @@ import com.simple.deeplink.DeeplinkHandler
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.databinding.FragmentCleanFilesBinding
 import com.simple.launcher.retirement.databinding.ItemCleanCategoryBinding
-import com.simple.launcher.retirement.domain.repository.AppRepository
+import com.simple.launcher.retirement.domain.repository.FileRepository
 import com.simple.launcher.retirement.domain.repository.StrangeFileCategory
 import com.simple.launcher.retirement.presentation.base.BaseFragment
 import com.simple.launcher.retirement.utils.background.setBackground
@@ -166,7 +166,7 @@ class CleanFilesFragment : BaseFragment<FragmentCleanFilesBinding>() {
 
             categories.forEachIndexed { index, category ->
                 val (count, bytes) = withContext(Dispatchers.IO) {
-                    AppRepository.instance.deleteStrangeFilesByCategory(category)
+                    FileRepository.instance.deleteStrangeFilesByCategory(category)
                 }
                 totalFiles += count
                 totalBytes += bytes
