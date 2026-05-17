@@ -43,7 +43,6 @@ class HomeViewModel(
     ) { strings, fileCount ->
 
         val fileCountLabel = "$fileCount"
-
         val list = arrayListOf<ViewItem>()
 
         CleanFilesHomeItem(
@@ -51,10 +50,7 @@ class HomeViewModel(
                 .replace("\$file_number", fileCountLabel)
                 .withFirst(fileCountLabel, Bold),
             icon = ImageRes(R.drawable.img_home_clean_up)
-        ).let {
-
-            list.add(it)
-        }
+        ).let { list.add(it) }
 
         1.0 to list
     }
@@ -66,7 +62,6 @@ class HomeViewModel(
     ) { strings, memoryMB ->
 
         val memoryLabel = "$memoryMB MB"
-
         val list = arrayListOf<ViewItem>()
 
         CleanMemoryHomeItem(
@@ -74,95 +69,78 @@ class HomeViewModel(
                 .replace("\$memory_mb", memoryLabel)
                 .withFirst(memoryLabel, Bold),
             icon = ImageRes(R.drawable.img_home_boost)
-        ).let {
-            list.add(it)
-        }
+        ).let { list.add(it) }
 
         2.0 to list
     }
 
-    val appHomeItems: StateFlow<Pair<Double, List<ViewItem>>> = combineState(
+    // Gộp appHomeItems + contactHomeItems thành một flow duy nhất subscribe getHomeAppsUseCase.asFlow().
+    // Trước đây: hai flow riêng → invoke() chạy 2 lần mỗi trigger (dù đã fix shareIn ở usecase).
+    // Bây giờ: một combine duy nhất, tách apps/contacts bên trong transform.
+    val appsAndContactsHomeItems: StateFlow<Pair<Double, List<ViewItem>>> = combineState(
         flow1 = strings,
         flow2 = themes,
         flow3 = getHomeAppsUseCase.asFlow(),
         initialValue = 3.0 to emptyList()
-    ) { strings, themes, entities ->
-        val apps = entities.filterIsInstance<HomeContentEntity.App>()
+    ) { strings, _, entities ->
         val list = arrayListOf<ViewItem>()
-        if (apps.isEmpty()) return@combineState 3.0 to list
 
-        HeaderHomeItem(
-            strings.getString(R.string.home_header_apps).toRich().with(
-                ForegroundColor(Color.WHITE),
-                TextSize(20),
-                CustomFont(Typeface.create("sans-serif-medium", Typeface.NORMAL))
-            )
-        ).let {
-            list.add(it)
+        // Apps section
+        val apps = entities.filterIsInstance<HomeContentEntity.App>()
+        if (apps.isNotEmpty()) {
+            HeaderHomeItem(
+                strings.getString(R.string.home_header_apps).toRich().with(
+                    ForegroundColor(Color.WHITE),
+                    TextSize(20),
+                    CustomFont(Typeface.create("sans-serif-medium", Typeface.NORMAL))
+                )
+            ).let { list.add(it) }
+
+            apps.map { AppHomeItem(it.entity.label.toRich(), ImageDrawable(it.entity.icon), it.entity) }
+                .let { list.addAll(it) }
         }
 
-        apps.map { AppHomeItem(it.entity.label.toRich(), ImageDrawable(it.entity.icon), it.entity) }.let {
-            list.addAll(it)
+        // Contacts section
+        val contacts = entities.filterIsInstance<HomeContentEntity.Contact>()
+        if (contacts.isNotEmpty()) {
+            HeaderHomeItem(
+                strings.getString(R.string.home_header_contacts).toRich().with(
+                    ForegroundColor(Color.WHITE),
+                    TextSize(20),
+                    CustomFont(Typeface.create("sans-serif-medium", Typeface.NORMAL))
+                )
+            ).let { list.add(it) }
+
+            contacts.map { contact ->
+                val photo = if (contact.entity.photoUri != null) {
+                    ImagePath(contact.entity.photoUri)
+                } else {
+                    ImageRes(R.drawable.ic_home_contact_24dp)
+                }
+                ContactHomeItem(contact.entity.name.toRich(), photo, contact.entity)
+            }.let { list.addAll(it) }
         }
 
         3.0 to list
-    }
-
-    val contactHomeItems: StateFlow<Pair<Double, List<ViewItem>>> = combineState(
-        flow1 = strings,
-        flow2 = themes,
-        flow3 = getHomeAppsUseCase.asFlow(),
-        initialValue = 4.0 to emptyList()
-    ) { strings, themes, entities ->
-        val contacts = entities.filterIsInstance<HomeContentEntity.Contact>()
-        val list = arrayListOf<ViewItem>()
-        if (contacts.isEmpty()) return@combineState 4.0 to list
-
-        HeaderHomeItem(
-            strings.getString(R.string.home_header_contacts).toRich().with(
-                ForegroundColor(Color.WHITE),
-                TextSize(20),
-                CustomFont(Typeface.create("sans-serif-medium", Typeface.NORMAL))
-            )
-        ).let {
-            list.add(it)
-        }
-
-        contacts.map { contact ->
-            val photo = if (contact.entity.photoUri != null) {
-                ImagePath(contact.entity.photoUri)
-            } else {
-                ImageRes(R.drawable.ic_home_contact_24dp)
-            }
-            ContactHomeItem(contact.entity.name.toRich(), photo, contact.entity)
-        }.let {
-            list.addAll(it)
-        }
-
-        4.0 to list
     }
 
     private val _itemMap = MutableStateFlow<Map<Double, List<ViewItem>>>(
         mapOf(0.0 to listOf(ClockHomeItem))
     )
 
+    // 4 flows thay vì 5 — gộp apps+contacts thành một
     val items: StateFlow<List<ViewItem>> = combineState(
         flow1 = cleanFilesHomeItem,
         flow2 = cleanMemoryHomeItem,
-        flow3 = appHomeItems,
-        flow4 = contactHomeItems,
-        flow5 = _itemMap,
+        flow3 = appsAndContactsHomeItems,
+        flow4 = _itemMap,
         initialValue = emptyList()
-    ) { cleanFiles, cleanMemory, apps, contacts, extraMap ->
-        (extraMap.toList() + listOf(cleanFiles, cleanMemory, apps, contacts))
+    ) { cleanFiles, cleanMemory, appsAndContacts, extraMap ->
+        (extraMap.toList() + listOf(cleanFiles, cleanMemory, appsAndContacts))
             .sortedBy { it.first }
             .flatMap { it.second }
     }
 
-    /**
-     * Yêu cầu repository phát lại giá trị mới cho các flow system status.
-     * Dùng khi nhận broadcast FILE_CHANGED hoặc onResume.
-     */
     fun loadSystemStatus() {
         fileRepository.refreshFileStatus()
         memoryRepository.refreshMemoryStatus()

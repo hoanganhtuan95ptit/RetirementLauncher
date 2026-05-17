@@ -7,13 +7,14 @@ import android.os.Environment
 import android.os.FileObserver
 import android.os.IBinder
 import android.util.Log
+import com.simple.launcher.retirement.BuildConfig
 import com.simple.launcher.retirement.domain.repository.PreferenceRepository
 import java.io.File
 
 class FileWatcherService : Service() {
 
     private val TAG = "FileWatcherService"
-    private val observers = mutableMapOf<String, FileObserver>()
+    private val observers = mutableListOf<FileObserver>()
     private lateinit var repository: PreferenceRepository
 
     override fun onCreate() {
@@ -26,54 +27,57 @@ class FileWatcherService : Service() {
             stopSelf()
             return START_NOT_STICKY
         }
-        startRecursiveWatching()
+        startWatching()
         return START_STICKY
     }
 
-    private fun startRecursiveWatching() {
-        // Dừng tất cả các observer cũ nếu có
+    private fun startWatching() {
         stopWatchingAll()
-        
-        val rootPath = Environment.getExternalStorageDirectory()
-        registerObserverRecursive(rootPath)
-        Log.d(TAG, "Started recursive watching from: ${rootPath.path}")
-    }
 
-    private fun registerObserverRecursive(file: File) {
-        val path = file.absolutePath
-        if (observers.containsKey(path)) return
-
-        try {
-            val observer = createObserver(file)
-            observer.startWatching()
-            observers[path] = observer
-
-            // Đăng ký cho các thư mục con hiện có
-            file.listFiles()?.forEach { child ->
-                if (child.isDirectory && !child.name.startsWith(".")) {
-                    registerObserverRecursive(child)
-                }
+        // Chỉ watch các thư mục có khả năng cao nhận APK/file lạ,
+        // thay vì đệ quy toàn bộ external storage (có thể tạo hàng trăm FileObserver).
+        val watchDirs = buildWatchDirs()
+        watchDirs.forEach { dir ->
+            if (dir.exists() && dir.isDirectory) {
+                registerObserver(dir)
             }
-        } catch (e: Exception) {
-            Log.e(TAG, "Error registering observer for $path: ${e.message}")
         }
+
+        if (BuildConfig.DEBUG) Log.d(TAG, "Watching ${observers.size} directories: ${watchDirs.map { it.name }}")
     }
 
-    private fun createObserver(file: File): FileObserver {
-        val path = file.absolutePath
+    /** Danh sách các thư mục cần theo dõi — giới hạn ở những nơi thường chứa APK/file lạ. */
+    private fun buildWatchDirs(): List<File> {
+        val root = Environment.getExternalStorageDirectory()
+        return listOfNotNull(
+            root,
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM),
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS),
+            File(root, "WhatsApp/Media/WhatsApp Documents"),
+            File(root, "Telegram")
+        ).filter { it.exists() && it.isDirectory }
+    }
+
+    private fun registerObserver(dir: File) {
         val mask = FileObserver.CREATE or FileObserver.MOVED_TO
-        
+        val observer = createObserver(dir, mask)
+        observer.startWatching()
+        observers.add(observer)
+    }
+
+    private fun createObserver(file: File, mask: Int): FileObserver {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             object : FileObserver(file, mask) {
                 override fun onEvent(event: Int, childPath: String?) {
-                    handleEvent(path, childPath)
+                    handleEvent(file.absolutePath, childPath)
                 }
             }
         } else {
             @Suppress("DEPRECATION")
-            object : FileObserver(path, mask) {
+            object : FileObserver(file.absolutePath, mask) {
                 override fun onEvent(event: Int, childPath: String?) {
-                    handleEvent(path, childPath)
+                    handleEvent(file.absolutePath, childPath)
                 }
             }
         }
@@ -81,32 +85,25 @@ class FileWatcherService : Service() {
 
     private fun handleEvent(parentPath: String, childPath: String?) {
         if (childPath == null) return
-        
-        val fullFile = File(parentPath, childPath)
-        
-        // Nếu là thư mục mới được tạo, đăng ký theo dõi nó luôn
-        if (fullFile.isDirectory) {
-            registerObserverRecursive(fullFile)
-            return
-        }
 
-        // Nếu là file cài đặt, thực hiện xóa
         val name = childPath.lowercase()
-        if (name.endsWith(".apk") || name.endsWith(".aab")) {
-            if (fullFile.exists()) {
-                val deleted = fullFile.delete()
-                Log.d(TAG, "Automatically deleted: $childPath, success: $deleted")
-            }
+        // Chỉ xử lý APK/AAB — không broadcast cho mọi file event
+        if (!name.endsWith(".apk") && !name.endsWith(".aab")) return
+
+        val fullFile = File(parentPath, childPath)
+        if (fullFile.exists()) {
+            val deleted = fullFile.delete()
+            if (BuildConfig.DEBUG) Log.d(TAG, "Auto-deleted: $childPath, success=$deleted")
         }
 
-        // Gửi broadcast thông báo có sự thay đổi file để UI cập nhật
+        // Broadcast chỉ khi thực sự có thay đổi liên quan
         val intent = Intent("com.simple.launcher.retirement.FILE_CHANGED")
         intent.setPackage(packageName)
         sendBroadcast(intent)
     }
 
     private fun stopWatchingAll() {
-        observers.values.forEach { it.stopWatching() }
+        observers.forEach { it.stopWatching() }
         observers.clear()
     }
 

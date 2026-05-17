@@ -114,9 +114,16 @@ class ContactListViewModel(
             val result = withContext(Dispatchers.IO) {
                 val selectedIds = repository.getSelectedContacts().map { it.id }.toSet()
                 val contentResolver = context.contentResolver
+                // Chỉ lấy 4 columns cần thiết thay vì null (query toàn bộ columns)
+                val projection = arrayOf(
+                    ContactsContract.CommonDataKinds.Phone.CONTACT_ID,
+                    ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
+                    ContactsContract.CommonDataKinds.Phone.NUMBER,
+                    ContactsContract.CommonDataKinds.Phone.PHOTO_THUMBNAIL_URI
+                )
                 val cursor = contentResolver.query(
                     ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                    null, null, null,
+                    projection, null, null,
                     ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " ASC"
                 )
 
@@ -150,11 +157,10 @@ class ContactListViewModel(
 
     // Nhận entity từ EventBus (adapter gửi nguyên entity, không toggle), ViewModel xử lý toggle
     fun updateItem(entity: SelectableContactEntity) {
-        val currentList = _contacts.value.toMutableList()
-        val index = currentList.indexOfFirst { it.contact.id == entity.contact.id }
-        if (index != -1) {
-            currentList[index] = currentList[index].copy(isSelected = !currentList[index].isSelected)
-            _contacts.value = currentList
+        val index = _contacts.value.indexOfFirst { it.contact.id == entity.contact.id }
+        if (index == -1) return
+        _contacts.value = _contacts.value.mapIndexed { i, item ->
+            if (i == index) item.copy(isSelected = !item.isSelected) else item
         }
     }
 

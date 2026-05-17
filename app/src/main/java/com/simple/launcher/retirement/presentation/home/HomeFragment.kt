@@ -21,6 +21,7 @@ import com.simple.adapter.utils.attachAdapter
 import com.simple.adapter.utils.submitListAndAwait
 import com.simple.deeplink.Deeplink
 import com.simple.deeplink.DeeplinkHandler
+import com.simple.launcher.retirement.BuildConfig
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.databinding.FragmentHomeBinding
 import com.simple.launcher.retirement.domain.repository.FileRepository
@@ -37,7 +38,8 @@ import java.util.UUID
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
-    val id = UUID.randomUUID().toString()
+    // UUID chỉ tạo ở debug build — tránh tốn tài nguyên ở production
+    val id = if (BuildConfig.DEBUG) UUID.randomUUID().toString() else ""
 
     private val viewModel: HomeViewModel by activityViewModels {
         HomeViewModelFactory(GetHomeAppsUseCase.instance, FileRepository.instance, MemoryRepository.instance)
@@ -49,7 +51,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     override fun setupViews(view: View, savedInstanceState: Bundle?) {
         super.setupViews(view, savedInstanceState)
-        Log.d("tuanha", "setupViews: $id")
+        if (BuildConfig.DEBUG) Log.d("tuanha", "setupViews: $id")
 
         // Setup LayoutManager
         val layoutManager = GridLayoutManager(requireContext(), HomeItem.TOTAL_COLUMNS)
@@ -73,8 +75,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         super.observeData()
 
         viewModel.items.attachAdapter().observe(this) { (items, adapters) ->
-            Log.d("tuanha", "observeData: ${items.size} $id $adapters")
-           ( binding.rvApps.adapter as MultiAdapter).submitList(items, adapters)
+            if (BuildConfig.DEBUG) Log.d("tuanha", "observeData: ${items.size} $id $adapters")
+            binding.rvApps.submitListAndAwait(items, adapters, true)
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -90,32 +92,32 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        Log.d("tuanha", "onAttach: $id")
+        if (BuildConfig.DEBUG) Log.d("tuanha", "onAttach: $id")
     }
 
     override fun onDetach() {
         super.onDetach()
-        Log.d("tuanha", "onDetach: $id")
+        if (BuildConfig.DEBUG) Log.d("tuanha", "onDetach: $id")
     }
 
     override fun onResume() {
         super.onResume()
-        Log.d("tuanha", "onResume: $id")
+        if (BuildConfig.DEBUG) Log.d("tuanha", "onResume: $id")
     }
 
     override fun onPause() {
         super.onPause()
-        Log.d("tuanha", "onPause: $id")
+        if (BuildConfig.DEBUG) Log.d("tuanha", "onPause: $id")
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        Log.d("tuanha", "onDestroyView: $id")
+        if (BuildConfig.DEBUG) Log.d("tuanha", "onDestroyView: $id")
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.d("tuanha", "onDestroy: $id")
+        if (BuildConfig.DEBUG) Log.d("tuanha", "onDestroy: $id")
     }
 }
 

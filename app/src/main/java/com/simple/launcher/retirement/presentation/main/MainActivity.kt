@@ -1,5 +1,6 @@
 package com.simple.launcher.retirement.presentation.main
 
+import android.app.ActivityManager
 import android.app.AppOpsManager
 import android.content.Context
 import android.content.Intent
@@ -29,7 +30,9 @@ import com.simple.launcher.retirement.utils.permission.PermissionManager
 import com.simple.launcher.retirement.utils.string.StringResStore
 import com.simple.launcher.retirement.utils.theme.ThemeColorStore
 import androidx.core.view.doOnLayout
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 
@@ -37,8 +40,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     override fun setupViews(savedInstanceState: Bundle?) {
         Log.d(TAG, "setupViews | savedInstanceState=${savedInstanceState != null} | action=${intent.action} | categories=${intent.categories}")
-        StringResStore.load(this)
-        ThemeColorStore.load(this)
+
+        // Chuyển reflection-based loading sang IO thread để không chặn main thread khi khởi động.
+        // ViewModel sẽ nhận emptyMap() ban đầu rồi cập nhật lại khi load xong (qua StateFlow).
+        lifecycleScope.launch {
+            withContext(Dispatchers.IO) {
+                StringResStore.load(this@MainActivity)
+                ThemeColorStore.load(this@MainActivity)
+            }
+        }
 
         window.navigationBarColor = Color.TRANSPARENT
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -122,15 +132,25 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     }
 
     fun startFileWatcherService() {
+        if (isServiceRunning(FileWatcherService::class.java)) return
         Log.d(TAG, "startFileWatcherService")
         val intent = Intent(this, FileWatcherService::class.java)
         startService(intent)
     }
 
     fun startAppMonitoringService() {
+        if (isServiceRunning(AppMonitoringService::class.java)) return
         Log.d(TAG, "startAppMonitoringService")
         val intent = Intent(this, AppMonitoringService::class.java)
         startService(intent)
+    }
+
+    /** Kiểm tra service có đang chạy không để tránh restart không cần thiết mỗi onResume. */
+    @Suppress("DEPRECATION")
+    private fun isServiceRunning(serviceClass: Class<*>): Boolean {
+        val manager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+        return manager.getRunningServices(Int.MAX_VALUE)
+            .any { it.service.className == serviceClass.name }
     }
 
     override fun onResume() {

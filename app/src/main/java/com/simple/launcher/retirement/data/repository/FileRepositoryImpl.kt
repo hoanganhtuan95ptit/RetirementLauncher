@@ -63,30 +63,16 @@ class FileRepositoryImpl(private val context: Context) : FileRepository {
     }
 
     override fun deleteStrangeFiles() {
-        val directoriesToScan = listOf(
-            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
-            Environment.getExternalStorageDirectory()
-        )
-        directoriesToScan.forEach { dir ->
-            dir?.let { recursiveDeleteStrange(it) }
-        }
+        // Chỉ scan từ external storage root — DOWNLOADS là subdirectory nên được quét tự động,
+        // không cần thêm vào riêng để tránh quét trùng.
+        val root = Environment.getExternalStorageDirectory()
+        root?.let { recursiveDeleteStrange(it) }
     }
 
     override fun deleteStrangeFilesByCategory(category: StrangeFileCategory): Pair<Int, Long> {
-        val roots = listOf(
-            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
-            Environment.getExternalStorageDirectory()
-        )
-        var count = 0
-        var bytes = 0L
-        roots.forEach { dir ->
-            dir?.let {
-                val result = recursiveDeleteByCategory(it, category)
-                count += result.first
-                bytes += result.second
-            }
-        }
-        return Pair(count, bytes)
+        // Tương tự: chỉ cần root, không thêm DOWNLOADS riêng
+        val root = Environment.getExternalStorageDirectory()
+        return root?.let { recursiveDeleteByCategory(it, category) } ?: Pair(0, 0L)
     }
 
     private fun recursiveDeleteByCategory(file: File, category: StrangeFileCategory): Pair<Int, Long> {

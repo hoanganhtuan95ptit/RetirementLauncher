@@ -22,33 +22,49 @@ class ContactRepositoryImpl(private val context: Context) : ContactRepository {
         private const val KEY_SELECTED_CONTACTS = "selected_contacts"
     }
 
+    // In-memory cache — tránh Gson.fromJson() mỗi lần getSelectedContacts() được gọi.
+    // Invalidate khi saveSelectedContacts() được gọi.
+    private var cachedContacts: List<ContactEntity>? = null
+
     override fun getSelectedContacts(): List<ContactEntity> {
+        // Trả về cache nếu đã có
+        cachedContacts?.let { cached ->
+            // Vẫn trả về debug list nếu cache rỗng ở debug build
+            if (cached.isNotEmpty()) return cached
+            val isDebug = (context.applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE) != 0
+            if (isDebug) return debugContacts()
+            return cached
+        }
+
         val data = sharedPrefs.all[KEY_SELECTED_CONTACTS]
-        val contacts = if (data is String) {
+        val contacts: List<ContactEntity> = if (data is String) {
             val type = object : TypeToken<List<ContactEntity>>() {}.type
             try {
-                gson.fromJson<List<ContactEntity>>(data, type)
-            } catch (e: Exception) {
+                gson.fromJson(data, type)
+            } catch (_: Exception) {
                 emptyList()
             }
         } else {
             emptyList()
         }
 
+        cachedContacts = contacts
+
         val isDebug = (context.applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE) != 0
-        if (contacts.isEmpty() && isDebug) {
-            return listOf(
-                ContactEntity("1", "Con gái", "0123456789"),
-                ContactEntity("2", "Con trai", "0987654321"),
-                ContactEntity("3", "Bác sĩ", "0112233445")
-            )
-        }
+        if (contacts.isEmpty() && isDebug) return debugContacts()
         return contacts
     }
 
     override fun saveSelectedContacts(contacts: List<ContactEntity>) {
         val json = gson.toJson(contacts)
         sharedPrefs.edit().putString(KEY_SELECTED_CONTACTS, json).apply()
+        cachedContacts = contacts  // cập nhật cache ngay
         _dataTrigger.tryEmit(Unit)
     }
+
+    private fun debugContacts() = listOf(
+        ContactEntity("1", "Con gái", "0123456789"),
+        ContactEntity("2", "Con trai", "0987654321"),
+        ContactEntity("3", "Bác sĩ", "0112233445")
+    )
 }

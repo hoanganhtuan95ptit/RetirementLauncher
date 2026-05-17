@@ -9,6 +9,7 @@ import android.telecom.TelecomManager
 import android.provider.Telephony
 import android.util.Log
 import com.google.gson.Gson
+import com.simple.launcher.retirement.BuildConfig
 import com.google.gson.reflect.TypeToken
 import com.simple.launcher.retirement.domain.model.AppEntity
 import com.simple.launcher.retirement.domain.repository.AppRepository
@@ -28,6 +29,14 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
     private val _dataTrigger = MutableSharedFlow<Unit>(replay = 1).also { it.tryEmit(Unit) }
 
     override fun homeDataFlow(): Flow<Unit> = _dataTrigger
+
+    // In-memory cache cho getSelectedPackages() — tránh Gson deserialize mỗi lần đọc.
+    // Được invalidate khi saveSelectedPackages() được gọi.
+    private var cachedSelectedPackages: List<String>? = null
+
+    // Cache kết quả isDefaultApp() — mỗi lần check tốn 6-7 binder IPC calls.
+    // Default apps gần như không đổi trong một session; cache tránh gọi lại mỗi 500ms.
+    private val defaultAppCache = HashMap<String, Boolean>(16)
 
     override fun getInstalledApps(): List<AppEntity> {
         val pm = context.packageManager
@@ -58,31 +67,44 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
     }
 
     override fun getSelectedPackages(): List<String> {
-        val data = sharedPrefs.all[KEY_SELECTED_APPS]
-        if (data is String) {
-            val type = object : TypeToken<List<String>>() {}.type
-            return try {
+        // Trả về cache nếu đã có, tránh Gson.fromJson() mỗi lần gọi
+        cachedSelectedPackages?.let { return it }
+
+        val result = when (val data = sharedPrefs.all[KEY_SELECTED_APPS]) {
+            is String -> try {
+                val type = object : TypeToken<List<String>>() {}.type
                 gson.fromJson(data, type)
-            } catch (e: Exception) {
+            } catch (_: Exception) {
                 emptyList()
             }
-        } else if (data is Set<*>) {
-            return data.filterIsInstance<String>()
+            is Set<*> -> data.filterIsInstance<String>()
+            else -> emptyList()
         }
-        return emptyList()
+        cachedSelectedPackages = result
+        return result
     }
 
     override fun saveSelectedPackages(packages: List<String>) {
         val json = gson.toJson(packages)
         sharedPrefs.edit().putString(KEY_SELECTED_APPS, json).apply()
+        cachedSelectedPackages = packages  // cập nhật cache ngay, không cần đọc lại
         _dataTrigger.tryEmit(Unit)
     }
 
     override fun isDefaultApp(packageName: String): Boolean {
+        // Trả về cache ngay nếu đã kiểm tra trước đó — tránh 6-7 binder IPC calls mỗi 500ms
+        defaultAppCache[packageName]?.let { return it }
+
+        val result = resolveIsDefaultApp(packageName)
+        defaultAppCache[packageName] = result
+        return result
+    }
+
+    private fun resolveIsDefaultApp(packageName: String): Boolean {
         val pm = context.packageManager
         val tag = "DefaultAppCheck"
 
-        Log.d(tag, "--- Checking: $packageName ---")
+        if (BuildConfig.DEBUG) Log.d(tag, "--- Checking: $packageName ---")
 
         // Default Launcher
         try {
@@ -92,117 +114,62 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
             } else {
                 PackageManager.MATCH_DEFAULT_ONLY
             }
-            val resolveInfo = pm.resolveActivity(intent, flags)
-            val launcherPkg = resolveInfo?.activityInfo?.packageName
-            Log.d(tag, "  Launcher default = $launcherPkg")
-            if (launcherPkg == packageName) {
-                Log.d(tag, "  => MATCH: Launcher")
-                return true
-            }
-        } catch (e: Exception) {
-            Log.e(tag, "  Launcher check failed: ${e.message}")
-        }
+            val launcherPkg = pm.resolveActivity(intent, flags)?.activityInfo?.packageName
+            if (launcherPkg == packageName) return true
+        } catch (_: Exception) {}
 
         // Default Dialer
         try {
             val telecomManager = context.getSystemService(Context.TELECOM_SERVICE) as? TelecomManager
             val dialerPkg = telecomManager?.defaultDialerPackage
-            Log.d(tag, "  Dialer default = $dialerPkg")
-            if (dialerPkg == packageName) {
-                Log.d(tag, "  => MATCH: Dialer")
-                return true
-            }
+            if (dialerPkg == packageName) return true
 
             // sharedUserId check: Samsung tách dialer + incallui thành 2 package
             // nhưng cùng sharedUserId → đều thuộc nhóm "phone default"
             if (dialerPkg != null) {
                 try {
-                    val dialerInfo = pm.getPackageInfo(dialerPkg, 0)
-                    val targetInfo = pm.getPackageInfo(packageName, 0)
-                    val dialerSharedUid = dialerInfo.sharedUserId
-                    val targetSharedUid = targetInfo.sharedUserId
-                    Log.d(tag, "  Dialer sharedUserId = $dialerSharedUid, target sharedUserId = $targetSharedUid")
-                    if (dialerSharedUid != null && dialerSharedUid == targetSharedUid) {
-                        Log.d(tag, "  => MATCH: same sharedUserId as default dialer")
-                        return true
-                    }
-                } catch (e: Exception) {
-                    Log.e(tag, "  sharedUserId check failed: ${e.message}")
-                }
+                    val dialerSharedUid = pm.getPackageInfo(dialerPkg, 0).sharedUserId
+                    val targetSharedUid = pm.getPackageInfo(packageName, 0).sharedUserId
+                    if (dialerSharedUid != null && dialerSharedUid == targetSharedUid) return true
+                } catch (_: Exception) {}
             }
-        } catch (e: Exception) {
-            Log.e(tag, "  Dialer check failed: ${e.message}")
-        }
+        } catch (_: Exception) {}
 
-        // In-Call UI — query tất cả InCallService implementations (không chỉ lấy cái đầu)
+        // In-Call UI
         try {
             val inCallIntent = Intent("android.telecom.InCallService")
-            val inCallServices = pm.queryIntentServices(inCallIntent, PackageManager.MATCH_ALL)
-            val inCallPackages = inCallServices.map { it.serviceInfo.packageName }
-            Log.d(tag, "  All InCall services = $inCallPackages")
-            if (inCallPackages.contains(packageName)) {
-                Log.d(tag, "  => MATCH: InCall UI")
-                return true
-            }
-        } catch (e: Exception) {
-            Log.e(tag, "  InCall UI check failed: ${e.message}")
-        }
+            val inCallPackages = pm.queryIntentServices(inCallIntent, PackageManager.MATCH_ALL)
+                .map { it.serviceInfo.packageName }
+            if (inCallPackages.contains(packageName)) return true
+        } catch (_: Exception) {}
 
-        // Phone process check — package chạy trong android.uid.phone là phone system app
-        // (bắt com.samsung.android.incallui và các package tương tự)
+        // Phone process check (android.uid.phone)
         try {
-            val targetInfo = pm.getPackageInfo(packageName, 0)
-            val sharedUid = targetInfo.sharedUserId
-            Log.d(tag, "  Package sharedUserId = $sharedUid")
-            if (sharedUid == "android.uid.phone") {
-                Log.d(tag, "  => MATCH: phone system package (android.uid.phone)")
-                return true
-            }
-        } catch (e: Exception) {
-            Log.e(tag, "  Phone UID check failed: ${e.message}")
-        }
+            val sharedUid = pm.getPackageInfo(packageName, 0).sharedUserId
+            if (sharedUid == "android.uid.phone") return true
+        } catch (_: Exception) {}
 
         // Default SMS
         try {
-            val smsPkg = Telephony.Sms.getDefaultSmsPackage(context)
-            Log.d(tag, "  SMS default = $smsPkg")
-            if (smsPkg == packageName) {
-                Log.d(tag, "  => MATCH: SMS")
-                return true
-            }
-        } catch (e: Exception) {
-            Log.e(tag, "  SMS check failed: ${e.message}")
-        }
+            if (Telephony.Sms.getDefaultSmsPackage(context) == packageName) return true
+        } catch (_: Exception) {}
 
         // Default Browser
         try {
             val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.example.com"))
-            val browserInfo = pm.resolveActivity(browserIntent, PackageManager.MATCH_DEFAULT_ONLY)
-            val browserPkg = browserInfo?.activityInfo?.packageName
-            Log.d(tag, "  Browser default = $browserPkg")
-            if (browserPkg == packageName) {
-                Log.d(tag, "  => MATCH: Browser")
-                return true
-            }
-        } catch (e: Exception) {
-            Log.e(tag, "  Browser check failed: ${e.message}")
-        }
+            val browserPkg = pm.resolveActivity(browserIntent, PackageManager.MATCH_DEFAULT_ONLY)
+                ?.activityInfo?.packageName
+            if (browserPkg == packageName) return true
+        } catch (_: Exception) {}
 
         // Default Email
         try {
             val emailIntent = Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:"))
-            val emailInfo = pm.resolveActivity(emailIntent, PackageManager.MATCH_DEFAULT_ONLY)
-            val emailPkg = emailInfo?.activityInfo?.packageName
-            Log.d(tag, "  Email default = $emailPkg")
-            if (emailPkg == packageName) {
-                Log.d(tag, "  => MATCH: Email")
-                return true
-            }
-        } catch (e: Exception) {
-            Log.e(tag, "  Email check failed: ${e.message}")
-        }
+            val emailPkg = pm.resolveActivity(emailIntent, PackageManager.MATCH_DEFAULT_ONLY)
+                ?.activityInfo?.packageName
+            if (emailPkg == packageName) return true
+        } catch (_: Exception) {}
 
-        Log.d(tag, "  => NO MATCH for $packageName")
         return false
     }
 }

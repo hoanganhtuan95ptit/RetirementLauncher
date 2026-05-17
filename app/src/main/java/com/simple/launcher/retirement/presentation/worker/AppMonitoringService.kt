@@ -6,10 +6,11 @@ import android.app.usage.UsageStatsManager
 import android.content.Context
 import android.content.Intent
 import android.os.Handler
+import android.os.HandlerThread
 import android.os.IBinder
-import android.os.Looper
 import android.os.PowerManager
 import android.util.Log
+import com.simple.launcher.retirement.BuildConfig
 import com.simple.launcher.retirement.domain.repository.AppRepository
 import com.simple.launcher.retirement.domain.repository.PreferenceRepository
 import com.simple.launcher.retirement.presentation.block.BlockActivity
@@ -17,11 +18,21 @@ import com.simple.launcher.retirement.presentation.block.BlockActivity
 class AppMonitoringService : Service() {
 
     private val TAG = "AppMonitoringService"
-    private val handler = Handler(Looper.getMainLooper())
+
+    // HandlerThread chạy trên background thread — tránh I/O và binder calls trên main thread
+    private lateinit var handlerThread: HandlerThread
+    private lateinit var handler: Handler
+
     private lateinit var appRepository: AppRepository
     private lateinit var prefRepository: PreferenceRepository
     private lateinit var powerManager: PowerManager
-    
+
+    // Tạo 1 lần trong onCreate(), tránh tạo mới mỗi 500ms trong checkForegroundApp()
+    private lateinit var systemPackages: Set<String>
+
+    // Cache UsageStatsManager — tránh getSystemService() mỗi lần poll
+    private lateinit var usageStatsManager: UsageStatsManager
+
     private val monitorRunnable = object : Runnable {
         override fun run() {
             checkForegroundApp()
@@ -31,14 +42,20 @@ class AppMonitoringService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-        Log.d(TAG, "Service onCreate")
+        if (BuildConfig.DEBUG) Log.d(TAG, "Service onCreate")
         appRepository = AppRepository.instance
         prefRepository = PreferenceRepository.instance
         powerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
+        usageStatsManager = getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
+        systemPackages = STATIC_SYSTEM_PACKAGES + packageName
+
+        // Tạo background thread riêng cho polling — không chặn main thread
+        handlerThread = HandlerThread("AppMonitorThread").also { it.start() }
+        handler = Handler(handlerThread.looper)
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        Log.d(TAG, "Service onStartCommand")
+        if (BuildConfig.DEBUG) Log.d(TAG, "Service onStartCommand")
         handler.removeCallbacks(monitorRunnable)
         handler.post(monitorRunnable)
         return START_STICKY
@@ -56,7 +73,6 @@ class AppMonitoringService : Service() {
             return
         }
 
-        val usageStatsManager = getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
         val endTime = System.currentTimeMillis()
         val startTime = endTime - 1000 * 5
         
@@ -88,11 +104,45 @@ class AppMonitoringService : Service() {
 
         if (foregroundPackage == "android.keyguard") return
 
-        Log.d(TAG, "Foreground App detected: $foregroundPackage")
-        
-        // Danh sách các package hệ thống và launcher không được chặn
-        val systemPackages = setOf(
-            packageName,
+        if (BuildConfig.DEBUG) Log.d(TAG, "Foreground App detected: $foregroundPackage")
+
+        // Dùng instance field systemPackages (khởi tạo 1 lần trong onCreate)
+        if (systemPackages.contains(foregroundPackage) || foregroundPackage.contains("launcher")) {
+            return
+        }
+
+        // Bỏ qua các ứng dụng mặc định
+        if (appRepository.isDefaultApp(foregroundPackage)) {
+            return
+        }
+
+        val allowedApps = appRepository.getSelectedPackages()
+        if (allowedApps.isNotEmpty() && !allowedApps.contains(foregroundPackage)) {
+            if (BuildConfig.DEBUG) Log.d(TAG, "Blocking app: $foregroundPackage")
+            blockApp()
+        }
+    }
+
+    private fun blockApp() {
+        // startActivity phải gọi với FLAG_ACTIVITY_NEW_TASK khi từ Service,
+        // không phụ thuộc thread — an toàn khi gọi từ HandlerThread.
+        val intent = Intent(this, BlockActivity::class.java)
+            .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        startActivity(intent)
+    }
+
+    override fun onBind(intent: Intent?): IBinder? = null
+
+    override fun onDestroy() {
+        handler.removeCallbacks(monitorRunnable)
+        handlerThread.quitSafely()
+        super.onDestroy()
+    }
+
+    companion object {
+        // Tập hợp tĩnh các package hệ thống — tạo một lần duy nhất khi class load.
+        // packageName của app được thêm vào khi onCreate() (dynamic).
+        val STATIC_SYSTEM_PACKAGES = setOf(
             "com.android.settings",
             "com.android.systemui",
             "android",
@@ -109,35 +159,5 @@ class AppMonitoringService : Service() {
             "com.android.packageinstaller",
             "com.google.android.packageinstaller"
         )
-
-        if (systemPackages.contains(foregroundPackage) || foregroundPackage.contains("launcher")) {
-            return
-        }
-
-        // Bỏ qua các ứng dụng mặc định
-        if (appRepository.isDefaultApp(foregroundPackage)) {
-            return
-        }
-
-        val allowedApps = appRepository.getSelectedPackages()
-        Log.d(TAG, "Allowed apps: $allowedApps")
-
-        if (allowedApps.isNotEmpty() && !allowedApps.contains(foregroundPackage)) {
-            Log.d(TAG, "Blocking app: $foregroundPackage")
-            blockApp()
-        }
-    }
-
-    private fun blockApp() {
-        val intent = Intent(this, BlockActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        startActivity(intent)
-    }
-
-    override fun onBind(intent: Intent?): IBinder? = null
-
-    override fun onDestroy() {
-        handler.removeCallbacks(monitorRunnable)
-        super.onDestroy()
     }
 }

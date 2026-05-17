@@ -104,11 +104,11 @@ class AppListViewModel(
 
     // Nhận entity từ EventBus (adapter gửi nguyên entity, không toggle), ViewModel xử lý toggle
     fun updateItem(entity: SelectableAppEntity) {
-        val currentList = _apps.value.toMutableList()
-        val index = currentList.indexOfFirst { it.app.packageName == entity.app.packageName }
-        if (index != -1) {
-            currentList[index] = currentList[index].copy(isSelected = !currentList[index].isSelected)
-            _apps.value = currentList
+        val index = _apps.value.indexOfFirst { it.app.packageName == entity.app.packageName }
+        if (index == -1) return
+        // mapIndexed tạo list mới (cần cho StateFlow emit) mà không cần bản copy MutableList trung gian
+        _apps.value = _apps.value.mapIndexed { i, item ->
+            if (i == index) item.copy(isSelected = !item.isSelected) else item
         }
     }
 
