@@ -1,5 +1,6 @@
 package com.simple.launcher.retirement.presentation.permissions.usage_stats
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
@@ -16,7 +17,10 @@ import com.simple.launcher.retirement.utils.permission.PermissionManager
 import com.simple.launcher.retirement.utils.text.setText
 import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
 
-class UsageStatsPermissionBottomSheet(private val onResult: () -> Unit) : BaseBottomSheetDialogFragment<BottomSheetUsageStatsPermissionBinding, UsageStatsPermissionViewModel>() {
+class UsageStatsPermissionBottomSheet(
+    private val onDismissed: (() -> Unit)? = null,
+    private val onResult: () -> Unit
+) : BaseBottomSheetDialogFragment<BottomSheetUsageStatsPermissionBinding, UsageStatsPermissionViewModel>() {
 
     override val viewModel: UsageStatsPermissionViewModel by viewModels()
 
@@ -64,6 +68,11 @@ class UsageStatsPermissionBottomSheet(private val onResult: () -> Unit) : BaseBo
             return
         }
         startForResult.launch(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS))
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+        onDismissed?.invoke()
     }
 
     companion object {

@@ -32,14 +32,14 @@ class PreferenceRepositoryImpl(context: Context) : PreferenceRepository {
     }
 
     override fun isAppBlockEnabled(): Boolean =
-        sharedPrefs.getBoolean(KEY_APP_BLOCK_ENABLED, true)
+        sharedPrefs.getBoolean(KEY_APP_BLOCK_ENABLED, false)
 
     override fun setAppBlockEnabled(enabled: Boolean) {
         sharedPrefs.edit().putBoolean(KEY_APP_BLOCK_ENABLED, enabled).apply()
     }
 
     override fun isFileCleanupEnabled(): Boolean =
-        sharedPrefs.getBoolean(KEY_FILE_CLEANUP_ENABLED, true)
+        sharedPrefs.getBoolean(KEY_FILE_CLEANUP_ENABLED, false)
 
     override fun setFileCleanupEnabled(enabled: Boolean) {
         sharedPrefs.edit().putBoolean(KEY_FILE_CLEANUP_ENABLED, enabled).apply()

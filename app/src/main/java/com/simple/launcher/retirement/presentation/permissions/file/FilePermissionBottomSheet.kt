@@ -1,5 +1,6 @@
 package com.simple.launcher.retirement.presentation.permissions.file
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -18,7 +19,10 @@ import com.simple.launcher.retirement.utils.permission.PermissionManager
 import com.simple.launcher.retirement.utils.text.setText
 import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
 
-class FilePermissionBottomSheet(private val onResult: () -> Unit) : BaseBottomSheetDialogFragment<BottomSheetFilePermissionBinding, FilePermissionViewModel>() {
+class FilePermissionBottomSheet(
+    private val onDismissed: (() -> Unit)? = null,
+    private val onResult: () -> Unit
+) : BaseBottomSheetDialogFragment<BottomSheetFilePermissionBinding, FilePermissionViewModel>() {
 
     override val viewModel: FilePermissionViewModel by viewModels()
 
@@ -93,6 +97,11 @@ class FilePermissionBottomSheet(private val onResult: () -> Unit) : BaseBottomSh
                 )
             )
         }
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+        onDismissed?.invoke()
     }
 
     companion object {

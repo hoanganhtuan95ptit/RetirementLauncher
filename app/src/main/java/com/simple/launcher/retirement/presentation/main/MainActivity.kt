@@ -12,6 +12,7 @@ import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import androidx.activity.OnBackPressedCallback
+import androidx.lifecycle.lifecycleScope
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
@@ -27,15 +28,17 @@ import com.simple.launcher.retirement.presentation.worker.FileWatcherService
 import com.simple.launcher.retirement.utils.permission.PermissionManager
 import com.simple.launcher.retirement.utils.string.StringResStore
 import com.simple.launcher.retirement.utils.theme.ThemeColorStore
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     override fun inflateBinding(inflater: LayoutInflater) = ActivityMainBinding.inflate(inflater)
 
     override fun setupViews(savedInstanceState: Bundle?) {
+        Log.d(TAG, "setupViews | savedInstanceState=${savedInstanceState != null} | action=${intent.action} | categories=${intent.categories}")
         StringResStore.load(this)
         ThemeColorStore.load(this)
-
 
         window.navigationBarColor = Color.TRANSPARENT
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -44,38 +47,54 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
         // Quét toàn bộ một lần lúc khởi động
         scheduleInitialFileCleanup()
-        
+
         val repository = PreferenceRepository.instance
-        
+
         // Bắt đầu lắng nghe sự thay đổi file ngầm nếu đã có quyền và được bật
-        if (PermissionManager.hasFilePermission(this) && repository.isFileCleanupEnabled()) {
+        val hasFilePerm = PermissionManager.hasFilePermission(this)
+        val fileCleanupEnabled = repository.isFileCleanupEnabled()
+        Log.d(TAG, "FileWatcher | hasFilePerm=$hasFilePerm | fileCleanupEnabled=$fileCleanupEnabled")
+        if (hasFilePerm && fileCleanupEnabled) {
             startFileWatcherService()
         }
-        
+
         // Khởi động service giám sát nếu đã có quyền và được bật
-        if (PermissionManager.hasUsageStatsPermission(this) && PermissionManager.hasOverlayPermission(this) && repository.isAppBlockEnabled()) {
+        val hasUsagePerm = PermissionManager.hasUsageStatsPermission(this)
+        val hasOverlayPerm = PermissionManager.hasOverlayPermission(this)
+        val appBlockEnabled = repository.isAppBlockEnabled()
+        Log.d(TAG, "AppMonitoring | hasUsagePerm=$hasUsagePerm | hasOverlayPerm=$hasOverlayPerm | appBlockEnabled=$appBlockEnabled")
+        if (hasUsagePerm && hasOverlayPerm && appBlockEnabled) {
             startAppMonitoringService()
         }
 
-        if (savedInstanceState == null) {
+        if (savedInstanceState == null) lifecycleScope.launch{
+            val isOnboardingCompleted = repository.isOnboardingCompleted()
             val isHomeIntent = intent.hasCategory(Intent.CATEGORY_HOME)
-            
+
             val deeplink = when {
-                !repository.isOnboardingCompleted() -> "app://onboarding"
+                !isOnboardingCompleted -> "app://onboarding"
                 isHomeIntent -> "app://home"
                 else -> "app://settings"
             }
 
+            delay(1000)
+
+            Log.d(TAG, "navigate | isOnboardingCompleted=$isOnboardingCompleted | isHomeIntent=$isHomeIntent | deeplink=$deeplink")
             sendDeeplink(deeplink)
+        } else {
+            Log.d(TAG, "navigate | skipped — restoring from savedInstanceState")
         }
 
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                if (supportFragmentManager.backStackEntryCount > 0) {
+                val backstackCount = supportFragmentManager.backStackEntryCount
+                val currentFragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
+                Log.d(TAG, "onBackPressed | backStackCount=$backstackCount | currentFragment=${currentFragment?.javaClass?.simpleName}")
+                if (backstackCount > 0) {
                     supportFragmentManager.popBackStack()
-                } else if (intent.hasCategory(Intent.CATEGORY_HOME) && supportFragmentManager.findFragmentById(R.id.fragment_container) !is HomeFragment) {
+                } else if (intent.hasCategory(Intent.CATEGORY_HOME) && currentFragment !is HomeFragment) {
                     sendDeeplink("app://home")
-                }else{
+                } else {
                     finish()
                 }
             }
@@ -84,9 +103,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
+        Log.d(TAG, "onNewIntent | action=${intent.action} | categories=${intent.categories}")
         // Khi nhấn nút Home
         if (Intent.ACTION_MAIN == intent.action && intent.hasCategory(Intent.CATEGORY_HOME)) {
-            Log.d("tuanha", "onNewIntent: ")
             sendDeeplink("app://home")
         }
     }
@@ -101,14 +120,22 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     }
 
     fun startFileWatcherService() {
+        Log.d(TAG, "startFileWatcherService")
         val intent = Intent(this, FileWatcherService::class.java)
+        startService(intent)
+    }
+
+    fun startAppMonitoringService() {
+        Log.d(TAG, "startAppMonitoringService")
+        val intent = Intent(this, AppMonitoringService::class.java)
         startService(intent)
     }
 
     override fun onResume() {
         super.onResume()
+        val currentFragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
+        Log.d(TAG, "onResume | currentFragment=${currentFragment?.javaClass?.simpleName}")
         val repository = PreferenceRepository.instance
-        // Khởi động service nếu đã có quyền và được bật
         if (PermissionManager.hasFilePermission(this) && repository.isFileCleanupEnabled()) {
             startFileWatcherService()
         }
@@ -117,8 +144,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         }
     }
 
-    fun startAppMonitoringService() {
-        val intent = Intent(this, AppMonitoringService::class.java)
-        startService(intent)
+    companion object {
+        private const val TAG = "MainActivity--->"
     }
 }

@@ -1,15 +1,11 @@
 package com.simple.launcher.retirement.presentation.settings
 
-import android.Manifest
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
@@ -23,8 +19,11 @@ import com.simple.launcher.retirement.databinding.FragmentSettingsBinding
 import com.simple.launcher.retirement.domain.repository.PreferenceRepository
 import com.simple.launcher.retirement.presentation.base.BaseFragment
 import com.simple.launcher.retirement.presentation.permissions.call_block.CallBlockPermissionBottomSheet
+import com.simple.launcher.retirement.presentation.permissions.file.FilePermissionBottomSheet
 import com.simple.launcher.retirement.presentation.permissions.launcher.DefaultLauncherBottomSheet
+import com.simple.launcher.retirement.presentation.permissions.usage_stats.UsageStatsPermissionBottomSheet
 import com.simple.launcher.retirement.presentation.pin_setup.PinVerifyBottomSheet
+import com.simple.launcher.retirement.utils.permission.PermissionManager
 import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.image.setImage
 import com.simple.launcher.retirement.utils.lifecycle.observe
@@ -103,37 +102,74 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
                 sendDeeplink("app://clean_memory", extras = mapOf("addToBackStack" to true))
             }
             SettingItem.ID_TOGGLE_BLOCK -> {
-                handleToggleAction(item) {
-                    repository.setAppBlockEnabled(item.isChecked)
-                    if (item.isChecked) {
-                        (activity as? com.simple.launcher.retirement.presentation.main.MainActivity)?.startAppMonitoringService()
-                    } else {
-                        val intent = Intent(requireContext(), com.simple.launcher.retirement.presentation.worker.AppMonitoringService::class.java)
-                        requireContext().stopService(intent)
+                if (item.isChecked && !PermissionManager.hasUsageStatsPermission(requireContext())) {
+                    UsageStatsPermissionBottomSheet(
+                        onDismissed = {
+                            if (!PermissionManager.hasUsageStatsPermission(requireContext())) {
+                                viewModel.updateItem(item)
+                            }
+                        }
+                    ) {
+                        handleToggleAction(item) {
+                            repository.setAppBlockEnabled(item.isChecked)
+                            if (item.isChecked) {
+                                (activity as? com.simple.launcher.retirement.presentation.main.MainActivity)?.startAppMonitoringService()
+                            }
+                        }
+                    }.show(childFragmentManager, UsageStatsPermissionBottomSheet.TAG)
+                } else {
+                    handleToggleAction(item) {
+                        repository.setAppBlockEnabled(item.isChecked)
+                        if (item.isChecked) {
+                            (activity as? com.simple.launcher.retirement.presentation.main.MainActivity)?.startAppMonitoringService()
+                        } else {
+                            val intent = Intent(requireContext(), com.simple.launcher.retirement.presentation.worker.AppMonitoringService::class.java)
+                            requireContext().stopService(intent)
+                        }
                     }
                 }
             }
             SettingItem.ID_TOGGLE_CLEANUP -> {
-                handleToggleAction(item) {
-                    repository.setFileCleanupEnabled(item.isChecked)
-                    if (item.isChecked) {
-                        (activity as? com.simple.launcher.retirement.presentation.main.MainActivity)?.startFileWatcherService()
-                    } else {
-                        val intent = Intent(requireContext(), com.simple.launcher.retirement.presentation.worker.FileWatcherService::class.java)
-                        requireContext().stopService(intent)
+                if (item.isChecked && !PermissionManager.hasFilePermission(requireContext())) {
+                    FilePermissionBottomSheet(
+                        onDismissed = {
+                            if (!PermissionManager.hasFilePermission(requireContext())) {
+                                viewModel.updateItem(item)
+                            }
+                        }
+                    ) {
+                        handleToggleAction(item) {
+                            repository.setFileCleanupEnabled(item.isChecked)
+                            if (item.isChecked) {
+                                (activity as? com.simple.launcher.retirement.presentation.main.MainActivity)?.startFileWatcherService()
+                            }
+                        }
+                    }.show(childFragmentManager, FilePermissionBottomSheet.TAG)
+                } else {
+                    handleToggleAction(item) {
+                        repository.setFileCleanupEnabled(item.isChecked)
+                        if (item.isChecked) {
+                            (activity as? com.simple.launcher.retirement.presentation.main.MainActivity)?.startFileWatcherService()
+                        } else {
+                            val intent = Intent(requireContext(), com.simple.launcher.retirement.presentation.worker.FileWatcherService::class.java)
+                            requireContext().stopService(intent)
+                        }
                     }
                 }
             }
             SettingItem.ID_TOGGLE_CALL_BLOCK -> {
                 if (item.isChecked && !hasCallBlockPermissions()) {
-                    CallBlockPermissionBottomSheet {
+                    CallBlockPermissionBottomSheet(
+                        onDismissed = {
+                            if (!hasCallBlockPermissions()) {
+                                viewModel.updateItem(item)
+                            }
+                        }
+                    ) {
                         if (hasCallBlockPermissions()) {
                             handleToggleAction(item) {
                                 repository.setCallBlockEnabled(item.isChecked)
                             }
-                        } else {
-                            item.isChecked = false
-                            viewModel.updateItem(item)
                         }
                     }.show(childFragmentManager, CallBlockPermissionBottomSheet.TAG)
                 } else {
@@ -146,17 +182,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
     }
 
     private fun hasCallBlockPermissions(): Boolean {
-        val permissions = mutableListOf(
-            Manifest.permission.READ_PHONE_STATE,
-            Manifest.permission.READ_CONTACTS
-        )
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            permissions.add(Manifest.permission.ANSWER_PHONE_CALLS)
-        }
-        
-        return permissions.all {
-            ContextCompat.checkSelfPermission(requireContext(), it) == PackageManager.PERMISSION_GRANTED
-        }
+        return PermissionManager.hasCallBlockPermissions(requireContext())
     }
 
     private fun handleToggleAction(item: SettingItem, action: () -> Unit) {
@@ -176,12 +202,14 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
                 
                 sendDeeplink("app://pin_setup", extras = mapOf("addToBackStack" to true))
             } else {
-                // Hoàn trả trạng thái ON tạm thời, chỉ tắt khi verify thành công
-                item.isChecked = true
-                viewModel.updateItem(item)
-
-                PinVerifyBottomSheet {
-                    item.isChecked = false // Xác nhận tắt
+                // Không pre-mutate — onDismissed sẽ revert về ON nếu user back mà chưa xác nhận PIN
+                PinVerifyBottomSheet(
+                    onDismissed = {
+                        // Repo vẫn còn isEnabled=true → DiffUtil detect old=false, new=true → revert về ON
+                        viewModel.updateItem(item)
+                    }
+                ) {
+                    // PIN đúng: thực hiện tắt
                     action()
                     viewModel.updateItem(item)
                 }.show(childFragmentManager, PinVerifyBottomSheet.TAG)

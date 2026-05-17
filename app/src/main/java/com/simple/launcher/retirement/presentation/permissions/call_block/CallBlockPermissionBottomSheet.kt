@@ -1,5 +1,6 @@
 package com.simple.launcher.retirement.presentation.permissions.call_block
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +15,10 @@ import com.simple.launcher.retirement.utils.permission.PermissionManager
 import com.simple.launcher.retirement.utils.text.setText
 import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
 
-class CallBlockPermissionBottomSheet(private val onResult: () -> Unit) : BaseBottomSheetDialogFragment<BottomSheetCallPermissionBinding, CallBlockPermissionViewModel>() {
+class CallBlockPermissionBottomSheet(
+    private val onDismissed: (() -> Unit)? = null,
+    private val onResult: () -> Unit
+) : BaseBottomSheetDialogFragment<BottomSheetCallPermissionBinding, CallBlockPermissionViewModel>() {
 
     override val viewModel: CallBlockPermissionViewModel by viewModels()
 
@@ -46,6 +50,11 @@ class CallBlockPermissionBottomSheet(private val onResult: () -> Unit) : BaseBot
             binding.btnGrant.tvAction.setText(state.text)
             binding.btnGrant.tvAction.setBackground(state.background)
         }
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+        onDismissed?.invoke()
     }
 
     companion object {

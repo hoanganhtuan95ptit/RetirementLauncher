@@ -1,8 +1,10 @@
 package com.simple.launcher.retirement.presentation.home
 
+import android.content.Context
 import android.content.IntentFilter
 import android.graphics.Rect
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,8 +33,11 @@ import com.simple.launcher.retirement.utils.broadcastReceiverFlow
 import com.simple.launcher.retirement.utils.lifecycle.observe
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import java.util.UUID
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
+
+    val id = UUID.randomUUID().toString()
 
     private val viewModel: HomeViewModel by activityViewModels {
         HomeViewModelFactory(GetHomeAppsUseCase.instance, FileRepository.instance, MemoryRepository.instance)
@@ -44,6 +49,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     override fun setupViews(view: View, savedInstanceState: Bundle?) {
         super.setupViews(view, savedInstanceState)
+        Log.d("tuanha", "setupViews: $id")
 
         // Setup LayoutManager
         val layoutManager = GridLayoutManager(requireContext(), HomeItem.TOTAL_COLUMNS)
@@ -67,7 +73,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         super.observeData()
 
         viewModel.items.attachAdapter().observe(this) { (items, adapters) ->
-            binding.rvApps.submitListAndAwait(items, adapters, true)
+            Log.d("tuanha", "observeData: ${items.size} $id $adapters")
+           ( binding.rvApps.adapter as MultiAdapter).submitList(items, adapters)
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -79,6 +86,36 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                     }
             }
         }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        Log.d("tuanha", "onAttach: $id")
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        Log.d("tuanha", "onDetach: $id")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("tuanha", "onResume: $id")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d("tuanha", "onPause: $id")
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Log.d("tuanha", "onDestroyView: $id")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("tuanha", "onDestroy: $id")
     }
 }
 
@@ -96,6 +133,7 @@ class HomeDeeplinkHandler : DeeplinkHandler {
             val fragmentManager = fragmentActivity.supportFragmentManager
             val currentFragment = fragmentManager.findFragmentById(R.id.fragment_container)
             if (currentFragment !is HomeFragment) {
+                Log.d("tuanha", "navigate: ")
                 // Xóa backstack và chuyển về HomeFragment
                 fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
                 fragmentManager.beginTransaction()

@@ -1,5 +1,6 @@
 package com.simple.launcher.retirement.presentation.pin_setup
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +15,10 @@ import com.simple.launcher.retirement.utils.lifecycle.observe
 import com.simple.launcher.retirement.utils.text.setText
 import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
 
-class PinVerifyBottomSheet(private val onSuccess: () -> Unit) : BaseBottomSheetDialogFragment<BottomSheetPinVerifyBinding, PinVerifyViewModel>() {
+class PinVerifyBottomSheet(
+    private val onDismissed: (() -> Unit)? = null,
+    private val onSuccess: () -> Unit
+) : BaseBottomSheetDialogFragment<BottomSheetPinVerifyBinding, PinVerifyViewModel>() {
 
     override val viewModel: PinVerifyViewModel by viewModels()
 
@@ -49,6 +53,11 @@ class PinVerifyBottomSheet(private val onSuccess: () -> Unit) : BaseBottomSheetD
             binding.btnVerify.tvAction.setText(state.text)
             binding.btnVerify.tvAction.setBackground(state.background)
         }
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+        onDismissed?.invoke()
     }
 
     companion object {
