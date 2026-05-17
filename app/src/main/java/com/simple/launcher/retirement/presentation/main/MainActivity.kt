@@ -28,7 +28,7 @@ import com.simple.launcher.retirement.presentation.worker.FileWatcherService
 import com.simple.launcher.retirement.utils.permission.PermissionManager
 import com.simple.launcher.retirement.utils.string.StringResStore
 import com.simple.launcher.retirement.utils.theme.ThemeColorStore
-import kotlinx.coroutines.delay
+import androidx.core.view.doOnLayout
 import kotlinx.coroutines.launch
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
@@ -67,7 +67,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             startAppMonitoringService()
         }
 
-        if (savedInstanceState == null) lifecycleScope.launch{
+        if (savedInstanceState == null) {
             val isOnboardingCompleted = repository.isOnboardingCompleted()
             val isHomeIntent = intent.hasCategory(Intent.CATEGORY_HOME)
 
@@ -77,10 +77,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 else -> "app://settings"
             }
 
-            delay(1000)
-
             Log.d(TAG, "navigate | isOnboardingCompleted=$isOnboardingCompleted | isHomeIntent=$isHomeIntent | deeplink=$deeplink")
-            sendDeeplink(deeplink)
+            // Dùng doOnLayout để đảm bảo container đã được measure/layout trước khi
+            // commit fragment transaction — tránh race condition với onCreate.
+            binding.root.doOnLayout {
+                lifecycleScope.launch { sendDeeplink(deeplink) }
+            }
         } else {
             Log.d(TAG, "navigate | skipped — restoring from savedInstanceState")
         }
@@ -145,6 +147,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     }
 
     companion object {
-        private const val TAG = "MainActivity--->"
+        private const val TAG = "tuanha"
     }
 }

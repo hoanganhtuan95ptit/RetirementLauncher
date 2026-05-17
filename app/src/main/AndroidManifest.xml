@@ -48,7 +48,7 @@
         <activity
             android:name=".presentation.main.MainActivity"
             android:exported="true"
-            android:launchMode="singleTask"
+            android:launchMode="singleInstance"
             android:stateNotNeeded="true"
             android:theme="@style/Theme.RetirementLauncher.NoActionBar">
             <intent-filter>
