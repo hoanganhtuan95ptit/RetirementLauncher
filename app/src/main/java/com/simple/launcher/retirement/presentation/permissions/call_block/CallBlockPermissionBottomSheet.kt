@@ -46,6 +46,15 @@ class CallBlockPermissionBottomSheet(
 
     override fun observeData() {
         super.observeData()
+
+        viewModel.title.observe(this) {
+            binding.tvTitle.setText(it)
+        }
+
+        viewModel.description.observe(this) {
+            binding.tvDescription.setText(it)
+        }
+
         viewModel.action.observe(this) { state ->
             binding.btnGrant.tvAction.setText(state.text)
             binding.btnGrant.tvAction.setBackground(state.background)

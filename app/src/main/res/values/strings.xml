@@ -64,6 +64,7 @@
     <!-- Call Block -->
     <string name="call_block_title">Quyền chặn cuộc gọi</string>
     <string name="call_block_desc">Ứng dụng cần quyền quản lý cuộc gọi và danh bạ để có thể tự động chặn các cuộc gọi từ người lạ.</string>
+    <string name="call_block_highlight">quản lý cuộc gọi và danh bạ</string>
     <string name="call_block_grant">Cấp quyền ngay</string>
     <string name="call_block_skip">Để sau</string>
     <!-- Home Status -->
