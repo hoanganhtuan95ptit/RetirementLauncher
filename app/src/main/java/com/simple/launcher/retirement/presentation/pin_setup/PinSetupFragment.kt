@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
 import com.simple.deeplink.Deeplink
 import com.simple.deeplink.DeeplinkHandler
+import com.simple.launcher.retirement.presentation.DeepLinks
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.databinding.FragmentPinSetupBinding
 import com.simple.launcher.retirement.domain.usecase.CheckPinUseCase
@@ -161,7 +162,7 @@ class PinSetupFragment : BaseFragment<FragmentPinSetupBinding>() {
 @Deeplink
 class PinSetupDeeplinkHandler : DeeplinkHandler {
 
-    override val deeplink: String = "app://pin_setup"
+    override val deeplink: String = DeepLinks.PIN_SETUP
 
     override suspend fun navigate(fragmentActivity: FragmentActivity, deeplink: String, extras: Map<String, Any?>?, sharedElement: Map<String, View>?): Boolean {
 

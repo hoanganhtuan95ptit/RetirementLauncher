@@ -18,6 +18,7 @@ import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.simple.deeplink.sendDeeplink
+import com.simple.launcher.retirement.presentation.DeepLinks
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.databinding.ActivityMainBinding
 import com.simple.launcher.retirement.domain.repository.PreferenceRepository
@@ -82,9 +83,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             val isHomeIntent = intent.hasCategory(Intent.CATEGORY_HOME)
 
             val deeplink = when {
-                !isOnboardingCompleted -> "app://onboarding"
-                isHomeIntent -> "app://home"
-                else -> "app://settings"
+                !isOnboardingCompleted -> DeepLinks.ONBOARDING
+                isHomeIntent -> DeepLinks.HOME
+                else -> DeepLinks.SETTINGS
             }
 
             Log.d(TAG, "navigate | isOnboardingCompleted=$isOnboardingCompleted | isHomeIntent=$isHomeIntent | deeplink=$deeplink")
@@ -105,7 +106,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 if (backstackCount > 0) {
                     supportFragmentManager.popBackStack()
                 } else if (intent.hasCategory(Intent.CATEGORY_HOME) && currentFragment !is HomeFragment) {
-                    sendDeeplink("app://home")
+                    sendDeeplink(DeepLinks.HOME)
                 } else {
                     finish()
                 }
@@ -118,7 +119,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         Log.d(TAG, "onNewIntent | action=${intent.action} | categories=${intent.categories}")
         // Khi nhấn nút Home
         if (Intent.ACTION_MAIN == intent.action && intent.hasCategory(Intent.CATEGORY_HOME)) {
-            sendDeeplink("app://home")
+            sendDeeplink(DeepLinks.HOME)
         }
     }
 

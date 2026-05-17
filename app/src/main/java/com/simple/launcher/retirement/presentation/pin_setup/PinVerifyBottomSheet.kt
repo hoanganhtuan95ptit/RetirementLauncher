@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
 import com.simple.deeplink.Deeplink
 import com.simple.deeplink.DeeplinkHandler
+import com.simple.launcher.retirement.presentation.DeepLinks
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.databinding.BottomSheetPinVerifyBinding
 import com.simple.launcher.retirement.domain.repository.PreferenceRepository
@@ -127,7 +128,7 @@ class PinVerifyBottomSheet : BaseBottomSheetDialogFragment<BottomSheetPinVerifyB
 @Deeplink
 class PinVerifyDeeplinkHandler : DeeplinkHandler {
 
-    override val deeplink: String = "app://pin_verify"
+    override val deeplink: String = DeepLinks.PIN_VERIFY
 
     override suspend fun navigate(fragmentActivity: FragmentActivity, deeplink: String, extras: Map<String, Any?>?, sharedElement: Map<String, View>?): Boolean {
 

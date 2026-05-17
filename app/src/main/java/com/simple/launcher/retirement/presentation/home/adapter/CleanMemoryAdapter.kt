@@ -7,7 +7,8 @@ import com.bumptech.glide.load.resource.bitmap.CenterInside
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.simple.adapter.Adapter
 import com.simple.adapter.base.BaseBindingViewHolder
-import com.simple.deeplink.sendDeeplink
+import com.simple.launcher.retirement.presentation.DeepLinks
+import com.simple.launcher.retirement.presentation.sendDeeplinkWithBackStack
 import com.simple.launcher.retirement.databinding.ItemUtilityBinding
 import com.simple.launcher.retirement.utils.image.RichImage
 import com.simple.launcher.retirement.utils.image.setImage
@@ -38,7 +39,7 @@ class CleanMemoryAdapter : UtilityAdapter<CleanMemoryHomeItem>() {
         val viewHolder = super.createViewHolder(parent, viewType)
         viewHolder.itemView.setOnSafeClickListener {
             it.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
-            sendDeeplink("app://clean_memory", extras = mapOf("addToBackStack" to true))
+            sendDeeplinkWithBackStack(DeepLinks.CLEAN_MEMORY)
         }
         return viewHolder
     }

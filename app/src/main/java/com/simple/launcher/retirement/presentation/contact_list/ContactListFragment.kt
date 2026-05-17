@@ -14,6 +14,8 @@ import com.simple.adapter.utils.attachAdapter
 import com.simple.adapter.utils.submitListAndAwait
 import com.simple.deeplink.Deeplink
 import com.simple.deeplink.DeeplinkHandler
+import com.simple.launcher.retirement.presentation.DeepLinks
+import com.simple.launcher.retirement.presentation.sendReorderContactsDeeplink
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.databinding.FragmentAppListBinding
 import com.simple.launcher.retirement.domain.repository.ContactRepository
@@ -125,11 +127,7 @@ class ContactListFragment : BaseFragment<FragmentAppListBinding>() {
         val newIds = currentSelected.filter { it !in savedIds }
         orderedIds.addAll(newIds)
 
-        com.simple.deeplink.sendDeeplink("app://reorder", extras = mapOf(
-            "type" to "contacts",
-            "ids" to orderedIds,
-            "addToBackStack" to true
-        ))
+        sendReorderContactsDeeplink(orderedIds)
     }
 
     private fun onSaveSuccess() {
@@ -149,7 +147,7 @@ class ContactListFragment : BaseFragment<FragmentAppListBinding>() {
 
 @Deeplink
 class ContactListDeeplinkHandler : DeeplinkHandler {
-    override val deeplink: String = "app://contact_list"
+    override val deeplink: String = DeepLinks.CONTACT_LIST
 
     override suspend fun navigate(
         fragmentActivity: FragmentActivity,

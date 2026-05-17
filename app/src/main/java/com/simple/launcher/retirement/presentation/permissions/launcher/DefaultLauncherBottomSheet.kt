@@ -15,6 +15,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
 import com.simple.deeplink.Deeplink
 import com.simple.deeplink.DeeplinkHandler
+import com.simple.launcher.retirement.presentation.DeepLinks
 import com.simple.launcher.retirement.databinding.BottomSheetDefaultLauncherBinding
 import com.simple.launcher.retirement.presentation.base.BaseBottomSheetDialogFragment
 import com.simple.launcher.retirement.utils.AppEventBus
@@ -114,7 +115,7 @@ class DefaultLauncherBottomSheet : BaseBottomSheetDialogFragment<BottomSheetDefa
 @Deeplink
 class DefaultLauncherDeeplinkHandler : DeeplinkHandler {
 
-    override val deeplink: String = "app://DefaultLauncher"
+    override val deeplink: String = DeepLinks.PERMISSION_DEFAULT_LAUNCHER
 
     override suspend fun navigate(fragmentActivity: FragmentActivity, deeplink: String, extras: Map<String, Any?>?, sharedElement: Map<String, View>?): Boolean {
 

@@ -6,7 +6,8 @@ import android.view.ViewGroup
 import com.simple.adapter.Adapter
 import com.simple.adapter.ViewItemAdapter
 import com.simple.adapter.base.BaseBindingViewHolder
-import com.simple.deeplink.sendDeeplink
+import com.simple.launcher.retirement.presentation.DeepLinks
+import com.simple.launcher.retirement.presentation.sendDeeplinkWithBackStack
 import com.simple.launcher.retirement.databinding.ItemAppBinding
 import com.simple.launcher.retirement.domain.model.AppEntity
 import com.simple.launcher.retirement.utils.getItem
@@ -46,7 +47,7 @@ class AppAdapter : ViewItemAdapter<AppHomeItem, ItemAppBinding>() {
             it.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
             val context = it.context
             if (item.entity.packageName == context.packageName) {
-                sendDeeplink("app://settings", extras = mapOf("addToBackStack" to true))
+                sendDeeplinkWithBackStack(DeepLinks.SETTINGS)
             } else {
                 val launchIntent = context.packageManager.getLaunchIntentForPackage(item.entity.packageName)
                 if (launchIntent != null) {

@@ -14,6 +14,7 @@ import com.simple.adapter.utils.submitListAndAwait
 import com.simple.deeplink.Deeplink
 import com.simple.deeplink.DeeplinkHandler
 import com.simple.deeplink.sendDeeplink
+import com.simple.launcher.retirement.presentation.DeepLinks
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.databinding.FragmentAppListBinding
 import com.simple.launcher.retirement.domain.repository.AppRepository
@@ -168,7 +169,7 @@ class ReorderFragment : BaseFragment<FragmentAppListBinding>() {
     private fun checkAppPermissions() {
         if (!PermissionManager.hasFilePermission(requireContext())) {
             awaitingPermission = true
-            sendDeeplink("app://FilePermission")
+            sendDeeplink(DeepLinks.PERMISSION_FILE)
             return
         }
         checkBlockPermissions()
@@ -178,12 +179,12 @@ class ReorderFragment : BaseFragment<FragmentAppListBinding>() {
         val context = requireContext()
         if (!PermissionManager.hasUsageStatsPermission(context)) {
             awaitingPermission = true
-            sendDeeplink("app://UsageStatsPermission")
+            sendDeeplink(DeepLinks.PERMISSION_USAGE_STATS)
             return
         }
         if (!PermissionManager.hasOverlayPermission(context)) {
             awaitingPermission = true
-            sendDeeplink("app://OverlayPermission")
+            sendDeeplink(DeepLinks.PERMISSION_OVERLAY)
             return
         }
         checkDefaultLauncher()
@@ -192,7 +193,7 @@ class ReorderFragment : BaseFragment<FragmentAppListBinding>() {
     private fun checkDefaultLauncher() {
         if (!PermissionManager.isDefaultLauncher(requireContext())) {
             awaitingPermission = true
-            sendDeeplink("app://DefaultLauncher")
+            sendDeeplink(DeepLinks.PERMISSION_DEFAULT_LAUNCHER)
             return
         }
         onSaveSuccess()
@@ -208,7 +209,7 @@ class ReorderFragment : BaseFragment<FragmentAppListBinding>() {
 
 @Deeplink
 class ReorderDeeplinkHandler : DeeplinkHandler {
-    override val deeplink: String = "app://reorder"
+    override val deeplink: String = DeepLinks.REORDER
 
     override suspend fun navigate(
         fragmentActivity: FragmentActivity,

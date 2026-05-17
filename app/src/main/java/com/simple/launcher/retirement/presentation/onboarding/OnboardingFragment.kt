@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import com.simple.deeplink.Deeplink
 import com.simple.deeplink.DeeplinkHandler
 import com.simple.deeplink.sendDeeplink
+import com.simple.launcher.retirement.presentation.DeepLinks
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.databinding.FragmentOnboardingBinding
 import com.simple.launcher.retirement.domain.repository.PreferenceRepository
@@ -33,7 +34,7 @@ class OnboardingFragment : BaseFragment<FragmentOnboardingBinding>() {
             val repository = PreferenceRepository.instance
             repository.setOnboardingCompleted(true)
 
-            sendDeeplink("app://settings")
+            sendDeeplink(DeepLinks.SETTINGS)
         }
     }
 
@@ -53,7 +54,7 @@ class OnboardingFragment : BaseFragment<FragmentOnboardingBinding>() {
 
 @Deeplink
 class OnboardingDeeplinkHandler : DeeplinkHandler {
-    override val deeplink: String = "app://onboarding"
+    override val deeplink: String = DeepLinks.ONBOARDING
 
     override suspend fun navigate(
         fragmentActivity: FragmentActivity,

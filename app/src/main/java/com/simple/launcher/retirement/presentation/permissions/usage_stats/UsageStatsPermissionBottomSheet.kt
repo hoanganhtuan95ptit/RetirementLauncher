@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
 import com.simple.deeplink.Deeplink
 import com.simple.deeplink.DeeplinkHandler
+import com.simple.launcher.retirement.presentation.DeepLinks
 import com.simple.launcher.retirement.databinding.BottomSheetUsageStatsPermissionBinding
 import com.simple.launcher.retirement.presentation.base.BaseBottomSheetDialogFragment
 import com.simple.launcher.retirement.presentation.pin_setup.PinVerifyBottomSheet
@@ -83,7 +84,7 @@ class UsageStatsPermissionBottomSheet : BaseBottomSheetDialogFragment<BottomShee
 @Deeplink
 class UsageStatsPermissionDeeplinkHandler : DeeplinkHandler {
 
-    override val deeplink: String = "app://UsageStatsPermission"
+    override val deeplink: String = DeepLinks.PERMISSION_USAGE_STATS
 
     override suspend fun navigate(fragmentActivity: FragmentActivity, deeplink: String, extras: Map<String, Any?>?, sharedElement: Map<String, View>?): Boolean {
 

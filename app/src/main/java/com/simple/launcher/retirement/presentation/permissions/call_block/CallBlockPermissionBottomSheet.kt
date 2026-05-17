@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
 import com.simple.deeplink.Deeplink
 import com.simple.deeplink.DeeplinkHandler
+import com.simple.launcher.retirement.presentation.DeepLinks
 import com.simple.launcher.retirement.databinding.BottomSheetCallPermissionBinding
 import com.simple.launcher.retirement.presentation.base.BaseBottomSheetDialogFragment
 import com.simple.launcher.retirement.utils.AppEventBus
@@ -84,7 +85,7 @@ class CallBlockPermissionBottomSheet : BaseBottomSheetDialogFragment<BottomSheet
 @Deeplink
 class CallBlockPermissionDeeplinkHandler : DeeplinkHandler {
 
-    override val deeplink: String = "app://CallBlockPermission"
+    override val deeplink: String = DeepLinks.PERMISSION_CALL_BLOCK
 
     override suspend fun navigate(fragmentActivity: FragmentActivity, deeplink: String, extras: Map<String, Any?>?, sharedElement: Map<String, View>?): Boolean {
 

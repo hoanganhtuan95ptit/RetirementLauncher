@@ -2,6 +2,7 @@ package com.simple.launcher.retirement.presentation.settings
 
 import android.content.Context
 import com.simple.deeplink.sendDeeplink
+import com.simple.launcher.retirement.presentation.DeepLinks
 import com.simple.launcher.retirement.presentation.pin_setup.Pin
 import com.simple.launcher.retirement.utils.AppEventBus
 import com.simple.launcher.retirement.utils.permission.PermissionManager
@@ -25,7 +26,7 @@ suspend fun requirePin(): Boolean {
  */
 suspend fun requireUsageStatsPermission(context: Context): Boolean {
     if (PermissionManager.hasUsageStatsPermission(context)) return true
-    sendDeeplink("app://UsageStatsPermission")
+    sendDeeplink(DeepLinks.PERMISSION_USAGE_STATS)
     val result = AppEventBus.events
         .filter { it is AppEventBus.PermissionResult }
         .first()

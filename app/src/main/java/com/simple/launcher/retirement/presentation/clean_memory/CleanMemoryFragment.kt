@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
 import com.simple.deeplink.Deeplink
 import com.simple.deeplink.DeeplinkHandler
+import com.simple.launcher.retirement.presentation.DeepLinks
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.databinding.FragmentCleanMemoryBinding
 import com.simple.launcher.retirement.presentation.base.BaseFragment
@@ -120,7 +121,7 @@ class CleanMemoryFragment : BaseFragment<FragmentCleanMemoryBinding>() {
 
 @Deeplink
 class CleanMemoryDeeplinkHandler : DeeplinkHandler {
-    override val deeplink: String = "app://clean_memory"
+    override val deeplink: String = DeepLinks.CLEAN_MEMORY
 
     override suspend fun navigate(
         fragmentActivity: FragmentActivity,

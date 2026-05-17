@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
 import com.simple.deeplink.Deeplink
 import com.simple.deeplink.DeeplinkHandler
+import com.simple.launcher.retirement.presentation.DeepLinks
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.databinding.FragmentCleanFilesBinding
 import com.simple.launcher.retirement.databinding.ItemCleanCategoryBinding
@@ -178,7 +179,7 @@ class CleanFilesFragment : BaseFragment<FragmentCleanFilesBinding>() {
 
 @Deeplink
 class CleanFilesDeeplinkHandler : DeeplinkHandler {
-    override val deeplink: String = "app://clean_files"
+    override val deeplink: String = DeepLinks.CLEAN_FILES
 
     override suspend fun navigate(
         fragmentActivity: FragmentActivity,

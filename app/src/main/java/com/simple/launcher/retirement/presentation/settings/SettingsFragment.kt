@@ -12,8 +12,10 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
 import com.simple.deeplink.Deeplink
 import com.simple.deeplink.DeeplinkHandler
-import com.simple.deeplink.sendDeeplink
 import com.simple.launcher.retirement.R
+import com.simple.launcher.retirement.presentation.DeepLinks
+import com.simple.launcher.retirement.presentation.sendDeeplinkWithBackStack
+import com.simple.deeplink.sendDeeplink
 import com.simple.launcher.retirement.databinding.FragmentSettingsBinding
 import com.simple.launcher.retirement.presentation.base.BaseFragment
 import com.simple.launcher.retirement.utils.background.setBackground
@@ -77,24 +79,24 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
                 // nếu chưa có thì đi thẳng vào setup
                 viewLifecycleOwner.lifecycleScope.launch {
                     if (requirePin()) {
-                        sendDeeplink("app://pin_setup", extras = mapOf("addToBackStack" to true))
+                        sendDeeplinkWithBackStack(DeepLinks.PIN_SETUP)
                     }
                 }
             }
             SettingItem.ID_APP_LIST -> {
-                sendDeeplink("app://app_list", extras = mapOf("addToBackStack" to true))
+                sendDeeplinkWithBackStack(DeepLinks.APP_LIST)
             }
             SettingItem.ID_CONTACT_LIST -> {
-                sendDeeplink("app://contact_list", extras = mapOf("addToBackStack" to true))
+                sendDeeplinkWithBackStack(DeepLinks.CONTACT_LIST)
             }
             SettingItem.ID_DEFAULT_LAUNCHER -> {
-                sendDeeplink("app://DefaultLauncher")
+                sendDeeplink(DeepLinks.PERMISSION_DEFAULT_LAUNCHER)
             }
             SettingItem.ID_CLEAN_FILES -> {
-                sendDeeplink("app://clean_files", extras = mapOf("addToBackStack" to true))
+                sendDeeplinkWithBackStack(DeepLinks.CLEAN_FILES)
             }
             SettingItem.ID_CLEAN_MEMORY -> {
-                sendDeeplink("app://clean_memory", extras = mapOf("addToBackStack" to true))
+                sendDeeplinkWithBackStack(DeepLinks.CLEAN_MEMORY)
             }
         }
     }
@@ -102,7 +104,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
 
 @Deeplink
 class SettingsDeeplinkHandler : DeeplinkHandler {
-    override val deeplink: String = "app://settings"
+    override val deeplink: String = DeepLinks.SETTINGS
 
     override suspend fun navigate(
         fragmentActivity: FragmentActivity,

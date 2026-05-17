@@ -21,6 +21,7 @@ import com.simple.adapter.utils.attachAdapter
 import com.simple.adapter.utils.submitListAndAwait
 import com.simple.deeplink.Deeplink
 import com.simple.deeplink.DeeplinkHandler
+import com.simple.launcher.retirement.presentation.DeepLinks
 import com.simple.launcher.retirement.BuildConfig
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.databinding.FragmentHomeBinding
@@ -88,7 +89,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
 @Deeplink
 class HomeDeeplinkHandler : DeeplinkHandler {
-    override val deeplink: String = "app://home"
+    override val deeplink: String = DeepLinks.HOME
 
     override suspend fun navigate(
         fragmentActivity: FragmentActivity,
