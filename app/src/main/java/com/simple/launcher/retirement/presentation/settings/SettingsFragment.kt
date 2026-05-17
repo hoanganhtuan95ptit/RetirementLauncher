@@ -1,34 +1,27 @@
 package com.simple.launcher.retirement.presentation.settings
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.simple.adapter.utils.attachAdapter
 import com.simple.adapter.utils.submitListAndAwait
+import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.lifecycleScope
 import com.simple.deeplink.Deeplink
 import com.simple.deeplink.DeeplinkHandler
 import com.simple.deeplink.sendDeeplink
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.databinding.FragmentSettingsBinding
-import com.simple.launcher.retirement.domain.repository.PreferenceRepository
 import com.simple.launcher.retirement.presentation.base.BaseFragment
-import com.simple.launcher.retirement.presentation.permissions.call_block.CallBlockPermissionBottomSheet
-import com.simple.launcher.retirement.presentation.permissions.file.FilePermissionBottomSheet
-import com.simple.launcher.retirement.presentation.permissions.launcher.DefaultLauncherBottomSheet
-import com.simple.launcher.retirement.presentation.permissions.usage_stats.UsageStatsPermissionBottomSheet
-import com.simple.launcher.retirement.presentation.pin_setup.PinVerifyBottomSheet
-import com.simple.launcher.retirement.utils.permission.PermissionManager
 import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.image.setImage
 import com.simple.launcher.retirement.utils.lifecycle.observe
-import com.simple.launcher.retirement.utils.string.asStringRes
 import com.simple.launcher.retirement.utils.text.setText
 import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
+import kotlinx.coroutines.launch
 
 class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
 
@@ -78,12 +71,15 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
     }
 
     private fun handleSettingItemClick(item: SettingItem) {
-        val repository = PreferenceRepository.instance
         when (item.id) {
             SettingItem.ID_PIN -> {
-                PinVerifyBottomSheet {
-                    sendDeeplink("app://pin_setup", extras = mapOf("addToBackStack" to true))
-                }.show(childFragmentManager, PinVerifyBottomSheet.TAG)
+                // Dùng suspend Pin.verify(): nếu có PIN sẵn thì xác thực trước,
+                // nếu chưa có thì đi thẳng vào setup
+                viewLifecycleOwner.lifecycleScope.launch {
+                    if (requirePin()) {
+                        sendDeeplink("app://pin_setup", extras = mapOf("addToBackStack" to true))
+                    }
+                }
             }
             SettingItem.ID_APP_LIST -> {
                 sendDeeplink("app://app_list", extras = mapOf("addToBackStack" to true))
@@ -92,7 +88,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
                 sendDeeplink("app://contact_list", extras = mapOf("addToBackStack" to true))
             }
             SettingItem.ID_DEFAULT_LAUNCHER -> {
-                DefaultLauncherBottomSheet().show(childFragmentManager, DefaultLauncherBottomSheet.TAG)
+                sendDeeplink("app://default_launcher_setup") // Example, adjust as needed
             }
             SettingItem.ID_CLEAN_FILES -> {
                 sendDeeplink("app://clean_files", extras = mapOf("addToBackStack" to true))
@@ -100,88 +96,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
             SettingItem.ID_CLEAN_MEMORY -> {
                 sendDeeplink("app://clean_memory", extras = mapOf("addToBackStack" to true))
             }
-            SettingItem.ID_TOGGLE_BLOCK -> {
-                if (item.isChecked && !PermissionManager.hasUsageStatsPermission(requireContext())) {
-                    UsageStatsPermissionBottomSheet(
-                        onDismissed = {
-                            if (!PermissionManager.hasUsageStatsPermission(requireContext())) {
-                                viewModel.updateItem(item)
-                            }
-                        }
-                    ) {
-                        handleSettingToggleAction(item, viewModel) {
-                            repository.setAppBlockEnabled(item.isChecked)
-                            if (item.isChecked) {
-                                (activity as? com.simple.launcher.retirement.presentation.main.MainActivity)?.startAppMonitoringService()
-                            }
-                        }
-                    }.show(childFragmentManager, UsageStatsPermissionBottomSheet.TAG)
-                } else {
-                    handleSettingToggleAction(item, viewModel) {
-                        repository.setAppBlockEnabled(item.isChecked)
-                        if (item.isChecked) {
-                            (activity as? com.simple.launcher.retirement.presentation.main.MainActivity)?.startAppMonitoringService()
-                        } else {
-                            val intent = Intent(requireContext(), com.simple.launcher.retirement.presentation.worker.AppMonitoringService::class.java)
-                            requireContext().stopService(intent)
-                        }
-                    }
-                }
-            }
-            SettingItem.ID_TOGGLE_CLEANUP -> {
-                if (item.isChecked && !PermissionManager.hasFilePermission(requireContext())) {
-                    FilePermissionBottomSheet(
-                        onDismissed = {
-                            if (!PermissionManager.hasFilePermission(requireContext())) {
-                                viewModel.updateItem(item)
-                            }
-                        }
-                    ) {
-                        handleSettingToggleAction(item, viewModel) {
-                            repository.setFileCleanupEnabled(item.isChecked)
-                            if (item.isChecked) {
-                                (activity as? com.simple.launcher.retirement.presentation.main.MainActivity)?.startFileWatcherService()
-                            }
-                        }
-                    }.show(childFragmentManager, FilePermissionBottomSheet.TAG)
-                } else {
-                    handleSettingToggleAction(item, viewModel) {
-                        repository.setFileCleanupEnabled(item.isChecked)
-                        if (item.isChecked) {
-                            (activity as? com.simple.launcher.retirement.presentation.main.MainActivity)?.startFileWatcherService()
-                        } else {
-                            val intent = Intent(requireContext(), com.simple.launcher.retirement.presentation.worker.FileWatcherService::class.java)
-                            requireContext().stopService(intent)
-                        }
-                    }
-                }
-            }
-            SettingItem.ID_TOGGLE_CALL_BLOCK -> {
-                if (item.isChecked && !hasCallBlockPermissions()) {
-                    CallBlockPermissionBottomSheet(
-                        onDismissed = {
-                            if (!hasCallBlockPermissions()) {
-                                viewModel.updateItem(item)
-                            }
-                        }
-                    ) {
-                        if (hasCallBlockPermissions()) {
-                            handleSettingToggleAction(item, viewModel) {
-                                repository.setCallBlockEnabled(item.isChecked)
-                            }
-                        }
-                    }.show(childFragmentManager, CallBlockPermissionBottomSheet.TAG)
-                } else {
-                    handleSettingToggleAction(item, viewModel) {
-                        repository.setCallBlockEnabled(item.isChecked)
-                    }
-                }
-            }
         }
-    }
-
-    private fun hasCallBlockPermissions(): Boolean {
-        return PermissionManager.hasCallBlockPermissions(requireContext())
     }
 }
 

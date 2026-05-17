@@ -38,9 +38,6 @@ import java.util.UUID
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
-    // UUID chỉ tạo ở debug build — tránh tốn tài nguyên ở production
-    val id = if (BuildConfig.DEBUG) UUID.randomUUID().toString() else ""
-
     private val viewModel: HomeViewModel by activityViewModels {
         HomeViewModelFactory(GetHomeAppsUseCase.instance, FileRepository.instance, MemoryRepository.instance)
     }
@@ -51,7 +48,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     override fun setupViews(view: View, savedInstanceState: Bundle?) {
         super.setupViews(view, savedInstanceState)
-        if (BuildConfig.DEBUG) Log.d("tuanha", "setupViews: $id")
 
         // Setup LayoutManager
         val layoutManager = GridLayoutManager(requireContext(), HomeItem.TOTAL_COLUMNS)
@@ -75,7 +71,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         super.observeData()
 
         viewModel.items.attachAdapter().observe(this) { (items, adapters) ->
-            if (BuildConfig.DEBUG) Log.d("tuanha", "observeData: ${items.size} $id $adapters")
             binding.rvApps.submitListAndAwait(items, adapters, true)
         }
 
@@ -88,36 +83,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                     }
             }
         }
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (BuildConfig.DEBUG) Log.d("tuanha", "onAttach: $id")
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        if (BuildConfig.DEBUG) Log.d("tuanha", "onDetach: $id")
-    }
-
-    override fun onResume() {
-        super.onResume()
-        if (BuildConfig.DEBUG) Log.d("tuanha", "onResume: $id")
-    }
-
-    override fun onPause() {
-        super.onPause()
-        if (BuildConfig.DEBUG) Log.d("tuanha", "onPause: $id")
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        if (BuildConfig.DEBUG) Log.d("tuanha", "onDestroyView: $id")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        if (BuildConfig.DEBUG) Log.d("tuanha", "onDestroy: $id")
     }
 }
 

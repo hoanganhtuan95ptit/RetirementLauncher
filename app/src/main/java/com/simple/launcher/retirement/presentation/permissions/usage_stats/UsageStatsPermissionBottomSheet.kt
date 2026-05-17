@@ -8,33 +8,36 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
+import com.simple.deeplink.Deeplink
+import com.simple.deeplink.DeeplinkHandler
 import com.simple.launcher.retirement.databinding.BottomSheetUsageStatsPermissionBinding
 import com.simple.launcher.retirement.presentation.base.BaseBottomSheetDialogFragment
+import com.simple.launcher.retirement.presentation.pin_setup.PinVerifyBottomSheet
+import com.simple.launcher.retirement.utils.AppEventBus
 import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.lifecycle.observe
 import com.simple.launcher.retirement.utils.permission.PermissionManager
 import com.simple.launcher.retirement.utils.text.setText
 import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
 
-class UsageStatsPermissionBottomSheet(
-    private val onDismissed: (() -> Unit)? = null,
-    private val onResult: () -> Unit
-) : BaseBottomSheetDialogFragment<BottomSheetUsageStatsPermissionBinding, UsageStatsPermissionViewModel>() {
+class UsageStatsPermissionBottomSheet : BaseBottomSheetDialogFragment<BottomSheetUsageStatsPermissionBinding, UsageStatsPermissionViewModel>() {
 
     override val viewModel: UsageStatsPermissionViewModel by viewModels()
 
+    // Tránh double-post: khi permission được grant thì dismiss() → onDismiss không post Cancel nữa
+    private var permissionGranted = false
+
     private val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (PermissionManager.hasUsageStatsPermission(requireContext())) {
+            permissionGranted = true
+            AppEventBus.post(AppEventBus.PermissionAccept)
             dismiss()
-            onResult()
         }
     }
 
-    override fun inflateBinding(
-        inflater: LayoutInflater,
-        container: ViewGroup?
-    ): BottomSheetUsageStatsPermissionBinding {
+    override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?): BottomSheetUsageStatsPermissionBinding {
         return BottomSheetUsageStatsPermissionBinding.inflate(inflater, container, false)
     }
 
@@ -61,21 +64,31 @@ class UsageStatsPermissionBottomSheet(
     }
 
     private fun requestUsageStatsPermission() {
-        val context = requireContext()
-        if (PermissionManager.hasUsageStatsPermission(context)) {
-            dismiss()
-            onResult()
-            return
-        }
         startForResult.launch(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS))
     }
 
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
-        onDismissed?.invoke()
+        // Chỉ post Cancel khi người dùng thực sự huỷ (không phải sau khi grant permission)
+        if (!permissionGranted) {
+            AppEventBus.post(AppEventBus.PermissionCancel)
+        }
     }
 
     companion object {
         const val TAG = "UsageStatsPermissionBottomSheet"
+    }
+}
+
+@Deeplink
+class UsageStatsPermissionDeeplinkHandler : DeeplinkHandler {
+
+    override val deeplink: String = "app://UsageStatsPermission"
+
+    override suspend fun navigate(fragmentActivity: FragmentActivity, deeplink: String, extras: Map<String, Any?>?, sharedElement: Map<String, View>?): Boolean {
+
+        UsageStatsPermissionBottomSheet().show(fragmentActivity.supportFragmentManager, UsageStatsPermissionBottomSheet.TAG)
+
+        return true
     }
 }

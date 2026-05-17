@@ -1,14 +1,6 @@
 package com.simple.launcher.retirement.presentation.app_list
 
-import android.app.AppOpsManager
-import android.app.role.RoleManager
-import android.content.Context
-import android.content.Intent
-import android.os.Build
 import android.os.Bundle
-import android.os.Environment
-import android.os.Process
-import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +8,6 @@ import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.asFlow
 import com.simple.adapter.utils.attachAdapter
 import com.simple.adapter.utils.submitListAndAwait
 import com.simple.deeplink.Deeplink
@@ -26,15 +17,9 @@ import com.simple.launcher.retirement.databinding.FragmentAppListBinding
 import com.simple.launcher.retirement.domain.usecase.GetSelectableAppsUseCase
 import com.simple.launcher.retirement.domain.usecase.SaveSelectedAppsUseCase
 import com.simple.launcher.retirement.presentation.base.BaseFragment
-import com.simple.launcher.retirement.presentation.permissions.file.FilePermissionBottomSheet
-import com.simple.launcher.retirement.presentation.permissions.launcher.DefaultLauncherBottomSheet
-import com.simple.launcher.retirement.presentation.permissions.overlay.OverlayPermissionBottomSheet
-import com.simple.launcher.retirement.presentation.permissions.usage_stats.UsageStatsPermissionBottomSheet
-import com.simple.launcher.retirement.presentation.reorder.ReorderType
 import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.image.setImage
 import com.simple.launcher.retirement.utils.lifecycle.observe
-import com.simple.launcher.retirement.utils.permission.PermissionManager
 import com.simple.launcher.retirement.utils.text.setText
 import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
 

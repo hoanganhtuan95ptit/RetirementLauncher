@@ -6,27 +6,34 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
+import com.simple.deeplink.Deeplink
+import com.simple.deeplink.DeeplinkHandler
 import com.simple.launcher.retirement.databinding.BottomSheetCallPermissionBinding
 import com.simple.launcher.retirement.presentation.base.BaseBottomSheetDialogFragment
+import com.simple.launcher.retirement.utils.AppEventBus
 import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.lifecycle.observe
 import com.simple.launcher.retirement.utils.permission.PermissionManager
 import com.simple.launcher.retirement.utils.text.setText
 import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
 
-class CallBlockPermissionBottomSheet(
-    private val onDismissed: (() -> Unit)? = null,
-    private val onResult: () -> Unit
-) : BaseBottomSheetDialogFragment<BottomSheetCallPermissionBinding, CallBlockPermissionViewModel>() {
+class CallBlockPermissionBottomSheet : BaseBottomSheetDialogFragment<BottomSheetCallPermissionBinding, CallBlockPermissionViewModel>() {
 
     override val viewModel: CallBlockPermissionViewModel by viewModels()
 
+    // Tránh double-post: khi permission được grant thì dismiss() → onDismiss không post Cancel nữa
+    private var permissionGranted = false
+
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
-    ) { _ ->
-        onResult()
-        dismiss()
+    ) { results ->
+        if (results.all { it.value }) {
+            permissionGranted = true
+            AppEventBus.post(AppEventBus.PermissionAccept)
+            dismiss()
+        }
     }
 
     override fun inflateBinding(
@@ -63,10 +70,26 @@ class CallBlockPermissionBottomSheet(
 
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
-        onDismissed?.invoke()
+        // Chỉ post Cancel khi người dùng thực sự huỷ (không phải sau khi grant permission)
+        if (!permissionGranted) {
+            AppEventBus.post(AppEventBus.PermissionCancel)
+        }
     }
 
     companion object {
         const val TAG = "CallBlockPermissionBottomSheet"
+    }
+}
+
+@Deeplink
+class CallBlockPermissionDeeplinkHandler : DeeplinkHandler {
+
+    override val deeplink: String = "app://CallBlockPermission"
+
+    override suspend fun navigate(fragmentActivity: FragmentActivity, deeplink: String, extras: Map<String, Any?>?, sharedElement: Map<String, View>?): Boolean {
+
+        CallBlockPermissionBottomSheet().show(fragmentActivity.supportFragmentManager, CallBlockPermissionBottomSheet.TAG)
+
+        return true
     }
 }

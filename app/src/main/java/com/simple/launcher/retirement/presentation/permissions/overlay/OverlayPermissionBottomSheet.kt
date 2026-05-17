@@ -1,5 +1,6 @@
 package com.simple.launcher.retirement.presentation.permissions.overlay
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -8,23 +9,31 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
+import com.simple.deeplink.Deeplink
+import com.simple.deeplink.DeeplinkHandler
 import com.simple.launcher.retirement.databinding.BottomSheetOverlayPermissionBinding
 import com.simple.launcher.retirement.presentation.base.BaseBottomSheetDialogFragment
+import com.simple.launcher.retirement.utils.AppEventBus
 import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.lifecycle.observe
 import com.simple.launcher.retirement.utils.permission.PermissionManager
 import com.simple.launcher.retirement.utils.text.setText
 import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
 
-class OverlayPermissionBottomSheet(private val onResult: () -> Unit) : BaseBottomSheetDialogFragment<BottomSheetOverlayPermissionBinding, OverlayPermissionViewModel>() {
+class OverlayPermissionBottomSheet : BaseBottomSheetDialogFragment<BottomSheetOverlayPermissionBinding, OverlayPermissionViewModel>() {
 
     override val viewModel: OverlayPermissionViewModel by viewModels()
 
+    // Tránh double-post: khi permission được grant thì dismiss() → onDismiss không post Cancel nữa
+    private var permissionGranted = false
+
     private val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (PermissionManager.hasOverlayPermission(requireContext())) {
+            permissionGranted = true
+            AppEventBus.post(AppEventBus.PermissionAccept)
             dismiss()
-            onResult()
         }
     }
 
@@ -60,8 +69,9 @@ class OverlayPermissionBottomSheet(private val onResult: () -> Unit) : BaseBotto
     private fun requestOverlayPermission() {
         val context = requireContext()
         if (PermissionManager.hasOverlayPermission(context)) {
+            permissionGranted = true
+            AppEventBus.post(AppEventBus.PermissionAccept)
             dismiss()
-            onResult()
             return
         }
         val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION)
@@ -69,7 +79,28 @@ class OverlayPermissionBottomSheet(private val onResult: () -> Unit) : BaseBotto
         startForResult.launch(intent)
     }
 
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+        // Chỉ post Cancel khi người dùng thực sự huỷ (không phải sau khi grant permission)
+        if (!permissionGranted) {
+            AppEventBus.post(AppEventBus.PermissionCancel)
+        }
+    }
+
     companion object {
         const val TAG = "OverlayPermissionBottomSheet"
+    }
+}
+
+@Deeplink
+class OverlayPermissionDeeplinkHandler : DeeplinkHandler {
+
+    override val deeplink: String = "app://OverlayPermission"
+
+    override suspend fun navigate(fragmentActivity: FragmentActivity, deeplink: String, extras: Map<String, Any?>?, sharedElement: Map<String, View>?): Boolean {
+
+        OverlayPermissionBottomSheet().show(fragmentActivity.supportFragmentManager, OverlayPermissionBottomSheet.TAG)
+
+        return true
     }
 }

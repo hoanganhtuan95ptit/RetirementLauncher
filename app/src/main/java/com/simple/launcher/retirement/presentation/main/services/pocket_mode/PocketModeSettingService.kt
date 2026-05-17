@@ -1,18 +1,7 @@
 package com.simple.launcher.retirement.presentation.main.services.pocket_mode
-import android.content.Context
-import android.graphics.Color
-import android.hardware.Sensor
-import android.hardware.SensorEvent
-import android.hardware.SensorEventListener
-import android.hardware.SensorManager
-import android.util.Log
-import android.view.View
-import android.view.ViewGroup
+
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.DefaultLifecycleObserver
-import androidx.lifecycle.LifecycleOwner
 import com.simple.adapter.ViewItem
 import com.simple.auto.register.AutoRegister
 import com.simple.launcher.retirement.R
@@ -22,10 +11,9 @@ import com.simple.launcher.retirement.presentation.settings.SettingItem
 import com.simple.launcher.retirement.presentation.settings.SettingsEventBus
 import com.simple.launcher.retirement.presentation.settings.SettingsFragment
 import com.simple.launcher.retirement.presentation.settings.SettingsViewModel
-import com.simple.launcher.retirement.presentation.settings.handleSettingToggleAction
+import com.simple.launcher.retirement.presentation.settings.requirePin
 import com.simple.launcher.retirement.utils.combineState
 import com.simple.launcher.retirement.utils.image.ImageRes
-import com.simple.launcher.retirement.utils.services.ActivityCreatedService
 import com.simple.launcher.retirement.utils.services.FragmentViewCreatedService
 import com.simple.launcher.retirement.utils.services.launchCollect
 import com.simple.launcher.retirement.utils.string.getString
@@ -39,56 +27,63 @@ import kotlinx.coroutines.flow.StateFlow
 @AutoRegister(apis = [SettingsFragment::class])
 class PocketModeSettingService : FragmentViewCreatedService {
 
+    private lateinit var settingsViewModel: SettingsViewModel
+    private lateinit var pocketModeSettingViewModel: PocketModeSettingViewModel
+
     override fun setup(fragment: Fragment) {
-        val settingsViewModel by fragment.viewModels<SettingsViewModel>()
-        val pocketModeSettingViewModel by fragment.viewModels<PocketModeSettingViewModel>()
+
+        settingsViewModel = fragment.viewModels<SettingsViewModel>().value
+        pocketModeSettingViewModel = fragment.viewModels<PocketModeSettingViewModel>().value
 
         pocketModeSettingViewModel.items.launchCollect(fragment) { items ->
-            items.forEach { item ->
-                if (item is SettingItem) {
-                    settingsViewModel.addItemAtEnd(item)
-                }
-            }
+            settingsViewModel.updateItem(SettingItem.ORDER_TOGGLE_POCKET_MODE, items)
         }
 
         SettingsEventBus.events.launchCollect(fragment) { item ->
             if (item.id == SettingItem.ID_TOGGLE_POCKET_MODE) {
-                fragment.handleSettingToggleAction(
-                    item = item,
-                    viewModel = settingsViewModel
-                ) {
-                    PreferenceRepository.instance.setPocketModeEnabled(item.isChecked)
+                val isTurningOn = item.isChecked
+
+                // Tắt tính năng yêu cầu xác thực PIN
+                if (!isTurningOn && !requirePin()) {
+                    // Revert toggle về ON vì user huỷ nhập PIN
+                    pocketModeSettingViewModel.refresh()
+                    return@launchCollect
                 }
+
+                PreferenceRepository.instance.setPocketModeEnabled(isTurningOn)
+                // Đồng bộ UI sau khi thay đổi trạng thái
+                pocketModeSettingViewModel.refresh()
             }
         }
     }
 
     class PocketModeSettingViewModel : BaseViewModel() {
 
-        private val repository by lazy {
-            PreferenceRepository.instance
-        }
+        private val repository by lazy { PreferenceRepository.instance }
+
+        val refreshTrigger = MutableStateFlow(0)
 
         val items: StateFlow<List<ViewItem>> = combineState(
             flow1 = strings,
             flow2 = themes,
             flow3 = repository.isPocketModeEnabledFlow(),
+            flow4 = refreshTrigger,
             initialValue = emptyList()
-        ) { stringMap, themeMap, isEnabled ->
+        ) { stringMap, themeMap, isEnabled, _ ->
 
             val textColor = themeMap.getColor(android.R.attr.textColorPrimary)
-            val settingsItems = mutableListOf<ViewItem>()
 
-            SettingItem(
-                SettingItem.ID_TOGGLE_POCKET_MODE,
-                stringMap.getString(R.string.setting_pocket_mode).toRich().with(ForegroundColor(textColor)),
-                ImageRes(android.R.drawable.ic_menu_compass), true, isEnabled
-            ).let {
-
-                settingsItems.add(it)
-            }
-
-            settingsItems
+            listOf(
+                SettingItem(
+                    SettingItem.ID_TOGGLE_POCKET_MODE,
+                    stringMap.getString(R.string.setting_pocket_mode).toRich().with(ForegroundColor(textColor)),
+                    ImageRes(android.R.drawable.ic_menu_compass),
+                    isSwitch = true,
+                    isChecked = isEnabled
+                )
+            )
         }
+
+        fun refresh() = refreshTrigger.value++
     }
 }

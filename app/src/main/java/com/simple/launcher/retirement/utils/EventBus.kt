@@ -25,3 +25,14 @@ open class EventBus<T> {
         _events.tryEmit(item)
     }
 }
+
+object AppEventBus : EventBus<AppEventBus.AppResult>() {
+
+    sealed class AppResult
+
+    sealed class PermissionResult: AppResult()
+
+    object PermissionCancel : PermissionResult()
+
+    object PermissionAccept : PermissionResult()
+}

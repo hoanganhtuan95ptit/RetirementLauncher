@@ -6,7 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
+import com.simple.deeplink.Deeplink
+import com.simple.deeplink.DeeplinkHandler
 import com.simple.launcher.retirement.databinding.BottomSheetPinVerifyBinding
 import com.simple.launcher.retirement.domain.repository.PreferenceRepository
 import com.simple.launcher.retirement.presentation.base.BaseBottomSheetDialogFragment
@@ -15,17 +18,14 @@ import com.simple.launcher.retirement.utils.lifecycle.observe
 import com.simple.launcher.retirement.utils.text.setText
 import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
 
-class PinVerifyBottomSheet(
-    private val onDismissed: (() -> Unit)? = null,
-    private val onSuccess: () -> Unit
-) : BaseBottomSheetDialogFragment<BottomSheetPinVerifyBinding, PinVerifyViewModel>() {
+class PinVerifyBottomSheet : BaseBottomSheetDialogFragment<BottomSheetPinVerifyBinding, PinVerifyViewModel>() {
 
     override val viewModel: PinVerifyViewModel by viewModels()
 
-    override fun inflateBinding(
-        inflater: LayoutInflater,
-        container: ViewGroup?
-    ): BottomSheetPinVerifyBinding {
+    // Tránh double-post: khi PIN đúng thì dismiss() sẽ gọi onDismiss → không post Cancel nữa
+    private var pinVerified = false
+
+    override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?): BottomSheetPinVerifyBinding {
         return BottomSheetPinVerifyBinding.inflate(inflater, container, false)
     }
 
@@ -35,13 +35,16 @@ class PinVerifyBottomSheet(
         val repository = PreferenceRepository.instance
 
         binding.btnVerify.root.setOnSafeClickListener {
+
             val inputPin = binding.etPin.text.toString()
             val savedPin = repository.getPin()
 
             if (inputPin == savedPin) {
-                onSuccess()
+                pinVerified = true
+                Pin.PinEventBus.post(Pin.PinVerifySuccess)
                 dismiss()
             } else {
+
                 Toast.makeText(context, "Mã PIN không chính xác", Toast.LENGTH_SHORT).show()
             }
         }
@@ -57,10 +60,26 @@ class PinVerifyBottomSheet(
 
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
-        onDismissed?.invoke()
+        // Chỉ post Cancel khi người dùng thực sự huỷ (không phải sau khi xác thực thành công)
+        if (!pinVerified) {
+            Pin.PinEventBus.post(Pin.PinCancel)
+        }
     }
 
     companion object {
         const val TAG = "PinVerifyBottomSheet"
+    }
+}
+
+@Deeplink
+class PinVerifyDeeplinkHandler : DeeplinkHandler {
+
+    override val deeplink: String = "app://pin_verify"
+
+    override suspend fun navigate(fragmentActivity: FragmentActivity, deeplink: String, extras: Map<String, Any?>?, sharedElement: Map<String, View>?): Boolean {
+
+        PinVerifyBottomSheet().show(fragmentActivity.supportFragmentManager, PinVerifyBottomSheet.TAG)
+
+        return true
     }
 }

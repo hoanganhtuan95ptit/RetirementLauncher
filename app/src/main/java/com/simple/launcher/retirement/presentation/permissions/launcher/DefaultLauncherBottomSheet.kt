@@ -2,6 +2,7 @@ package com.simple.launcher.retirement.presentation.permissions.launcher
 
 import android.app.role.RoleManager
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -10,23 +11,31 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
+import com.simple.deeplink.Deeplink
+import com.simple.deeplink.DeeplinkHandler
 import com.simple.launcher.retirement.databinding.BottomSheetDefaultLauncherBinding
 import com.simple.launcher.retirement.presentation.base.BaseBottomSheetDialogFragment
+import com.simple.launcher.retirement.utils.AppEventBus
 import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.lifecycle.observe
 import com.simple.launcher.retirement.utils.permission.PermissionManager
 import com.simple.launcher.retirement.utils.text.setText
 import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
 
-class DefaultLauncherBottomSheet(private val onResult: (() -> Unit)? = null) : BaseBottomSheetDialogFragment<BottomSheetDefaultLauncherBinding, DefaultLauncherViewModel>() {
+class DefaultLauncherBottomSheet : BaseBottomSheetDialogFragment<BottomSheetDefaultLauncherBinding, DefaultLauncherViewModel>() {
 
     override val viewModel: DefaultLauncherViewModel by viewModels()
 
+    // Tránh double-post: khi permission được grant thì dismiss() → onDismiss không post Cancel nữa
+    private var permissionGranted = false
+
     private val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (PermissionManager.isDefaultLauncher(requireContext())) {
+            permissionGranted = true
+            AppEventBus.post(AppEventBus.PermissionAccept)
             dismiss()
-            onResult?.invoke()
         }
     }
 
@@ -61,8 +70,9 @@ class DefaultLauncherBottomSheet(private val onResult: (() -> Unit)? = null) : B
 
     private fun openDefaultLauncherSettings() {
         if (PermissionManager.isDefaultLauncher(requireContext())) {
+            permissionGranted = true
+            AppEventBus.post(AppEventBus.PermissionAccept)
             dismiss()
-            onResult?.invoke()
             return
         }
 
@@ -88,7 +98,28 @@ class DefaultLauncherBottomSheet(private val onResult: (() -> Unit)? = null) : B
         startForResult.launch(intent)
     }
 
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+        // Chỉ post Cancel khi người dùng thực sự huỷ (không phải sau khi grant permission)
+        if (!permissionGranted) {
+            AppEventBus.post(AppEventBus.PermissionCancel)
+        }
+    }
+
     companion object {
         const val TAG = "DefaultLauncherBottomSheet"
+    }
+}
+
+@Deeplink
+class DefaultLauncherDeeplinkHandler : DeeplinkHandler {
+
+    override val deeplink: String = "app://DefaultLauncher"
+
+    override suspend fun navigate(fragmentActivity: FragmentActivity, deeplink: String, extras: Map<String, Any?>?, sharedElement: Map<String, View>?): Boolean {
+
+        DefaultLauncherBottomSheet().show(fragmentActivity.supportFragmentManager, DefaultLauncherBottomSheet.TAG)
+
+        return true
     }
 }

@@ -17,12 +17,13 @@ import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.databinding.FragmentAppListBinding
 import com.simple.launcher.retirement.domain.repository.AppRepository
 import com.simple.launcher.retirement.domain.repository.ContactRepository
-import com.simple.launcher.retirement.domain.repository.PreferenceRepository
 import com.simple.launcher.retirement.presentation.base.BaseFragment
 import com.simple.launcher.retirement.presentation.permissions.file.FilePermissionBottomSheet
 import com.simple.launcher.retirement.presentation.permissions.launcher.DefaultLauncherBottomSheet
 import com.simple.launcher.retirement.presentation.permissions.overlay.OverlayPermissionBottomSheet
 import com.simple.launcher.retirement.presentation.permissions.usage_stats.UsageStatsPermissionBottomSheet
+import com.simple.launcher.retirement.utils.AppEventBus
+import kotlinx.coroutines.flow.filterIsInstance
 import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.image.setImage
 import com.simple.launcher.retirement.utils.lifecycle.observe
@@ -31,6 +32,9 @@ import com.simple.launcher.retirement.utils.text.setText
 import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
 
 class ReorderFragment : BaseFragment<FragmentAppListBinding>() {
+
+    // Flag để tránh xử lý PermissionAccept từ các bottom sheet không liên quan
+    private var awaitingPermission = false
 
     companion object {
         fun newInstance(type: ReorderType, ids: List<String>): ReorderFragment {
@@ -121,6 +125,16 @@ class ReorderFragment : BaseFragment<FragmentAppListBinding>() {
         viewModel.items.attachAdapter().observe(this) { (items, adapters) ->
             binding.rvAppList.submitListAndAwait(items, adapters, false)
         }
+
+        // Lắng nghe kết quả từ các permission bottom sheet
+        AppEventBus.events.filterIsInstance<AppEventBus.PermissionResult>().observe(this) { event ->
+            if (!awaitingPermission) return@observe
+            awaitingPermission = false
+            if (event is AppEventBus.PermissionAccept) {
+                checkAppPermissions()
+            }
+            // Nếu PermissionCancel: dừng lại, không làm gì thêm
+        }
     }
 
     private fun checkPermissionsAndSave() {
@@ -155,11 +169,9 @@ class ReorderFragment : BaseFragment<FragmentAppListBinding>() {
     }
 
     private fun checkAppPermissions() {
-        val context = requireContext()
-        if (!PermissionManager.hasFilePermission(context)) {
-            FilePermissionBottomSheet {
-                checkBlockPermissions()
-            }.show(childFragmentManager, FilePermissionBottomSheet.TAG)
+        if (!PermissionManager.hasFilePermission(requireContext())) {
+            awaitingPermission = true
+            FilePermissionBottomSheet().show(childFragmentManager, FilePermissionBottomSheet.TAG)
             return
         }
         checkBlockPermissions()
@@ -168,26 +180,22 @@ class ReorderFragment : BaseFragment<FragmentAppListBinding>() {
     private fun checkBlockPermissions() {
         val context = requireContext()
         if (!PermissionManager.hasUsageStatsPermission(context)) {
-            UsageStatsPermissionBottomSheet {
-                checkBlockPermissions()
-            }.show(childFragmentManager, UsageStatsPermissionBottomSheet.TAG)
+            awaitingPermission = true
+            UsageStatsPermissionBottomSheet().show(childFragmentManager, UsageStatsPermissionBottomSheet.TAG)
             return
         }
         if (!PermissionManager.hasOverlayPermission(context)) {
-            OverlayPermissionBottomSheet {
-                checkBlockPermissions()
-            }.show(childFragmentManager, OverlayPermissionBottomSheet.TAG)
+            awaitingPermission = true
+            OverlayPermissionBottomSheet().show(childFragmentManager, OverlayPermissionBottomSheet.TAG)
             return
         }
         checkDefaultLauncher()
     }
 
     private fun checkDefaultLauncher() {
-        val context = requireContext()
-        if (!PermissionManager.isDefaultLauncher(context)) {
-            DefaultLauncherBottomSheet {
-                onSaveSuccess()
-            }.show(childFragmentManager, DefaultLauncherBottomSheet.TAG)
+        if (!PermissionManager.isDefaultLauncher(requireContext())) {
+            awaitingPermission = true
+            DefaultLauncherBottomSheet().show(childFragmentManager, DefaultLauncherBottomSheet.TAG)
             return
         }
         onSaveSuccess()

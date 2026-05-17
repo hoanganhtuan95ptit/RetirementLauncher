@@ -25,11 +25,7 @@ import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
 class PinSetupFragment : BaseFragment<FragmentPinSetupBinding>() {
 
     private val viewModel: PinSetupViewModel by viewModels {
-        PinSetupViewModelFactory(
-            HasPinUseCase.instance,
-            CheckPinUseCase.instance,
-            SavePinUseCase.instance
-        )
+        PinSetupViewModelFactory(HasPinUseCase.instance, CheckPinUseCase.instance, SavePinUseCase.instance)
     }
 
     override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentPinSetupBinding {
@@ -62,15 +58,19 @@ class PinSetupFragment : BaseFragment<FragmentPinSetupBinding>() {
                 PinSetupViewModel.State.ENTER_OLD_PIN -> {
                     binding.tvInstruction.setText("Nhập mã PIN hiện tại".toRich())
                 }
+
                 PinSetupViewModel.State.ENTER_NEW_PIN -> {
                     binding.tvInstruction.setText("Nhập mã PIN mới (6 chữ số)".toRich())
                 }
+
                 PinSetupViewModel.State.CONFIRM_NEW_PIN -> {
                     binding.tvInstruction.setText("Xác nhận mã PIN mới".toRich())
                 }
+
                 PinSetupViewModel.State.SUCCESS -> {
                     Toast.makeText(context, "Thiết lập mã PIN thành công", Toast.LENGTH_SHORT).show()
                     requireActivity().onBackPressedDispatcher.onBackPressed()
+                    Pin.PinEventBus.post(Pin.PinSetupSuccess)
                 }
             }
         }
@@ -95,25 +95,27 @@ class PinSetupFragment : BaseFragment<FragmentPinSetupBinding>() {
             binding.btnNext.tvAction.setBackground(state.background)
         }
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Pin.PinEventBus.post(Pin.PinCancel)
+    }
 }
 
 @Deeplink
 class PinSetupDeeplinkHandler : DeeplinkHandler {
+
     override val deeplink: String = "app://pin_setup"
 
-    override suspend fun navigate(
-        fragmentActivity: FragmentActivity,
-        deeplink: String,
-        extras: Map<String, Any?>?,
-        sharedElement: Map<String, View>?
-    ): Boolean {
+    override suspend fun navigate(fragmentActivity: FragmentActivity, deeplink: String, extras: Map<String, Any?>?, sharedElement: Map<String, View>?): Boolean {
+
         val transaction = fragmentActivity.supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, PinSetupFragment())
-        
+
         if (extras?.get("addToBackStack") == true) {
             transaction.addToBackStack(null)
         }
-        
+
         transaction.commit()
         return true
     }
