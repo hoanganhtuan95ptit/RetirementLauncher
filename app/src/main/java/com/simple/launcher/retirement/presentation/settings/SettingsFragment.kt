@@ -88,7 +88,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
                 sendDeeplink("app://contact_list", extras = mapOf("addToBackStack" to true))
             }
             SettingItem.ID_DEFAULT_LAUNCHER -> {
-                sendDeeplink("app://default_launcher_setup") // Example, adjust as needed
+                sendDeeplink("app://DefaultLauncher")
             }
             SettingItem.ID_CLEAN_FILES -> {
                 sendDeeplink("app://clean_files", extras = mapOf("addToBackStack" to true))

@@ -100,6 +100,18 @@
     <string name="overlay_permission_title">Hiển thị trên ứng dụng khác</string>
     <string name="overlay_permission_desc">Ứng dụng cần quyền \'Hiển thị trên các ứng dụng khác\' để có thể hiển thị màn hình khóa khi một ứng dụng bị chặn được mở.</string>
     <string name="overlay_permission_highlight">\'Hiển thị trên các ứng dụng khác\'</string>
+    <!-- PIN Setup -->
+    <string name="pin_enter_current">Nhập mã PIN hiện tại</string>
+    <string name="pin_enter_new">Nhập mã PIN mới (6 chữ số)</string>
+    <string name="pin_confirm_new">Xác nhận mã PIN mới</string>
+    <string name="pin_setup_success">Thiết lập mã PIN thành công</string>
+    <string name="pin_error_length">Mã PIN phải có 6 chữ số</string>
+    <string name="pin_error_old_incorrect">Mã PIN cũ không chính xác</string>
+    <string name="pin_error_confirm_mismatch">Mã PIN xác nhận không khớp</string>
+    <string name="pin_error_incorrect">Mã PIN không chính xác</string>
+    <!-- Clean Files -->
+    <string name="clean_cat_file_count">%1$d file</string>
+
     <!-- Reorder -->
     <string name="reorder_apps_title">Sắp xếp ứng dụng</string>
     <string name="reorder_contacts_title">Sắp xếp liên hệ</string>

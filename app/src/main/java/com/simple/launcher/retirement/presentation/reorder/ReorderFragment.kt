@@ -13,15 +13,12 @@ import com.simple.adapter.utils.attachAdapter
 import com.simple.adapter.utils.submitListAndAwait
 import com.simple.deeplink.Deeplink
 import com.simple.deeplink.DeeplinkHandler
+import com.simple.deeplink.sendDeeplink
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.databinding.FragmentAppListBinding
 import com.simple.launcher.retirement.domain.repository.AppRepository
 import com.simple.launcher.retirement.domain.repository.ContactRepository
 import com.simple.launcher.retirement.presentation.base.BaseFragment
-import com.simple.launcher.retirement.presentation.permissions.file.FilePermissionBottomSheet
-import com.simple.launcher.retirement.presentation.permissions.launcher.DefaultLauncherBottomSheet
-import com.simple.launcher.retirement.presentation.permissions.overlay.OverlayPermissionBottomSheet
-import com.simple.launcher.retirement.presentation.permissions.usage_stats.UsageStatsPermissionBottomSheet
 import com.simple.launcher.retirement.utils.AppEventBus
 import kotlinx.coroutines.flow.filterIsInstance
 import com.simple.launcher.retirement.utils.background.setBackground
@@ -171,7 +168,7 @@ class ReorderFragment : BaseFragment<FragmentAppListBinding>() {
     private fun checkAppPermissions() {
         if (!PermissionManager.hasFilePermission(requireContext())) {
             awaitingPermission = true
-            FilePermissionBottomSheet().show(childFragmentManager, FilePermissionBottomSheet.TAG)
+            sendDeeplink("app://FilePermission")
             return
         }
         checkBlockPermissions()
@@ -181,12 +178,12 @@ class ReorderFragment : BaseFragment<FragmentAppListBinding>() {
         val context = requireContext()
         if (!PermissionManager.hasUsageStatsPermission(context)) {
             awaitingPermission = true
-            UsageStatsPermissionBottomSheet().show(childFragmentManager, UsageStatsPermissionBottomSheet.TAG)
+            sendDeeplink("app://UsageStatsPermission")
             return
         }
         if (!PermissionManager.hasOverlayPermission(context)) {
             awaitingPermission = true
-            OverlayPermissionBottomSheet().show(childFragmentManager, OverlayPermissionBottomSheet.TAG)
+            sendDeeplink("app://OverlayPermission")
             return
         }
         checkDefaultLauncher()
@@ -195,7 +192,7 @@ class ReorderFragment : BaseFragment<FragmentAppListBinding>() {
     private fun checkDefaultLauncher() {
         if (!PermissionManager.isDefaultLauncher(requireContext())) {
             awaitingPermission = true
-            DefaultLauncherBottomSheet().show(childFragmentManager, DefaultLauncherBottomSheet.TAG)
+            sendDeeplink("app://DefaultLauncher")
             return
         }
         onSaveSuccess()

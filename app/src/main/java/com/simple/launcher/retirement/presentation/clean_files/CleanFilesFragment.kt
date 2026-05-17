@@ -81,7 +81,7 @@ class CleanFilesFragment : BaseFragment<FragmentCleanFilesBinding>() {
     private fun markCategoryDone(index: Int, count: Int) {
         val b = categoryBindings.getOrNull(index) ?: return
         if (b.ivCatCheck.visibility == View.VISIBLE) return // đã đánh dấu rồi, bỏ qua
-        b.tvCatCount.text = "$count file"
+        b.tvCatCount.text = getString(R.string.clean_cat_file_count, count)
         b.tvCatCount.visibility = View.VISIBLE
         b.ivCatCheck.visibility = View.VISIBLE
         val anim = AnimationUtils.loadAnimation(requireContext(), android.R.anim.fade_in)

@@ -13,7 +13,6 @@ object Pin {
         if (PreferenceRepository.instance.hasPin()) {
 
             sendDeeplink("app://pin_verify")
-
             return PinEventBus.events.filter { it is Pin.PinCancel || it is Pin.PinVerifySuccess }.first()
         } else {
 

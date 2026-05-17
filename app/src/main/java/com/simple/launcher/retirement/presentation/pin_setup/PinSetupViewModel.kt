@@ -62,8 +62,8 @@ class PinSetupViewModel(
         )
     }
 
-    private val _error = MutableStateFlow<String?>(null)
-    val error: StateFlow<String?> = _error
+    private val _error = MutableStateFlow<Int?>(null)
+    val error: StateFlow<Int?> = _error
 
     private var tempPin: String = ""
 
@@ -79,7 +79,7 @@ class PinSetupViewModel(
 
     fun handlePinInput(pin: String) {
         if (pin.length != 6) {
-            _error.value = "Mã PIN phải có 6 chữ số"
+            _error.value = R.string.pin_error_length
             return
         }
         _error.value = null
@@ -90,7 +90,7 @@ class PinSetupViewModel(
                     _state.value = State.ENTER_NEW_PIN
                     _actionRes.value = R.string.back
                 } else {
-                    _error.value = "Mã PIN cũ không chính xác"
+                    _error.value = R.string.pin_error_old_incorrect
                 }
             }
             State.ENTER_NEW_PIN -> {
@@ -103,7 +103,7 @@ class PinSetupViewModel(
                     savePinUseCase(pin)
                     _state.value = State.SUCCESS
                 } else {
-                    _error.value = "Mã PIN xác nhận không khớp"
+                    _error.value = R.string.pin_error_confirm_mismatch
                 }
             }
             else -> {}

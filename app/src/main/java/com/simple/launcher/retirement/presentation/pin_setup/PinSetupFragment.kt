@@ -28,6 +28,16 @@ class PinSetupFragment : BaseFragment<FragmentPinSetupBinding>() {
         PinSetupViewModelFactory(HasPinUseCase.instance, CheckPinUseCase.instance, SavePinUseCase.instance)
     }
 
+    private val pinBuilder = StringBuilder()
+    private val PIN_LENGTH = 6
+
+    private val pinDots: List<View> by lazy {
+        listOf(
+            binding.vPin1, binding.vPin2, binding.vPin3,
+            binding.vPin4, binding.vPin5, binding.vPin6
+        )
+    }
+
     override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentPinSetupBinding {
         return FragmentPinSetupBinding.inflate(inflater, container, false)
     }
@@ -39,10 +49,56 @@ class PinSetupFragment : BaseFragment<FragmentPinSetupBinding>() {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
-        binding.btnNext.root.setOnSafeClickListener {
-            val pin = binding.etPin.text.toString()
-            viewModel.handlePinInput(pin)
+        setupNumpad()
+    }
+
+    private fun setupNumpad() {
+        val digitKeys = mapOf(
+            binding.btnKey0 to "0",
+            binding.btnKey1 to "1",
+            binding.btnKey2 to "2",
+            binding.btnKey3 to "3",
+            binding.btnKey4 to "4",
+            binding.btnKey5 to "5",
+            binding.btnKey6 to "6",
+            binding.btnKey7 to "7",
+            binding.btnKey8 to "8",
+            binding.btnKey9 to "9"
+        )
+
+        for ((btn, digit) in digitKeys) {
+            btn.setOnClickListener {
+                if (pinBuilder.length < PIN_LENGTH) {
+                    pinBuilder.append(digit)
+                    updatePinDots()
+                    if (pinBuilder.length == PIN_LENGTH) {
+                        viewModel.handlePinInput(pinBuilder.toString())
+                    }
+                }
+            }
         }
+
+        binding.btnKeyDelete.setOnClickListener {
+            if (pinBuilder.isNotEmpty()) {
+                pinBuilder.deleteCharAt(pinBuilder.length - 1)
+                updatePinDots()
+            }
+        }
+    }
+
+    private fun updatePinDots() {
+        val filled = pinBuilder.length
+        pinDots.forEachIndexed { index, dot ->
+            dot.setBackgroundResource(
+                if (index < filled) R.drawable.bg_pin_dot_filled
+                else R.drawable.bg_pin_dot_empty
+            )
+        }
+    }
+
+    private fun resetPin() {
+        pinBuilder.clear()
+        updatePinDots()
     }
 
     override fun observeData() {
@@ -53,30 +109,30 @@ class PinSetupFragment : BaseFragment<FragmentPinSetupBinding>() {
         }
 
         viewModel.state.observe(this) { state ->
-            binding.etPin.text.clear()
+            resetPin()
             when (state) {
                 PinSetupViewModel.State.ENTER_OLD_PIN -> {
-                    binding.tvInstruction.setText("Nhập mã PIN hiện tại".toRich())
+                    binding.tvInstruction.setText(getString(R.string.pin_enter_current).toRich())
                 }
 
                 PinSetupViewModel.State.ENTER_NEW_PIN -> {
-                    binding.tvInstruction.setText("Nhập mã PIN mới (6 chữ số)".toRich())
+                    binding.tvInstruction.setText(getString(R.string.pin_enter_new).toRich())
                 }
 
                 PinSetupViewModel.State.CONFIRM_NEW_PIN -> {
-                    binding.tvInstruction.setText("Xác nhận mã PIN mới".toRich())
+                    binding.tvInstruction.setText(getString(R.string.pin_confirm_new).toRich())
                 }
 
                 PinSetupViewModel.State.SUCCESS -> {
-                    Toast.makeText(context, "Thiết lập mã PIN thành công", Toast.LENGTH_SHORT).show()
-                    requireActivity().onBackPressedDispatcher.onBackPressed()
+                    Toast.makeText(context, R.string.pin_setup_success, Toast.LENGTH_SHORT).show()
                     Pin.PinEventBus.post(Pin.PinSetupSuccess)
+                    requireActivity().onBackPressedDispatcher.onBackPressed()
                 }
             }
         }
 
-        viewModel.error.observe(this) { error ->
-            binding.tvError.setText(error?.toRich())
+        viewModel.error.observe(this) { errorRes ->
+            binding.tvError.setText(errorRes?.let { getString(it) }?.toRich())
         }
 
         viewModel.toolbar.observe(this) { state ->
@@ -111,10 +167,7 @@ class PinSetupDeeplinkHandler : DeeplinkHandler {
 
         val transaction = fragmentActivity.supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, PinSetupFragment())
-
-        if (extras?.get("addToBackStack") == true) {
-            transaction.addToBackStack(null)
-        }
+            .addToBackStack(null)
 
         transaction.commit()
         return true
