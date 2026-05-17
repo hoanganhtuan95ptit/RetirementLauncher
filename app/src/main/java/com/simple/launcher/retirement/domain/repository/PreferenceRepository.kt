@@ -2,6 +2,7 @@ package com.simple.launcher.retirement.domain.repository
 
 import com.simple.launcher.retirement.MainApplication
 import com.simple.launcher.retirement.data.repository.PreferenceRepositoryImpl
+import kotlinx.coroutines.flow.Flow
 
 /**
  * Quản lý tất cả preference / cài đặt người dùng:
@@ -11,21 +12,26 @@ interface PreferenceRepository {
     fun getPin(): String?
     fun savePin(pin: String)
     fun hasPin(): Boolean
+    fun hasPinFlow(): Flow<Boolean>
 
     fun isOnboardingCompleted(): Boolean
     fun setOnboardingCompleted(completed: Boolean)
 
     fun isAppBlockEnabled(): Boolean
     fun setAppBlockEnabled(enabled: Boolean)
+    fun isAppBlockEnabledFlow(): Flow<Boolean>
 
     fun isFileCleanupEnabled(): Boolean
     fun setFileCleanupEnabled(enabled: Boolean)
+    fun isFileCleanupEnabledFlow(): Flow<Boolean>
 
     fun isCallBlockEnabled(): Boolean
     fun setCallBlockEnabled(enabled: Boolean)
+    fun isCallBlockEnabledFlow(): Flow<Boolean>
 
     fun isPocketModeEnabled(): Boolean
     fun setPocketModeEnabled(enabled: Boolean)
+    fun isPocketModeEnabledFlow(): Flow<Boolean>
 
     companion object {
         val instance: PreferenceRepository by lazy { PreferenceRepositoryImpl(MainApplication.instance) }

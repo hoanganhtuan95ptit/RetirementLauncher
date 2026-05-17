@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
@@ -34,7 +33,7 @@ import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
 class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
 
     private val viewModel: SettingsViewModel by viewModels {
-        SettingsViewModelFactory(PreferenceRepository.instance)
+        SettingsViewModelFactory()
     }
 
     override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentSettingsBinding {
@@ -110,7 +109,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
                             }
                         }
                     ) {
-                        handleToggleAction(item) {
+                        handleSettingToggleAction(item, viewModel) {
                             repository.setAppBlockEnabled(item.isChecked)
                             if (item.isChecked) {
                                 (activity as? com.simple.launcher.retirement.presentation.main.MainActivity)?.startAppMonitoringService()
@@ -118,7 +117,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
                         }
                     }.show(childFragmentManager, UsageStatsPermissionBottomSheet.TAG)
                 } else {
-                    handleToggleAction(item) {
+                    handleSettingToggleAction(item, viewModel) {
                         repository.setAppBlockEnabled(item.isChecked)
                         if (item.isChecked) {
                             (activity as? com.simple.launcher.retirement.presentation.main.MainActivity)?.startAppMonitoringService()
@@ -138,7 +137,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
                             }
                         }
                     ) {
-                        handleToggleAction(item) {
+                        handleSettingToggleAction(item, viewModel) {
                             repository.setFileCleanupEnabled(item.isChecked)
                             if (item.isChecked) {
                                 (activity as? com.simple.launcher.retirement.presentation.main.MainActivity)?.startFileWatcherService()
@@ -146,7 +145,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
                         }
                     }.show(childFragmentManager, FilePermissionBottomSheet.TAG)
                 } else {
-                    handleToggleAction(item) {
+                    handleSettingToggleAction(item, viewModel) {
                         repository.setFileCleanupEnabled(item.isChecked)
                         if (item.isChecked) {
                             (activity as? com.simple.launcher.retirement.presentation.main.MainActivity)?.startFileWatcherService()
@@ -167,20 +166,15 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
                         }
                     ) {
                         if (hasCallBlockPermissions()) {
-                            handleToggleAction(item) {
+                            handleSettingToggleAction(item, viewModel) {
                                 repository.setCallBlockEnabled(item.isChecked)
                             }
                         }
                     }.show(childFragmentManager, CallBlockPermissionBottomSheet.TAG)
                 } else {
-                    handleToggleAction(item) {
+                    handleSettingToggleAction(item, viewModel) {
                         repository.setCallBlockEnabled(item.isChecked)
                     }
-                }
-            }
-            SettingItem.ID_TOGGLE_POCKET_MODE -> {
-                handleToggleAction(item) {
-                    repository.setPocketModeEnabled(item.isChecked)
                 }
             }
         }
@@ -188,38 +182,6 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
 
     private fun hasCallBlockPermissions(): Boolean {
         return PermissionManager.hasCallBlockPermissions(requireContext())
-    }
-
-    private fun handleToggleAction(item: SettingItem, action: () -> Unit) {
-        val repository = PreferenceRepository.instance
-        val isTurningOn = item.isChecked
-        
-        if (isTurningOn) {
-            // Khi bật: không cần mã PIN
-            action()
-            viewModel.updateItem(item)
-        } else {
-            // Khi tắt: yêu cầu mã PIN
-            if (!repository.hasPin()) {
-                Toast.makeText(requireContext(), R.string.setting_pin_required.asStringRes(), Toast.LENGTH_LONG).show()
-                item.isChecked = true // Hoàn trả trạng thái ON
-                viewModel.updateItem(item)
-                
-                sendDeeplink("app://pin_setup", extras = mapOf("addToBackStack" to true))
-            } else {
-                // Không pre-mutate — onDismissed sẽ revert về ON nếu user back mà chưa xác nhận PIN
-                PinVerifyBottomSheet(
-                    onDismissed = {
-                        // Repo vẫn còn isEnabled=true → DiffUtil detect old=false, new=true → revert về ON
-                        viewModel.updateItem(item)
-                    }
-                ) {
-                    // PIN đúng: thực hiện tắt
-                    action()
-                    viewModel.updateItem(item)
-                }.show(childFragmentManager, PinVerifyBottomSheet.TAG)
-            }
-        }
     }
 }
 

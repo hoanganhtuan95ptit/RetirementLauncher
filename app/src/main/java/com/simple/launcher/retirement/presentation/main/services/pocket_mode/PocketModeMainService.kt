@@ -1,4 +1,4 @@
-package com.simple.launcher.retirement.presentation.main.services
+package com.simple.launcher.retirement.presentation.main.services.pocket_mode
 
 import android.content.Context
 import android.graphics.Color
@@ -14,10 +14,11 @@ import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import com.simple.auto.register.AutoRegister
 import com.simple.launcher.retirement.domain.repository.PreferenceRepository
+import com.simple.launcher.retirement.presentation.main.MainActivity
 import com.simple.launcher.retirement.utils.services.ActivityCreatedService
 
-@AutoRegister(apis = [ActivityCreatedService::class])
-class PocketModeService : ActivityCreatedService {
+@AutoRegister(apis = [MainActivity::class])
+class PocketModeMainService : ActivityCreatedService {
 
     override fun setup(fragmentActivity: FragmentActivity) {
         val sensorManager = fragmentActivity.getSystemService(Context.SENSOR_SERVICE) as SensorManager
@@ -38,7 +39,7 @@ class PocketModeService : ActivityCreatedService {
 
         val sensorListener = object : SensorEventListener {
             override fun onSensorChanged(event: SensorEvent) {
-                val repository = PreferenceRepository.instance
+                val repository = PreferenceRepository.Companion.instance
                 if (!repository.isPocketModeEnabled()) {
                     removeOverlay(fragmentActivity, overlayView)
                     return
