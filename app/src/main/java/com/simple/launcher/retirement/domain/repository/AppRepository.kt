@@ -26,8 +26,8 @@ enum class StrangeFileCategory(val extensions: Set<String>) {
 interface AppRepository {
     fun getInstalledApps(): List<AppEntity>
     fun getCurrentApp(): AppEntity
-    fun getSelectedPackages(): Set<String>
-    fun saveSelectedPackages(packages: Set<String>)
+    fun getSelectedPackages(): List<String>
+    fun saveSelectedPackages(packages: List<String>)
     fun isDefaultApp(packageName: String): Boolean
 
     // Flow phát lại khi danh sách app / contact thay đổi

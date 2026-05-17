@@ -24,6 +24,9 @@ interface PreferenceRepository {
     fun isCallBlockEnabled(): Boolean
     fun setCallBlockEnabled(enabled: Boolean)
 
+    fun isPocketModeEnabled(): Boolean
+    fun setPocketModeEnabled(enabled: Boolean)
+
     companion object {
         val instance: PreferenceRepository by lazy { PreferenceRepositoryImpl(MainApplication.instance) }
     }

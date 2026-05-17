@@ -54,8 +54,8 @@ class SettingsViewModel(
         }
 
         settingsItems.addAll(listOf(
-            SettingItem(SettingItem.ID_APP_LIST, R.string.setting_app_list.toSettingRichText(), ImageRes(android.R.drawable.ic_menu_agenda)),
             SettingItem(SettingItem.ID_DEFAULT_LAUNCHER, R.string.setting_default_launcher.toSettingRichText(), ImageRes(android.R.drawable.ic_menu_manage)),
+            SettingItem(SettingItem.ID_APP_LIST, R.string.setting_app_list.toSettingRichText(), ImageRes(android.R.drawable.ic_menu_agenda)),
             SettingItem(SettingItem.ID_CONTACT_LIST, R.string.setting_contact_list.toSettingRichText(), ImageRes(android.R.drawable.ic_menu_call)),
             SettingItem(SettingItem.ID_CLEAN_FILES, R.string.setting_clean_files.toSettingRichText(), ImageRes(android.R.drawable.ic_menu_delete)),
             SettingItem(SettingItem.ID_CLEAN_MEMORY, R.string.setting_clean_memory.toSettingRichText(), ImageRes(android.R.drawable.ic_media_play)),
@@ -66,6 +66,9 @@ class SettingsViewModel(
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             settingsItems.add(SettingItem(SettingItem.ID_TOGGLE_CALL_BLOCK, R.string.setting_call_block.toSettingRichText(), ImageRes(android.R.drawable.ic_menu_call), true, repository.isCallBlockEnabled()))
         }
+
+        settingsItems.add(SettingItem(SettingItem.ID_TOGGLE_POCKET_MODE, R.string.setting_pocket_mode.toSettingRichText(), ImageRes(android.R.drawable.ic_menu_compass), true, repository.isPocketModeEnabled()))
+
         settingsItems
     }
 

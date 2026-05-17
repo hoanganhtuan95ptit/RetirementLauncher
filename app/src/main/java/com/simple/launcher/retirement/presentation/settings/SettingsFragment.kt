@@ -178,6 +178,11 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
                     }
                 }
             }
+            SettingItem.ID_TOGGLE_POCKET_MODE -> {
+                handleToggleAction(item) {
+                    repository.setPocketModeEnabled(item.isChecked)
+                }
+            }
         }
     }
 

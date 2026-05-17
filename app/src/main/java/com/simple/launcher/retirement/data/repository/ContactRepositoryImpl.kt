@@ -23,10 +23,14 @@ class ContactRepositoryImpl(private val context: Context) : ContactRepository {
     }
 
     override fun getSelectedContacts(): List<ContactEntity> {
-        val json = sharedPrefs.getString(KEY_SELECTED_CONTACTS, null)
-        val contacts = if (json != null) {
+        val data = sharedPrefs.all[KEY_SELECTED_CONTACTS]
+        val contacts = if (data is String) {
             val type = object : TypeToken<List<ContactEntity>>() {}.type
-            gson.fromJson<List<ContactEntity>>(json, type)
+            try {
+                gson.fromJson<List<ContactEntity>>(data, type)
+            } catch (e: Exception) {
+                emptyList()
+            }
         } else {
             emptyList()
         }

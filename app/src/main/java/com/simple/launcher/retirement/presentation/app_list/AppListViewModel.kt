@@ -113,7 +113,7 @@ class AppListViewModel(
     }
 
     fun saveSelection() {
-        val selectedPackages = _apps.value.filter { it.isSelected }.map { it.app.packageName }.toSet()
+        val selectedPackages = _apps.value.filter { it.isSelected }.map { it.app.packageName }
         saveSelectedAppsUseCase(selectedPackages)
     }
 }

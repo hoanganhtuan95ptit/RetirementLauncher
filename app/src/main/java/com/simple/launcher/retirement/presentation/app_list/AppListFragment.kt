@@ -30,6 +30,7 @@ import com.simple.launcher.retirement.presentation.permissions.file.FilePermissi
 import com.simple.launcher.retirement.presentation.permissions.launcher.DefaultLauncherBottomSheet
 import com.simple.launcher.retirement.presentation.permissions.overlay.OverlayPermissionBottomSheet
 import com.simple.launcher.retirement.presentation.permissions.usage_stats.UsageStatsPermissionBottomSheet
+import com.simple.launcher.retirement.presentation.reorder.ReorderType
 import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.image.setImage
 import com.simple.launcher.retirement.utils.lifecycle.observe
@@ -65,7 +66,7 @@ class AppListFragment : BaseFragment<FragmentAppListBinding>() {
         }
 
         binding.btnSave.root.setOnSafeClickListener {
-            checkPermissionsAndSave()
+            navigateToReorder()
         }
 
         viewModel.loadApps()
@@ -110,50 +111,27 @@ class AppListFragment : BaseFragment<FragmentAppListBinding>() {
         }
     }
 
-    private fun checkPermissionsAndSave() {
-        val context = requireContext()
-        if (!PermissionManager.hasFilePermission(context)) {
-            FilePermissionBottomSheet {
-                // Sau khi xử lý xong quyền file, check tiếp quyền block
-                checkBlockPermissions()
-            }.show(childFragmentManager, FilePermissionBottomSheet.TAG)
+    private fun navigateToReorder() {
+        val currentSelected = viewModel.items.value.filter { it.isSelected }.map { it.entity.app.packageName }.toSet()
+        if (currentSelected.isEmpty()) {
+            Toast.makeText(context, R.string.app_list_empty_error, Toast.LENGTH_SHORT).show()
             return
         }
-        checkBlockPermissions()
-    }
 
-    private fun checkBlockPermissions() {
-        val context = requireContext()
-        if (!PermissionManager.hasUsageStatsPermission(context)) {
-            UsageStatsPermissionBottomSheet {
-                checkBlockPermissions()
-            }.show(childFragmentManager, UsageStatsPermissionBottomSheet.TAG)
-            return
-        }
-        if (!PermissionManager.hasOverlayPermission(context)) {
-            OverlayPermissionBottomSheet {
-                checkBlockPermissions()
-            }.show(childFragmentManager, OverlayPermissionBottomSheet.TAG)
-            return
-        }
-        checkDefaultLauncher()
-    }
+        // Lấy danh sách đã lưu để giữ đúng thứ tự cũ
+        val savedIds = com.simple.launcher.retirement.domain.repository.AppRepository.instance.getSelectedPackages()
 
-    private fun checkDefaultLauncher() {
-        val context = requireContext()
-        if (!PermissionManager.isDefaultLauncher(context)) {
-            viewModel.saveSelection()
-            DefaultLauncherBottomSheet {
-                onSaveSuccess()
-            }.show(childFragmentManager, DefaultLauncherBottomSheet.TAG)
-            return
-        }
-        saveAndExit()
-    }
+        // 1. Giữ lại những app cũ vẫn đang được chọn (đúng thứ tự cũ)
+        val orderedIds = savedIds.filter { it in currentSelected }.toMutableList()
+        // 2. Thêm những app mới được chọn vào cuối
+        val newIds = currentSelected.filter { it !in savedIds }
+        orderedIds.addAll(newIds)
 
-    private fun saveAndExit() {
-        viewModel.saveSelection()
-        onSaveSuccess()
+        com.simple.deeplink.sendDeeplink("app://reorder", extras = mapOf(
+            "type" to "apps",
+            "ids" to orderedIds,
+            "addToBackStack" to true
+        ))
     }
 
     private fun onSaveSuccess() {

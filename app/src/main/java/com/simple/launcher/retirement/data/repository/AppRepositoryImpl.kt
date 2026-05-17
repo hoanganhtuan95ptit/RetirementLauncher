@@ -8,6 +8,8 @@ import android.os.Build
 import android.telecom.TelecomManager
 import android.provider.Telephony
 import android.util.Log
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.simple.launcher.retirement.domain.model.AppEntity
 import com.simple.launcher.retirement.domain.repository.AppRepository
 import kotlinx.coroutines.flow.Flow
@@ -16,6 +18,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 class AppRepositoryImpl(private val context: Context) : AppRepository {
 
     private val sharedPrefs = context.getSharedPreferences("launcher_prefs", Context.MODE_PRIVATE)
+    private val gson = Gson()
 
     companion object {
         private const val KEY_SELECTED_APPS = "selected_apps"
@@ -54,12 +57,24 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
         )
     }
 
-    override fun getSelectedPackages(): Set<String> {
-        return sharedPrefs.getStringSet(KEY_SELECTED_APPS, null) ?: emptySet()
+    override fun getSelectedPackages(): List<String> {
+        val data = sharedPrefs.all[KEY_SELECTED_APPS]
+        if (data is String) {
+            val type = object : TypeToken<List<String>>() {}.type
+            return try {
+                gson.fromJson(data, type)
+            } catch (e: Exception) {
+                emptyList()
+            }
+        } else if (data is Set<*>) {
+            return data.filterIsInstance<String>()
+        }
+        return emptyList()
     }
 
-    override fun saveSelectedPackages(packages: Set<String>) {
-        sharedPrefs.edit().putStringSet(KEY_SELECTED_APPS, packages).apply()
+    override fun saveSelectedPackages(packages: List<String>) {
+        val json = gson.toJson(packages)
+        sharedPrefs.edit().putString(KEY_SELECTED_APPS, json).apply()
         _dataTrigger.tryEmit(Unit)
     }
 

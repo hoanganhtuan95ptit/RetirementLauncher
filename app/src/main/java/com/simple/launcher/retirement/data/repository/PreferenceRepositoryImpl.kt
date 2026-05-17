@@ -14,6 +14,7 @@ class PreferenceRepositoryImpl(context: Context) : PreferenceRepository {
         private const val KEY_APP_BLOCK_ENABLED = "app_block_enabled"
         private const val KEY_FILE_CLEANUP_ENABLED = "file_cleanup_enabled"
         private const val KEY_CALL_BLOCK_ENABLED = "call_block_enabled"
+        private const val KEY_POCKET_MODE_ENABLED = "pocket_mode_enabled"
     }
 
     override fun getPin(): String? = sharedPrefs.getString(KEY_PIN, null)
@@ -50,5 +51,12 @@ class PreferenceRepositoryImpl(context: Context) : PreferenceRepository {
 
     override fun setCallBlockEnabled(enabled: Boolean) {
         sharedPrefs.edit().putBoolean(KEY_CALL_BLOCK_ENABLED, enabled).apply()
+    }
+
+    override fun isPocketModeEnabled(): Boolean =
+        sharedPrefs.getBoolean(KEY_POCKET_MODE_ENABLED, false)
+
+    override fun setPocketModeEnabled(enabled: Boolean) {
+        sharedPrefs.edit().putBoolean(KEY_POCKET_MODE_ENABLED, enabled).apply()
     }
 }

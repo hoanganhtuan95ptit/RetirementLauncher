@@ -33,6 +33,7 @@ import com.simple.launcher.retirement.presentation.permissions.file.FilePermissi
 import com.simple.launcher.retirement.presentation.permissions.launcher.DefaultLauncherBottomSheet
 import com.simple.launcher.retirement.presentation.permissions.overlay.OverlayPermissionBottomSheet
 import com.simple.launcher.retirement.presentation.permissions.usage_stats.UsageStatsPermissionBottomSheet
+import com.simple.launcher.retirement.presentation.reorder.ReorderType
 import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.image.setImage
 import com.simple.launcher.retirement.utils.lifecycle.observe
@@ -78,7 +79,7 @@ class ContactListFragment : BaseFragment<FragmentAppListBinding>() {
         }
 
         binding.btnSave.root.setOnSafeClickListener {
-            checkPermissionsAndSave()
+            navigateToReorder()
         }
 
         checkPermissionAndLoad()
@@ -123,49 +124,28 @@ class ContactListFragment : BaseFragment<FragmentAppListBinding>() {
         }
     }
 
-    private fun checkPermissionsAndSave() {
-        val context = requireContext()
-        if (!PermissionManager.hasFilePermission(context)) {
-            FilePermissionBottomSheet {
-                checkBlockPermissions()
-            }.show(childFragmentManager, FilePermissionBottomSheet.TAG)
+    private fun navigateToReorder() {
+        val currentSelected = viewModel.items.value.filter { it.isSelected }.map { it.entity.contact.id }.toSet()
+        if (currentSelected.isEmpty()) {
+            Toast.makeText(context, R.string.contact_list_empty_error, Toast.LENGTH_SHORT).show()
             return
         }
-        checkBlockPermissions()
-    }
 
-    private fun checkBlockPermissions() {
-        val context = requireContext()
-        if (!PermissionManager.hasUsageStatsPermission(context)) {
-            UsageStatsPermissionBottomSheet {
-                checkBlockPermissions()
-            }.show(childFragmentManager, UsageStatsPermissionBottomSheet.TAG)
-            return
-        }
-        if (!PermissionManager.hasOverlayPermission(context)) {
-            OverlayPermissionBottomSheet {
-                checkBlockPermissions()
-            }.show(childFragmentManager, OverlayPermissionBottomSheet.TAG)
-            return
-        }
-        checkDefaultLauncher()
-    }
+        // Lấy danh sách đã lưu để giữ đúng thứ tự cũ
+        val savedContacts = com.simple.launcher.retirement.domain.repository.ContactRepository.instance.getSelectedContacts()
+        val savedIds = savedContacts.map { it.id }
 
-    private fun checkDefaultLauncher() {
-        val context = requireContext()
-        if (!PermissionManager.isDefaultLauncher(context)) {
-            viewModel.saveSelection()
-            DefaultLauncherBottomSheet {
-                onSaveSuccess()
-            }.show(childFragmentManager, DefaultLauncherBottomSheet.TAG)
-            return
-        }
-        saveAndExit()
-    }
+        // 1. Giữ lại những liên hệ cũ vẫn đang được chọn (đúng thứ tự cũ)
+        val orderedIds = savedIds.filter { it in currentSelected }.toMutableList()
+        // 2. Thêm những liên hệ mới được chọn vào cuối
+        val newIds = currentSelected.filter { it !in savedIds }
+        orderedIds.addAll(newIds)
 
-    private fun saveAndExit() {
-        viewModel.saveSelection()
-        onSaveSuccess()
+        com.simple.deeplink.sendDeeplink("app://reorder", extras = mapOf(
+            "type" to "contacts",
+            "ids" to orderedIds,
+            "addToBackStack" to true
+        ))
     }
 
     private fun onSaveSuccess() {

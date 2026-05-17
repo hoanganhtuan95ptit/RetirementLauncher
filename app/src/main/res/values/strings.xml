@@ -12,6 +12,7 @@
     <string name="setting_app_monitoring">Giám sát ứng dụng</string>
     <string name="setting_auto_cleanup_apk">Tự động xóa APK</string>
     <string name="setting_call_block">Chặn cuộc gọi lạ</string>
+    <string name="setting_pocket_mode">Chống chạm nhầm (túi quần)</string>
     <string name="setting_pin_required">Bạn cần thiết lập mã PIN trước khi tắt tính năng này</string>
 
     <!-- Onboarding -->
@@ -99,4 +100,10 @@
     <string name="overlay_permission_title">Hiển thị trên ứng dụng khác</string>
     <string name="overlay_permission_desc">Ứng dụng cần quyền \'Hiển thị trên các ứng dụng khác\' để có thể hiển thị màn hình khóa khi một ứng dụng bị chặn được mở.</string>
     <string name="overlay_permission_highlight">\'Hiển thị trên các ứng dụng khác\'</string>
+    <!-- Reorder -->
+    <string name="reorder_apps_title">Sắp xếp ứng dụng</string>
+    <string name="reorder_contacts_title">Sắp xếp liên hệ</string>
+    <string name="done">Hoàn tất</string>
+    <string name="app_list_empty_error">Vui lòng chọn ít nhất một ứng dụng</string>
+    <string name="contact_list_empty_error">Vui lòng chọn ít nhất một liên hệ</string>
 </resources>

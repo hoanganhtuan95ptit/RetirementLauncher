@@ -24,22 +24,19 @@ class GetHomeAppsUseCase(
         val selectedPackages = appRepository.getSelectedPackages()
 
         val apps = if (selectedPackages.isEmpty()) {
-            allApps.map { HomeContentEntity.App(it) }
+            allApps.map { HomeContentEntity.App(it) }.sortedBy { it.entity.label.lowercase() }.toMutableList()
         } else {
-            allApps.filter { selectedPackages.contains(it.packageName) }
-                .map { HomeContentEntity.App(it) }
-        }.toMutableList()
+            selectedPackages.mapNotNull { pkg -> allApps.find { it.packageName == pkg } }
+                .map { HomeContentEntity.App(it) }.toMutableList()
+        }
 
         val currentApp = appRepository.getCurrentApp()
         if (apps.none { it.entity.packageName == currentApp.packageName }) {
             apps.add(HomeContentEntity.App(currentApp))
         }
 
-        apps.sortBy { it.entity.label.lowercase() }
-
         val contacts = contactRepository.getSelectedContacts()
             .map { HomeContentEntity.Contact(it) }
-            .sortedBy { it.entity.name.lowercase() }
 
         return apps + contacts
     }
