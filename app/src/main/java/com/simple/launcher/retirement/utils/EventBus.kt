@@ -5,16 +5,8 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 
 /**
- * Generic event bus dùng chung cho toàn app.
- *
- * Cách dùng:
- *   object MyEventBus : EventBus<MyType>()
- *
- *   // Gửi event (từ adapter / bất kỳ nơi nào):
- *   MyEventBus.post(item)
- *
- *   // Nhận event (từ Fragment / ViewModel):
- *   MyEventBus.events.collectLatest { item -> ... }
+ * Generic event bus base class.
+ * Dùng [AppEventBus] (định nghĩa trong AppEvent.kt) để gửi / nhận toàn bộ event của app.
  */
 open class EventBus<T> {
 
@@ -24,15 +16,4 @@ open class EventBus<T> {
     fun post(item: T) {
         _events.tryEmit(item)
     }
-}
-
-object AppEventBus : EventBus<AppEventBus.AppResult>() {
-
-    sealed class AppResult
-
-    sealed class PermissionResult: AppResult()
-
-    object PermissionCancel : PermissionResult()
-
-    object PermissionAccept : PermissionResult()
 }

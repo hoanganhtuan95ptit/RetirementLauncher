@@ -20,6 +20,7 @@ import com.simple.launcher.retirement.databinding.FragmentAppListBinding
 import com.simple.launcher.retirement.domain.repository.AppRepository
 import com.simple.launcher.retirement.domain.repository.ContactRepository
 import com.simple.launcher.retirement.presentation.base.BaseFragment
+import com.simple.launcher.retirement.utils.AppEvent
 import com.simple.launcher.retirement.utils.AppEventBus
 import kotlinx.coroutines.flow.filterIsInstance
 import com.simple.launcher.retirement.utils.background.setBackground
@@ -95,7 +96,7 @@ class ReorderFragment : BaseFragment<FragmentAppListBinding>() {
             checkPermissionsAndSave()
         }
 
-        viewModel.loadItems()
+        viewModel.loadItems(requireContext())
     }
 
     override fun observeData() {
@@ -125,11 +126,15 @@ class ReorderFragment : BaseFragment<FragmentAppListBinding>() {
         }
 
         // Lắng nghe kết quả từ các permission bottom sheet
-        AppEventBus.events.filterIsInstance<AppEventBus.PermissionResult>().observe(this) { event ->
+        AppEventBus.events.filterIsInstance<AppEvent.PermissionResult>().observe(this) { event ->
             if (!awaitingPermission) return@observe
             awaitingPermission = false
-            if (event is AppEventBus.PermissionAccept) {
-                checkAppPermissions()
+            if (event is AppEvent.PermissionAccept) {
+                if (type == ReorderType.APPS) {
+                    checkAppPermissions()
+                } else {
+                    checkDefaultLauncher()
+                }
             }
             // Nếu PermissionCancel: dừng lại, không làm gì thêm
         }
@@ -147,22 +152,13 @@ class ReorderFragment : BaseFragment<FragmentAppListBinding>() {
         if (type == ReorderType.APPS) {
             AppRepository.instance.saveSelectedPackages(viewModel.getFinalIds())
         } else {
-            // For contacts, we need to save the actual ContactEntity list in order.
-            // Since we don't have the full list in ReorderViewModel yet (only IDs), 
-            // we should probably have loaded them or just use what's in repo if IDs match.
-            // But wait, the order might have changed.
-            
-            val finalIds = viewModel.getFinalIds()
-            val currentSelected = ContactRepository.instance.getSelectedContacts()
-            val orderedContacts = finalIds.mapNotNull { id -> currentSelected.find { it.id == id } }
-            ContactRepository.instance.saveSelectedContacts(orderedContacts)
+            ContactRepository.instance.saveSelectedContacts(viewModel.getFinalContacts())
         }
 
         if (type == ReorderType.APPS) {
             checkAppPermissions()
         } else {
-            // For contacts, usually just contact permission is needed, which was already granted.
-            onSaveSuccess()
+            checkDefaultLauncher()
         }
     }
 

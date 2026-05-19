@@ -14,7 +14,9 @@ import androidx.fragment.app.viewModels
 import com.simple.deeplink.Deeplink
 import com.simple.deeplink.DeeplinkHandler
 import com.simple.launcher.retirement.databinding.BottomSheetOverlayPermissionBinding
+import com.simple.launcher.retirement.presentation.DeepLinks
 import com.simple.launcher.retirement.presentation.base.BaseBottomSheetDialogFragment
+import com.simple.launcher.retirement.utils.AppEvent
 import com.simple.launcher.retirement.utils.AppEventBus
 import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.lifecycle.observe
@@ -32,7 +34,7 @@ class OverlayPermissionBottomSheet : BaseBottomSheetDialogFragment<BottomSheetOv
     private val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (PermissionManager.hasOverlayPermission(requireContext())) {
             permissionGranted = true
-            AppEventBus.post(AppEventBus.PermissionAccept)
+            AppEventBus.post(AppEvent.PermissionAccept)
             dismiss()
         }
     }
@@ -70,7 +72,7 @@ class OverlayPermissionBottomSheet : BaseBottomSheetDialogFragment<BottomSheetOv
         val context = requireContext()
         if (PermissionManager.hasOverlayPermission(context)) {
             permissionGranted = true
-            AppEventBus.post(AppEventBus.PermissionAccept)
+            AppEventBus.post(AppEvent.PermissionAccept)
             dismiss()
             return
         }
@@ -83,7 +85,7 @@ class OverlayPermissionBottomSheet : BaseBottomSheetDialogFragment<BottomSheetOv
         super.onDismiss(dialog)
         // Chỉ post Cancel khi người dùng thực sự huỷ (không phải sau khi grant permission)
         if (!permissionGranted) {
-            AppEventBus.post(AppEventBus.PermissionCancel)
+            AppEventBus.post(AppEvent.PermissionCancel)
         }
     }
 
@@ -95,7 +97,7 @@ class OverlayPermissionBottomSheet : BaseBottomSheetDialogFragment<BottomSheetOv
 @Deeplink
 class OverlayPermissionDeeplinkHandler : DeeplinkHandler {
 
-    override val deeplink: String = "app://OverlayPermission"
+    override val deeplink: String = DeepLinks.PERMISSION_OVERLAY
 
     override suspend fun navigate(fragmentActivity: FragmentActivity, deeplink: String, extras: Map<String, Any?>?, sharedElement: Map<String, View>?): Boolean {
 

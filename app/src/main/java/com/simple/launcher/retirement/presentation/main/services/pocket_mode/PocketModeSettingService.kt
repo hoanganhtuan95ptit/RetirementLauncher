@@ -8,8 +8,9 @@ import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.domain.repository.PreferenceRepository
 import com.simple.launcher.retirement.presentation.base.BaseViewModel
 import com.simple.launcher.retirement.presentation.settings.SettingItem
-import com.simple.launcher.retirement.presentation.settings.SettingsEventBus
 import com.simple.launcher.retirement.presentation.settings.SettingsFragment
+import com.simple.launcher.retirement.utils.AppEvent
+import com.simple.launcher.retirement.utils.AppEventBus
 import com.simple.launcher.retirement.presentation.settings.SettingsViewModel
 import com.simple.launcher.retirement.presentation.settings.requirePin
 import com.simple.launcher.retirement.utils.combineState
@@ -23,6 +24,7 @@ import com.simple.launcher.retirement.utils.text.with
 import com.simple.launcher.retirement.utils.theme.getColor
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.filterIsInstance
 
 @AutoRegister(apis = [SettingsFragment::class])
 class PocketModeSettingService : FragmentViewCreatedService {
@@ -39,7 +41,8 @@ class PocketModeSettingService : FragmentViewCreatedService {
             settingsViewModel.updateItem(SettingItem.ORDER_TOGGLE_POCKET_MODE, items)
         }
 
-        SettingsEventBus.events.launchCollect(fragment) { item ->
+        AppEventBus.events.filterIsInstance<AppEvent.SettingClicked>().launchCollect(fragment.viewLifecycleOwner) { event ->
+            val item = event.item
             if (item.id == SettingItem.ID_TOGGLE_POCKET_MODE) {
                 val isTurningOn = item.isChecked
 

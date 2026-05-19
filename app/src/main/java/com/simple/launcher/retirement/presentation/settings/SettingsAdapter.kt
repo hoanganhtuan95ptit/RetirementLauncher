@@ -1,5 +1,6 @@
 package com.simple.launcher.retirement.presentation.settings
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
@@ -13,6 +14,8 @@ import com.simple.launcher.retirement.utils.image.RichImage
 import com.simple.launcher.retirement.utils.image.setImage
 import com.simple.launcher.retirement.utils.text.RichText
 import com.simple.launcher.retirement.utils.text.setText
+import com.simple.launcher.retirement.utils.AppEvent
+import com.simple.launcher.retirement.utils.AppEventBus
 import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
 
 data class SettingItem(
@@ -82,7 +85,7 @@ class SettingsAdapter : ViewItemAdapter<SettingItem, ItemSettingBinding>() {
             if (item.isSwitch) {
                 viewHolder.binding.swSetting.toggle()
             } else {
-                SettingsEventBus.post(item)
+                AppEventBus.post(AppEvent.SettingClicked(item))
             }
         }
 
@@ -91,7 +94,7 @@ class SettingsAdapter : ViewItemAdapter<SettingItem, ItemSettingBinding>() {
             val item = viewHolder.getItem<SettingItem>() ?: return@setOnCheckedChangeListener
             if (item.isChecked != isChecked) {
                 item.isChecked = isChecked
-                SettingsEventBus.post(item)
+                AppEventBus.post(AppEvent.SettingClicked(item))
             }
         }
 

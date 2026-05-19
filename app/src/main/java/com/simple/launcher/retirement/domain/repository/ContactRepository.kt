@@ -6,6 +6,7 @@ import com.simple.launcher.retirement.domain.model.ContactEntity
 import kotlinx.coroutines.flow.Flow
 
 interface ContactRepository {
+    fun getAllContacts(context: android.content.Context): List<ContactEntity>
     fun getSelectedContacts(): List<ContactEntity>
     fun saveSelectedContacts(contacts: List<ContactEntity>)
 

@@ -13,6 +13,8 @@ import com.simple.launcher.retirement.utils.image.RichImage
 import com.simple.launcher.retirement.utils.image.setImage
 import com.simple.launcher.retirement.utils.text.RichText
 import com.simple.launcher.retirement.utils.text.setText
+import com.simple.launcher.retirement.utils.AppEvent
+import com.simple.launcher.retirement.utils.AppEventBus
 import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
 
 data class SelectableContactItem(
@@ -46,7 +48,7 @@ class ContactListAdapter : ViewItemAdapter<SelectableContactItem, ItemSelectable
         val viewHolder = super.createViewHolder(parent, viewType)
         viewHolder.itemView.setOnSafeClickListener {
             val item = viewHolder.getItem<SelectableContactItem>() ?: return@setOnSafeClickListener
-            ContactListEventBus.post(item.entity)  // chỉ gửi entity, ViewModel xử lý toggle
+            AppEventBus.post(AppEvent.ContactSelected(item.entity))
         }
         return viewHolder
     }

@@ -21,9 +21,12 @@ import com.simple.launcher.retirement.domain.usecase.SaveSelectedAppsUseCase
 import com.simple.launcher.retirement.presentation.base.BaseFragment
 import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.image.setImage
+import com.simple.launcher.retirement.utils.AppEvent
+import com.simple.launcher.retirement.utils.AppEventBus
 import com.simple.launcher.retirement.utils.lifecycle.observe
 import com.simple.launcher.retirement.utils.text.setText
 import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
+import kotlinx.coroutines.flow.filterIsInstance
 
 class AppListFragment : BaseFragment<FragmentAppListBinding>() {
 
@@ -93,8 +96,8 @@ class AppListFragment : BaseFragment<FragmentAppListBinding>() {
             binding.rvAppList.submitListAndAwait(items, adapters, true)
         }
 
-        AppListEventBus.events.observe(this) { entity ->
-            viewModel.updateItem(entity)
+        AppEventBus.events.filterIsInstance<AppEvent.AppSelected>().observe(this) { event ->
+            viewModel.updateItem(event.entity)
         }
     }
 

@@ -15,7 +15,9 @@ import androidx.fragment.app.viewModels
 import com.simple.deeplink.Deeplink
 import com.simple.deeplink.DeeplinkHandler
 import com.simple.launcher.retirement.databinding.BottomSheetFilePermissionBinding
+import com.simple.launcher.retirement.presentation.DeepLinks
 import com.simple.launcher.retirement.presentation.base.BaseBottomSheetDialogFragment
+import com.simple.launcher.retirement.utils.AppEvent
 import com.simple.launcher.retirement.utils.AppEventBus
 import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.lifecycle.observe
@@ -33,7 +35,7 @@ class FilePermissionBottomSheet : BaseBottomSheetDialogFragment<BottomSheetFileP
     private val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (PermissionManager.hasFilePermission(requireContext())) {
             permissionGranted = true
-            AppEventBus.post(AppEventBus.PermissionAccept)
+            AppEventBus.post(AppEvent.PermissionAccept)
             dismiss()
         }
     }
@@ -41,7 +43,7 @@ class FilePermissionBottomSheet : BaseBottomSheetDialogFragment<BottomSheetFileP
     private val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { results ->
         if (results.all { it.value }) {
             permissionGranted = true
-            AppEventBus.post(AppEventBus.PermissionAccept)
+            AppEventBus.post(AppEvent.PermissionAccept)
             dismiss()
         }
     }
@@ -81,7 +83,7 @@ class FilePermissionBottomSheet : BaseBottomSheetDialogFragment<BottomSheetFileP
     private fun requestFilePermission() {
         if (PermissionManager.hasFilePermission(requireContext())) {
             permissionGranted = true
-            AppEventBus.post(AppEventBus.PermissionAccept)
+            AppEventBus.post(AppEvent.PermissionAccept)
             dismiss()
             return
         }
@@ -110,7 +112,7 @@ class FilePermissionBottomSheet : BaseBottomSheetDialogFragment<BottomSheetFileP
         super.onDismiss(dialog)
         // Chỉ post Cancel khi người dùng thực sự huỷ (không phải sau khi grant permission)
         if (!permissionGranted) {
-            AppEventBus.post(AppEventBus.PermissionCancel)
+            AppEventBus.post(AppEvent.PermissionCancel)
         }
     }
 
@@ -122,7 +124,7 @@ class FilePermissionBottomSheet : BaseBottomSheetDialogFragment<BottomSheetFileP
 @Deeplink
 class FilePermissionDeeplinkHandler : DeeplinkHandler {
 
-    override val deeplink: String = "app://FilePermission"
+    override val deeplink: String = DeepLinks.PERMISSION_FILE
 
     override suspend fun navigate(fragmentActivity: FragmentActivity, deeplink: String, extras: Map<String, Any?>?, sharedElement: Map<String, View>?): Boolean {
 

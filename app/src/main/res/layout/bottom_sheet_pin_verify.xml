@@ -81,6 +81,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:fitsSystemWindows="true"
         android:orientation="vertical">
 
         <!-- Row 1: 1 2 3 -->
@@ -197,17 +198,6 @@
                 android:contentDescription="Xoá"
                 android:padding="20dp"
                 android:src="@drawable/ic_clear" />
-
         </LinearLayout>
-
     </LinearLayout>
-
-    <include
-        android:id="@+id/btnVerify"
-        layout="@layout/layout_action"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:visibility="gone" />
-
 </LinearLayout>

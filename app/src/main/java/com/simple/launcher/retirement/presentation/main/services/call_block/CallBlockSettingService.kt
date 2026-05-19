@@ -10,7 +10,6 @@ import com.simple.launcher.retirement.domain.repository.PreferenceRepository
 import com.simple.launcher.retirement.presentation.base.BaseViewModel
 import com.simple.launcher.retirement.presentation.permissions.call_block.CallBlockPermissionBottomSheet
 import com.simple.launcher.retirement.presentation.settings.SettingItem
-import com.simple.launcher.retirement.presentation.settings.SettingsEventBus
 import com.simple.launcher.retirement.presentation.settings.SettingsFragment
 import com.simple.launcher.retirement.presentation.settings.SettingsViewModel
 import com.simple.launcher.retirement.presentation.settings.requirePin
@@ -24,10 +23,11 @@ import com.simple.launcher.retirement.utils.text.ForegroundColor
 import com.simple.launcher.retirement.utils.text.toRich
 import com.simple.launcher.retirement.utils.text.with
 import com.simple.launcher.retirement.utils.theme.getColor
+import com.simple.launcher.retirement.utils.AppEvent
 import com.simple.launcher.retirement.utils.AppEventBus
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.first
 
 @AutoRegister(apis = [SettingsFragment::class])
@@ -46,7 +46,8 @@ class CallBlockSettingService : FragmentViewCreatedService {
             settingsViewModel.updateItem(SettingItem.ORDER_TOGGLE_CALL_BLOCK, items)
         }
 
-        SettingsEventBus.events.launchCollect(fragment) { item ->
+        AppEventBus.events.filterIsInstance<AppEvent.SettingClicked>().launchCollect(fragment.viewLifecycleOwner) { event ->
+            val item = event.item
             if (item.id == SettingItem.ID_TOGGLE_CALL_BLOCK) {
                 handleToggle(fragment, item)
                 // Đồng bộ UI với trạng thái thực từ repository
@@ -82,9 +83,9 @@ class CallBlockSettingService : FragmentViewCreatedService {
     private suspend fun Fragment.awaitCallBlockPermission(): Boolean {
         CallBlockPermissionBottomSheet().show(childFragmentManager, CallBlockPermissionBottomSheet.TAG)
         val result = AppEventBus.events
-            .filter { it is AppEventBus.PermissionResult }
+            .filterIsInstance<AppEvent.PermissionResult>()
             .first()
-        return result is AppEventBus.PermissionAccept
+        return result is AppEvent.PermissionAccept
     }
 
     class CallBlockSettingViewModel : BaseViewModel() {

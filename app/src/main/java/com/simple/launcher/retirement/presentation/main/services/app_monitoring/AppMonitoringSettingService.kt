@@ -1,6 +1,7 @@
 package com.simple.launcher.retirement.presentation.main.services.app_monitoring
 
 import android.content.Intent
+import android.util.Log
 import androidx.fragment.app.Fragment
 
 import androidx.fragment.app.viewModels
@@ -11,8 +12,9 @@ import com.simple.launcher.retirement.domain.repository.PreferenceRepository
 import com.simple.launcher.retirement.presentation.base.BaseViewModel
 import com.simple.launcher.retirement.presentation.main.MainActivity
 import com.simple.launcher.retirement.presentation.settings.SettingItem
-import com.simple.launcher.retirement.presentation.settings.SettingsEventBus
 import com.simple.launcher.retirement.presentation.settings.SettingsFragment
+import com.simple.launcher.retirement.utils.AppEvent
+import com.simple.launcher.retirement.utils.AppEventBus
 import com.simple.launcher.retirement.presentation.settings.SettingsViewModel
 import com.simple.launcher.retirement.presentation.settings.requirePin
 import com.simple.launcher.retirement.presentation.settings.requireUsageStatsPermission
@@ -28,6 +30,7 @@ import com.simple.launcher.retirement.utils.text.with
 import com.simple.launcher.retirement.utils.theme.getColor
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.filterIsInstance
 
 @AutoRegister(apis = [SettingsFragment::class])
 class AppMonitoringSettingService : FragmentViewCreatedService {
@@ -44,7 +47,8 @@ class AppMonitoringSettingService : FragmentViewCreatedService {
             settingsViewModel.updateItem(SettingItem.ORDER_TOGGLE_BLOCK, items)
         }
 
-        SettingsEventBus.events.launchCollect(fragment) { item ->
+        AppEventBus.events.filterIsInstance<AppEvent.SettingClicked>().launchCollect(fragment.viewLifecycleOwner) { event ->
+            val item = event.item
             if (item.id == SettingItem.ID_TOGGLE_BLOCK) {
                 handleToggle(fragment, item)
                 // Luôn refresh sau handleToggle để đồng bộ UI với trạng thái thực từ repository

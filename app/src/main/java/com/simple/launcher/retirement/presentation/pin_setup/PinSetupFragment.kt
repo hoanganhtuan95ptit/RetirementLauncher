@@ -12,8 +12,6 @@ import com.simple.deeplink.DeeplinkHandler
 import com.simple.launcher.retirement.presentation.DeepLinks
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.databinding.FragmentPinSetupBinding
-import com.simple.launcher.retirement.domain.usecase.CheckPinUseCase
-import com.simple.launcher.retirement.domain.usecase.HasPinUseCase
 import com.simple.launcher.retirement.domain.usecase.SavePinUseCase
 import com.simple.launcher.retirement.presentation.base.BaseFragment
 import com.simple.launcher.retirement.utils.background.setBackground
@@ -26,7 +24,7 @@ import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
 class PinSetupFragment : BaseFragment<FragmentPinSetupBinding>() {
 
     private val viewModel: PinSetupViewModel by viewModels {
-        PinSetupViewModelFactory(HasPinUseCase.instance, CheckPinUseCase.instance, SavePinUseCase.instance)
+        PinSetupViewModelFactory(SavePinUseCase.instance)
     }
 
     private val pinBuilder = StringBuilder()
@@ -112,10 +110,6 @@ class PinSetupFragment : BaseFragment<FragmentPinSetupBinding>() {
         viewModel.state.observe(this) { state ->
             resetPin()
             when (state) {
-                PinSetupViewModel.State.ENTER_OLD_PIN -> {
-                    binding.tvInstruction.setText(getString(R.string.pin_enter_current).toRich())
-                }
-
                 PinSetupViewModel.State.ENTER_NEW_PIN -> {
                     binding.tvInstruction.setText(getString(R.string.pin_enter_new).toRich())
                 }

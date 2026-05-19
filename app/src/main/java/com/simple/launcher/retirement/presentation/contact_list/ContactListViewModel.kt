@@ -1,7 +1,6 @@
 package com.simple.launcher.retirement.presentation.contact_list
 
 import android.content.Context
-import android.provider.ContactsContract
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -113,43 +112,10 @@ class ContactListViewModel(
         viewModelScope.launch {
             val result = withContext(Dispatchers.IO) {
                 val selectedIds = repository.getSelectedContacts().map { it.id }.toSet()
-                val contentResolver = context.contentResolver
-                // Chỉ lấy 4 columns cần thiết thay vì null (query toàn bộ columns)
-                val projection = arrayOf(
-                    ContactsContract.CommonDataKinds.Phone.CONTACT_ID,
-                    ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
-                    ContactsContract.CommonDataKinds.Phone.NUMBER,
-                    ContactsContract.CommonDataKinds.Phone.PHOTO_THUMBNAIL_URI
-                )
-                val cursor = contentResolver.query(
-                    ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                    projection, null, null,
-                    ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " ASC"
-                )
-
-                val contactsList = mutableListOf<SelectableContactEntity>()
-                cursor?.use {
-                    val idIndex = it.getColumnIndex(ContactsContract.CommonDataKinds.Phone.CONTACT_ID)
-                    val nameIndex = it.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)
-                    val numberIndex = it.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)
-                    val photoIndex = it.getColumnIndex(ContactsContract.CommonDataKinds.Phone.PHOTO_THUMBNAIL_URI)
-
-                    val processedIds = mutableSetOf<String>()
-
-                    while (it.moveToNext()) {
-                        val id = it.getString(idIndex)
-                        if (processedIds.contains(id)) continue
-
-                        val name = it.getString(nameIndex)
-                        val number = it.getString(numberIndex)
-                        val photoUri = it.getString(photoIndex)
-
-                        val contact = ContactEntity(id, name, number, photoUri)
-                        contactsList.add(SelectableContactEntity(contact, selectedIds.contains(id)))
-                        processedIds.add(id)
-                    }
+                val allContacts = repository.getAllContacts(context)
+                allContacts.map { contact ->
+                    SelectableContactEntity(contact, selectedIds.contains(contact.id))
                 }
-                contactsList
             }
             _contacts.value = result
         }

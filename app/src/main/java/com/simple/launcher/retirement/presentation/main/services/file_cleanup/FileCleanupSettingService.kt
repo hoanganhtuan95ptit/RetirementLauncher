@@ -11,7 +11,6 @@ import com.simple.launcher.retirement.presentation.base.BaseViewModel
 import com.simple.launcher.retirement.presentation.main.MainActivity
 import com.simple.launcher.retirement.presentation.permissions.file.FilePermissionBottomSheet
 import com.simple.launcher.retirement.presentation.settings.SettingItem
-import com.simple.launcher.retirement.presentation.settings.SettingsEventBus
 import com.simple.launcher.retirement.presentation.settings.SettingsFragment
 import com.simple.launcher.retirement.presentation.settings.SettingsViewModel
 import com.simple.launcher.retirement.presentation.settings.requirePin
@@ -26,10 +25,11 @@ import com.simple.launcher.retirement.utils.text.ForegroundColor
 import com.simple.launcher.retirement.utils.text.toRich
 import com.simple.launcher.retirement.utils.text.with
 import com.simple.launcher.retirement.utils.theme.getColor
+import com.simple.launcher.retirement.utils.AppEvent
 import com.simple.launcher.retirement.utils.AppEventBus
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.first
 
 @AutoRegister(apis = [SettingsFragment::class])
@@ -47,7 +47,8 @@ class FileCleanupSettingService : FragmentViewCreatedService {
             settingsViewModel.updateItem(SettingItem.ORDER_TOGGLE_CLEANUP, items)
         }
 
-        SettingsEventBus.events.launchCollect(fragment) { item ->
+        AppEventBus.events.filterIsInstance<AppEvent.SettingClicked>().launchCollect(fragment.viewLifecycleOwner) { event ->
+            val item = event.item
             if (item.id == SettingItem.ID_TOGGLE_CLEANUP) {
                 handleToggle(fragment, item)
                 // Đồng bộ UI với trạng thái thực từ repository
@@ -89,9 +90,9 @@ class FileCleanupSettingService : FragmentViewCreatedService {
     private suspend fun Fragment.awaitFilePermission(): Boolean {
         FilePermissionBottomSheet().show(childFragmentManager, FilePermissionBottomSheet.TAG)
         val result = AppEventBus.events
-            .filter { it is AppEventBus.PermissionResult }
+            .filterIsInstance<AppEvent.PermissionResult>()
             .first()
-        return result is AppEventBus.PermissionAccept
+        return result is AppEvent.PermissionAccept
     }
 
     class FileCleanupSettingViewModel : BaseViewModel() {

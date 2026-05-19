@@ -16,6 +16,7 @@ import com.simple.launcher.retirement.presentation.DeepLinks
 import com.simple.launcher.retirement.databinding.BottomSheetUsageStatsPermissionBinding
 import com.simple.launcher.retirement.presentation.base.BaseBottomSheetDialogFragment
 import com.simple.launcher.retirement.presentation.pin_setup.PinVerifyBottomSheet
+import com.simple.launcher.retirement.utils.AppEvent
 import com.simple.launcher.retirement.utils.AppEventBus
 import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.lifecycle.observe
@@ -33,7 +34,7 @@ class UsageStatsPermissionBottomSheet : BaseBottomSheetDialogFragment<BottomShee
     private val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (PermissionManager.hasUsageStatsPermission(requireContext())) {
             permissionGranted = true
-            AppEventBus.post(AppEventBus.PermissionAccept)
+            AppEventBus.post(AppEvent.PermissionAccept)
             dismiss()
         }
     }
@@ -72,7 +73,7 @@ class UsageStatsPermissionBottomSheet : BaseBottomSheetDialogFragment<BottomShee
         super.onDismiss(dialog)
         // Chỉ post Cancel khi người dùng thực sự huỷ (không phải sau khi grant permission)
         if (!permissionGranted) {
-            AppEventBus.post(AppEventBus.PermissionCancel)
+            AppEventBus.post(AppEvent.PermissionCancel)
         }
     }
 

@@ -104,14 +104,6 @@ class PinVerifyBottomSheet : BaseBottomSheetDialogFragment<BottomSheetPinVerifyB
         updatePinDots()
     }
 
-    override fun observeData() {
-        super.observeData()
-        viewModel.action.observe(this) { state ->
-            binding.btnVerify.tvAction.setText(state.text)
-            binding.btnVerify.tvAction.setBackground(state.background)
-        }
-    }
-
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
         // Chỉ post Cancel khi người dùng thực sự huỷ (không phải sau khi xác thực thành công)

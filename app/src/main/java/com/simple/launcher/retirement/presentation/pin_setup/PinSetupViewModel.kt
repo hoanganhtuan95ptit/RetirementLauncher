@@ -1,8 +1,6 @@
 package com.simple.launcher.retirement.presentation.pin_setup
 
 import com.simple.launcher.retirement.R
-import com.simple.launcher.retirement.domain.usecase.CheckPinUseCase
-import com.simple.launcher.retirement.domain.usecase.HasPinUseCase
 import com.simple.launcher.retirement.domain.usecase.SavePinUseCase
 import com.simple.launcher.retirement.presentation.base.ActionState
 import com.simple.launcher.retirement.presentation.base.BaseViewModel
@@ -17,13 +15,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
 class PinSetupViewModel(
-    private val hasPinUseCase: HasPinUseCase,
-    private val checkPinUseCase: CheckPinUseCase,
     private val savePinUseCase: SavePinUseCase
 ) : BaseViewModel() {
 
     enum class State {
-        ENTER_OLD_PIN,
         ENTER_NEW_PIN,
         CONFIRM_NEW_PIN,
         SUCCESS
@@ -68,13 +63,8 @@ class PinSetupViewModel(
     private var tempPin: String = ""
 
     init {
-        if (hasPinUseCase()) {
-            _state.value = State.ENTER_OLD_PIN
-            _actionRes.value = R.string.back
-        } else {
-            _state.value = State.ENTER_NEW_PIN
-            _actionRes.value = R.string.onboarding_start
-        }
+        _state.value = State.ENTER_NEW_PIN
+        _actionRes.value = R.string.onboarding_start
     }
 
     fun handlePinInput(pin: String) {
@@ -85,14 +75,6 @@ class PinSetupViewModel(
         _error.value = null
 
         when (_state.value) {
-            State.ENTER_OLD_PIN -> {
-                if (checkPinUseCase(pin)) {
-                    _state.value = State.ENTER_NEW_PIN
-                    _actionRes.value = R.string.back
-                } else {
-                    _error.value = R.string.pin_error_old_incorrect
-                }
-            }
             State.ENTER_NEW_PIN -> {
                 tempPin = pin
                 _state.value = State.CONFIRM_NEW_PIN

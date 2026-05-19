@@ -17,12 +17,16 @@ import com.simple.launcher.retirement.presentation.DeepLinks
 import com.simple.launcher.retirement.presentation.sendDeeplinkWithBackStack
 import com.simple.deeplink.sendDeeplink
 import com.simple.launcher.retirement.databinding.FragmentSettingsBinding
+import com.simple.launcher.retirement.domain.repository.PreferenceRepository
 import com.simple.launcher.retirement.presentation.base.BaseFragment
 import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.image.setImage
+import com.simple.launcher.retirement.utils.AppEvent
+import com.simple.launcher.retirement.utils.AppEventBus
 import com.simple.launcher.retirement.utils.lifecycle.observe
 import com.simple.launcher.retirement.utils.text.setText
 import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
+import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.launch
 
 class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
@@ -67,8 +71,8 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
             binding.rvSettings.submitListAndAwait(items, adapters, true)
         }
 
-        SettingsEventBus.events.observe(this) { item ->
-            handleSettingItemClick(item)
+        AppEventBus.events.filterIsInstance<AppEvent.SettingClicked>().observe(this) { event ->
+            handleSettingItemClick(event.item)
         }
     }
 
@@ -78,8 +82,11 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
                 // Dùng suspend Pin.verify(): nếu có PIN sẵn thì xác thực trước,
                 // nếu chưa có thì đi thẳng vào setup
                 viewLifecycleOwner.lifecycleScope.launch {
+                    val hasPin = PreferenceRepository.instance.hasPin()
                     if (requirePin()) {
-                        sendDeeplinkWithBackStack(DeepLinks.PIN_SETUP)
+                        if (hasPin) {
+                            sendDeeplinkWithBackStack(DeepLinks.PIN_SETUP)
+                        }
                     }
                 }
             }

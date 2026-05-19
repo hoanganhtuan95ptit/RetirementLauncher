@@ -1,5 +1,6 @@
 package com.simple.launcher.retirement.presentation.reorder
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.simple.adapter.ViewItem
@@ -66,7 +67,7 @@ class ReorderViewModel(
     private val _items = MutableStateFlow<List<ReorderItem>>(emptyList())
     val items: StateFlow<List<ReorderItem>> = _items
 
-    fun loadItems() {
+    fun loadItems(context: Context) {
         if (type == ReorderType.APPS) {
             val allApps = appRepository.getInstalledApps()
             val selectedApps = initialIds.mapNotNull { pkg -> allApps.find { it.packageName == pkg } }
@@ -78,17 +79,8 @@ class ReorderViewModel(
                 )
             }
         } else {
-            // For contacts, we can't easily get all by ID from the repo yet.
-            // But wait, ContactRepositoryImpl has a way to load from DB.
-            // For now, let's assume we pass IDs and the Fragment/ViewModel can handle it.
-            // Actually, if we are in ContactListFragment, we have the full entities.
-            // To simplify, let's assume ReorderFragment is told what to display.
-            
-            // For now, I'll just use the already selected ones from repo as a fallback,
-            // but ideally we pass the current selection.
-            val selectedContacts = contactRepository.getSelectedContacts()
-            // Map initialIds to entities if possible, or just use repo if they match.
-            val orderedContacts = initialIds.mapNotNull { id -> selectedContacts.find { it.id == id } }
+            val allContacts = contactRepository.getAllContacts(context)
+            val orderedContacts = initialIds.mapNotNull { id -> allContacts.find { it.id == id } }
             
             _items.value = orderedContacts.map { contact ->
                 val photo = if (contact.photoUri != null) {
@@ -99,7 +91,8 @@ class ReorderViewModel(
                 ReorderItem(
                     id = contact.id,
                     label = contact.name.toRich(),
-                    icon = photo
+                    icon = photo,
+                    data = contact
                 )
             }
         }
@@ -113,12 +106,15 @@ class ReorderViewModel(
     }
 
     fun getFinalIds(): List<String> = _items.value.map { it.id }
+
+    fun getFinalContacts(): List<ContactEntity> = _items.value.mapNotNull { it.data as? ContactEntity }
 }
 
 data class ReorderItem(
     val id: String,
     val label: RichText,
-    val icon: RichImage
+    val icon: RichImage,
+    val data: Any? = null
 ) : ViewItem {
     override fun areItemsTheSame(): List<Any> = listOf(id)
     override fun getContentsCompare(): List<Pair<Any, String>> = listOf(

@@ -4,9 +4,10 @@ import android.content.Context
 import com.simple.deeplink.sendDeeplink
 import com.simple.launcher.retirement.presentation.DeepLinks
 import com.simple.launcher.retirement.presentation.pin_setup.Pin
+import com.simple.launcher.retirement.utils.AppEvent
 import com.simple.launcher.retirement.utils.AppEventBus
 import com.simple.launcher.retirement.utils.permission.PermissionManager
-import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.first
 
 /**
@@ -28,7 +29,7 @@ suspend fun requireUsageStatsPermission(context: Context): Boolean {
     if (PermissionManager.hasUsageStatsPermission(context)) return true
     sendDeeplink(DeepLinks.PERMISSION_USAGE_STATS)
     val result = AppEventBus.events
-        .filter { it is AppEventBus.PermissionResult }
+        .filterIsInstance<AppEvent.PermissionResult>()
         .first()
-    return result is AppEventBus.PermissionAccept
+    return result is AppEvent.PermissionAccept
 }

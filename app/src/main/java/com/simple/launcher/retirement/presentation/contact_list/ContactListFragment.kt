@@ -22,10 +22,13 @@ import com.simple.launcher.retirement.domain.repository.ContactRepository
 import com.simple.launcher.retirement.presentation.base.BaseFragment
 import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.image.setImage
+import com.simple.launcher.retirement.utils.AppEvent
+import com.simple.launcher.retirement.utils.AppEventBus
 import com.simple.launcher.retirement.utils.lifecycle.observe
 import com.simple.launcher.retirement.utils.permission.PermissionManager
 import com.simple.launcher.retirement.utils.text.setText
 import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
+import kotlinx.coroutines.flow.filterIsInstance
 
 class ContactListFragment : BaseFragment<FragmentAppListBinding>() {
 
@@ -105,8 +108,8 @@ class ContactListFragment : BaseFragment<FragmentAppListBinding>() {
             binding.rvAppList.submitListAndAwait(items, adapters, true)
         }
 
-        ContactListEventBus.events.observe(this) { entity ->
-            viewModel.updateItem(entity)
+        AppEventBus.events.filterIsInstance<AppEvent.ContactSelected>().observe(this) { event ->
+            viewModel.updateItem(event.entity)
         }
     }
 

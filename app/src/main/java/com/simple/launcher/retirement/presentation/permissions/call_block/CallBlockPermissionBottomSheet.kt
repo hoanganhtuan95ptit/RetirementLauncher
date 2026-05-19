@@ -13,6 +13,7 @@ import com.simple.deeplink.DeeplinkHandler
 import com.simple.launcher.retirement.presentation.DeepLinks
 import com.simple.launcher.retirement.databinding.BottomSheetCallPermissionBinding
 import com.simple.launcher.retirement.presentation.base.BaseBottomSheetDialogFragment
+import com.simple.launcher.retirement.utils.AppEvent
 import com.simple.launcher.retirement.utils.AppEventBus
 import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.lifecycle.observe
@@ -32,7 +33,7 @@ class CallBlockPermissionBottomSheet : BaseBottomSheetDialogFragment<BottomSheet
     ) { results ->
         if (results.all { it.value }) {
             permissionGranted = true
-            AppEventBus.post(AppEventBus.PermissionAccept)
+            AppEventBus.post(AppEvent.PermissionAccept)
             dismiss()
         }
     }
@@ -73,7 +74,7 @@ class CallBlockPermissionBottomSheet : BaseBottomSheetDialogFragment<BottomSheet
         super.onDismiss(dialog)
         // Chỉ post Cancel khi người dùng thực sự huỷ (không phải sau khi grant permission)
         if (!permissionGranted) {
-            AppEventBus.post(AppEventBus.PermissionCancel)
+            AppEventBus.post(AppEvent.PermissionCancel)
         }
     }
 
