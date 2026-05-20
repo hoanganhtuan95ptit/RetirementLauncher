@@ -26,3 +26,22 @@ dependencyResolutionManagement {
 
 rootProject.name = "RetirementLauncher"
 include ':app'
+
+def localPropertiesFile = new File(settings.rootDir, 'local.properties')
+if (localPropertiesFile.exists()) {
+    Properties properties = new Properties()
+    localPropertiesFile.withInputStream { properties.load(it) }
+    
+    // Tự động include tất cả các properties bắt đầu bằng "module."
+    properties.each { key, path ->
+        if (key.startsWith("module.")) {
+            def moduleName = key.substring("module.".length())
+            def modulePath = new File(path.toString())
+            
+            if (modulePath.exists()) {
+                include ":${moduleName}"
+                project(":${moduleName}").projectDir = modulePath
+            }
+        }
+    }
+}
