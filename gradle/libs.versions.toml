@@ -26,6 +26,9 @@ adapter = "1.0.5.2"
 deeplink = "1.0.2.1"
 autoService = "1.1.1"
 autoRegister = "1.0.5"
+firebaseBom = "33.9.0"
+googleServices = "4.4.2"
+crashlytics = "3.0.3"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -59,6 +62,9 @@ auto-register = { group = "com.github.hoanganhtuan95ptit", name = "auto-register
 auto-register-processor = { group = "com.github.hoanganhtuan95ptit", name = "auto-register-processor", version.ref = "autoRegister" }
 auto-service = { group = "com.google.auto.service", name = "auto-service-annotations", version.ref = "autoService" }
 auto-service-ksp = { group = "dev.zacsweers.autoservice", name = "auto-service-ksp", version = "1.2.0" }
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
+firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics" }
+firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -66,3 +72,5 @@ android-library = { id = "com.android.library", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
+crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "crashlytics" }
