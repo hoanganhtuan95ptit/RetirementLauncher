@@ -32,6 +32,9 @@ sealed class AppEvent {
 
     // ── Nhấn / toggle item trong Settings ───────────────────────────────────
     data class SettingClicked(val item: SettingItem) : AppEvent()
+
+    // ── Performance ─────────────────────────────────────────────────────────
+    data class FpsUpdated(val screenName: String, val fps: Int) : AppEvent()
 }
 
 /** Bus duy nhất để phát / nhận toàn bộ [AppEvent] trong app. */
