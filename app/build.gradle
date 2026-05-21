@@ -47,16 +47,12 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             if (signingConfigs.keystore.storeFile != null) {
                 signingConfig signingConfigs.keystore
             }
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-        debug {
-            if (signingConfigs.keystore.storeFile != null) {
-                signingConfig signingConfigs.keystore
-            }
         }
     }
     buildFeatures {

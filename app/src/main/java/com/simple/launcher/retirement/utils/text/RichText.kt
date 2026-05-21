@@ -17,6 +17,7 @@ import android.text.style.MetricAffectingSpan
 import android.text.style.RelativeSizeSpan
 import android.text.style.StyleSpan
 import android.widget.TextView
+import androidx.annotation.Keep
 import com.google.auto.service.AutoService
 import java.util.ServiceLoader
 
@@ -136,6 +137,7 @@ interface RichSpanConvert {
 
 object Bold : RichSpan()
 
+@Keep
 @AutoService(RichSpanConvert::class)
 class BoldConvert : RichSpanConvert {
 
@@ -147,6 +149,7 @@ class BoldConvert : RichSpanConvert {
 
 data class RelativeSize(val proportion: Float) : RichSpan()
 
+@Keep
 @AutoService(RichSpanConvert::class)
 class RelativeSizeConvert : RichSpanConvert {
 
@@ -158,6 +161,7 @@ class RelativeSizeConvert : RichSpanConvert {
 
 data class ForegroundColor(val color: Int) : RichSpan()
 
+@Keep
 @AutoService(RichSpanConvert::class)
 class ForegroundColorConvert : RichSpanConvert {
 
@@ -172,6 +176,7 @@ class ForegroundColorConvert : RichSpanConvert {
  */
 data class TextSize(val sizeDip: Int) : RichSpan()
 
+@Keep
 @AutoService(RichSpanConvert::class)
 class TextSizeConvert : RichSpanConvert {
     override fun getAndroidSpan(richSpan: RichSpan): CharacterStyle? {
@@ -187,6 +192,7 @@ class TextSizeConvert : RichSpanConvert {
  */
 data class CustomFont(val typeface: Typeface) : RichSpan()
 
+@Keep
 @AutoService(RichSpanConvert::class)
 class CustomFontConvert : RichSpanConvert {
     override fun getAndroidSpan(richSpan: RichSpan): CharacterStyle? {
@@ -217,6 +223,7 @@ data class RoundedOutline(
     val dashGap: Float = 0f
 ) : RichSpan()
 
+@Keep
 @AutoService(RichSpanConvert::class)
 class RoundedOutlineSpanConvert : RichSpanConvert {
 

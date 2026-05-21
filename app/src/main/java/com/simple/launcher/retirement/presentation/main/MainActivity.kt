@@ -31,6 +31,9 @@ import com.simple.launcher.retirement.utils.permission.PermissionManager
 import com.simple.launcher.retirement.utils.string.StringResStore
 import com.simple.launcher.retirement.utils.theme.ThemeColorStore
 import androidx.core.view.doOnLayout
+import com.simple.auto.register.AutoRegisterManager
+import com.simple.deeplink.DeeplinkRegister
+import com.simple.launcher.retirement.utils.services.launchCollect
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
