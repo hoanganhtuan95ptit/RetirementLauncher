@@ -5,18 +5,24 @@ import android.view.ViewGroup
 import com.simple.adapter.Adapter
 import com.simple.adapter.ViewItem
 import com.simple.adapter.ViewItemAdapter
-import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.databinding.ItemHeaderBinding
 import com.simple.launcher.retirement.utils.exts.SpanSizeLookupViewItem
+import com.simple.launcher.retirement.utils.size.DP
+import com.simple.launcher.retirement.utils.size.Padding
 import com.simple.launcher.retirement.utils.text.RichText
 import com.simple.launcher.retirement.utils.text.setText
+import com.simple.launcher.retirement.utils.view.setPadding
 
 data class SettingHeaderItem(
-    val title: RichText
+    val title: RichText,
+    val padding: Padding = Padding(DP.DP_16, DP.DP_24, DP.DP_16, DP.DP_8)
 ) : ViewItem, SpanSizeLookupViewItem {
     override fun getSpanSize(): Int = 2
     override fun areItemsTheSame(): List<Any> = listOf(title.text)
-    override fun getContentsCompare(): List<Pair<Any, String>> = listOf(title to "title")
+    override fun getContentsCompare(): List<Pair<Any, String>> = listOf(
+        title to "title",
+        padding to "padding"
+    )
 }
 
 @Adapter
@@ -33,11 +39,6 @@ class SettingHeaderAdapter : ViewItemAdapter<SettingHeaderItem, ItemHeaderBindin
     override fun onBindViewHolder(binding: ItemHeaderBinding, viewType: Int, position: Int, item: SettingHeaderItem, payloads: List<String>) {
         super.onBindViewHolder(binding, viewType, position, item, payloads)
         binding.tvTitle.setText(item.title)
-        binding.tvTitle.setPadding(
-            binding.root.context.resources.getDimensionPixelSize(R.dimen.setting_header_padding_horizontal),
-            binding.root.context.resources.getDimensionPixelSize(R.dimen.setting_header_padding_top),
-            binding.root.context.resources.getDimensionPixelSize(R.dimen.setting_header_padding_horizontal),
-            binding.root.context.resources.getDimensionPixelSize(R.dimen.setting_header_padding_bottom)
-        )
+        binding.tvTitle.setPadding(item.padding)
     }
 }

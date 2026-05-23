@@ -1,6 +1,11 @@
 package com.simple.launcher.retirement.utils.view
 
 import android.view.View
+import com.simple.launcher.retirement.utils.size.Padding
+
+fun View.setPadding(padding: Padding) {
+    setPadding(padding.start, padding.top, padding.end, padding.bottom)
+}
 
 fun View.setOnSafeClickListener(onSafeClick: (View) -> Unit) {
     val safeClickListener = SafeClickListener {
