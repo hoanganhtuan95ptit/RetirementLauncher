@@ -106,6 +106,7 @@ class ContactListFragment : BaseFragment<FragmentAppListBinding>() {
 
         viewModel.items.attachAdapter().observe(this) { (items, adapters) ->
             binding.rvAppList.submitListAndAwait(items, adapters, true)
+            binding.rvAppList.scrollToPosition(0)
         }
 
         AppEventBus.events.filterIsInstance<AppEvent.ContactSelected>().observe(this) { event ->
@@ -114,21 +115,16 @@ class ContactListFragment : BaseFragment<FragmentAppListBinding>() {
     }
 
     private fun navigateToReorder() {
-        val currentSelected = viewModel.items.value.filter { it.isSelected }.map { it.entity.contact.id }.toSet()
+        val currentSelected = viewModel.getAllSelectedIds()
         if (currentSelected.isEmpty()) {
             Toast.makeText(context, R.string.contact_list_empty_error, Toast.LENGTH_SHORT).show()
             return
         }
 
-        // Lấy danh sách đã lưu để giữ đúng thứ tự cũ
-        val savedContacts = com.simple.launcher.retirement.domain.repository.ContactRepository.instance.getSelectedContacts()
-        val savedIds = savedContacts.map { it.id }
-
-        // 1. Giữ lại những liên hệ cũ vẫn đang được chọn (đúng thứ tự cũ)
+        // Giữ đúng thứ tự cũ cho các contact đã lưu, thêm mới vào cuối
+        val savedIds = ContactRepository.instance.getSelectedContacts().map { it.id }
         val orderedIds = savedIds.filter { it in currentSelected }.toMutableList()
-        // 2. Thêm những liên hệ mới được chọn vào cuối
-        val newIds = currentSelected.filter { it !in savedIds }
-        orderedIds.addAll(newIds)
+        orderedIds.addAll(currentSelected.filter { it !in savedIds })
 
         sendReorderContactsDeeplink(orderedIds)
     }
