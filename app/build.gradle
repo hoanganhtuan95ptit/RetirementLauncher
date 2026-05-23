@@ -23,6 +23,46 @@ if (retirementPath != null) {
     }
 }
 
+def runGitCommand(List<String> command, def defaultValue) {
+    try {
+        def process = new ProcessBuilder(command)
+                .directory(rootProject.rootDir)
+                .redirectErrorStream(true)
+                .start()
+
+        process.waitFor()
+
+        if (process.exitValue() == 0) {
+            def output = process.inputStream.text.trim()
+
+            if (!output.isEmpty()) {
+                return defaultValue instanceof Integer
+                        ? output.toInteger()
+                        : output
+            }
+        }
+
+    } catch (Exception e) {
+        println("⚠️ Git command failed: ${e.message}")
+    }
+
+    return defaultValue
+}
+
+def getGitVersionCode() {
+    return runGitCommand(
+            ['git', 'rev-list', '--count', 'HEAD'],
+            1
+    )
+}
+
+def getGitHash() {
+    return runGitCommand(
+            ['git', 'rev-parse', '--short', 'HEAD'],
+            'dev'
+    )
+}
+
 android {
     namespace 'com.simple.launcher.retirement'
     compileSdk 36
@@ -40,10 +80,16 @@ android {
         applicationId "com.simple.launcher.retirement"
         minSdk 24
         targetSdk 35
-        versionCode 4
-        versionName "1.0.2"
+        versionCode getGitVersionCode()
+        versionName "1.${new Date().format('yy.MM')}.${getGitHash()}"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        println("-------------------------------------------")
+        println("🚀 Building RetirementLauncher")
+        println("📌 Version Code: ${versionCode}")
+        println("📌 Version Name: ${versionName}")
+        println("-------------------------------------------")
     }
 
     buildTypes {
