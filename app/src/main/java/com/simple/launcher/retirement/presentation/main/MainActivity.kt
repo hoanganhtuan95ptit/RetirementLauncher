@@ -65,7 +65,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         val repository = PreferenceRepository.instance
 
         // Bắt đầu lắng nghe sự thay đổi file ngầm nếu đã có quyền và được bật
-        val hasFilePerm = PermissionManager.hasFilePermission(this)
+        val hasFilePerm = PermissionManager.hasFilePermission()
         val fileCleanupEnabled = repository.isFileCleanupEnabled()
         Log.d(TAG, "FileWatcher | hasFilePerm=$hasFilePerm | fileCleanupEnabled=$fileCleanupEnabled")
         if (hasFilePerm && fileCleanupEnabled) {
@@ -73,8 +73,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         }
 
         // Khởi động service giám sát nếu đã có quyền và được bật
-        val hasUsagePerm = PermissionManager.hasUsageStatsPermission(this)
-        val hasOverlayPerm = PermissionManager.hasOverlayPermission(this)
+        val hasUsagePerm = PermissionManager.hasUsageStatsPermission()
+        val hasOverlayPerm = PermissionManager.hasOverlayPermission()
         val appBlockEnabled = repository.isAppBlockEnabled()
         Log.d(TAG, "AppMonitoring | hasUsagePerm=$hasUsagePerm | hasOverlayPerm=$hasOverlayPerm | appBlockEnabled=$appBlockEnabled")
         if (hasUsagePerm && hasOverlayPerm && appBlockEnabled) {
@@ -162,10 +162,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         val currentFragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
         Log.d(TAG, "onResume | currentFragment=${currentFragment?.javaClass?.simpleName}")
         val repository = PreferenceRepository.instance
-        if (PermissionManager.hasFilePermission(this) && repository.isFileCleanupEnabled()) {
+        if (PermissionManager.hasFilePermission() && repository.isFileCleanupEnabled()) {
             startFileWatcherService()
         }
-        if (PermissionManager.hasUsageStatsPermission(this) && PermissionManager.hasOverlayPermission(this) && repository.isAppBlockEnabled()) {
+        if (PermissionManager.hasUsageStatsPermission() && PermissionManager.hasOverlayPermission() && repository.isAppBlockEnabled()) {
             startAppMonitoringService()
         }
     }

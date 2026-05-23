@@ -32,7 +32,7 @@ class UsageStatsPermissionBottomSheet : BaseBottomSheetDialogFragment<BottomShee
     private var permissionGranted = false
 
     private val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        if (PermissionManager.hasUsageStatsPermission(requireContext())) {
+        if (PermissionManager.hasUsageStatsPermission()) {
             permissionGranted = true
             AppEventBus.post(AppEvent.PermissionAccept)
             dismiss()

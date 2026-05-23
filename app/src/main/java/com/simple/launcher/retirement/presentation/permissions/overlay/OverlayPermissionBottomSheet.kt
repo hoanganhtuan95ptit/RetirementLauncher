@@ -23,6 +23,7 @@ import com.simple.launcher.retirement.utils.lifecycle.observe
 import com.simple.launcher.retirement.utils.permission.PermissionManager
 import com.simple.launcher.retirement.utils.text.setText
 import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
+import androidx.core.net.toUri
 
 class OverlayPermissionBottomSheet : BaseBottomSheetDialogFragment<BottomSheetOverlayPermissionBinding, OverlayPermissionViewModel>() {
 
@@ -32,7 +33,7 @@ class OverlayPermissionBottomSheet : BaseBottomSheetDialogFragment<BottomSheetOv
     private var permissionGranted = false
 
     private val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        if (PermissionManager.hasOverlayPermission(requireContext())) {
+        if (PermissionManager.hasOverlayPermission()) {
             permissionGranted = true
             AppEventBus.post(AppEvent.PermissionAccept)
             dismiss()
@@ -69,15 +70,14 @@ class OverlayPermissionBottomSheet : BaseBottomSheetDialogFragment<BottomSheetOv
     }
 
     private fun requestOverlayPermission() {
-        val context = requireContext()
-        if (PermissionManager.hasOverlayPermission(context)) {
+        if (PermissionManager.hasOverlayPermission()) {
             permissionGranted = true
             AppEventBus.post(AppEvent.PermissionAccept)
             dismiss()
             return
         }
         val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION)
-        intent.data = Uri.parse("package:${context.packageName}")
+        intent.data = "package:${requireContext().packageName}".toUri()
         startForResult.launch(intent)
     }
 

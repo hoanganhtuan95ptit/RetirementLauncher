@@ -12,8 +12,7 @@ import com.simple.launcher.retirement.presentation.main.MainActivity
 import com.simple.launcher.retirement.presentation.settings.SettingItem
 import com.simple.launcher.retirement.presentation.settings.SettingsFragment
 import com.simple.launcher.retirement.presentation.settings.SettingsViewModel
-import com.simple.launcher.retirement.presentation.settings.requirePin
-import com.simple.launcher.retirement.presentation.settings.requireUsageStatsPermission
+import com.simple.launcher.retirement.utils.permission.PermissionManager
 import com.simple.launcher.retirement.presentation.worker.AppMonitoringService
 import com.simple.launcher.retirement.utils.AppEvent
 import com.simple.launcher.retirement.utils.AppEventBus
@@ -99,13 +98,13 @@ class AppMonitoringSettingService : FragmentCreatedService {
         val context = fragment.requireContext()
         val isTurningOn = item.isChecked
 
-        if (isTurningOn && !requireUsageStatsPermission(context)) {
+        if (isTurningOn && !PermissionManager.requireUsageStatsPermission()) {
             // User huỷ cấp quyền → revert về OFF
             appMonitoringSettingViewModel.refresh()
             return
         }
 
-        if (!isTurningOn && !requirePin()) {
+        if (!isTurningOn && !PermissionManager.requirePinPermissions()) {
             // User huỷ nhập PIN → revert về ON
             appMonitoringSettingViewModel.refresh()
             return

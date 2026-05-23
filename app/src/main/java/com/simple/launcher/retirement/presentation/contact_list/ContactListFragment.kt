@@ -135,11 +135,10 @@ class ContactListFragment : BaseFragment<FragmentAppListBinding>() {
     }
 
     private fun checkPermissionAndLoad() {
-        val context = requireContext()
-        if (!PermissionManager.hasContactPermission(context)) {
+        if (!PermissionManager.hasContactPermission()) {
             requestPermissionLauncher.launch(Manifest.permission.READ_CONTACTS)
         } else {
-            viewModel.loadContacts(context)
+            viewModel.loadContacts(requireContext())
         }
     }
 }

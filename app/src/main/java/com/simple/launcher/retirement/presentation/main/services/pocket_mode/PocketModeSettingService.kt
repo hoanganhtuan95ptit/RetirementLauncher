@@ -9,7 +9,7 @@ import com.simple.launcher.retirement.presentation.settings.SettingsFragment
 import com.simple.launcher.retirement.utils.AppEvent
 import com.simple.launcher.retirement.utils.AppEventBus
 import com.simple.launcher.retirement.presentation.settings.SettingsViewModel
-import com.simple.launcher.retirement.presentation.settings.requirePin
+import com.simple.launcher.retirement.utils.permission.PermissionManager
 import com.simple.launcher.retirement.utils.services.FragmentCreatedService
 import com.simple.launcher.retirement.utils.services.launchCollect
 import kotlinx.coroutines.flow.filterIsInstance
@@ -35,7 +35,7 @@ class PocketModeSettingService : FragmentCreatedService {
                 val isTurningOn = item.isChecked
 
                 // Tắt tính năng yêu cầu xác thực PIN
-                if (!isTurningOn && !requirePin()) {
+                if (!isTurningOn && !PermissionManager.requirePinPermissions()) {
                     // Revert toggle về ON vì user huỷ nhập PIN
                     pocketModeSettingViewModel.refresh()
                     return@launchCollect

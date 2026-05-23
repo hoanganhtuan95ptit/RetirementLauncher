@@ -4,26 +4,25 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.simple.adapter.utils.attachAdapter
 import com.simple.adapter.utils.submitListAndAwait
-import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.lifecycleScope
 import com.simple.deeplink.Deeplink
 import com.simple.deeplink.DeeplinkHandler
 import com.simple.launcher.retirement.R
-import com.simple.launcher.retirement.presentation.DeepLinks
-import com.simple.launcher.retirement.presentation.sendDeeplinkWithBackStack
-import com.simple.deeplink.sendDeeplink
 import com.simple.launcher.retirement.databinding.FragmentSettingsBinding
-import com.simple.launcher.retirement.domain.repository.PreferenceRepository
+import com.simple.launcher.retirement.presentation.DeepLinks
 import com.simple.launcher.retirement.presentation.base.BaseFragment
-import com.simple.launcher.retirement.utils.background.setBackground
-import com.simple.launcher.retirement.utils.image.setImage
+import com.simple.launcher.retirement.presentation.sendDeeplinkWithBackStack
 import com.simple.launcher.retirement.utils.AppEvent
 import com.simple.launcher.retirement.utils.AppEventBus
+import com.simple.launcher.retirement.utils.background.setBackground
+import com.simple.launcher.retirement.utils.image.setImage
 import com.simple.launcher.retirement.utils.lifecycle.observe
+import com.simple.launcher.retirement.utils.permission.PermissionManager
 import com.simple.launcher.retirement.utils.text.setText
 import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
 import kotlinx.coroutines.flow.filterIsInstance
@@ -82,8 +81,8 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
                 // Dùng suspend Pin.verify(): nếu có PIN sẵn thì xác thực trước,
                 // nếu chưa có thì đi thẳng vào setup
                 viewLifecycleOwner.lifecycleScope.launch {
-                    val hasPin = PreferenceRepository.instance.hasPin()
-                    if (requirePin()) {
+                    val hasPin = PermissionManager.hasPinPermission()
+                    if (PermissionManager.requirePinPermissions()) {
                         if (hasPin) {
                             sendDeeplinkWithBackStack(DeepLinks.PIN_SETUP)
                         }
@@ -97,7 +96,9 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
                 sendDeeplinkWithBackStack(DeepLinks.CONTACT_LIST)
             }
             SettingItem.ID_DEFAULT_LAUNCHER -> {
-                sendDeeplink(DeepLinks.PERMISSION_DEFAULT_LAUNCHER)
+                viewLifecycleOwner.lifecycleScope.launch {
+                    PermissionManager.requireDefaultLauncher()
+                }
             }
             SettingItem.ID_CLEAN_FILES -> {
                 sendDeeplinkWithBackStack(DeepLinks.CLEAN_FILES)

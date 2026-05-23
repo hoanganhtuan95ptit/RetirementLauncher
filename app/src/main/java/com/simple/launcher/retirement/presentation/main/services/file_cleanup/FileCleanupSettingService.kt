@@ -6,11 +6,9 @@ import androidx.fragment.app.viewModels
 import com.simple.auto.register.AutoRegister
 import com.simple.launcher.retirement.domain.repository.PreferenceRepository
 import com.simple.launcher.retirement.presentation.main.MainActivity
-import com.simple.launcher.retirement.presentation.permissions.file.FilePermissionBottomSheet
 import com.simple.launcher.retirement.presentation.settings.SettingItem
 import com.simple.launcher.retirement.presentation.settings.SettingsFragment
 import com.simple.launcher.retirement.presentation.settings.SettingsViewModel
-import com.simple.launcher.retirement.presentation.settings.requirePin
 import com.simple.launcher.retirement.presentation.worker.FileWatcherService
 import com.simple.launcher.retirement.utils.permission.PermissionManager
 import com.simple.launcher.retirement.utils.services.launchCollect
@@ -18,7 +16,6 @@ import com.simple.launcher.retirement.utils.AppEvent
 import com.simple.launcher.retirement.utils.AppEventBus
 import com.simple.launcher.retirement.utils.services.FragmentCreatedService
 import kotlinx.coroutines.flow.filterIsInstance
-import kotlinx.coroutines.flow.first
 
 @AutoRegister(apis = [SettingsFragment::class])
 class FileCleanupSettingService : FragmentCreatedService {
@@ -50,43 +47,28 @@ class FileCleanupSettingService : FragmentCreatedService {
         AppEventBus.events.filterIsInstance<AppEvent.SettingClicked>().launchCollect(fragment) { event ->
             val item = event.item
             if (item.id == SettingItem.ID_TOGGLE_CLEANUP) {
-                handleToggle(fragment, item)
+                handleToggle(item)
                 // Đồng bộ UI với trạng thái thực từ repository
                 fileCleanupSettingViewModel.refresh()
             }
         }
     }
 
-    private suspend fun handleToggle(fragment: Fragment, item: SettingItem) {
+    private suspend fun handleToggle(item: SettingItem) {
 
         val repository = PreferenceRepository.instance
-        val context = fragment.requireContext()
         val isTurningOn = item.isChecked
 
-        if (isTurningOn && !PermissionManager.hasFilePermission(context)) {
-            // Xin quyền file thông qua bottom sheet (callback → suspend)
-            val granted = fragment.awaitFilePermission()
-            if (!granted) return
+        if (isTurningOn && !PermissionManager.requireFilePermission()) {
+            return
         }
 
-        if (!isTurningOn && !requirePin()) {
+        if (!isTurningOn && !PermissionManager.requirePinPermissions()) {
             // User huỷ PIN → revert (refresh sẽ xử lý sau khi hàm này return)
             return
         }
 
         // Chỉ set preference — Flow bên trên sẽ tự start/stop service
         repository.setFileCleanupEnabled(isTurningOn)
-    }
-
-    /**
-     * Hiển thị FilePermissionBottomSheet và chờ kết quả qua AppEventBus.
-     * @return true nếu quyền được cấp, false nếu user huỷ hoặc từ chối.
-     */
-    private suspend fun Fragment.awaitFilePermission(): Boolean {
-        FilePermissionBottomSheet().show(childFragmentManager, FilePermissionBottomSheet.TAG)
-        val result = AppEventBus.events
-            .filterIsInstance<AppEvent.PermissionResult>()
-            .first()
-        return result is AppEvent.PermissionAccept
     }
 }

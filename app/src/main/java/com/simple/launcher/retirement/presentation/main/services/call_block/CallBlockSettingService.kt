@@ -5,18 +5,15 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.simple.auto.register.AutoRegister
 import com.simple.launcher.retirement.domain.repository.PreferenceRepository
-import com.simple.launcher.retirement.presentation.permissions.call_block.CallBlockPermissionBottomSheet
 import com.simple.launcher.retirement.presentation.settings.SettingItem
 import com.simple.launcher.retirement.presentation.settings.SettingsFragment
 import com.simple.launcher.retirement.presentation.settings.SettingsViewModel
-import com.simple.launcher.retirement.presentation.settings.requirePin
 import com.simple.launcher.retirement.utils.permission.PermissionManager
 import com.simple.launcher.retirement.utils.services.FragmentCreatedService
 import com.simple.launcher.retirement.utils.services.launchCollect
 import com.simple.launcher.retirement.utils.AppEvent
 import com.simple.launcher.retirement.utils.AppEventBus
 import kotlinx.coroutines.flow.filterIsInstance
-import kotlinx.coroutines.flow.first
 
 @AutoRegister(apis = [SettingsFragment::class])
 class CallBlockSettingService : FragmentCreatedService {
@@ -37,42 +34,27 @@ class CallBlockSettingService : FragmentCreatedService {
         AppEventBus.events.filterIsInstance<AppEvent.SettingClicked>().launchCollect(fragment) { event ->
             val item = event.item
             if (item.id == SettingItem.ID_TOGGLE_CALL_BLOCK) {
-                handleToggle(fragment, item)
+                handleToggle(item)
                 // Đồng bộ UI với trạng thái thực từ repository
                 callBlockSettingViewModel.refresh()
             }
         }
     }
 
-    private suspend fun handleToggle(fragment: Fragment, item: SettingItem) {
+    private suspend fun handleToggle(item: SettingItem) {
 
         val repository = PreferenceRepository.instance
-        val context = fragment.requireContext()
         val isTurningOn = item.isChecked
 
-        if (isTurningOn && !PermissionManager.hasCallBlockPermissions(context)) {
-            // Xin quyền call block thông qua bottom sheet (callback → suspend)
-            val granted = fragment.awaitCallBlockPermission()
-            if (!granted) return
+        if (isTurningOn && !PermissionManager.requireCallBlockPermissions()) {
+            return
         }
 
-        if (!isTurningOn && !requirePin()) {
+        if (!isTurningOn && !PermissionManager.requirePinPermissions()) {
             // User huỷ PIN → revert (refresh sẽ xử lý sau khi hàm này return)
             return
         }
 
         repository.setCallBlockEnabled(isTurningOn)
-    }
-
-    /**
-     * Hiển thị CallBlockPermissionBottomSheet và chờ kết quả qua AppEventBus.
-     * @return true nếu quyền được cấp, false nếu user huỷ.
-     */
-    private suspend fun Fragment.awaitCallBlockPermission(): Boolean {
-        CallBlockPermissionBottomSheet().show(childFragmentManager, CallBlockPermissionBottomSheet.TAG)
-        val result = AppEventBus.events
-            .filterIsInstance<AppEvent.PermissionResult>()
-            .first()
-        return result is AppEvent.PermissionAccept
     }
 }

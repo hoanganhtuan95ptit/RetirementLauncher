@@ -33,7 +33,7 @@ class FilePermissionBottomSheet : BaseBottomSheetDialogFragment<BottomSheetFileP
     private var permissionGranted = false
 
     private val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        if (PermissionManager.hasFilePermission(requireContext())) {
+        if (PermissionManager.hasFilePermission()) {
             permissionGranted = true
             AppEventBus.post(AppEvent.PermissionAccept)
             dismiss()
@@ -81,7 +81,7 @@ class FilePermissionBottomSheet : BaseBottomSheetDialogFragment<BottomSheetFileP
     }
 
     private fun requestFilePermission() {
-        if (PermissionManager.hasFilePermission(requireContext())) {
+        if (PermissionManager.hasFilePermission()) {
             permissionGranted = true
             AppEventBus.post(AppEvent.PermissionAccept)
             dismiss()

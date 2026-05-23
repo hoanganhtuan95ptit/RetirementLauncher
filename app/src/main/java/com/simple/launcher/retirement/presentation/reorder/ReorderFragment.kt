@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -13,7 +14,6 @@ import com.simple.adapter.utils.attachAdapter
 import com.simple.adapter.utils.submitListAndAwait
 import com.simple.deeplink.Deeplink
 import com.simple.deeplink.DeeplinkHandler
-import com.simple.deeplink.sendDeeplink
 import com.simple.launcher.retirement.presentation.DeepLinks
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.databinding.FragmentAppListBinding
@@ -21,20 +21,15 @@ import com.simple.launcher.retirement.domain.repository.AppRepository
 import com.simple.launcher.retirement.domain.repository.ContactRepository
 import com.simple.launcher.retirement.domain.repository.PreferenceRepository
 import com.simple.launcher.retirement.presentation.base.BaseFragment
-import com.simple.launcher.retirement.utils.AppEvent
-import com.simple.launcher.retirement.utils.AppEventBus
-import kotlinx.coroutines.flow.filterIsInstance
 import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.image.setImage
 import com.simple.launcher.retirement.utils.lifecycle.observe
 import com.simple.launcher.retirement.utils.permission.PermissionManager
 import com.simple.launcher.retirement.utils.text.setText
 import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
+import kotlinx.coroutines.launch
 
 class ReorderFragment : BaseFragment<FragmentAppListBinding>() {
-
-    // Flag để tránh xử lý PermissionAccept từ các bottom sheet không liên quan
-    private var awaitingPermission = false
 
     companion object {
         fun newInstance(type: ReorderType, ids: List<String>): ReorderFragment {
@@ -94,7 +89,7 @@ class ReorderFragment : BaseFragment<FragmentAppListBinding>() {
         itemTouchHelper.attachToRecyclerView(binding.rvAppList)
 
         binding.btnSave.root.setOnSafeClickListener {
-            checkPermissionsAndSave()
+            lifecycleScope.launch { checkPermissionsAndSave() }
         }
 
         viewModel.loadItems(requireContext())
@@ -125,74 +120,24 @@ class ReorderFragment : BaseFragment<FragmentAppListBinding>() {
         viewModel.items.attachAdapter().observe(this) { (items, adapters) ->
             binding.rvAppList.submitListAndAwait(items, adapters, false)
         }
-
-        // Lắng nghe kết quả từ các permission bottom sheet
-        AppEventBus.events.filterIsInstance<AppEvent.PermissionResult>().observe(this) { event ->
-            if (!awaitingPermission) return@observe
-            awaitingPermission = false
-            if (event is AppEvent.PermissionAccept) {
-                if (type == ReorderType.APPS) {
-                    checkAppPermissions()
-                } else {
-                    checkDefaultLauncher()
-                }
-            }
-            // Nếu PermissionCancel: dừng lại, không làm gì thêm
-        }
     }
 
-    private fun checkPermissionsAndSave() {
-        val context = requireContext()
-        // Here we can either save first or check permissions first.
-        // The user said "xử lý khi người dùng ấn lưu và trước khi xin quyền".
-        // This might mean save the order then check permissions.
-        
-        // Actually, if we save the order now, and the user cancels permissions, 
-        // the order is still saved. This seems correct.
-        
+    private suspend fun checkPermissionsAndSave() {
+        // Lưu thứ tự trước khi xin quyền
         if (type == ReorderType.APPS) {
             AppRepository.instance.saveSelectedPackages(viewModel.getFinalIds())
         } else {
             ContactRepository.instance.saveSelectedContacts(viewModel.getFinalContacts())
         }
 
+        // Xin quyền tuần tự — nếu bất kỳ quyền nào bị từ chối thì dừng
         if (type == ReorderType.APPS) {
-            checkAppPermissions()
-        } else {
-            checkDefaultLauncher()
+            if (!PermissionManager.requireFilePermission()) return
+            if (!PermissionManager.requireUsageStatsPermission()) return
+            if (!PermissionManager.requireOverlayPermission()) return
         }
-    }
+        if (!PermissionManager.requireDefaultLauncher()) return
 
-    private fun checkAppPermissions() {
-        if (!PermissionManager.hasFilePermission(requireContext())) {
-            awaitingPermission = true
-            sendDeeplink(DeepLinks.PERMISSION_FILE)
-            return
-        }
-        checkBlockPermissions()
-    }
-
-    private fun checkBlockPermissions() {
-        val context = requireContext()
-        if (!PermissionManager.hasUsageStatsPermission(context)) {
-            awaitingPermission = true
-            sendDeeplink(DeepLinks.PERMISSION_USAGE_STATS)
-            return
-        }
-        if (!PermissionManager.hasOverlayPermission(context)) {
-            awaitingPermission = true
-            sendDeeplink(DeepLinks.PERMISSION_OVERLAY)
-            return
-        }
-        checkDefaultLauncher()
-    }
-
-    private fun checkDefaultLauncher() {
-        if (!PermissionManager.isDefaultLauncher(requireContext())) {
-            awaitingPermission = true
-            sendDeeplink(DeepLinks.PERMISSION_DEFAULT_LAUNCHER)
-            return
-        }
         onSaveSuccess()
     }
 

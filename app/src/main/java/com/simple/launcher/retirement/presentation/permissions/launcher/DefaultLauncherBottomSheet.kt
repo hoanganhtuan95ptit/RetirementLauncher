@@ -34,7 +34,7 @@ class DefaultLauncherBottomSheet : BaseBottomSheetDialogFragment<BottomSheetDefa
     private var permissionGranted = false
 
     private val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        if (PermissionManager.isDefaultLauncher(requireContext())) {
+        if (PermissionManager.isDefaultLauncher()) {
             permissionGranted = true
             AppEventBus.post(AppEvent.PermissionAccept)
             dismiss()
@@ -71,7 +71,7 @@ class DefaultLauncherBottomSheet : BaseBottomSheetDialogFragment<BottomSheetDefa
     }
 
     private fun openDefaultLauncherSettings() {
-        if (PermissionManager.isDefaultLauncher(requireContext())) {
+        if (PermissionManager.isDefaultLauncher()) {
             permissionGranted = true
             AppEventBus.post(AppEvent.PermissionAccept)
             dismiss()
