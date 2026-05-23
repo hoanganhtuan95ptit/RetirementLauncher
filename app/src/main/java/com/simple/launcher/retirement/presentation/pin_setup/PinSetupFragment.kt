@@ -1,6 +1,7 @@
 package com.simple.launcher.retirement.presentation.pin_setup
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -149,6 +150,7 @@ class PinSetupFragment : BaseFragment<FragmentPinSetupBinding>() {
 
     override fun onDestroy() {
         super.onDestroy()
+        Log.d("tuanha", "onDestroy: ")
         Pin.PinEventBus.post(Pin.PinCancel)
     }
 }

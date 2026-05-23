@@ -25,13 +25,14 @@ import com.simple.launcher.retirement.utils.text.with
 import com.simple.launcher.retirement.utils.theme.getColor
 import com.simple.launcher.retirement.utils.AppEvent
 import com.simple.launcher.retirement.utils.AppEventBus
+import com.simple.launcher.retirement.utils.services.FragmentCreatedService
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.first
 
 @AutoRegister(apis = [SettingsFragment::class])
-class CallBlockSettingService : FragmentViewCreatedService {
+class CallBlockSettingService : FragmentCreatedService {
 
     private lateinit var settingsViewModel: SettingsViewModel
     private lateinit var callBlockSettingViewModel: CallBlockSettingViewModel
@@ -46,7 +47,7 @@ class CallBlockSettingService : FragmentViewCreatedService {
             settingsViewModel.updateItem(SettingItem.ORDER_TOGGLE_CALL_BLOCK, items)
         }
 
-        AppEventBus.events.filterIsInstance<AppEvent.SettingClicked>().launchCollect(fragment.viewLifecycleOwner) { event ->
+        AppEventBus.events.filterIsInstance<AppEvent.SettingClicked>().launchCollect(fragment) { event ->
             val item = event.item
             if (item.id == SettingItem.ID_TOGGLE_CALL_BLOCK) {
                 handleToggle(fragment, item)

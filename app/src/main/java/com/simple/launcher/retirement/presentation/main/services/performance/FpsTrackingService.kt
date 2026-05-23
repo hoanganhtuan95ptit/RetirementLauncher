@@ -337,12 +337,12 @@ class FpsTrackingService : ActivityCreatedService {
 
             overlayView?.text = builder
 
-            AppEventBus.post(
-                AppEvent.FpsUpdated(
-                    activity.javaClass.simpleName,
-                    fps.toInt(),
-                )
-            )
+//            AppEventBus.post(
+//                AppEvent.FpsUpdated(
+//                    activity.javaClass.simpleName,
+//                    fps.toInt(),
+//                )
+//            )
         }
 
         // ─────────────────────────────────────────────────────────────

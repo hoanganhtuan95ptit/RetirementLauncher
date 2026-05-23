@@ -15,6 +15,7 @@ import com.simple.launcher.retirement.presentation.settings.SettingsViewModel
 import com.simple.launcher.retirement.presentation.settings.requirePin
 import com.simple.launcher.retirement.utils.combineState
 import com.simple.launcher.retirement.utils.image.ImageRes
+import com.simple.launcher.retirement.utils.services.FragmentCreatedService
 import com.simple.launcher.retirement.utils.services.FragmentViewCreatedService
 import com.simple.launcher.retirement.utils.services.launchCollect
 import com.simple.launcher.retirement.utils.string.getString
@@ -27,7 +28,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterIsInstance
 
 @AutoRegister(apis = [SettingsFragment::class])
-class PocketModeSettingService : FragmentViewCreatedService {
+class PocketModeSettingService : FragmentCreatedService {
 
     private lateinit var settingsViewModel: SettingsViewModel
     private lateinit var pocketModeSettingViewModel: PocketModeSettingViewModel
@@ -41,7 +42,7 @@ class PocketModeSettingService : FragmentViewCreatedService {
             settingsViewModel.updateItem(SettingItem.ORDER_TOGGLE_POCKET_MODE, items)
         }
 
-        AppEventBus.events.filterIsInstance<AppEvent.SettingClicked>().launchCollect(fragment.viewLifecycleOwner) { event ->
+        AppEventBus.events.filterIsInstance<AppEvent.SettingClicked>().launchCollect(fragment) { event ->
             val item = event.item
             if (item.id == SettingItem.ID_TOGGLE_POCKET_MODE) {
                 val isTurningOn = item.isChecked

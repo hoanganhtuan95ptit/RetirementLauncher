@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.google.services)
     alias(libs.plugins.crashlytics)
+    alias(libs.plugins.firebase.perf)
 }
 
 // Optimization: Safe loading of local.properties and external config
@@ -39,8 +40,8 @@ android {
         applicationId "com.simple.launcher.retirement"
         minSdk 24
         targetSdk 35
-        versionCode 2
-        versionName "1.0"
+        versionCode 3
+        versionName "1.0.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -79,6 +80,7 @@ dependencies {
     implementation libs.androidx.lifecycle.livedata.ktx
     implementation libs.androidx.lifecycle.viewmodel.ktx
     implementation libs.androidx.fragment.ktx
+    implementation libs.androidx.metrics
     implementation libs.gson
     implementation libs.adapter
     ksp libs.adapter.processor
@@ -96,6 +98,7 @@ dependencies {
     implementation platform(libs.firebase.bom)
     implementation libs.firebase.analytics
     implementation libs.firebase.crashlytics
+    implementation libs.firebase.perf
 
     // Optimization: Automatically implement all modules defined in local.properties
     localProperties.each { key, path ->
