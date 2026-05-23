@@ -1,6 +1,5 @@
 package com.simple.launcher.retirement.presentation.settings
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
@@ -9,13 +8,14 @@ import com.simple.adapter.ViewItem
 import com.simple.adapter.ViewItemAdapter
 import com.simple.adapter.base.BaseBindingViewHolder
 import com.simple.launcher.retirement.databinding.ItemSettingBinding
+import com.simple.launcher.retirement.utils.AppEvent
+import com.simple.launcher.retirement.utils.AppEventBus
+import com.simple.launcher.retirement.utils.exts.SpanSizeLookupViewItem
 import com.simple.launcher.retirement.utils.getItem
 import com.simple.launcher.retirement.utils.image.RichImage
 import com.simple.launcher.retirement.utils.image.setImage
 import com.simple.launcher.retirement.utils.text.RichText
 import com.simple.launcher.retirement.utils.text.setText
-import com.simple.launcher.retirement.utils.AppEvent
-import com.simple.launcher.retirement.utils.AppEventBus
 import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
 
 data class SettingItem(
@@ -24,7 +24,9 @@ data class SettingItem(
     val icon: RichImage,
     val isSwitch: Boolean = false,
     var isChecked: Boolean = false,
-) : ViewItem {
+) : ViewItem, SpanSizeLookupViewItem {
+
+    override fun getSpanSize(): Int = 1
 
     override fun areItemsTheSame(): List<Any> = listOf(id)
 
@@ -49,18 +51,21 @@ data class SettingItem(
         const val ID_TOGGLE_POCKET_MODE = 10
 
         // ── Slot orders (dùng cho _itemMap trong SettingsViewModel) ──────────
-        // Base items: 1.0 → 6.0
-        // Service items: 7.0 trở đi (hoặc dùng số lẻ để xen giữa base items)
-        const val ORDER_PIN             = 1.0
-        const val ORDER_DEFAULT_LAUNCHER = 2.0
-        const val ORDER_APP_LIST        = 3.0
-        const val ORDER_CONTACT_LIST    = 4.0
-        const val ORDER_CLEAN_FILES     = 5.0
-        const val ORDER_CLEAN_MEMORY    = 6.0
-        const val ORDER_TOGGLE_BLOCK    = 7.0
-        const val ORDER_TOGGLE_CLEANUP  = 8.0
-        const val ORDER_TOGGLE_CALL_BLOCK = 9.0
-        const val ORDER_TOGGLE_POCKET_MODE = 10.0
+        const val ORDER_HEADER_GENERAL = 10.0
+        const val ORDER_DEFAULT_LAUNCHER = 11.0
+        const val ORDER_APP_LIST = 12.0
+        const val ORDER_CONTACT_LIST = 13.0
+
+        const val ORDER_HEADER_SECURITY = 20.0
+        const val ORDER_PIN = 21.0
+        const val ORDER_TOGGLE_BLOCK = 22.0
+        const val ORDER_TOGGLE_CALL_BLOCK = 23.0
+        const val ORDER_TOGGLE_CLEANUP = 24.0
+
+        const val ORDER_HEADER_OPTIMIZATION = 30.0
+        const val ORDER_CLEAN_FILES = 31.0
+        const val ORDER_CLEAN_MEMORY = 32.0
+        const val ORDER_TOGGLE_POCKET_MODE = 33.0
     }
 }
 

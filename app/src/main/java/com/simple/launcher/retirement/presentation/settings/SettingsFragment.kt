@@ -20,6 +20,7 @@ import com.simple.launcher.retirement.presentation.sendDeeplinkWithBackStack
 import com.simple.launcher.retirement.utils.AppEvent
 import com.simple.launcher.retirement.utils.AppEventBus
 import com.simple.launcher.retirement.utils.background.setBackground
+import com.simple.launcher.retirement.utils.exts.SpanSizeLookupViewItem
 import com.simple.launcher.retirement.utils.image.setImage
 import com.simple.launcher.retirement.utils.lifecycle.observe
 import com.simple.launcher.retirement.utils.permission.PermissionManager
@@ -45,7 +46,13 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
-        binding.rvSettings.layoutManager = GridLayoutManager(requireContext(), 2)
+        val layoutManager = GridLayoutManager(requireContext(), 2)
+        layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+            override fun getSpanSize(position: Int): Int {
+                return (viewModel.items.value.getOrNull(position) as? SpanSizeLookupViewItem)?.getSpanSize() ?: 1
+            }
+        }
+        binding.rvSettings.layoutManager = layoutManager
     }
 
     override fun observeData() {

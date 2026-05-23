@@ -3,6 +3,9 @@
 
     <!-- Settings -->
     <string name="settings_title">Cài đặt</string>
+    <string name="setting_header_general">Thiết lập chung</string>
+    <string name="setting_header_security">Bảo mật &amp; Bảo vệ</string>
+    <string name="setting_header_optimization">Tối ưu &amp; Tiện ích</string>
     <string name="setting_pin">Thiết lập mã PIN</string>
     <string name="setting_app_list">Thiết lập danh sách app</string>
     <string name="setting_default_launcher">Thiết lập launcher mặc định</string>

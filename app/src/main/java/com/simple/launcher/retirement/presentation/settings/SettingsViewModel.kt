@@ -57,11 +57,10 @@ class SettingsViewModel : BaseViewModel() {
 
         // ── Build base slots ──────────────────────────────────────────────────
         val baseSlots = buildList<Pair<Double, List<ViewItem>>> {
-            if (hasPin) {
-                add(SettingItem.ORDER_PIN to listOf(
-                    SettingItem(SettingItem.ID_PIN, R.string.setting_pin.toSettingRichText(), ImageRes(android.R.drawable.ic_lock_idle_lock))
-                ))
-            }
+            // Group 1: General
+            add(SettingItem.ORDER_HEADER_GENERAL to listOf(
+                SettingHeaderItem(R.string.setting_header_general.toSettingRichText())
+            ))
             add(SettingItem.ORDER_DEFAULT_LAUNCHER to listOf(
                 SettingItem(SettingItem.ID_DEFAULT_LAUNCHER, R.string.setting_default_launcher.toSettingRichText(), ImageRes(android.R.drawable.ic_menu_manage))
             ))
@@ -70,6 +69,19 @@ class SettingsViewModel : BaseViewModel() {
             ))
             add(SettingItem.ORDER_CONTACT_LIST to listOf(
                 SettingItem(SettingItem.ID_CONTACT_LIST, R.string.setting_contact_list.toSettingRichText(), ImageRes(android.R.drawable.ic_menu_call))
+            ))
+
+            // Group 2: Security & Protection
+            add(SettingItem.ORDER_HEADER_SECURITY to listOf(
+                SettingHeaderItem(R.string.setting_header_security.toSettingRichText())
+            ))
+            if (hasPin)add(SettingItem.ORDER_PIN to listOf(
+                SettingItem(SettingItem.ID_PIN, R.string.setting_pin.toSettingRichText(), ImageRes(android.R.drawable.ic_lock_idle_lock))
+            ))
+
+            // Group 3: Optimization & Utilities
+            add(SettingItem.ORDER_HEADER_OPTIMIZATION to listOf(
+                SettingHeaderItem(R.string.setting_header_optimization.toSettingRichText())
             ))
             add(SettingItem.ORDER_CLEAN_FILES to listOf(
                 SettingItem(SettingItem.ID_CLEAN_FILES, R.string.setting_clean_files.toSettingRichText(), ImageRes(android.R.drawable.ic_menu_delete))
