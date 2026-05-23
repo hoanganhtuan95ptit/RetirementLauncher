@@ -108,22 +108,19 @@ class PinSetupFragment : BaseFragment<FragmentPinSetupBinding>() {
             binding.root.setBackground(background)
         }
 
+        viewModel.instruction.observe(this) { instruction ->
+            binding.tvInstruction.setText(instruction)
+        }
+
         viewModel.state.observe(this) { state ->
             resetPin()
             when (state) {
-                PinSetupViewModel.State.ENTER_NEW_PIN -> {
-                    binding.tvInstruction.setText(getString(R.string.pin_enter_new).toRich())
-                }
-
-                PinSetupViewModel.State.CONFIRM_NEW_PIN -> {
-                    binding.tvInstruction.setText(getString(R.string.pin_confirm_new).toRich())
-                }
-
                 PinSetupViewModel.State.SUCCESS -> {
                     Toast.makeText(context, R.string.pin_setup_success, Toast.LENGTH_SHORT).show()
                     Pin.PinEventBus.post(Pin.PinSetupSuccess)
                     requireActivity().onBackPressedDispatcher.onBackPressed()
                 }
+                else -> Unit
             }
         }
 

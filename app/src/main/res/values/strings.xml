@@ -41,6 +41,11 @@
 
     <!-- Clean Memory -->
     <string name="clean_memory_title">Giải phóng bộ nhớ</string>
+    <string name="clean_memory_ram_label">RAM ĐANG DÙNG</string>
+    <string name="clean_memory_stat_used">Đang dùng</string>
+    <string name="clean_memory_stat_free">Còn trống</string>
+    <string name="clean_memory_stat_total">Tổng cộng</string>
+    <string name="clean_memory_result_sub">Hệ thống đã được tối ưu</string>
     <string name="clean_memory_desc">Tối ưu hóa hệ thống bằng cách đóng các ứng dụng\nchạy ngầm không cần thiết.</string>
     <string name="clean_memory_start">Tăng tốc ngay</string>
     <string name="clean_memory_running">Đang tối ưu hệ thống...</string>
@@ -50,6 +55,7 @@
     <string name="clean_memory_toast">Đã giải phóng %1$d MB RAM</string>
 
     <!-- Contacts -->
+    <string name="contact_tap_to_call">Gọi ngay</string>
     <string name="contact_list_title">Chọn liên hệ nhanh</string>
     <string name="contact_list_saved">Đã lưu danh sách liên hệ</string>
     <string name="contact_permission_denied">Cần quyền truy cập danh bạ để sử dụng tính năng này</string>
@@ -75,6 +81,8 @@
     <string name="home_header_contacts">Liên hệ nhanh</string>
 
     <!-- Block -->
+    <string name="block_title">Ứng dụng bị chặn</string>
+    <string name="block_desc">Ứng dụng này không có trong danh sách được phép sử dụng. Vui lòng liên hệ quản trị viên.</string>
     <string name="block_go_home">Quay về màn hình chính</string>
 
     <!-- Permissions & Setup -->
@@ -85,6 +93,9 @@
     <string name="permission_grant">Cấp quyền ngay</string>
     <string name="permission_skip">Bỏ qua</string>
     <string name="pin_verify_action">Xác nhận</string>
+    <string name="pin_verify_title">Xác nhận mã PIN</string>
+    <string name="pin_verify_desc">Vui lòng nhập mã PIN để thay đổi thiết lập này.</string>
+    <string name="pin_key_delete_desc">Xoá</string>
 
     <!-- File Permission -->
     <string name="file_permission_title">Bảo vệ bộ nhớ</string>
@@ -101,6 +112,7 @@
     <string name="overlay_permission_desc">Ứng dụng cần quyền \'Hiển thị trên các ứng dụng khác\' để có thể hiển thị màn hình khóa khi một ứng dụng bị chặn được mở.</string>
     <string name="overlay_permission_highlight">\'Hiển thị trên các ứng dụng khác\'</string>
     <!-- PIN Setup -->
+    <string name="pin_setup_title">Nhập mã PIN</string>
     <string name="pin_enter_current">Nhập mã PIN hiện tại</string>
     <string name="pin_enter_new">Nhập mã PIN mới (6 chữ số)</string>
     <string name="pin_confirm_new">Xác nhận mã PIN mới</string>

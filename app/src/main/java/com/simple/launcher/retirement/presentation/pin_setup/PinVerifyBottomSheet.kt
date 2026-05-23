@@ -45,6 +45,14 @@ class PinVerifyBottomSheet : BaseBottomSheetDialogFragment<BottomSheetPinVerifyB
         setupNumpad()
     }
 
+    override fun observeData() {
+        super.observeData()
+        viewModel.content.observe(this) { state ->
+            binding.tvTitle.setText(state.title)
+            binding.tvDesc.setText(state.desc)
+        }
+    }
+
     private fun setupNumpad() {
         val repository = PreferenceRepository.instance
 

@@ -38,6 +38,10 @@ class BlockActivity : BaseActivity<ActivityBlockBinding>() {
 
     override fun observeData() {
         super.observeData()
+        viewModel.content.observe(this) { state ->
+            binding.tvTitle.setText(state.title)
+            binding.tvMessage.setText(state.message)
+        }
         // Activity implement LifecycleOwner → dùng overload observe(lifecycleOwner)
         viewModel.action.observe(this) { state ->
             binding.btnGoHome.tvAction.setText(state.text)

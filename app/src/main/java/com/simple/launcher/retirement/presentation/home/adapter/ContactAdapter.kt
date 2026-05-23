@@ -19,12 +19,14 @@ import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
 
 data class ContactHomeItem(
     val name: RichText,
+    val tapToCallLabel: RichText,
     val photo: RichImage,
     val entity: ContactEntity  // chỉ dùng cho onclick
 ) : HomeItem {
     override fun areItemsTheSame(): List<Any> = listOf(entity.id)
     override fun getContentsCompare(): List<Pair<Any, String>> = listOf(
         name to "name",
+        tapToCallLabel to "tapToCallLabel",
         photo to "photo"
     )
     override val spanSize: Int = HomeItem.TOTAL_COLUMNS / 2 // half width
@@ -63,6 +65,9 @@ class ContactAdapter : ViewItemAdapter<ContactHomeItem, ItemContactBinding>() {
         super.onBindViewHolder(binding, viewType, position, item, payloads)
         if (payloads.isEmpty() || payloads.contains("name")) {
             binding.tvName.setText(item.name)
+        }
+        if (payloads.isEmpty() || payloads.contains("tapToCallLabel")) {
+            binding.tvTapToCall.setText(item.tapToCallLabel)
         }
         if (payloads.isEmpty() || payloads.contains("photo")) {
             binding.ivPhoto.setImage(item.photo)

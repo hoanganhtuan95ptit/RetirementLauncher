@@ -71,6 +71,15 @@ class CleanMemoryFragment : BaseFragment<FragmentCleanMemoryBinding>() {
             binding.tvStatTotal.text = update.info.totalGB
         }
 
+        viewModel.labels.observe(this) { labels ->
+            binding.tvGaugeLabel.text = labels.gaugeLabel
+            binding.tvStatUsedLabel.text = labels.statUsedLabel
+            binding.tvStatFreeLabel.text = labels.statFreeLabel
+            binding.tvStatTotalLabel.text = labels.statTotalLabel
+            binding.tvResultSub.text = labels.resultSubLabel
+            binding.tvStatus.text = labels.statusDesc
+        }
+
         viewModel.action.observe(this) { state ->
             binding.tvBtnLabel.setText(state.text)
         }

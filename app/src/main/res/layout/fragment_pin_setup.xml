@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?android:attr/colorBackground">
@@ -19,8 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
-        android:text="Nhập mã PIN"
-        android:textColor="?android:attr/textColorPrimary"
+        tools:text="@string/pin_enter_new"
         android:textSize="22sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -117,21 +117,24 @@
                 style="@style/PinNumpadKey"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:text="1" />
+                android:text="1"
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:id="@+id/btnKey2"
                 style="@style/PinNumpadKey"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:text="2" />
+                android:text="2"
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:id="@+id/btnKey3"
                 style="@style/PinNumpadKey"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:text="3" />
+                android:text="3"
+                tools:ignore="HardcodedText" />
 
         </LinearLayout>
 
@@ -146,21 +149,24 @@
                 style="@style/PinNumpadKey"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:text="4" />
+                android:text="4"
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:id="@+id/btnKey5"
                 style="@style/PinNumpadKey"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:text="5" />
+                android:text="5"
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:id="@+id/btnKey6"
                 style="@style/PinNumpadKey"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:text="6" />
+                android:text="6"
+                tools:ignore="HardcodedText" />
 
         </LinearLayout>
 
@@ -175,21 +181,24 @@
                 style="@style/PinNumpadKey"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:text="7" />
+                android:text="7"
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:id="@+id/btnKey8"
                 style="@style/PinNumpadKey"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:text="8" />
+                android:text="8"
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:id="@+id/btnKey9"
                 style="@style/PinNumpadKey"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:text="9" />
+                android:text="9"
+                tools:ignore="HardcodedText" />
 
         </LinearLayout>
 
@@ -209,7 +218,8 @@
                 style="@style/PinNumpadKey"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:text="0" />
+                android:text="0"
+                tools:ignore="HardcodedText" />
 
             <ImageView
                 android:id="@+id/btnKeyDelete"
@@ -217,7 +227,7 @@
                 android:layout_height="72dp"
                 android:layout_weight="1"
                 android:background="@drawable/bg_numpad_key"
-                android:contentDescription="Xoá"
+                android:contentDescription="@string/pin_key_delete_desc"
                 android:padding="22dp"
                 android:src="@drawable/ic_clear" />
 

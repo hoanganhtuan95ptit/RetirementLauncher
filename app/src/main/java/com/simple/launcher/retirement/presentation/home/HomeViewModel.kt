@@ -27,6 +27,7 @@ import com.simple.launcher.retirement.utils.text.TextSize
 import com.simple.launcher.retirement.utils.text.toRich
 import com.simple.launcher.retirement.utils.text.with
 import com.simple.launcher.retirement.utils.text.withFirst
+import com.simple.launcher.retirement.utils.theme.getColor
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -82,7 +83,8 @@ class HomeViewModel(
         flow2 = themes,
         flow3 = getHomeAppsUseCase.asFlow(),
         initialValue = 3.0 to emptyList()
-    ) { strings, _, entities ->
+    ) { strings, themeMap, entities ->
+        val textColor = themeMap.getColor(android.R.attr.textColorPrimary)
         val list = arrayListOf<ViewItem>()
 
         // Apps section
@@ -117,7 +119,12 @@ class HomeViewModel(
                 } else {
                     ImageRes(R.drawable.ic_home_contact_24dp)
                 }
-                ContactHomeItem(contact.entity.name.toRich(), photo, contact.entity)
+                ContactHomeItem(
+                    name = contact.entity.name.toRich().with(ForegroundColor(textColor)),
+                    tapToCallLabel = strings.getString(R.string.contact_tap_to_call).toRich().with(ForegroundColor(textColor)),
+                    photo = photo,
+                    entity = contact.entity
+                )
             }.let { list.addAll(it) }
         }
 

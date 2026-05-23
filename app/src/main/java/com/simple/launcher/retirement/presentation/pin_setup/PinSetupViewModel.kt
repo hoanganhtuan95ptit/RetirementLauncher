@@ -10,6 +10,10 @@ import com.simple.launcher.retirement.presentation.base.buildBackIcon
 import com.simple.launcher.retirement.presentation.base.buildToolbarTitle
 import com.simple.launcher.retirement.utils.combineState
 import com.simple.launcher.retirement.utils.string.getString
+import com.simple.launcher.retirement.utils.text.ForegroundColor
+import com.simple.launcher.retirement.utils.text.RichText
+import com.simple.launcher.retirement.utils.text.toRich
+import com.simple.launcher.retirement.utils.text.with
 import com.simple.launcher.retirement.utils.theme.getColor
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -39,6 +43,21 @@ class PinSetupViewModel(
             title = buildToolbarTitle(stringMap.getString(R.string.setting_pin), color),
             backIcon = buildBackIcon(color)
         )
+    }
+
+    val instruction: StateFlow<RichText> = combineState(
+        flow1 = strings,
+        flow2 = themes,
+        flow3 = _state,
+        initialValue = "".toRich()
+    ) { stringMap, themeMap, state ->
+        val color = themeMap.getColor(android.R.attr.textColorPrimary)
+        val resId = when (state) {
+            State.ENTER_NEW_PIN -> R.string.pin_enter_new
+            State.CONFIRM_NEW_PIN -> R.string.pin_confirm_new
+            State.SUCCESS -> R.string.pin_enter_new
+        }
+        stringMap.getString(resId).toRich().with(ForegroundColor(color))
     }
 
     val action: StateFlow<ActionState> = combineState(

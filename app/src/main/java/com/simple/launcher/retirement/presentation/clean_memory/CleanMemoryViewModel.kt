@@ -31,6 +31,15 @@ enum class BoostState { IDLE, BOOSTING, DONE }
 /** Bọc RamInfo kèm flag animate để Fragment quyết định animation gauge. */
 data class RamUpdate(val info: RamInfo, val animate: Boolean)
 
+data class CleanMemoryLabels(
+    val gaugeLabel: String = "",
+    val statUsedLabel: String = "",
+    val statFreeLabel: String = "",
+    val statTotalLabel: String = "",
+    val resultSubLabel: String = "",
+    val statusDesc: String = ""
+)
+
 class CleanMemoryViewModel : BaseViewModel() {
 
     private val repository = MemoryRepository.instance
@@ -46,6 +55,23 @@ class CleanMemoryViewModel : BaseViewModel() {
         ToolbarState(
             title = buildToolbarTitle(stringMap.getString(R.string.clean_memory_title), color),
             backIcon = buildBackIcon(color)
+        )
+    }
+
+    // ── Static labels ─────────────────────────────────────────────────────────
+
+    val labels: StateFlow<CleanMemoryLabels> = combineState(
+        flow1 = strings,
+        flow2 = themes,
+        initialValue = CleanMemoryLabels()
+    ) { stringMap, _ ->
+        CleanMemoryLabels(
+            gaugeLabel = stringMap.getString(R.string.clean_memory_ram_label),
+            statUsedLabel = stringMap.getString(R.string.clean_memory_stat_used),
+            statFreeLabel = stringMap.getString(R.string.clean_memory_stat_free),
+            statTotalLabel = stringMap.getString(R.string.clean_memory_stat_total),
+            resultSubLabel = stringMap.getString(R.string.clean_memory_result_sub),
+            statusDesc = stringMap.getString(R.string.clean_memory_desc)
         )
     }
 

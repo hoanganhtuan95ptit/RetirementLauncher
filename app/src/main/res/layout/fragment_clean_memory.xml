@@ -2,6 +2,7 @@
 <androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
@@ -28,10 +29,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="RAM ĐANG DÙNG"
             android:textColor="@color/memory_text_secondary"
             android:textSize="11sp"
             android:letterSpacing="0.08"
+            tools:text="@string/clean_memory_ram_label"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar" />
@@ -51,10 +52,10 @@
             android:id="@+id/tvPercent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0%"
             android:textColor="@color/memory_text_primary"
             android:textSize="34sp"
             android:fontFamily="sans-serif-medium"
+            tools:text="0%"
             app:layout_constraintBottom_toTopOf="@id/tvRamDetail"
             app:layout_constraintEnd_toEndOf="@id/memoryGauge"
             app:layout_constraintStart_toStartOf="@id/memoryGauge"
@@ -65,9 +66,9 @@
             android:id="@+id/tvRamDetail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="-- / -- GB"
             android:textColor="@color/memory_text_secondary"
             android:textSize="12sp"
+            tools:text="-- / -- GB"
             app:layout_constraintBottom_toBottomOf="@id/memoryGauge"
             app:layout_constraintEnd_toEndOf="@id/memoryGauge"
             app:layout_constraintStart_toStartOf="@id/memoryGauge"
@@ -102,17 +103,18 @@
                     android:id="@+id/tvStatUsed"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="--"
                     android:textColor="@color/memory_stat_used"
                     android:textSize="18sp"
-                    android:fontFamily="sans-serif-medium" />
+                    android:fontFamily="sans-serif-medium"
+                    tools:text="--" />
                 <TextView
+                    android:id="@+id/tvStatUsedLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Đang dùng"
+                    android:layout_marginTop="2dp"
                     android:textColor="@color/memory_text_secondary"
                     android:textSize="12sp"
-                    android:layout_marginTop="2dp" />
+                    tools:text="@string/clean_memory_stat_used" />
             </LinearLayout>
 
             <LinearLayout
@@ -130,17 +132,18 @@
                     android:id="@+id/tvStatFree"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="--"
                     android:textColor="@color/memory_stat_free"
                     android:textSize="18sp"
-                    android:fontFamily="sans-serif-medium" />
+                    android:fontFamily="sans-serif-medium"
+                    tools:text="--" />
                 <TextView
+                    android:id="@+id/tvStatFreeLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Còn trống"
+                    android:layout_marginTop="2dp"
                     android:textColor="@color/memory_text_secondary"
                     android:textSize="12sp"
-                    android:layout_marginTop="2dp" />
+                    tools:text="@string/clean_memory_stat_free" />
             </LinearLayout>
 
             <LinearLayout
@@ -157,17 +160,18 @@
                     android:id="@+id/tvStatTotal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="--"
                     android:textColor="@color/memory_text_primary"
                     android:textSize="18sp"
-                    android:fontFamily="sans-serif-medium" />
+                    android:fontFamily="sans-serif-medium"
+                    tools:text="--" />
                 <TextView
+                    android:id="@+id/tvStatTotalLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Tổng cộng"
+                    android:layout_marginTop="2dp"
                     android:textColor="@color/memory_text_secondary"
                     android:textSize="12sp"
-                    android:layout_marginTop="2dp" />
+                    tools:text="@string/clean_memory_stat_total" />
             </LinearLayout>
         </LinearLayout>
 
@@ -213,9 +217,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
-                    android:text="Hệ thống đã được tối ưu"
                     android:textColor="@color/memory_text_secondary"
-                    android:textSize="11sp" />
+                    android:textSize="11sp"
+                    tools:text="@string/clean_memory_result_sub" />
             </LinearLayout>
         </LinearLayout>
 
@@ -228,10 +232,10 @@
             android:layout_marginEnd="16dp"
             android:layout_marginTop="12dp"
             android:gravity="center"
-            android:text="@string/clean_memory_desc"
             android:textColor="@color/memory_text_secondary"
             android:textSize="13sp"
             android:lineSpacingMultiplier="1.4"
+            tools:text="@string/clean_memory_desc"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cardResult" />
@@ -267,10 +271,10 @@
                 android:id="@+id/tvBtnLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/clean_memory_start"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp"
-                android:fontFamily="sans-serif-medium" />
+                android:fontFamily="sans-serif-medium"
+                tools:text="@string/clean_memory_start" />
 
         </LinearLayout>
 
