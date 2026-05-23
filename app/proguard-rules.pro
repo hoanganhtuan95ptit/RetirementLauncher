@@ -32,6 +32,16 @@
     public <init>(android.content.Context, androidx.work.WorkerParameters);
 }
 
+# Resources & Config (Safety for dynamic resource access)
+-keep class **.R$* {
+    public static <fields>;
+}
+-keep class **.BuildConfig { *; }
+
+# Advertising (AdMob / Play Services Ads)
+-keep class com.google.android.gms.ads.** { *; }
+-keep class com.google.ads.** { *; }
+
 # General suppression
 -dontnote **
 -dontwarn **

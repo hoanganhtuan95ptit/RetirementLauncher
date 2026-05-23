@@ -8,6 +8,7 @@ import android.os.Looper
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
+import android.util.Log
 import android.view.FrameMetrics
 import android.view.Gravity
 import android.view.ViewGroup
@@ -30,18 +31,14 @@ class FpsTrackingService : ActivityCreatedService {
 
     override fun setup(fragmentActivity: FragmentActivity) {
         if (!BuildConfig.DEBUG) return
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) return
 
+        Log.d("tuanha", "setup: ")
         fragmentActivity.lifecycle.addObserver(
             ActivityPerformanceTracker(fragmentActivity)
         )
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
-    private class ActivityPerformanceTracker(
-        private val activity: FragmentActivity,
-    ) : DefaultLifecycleObserver,
-        Window.OnFrameMetricsAvailableListener {
+    private class ActivityPerformanceTracker(private val activity: FragmentActivity) : DefaultLifecycleObserver, Window.OnFrameMetricsAvailableListener {
 
         companion object {
 

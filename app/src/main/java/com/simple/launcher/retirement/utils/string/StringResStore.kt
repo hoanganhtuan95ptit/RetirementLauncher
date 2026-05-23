@@ -1,6 +1,7 @@
 package com.simple.launcher.retirement.utils.string
 
 import android.content.Context
+import android.util.Log
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -28,6 +29,7 @@ object StringResStore {
                     val resId = field.getInt(null)
                     val value = resources.getString(resId)
 
+                    Log.d("tuanha", "load: ${field.name} resId:$resId value:$value")
                     nameMap[field.name] = value
                     idMap[resId] = value
                 }
