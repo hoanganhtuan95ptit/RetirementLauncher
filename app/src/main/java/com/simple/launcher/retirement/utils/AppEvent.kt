@@ -24,6 +24,12 @@ sealed class AppEvent {
     object PermissionAccept : PermissionResult()
     object PermissionCancel : PermissionResult()
 
+
+    sealed class PinResult: AppEvent()
+    object PinCancel : PinResult()
+    object PinSetupSuccess : PinResult()
+    object PinVerifySuccess : PinResult()
+
     // ── Chọn app trong danh sách ────────────────────────────────────────────
     data class AppSelected(val entity: SelectableAppEntity) : AppEvent()
 

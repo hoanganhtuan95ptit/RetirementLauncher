@@ -15,6 +15,8 @@ import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.databinding.BottomSheetPinVerifyBinding
 import com.simple.launcher.retirement.domain.repository.PreferenceRepository
 import com.simple.launcher.retirement.presentation.base.BaseBottomSheetDialogFragment
+import com.simple.launcher.retirement.utils.AppEvent
+import com.simple.launcher.retirement.utils.AppEventBus
 import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.lifecycle.observe
 import com.simple.launcher.retirement.utils.text.setText
@@ -78,7 +80,7 @@ class PinVerifyBottomSheet : BaseBottomSheetDialogFragment<BottomSheetPinVerifyB
                         val savedPin = repository.getPin()
                         if (pinBuilder.toString() == savedPin) {
                             pinVerified = true
-                            Pin.PinEventBus.post(Pin.PinVerifySuccess)
+                            AppEventBus.post(AppEvent.PinVerifySuccess)
                             dismiss()
                         } else {
                             Toast.makeText(context, R.string.pin_error_incorrect, Toast.LENGTH_SHORT).show()
@@ -116,7 +118,7 @@ class PinVerifyBottomSheet : BaseBottomSheetDialogFragment<BottomSheetPinVerifyB
         super.onDismiss(dialog)
         // Chỉ post Cancel khi người dùng thực sự huỷ (không phải sau khi xác thực thành công)
         if (!pinVerified) {
-            Pin.PinEventBus.post(Pin.PinCancel)
+            AppEventBus.post(AppEvent.PinCancel)
         }
     }
 

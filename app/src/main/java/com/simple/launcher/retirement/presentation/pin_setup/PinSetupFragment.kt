@@ -15,6 +15,8 @@ import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.databinding.FragmentPinSetupBinding
 import com.simple.launcher.retirement.domain.usecase.SavePinUseCase
 import com.simple.launcher.retirement.presentation.base.BaseFragment
+import com.simple.launcher.retirement.utils.AppEvent
+import com.simple.launcher.retirement.utils.AppEventBus
 import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.image.setImage
 import com.simple.launcher.retirement.utils.lifecycle.observe
@@ -117,7 +119,7 @@ class PinSetupFragment : BaseFragment<FragmentPinSetupBinding>() {
             when (state) {
                 PinSetupViewModel.State.SUCCESS -> {
                     Toast.makeText(context, R.string.pin_setup_success, Toast.LENGTH_SHORT).show()
-                    Pin.PinEventBus.post(Pin.PinSetupSuccess)
+                    AppEventBus.post(AppEvent.PinSetupSuccess)
                     requireActivity().onBackPressedDispatcher.onBackPressed()
                 }
                 else -> Unit
@@ -147,8 +149,7 @@ class PinSetupFragment : BaseFragment<FragmentPinSetupBinding>() {
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.d("tuanha", "onDestroy: ")
-        Pin.PinEventBus.post(Pin.PinCancel)
+        AppEventBus.post(AppEvent.PinCancel)
     }
 }
 
