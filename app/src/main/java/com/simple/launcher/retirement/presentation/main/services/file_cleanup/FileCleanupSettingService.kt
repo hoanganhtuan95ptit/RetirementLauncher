@@ -18,7 +18,6 @@ import com.simple.launcher.retirement.presentation.worker.FileWatcherService
 import com.simple.launcher.retirement.utils.combineState
 import com.simple.launcher.retirement.utils.image.ImageRes
 import com.simple.launcher.retirement.utils.permission.PermissionManager
-import com.simple.launcher.retirement.utils.services.FragmentViewCreatedService
 import com.simple.launcher.retirement.utils.services.launchCollect
 import com.simple.launcher.retirement.utils.string.getString
 import com.simple.launcher.retirement.utils.text.ForegroundColor
@@ -44,10 +43,22 @@ class FileCleanupSettingService : FragmentCreatedService {
         settingsViewModel = fragment.viewModels<SettingsViewModel>().value
         fileCleanupSettingViewModel = fragment.viewModels<FileCleanupSettingViewModel>().value
 
+        // Cập nhật UI theo trạng thái cấu hình
         fileCleanupSettingViewModel.items.launchCollect(fragment) { items ->
             settingsViewModel.updateItem(SettingItem.ORDER_TOGGLE_CLEANUP, items)
         }
 
+        // Lắng nghe cấu hình on/off từ cache → tự bật/tắt FileWatcherService
+        PreferenceRepository.instance.isFileCleanupEnabledFlow().launchCollect(fragment) { isEnabled ->
+            val context = fragment.requireContext()
+            if (isEnabled) {
+                (fragment.activity as? MainActivity)?.startFileWatcherService()
+            } else {
+                context.stopService(Intent(context, FileWatcherService::class.java))
+            }
+        }
+
+        // Xử lý sự kiện toggle từ người dùng
         AppEventBus.events.filterIsInstance<AppEvent.SettingClicked>().launchCollect(fragment) { event ->
             val item = event.item
             if (item.id == SettingItem.ID_TOGGLE_CLEANUP) {
@@ -75,13 +86,8 @@ class FileCleanupSettingService : FragmentCreatedService {
             return
         }
 
+        // Chỉ set preference — Flow bên trên sẽ tự start/stop service
         repository.setFileCleanupEnabled(isTurningOn)
-
-        if (isTurningOn) {
-            (fragment.activity as? MainActivity)?.startFileWatcherService()
-        } else {
-            context.stopService(Intent(context, FileWatcherService::class.java))
-        }
     }
 
     /**

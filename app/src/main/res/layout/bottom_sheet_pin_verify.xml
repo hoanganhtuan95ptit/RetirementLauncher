@@ -10,17 +10,19 @@
 
     <TextView
         android:id="@+id/tvTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:textSize="20sp"
         android:textStyle="bold"
         tools:text="@string/pin_verify_title" />
 
     <TextView
         android:id="@+id/tvDesc"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:gravity="center"
         tools:text="@string/pin_verify_desc" />
 
     <!-- PIN dot indicators -->

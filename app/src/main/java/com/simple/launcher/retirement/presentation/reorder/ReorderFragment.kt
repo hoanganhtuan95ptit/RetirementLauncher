@@ -19,6 +19,7 @@ import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.databinding.FragmentAppListBinding
 import com.simple.launcher.retirement.domain.repository.AppRepository
 import com.simple.launcher.retirement.domain.repository.ContactRepository
+import com.simple.launcher.retirement.domain.repository.PreferenceRepository
 import com.simple.launcher.retirement.presentation.base.BaseFragment
 import com.simple.launcher.retirement.utils.AppEvent
 import com.simple.launcher.retirement.utils.AppEventBus
@@ -196,10 +197,31 @@ class ReorderFragment : BaseFragment<FragmentAppListBinding>() {
     }
 
     private fun onSaveSuccess() {
+        // Kích hoạt tự động xóa APK và giám sát ứng dụng sau khi thiết lập xong
+        activateAutoFeatures()
+
         val messageRes = if (type == ReorderType.APPS) R.string.app_list_saved else R.string.contact_list_saved
         android.widget.Toast.makeText(context, messageRes, android.widget.Toast.LENGTH_SHORT).show()
 
         requireActivity().onBackPressedDispatcher.onBackPressed()
+    }
+
+    /**
+     * Tự động bật cấu hình xóa APK và giám sát ứng dụng khi thiết lập
+     * danh sách app hoặc liên hệ nhanh hoàn tất.
+     * Việc start/stop service thực tế do AppMonitoringSettingService
+     * và FileCleanupSettingService xử lý qua Flow.
+     */
+    private fun activateAutoFeatures() {
+        val repository = PreferenceRepository.instance
+
+        if (!repository.isFileCleanupEnabled()) {
+            repository.setFileCleanupEnabled(true)
+        }
+
+        if (!repository.isAppBlockEnabled()) {
+            repository.setAppBlockEnabled(true)
+        }
     }
 }
 

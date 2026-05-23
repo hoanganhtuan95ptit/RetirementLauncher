@@ -35,7 +35,6 @@ class AppMonitoringSettingViewModel : BaseViewModel() {
 
     private val repository = PreferenceRepository.instance
 
-
     val refreshTrigger = MutableStateFlow(0)
 
     val isAppBlockEnabledFlow = repository.isAppBlockEnabledFlow()
@@ -51,7 +50,6 @@ class AppMonitoringSettingViewModel : BaseViewModel() {
             isSwitch = true,
             isChecked = isEnabled
         ).let {
-
             listOf(it)
         }
     }
@@ -70,15 +68,26 @@ class AppMonitoringSettingService : FragmentCreatedService {
         settingsViewModel = fragment.viewModels<SettingsViewModel>().value
         appMonitoringSettingViewModel = fragment.viewModels<AppMonitoringSettingViewModel>().value
 
+        // Cập nhật UI theo trạng thái cấu hình
         appMonitoringSettingViewModel.items.launchCollect(fragment) { items ->
             settingsViewModel.updateItem(SettingItem.ORDER_TOGGLE_BLOCK, items)
         }
 
+        // Lắng nghe cấu hình on/off từ cache → tự bật/tắt AppMonitoringService
+        PreferenceRepository.instance.isAppBlockEnabledFlow().launchCollect(fragment) { isEnabled ->
+            val context = fragment.requireContext()
+            if (isEnabled) {
+                (fragment.activity as? MainActivity)?.startAppMonitoringService()
+            } else {
+                context.stopService(Intent(context, AppMonitoringService::class.java))
+            }
+        }
+
+        // Xử lý sự kiện toggle từ người dùng
         AppEventBus.events.filterIsInstance<AppEvent.SettingClicked>().launchCollect(fragment) { event ->
             val item = event.item
             if (item.id == SettingItem.ID_TOGGLE_BLOCK) {
                 handleToggle(fragment, item)
-                // Luôn refresh sau handleToggle để đồng bộ UI với trạng thái thực từ repository
                 appMonitoringSettingViewModel.refresh()
             }
         }
@@ -102,13 +111,7 @@ class AppMonitoringSettingService : FragmentCreatedService {
             return
         }
 
+        // Chỉ set preference — Flow bên trên sẽ tự start/stop service
         repository.setAppBlockEnabled(isTurningOn)
-
-        if (isTurningOn) {
-            (fragment.activity as? MainActivity)?.startAppMonitoringService()
-        } else {
-            val intent = Intent(context, AppMonitoringService::class.java)
-            context.stopService(intent)
-        }
     }
 }
