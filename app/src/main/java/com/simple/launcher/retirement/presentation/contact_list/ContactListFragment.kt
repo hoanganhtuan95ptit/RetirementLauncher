@@ -129,11 +129,6 @@ class ContactListFragment : BaseFragment<FragmentAppListBinding>() {
         sendReorderContactsDeeplink(orderedIds)
     }
 
-    private fun onSaveSuccess() {
-        Toast.makeText(context, R.string.contact_list_saved, Toast.LENGTH_SHORT).show()
-        requireActivity().onBackPressedDispatcher.onBackPressed()
-    }
-
     private fun checkPermissionAndLoad() {
         if (!PermissionManager.hasContactPermission()) {
             requestPermissionLauncher.launch(Manifest.permission.READ_CONTACTS)

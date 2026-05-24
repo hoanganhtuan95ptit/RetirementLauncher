@@ -102,7 +102,7 @@ class AppListFragment : BaseFragment<FragmentAppListBinding>() {
     }
 
     private fun navigateToReorder() {
-        val currentSelected = viewModel.items.value.filter { it.isSelected }.map { it.entity.app.packageName }.toSet()
+        val currentSelected = viewModel.getAllSelectedIds()
         if (currentSelected.isEmpty()) {
             Toast.makeText(context, R.string.app_list_empty_error, Toast.LENGTH_SHORT).show()
             return
@@ -114,15 +114,9 @@ class AppListFragment : BaseFragment<FragmentAppListBinding>() {
         // 1. Giữ lại những app cũ vẫn đang được chọn (đúng thứ tự cũ)
         val orderedIds = savedIds.filter { it in currentSelected }.toMutableList()
         // 2. Thêm những app mới được chọn vào cuối
-        val newIds = currentSelected.filter { it !in savedIds }
-        orderedIds.addAll(newIds)
+        orderedIds.addAll(currentSelected.filter { it !in savedIds })
 
         sendReorderAppsDeeplink(orderedIds)
-    }
-
-    private fun onSaveSuccess() {
-        Toast.makeText(context, R.string.app_list_saved, Toast.LENGTH_SHORT).show()
-        requireActivity().onBackPressedDispatcher.onBackPressed()
     }
 }
 

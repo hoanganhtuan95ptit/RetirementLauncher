@@ -14,6 +14,7 @@ import com.simple.launcher.retirement.presentation.base.buildActionState
 import com.simple.launcher.retirement.presentation.base.buildBackIcon
 import com.simple.launcher.retirement.presentation.base.buildSearchState
 import com.simple.launcher.retirement.presentation.base.buildToolbarTitle
+import com.simple.launcher.retirement.domain.repository.AppRepository
 import com.simple.launcher.retirement.utils.combineState
 import com.simple.launcher.retirement.utils.image.ImageDrawable
 import com.simple.launcher.retirement.utils.string.getString
@@ -72,23 +73,30 @@ class AppListViewModel(
         )
     }
 
-    // Nội bộ: domain entities
+    // Nội bộ: domain entities (không chứa trạng thái selected)
     private val _apps = MutableStateFlow<List<SelectableAppEntity>>(emptyList())
     private val _query = MutableStateFlow("")
+
+    // Tách riêng trạng thái selected — độc lập với search query
+    // Khởi tạo từ danh sách đã lưu trong cache
+    private val _selectedIds = MutableStateFlow<Set<String>>(
+        AppRepository.instance.getSelectedPackages().toSet()
+    )
 
     // Expose ra ngoài: ViewItems đã được xử lý sẵn, adapter chỉ set data
     val items: StateFlow<List<SelectableAppItem>> = combineState(
         flow1 = _apps,
         flow2 = _query,
+        flow3 = _selectedIds,
         initialValue = emptyList()
-    ) { apps, query ->
+    ) { apps, query, selectedIds ->
         apps.filter {
             query.isBlank() || it.app.label.contains(query, ignoreCase = true)
         }.map { entity ->
             SelectableAppItem(
                 label = entity.app.label.toRich(),
                 icon = ImageDrawable(entity.app.icon),
-                isSelected = entity.isSelected,
+                isSelected = entity.app.packageName in selectedIds,
                 entity = entity
             )
         }
@@ -104,17 +112,20 @@ class AppListViewModel(
 
     // Nhận entity từ EventBus (adapter gửi nguyên entity, không toggle), ViewModel xử lý toggle
     fun updateItem(entity: SelectableAppEntity) {
-        val index = _apps.value.indexOfFirst { it.app.packageName == entity.app.packageName }
-        if (index == -1) return
-        // mapIndexed tạo list mới (cần cho StateFlow emit) mà không cần bản copy MutableList trung gian
-        _apps.value = _apps.value.mapIndexed { i, item ->
-            if (i == index) item.copy(isSelected = !item.isSelected) else item
+        val packageName = entity.app.packageName
+        val current = _selectedIds.value
+        _selectedIds.value = if (packageName in current) {
+            current - packageName
+        } else {
+            current + packageName
         }
     }
 
+    /** Trả về tất cả package name đang được chọn (không phụ thuộc search query) */
+    fun getAllSelectedIds(): Set<String> = _selectedIds.value
+
     fun saveSelection() {
-        val selectedPackages = _apps.value.filter { it.isSelected }.map { it.app.packageName }
-        saveSelectedAppsUseCase(selectedPackages)
+        saveSelectedAppsUseCase(_selectedIds.value.toList())
     }
 }
 
