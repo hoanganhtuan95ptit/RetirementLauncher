@@ -1,16 +1,21 @@
 package com.simple.launcher.retirement.presentation.worker
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.app.Service
 import android.app.usage.UsageEvents
 import android.app.usage.UsageStatsManager
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Handler
 import android.os.HandlerThread
 import android.os.IBinder
 import android.os.PowerManager
 import android.util.Log
+import androidx.core.app.NotificationCompat
 import com.simple.launcher.retirement.BuildConfig
+import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.domain.repository.AppRepository
 import com.simple.launcher.retirement.domain.repository.PreferenceRepository
 import com.simple.launcher.retirement.presentation.block.BlockActivity
@@ -48,6 +53,7 @@ class AppMonitoringService : Service() {
         powerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
         usageStatsManager = getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
         systemPackages = STATIC_SYSTEM_PACKAGES + packageName
+        createNotificationChannel()
 
         // Tạo background thread riêng cho polling — không chặn main thread
         handlerThread = HandlerThread("AppMonitorThread").also { it.start() }
@@ -56,10 +62,37 @@ class AppMonitoringService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         if (BuildConfig.DEBUG) Log.d(TAG, "Service onStartCommand")
+        // Phải gọi startForeground() ngay, trước bất kỳ xử lý nào,
+        // để tránh crash BackgroundServiceStartNotAllowedException trên API 26+
+        startForeground(NOTIFICATION_ID, buildNotification())
+
         handler.removeCallbacks(monitorRunnable)
         handler.post(monitorRunnable)
         return START_STICKY
     }
+
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(
+                CHANNEL_ID,
+                "App Monitor",
+                NotificationManager.IMPORTANCE_MIN
+            ).apply {
+                setShowBadge(false)
+                description = "App monitoring service"
+            }
+            val nm = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            nm.createNotificationChannel(channel)
+        }
+    }
+
+    private fun buildNotification() = NotificationCompat.Builder(this, CHANNEL_ID)
+        .setContentTitle(getString(R.string.app_name))
+        .setSmallIcon(R.mipmap.ic_launcher)
+        .setPriority(NotificationCompat.PRIORITY_MIN)
+        .setOngoing(true)
+        .setSilent(true)
+        .build()
 
     private fun checkForegroundApp() {
         // Nếu tính năng bị tắt trong cài đặt, tự dừng service
@@ -140,6 +173,9 @@ class AppMonitoringService : Service() {
     }
 
     companion object {
+        private const val CHANNEL_ID = "app_monitor_channel"
+        private const val NOTIFICATION_ID = 1002
+
         // Tập hợp tĩnh các package hệ thống — tạo một lần duy nhất khi class load.
         // packageName của app được thêm vào khi onCreate() (dynamic).
         val STATIC_SYSTEM_PACKAGES = setOf(

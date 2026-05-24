@@ -139,14 +139,22 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         if (isServiceRunning(FileWatcherService::class.java)) return
         Log.d(TAG, "startFileWatcherService")
         val intent = Intent(this, FileWatcherService::class.java)
-        startService(intent)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(intent)
+        } else {
+            startService(intent)
+        }
     }
 
     fun startAppMonitoringService() {
         if (isServiceRunning(AppMonitoringService::class.java)) return
         Log.d(TAG, "startAppMonitoringService")
         val intent = Intent(this, AppMonitoringService::class.java)
-        startService(intent)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(intent)
+        } else {
+            startService(intent)
+        }
     }
 
     /** Kiểm tra service có đang chạy không để tránh restart không cần thiết mỗi onResume. */

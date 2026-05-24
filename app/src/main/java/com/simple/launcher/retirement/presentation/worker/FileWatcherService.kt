@@ -1,13 +1,18 @@
 package com.simple.launcher.retirement.presentation.worker
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.app.Service
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Environment
 import android.os.FileObserver
 import android.os.IBinder
 import android.util.Log
+import androidx.core.app.NotificationCompat
 import com.simple.launcher.retirement.BuildConfig
+import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.domain.repository.PreferenceRepository
 import java.io.File
 
@@ -20,9 +25,14 @@ class FileWatcherService : Service() {
     override fun onCreate() {
         super.onCreate()
         repository = PreferenceRepository.instance
+        createNotificationChannel()
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        // Phải gọi startForeground() ngay, trước bất kỳ xử lý nào,
+        // để tránh crash BackgroundServiceStartNotAllowedException trên API 26+
+        startForeground(NOTIFICATION_ID, buildNotification())
+
         if (!repository.isFileCleanupEnabled()) {
             stopSelf()
             return START_NOT_STICKY
@@ -30,6 +40,29 @@ class FileWatcherService : Service() {
         startWatching()
         return START_STICKY
     }
+
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(
+                CHANNEL_ID,
+                "File Watcher",
+                NotificationManager.IMPORTANCE_MIN
+            ).apply {
+                setShowBadge(false)
+                description = "File monitoring service"
+            }
+            val nm = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            nm.createNotificationChannel(channel)
+        }
+    }
+
+    private fun buildNotification() = NotificationCompat.Builder(this, CHANNEL_ID)
+        .setContentTitle(getString(R.string.app_name))
+        .setSmallIcon(R.mipmap.ic_launcher)
+        .setPriority(NotificationCompat.PRIORITY_MIN)
+        .setOngoing(true)
+        .setSilent(true)
+        .build()
 
     private fun startWatching() {
         stopWatchingAll()
@@ -112,5 +145,10 @@ class FileWatcherService : Service() {
     override fun onDestroy() {
         stopWatchingAll()
         super.onDestroy()
+    }
+
+    companion object {
+        private const val CHANNEL_ID = "file_watcher_channel"
+        private const val NOTIFICATION_ID = 1001
     }
 }
