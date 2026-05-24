@@ -16,3 +16,4 @@
 @skills/skill_event_bus.md
 @skills/skill_dp.md
 @skills/skill_component_service.md
+@skills/skill_permission.md
