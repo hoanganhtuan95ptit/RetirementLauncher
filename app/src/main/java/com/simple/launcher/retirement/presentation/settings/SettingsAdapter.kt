@@ -66,6 +66,11 @@ data class SettingItem(
         const val ORDER_CLEAN_FILES = 31.0
         const val ORDER_CLEAN_MEMORY = 32.0
         const val ORDER_TOGGLE_POCKET_MODE = 33.0
+
+        // ── Debug-only ────────────────────────────────────────────────────────
+        const val ID_DEBUG_BLOCK_SCREEN = 100
+        const val ORDER_HEADER_DEBUG = 90.0
+        const val ORDER_DEBUG_BLOCK_SCREEN = 91.0
     }
 }
 

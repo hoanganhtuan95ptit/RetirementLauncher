@@ -3,6 +3,7 @@ package com.simple.launcher.retirement.presentation.block
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import com.simple.launcher.retirement.databinding.ActivityBlockBinding
@@ -20,6 +21,10 @@ class BlockActivity : BaseActivity<ActivityBlockBinding>() {
     override fun inflateBinding(inflater: LayoutInflater) = ActivityBlockBinding.inflate(inflater)
 
     override fun setupViews(savedInstanceState: Bundle?) {
+        // Đọc tên app bị chặn từ Intent extra (truyền từ AppMonitoringService)
+        val appName = intent.getStringExtra(EXTRA_APP_NAME)
+        viewModel.setAppName(appName)
+
         binding.btnGoHome.root.setOnSafeClickListener {
             val intent = Intent(this, MainActivity::class.java)
             intent.action = Intent.ACTION_MAIN
@@ -38,14 +43,32 @@ class BlockActivity : BaseActivity<ActivityBlockBinding>() {
 
     override fun observeData() {
         super.observeData()
+
+        // Apply background từ theme — không hardcode màu trong XML
+        viewModel.background.observe(this) { background ->
+            binding.root.setBackground(background)
+        }
+
         viewModel.content.observe(this) { state ->
             binding.tvTitle.setText(state.title)
             binding.tvMessage.setText(state.message)
+
+            // Hiển thị pill tên app nếu có
+            if (state.appName != null) {
+                binding.tvAppName.visibility = View.VISIBLE
+                binding.tvAppName.text = state.appName
+            } else {
+                binding.tvAppName.visibility = View.GONE
+            }
         }
-        // Activity implement LifecycleOwner → dùng overload observe(lifecycleOwner)
+
         viewModel.action.observe(this) { state ->
             binding.btnGoHome.tvAction.setText(state.text)
             binding.btnGoHome.tvAction.setBackground(state.background)
         }
+    }
+
+    companion object {
+        const val EXTRA_APP_NAME = "extra_app_name"
     }
 }

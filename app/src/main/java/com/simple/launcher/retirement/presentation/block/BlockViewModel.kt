@@ -11,25 +11,35 @@ import com.simple.launcher.retirement.utils.text.RichText
 import com.simple.launcher.retirement.utils.text.toRich
 import com.simple.launcher.retirement.utils.text.with
 import com.simple.launcher.retirement.utils.theme.getColor
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
 data class BlockContentState(
     val title: RichText,
-    val message: RichText
+    val message: RichText,
+    val appName: String? = null
 )
 
 class BlockViewModel : BaseViewModel() {
 
+    private val _appName = MutableStateFlow<String?>(null)
+
+    fun setAppName(name: String?) {
+        _appName.value = name
+    }
+
     val content: StateFlow<BlockContentState> = combineState(
         flow1 = strings,
         flow2 = themes,
+        flow3 = _appName,
         initialValue = BlockContentState("".toRich(), "".toRich())
-    ) { stringMap, themeMap ->
+    ) { stringMap, themeMap, appName ->
         val titleColor = themeMap.getColor(android.R.attr.textColorPrimary)
         val messageColor = themeMap.getColor(android.R.attr.textColorSecondary)
         BlockContentState(
             title = stringMap.getString(R.string.block_title).toRich().with(ForegroundColor(titleColor)),
-            message = stringMap.getString(R.string.block_desc).toRich().with(ForegroundColor(messageColor))
+            message = stringMap.getString(R.string.block_desc).toRich().with(ForegroundColor(messageColor)),
+            appName = appName
         )
     }
 

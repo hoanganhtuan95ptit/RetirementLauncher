@@ -3,6 +3,7 @@ package com.simple.launcher.retirement.presentation.settings
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.simple.adapter.ViewItem
+import com.simple.launcher.retirement.BuildConfig
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.domain.repository.PreferenceRepository
 import com.simple.launcher.retirement.presentation.base.BaseViewModel
@@ -89,6 +90,16 @@ class SettingsViewModel : BaseViewModel() {
             add(SettingItem.ORDER_CLEAN_MEMORY to listOf(
                 SettingItem(SettingItem.ID_CLEAN_MEMORY, R.string.setting_clean_memory.toSettingRichText(), ImageRes(android.R.drawable.ic_media_play))
             ))
+
+            // ── Debug group: chỉ hiển thị trong debug build ──────────────────
+            if (BuildConfig.DEBUG) {
+                add(SettingItem.ORDER_HEADER_DEBUG to listOf(
+                    SettingHeaderItem(R.string.setting_header_debug.toSettingRichText())
+                ))
+                add(SettingItem.ORDER_DEBUG_BLOCK_SCREEN to listOf(
+                    SettingItem(SettingItem.ID_DEBUG_BLOCK_SCREEN, R.string.setting_debug_block_screen.toSettingRichText(), ImageRes(android.R.drawable.ic_lock_idle_lock))
+                ))
+            }
         }
 
         // ── Merge base + service slots, sort by order key, flatten ────────────

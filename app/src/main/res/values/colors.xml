@@ -8,6 +8,13 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+    <!-- Block screen -->
+    <color name="block_icon_bg">#EEEDFE</color>
+    <color name="block_icon_tint">#534AB7</color>
+    <color name="block_pill_bg">#F5F5FA</color>
+    <color name="block_pill_border">#D3D1C7</color>
+    <color name="block_pill_text">#5F5E5A</color>
+
     <!-- Clean Files – category icon backgrounds -->
     <color name="clean_cat_purple_bg">#EEEDFE</color>
     <color name="clean_cat_amber_bg">#FAEEDA</color>

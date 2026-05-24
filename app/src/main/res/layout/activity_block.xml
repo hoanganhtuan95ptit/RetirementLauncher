@@ -4,33 +4,60 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
     android:padding="32dp">
 
-    <ImageView
-        android:id="@+id/ivLock"
+    <!-- Icon container: hình tròn nền tím nhạt -->
+    <FrameLayout
+        android:id="@+id/ivLockContainer"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:src="@android:drawable/ic_lock_lock"
-        app:layout_constraintBottom_toTopOf="@+id/tvTitle"
+        android:background="@drawable/bg_block_icon"
+        app:layout_constraintBottom_toTopOf="@+id/tvAppName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed"
-        app:tint="@android:color/holo_red_dark" />
+        app:layout_constraintVertical_chainStyle="packed">
+
+        <ImageView
+            android:id="@+id/ivLock"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:src="@android:drawable/ic_lock_lock"
+            app:tint="@color/block_icon_tint" />
+    </FrameLayout>
+
+    <!-- Tên app bị chặn (pill nhỏ) -->
+    <TextView
+        android:id="@+id/tvAppName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/bg_block_app_pill"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="6dp"
+        android:textSize="13sp"
+        android:textColor="@color/block_pill_text"
+        android:visibility="gone"
+        tools:text="Facebook"
+        tools:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/tvTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivLockContainer" />
 
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="20dp"
         android:textSize="24sp"
         android:textStyle="bold"
         tools:text="@string/block_title"
         app:layout_constraintBottom_toTopOf="@+id/tvMessage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ivLock" />
+        app:layout_constraintTop_toBottomOf="@id/tvAppName" />
 
     <TextView
         android:id="@+id/tvMessage"
@@ -38,7 +65,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:gravity="center"
-        android:textSize="16sp"
+        android:lineSpacingMultiplier="1.4"
+        android:textSize="18sp"
         tools:text="@string/block_desc"
         app:layout_constraintBottom_toTopOf="@+id/btnGoHome"
         app:layout_constraintEnd_toEndOf="parent"
@@ -50,8 +78,7 @@
         layout="@layout/layout_action"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvMessage" />
+        android:layout_marginTop="36dp"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -152,15 +152,29 @@ class AppMonitoringService : Service() {
         val allowedApps = appRepository.getSelectedPackages()
         if (allowedApps.isNotEmpty() && !allowedApps.contains(foregroundPackage)) {
             if (BuildConfig.DEBUG) Log.d(TAG, "Blocking app: $foregroundPackage")
-            blockApp()
+            blockApp(foregroundPackage)
         }
     }
 
-    private fun blockApp() {
+    private fun blockApp(packageName: String) {
+        // Lấy tên hiển thị của app để hiển thị trên màn hình chặn
+        val appLabel = try {
+            packageManager.getApplicationLabel(
+                packageManager.getApplicationInfo(packageName, 0)
+            ).toString()
+        } catch (e: Exception) {
+            null
+        }
+
         // startActivity phải gọi với FLAG_ACTIVITY_NEW_TASK khi từ Service,
         // không phụ thuộc thread — an toàn khi gọi từ HandlerThread.
         val intent = Intent(this, BlockActivity::class.java)
             .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            .apply {
+                if (appLabel != null) {
+                    putExtra(BlockActivity.EXTRA_APP_NAME, appLabel)
+                }
+            }
         startActivity(intent)
     }
 

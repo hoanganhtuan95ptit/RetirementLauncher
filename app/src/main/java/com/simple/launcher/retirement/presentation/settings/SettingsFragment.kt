@@ -1,5 +1,6 @@
 package com.simple.launcher.retirement.presentation.settings
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.simple.launcher.retirement.presentation.block.BlockActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.simple.adapter.utils.attachAdapter
 import com.simple.adapter.utils.submitListAndAwait
@@ -112,6 +114,12 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
             }
             SettingItem.ID_CLEAN_MEMORY -> {
                 sendDeeplinkWithBackStack(DeepLinks.CLEAN_MEMORY)
+            }
+            SettingItem.ID_DEBUG_BLOCK_SCREEN -> {
+                startActivity(
+                    Intent(requireContext(), BlockActivity::class.java)
+                        .putExtra(BlockActivity.EXTRA_APP_NAME, "Facebook (demo)")
+                )
             }
         }
     }

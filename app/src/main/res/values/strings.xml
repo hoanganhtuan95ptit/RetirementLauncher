@@ -87,6 +87,11 @@
     <string name="block_title">Ứng dụng bị chặn</string>
     <string name="block_desc">Ứng dụng này không có trong danh sách được phép sử dụng. Vui lòng liên hệ quản trị viên.</string>
     <string name="block_go_home">Quay về màn hình chính</string>
+    <string name="block_app_label">Ứng dụng: %s</string>
+
+    <!-- Debug-only settings (chỉ hiển thị trong debug build) -->
+    <string name="setting_header_debug">🐛 Debug</string>
+    <string name="setting_debug_block_screen">Xem màn hình Block</string>
 
     <!-- Permissions & Setup -->
     <string name="default_launcher_setup">Thiết lập ngay</string>
