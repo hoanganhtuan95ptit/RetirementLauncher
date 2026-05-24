@@ -14,3 +14,5 @@
 @skills/skill_common_layouts.md
 @skills/skill_deeplink.md
 @skills/skill_event_bus.md
+@skills/skill_dp.md
+@skills/skill_component_service.md
