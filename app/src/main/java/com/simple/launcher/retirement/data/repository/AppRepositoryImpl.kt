@@ -235,7 +235,7 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
 
         val result = when (val data = sharedPrefs.all[KEY_SELECTED_APPS]) {
             is String -> try {
-                val type = object : TypeToken<List<String>>() {}.type
+                val type = TypeToken.getParameterized(List::class.java, String::class.java).type
                 gson.fromJson(data, type)
             } catch (_: Exception) {
                 emptyList()

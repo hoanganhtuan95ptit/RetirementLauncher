@@ -77,7 +77,7 @@ class ContactRepositoryImpl(private val context: Context) : ContactRepository {
 
         val data = sharedPrefs.all[KEY_SELECTED_CONTACTS]
         val contacts: List<ContactEntity> = if (data is String) {
-            val type = object : TypeToken<List<ContactEntity>>() {}.type
+            val type = TypeToken.getParameterized(List::class.java, ContactEntity::class.java).type
             try {
                 gson.fromJson(data, type)
             } catch (_: Exception) {
