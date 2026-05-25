@@ -7,26 +7,19 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import androidx.activity.OnBackPressedCallback
+import androidx.core.view.doOnLayout
 import androidx.lifecycle.lifecycleScope
-import androidx.work.ExistingWorkPolicy
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
 import com.simple.deeplink.sendDeeplink
-import com.simple.launcher.retirement.presentation.DeepLinks
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.databinding.ActivityMainBinding
 import com.simple.launcher.retirement.domain.repository.PreferenceRepository
+import com.simple.launcher.retirement.presentation.DeepLinks
 import com.simple.launcher.retirement.presentation.base.BaseActivity
 import com.simple.launcher.retirement.presentation.home.HomeFragment
 import com.simple.launcher.retirement.presentation.worker.BackgroundService
-import com.simple.launcher.retirement.presentation.worker.FileCleanupWorker
 import com.simple.launcher.retirement.utils.permission.PermissionManager
 import com.simple.launcher.retirement.utils.string.StringResStore
 import com.simple.launcher.retirement.utils.theme.ThemeColorStore
-import androidx.core.view.doOnLayout
-import com.simple.auto.register.AutoRegisterManager
-import com.simple.deeplink.DeeplinkRegister
-import com.simple.launcher.retirement.utils.services.launchCollect
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -51,9 +44,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             window.isNavigationBarContrastEnforced = false
         }
-
-        // Quét toàn bộ một lần lúc khởi động
-        scheduleInitialFileCleanup()
 
         val repository = PreferenceRepository.instance
 
@@ -111,15 +101,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         if (Intent.ACTION_MAIN == intent.action && intent.hasCategory(Intent.CATEGORY_HOME)) {
             sendDeeplink(DeepLinks.HOME)
         }
-    }
-
-    private fun scheduleInitialFileCleanup() {
-        val cleanupRequest = OneTimeWorkRequestBuilder<FileCleanupWorker>().build()
-        WorkManager.getInstance(applicationContext).enqueueUniqueWork(
-            "InitialFileCleanup",
-            ExistingWorkPolicy.KEEP,
-            cleanupRequest
-        )
     }
 
     fun startBackgroundService() {

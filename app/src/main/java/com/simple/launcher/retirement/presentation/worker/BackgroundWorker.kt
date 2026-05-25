@@ -1,6 +1,7 @@
 package com.simple.launcher.retirement.presentation.worker
 
 import android.content.Context
+import androidx.annotation.CallSuper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -16,7 +17,8 @@ abstract class BackgroundWorker(protected val context: Context) {
 
     protected abstract fun onStop()
 
-    fun attach(scope: CoroutineScope) {
+    @CallSuper
+    open fun attach(scope: CoroutineScope) {
         this.scope = scope
         scope.launch {
             observeEnabled().collect { isEnabled ->
