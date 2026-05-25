@@ -1,15 +1,9 @@
 package com.simple.launcher.retirement.presentation.main
 
-import android.app.ActivityManager
-import android.app.AppOpsManager
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.os.Environment
-import android.os.Process
-import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import androidx.activity.OnBackPressedCallback
@@ -24,9 +18,8 @@ import com.simple.launcher.retirement.databinding.ActivityMainBinding
 import com.simple.launcher.retirement.domain.repository.PreferenceRepository
 import com.simple.launcher.retirement.presentation.base.BaseActivity
 import com.simple.launcher.retirement.presentation.home.HomeFragment
-import com.simple.launcher.retirement.presentation.worker.AppMonitoringService
+import com.simple.launcher.retirement.presentation.worker.BackgroundService
 import com.simple.launcher.retirement.presentation.worker.FileCleanupWorker
-import com.simple.launcher.retirement.presentation.worker.FileWatcherService
 import com.simple.launcher.retirement.utils.permission.PermissionManager
 import com.simple.launcher.retirement.utils.string.StringResStore
 import com.simple.launcher.retirement.utils.theme.ThemeColorStore
@@ -64,21 +57,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
         val repository = PreferenceRepository.instance
 
-        // Bắt đầu lắng nghe sự thay đổi file ngầm nếu đã có quyền và được bật
+        // Khởi động BackgroundService nếu ít nhất một tính năng được bật và có đủ quyền
         val hasFilePerm = PermissionManager.hasFilePermission()
         val fileCleanupEnabled = repository.isFileCleanupEnabled()
-        Log.d(TAG, "FileWatcher | hasFilePerm=$hasFilePerm | fileCleanupEnabled=$fileCleanupEnabled")
-        if (hasFilePerm && fileCleanupEnabled) {
-            startFileWatcherService()
-        }
-
-        // Khởi động service giám sát nếu đã có quyền và được bật
         val hasUsagePerm = PermissionManager.hasUsageStatsPermission()
         val hasOverlayPerm = PermissionManager.hasOverlayPermission()
         val appBlockEnabled = repository.isAppBlockEnabled()
-        Log.d(TAG, "AppMonitoring | hasUsagePerm=$hasUsagePerm | hasOverlayPerm=$hasOverlayPerm | appBlockEnabled=$appBlockEnabled")
-        if (hasUsagePerm && hasOverlayPerm && appBlockEnabled) {
-            startAppMonitoringService()
+        Log.d(TAG, "BackgroundService | hasFilePerm=$hasFilePerm | fileCleanupEnabled=$fileCleanupEnabled | hasUsagePerm=$hasUsagePerm | appBlockEnabled=$appBlockEnabled")
+        if ((hasFilePerm && fileCleanupEnabled) || (hasUsagePerm && hasOverlayPerm && appBlockEnabled)) {
+            startBackgroundService()
         }
 
         if (savedInstanceState == null) {
@@ -135,34 +122,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         )
     }
 
-    fun startFileWatcherService() {
-        if (isServiceRunning(FileWatcherService::class.java)) return
-        Log.d(TAG, "startFileWatcherService")
-        val intent = Intent(this, FileWatcherService::class.java)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            startForegroundService(intent)
-        } else {
-            startService(intent)
-        }
-    }
-
-    fun startAppMonitoringService() {
-        if (isServiceRunning(AppMonitoringService::class.java)) return
-        Log.d(TAG, "startAppMonitoringService")
-        val intent = Intent(this, AppMonitoringService::class.java)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            startForegroundService(intent)
-        } else {
-            startService(intent)
-        }
-    }
-
-    /** Kiểm tra service có đang chạy không để tránh restart không cần thiết mỗi onResume. */
-    @Suppress("DEPRECATION")
-    private fun isServiceRunning(serviceClass: Class<*>): Boolean {
-        val manager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
-        return manager.getRunningServices(Int.MAX_VALUE)
-            .any { it.service.className == serviceClass.name }
+    fun startBackgroundService() {
+        Log.d(TAG, "startBackgroundService")
+        BackgroundService.start(this)
     }
 
     override fun onResume() {
@@ -170,12 +132,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         val currentFragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
         Log.d(TAG, "onResume | currentFragment=${currentFragment?.javaClass?.simpleName}")
         val repository = PreferenceRepository.instance
-        if (PermissionManager.hasFilePermission() && repository.isFileCleanupEnabled()) {
-            startFileWatcherService()
-        }
-        if (PermissionManager.hasUsageStatsPermission() && PermissionManager.hasOverlayPermission() && repository.isAppBlockEnabled()) {
-            startAppMonitoringService()
-        }
+        val shouldStart = (PermissionManager.hasFilePermission() && repository.isFileCleanupEnabled())
+            || (PermissionManager.hasUsageStatsPermission() && PermissionManager.hasOverlayPermission() && repository.isAppBlockEnabled())
+        if (shouldStart) startBackgroundService()
     }
 
     companion object {

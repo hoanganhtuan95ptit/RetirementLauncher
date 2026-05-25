@@ -74,16 +74,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         viewModel.items.attachAdapter().observe(this) { (items, adapters) ->
             binding.rvApps.submitListAndAwait(items, adapters, true)
         }
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                viewModel.loadSystemStatus()
-                requireContext().broadcastReceiverFlow(IntentFilter("com.simple.launcher.retirement.FILE_CHANGED"))
-                    .collectLatest {
-                        viewModel.loadSystemStatus()
-                    }
-            }
-        }
+//
+//        viewLifecycleOwner.lifecycleScope.launch {
+//            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+//                viewModel.loadSystemStatus()
+//                requireContext().broadcastReceiverFlow(IntentFilter("com.simple.launcher.retirement.FILE_CHANGED"))
+//                    .collectLatest {
+//                        viewModel.loadSystemStatus()
+//                    }
+//            }
+//        }
     }
 }
 

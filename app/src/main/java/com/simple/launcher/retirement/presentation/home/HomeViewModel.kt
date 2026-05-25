@@ -149,7 +149,7 @@ class HomeViewModel(
     }
 
     fun loadSystemStatus() {
-        fileRepository.refreshFileStatus()
+//        fileRepository.refreshFileStatus()
         memoryRepository.refreshMemoryStatus()
     }
 

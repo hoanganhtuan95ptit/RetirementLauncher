@@ -72,13 +72,7 @@
             android:theme="@style/Theme.RetirementLauncher.NoActionBar" />
 
         <service
-            android:name=".presentation.worker.FileWatcherService"
-            android:enabled="true"
-            android:exported="false"
-            android:foregroundServiceType="dataSync" />
-
-        <service
-            android:name=".presentation.worker.AppMonitoringService"
+            android:name=".presentation.worker.BackgroundService"
             android:enabled="true"
             android:exported="false"
             android:foregroundServiceType="dataSync" />

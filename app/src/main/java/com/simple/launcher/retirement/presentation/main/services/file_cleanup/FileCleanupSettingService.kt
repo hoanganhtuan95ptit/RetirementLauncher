@@ -1,6 +1,5 @@
 package com.simple.launcher.retirement.presentation.main.services.file_cleanup
 
-import android.content.Intent
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.simple.auto.register.AutoRegister
@@ -9,7 +8,6 @@ import com.simple.launcher.retirement.presentation.main.MainActivity
 import com.simple.launcher.retirement.presentation.settings.SettingItem
 import com.simple.launcher.retirement.presentation.settings.SettingsFragment
 import com.simple.launcher.retirement.presentation.settings.SettingsViewModel
-import com.simple.launcher.retirement.presentation.worker.FileWatcherService
 import com.simple.launcher.retirement.utils.permission.PermissionManager
 import com.simple.launcher.retirement.utils.services.launchCollect
 import com.simple.launcher.retirement.utils.AppEvent
@@ -33,14 +31,9 @@ class FileCleanupSettingService : FragmentCreatedService {
             settingsViewModel.updateItem(SettingItem.ORDER_TOGGLE_CLEANUP, items)
         }
 
-        // Lắng nghe cấu hình on/off từ cache → tự bật/tắt FileWatcherService
-        PreferenceRepository.instance.isFileCleanupEnabledFlow().launchCollect(fragment) { isEnabled ->
-            val context = fragment.requireContext()
-            if (isEnabled) {
-                (fragment.activity as? MainActivity)?.startFileWatcherService()
-            } else {
-                context.stopService(Intent(context, FileWatcherService::class.java))
-            }
+        // Lắng nghe cấu hình on/off → re-evaluate BackgroundService
+        PreferenceRepository.instance.isFileCleanupEnabledFlow().launchCollect(fragment) {
+            (fragment.activity as? MainActivity)?.startBackgroundService()
         }
 
         // Xử lý sự kiện toggle từ người dùng

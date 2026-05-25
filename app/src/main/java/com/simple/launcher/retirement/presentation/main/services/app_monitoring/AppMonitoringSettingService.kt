@@ -1,6 +1,5 @@
 package com.simple.launcher.retirement.presentation.main.services.app_monitoring
 
-import android.content.Intent
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.simple.adapter.ViewItem
@@ -13,7 +12,7 @@ import com.simple.launcher.retirement.presentation.settings.SettingItem
 import com.simple.launcher.retirement.presentation.settings.SettingsFragment
 import com.simple.launcher.retirement.presentation.settings.SettingsViewModel
 import com.simple.launcher.retirement.utils.permission.PermissionManager
-import com.simple.launcher.retirement.presentation.worker.AppMonitoringService
+import com.simple.launcher.retirement.presentation.worker.BackgroundService
 import com.simple.launcher.retirement.utils.AppEvent
 import com.simple.launcher.retirement.utils.AppEventBus
 import com.simple.launcher.retirement.utils.combineState
@@ -72,14 +71,9 @@ class AppMonitoringSettingService : FragmentCreatedService {
             settingsViewModel.updateItem(SettingItem.ORDER_TOGGLE_BLOCK, items)
         }
 
-        // Lắng nghe cấu hình on/off từ cache → tự bật/tắt AppMonitoringService
-        PreferenceRepository.instance.isAppBlockEnabledFlow().launchCollect(fragment) { isEnabled ->
-            val context = fragment.requireContext()
-            if (isEnabled) {
-                (fragment.activity as? MainActivity)?.startAppMonitoringService()
-            } else {
-                context.stopService(Intent(context, AppMonitoringService::class.java))
-            }
+        // Lắng nghe cấu hình on/off → re-evaluate BackgroundService
+        PreferenceRepository.instance.isAppBlockEnabledFlow().launchCollect(fragment) {
+            (fragment.activity as? MainActivity)?.startBackgroundService()
         }
 
         // Xử lý sự kiện toggle từ người dùng
@@ -95,7 +89,6 @@ class AppMonitoringSettingService : FragmentCreatedService {
     private suspend fun handleToggle(fragment: Fragment, item: SettingItem) {
 
         val repository = PreferenceRepository.instance
-        val context = fragment.requireContext()
         val isTurningOn = item.isChecked
 
         if (isTurningOn && !PermissionManager.requireUsageStatsPermission()) {

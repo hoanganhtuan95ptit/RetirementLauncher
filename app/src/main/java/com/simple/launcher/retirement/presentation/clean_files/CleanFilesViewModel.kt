@@ -138,6 +138,7 @@ class CleanFilesViewModel : BaseViewModel() {
             }
 
             _result.value = CleanResultData(totalFiles, totalBytes)
+            FileRepository.instance.refreshFileStatus()
             setScreenState(CleanScreenState.DONE)
         }
     }

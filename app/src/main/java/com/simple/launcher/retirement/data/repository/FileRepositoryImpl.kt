@@ -18,7 +18,7 @@ class FileRepositoryImpl(private val context: Context) : FileRepository {
          * Chỉ giữ lại ảnh / nhạc / video.
          * Mọi đuôi khác đều bị coi là "file lạ" và xóa.
          */
-        private val ALLOWED_EXTENSIONS = setOf(
+        val ALLOWED_EXTENSIONS = setOf(
             // Ảnh
             "jpg", "jpeg", "png", "gif", "webp", "bmp", "heic", "heif",
             // Nhạc
@@ -26,6 +26,14 @@ class FileRepositoryImpl(private val context: Context) : FileRepository {
             // Video
             "mp4", "mkv", "avi", "mov", "3gp", "webm"
         )
+
+        /**
+         * Các thư mục con của Android/ cần bỏ qua — chứa file hệ thống quan trọng,
+         * không phải file lạ của người dùng.
+         * - obb: expansion files của app (game assets, v.v.)
+         * - media: media riêng của từng app (voicemail, ringtone, v.v.)
+         */
+        private val ANDROID_SKIP_DIRS = setOf("obb", "media")
     }
 
     // replay = 1 đảm bảo subscriber mới nhận ngay giá trị gần nhất
@@ -52,7 +60,7 @@ class FileRepositoryImpl(private val context: Context) : FileRepository {
     private fun recursiveCountStrange(file: File): Int {
         var count = 0
         if (file.isDirectory) {
-            if (file.name.startsWith(".") || file.name == "Android") return 0
+            if (shouldSkipDir(file)) return 0
             file.listFiles()?.forEach { child ->
                 count += recursiveCountStrange(child)
             }
@@ -77,7 +85,7 @@ class FileRepositoryImpl(private val context: Context) : FileRepository {
 
     private fun recursiveDeleteByCategory(file: File, category: StrangeFileCategory): Pair<Int, Long> {
         if (file.isDirectory) {
-            if (file.name.startsWith(".") || file.name == "Android") return Pair(0, 0L)
+            if (shouldSkipDir(file)) return Pair(0, 0L)
             var count = 0; var bytes = 0L
             file.listFiles()?.forEach { child ->
                 val r = recursiveDeleteByCategory(child, category)
@@ -107,6 +115,7 @@ class FileRepositoryImpl(private val context: Context) : FileRepository {
 
     private fun recursiveDeleteStrange(file: File) {
         if (file.isDirectory) {
+            if (shouldSkipDir(file)) return
             file.listFiles()?.forEach { child -> recursiveDeleteStrange(child) }
         } else {
             if (isStrangeFile(file)) {
@@ -122,7 +131,7 @@ class FileRepositoryImpl(private val context: Context) : FileRepository {
 
     private fun findAndDeleteApkFiles(file: File) {
         if (file.isDirectory) {
-            if (file.name.startsWith(".") || file.name == "Android") return
+            if (shouldSkipDir(file)) return
             file.listFiles()?.forEach { child -> findAndDeleteApkFiles(child) }
         } else {
             val name = file.name.lowercase()
@@ -130,5 +139,16 @@ class FileRepositoryImpl(private val context: Context) : FileRepository {
                 try { if (file.exists()) file.delete() } catch (e: Exception) { e.printStackTrace() }
             }
         }
+    }
+
+    /**
+     * Bỏ qua thư mục ẩn và các thư mục con nhạy cảm trong Android/:
+     * - obb: expansion files của app
+     * - media: media riêng của từng app
+     */
+    private fun shouldSkipDir(file: File): Boolean {
+        if (file.name.startsWith(".")) return true
+        val path = file.canonicalPath
+        return ANDROID_SKIP_DIRS.any { skip -> path.contains("/Android/$skip") }
     }
 }
