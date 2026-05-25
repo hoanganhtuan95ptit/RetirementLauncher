@@ -21,7 +21,7 @@ import com.simple.launcher.retirement.utils.combineState
 import com.simple.launcher.retirement.utils.image.ImagePath
 import com.simple.launcher.retirement.utils.image.ImageRes
 import com.simple.launcher.retirement.utils.string.getString
-import com.simple.launcher.retirement.utils.text.toRich
+import com.simple.launcher.retirement.utils.text.RichText
 import com.simple.launcher.retirement.utils.theme.getColor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -130,7 +130,7 @@ class ContactListViewModel(
                     ImageRes(R.drawable.ic_home_contact_24dp)
                 }
                 SelectableContactItem(
-                    name = contact.name.toRich(),
+                    name = RichText.Builder(contact.name).build(),
                     photo = photo,
                     isSelected = isSelected,
                     entity = SelectableContactEntity(contact, isSelected)

@@ -8,8 +8,6 @@ import com.simple.launcher.retirement.utils.text.ForegroundColor
 import com.simple.launcher.retirement.utils.text.RichText
 import com.simple.launcher.retirement.utils.text.TextSize
 import com.simple.launcher.retirement.utils.text.emptyText
-import com.simple.launcher.retirement.utils.text.toRich
-import com.simple.launcher.retirement.utils.text.with
 
 /**
  * Trạng thái cho action button (ví dụ: nút Lưu, nút Dọn dẹp).
@@ -38,22 +36,18 @@ fun buildActionState(
     textColor: Int,
     backgroundColor: Int,
     textSize: Int = 18,
-    cornerRadius: Int = DP.DP_12.toInt(),
+    cornerRadius: Int = DP.DP_12,
     strokeWidth: Int = 0,
     strokeColor: Int = Color.TRANSPARENT,
     strokeDashGap: Int = 0,
     strokeDashWidth: Int = 0
 ): ActionState = ActionState(
-    text = text.toRich().with(ForegroundColor(textColor), TextSize(textSize), Bold),
-    background = Background(
-        backgroundColor = backgroundColor,
-        cornerRadius_TL = cornerRadius,
-        cornerRadius_TR = cornerRadius,
-        cornerRadius_BL = cornerRadius,
-        cornerRadius_BR = cornerRadius,
-        strokeWidth = strokeWidth,
-        strokeColor = strokeColor,
-        strokeDashGap = strokeDashGap,
-        strokeDashWidth = strokeDashWidth
-    )
+    text = RichText.Builder(text)
+        .with(ForegroundColor(textColor), TextSize(textSize), Bold)
+        .build(),
+    background = Background.Builder()
+        .backgroundColor(backgroundColor)
+        .cornerRadius(cornerRadius)
+        .stroke(width = strokeWidth, color = strokeColor, dashWidth = strokeDashWidth, dashGap = strokeDashGap)
+        .build()
 )

@@ -22,7 +22,6 @@ import com.simple.launcher.retirement.utils.image.ImageRes
 import com.simple.launcher.retirement.utils.image.RichImage
 import com.simple.launcher.retirement.utils.string.getString
 import com.simple.launcher.retirement.utils.text.RichText
-import com.simple.launcher.retirement.utils.text.toRich
 import com.simple.launcher.retirement.utils.theme.getColor
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -74,7 +73,7 @@ class ReorderViewModel(
             _items.value = selectedApps.map { app ->
                 ReorderItem(
                     id = app.packageName,
-                    label = app.label.toRich(),
+                    label = RichText.Builder(app.label).build(),
                     icon = ImageDrawable(app.icon)
                 )
             }
@@ -90,7 +89,7 @@ class ReorderViewModel(
                 }
                 ReorderItem(
                     id = contact.id,
-                    label = contact.name.toRich(),
+                    label = RichText.Builder(contact.name).build(),
                     icon = photo,
                     data = contact
                 )

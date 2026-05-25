@@ -15,7 +15,6 @@ import com.simple.launcher.retirement.utils.combineState
 import com.simple.launcher.retirement.utils.string.asStringRes
 import com.simple.launcher.retirement.utils.string.getString
 import com.simple.launcher.retirement.utils.text.RichText
-import com.simple.launcher.retirement.utils.text.toRich
 import com.simple.launcher.retirement.utils.theme.getColor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -113,9 +112,9 @@ class CleanMemoryViewModel : BaseViewModel() {
     ) { stringMap, mb ->
         if (mb == null) null
         else if (mb > 0) {
-            String.format(stringMap.getString(R.string.clean_memory_toast), mb.toInt()).toRich()
+            RichText.Builder(String.format(stringMap.getString(R.string.clean_memory_toast), mb.toInt())).build()
         } else {
-            stringMap.getString(R.string.clean_memory_optimal).toRich()
+            RichText.Builder(stringMap.getString(R.string.clean_memory_optimal)).build()
         }
     }
 

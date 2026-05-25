@@ -20,8 +20,8 @@ import com.simple.launcher.retirement.utils.AppEventBus
 import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.image.setImage
 import com.simple.launcher.retirement.utils.lifecycle.observe
+import com.simple.launcher.retirement.utils.text.RichText
 import com.simple.launcher.retirement.utils.text.setText
-import com.simple.launcher.retirement.utils.text.toRich
 import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
 
 class PinSetupFragment : BaseFragment<FragmentPinSetupBinding>() {
@@ -127,7 +127,7 @@ class PinSetupFragment : BaseFragment<FragmentPinSetupBinding>() {
         }
 
         viewModel.error.observe(this) { errorRes ->
-            binding.tvError.setText(errorRes?.let { getString(it) }?.toRich())
+            binding.tvError.setText(errorRes?.let { RichText.Builder(getString(it)).build() })
         }
 
         viewModel.toolbar.observe(this) { state ->

@@ -9,7 +9,6 @@ import com.simple.launcher.retirement.utils.string.getString
 import com.simple.launcher.retirement.utils.text.Bold
 import com.simple.launcher.retirement.utils.text.ForegroundColor
 import com.simple.launcher.retirement.utils.text.RichText
-import com.simple.launcher.retirement.utils.text.withFirst
 import com.simple.launcher.retirement.utils.theme.getColor
 import kotlinx.coroutines.flow.StateFlow
 
@@ -21,8 +20,9 @@ class UsageStatsPermissionViewModel : BaseViewModel() {
         initialValue = RichText("")
     ) { stringMap, themeMap ->
         val color = themeMap.getColor(android.R.attr.textColorPrimary)
-        stringMap.getString(R.string.usage_stats_permission_title)
-            .withFirst(stringMap.getString(R.string.usage_stats_permission_title), ForegroundColor(color), Bold)
+        RichText.Builder(stringMap.getString(R.string.usage_stats_permission_title))
+            .with(ForegroundColor(color), Bold)
+            .build()
     }
 
     val description: StateFlow<RichText> = combineState(
@@ -33,9 +33,10 @@ class UsageStatsPermissionViewModel : BaseViewModel() {
         val color = themeMap.getColor(android.R.attr.textColorSecondary)
         val highlightColor = themeMap.getColor(android.R.attr.colorAccent)
 
-        stringMap.getString(R.string.usage_stats_permission_desc)
-            .withFirst(stringMap.getString(R.string.usage_stats_permission_desc), ForegroundColor(color))
+        RichText.Builder(stringMap.getString(R.string.usage_stats_permission_desc))
+            .with(ForegroundColor(color))
             .withFirst(stringMap.getString(R.string.usage_stats_permission_highlight), Bold, ForegroundColor(highlightColor))
+            .build()
     }
 
     val action: StateFlow<ActionState> = combineState(

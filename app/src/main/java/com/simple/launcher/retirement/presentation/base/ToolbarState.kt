@@ -9,8 +9,6 @@ import com.simple.launcher.retirement.utils.text.ForegroundColor
 import com.simple.launcher.retirement.utils.text.RichText
 import com.simple.launcher.retirement.utils.text.TextSize
 import com.simple.launcher.retirement.utils.text.emptyText
-import com.simple.launcher.retirement.utils.text.toRich
-import com.simple.launcher.retirement.utils.text.with
 
 /**
  * Trạng thái toolbar được expose từ ViewModel.
@@ -42,11 +40,9 @@ fun buildToolbarTitle(
     color: Int,
     sizeDip: Int = 18,
     typeface: Typeface = Typeface.create("sans-serif-medium", Typeface.NORMAL)
-): RichText = text.toRich().with(
-    ForegroundColor(color),
-    TextSize(sizeDip),
-    CustomFont(typeface)
-)
+): RichText = RichText.Builder(text)
+    .with(ForegroundColor(color), TextSize(sizeDip), CustomFont(typeface))
+    .build()
 
 /**
  * Tạo RichImage cho nút back với màu icon được lấy từ theme.

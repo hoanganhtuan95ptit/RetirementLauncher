@@ -14,8 +14,7 @@ import com.simple.launcher.retirement.utils.combineState
 import com.simple.launcher.retirement.utils.image.ImageRes
 import com.simple.launcher.retirement.utils.string.getString
 import com.simple.launcher.retirement.utils.text.ForegroundColor
-import com.simple.launcher.retirement.utils.text.toRich
-import com.simple.launcher.retirement.utils.text.with
+import com.simple.launcher.retirement.utils.text.RichText
 import com.simple.launcher.retirement.utils.theme.getColor
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -54,7 +53,7 @@ class SettingsViewModel : BaseViewModel() {
         val textColor = themeMap.getColor(android.R.attr.textColorPrimary)
 
         fun Int.toSettingRichText() =
-            stringMap.getString(this).toRich().with(ForegroundColor(textColor))
+            RichText.Builder(stringMap.getString(this)).with(ForegroundColor(textColor)).build()
 
         // ── Build base slots ──────────────────────────────────────────────────
         val baseSlots = buildList<Pair<Double, List<ViewItem>>> {

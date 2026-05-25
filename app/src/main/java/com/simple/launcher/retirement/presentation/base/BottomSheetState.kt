@@ -28,17 +28,13 @@ fun buildBottomSheetState(
     showAnchor: Boolean = true,
     cornerRadius: Int = DP.DP_24.toInt()
 ): BottomSheetState = BottomSheetState(
-    background = Background(
-        backgroundColor = backgroundColor,
-        cornerRadius_TL = cornerRadius,
-        cornerRadius_TR = cornerRadius
-    ),
-    anchorBackground = Background(
-        backgroundColor = anchorColor,
-        cornerRadius_TL = 100.toPx(),
-        cornerRadius_TR = 100.toPx(),
-        cornerRadius_BL = 100.toPx(),
-        cornerRadius_BR = 100.toPx(),
-    ),
+    background = Background.Builder()
+        .backgroundColor(backgroundColor)
+        .cornerRadiusTop(cornerRadius)
+        .build(),
+    anchorBackground = Background.Builder()
+        .backgroundColor(anchorColor)
+        .cornerRadius(100.toPx())
+        .build(),
     showAnchor = showAnchor
 )

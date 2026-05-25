@@ -54,4 +54,9 @@ data class Background(
 
         return this
     }
+
+    companion object {
+
+        fun Builder() = BackgroundBuilder()
+    }
 }

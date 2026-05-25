@@ -9,8 +9,7 @@ import com.simple.launcher.retirement.utils.combineState
 import com.simple.launcher.retirement.utils.image.ImageRes
 import com.simple.launcher.retirement.utils.string.getString
 import com.simple.launcher.retirement.utils.text.ForegroundColor
-import com.simple.launcher.retirement.utils.text.toRich
-import com.simple.launcher.retirement.utils.text.with
+import com.simple.launcher.retirement.utils.text.RichText
 import com.simple.launcher.retirement.utils.theme.getColor
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -34,7 +33,7 @@ class FileCleanupSettingViewModel : BaseViewModel() {
         listOf(
             SettingItem(
                 SettingItem.ID_TOGGLE_CLEANUP,
-                stringMap.getString(R.string.setting_auto_cleanup_apk).toRich().with(ForegroundColor(textColor)),
+                stringMap.getString(R.string.setting_auto_cleanup_apk).let { RichText.Builder(it).with(ForegroundColor(textColor)).build() },
                 ImageRes(android.R.drawable.ic_menu_save),
                 isSwitch = true,
                 isChecked = isEnabled

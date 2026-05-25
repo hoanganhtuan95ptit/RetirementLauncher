@@ -16,8 +16,6 @@ import com.simple.launcher.retirement.utils.string.getString
 import com.simple.launcher.retirement.utils.text.ForegroundColor
 import com.simple.launcher.retirement.utils.text.RichText
 import com.simple.launcher.retirement.utils.text.emptyText
-import com.simple.launcher.retirement.utils.text.toRich
-import com.simple.launcher.retirement.utils.text.with
 import com.simple.launcher.retirement.utils.theme.getColor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -29,34 +27,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class CleanFilesViewModel : BaseViewModel() {
-
-    enum class CleanScreenState { IDLE, SCANNING, DONE }
-
-    data class CategoryMeta(
-        val labelRes: Int,
-        val iconRes: Int,
-        val iconBgRes: Int,
-        val iconTintRes: Int
-    )
-
-    data class CleanResultData(
-        val totalFiles: Int,
-        val totalBytes: Long
-    ) {
-        val spaceMB: Float get() = totalBytes / (1024f * 1024f)
-        val spaceLabel: String get() = if (spaceMB >= 1f) "%.1f MB".format(spaceMB) else "${totalBytes / 1024} KB"
-    }
-
-    /**
-     * Trạng thái vùng trung tâm ring.
-     * [showIcon] = true  → hiện icon, ẩn số đếm.
-     * [showIcon] = false → ẩn icon, hiện [countText] + [unitText].
-     */
-    data class RingCenterState(
-        val showIcon: Boolean,
-        val countText: RichText = emptyText(),
-        val unitText: RichText  = emptyText()
-    )
 
     val categoryMeta: List<CategoryMeta> = listOf(
         CategoryMeta(
@@ -85,41 +55,54 @@ class CleanFilesViewModel : BaseViewModel() {
         )
     )
 
-    val toolbar: StateFlow<ToolbarState> = combineState(
-        flow1 = strings,
-        flow2 = themes,
-        initialValue = ToolbarState.empty()
-    ) { stringMap, themeMap ->
-        val color = themeMap.getColor(android.R.attr.textColorPrimary)
-        ToolbarState(
-            title = buildToolbarTitle(stringMap.getString(R.string.clean_files_title), color),
-            backIcon = buildBackIcon(color)
-        )
-    }
-
-    private val _actionRes = MutableStateFlow(R.string.clean_files_start)
-
-    val action: StateFlow<ActionState> = combineState(
-        flow1 = strings,
-        flow2 = themes,
-        flow3 = _actionRes,
-        initialValue = ActionState.empty()
-    ) { stringMap, themeMap, actionRes ->
-        val textColor = themeMap.getColor(android.R.attr.textColorPrimary)
-        val bgColor = themeMap.getColor(android.R.attr.colorControlHighlight, Color.LTGRAY)
-        buildActionState(
-            text = stringMap.getString(actionRes),
-            textColor = textColor,
-            backgroundColor = bgColor
-        )
-    }
-
     /** Số file lạ hiện có trên máy — cập nhật real-time qua Flow */
     val strangeFileCount: StateFlow<Int> = FileRepository.instance.countStrangeFilesFlow()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000L), 0)
 
     private val _screenState = MutableStateFlow(CleanScreenState.IDLE)
     val screenState: StateFlow<CleanScreenState> = _screenState
+
+    val toolbar: StateFlow<ToolbarState> = combineState(flow1 = strings, flow2 = themes, initialValue = ToolbarState.empty()) { stringMap, themeMap ->
+
+        val color = themeMap.getColor(android.R.attr.textColorPrimary)
+
+        ToolbarState(
+            title = buildToolbarTitle(stringMap.getString(R.string.clean_files_title), color),
+            backIcon = buildBackIcon(color)
+        )
+    }
+
+    val action: StateFlow<ActionState> = combineState(flow1 = strings, flow2 = themes, flow3 = screenState, initialValue = ActionState.empty()) { stringMap, themeMap, screenState ->
+
+        val text = when (screenState) {
+            CleanScreenState.IDLE -> R.string.clean_files_start
+            CleanScreenState.SCANNING -> R.string.clean_files_running
+            CleanScreenState.DONE -> R.string.clean_files_retry
+        }.let {
+
+            stringMap.getString(it)
+        }
+
+        val textColor = when (screenState) {
+            CleanScreenState.SCANNING -> android.R.attr.textColorPrimary
+            else -> com.google.android.material.R.attr.colorOnPrimary
+        }.let {
+            themeMap.getColor(it, Color.LTGRAY)
+        }
+
+        val bgColor = when (screenState) {
+            CleanScreenState.SCANNING -> android.R.attr.colorControlHighlight
+            else -> android.R.attr.colorPrimary
+        }.let {
+            themeMap.getColor(it, Color.LTGRAY)
+        }
+
+        buildActionState(
+            text = text,
+            textColor = textColor,
+            backgroundColor = bgColor
+        )
+    }
 
     /**
      * Status text hiển thị dưới ring — màu và nội dung đều từ ViewModel.
@@ -141,7 +124,9 @@ class CleanFilesViewModel : BaseViewModel() {
             CleanScreenState.SCANNING -> stringMap.getString(R.string.clean_files_running)
             CleanScreenState.DONE    -> stringMap.getString(R.string.clean_files_completed)
         }
-        text.toRich().with(ForegroundColor(color))
+        RichText.Builder(text)
+            .with(ForegroundColor(color))
+            .build()
     }
 
     private val _result = MutableStateFlow<CleanResultData?>(null)
@@ -164,16 +149,22 @@ class CleanFilesViewModel : BaseViewModel() {
         when (state) {
             CleanScreenState.IDLE -> if (count > 0) RingCenterState(
                 showIcon  = false,
-                countText = count.toString().toRich().with(ForegroundColor(primaryColor)),
-                unitText  = stringMap.getString(R.string.clean_files_count_unit)
-                                .toRich().with(ForegroundColor(secondaryColor))
+                countText = RichText.Builder(count.toString())
+                    .with(ForegroundColor(primaryColor))
+                    .build(),
+                unitText  = RichText.Builder(stringMap.getString(R.string.clean_files_count_unit))
+                    .with(ForegroundColor(secondaryColor))
+                    .build()
             ) else RingCenterState(showIcon = true)
             CleanScreenState.SCANNING -> RingCenterState(showIcon = true)
             CleanScreenState.DONE -> RingCenterState(
                 showIcon  = false,
-                countText = (result?.totalFiles ?: 0).toString().toRich().with(ForegroundColor(primaryColor)),
-                unitText  = stringMap.getString(R.string.clean_result_files_deleted)
-                                .toRich().with(ForegroundColor(secondaryColor))
+                countText = RichText.Builder((result?.totalFiles ?: 0).toString())
+                    .with(ForegroundColor(primaryColor))
+                    .build(),
+                unitText  = RichText.Builder(stringMap.getString(R.string.clean_result_files_deleted))
+                    .with(ForegroundColor(secondaryColor))
+                    .build()
             )
         }
     }
@@ -184,7 +175,6 @@ class CleanFilesViewModel : BaseViewModel() {
      * non-null = Pair(số file đã xóa, bytes đã xóa)
      */
     private val _categoryResults = MutableStateFlow<List<Pair<Int, Long>?>>(emptyList())
-    val categoryResults: StateFlow<List<Pair<Int, Long>?>> = _categoryResults
 
     /**
      * Text đã được format + tô màu cho từng category count.
@@ -200,7 +190,7 @@ class CleanFilesViewModel : BaseViewModel() {
         results.map { pair ->
             pair?.let {
                 String.format(stringMap.getString(R.string.clean_cat_file_count), it.first)
-                    .toRich().with(ForegroundColor(color))
+                    .let { text -> RichText.Builder(text).with(ForegroundColor(color)).build() }
             }
         }
     }
@@ -242,17 +232,33 @@ class CleanFilesViewModel : BaseViewModel() {
 
     fun setScreenState(state: CleanScreenState) {
         _screenState.value = state
-        when (state) {
-            CleanScreenState.IDLE     -> _actionRes.value = R.string.clean_files_start
-            CleanScreenState.SCANNING -> _actionRes.value = R.string.clean_files_running
-            CleanScreenState.DONE     -> _actionRes.value = R.string.clean_files_retry
-        }
     }
 
-    fun reset() {
-        _screenState.value = CleanScreenState.IDLE
-        _result.value = null
-        _actionRes.value = R.string.clean_files_start
-        _categoryResults.value = emptyList()
+    enum class CleanScreenState { IDLE, SCANNING, DONE }
+
+    data class CategoryMeta(
+        val labelRes: Int,
+        val iconRes: Int,
+        val iconBgRes: Int,
+        val iconTintRes: Int
+    )
+
+    data class CleanResultData(
+        val totalFiles: Int,
+        val totalBytes: Long
+    ) {
+        val spaceMB: Float get() = totalBytes / (1024f * 1024f)
+        val spaceLabel: String get() = if (spaceMB >= 1f) "%.1f MB".format(spaceMB) else "${totalBytes / 1024} KB"
     }
+
+    /**
+     * Trạng thái vùng trung tâm ring.
+     * [showIcon] = true  → hiện icon, ẩn số đếm.
+     * [showIcon] = false → ẩn icon, hiện [countText] + [unitText].
+     */
+    data class RingCenterState(
+        val showIcon: Boolean,
+        val countText: RichText = emptyText(),
+        val unitText: RichText = emptyText()
+    )
 }

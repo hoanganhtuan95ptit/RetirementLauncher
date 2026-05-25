@@ -18,7 +18,7 @@ import com.simple.launcher.retirement.domain.repository.AppRepository
 import com.simple.launcher.retirement.utils.combineState
 import com.simple.launcher.retirement.utils.image.ImageDrawable
 import com.simple.launcher.retirement.utils.string.getString
-import com.simple.launcher.retirement.utils.text.toRich
+import com.simple.launcher.retirement.utils.text.RichText
 import com.simple.launcher.retirement.utils.theme.getColor
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -94,7 +94,7 @@ class AppListViewModel(
             query.isBlank() || it.app.label.contains(query, ignoreCase = true)
         }.map { entity ->
             SelectableAppItem(
-                label = entity.app.label.toRich(),
+                label = RichText.Builder(entity.app.label).build(),
                 icon = ImageDrawable(entity.app.icon),
                 isSelected = entity.app.packageName in selectedIds,
                 entity = entity

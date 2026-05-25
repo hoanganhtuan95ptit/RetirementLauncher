@@ -21,8 +21,7 @@ import com.simple.launcher.retirement.utils.services.FragmentCreatedService
 import com.simple.launcher.retirement.utils.services.launchCollect
 import com.simple.launcher.retirement.utils.string.getString
 import com.simple.launcher.retirement.utils.text.ForegroundColor
-import com.simple.launcher.retirement.utils.text.toRich
-import com.simple.launcher.retirement.utils.text.with
+import com.simple.launcher.retirement.utils.text.RichText
 import com.simple.launcher.retirement.utils.theme.getColor
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -44,7 +43,7 @@ class AppMonitoringSettingViewModel : BaseViewModel() {
         SettingItem(
             id = SettingItem.ID_TOGGLE_BLOCK,
             icon = ImageRes(android.R.drawable.ic_lock_lock),
-            title = stringMap.getString(R.string.setting_app_monitoring).toRich().with(ForegroundColor(textColor)),
+            title = RichText.Builder(stringMap.getString(R.string.setting_app_monitoring)).with(ForegroundColor(textColor)).build(),
             isSwitch = true,
             isChecked = isEnabled
         ).let {

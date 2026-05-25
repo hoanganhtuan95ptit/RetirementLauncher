@@ -23,10 +23,9 @@ import com.simple.launcher.retirement.utils.string.getString
 import com.simple.launcher.retirement.utils.text.Bold
 import com.simple.launcher.retirement.utils.text.CustomFont
 import com.simple.launcher.retirement.utils.text.ForegroundColor
+import com.simple.launcher.retirement.utils.text.RichText
 import com.simple.launcher.retirement.utils.text.TextSize
 import com.simple.launcher.retirement.utils.text.toRich
-import com.simple.launcher.retirement.utils.text.with
-import com.simple.launcher.retirement.utils.text.withFirst
 import com.simple.launcher.retirement.utils.theme.getColor
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -47,9 +46,10 @@ class HomeViewModel(
         val list = arrayListOf<ViewItem>()
 
         CleanFilesHomeItem(
-            label = strings.getString(R.string.home_strange_files)
-                .replace("\$file_number", fileCountLabel)
-                .withFirst(fileCountLabel, Bold),
+            label = RichText.Builder(strings.getString(R.string.home_strange_files)
+                .replace("\$file_number", fileCountLabel))
+                .withFirst(fileCountLabel, Bold)
+                .build(),
             icon = ImageRes(R.drawable.img_home_clean_up)
         ).let { list.add(it) }
 
@@ -66,9 +66,10 @@ class HomeViewModel(
         val list = arrayListOf<ViewItem>()
 
         CleanMemoryHomeItem(
-            label = strings.getString(R.string.home_memory_status)
-                .replace("\$memory_mb", memoryLabel)
-                .withFirst(memoryLabel, Bold),
+            label = RichText.Builder(strings.getString(R.string.home_memory_status)
+                .replace("\$memory_mb", memoryLabel))
+                .withFirst(memoryLabel, Bold)
+                .build(),
             icon = ImageRes(R.drawable.img_home_boost)
         ).let { list.add(it) }
 
@@ -91,14 +92,12 @@ class HomeViewModel(
         val apps = entities.filterIsInstance<HomeContentEntity.App>()
         if (apps.isNotEmpty()) {
             HeaderHomeItem(
-                strings.getString(R.string.home_header_apps).toRich().with(
-                    ForegroundColor(Color.WHITE),
-                    TextSize(20),
-                    CustomFont(Typeface.create("sans-serif-medium", Typeface.NORMAL))
-                )
+                RichText.Builder(strings.getString(R.string.home_header_apps))
+                    .with(ForegroundColor(Color.WHITE), TextSize(20), CustomFont(Typeface.create("sans-serif-medium", Typeface.NORMAL)))
+                    .build()
             ).let { list.add(it) }
 
-            apps.map { AppHomeItem(it.entity.label.toRich(), ImageDrawable(it.entity.icon), it.entity) }
+            apps.map { AppHomeItem(RichText.Builder(it.entity.label).build(), ImageDrawable(it.entity.icon), it.entity) }
                 .let { list.addAll(it) }
         }
 
@@ -106,11 +105,9 @@ class HomeViewModel(
         val contacts = entities.filterIsInstance<HomeContentEntity.Contact>()
         if (contacts.isNotEmpty()) {
             HeaderHomeItem(
-                strings.getString(R.string.home_header_contacts).toRich().with(
-                    ForegroundColor(Color.WHITE),
-                    TextSize(20),
-                    CustomFont(Typeface.create("sans-serif-medium", Typeface.NORMAL))
-                )
+                RichText.Builder(strings.getString(R.string.home_header_contacts))
+                    .with(ForegroundColor(Color.WHITE), TextSize(20), CustomFont(Typeface.create("sans-serif-medium", Typeface.NORMAL)))
+                    .build()
             ).let { list.add(it) }
 
             contacts.map { contact ->
@@ -120,8 +117,12 @@ class HomeViewModel(
                     ImageRes(R.drawable.ic_home_contact_24dp)
                 }
                 ContactHomeItem(
-                    name = contact.entity.name.toRich().with(ForegroundColor(textColor)),
-                    tapToCallLabel = strings.getString(R.string.contact_tap_to_call).toRich().with(ForegroundColor(textColor)),
+                    name = RichText.Builder(contact.entity.name)
+                        .with(ForegroundColor(textColor))
+                        .build(),
+                    tapToCallLabel = RichText.Builder(strings.getString(R.string.contact_tap_to_call))
+                        .with(ForegroundColor(textColor))
+                        .build(),
                     photo = photo,
                     entity = contact.entity
                 )

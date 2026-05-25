@@ -10,7 +10,7 @@
         android:id="@+id/tv_action"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="48dp"
+        android:minHeight="56dp"
         android:minWidth="120dp"
         android:gravity="center"
         tools:text="Action"

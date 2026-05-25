@@ -18,7 +18,7 @@ data class SearchState(
             hint = "",
             textColor = 0,
             hintColor = 0,
-            background = Background()
+            background = Background.Builder().build()
         )
     }
 }
@@ -31,19 +31,16 @@ fun buildSearchState(
     textColor: Int,
     hintColor: Int,
     backgroundColor: Int,
-    cornerRadius: Int = DP.DP_12.toInt(),
+    cornerRadius: Int = DP.DP_12,
     clearIconColor: Int = textColor
 ): SearchState = SearchState(
     hint = hint,
     textColor = textColor,
     hintColor = hintColor,
-    background = Background(
-        backgroundColor = backgroundColor,
-        cornerRadius_TL = cornerRadius,
-        cornerRadius_TR = cornerRadius,
-        cornerRadius_BL = cornerRadius,
-        cornerRadius_BR = cornerRadius
-    ),
+    background = Background.Builder()
+        .backgroundColor(backgroundColor)
+        .cornerRadius(cornerRadius)
+        .build(),
     clearIcon = buildClearIcon(clearIconColor)
 )
 
