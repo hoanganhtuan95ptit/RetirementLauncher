@@ -24,6 +24,9 @@ class BackgroundService : Service() {
     override fun onCreate() {
         super.onCreate()
         createNotificationChannel()
+        // Phải gọi startForeground() ngay trong onCreate() để tránh ForegroundServiceDidNotStartInTimeException.
+        // onStartCommand() có thể đến sau vài ms — nếu workers khởi tạo chậm thì đã quá 5 giây.
+        startForeground(NOTIFICATION_ID, buildNotification())
 
         workers += AppMonitoringWorker(this)
         workers += FileWatcherWorker(this)

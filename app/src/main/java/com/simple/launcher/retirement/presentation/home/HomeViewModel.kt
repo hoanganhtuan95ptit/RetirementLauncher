@@ -22,7 +22,14 @@ import com.simple.launcher.retirement.utils.image.ImagePath
 import com.simple.launcher.retirement.utils.image.ImageRes
 import com.simple.launcher.retirement.utils.size.DP
 import com.simple.launcher.retirement.utils.string.getString
-import com.simple.launcher.retirement.utils.text.*
+import com.simple.launcher.retirement.utils.text.Bold
+import com.simple.launcher.retirement.utils.text.CustomFont
+import com.simple.launcher.retirement.utils.text.ForegroundColor
+import com.simple.launcher.retirement.utils.text.RichText
+import com.simple.launcher.retirement.utils.text.TextSize
+import com.simple.launcher.retirement.utils.text.build
+import com.simple.launcher.retirement.utils.text.with
+import com.simple.launcher.retirement.utils.text.withFirst
 import com.simple.launcher.retirement.utils.theme.getColor
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -75,17 +82,32 @@ class HomeViewModel(
     ) { strings, memoryMB ->
 
         val memoryLabel = "$memoryMB MB"
-        val list = arrayListOf<ViewItem>()
+        val canCleanMemory = memoryMB > 0
 
-        CleanMemoryHomeItem(
+        val labelColor = if (canCleanMemory) {
+            Color.parseColor("#534AB7") // clean_cat_purple
+        } else {
+            Color.BLACK
+        }
+
+        val cardBackground = Background.Builder()
+            .backgroundColor(if (canCleanMemory) Color.parseColor("#EEEDFE") else Color.WHITE)
+            .cornerRadius(DP.DP_16)
+            .build()
+
+
+        2.0 to CleanMemoryHomeItem(
             label = strings.getString(R.string.home_memory_status)
                 .replace("\$memory_mb", memoryLabel)
+                .with(ForegroundColor(labelColor))
                 .withFirst(memoryLabel, Bold)
                 .build(),
-            icon = ImageRes(R.drawable.img_home_boost)
-        ).let { list.add(it) }
+            icon = ImageRes(R.drawable.img_home_boost),
+            cardBackground = cardBackground
+        ).let {
 
-        2.0 to list
+            listOf(it)
+        }
     }
 
     // Gộp appHomeItems + contactHomeItems thành một flow duy nhất subscribe getHomeAppsUseCase.asFlow().

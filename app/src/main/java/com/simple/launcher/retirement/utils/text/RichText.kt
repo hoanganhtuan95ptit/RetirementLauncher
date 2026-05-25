@@ -5,9 +5,13 @@ import android.text.SpannableString
 import android.text.style.CharacterStyle
 import java.util.ServiceLoader
 
-private val richSpanConvert by lazy {
+private val richSpanConvertList by lazy {
     ServiceLoader.load(RichSpanConvert::class.java).toList()
 }
+
+// Cache KClass → RichSpanConvert: lần đầu O(n) scan, từ lần 2 trở đi O(1).
+// Chạy trên main thread nên HashMap thường là đủ.
+private val richSpanConvertCache = HashMap<kotlin.reflect.KClass<out RichSpan>, RichSpanConvert>()
 
 data class RichText(
     val text: String,
@@ -35,8 +39,18 @@ data class RichText(
     }
 
     private fun RichSpan.toAndroidSpan(): CharacterStyle {
+        val klass = this::class
+        val cached = richSpanConvertCache[klass]
+        if (cached != null) return cached.getAndroidSpan(this)!!
 
-        return richSpanConvert.firstNotNullOf { it.getAndroidSpan(this) }
+        for (converter in richSpanConvertList) {
+            val span = converter.getAndroidSpan(this)
+            if (span != null) {
+                richSpanConvertCache[klass] = converter
+                return span
+            }
+        }
+        error("No RichSpanConvert found for ${klass.simpleName}")
     }
 
     companion object {
