@@ -42,10 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/memory_text_primary"
-            android:textSize="13sp"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:lineSpacingExtra="2dp" />
+            android:gravity="center" />
 
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/swSetting"

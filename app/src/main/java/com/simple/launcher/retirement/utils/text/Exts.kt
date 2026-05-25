@@ -65,3 +65,64 @@ fun RichTextBuilder.build(): RichText = RichText(
     text = text,
     spans = richStyles
 )
+
+
+fun String.withStyleDisplayLarge(): RichTextBuilder {
+    return toBuilder().with(TextSize(57))
+}
+
+fun String.withStyleDisplayMedium(): RichTextBuilder {
+    return toBuilder().with(TextSize(45))
+}
+
+fun String.withStyleDisplaySmall(): RichTextBuilder {
+    return toBuilder().with(TextSize(36))
+}
+
+fun String.withStyleHeadlineLarge(): RichTextBuilder {
+    return toBuilder().with(TextSize(32))
+}
+
+fun String.withStyleHeadlineMedium(): RichTextBuilder {
+    return toBuilder().with(TextSize(28))
+}
+
+fun String.withStyleHeadlineSmall(): RichTextBuilder {
+    return toBuilder().with(TextSize(24))
+}
+
+fun String.withStyleTitleLarge(): RichTextBuilder {
+    return toBuilder().with(TextSize(22))
+}
+
+fun String.withStyleTitleMedium(): RichTextBuilder {
+    return toBuilder().with(TextSize(16))
+}
+
+fun String.withStyleTitleSmall(): RichTextBuilder {
+    return toBuilder().with(TextSize(14))
+}
+
+fun String.withStyleBodyLarge(): RichTextBuilder {
+    return toBuilder().with(TextSize(16))
+}
+
+fun String.withStyleBodyMedium(): RichTextBuilder {
+    return toBuilder().with(TextSize(14))
+}
+
+fun String.withStyleBodySmall(): RichTextBuilder {
+    return toBuilder().with(TextSize(12))
+}
+
+fun String.withStyleLabelLarge(): RichTextBuilder {
+    return toBuilder().with(TextSize(14))
+}
+
+fun String.withStyleLabelMedium(): RichTextBuilder {
+    return toBuilder().with(TextSize(12))
+}
+
+fun String.withStyleLabelSmall(): RichTextBuilder {
+    return toBuilder().with(TextSize(11))
+}

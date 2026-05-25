@@ -6,6 +6,7 @@ import com.simple.adapter.Adapter
 import com.simple.adapter.ViewItem
 import com.simple.adapter.ViewItemAdapter
 import com.simple.launcher.retirement.databinding.ItemHeaderBinding
+import com.simple.launcher.retirement.databinding.ItemSettingHeaderBinding
 import com.simple.launcher.retirement.utils.exts.SpanSizeLookupViewItem
 import com.simple.launcher.retirement.utils.size.DP
 import com.simple.launcher.retirement.utils.size.Padding
@@ -26,17 +27,17 @@ data class SettingHeaderItem(
 }
 
 @Adapter
-class SettingHeaderAdapter : ViewItemAdapter<SettingHeaderItem, ItemHeaderBinding>() {
+class SettingHeaderAdapter : ViewItemAdapter<SettingHeaderItem, ItemSettingHeaderBinding>() {
 
     override val viewItemClass: Class<SettingHeaderItem> by lazy {
         SettingHeaderItem::class.java
     }
 
-    override fun createViewBinding(layoutInflater: LayoutInflater, parent: ViewGroup, viewType: Int): ItemHeaderBinding {
-        return ItemHeaderBinding.inflate(layoutInflater, parent, false)
+    override fun createViewBinding(layoutInflater: LayoutInflater, parent: ViewGroup, viewType: Int): ItemSettingHeaderBinding {
+        return ItemSettingHeaderBinding.inflate(layoutInflater, parent, false)
     }
 
-    override fun onBindViewHolder(binding: ItemHeaderBinding, viewType: Int, position: Int, item: SettingHeaderItem, payloads: List<String>) {
+    override fun onBindViewHolder(binding: ItemSettingHeaderBinding, viewType: Int, position: Int, item: SettingHeaderItem, payloads: List<String>) {
         super.onBindViewHolder(binding, viewType, position, item, payloads)
         binding.tvTitle.setText(item.title)
         binding.tvTitle.setPadding(item.padding)
