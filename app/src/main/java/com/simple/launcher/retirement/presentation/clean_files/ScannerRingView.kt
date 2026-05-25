@@ -11,6 +11,7 @@ import android.view.View
 import android.view.animation.LinearInterpolator
 import androidx.core.content.ContextCompat
 import com.simple.launcher.retirement.R
+import com.simple.launcher.retirement.utils.size.DP
 
 /**
  * Custom view vẽ vòng tròn scanner với 3 trạng thái:
@@ -111,7 +112,7 @@ class ScannerRingView @JvmOverloads constructor(
     // ------- Drawing -------
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
-        val strokeWidth = dp(6f)
+        val strokeWidth = DP.DP_20.toFloat()
         trackPaint.strokeWidth = strokeWidth
         arcPaint.strokeWidth = strokeWidth
         val inset = strokeWidth / 2f + dp(2f)

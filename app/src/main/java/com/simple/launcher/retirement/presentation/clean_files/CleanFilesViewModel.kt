@@ -13,32 +13,50 @@ import com.simple.launcher.retirement.presentation.base.buildBackIcon
 import com.simple.launcher.retirement.presentation.base.buildToolbarTitle
 import com.simple.launcher.retirement.utils.combineState
 import com.simple.launcher.retirement.utils.string.getString
+import com.simple.launcher.retirement.utils.text.ForegroundColor
+import com.simple.launcher.retirement.utils.text.RichText
+import com.simple.launcher.retirement.utils.text.emptyText
+import com.simple.launcher.retirement.utils.text.toRich
+import com.simple.launcher.retirement.utils.text.with
 import com.simple.launcher.retirement.utils.theme.getColor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-enum class CleanScreenState { IDLE, SCANNING, DONE }
-
-data class CategoryMeta(
-    val labelRes: Int,
-    val iconRes: Int,
-    val iconBgRes: Int,
-    val iconTintRes: Int
-)
-
-data class CleanResultData(
-    val totalFiles: Int,
-    val totalBytes: Long
-) {
-    val spaceMB: Float get() = totalBytes / (1024f * 1024f)
-    val spaceLabel: String get() = if (spaceMB >= 1f) "%.1f MB".format(spaceMB) else "${totalBytes / 1024} KB"
-}
-
 class CleanFilesViewModel : BaseViewModel() {
+
+    enum class CleanScreenState { IDLE, SCANNING, DONE }
+
+    data class CategoryMeta(
+        val labelRes: Int,
+        val iconRes: Int,
+        val iconBgRes: Int,
+        val iconTintRes: Int
+    )
+
+    data class CleanResultData(
+        val totalFiles: Int,
+        val totalBytes: Long
+    ) {
+        val spaceMB: Float get() = totalBytes / (1024f * 1024f)
+        val spaceLabel: String get() = if (spaceMB >= 1f) "%.1f MB".format(spaceMB) else "${totalBytes / 1024} KB"
+    }
+
+    /**
+     * Trạng thái vùng trung tâm ring.
+     * [showIcon] = true  → hiện icon, ẩn số đếm.
+     * [showIcon] = false → ẩn icon, hiện [countText] + [unitText].
+     */
+    data class RingCenterState(
+        val showIcon: Boolean,
+        val countText: RichText = emptyText(),
+        val unitText: RichText  = emptyText()
+    )
 
     val categoryMeta: List<CategoryMeta> = listOf(
         CategoryMeta(
@@ -96,11 +114,69 @@ class CleanFilesViewModel : BaseViewModel() {
         )
     }
 
+    /** Số file lạ hiện có trên máy — cập nhật real-time qua Flow */
+    val strangeFileCount: StateFlow<Int> = FileRepository.instance.countStrangeFilesFlow()
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000L), 0)
+
     private val _screenState = MutableStateFlow(CleanScreenState.IDLE)
     val screenState: StateFlow<CleanScreenState> = _screenState
 
+    /**
+     * Status text hiển thị dưới ring — màu và nội dung đều từ ViewModel.
+     * Fragment chỉ observe và gọi binding.tvStatus.setText(it).
+     */
+    val statusText: StateFlow<RichText> = combineState(
+        flow1 = strings,
+        flow2 = themes,
+        flow3 = _screenState,
+        flow4 = strangeFileCount,
+        initialValue = emptyText()
+    ) { stringMap, themeMap, state, count ->
+        val color = themeMap.getColor(android.R.attr.textColorSecondary)
+        val text = when (state) {
+            CleanScreenState.IDLE -> if (count > 0)
+                String.format(stringMap.getString(R.string.clean_files_idle_desc), count)
+            else
+                stringMap.getString(R.string.clean_files_desc)
+            CleanScreenState.SCANNING -> stringMap.getString(R.string.clean_files_running)
+            CleanScreenState.DONE    -> stringMap.getString(R.string.clean_files_completed)
+        }
+        text.toRich().with(ForegroundColor(color))
+    }
+
     private val _result = MutableStateFlow<CleanResultData?>(null)
     val result: StateFlow<CleanResultData?> = _result
+
+    /**
+     * Trạng thái vùng trung tâm ring — text, màu, icon visibility đều từ ViewModel.
+     * Dùng 5 flows tối đa của combineState.
+     */
+    val ringCenter: StateFlow<RingCenterState> = combineState(
+        flow1 = strings,
+        flow2 = themes,
+        flow3 = _screenState,
+        flow4 = strangeFileCount,
+        flow5 = _result,
+        initialValue = RingCenterState(showIcon = true)
+    ) { stringMap, themeMap, state, count, result ->
+        val primaryColor   = themeMap.getColor(android.R.attr.textColorPrimary)
+        val secondaryColor = themeMap.getColor(android.R.attr.textColorSecondary)
+        when (state) {
+            CleanScreenState.IDLE -> if (count > 0) RingCenterState(
+                showIcon  = false,
+                countText = count.toString().toRich().with(ForegroundColor(primaryColor)),
+                unitText  = stringMap.getString(R.string.clean_files_count_unit)
+                                .toRich().with(ForegroundColor(secondaryColor))
+            ) else RingCenterState(showIcon = true)
+            CleanScreenState.SCANNING -> RingCenterState(showIcon = true)
+            CleanScreenState.DONE -> RingCenterState(
+                showIcon  = false,
+                countText = (result?.totalFiles ?: 0).toString().toRich().with(ForegroundColor(primaryColor)),
+                unitText  = stringMap.getString(R.string.clean_result_files_deleted)
+                                .toRich().with(ForegroundColor(secondaryColor))
+            )
+        }
+    }
 
     /**
      * List có size = StrangeFileCategory.values().size.
@@ -109,6 +185,25 @@ class CleanFilesViewModel : BaseViewModel() {
      */
     private val _categoryResults = MutableStateFlow<List<Pair<Int, Long>?>>(emptyList())
     val categoryResults: StateFlow<List<Pair<Int, Long>?>> = _categoryResults
+
+    /**
+     * Text đã được format + tô màu cho từng category count.
+     * null = category chưa xử lý xong (Fragment giữ View INVISIBLE).
+     */
+    val categoryCountTexts: StateFlow<List<RichText?>> = combineState(
+        flow1 = strings,
+        flow2 = themes,
+        flow3 = _categoryResults,
+        initialValue = emptyList()
+    ) { stringMap, themeMap, results ->
+        val color = themeMap.getColor(android.R.attr.textColorSecondary)
+        results.map { pair ->
+            pair?.let {
+                String.format(stringMap.getString(R.string.clean_cat_file_count), it.first)
+                    .toRich().with(ForegroundColor(color))
+            }
+        }
+    }
 
     // ─── Scan logic ────────────────────────────────────────────────────────────
 

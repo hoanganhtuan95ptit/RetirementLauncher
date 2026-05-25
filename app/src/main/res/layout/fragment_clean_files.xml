@@ -36,8 +36,8 @@
 
             <!-- Scanner ring -->
             <FrameLayout
-                android:layout_width="160dp"
-                android:layout_height="160dp"
+                android:layout_width="188dp"
+                android:layout_height="188dp"
                 android:layout_gravity="center_horizontal">
 
                 <com.simple.launcher.retirement.presentation.clean_files.ScannerRingView
@@ -48,8 +48,8 @@
                 <!-- Center of ring -->
                 <LinearLayout
                     android:id="@+id/llRingCenter"
-                    android:layout_width="108dp"
-                    android:layout_height="108dp"
+                    android:layout_width="124dp"
+                    android:layout_height="124dp"
                     android:layout_gravity="center"
                     android:background="@drawable/bg_ring_center"
                     android:orientation="vertical"
@@ -224,7 +224,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

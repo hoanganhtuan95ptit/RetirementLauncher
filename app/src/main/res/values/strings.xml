@@ -41,6 +41,8 @@
     <string name="clean_result_files_deleted">file đã xóa</string>
     <string name="clean_result_space_freed">đã giải phóng</string>
     <string name="clean_result_nothing">Thiết bị đã sạch, không tìm thấy file lạ.</string>
+    <string name="clean_files_idle_desc">Phát hiện %1$d file lạ – nhấn để dọn dẹp</string>
+    <string name="clean_files_count_unit">file lạ</string>
 
     <!-- Clean Memory -->
     <string name="clean_memory_title">Giải phóng bộ nhớ</string>
