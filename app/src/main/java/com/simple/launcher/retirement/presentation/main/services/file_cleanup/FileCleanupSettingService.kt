@@ -8,11 +8,11 @@ import com.simple.launcher.retirement.presentation.main.MainActivity
 import com.simple.launcher.retirement.presentation.settings.SettingItem
 import com.simple.launcher.retirement.presentation.settings.SettingsFragment
 import com.simple.launcher.retirement.presentation.settings.SettingsViewModel
-import com.simple.launcher.retirement.utils.permission.PermissionManager
-import com.simple.launcher.retirement.utils.services.launchCollect
 import com.simple.launcher.retirement.utils.AppEvent
 import com.simple.launcher.retirement.utils.AppEventBus
+import com.simple.launcher.retirement.utils.permission.PermissionManager
 import com.simple.launcher.retirement.utils.services.FragmentCreatedService
+import com.simple.launcher.retirement.utils.services.launchCollect
 import kotlinx.coroutines.flow.filterIsInstance
 
 @AutoRegister(apis = [SettingsFragment::class])
@@ -33,7 +33,7 @@ class FileCleanupSettingService : FragmentCreatedService {
 
         // Lắng nghe cấu hình on/off → re-evaluate BackgroundService
         PreferenceRepository.instance.isFileCleanupEnabledFlow().launchCollect(fragment) {
-            (fragment.activity as? MainActivity)?.startBackgroundService()
+            if (it) (fragment.activity as? MainActivity)?.startBackgroundService()
         }
 
         // Xử lý sự kiện toggle từ người dùng

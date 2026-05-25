@@ -29,7 +29,6 @@ object StringResStore {
                     val resId = field.getInt(null)
                     val value = resources.getString(resId)
 
-                    Log.d("tuanha", "load: ${field.name} resId:$resId value:$value")
                     nameMap[field.name] = value
                     idMap[resId] = value
                 }
