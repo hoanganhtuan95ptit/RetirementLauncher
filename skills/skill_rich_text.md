@@ -2,33 +2,35 @@
 
 ## Mục đích
 
-`RichText` là một công cụ giúp tạo và quản lý các chuỗi văn bản có định dạng (Spannable) một cách dễ dàng và khai báo (declarative). Nó thay thế việc sử dụng `SpannableString` và `setSpan` thủ công bằng một cú pháp trôi chảy (fluent API), giúp code sạch hơn và dễ bảo trì hơn.
+`RichText` là một công cụ giúp tạo và quản lý các chuỗi văn bản có định dạng (Spannable) một cách dễ dàng và khai báo (declarative). Nó thay thế việc sử dụng `SpannableString` và `setSpan` thủ công bằng một cú pháp mở rộng (extension functions) trôi chảy, giúp code sạch hơn và dễ bảo trì hơn.
 
 ## Vị trí
 
-| File | Package |
+| File / Folder | Package / Path |
 |---|---|
 | `RichText.kt` | `com.simple.launcher.retirement.utils.text` |
 | `RichTextBuilder.kt` | `com.simple.launcher.retirement.utils.text` |
-| `RichSpan.kt` | `com.simple.launcher.retirement.utils.text` |
+| `RichSpan.kt` | `com.simple.launcher.retirement.utils.text` (Chứa lớp cơ sở `RichSpan` & `RichSpanConvert`) |
 | `Exts.kt` | `com.simple.launcher.retirement.utils.text` |
+| `span/` | Thư mục `utils/text/span/` (Chứa các custom spans cụ thể) |
 
 ## Kiến trúc tổng quan
 
-Hệ thống dựa trên việc định nghĩa các `RichSpan` (đại diện cho kiểu style) và các `RichSpanConvert` để chuyển đổi chúng thành các class `CharacterStyle` của Android.
+Hệ thống dựa trên việc định nghĩa các `RichSpan` (đại diện cho kiểu style) và các `RichSpanConvert` để chuyển đổi chúng thành các class `CharacterStyle` của Android. Các span cụ thể được đặt trong thư mục `utils/text/span/` để giữ mã nguồn sạch sẽ.
 
 ### Các class và hàm chính
 
 | Thành phần | Mô tả |
 |---|---|
-| `RichText` | Lớp chứa nội dung văn bản và danh sách các style đã áp dụng. |
-| `RichTextBuilder` | Builder tạo `RichText` bằng fluent API (chaining). |
-| `RichSpan` | Lớp cha cho các loại định dạng (Bold, ForegroundColor, RelativeSize, v.v.). |
-| `String.withFirst()` | Áp dụng style cho lần xuất hiện **đầu tiên** của một từ khóa. |
-| `String.withAll()` | Áp dụng style cho **tất cả** các lần xuất hiện của một từ khóa. |
+| `RichText` | Lớp chứa nội dung văn bản và danh sách các style đã áp dụng. Có thể khởi tạo đơn giản bằng `RichText("nội dung")` khi không cần style. |
+| `RichTextBuilder` | Builder tạo `RichText` dùng trong nội bộ. |
+| `String.toBuilder()` | Chuyển đổi String thành `RichTextBuilder`. |
+| `String.with(...)` | Bắt đầu builder bằng cách áp dụng style cho toàn bộ String. |
+| `String.withFirst(...)` | Bắt đầu builder bằng cách áp dụng style cho lần xuất hiện đầu tiên của một từ khóa. |
+| `String.withAll(...)` | Bắt đầu builder bằng cách áp dụng style cho tất cả lần xuất hiện của một từ khóa. |
 | `TextView.setText(RichText)` | Hàm mở rộng để hiển thị `RichText` lên UI. |
 
-### Các RichSpan có sẵn
+### Các RichSpan có sẵn (nằm tại thư mục `utils/text/span/`)
 
 | RichSpan | Mô tả |
 |---|---|
@@ -41,79 +43,74 @@ Hệ thống dựa trên việc định nghĩa các `RichSpan` (đại diện ch
 
 ## Hướng dẫn sử dụng
 
-Có **2 cách** tạo `RichText`: dùng **extension functions** hoặc dùng **RichText.Builder**.
+Luôn sử dụng các **extension functions** trực tiếp trên `String` để tạo `RichText` một cách tự nhiên và sạch đẹp nhất. Nhớ import `com.simple.launcher.retirement.utils.text.*`.
 
 ---
 
-### Cách 1: Extension functions (phù hợp cho trường hợp đơn giản)
-
-#### 1.1. Áp dụng style cho từ khóa đầu tiên
+### 1. Áp dụng style cho toàn bộ chuỗi
 
 ```kotlin
+import com.simple.launcher.retirement.utils.text.*
+
+val title = "Cài đặt"
+    .with(ForegroundColor(textColor), TextSize(20), Bold)
+    .build()
+
+textView.setText(title)
+```
+
+---
+
+### 2. Áp dụng style cho từ khóa đầu tiên
+
+```kotlin
+import com.simple.launcher.retirement.utils.text.*
+
 val message = "Chào mừng bạn đến với Retirement Launcher"
     .withFirst("Retirement Launcher", Bold, ForegroundColor(Color.BLUE))
+    .build()
 
 textView.setText(message)
 ```
 
-#### 1.2. Áp dụng style cho tất cả các từ khóa trùng khớp
+---
+
+### 3. Áp dụng style cho tất cả các từ khóa trùng khớp
 
 ```kotlin
+import com.simple.launcher.retirement.utils.text.*
+
 val description = "Android là hệ điều hành, Android rất phổ biến."
     .withAll("Android", Bold, RelativeSize(1.2f))
+    .build()
 
 textView.setText(description)
 ```
 
-#### 1.3. Kết hợp nhiều style (Chaining)
+---
+
+### 4. Kết hợp nhiều style (Chaining)
 
 ```kotlin
+import com.simple.launcher.retirement.utils.text.*
+
 val complexText = "Giá: 100.000đ (Đã bao gồm thuế)"
     .withFirst("100.000đ", Bold, ForegroundColor(Color.RED), RelativeSize(1.5f))
     .withFirst("(Đã bao gồm thuế)", RelativeSize(0.8f))
+    .build()
 
 textView.setText(complexText)
 ```
 
 ---
 
-### Cách 2: RichText.Builder (khuyến khích — rõ ràng, dễ đọc hơn)
-
-Sử dụng `RichText.Builder(text)` để tạo builder, rồi gọi chaining các phương thức `with()`, `withFirst()`, `withAll()`, cuối cùng gọi `build()`.
-
-#### API của RichTextBuilder
-
-| Method | Mô tả |
-|---|---|
-| `with(vararg spans)` | Áp dụng style cho **toàn bộ** chuỗi gốc. |
-| `withFirst(substring, vararg spans)` | Áp dụng style cho lần xuất hiện **đầu tiên** của `substring`. |
-| `withAll(substring, vararg spans)` | Áp dụng style cho **tất cả** lần xuất hiện của `substring`. |
-| `build()` | Tạo ra `RichText` cuối cùng. |
-
-#### 2.1. Style toàn bộ chuỗi
+### 5. Tạo RichText đơn giản không có style
 
 ```kotlin
-val title = RichText.Builder("Cài đặt")
-    .with(ForegroundColor(textColor), TextSize(20), Bold)
-    .build()
-```
+import com.simple.launcher.retirement.utils.text.RichText
 
-#### 2.2. Style một phần chuỗi
-
-```kotlin
-val desc = RichText.Builder("Bạn có 5 file rác cần dọn dẹp")
-    .withFirst("5", Bold, ForegroundColor(Color.RED))
-    .withFirst("rác", ForegroundColor(Color.YELLOW))
-    .build()
-```
-
-#### 2.3. Kết hợp style toàn bộ + style một phần
-
-```kotlin
-val text = RichText.Builder(getString(R.string.overlay_permission_desc))
-    .with(ForegroundColor(descColor))
-    .withFirst(getString(R.string.overlay_permission_highlight), Bold, ForegroundColor(highlightColor))
-    .build()
+val simpleText = RichText("Chỉ là text bình thường")
+textView.setText(simpleText)
 ```
 
 ---
@@ -127,58 +124,65 @@ binding.tvHeader.setText(richText)
 
 ## Tại sao nên dùng RichText?
 
-1.  **Cú pháp khai báo**: Giúp người đọc hiểu ngay phần văn bản nào đang được định dạng như thế nào mà không cần đọc logic `index` phức tạp.
-2.  **Khả năng mở rộng**: Bạn có thể dễ dàng thêm các loại `RichSpan` mới bằng cách kế thừa `RichSpan` và tạo một `RichSpanConvert` tương ứng với annotation `@AutoService`.
-3.  **Tự động hóa**: Nhờ sử dụng `ServiceLoader` và `AutoService`, các trình chuyển đổi style mới sẽ tự động được hệ thống nhận diện.
-4.  **Hai cách dùng**: Extension functions cho code ngắn gọn, Builder cho code rõ ràng — tùy ngữ cảnh mà chọn.
+1. **Cú pháp khai báo**: Giúp người đọc hiểu ngay phần văn bản nào đang được định dạng như thế nào mà không cần đọc logic `index` phức tạp.
+2. **Khả năng mở rộng**: Bạn có thể dễ dàng thêm các loại `RichSpan` mới bằng cách kế thừa `RichSpan` và tạo một `RichSpanConvert` tương ứng với annotation `@AutoService`.
+3. **Tự động hóa**: Nhờ sử dụng `ServiceLoader` và `AutoService`, các trình chuyển đổi style mới sẽ tự động được hệ thống nhận diện.
+4. **Không Boilerplate**: Không cần gọi `RichText.Builder(...)` thủ công, chỉ cần gọi extension trực tiếp trên String.
 
 ## Ví dụ thực tế trong dự án
 
-### Ví dụ 1: ActionState cho nút bấm (Builder)
+### Ví dụ 1: ActionState cho nút bấm
 
 ```kotlin
+import com.simple.launcher.retirement.utils.text.*
+
 fun buildActionState(
     text: String,
     textColor: Int,
     textSize: Int = 18
 ): ActionState = ActionState(
-    text = RichText.Builder(text)
-        .with(ForegroundColor(textColor), TextSize(textSize), Bold)
-        .build()
+    text = text.with(ForegroundColor(textColor), TextSize(textSize), Bold).build()
 )
 ```
 
-### Ví dụ 2: Settings Item (Extension)
+### Ví dụ 2: Settings Item
 
 ```kotlin
+import com.simple.launcher.retirement.utils.text.*
+
 val textColor = themeMap.getColor(android.R.attr.textColorPrimary)
 val item = SettingItem(
-    title = stringMap.getString(R.string.setting_pin).toRich().with(ForegroundColor(textColor)),
+    title = stringMap.getString(R.string.setting_pin).with(ForegroundColor(textColor)).build(),
 )
 ```
 
-### Ví dụ 3: Permission screen với highlight (Builder)
+### Ví dụ 3: Permission screen với highlight
 
 ```kotlin
-val description = RichText.Builder(stringMap.getString(R.string.overlay_permission_desc))
+import com.simple.launcher.retirement.utils.text.*
+
+val description = stringMap.getString(R.string.overlay_permission_desc)
     .with(ForegroundColor(descColor))
     .withFirst(stringMap.getString(R.string.overlay_permission_highlight), Bold, ForegroundColor(highlightColor))
     .build()
 ```
 
-### Ví dụ 4: Header với custom font (Extension)
+### Ví dụ 4: Header với custom font
 
 ```kotlin
-val header = strings.getString(R.string.home_header_apps).toRich().with(
-    ForegroundColor(Color.WHITE),
-    TextSize(20),
-    CustomFont(Typeface.create("sans-serif-medium", Typeface.NORMAL))
-)
+import com.simple.launcher.retirement.utils.text.*
+
+val header = strings.getString(R.string.home_header_apps)
+    .with(
+        ForegroundColor(Color.WHITE),
+        TextSize(20),
+        CustomFont(Typeface.create("sans-serif-medium", Typeface.NORMAL))
+    ).build()
 ```
 
 ## Lưu ý quan trọng
 
-- **Ưu tiên dùng `RichText.Builder`** khi cần kết hợp `with()` + `withFirst()` — code rõ ràng hơn extension chaining.
-- **Dùng extension functions** (`toRich()`, `.with()`) khi chỉ cần style đơn giản cho toàn bộ chuỗi.
-- Luôn gọi `build()` ở cuối khi dùng Builder.
-- `withFirst` trả về chính builder nếu substring không tìm thấy (không crash).
+- **Luôn import** `com.simple.launcher.retirement.utils.text.*` (hoặc các extension riêng lẻ) để gọi được `.with()`, `.withFirst()`, `.withAll()`.
+- **Luôn gọi `.build()`** ở cuối cùng của chuỗi phương thức để tạo đối tượng `RichText` thực sự.
+- `withFirst` và `withAll` trả về chính builder nếu substring không tìm thấy (không crash).
+

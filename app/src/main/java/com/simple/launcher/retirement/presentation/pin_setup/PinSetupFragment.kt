@@ -127,7 +127,7 @@ class PinSetupFragment : BaseFragment<FragmentPinSetupBinding>() {
         }
 
         viewModel.error.observe(this) { errorRes ->
-            binding.tvError.setText(errorRes?.let { RichText.Builder(getString(it)).build() })
+            binding.tvError.setText(errorRes?.let { RichText(getString(it)) })
         }
 
         viewModel.toolbar.observe(this) { state ->

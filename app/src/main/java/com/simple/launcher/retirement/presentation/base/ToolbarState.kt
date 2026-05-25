@@ -4,11 +4,7 @@ import android.graphics.Typeface
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.utils.image.ImageRes
 import com.simple.launcher.retirement.utils.image.RichImage
-import com.simple.launcher.retirement.utils.text.CustomFont
-import com.simple.launcher.retirement.utils.text.ForegroundColor
-import com.simple.launcher.retirement.utils.text.RichText
-import com.simple.launcher.retirement.utils.text.TextSize
-import com.simple.launcher.retirement.utils.text.emptyText
+import com.simple.launcher.retirement.utils.text.*
 
 /**
  * Trạng thái toolbar được expose từ ViewModel.
@@ -40,7 +36,7 @@ fun buildToolbarTitle(
     color: Int,
     sizeDip: Int = 18,
     typeface: Typeface = Typeface.create("sans-serif-medium", Typeface.NORMAL)
-): RichText = RichText.Builder(text)
+): RichText = text
     .with(ForegroundColor(color), TextSize(sizeDip), CustomFont(typeface))
     .build()
 

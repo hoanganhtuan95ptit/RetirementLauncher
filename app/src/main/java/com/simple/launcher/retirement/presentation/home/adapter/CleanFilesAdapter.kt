@@ -10,17 +10,24 @@ import com.simple.adapter.base.BaseBindingViewHolder
 import com.simple.launcher.retirement.presentation.DeepLinks
 import com.simple.launcher.retirement.presentation.sendDeeplinkWithBackStack
 import com.simple.launcher.retirement.databinding.ItemUtilityBinding
+import com.simple.launcher.retirement.utils.background.Background
+import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.image.RichImage
 import com.simple.launcher.retirement.utils.image.setImage
 import com.simple.launcher.retirement.utils.text.RichText
 import com.simple.launcher.retirement.utils.text.setText
 import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
 
-data class CleanFilesHomeItem(val label: RichText, val icon: RichImage) : HomeItem {
+data class CleanFilesHomeItem(
+    val label: RichText,
+    val icon: RichImage,
+    val cardBackground: Background
+) : HomeItem {
     override fun areItemsTheSame(): List<Any> = listOf("CleanFiles")
     override fun getContentsCompare(): List<Pair<Any, String>> = listOf(
         label to "label",
-        icon to "icon"
+        icon to "icon",
+        cardBackground to "cardBackground"
     )
     override val spanSize: Int = HomeItem.TOTAL_COLUMNS / 2 // half width
 }
@@ -51,6 +58,9 @@ class CleanFilesAdapter : UtilityAdapter<CleanFilesHomeItem>() {
         }
         if (payloads.isEmpty() || payloads.contains("label")) {
             binding.tvLabel.setText(item.label)
+        }
+        if (payloads.isEmpty() || payloads.contains("cardBackground")) {
+            binding.root.setBackground(item.cardBackground)
         }
     }
 }

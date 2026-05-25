@@ -8,8 +8,7 @@ import com.simple.launcher.retirement.presentation.settings.SettingItem
 import com.simple.launcher.retirement.utils.combineState
 import com.simple.launcher.retirement.utils.image.ImageRes
 import com.simple.launcher.retirement.utils.string.getString
-import com.simple.launcher.retirement.utils.text.ForegroundColor
-import com.simple.launcher.retirement.utils.text.RichText
+import com.simple.launcher.retirement.utils.text.*
 import com.simple.launcher.retirement.utils.theme.getColor
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -33,7 +32,7 @@ class CallBlockSettingViewModel : BaseViewModel() {
         listOf(
             SettingItem(
                 SettingItem.ID_TOGGLE_CALL_BLOCK,
-                stringMap.getString(R.string.setting_call_block).let { RichText.Builder(it).with(ForegroundColor(textColor)).build() },
+                stringMap.getString(R.string.setting_call_block).with(ForegroundColor(textColor)).build(),
                 ImageRes(android.R.drawable.ic_menu_call),
                 isSwitch = true,
                 isChecked = isEnabled

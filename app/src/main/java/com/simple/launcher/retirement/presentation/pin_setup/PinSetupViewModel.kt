@@ -10,9 +10,7 @@ import com.simple.launcher.retirement.presentation.base.buildBackIcon
 import com.simple.launcher.retirement.presentation.base.buildToolbarTitle
 import com.simple.launcher.retirement.utils.combineState
 import com.simple.launcher.retirement.utils.string.getString
-import com.simple.launcher.retirement.utils.text.ForegroundColor
-import com.simple.launcher.retirement.utils.text.RichText
-import com.simple.launcher.retirement.utils.text.emptyText
+import com.simple.launcher.retirement.utils.text.*
 import com.simple.launcher.retirement.utils.theme.getColor
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -56,7 +54,7 @@ class PinSetupViewModel(
             State.CONFIRM_NEW_PIN -> R.string.pin_confirm_new
             State.SUCCESS -> R.string.pin_enter_new
         }
-        RichText.Builder(stringMap.getString(resId))
+        stringMap.getString(resId)
             .with(ForegroundColor(color))
             .build()
     }

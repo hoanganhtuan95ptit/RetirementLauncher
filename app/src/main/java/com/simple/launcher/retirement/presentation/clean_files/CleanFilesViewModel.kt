@@ -13,9 +13,7 @@ import com.simple.launcher.retirement.presentation.base.buildBackIcon
 import com.simple.launcher.retirement.presentation.base.buildToolbarTitle
 import com.simple.launcher.retirement.utils.combineState
 import com.simple.launcher.retirement.utils.string.getString
-import com.simple.launcher.retirement.utils.text.ForegroundColor
-import com.simple.launcher.retirement.utils.text.RichText
-import com.simple.launcher.retirement.utils.text.emptyText
+import com.simple.launcher.retirement.utils.text.*
 import com.simple.launcher.retirement.utils.theme.getColor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -124,9 +122,7 @@ class CleanFilesViewModel : BaseViewModel() {
             CleanScreenState.SCANNING -> stringMap.getString(R.string.clean_files_running)
             CleanScreenState.DONE    -> stringMap.getString(R.string.clean_files_completed)
         }
-        RichText.Builder(text)
-            .with(ForegroundColor(color))
-            .build()
+        text.with(ForegroundColor(color)).build()
     }
 
     private val _result = MutableStateFlow<CleanResultData?>(null)
@@ -149,20 +145,20 @@ class CleanFilesViewModel : BaseViewModel() {
         when (state) {
             CleanScreenState.IDLE -> if (count > 0) RingCenterState(
                 showIcon  = false,
-                countText = RichText.Builder(count.toString())
+                countText = count.toString()
                     .with(ForegroundColor(primaryColor))
                     .build(),
-                unitText  = RichText.Builder(stringMap.getString(R.string.clean_files_count_unit))
+                unitText  = stringMap.getString(R.string.clean_files_count_unit)
                     .with(ForegroundColor(secondaryColor))
                     .build()
             ) else RingCenterState(showIcon = true)
             CleanScreenState.SCANNING -> RingCenterState(showIcon = true)
             CleanScreenState.DONE -> RingCenterState(
                 showIcon  = false,
-                countText = RichText.Builder((result?.totalFiles ?: 0).toString())
+                countText = (result?.totalFiles ?: 0).toString()
                     .with(ForegroundColor(primaryColor))
                     .build(),
-                unitText  = RichText.Builder(stringMap.getString(R.string.clean_result_files_deleted))
+                unitText  = stringMap.getString(R.string.clean_result_files_deleted)
                     .with(ForegroundColor(secondaryColor))
                     .build()
             )
@@ -190,7 +186,7 @@ class CleanFilesViewModel : BaseViewModel() {
         results.map { pair ->
             pair?.let {
                 String.format(stringMap.getString(R.string.clean_cat_file_count), it.first)
-                    .let { text -> RichText.Builder(text).with(ForegroundColor(color)).build() }
+                    .with(ForegroundColor(color)).build()
             }
         }
     }

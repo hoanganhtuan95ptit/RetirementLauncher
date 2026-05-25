@@ -15,17 +15,14 @@ import com.simple.launcher.retirement.presentation.home.adapter.CleanMemoryHomeI
 import com.simple.launcher.retirement.presentation.home.adapter.ClockHomeItem
 import com.simple.launcher.retirement.presentation.home.adapter.ContactHomeItem
 import com.simple.launcher.retirement.presentation.home.adapter.HeaderHomeItem
+import com.simple.launcher.retirement.utils.background.Background
 import com.simple.launcher.retirement.utils.combineState
 import com.simple.launcher.retirement.utils.image.ImageDrawable
 import com.simple.launcher.retirement.utils.image.ImagePath
 import com.simple.launcher.retirement.utils.image.ImageRes
+import com.simple.launcher.retirement.utils.size.DP
 import com.simple.launcher.retirement.utils.string.getString
-import com.simple.launcher.retirement.utils.text.Bold
-import com.simple.launcher.retirement.utils.text.CustomFont
-import com.simple.launcher.retirement.utils.text.ForegroundColor
-import com.simple.launcher.retirement.utils.text.RichText
-import com.simple.launcher.retirement.utils.text.TextSize
-import com.simple.launcher.retirement.utils.text.toRich
+import com.simple.launcher.retirement.utils.text.*
 import com.simple.launcher.retirement.utils.theme.getColor
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -38,19 +35,34 @@ class HomeViewModel(
 
     val cleanFilesHomeItem: StateFlow<Pair<Double, List<ViewItem>>> = combineState(
         flow1 = strings,
-        flow2 = fileRepository.countStrangeFilesFlow(),
+        flow2 = themes,
+        flow3 = fileRepository.countStrangeFilesFlow(),
         initialValue = 1.0 to emptyList()
-    ) { strings, fileCount ->
+    ) { strings, themeMap, fileCount ->
 
         val fileCountLabel = "$fileCount"
         val list = arrayListOf<ViewItem>()
+        val hasStrangeFiles = fileCount > 0
+
+        val labelColor = if (hasStrangeFiles) {
+            Color.parseColor("#A32D2D") // clean_cat_red
+        } else {
+            Color.BLACK
+        }
+
+        val cardBackground = Background.Builder()
+            .backgroundColor(if (hasStrangeFiles) Color.parseColor("#FCEBEB") else Color.WHITE)
+            .cornerRadius(DP.DP_16)
+            .build()
 
         CleanFilesHomeItem(
-            label = RichText.Builder(strings.getString(R.string.home_strange_files)
-                .replace("\$file_number", fileCountLabel))
+            label = strings.getString(R.string.home_strange_files)
+                .replace("\$file_number", fileCountLabel)
+                .with(ForegroundColor(labelColor))
                 .withFirst(fileCountLabel, Bold)
                 .build(),
-            icon = ImageRes(R.drawable.img_home_clean_up)
+            icon = ImageRes(R.drawable.img_home_clean_up),
+            cardBackground = cardBackground
         ).let { list.add(it) }
 
         1.0 to list
@@ -66,8 +78,8 @@ class HomeViewModel(
         val list = arrayListOf<ViewItem>()
 
         CleanMemoryHomeItem(
-            label = RichText.Builder(strings.getString(R.string.home_memory_status)
-                .replace("\$memory_mb", memoryLabel))
+            label = strings.getString(R.string.home_memory_status)
+                .replace("\$memory_mb", memoryLabel)
                 .withFirst(memoryLabel, Bold)
                 .build(),
             icon = ImageRes(R.drawable.img_home_boost)
@@ -92,12 +104,12 @@ class HomeViewModel(
         val apps = entities.filterIsInstance<HomeContentEntity.App>()
         if (apps.isNotEmpty()) {
             HeaderHomeItem(
-                RichText.Builder(strings.getString(R.string.home_header_apps))
+                strings.getString(R.string.home_header_apps)
                     .with(ForegroundColor(Color.WHITE), TextSize(20), CustomFont(Typeface.create("sans-serif-medium", Typeface.NORMAL)))
                     .build()
             ).let { list.add(it) }
 
-            apps.map { AppHomeItem(RichText.Builder(it.entity.label).build(), ImageDrawable(it.entity.icon), it.entity) }
+            apps.map { AppHomeItem(RichText(it.entity.label), ImageDrawable(it.entity.icon), it.entity) }
                 .let { list.addAll(it) }
         }
 
@@ -105,7 +117,7 @@ class HomeViewModel(
         val contacts = entities.filterIsInstance<HomeContentEntity.Contact>()
         if (contacts.isNotEmpty()) {
             HeaderHomeItem(
-                RichText.Builder(strings.getString(R.string.home_header_contacts))
+                strings.getString(R.string.home_header_contacts)
                     .with(ForegroundColor(Color.WHITE), TextSize(20), CustomFont(Typeface.create("sans-serif-medium", Typeface.NORMAL)))
                     .build()
             ).let { list.add(it) }
@@ -117,10 +129,10 @@ class HomeViewModel(
                     ImageRes(R.drawable.ic_home_contact_24dp)
                 }
                 ContactHomeItem(
-                    name = RichText.Builder(contact.entity.name)
+                    name = contact.entity.name
                         .with(ForegroundColor(textColor))
                         .build(),
-                    tapToCallLabel = RichText.Builder(strings.getString(R.string.contact_tap_to_call))
+                    tapToCallLabel = strings.getString(R.string.contact_tap_to_call)
                         .with(ForegroundColor(textColor))
                         .build(),
                     photo = photo,
@@ -147,11 +159,6 @@ class HomeViewModel(
         (extraMap.toList() + listOf(cleanFiles, cleanMemory, appsAndContacts))
             .sortedBy { it.first }
             .flatMap { it.second }
-    }
-
-    fun loadSystemStatus() {
-//        fileRepository.refreshFileStatus()
-        memoryRepository.refreshMemoryStatus()
     }
 
     fun updateItem(order: Double, list: List<ViewItem>) {

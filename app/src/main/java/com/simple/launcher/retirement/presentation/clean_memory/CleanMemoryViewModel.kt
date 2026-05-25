@@ -112,9 +112,9 @@ class CleanMemoryViewModel : BaseViewModel() {
     ) { stringMap, mb ->
         if (mb == null) null
         else if (mb > 0) {
-            RichText.Builder(String.format(stringMap.getString(R.string.clean_memory_toast), mb.toInt())).build()
+            RichText(String.format(stringMap.getString(R.string.clean_memory_toast), mb.toInt()))
         } else {
-            RichText.Builder(stringMap.getString(R.string.clean_memory_optimal)).build()
+            RichText(stringMap.getString(R.string.clean_memory_optimal))
         }
     }
 

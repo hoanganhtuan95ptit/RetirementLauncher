@@ -12,7 +12,6 @@ import com.simple.launcher.retirement.presentation.settings.SettingItem
 import com.simple.launcher.retirement.presentation.settings.SettingsFragment
 import com.simple.launcher.retirement.presentation.settings.SettingsViewModel
 import com.simple.launcher.retirement.utils.permission.PermissionManager
-import com.simple.launcher.retirement.presentation.worker.BackgroundService
 import com.simple.launcher.retirement.utils.AppEvent
 import com.simple.launcher.retirement.utils.AppEventBus
 import com.simple.launcher.retirement.utils.combineState
@@ -20,8 +19,7 @@ import com.simple.launcher.retirement.utils.image.ImageRes
 import com.simple.launcher.retirement.utils.services.FragmentCreatedService
 import com.simple.launcher.retirement.utils.services.launchCollect
 import com.simple.launcher.retirement.utils.string.getString
-import com.simple.launcher.retirement.utils.text.ForegroundColor
-import com.simple.launcher.retirement.utils.text.RichText
+import com.simple.launcher.retirement.utils.text.*
 import com.simple.launcher.retirement.utils.theme.getColor
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -43,7 +41,7 @@ class AppMonitoringSettingViewModel : BaseViewModel() {
         SettingItem(
             id = SettingItem.ID_TOGGLE_BLOCK,
             icon = ImageRes(android.R.drawable.ic_lock_lock),
-            title = RichText.Builder(stringMap.getString(R.string.setting_app_monitoring)).with(ForegroundColor(textColor)).build(),
+            title = stringMap.getString(R.string.setting_app_monitoring).with(ForegroundColor(textColor)).build(),
             isSwitch = true,
             isChecked = isEnabled
         ).let {
@@ -79,13 +77,13 @@ class AppMonitoringSettingService : FragmentCreatedService {
         AppEventBus.events.filterIsInstance<AppEvent.SettingClicked>().launchCollect(fragment) { event ->
             val item = event.item
             if (item.id == SettingItem.ID_TOGGLE_BLOCK) {
-                handleToggle(fragment, item)
+                handleToggle(item)
                 appMonitoringSettingViewModel.refresh()
             }
         }
     }
 
-    private suspend fun handleToggle(fragment: Fragment, item: SettingItem) {
+    private suspend fun handleToggle(item: SettingItem) {
 
         val repository = PreferenceRepository.instance
         val isTurningOn = item.isChecked

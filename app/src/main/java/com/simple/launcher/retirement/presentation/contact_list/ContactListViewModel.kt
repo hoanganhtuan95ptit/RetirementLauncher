@@ -130,7 +130,7 @@ class ContactListViewModel(
                     ImageRes(R.drawable.ic_home_contact_24dp)
                 }
                 SelectableContactItem(
-                    name = RichText.Builder(contact.name).build(),
+                    name = RichText(contact.name),
                     photo = photo,
                     isSelected = isSelected,
                     entity = SelectableContactEntity(contact, isSelected)

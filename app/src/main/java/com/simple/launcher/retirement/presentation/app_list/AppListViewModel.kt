@@ -94,7 +94,7 @@ class AppListViewModel(
             query.isBlank() || it.app.label.contains(query, ignoreCase = true)
         }.map { entity ->
             SelectableAppItem(
-                label = RichText.Builder(entity.app.label).build(),
+                label = RichText(entity.app.label),
                 icon = ImageDrawable(entity.app.icon),
                 isSelected = entity.app.packageName in selectedIds,
                 entity = entity

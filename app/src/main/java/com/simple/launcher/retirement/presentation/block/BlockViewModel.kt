@@ -6,9 +6,7 @@ import com.simple.launcher.retirement.presentation.base.BaseViewModel
 import com.simple.launcher.retirement.presentation.base.buildActionState
 import com.simple.launcher.retirement.utils.combineState
 import com.simple.launcher.retirement.utils.string.getString
-import com.simple.launcher.retirement.utils.text.ForegroundColor
-import com.simple.launcher.retirement.utils.text.RichText
-import com.simple.launcher.retirement.utils.text.emptyText
+import com.simple.launcher.retirement.utils.text.*
 import com.simple.launcher.retirement.utils.theme.getColor
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -36,10 +34,10 @@ class BlockViewModel : BaseViewModel() {
         val titleColor = themeMap.getColor(android.R.attr.textColorPrimary)
         val messageColor = themeMap.getColor(android.R.attr.textColorSecondary)
         BlockContentState(
-            title = RichText.Builder(stringMap.getString(R.string.block_title))
+            title = stringMap.getString(R.string.block_title)
                 .with(ForegroundColor(titleColor))
                 .build(),
-            message = RichText.Builder(stringMap.getString(R.string.block_desc))
+            message = stringMap.getString(R.string.block_desc)
                 .with(ForegroundColor(messageColor))
                 .build(),
             appName = appName

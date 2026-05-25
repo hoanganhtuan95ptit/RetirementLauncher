@@ -6,9 +6,7 @@ import com.simple.launcher.retirement.presentation.base.BaseViewModel
 import com.simple.launcher.retirement.presentation.base.buildActionState
 import com.simple.launcher.retirement.utils.combineState
 import com.simple.launcher.retirement.utils.string.getString
-import com.simple.launcher.retirement.utils.text.Bold
-import com.simple.launcher.retirement.utils.text.ForegroundColor
-import com.simple.launcher.retirement.utils.text.RichText
+import com.simple.launcher.retirement.utils.text.*
 import com.simple.launcher.retirement.utils.theme.getColor
 import kotlinx.coroutines.flow.StateFlow
 
@@ -20,7 +18,7 @@ class OverlayPermissionViewModel : BaseViewModel() {
         initialValue = RichText("")
     ) { stringMap, themeMap ->
         val color = themeMap.getColor(android.R.attr.textColorPrimary)
-        RichText.Builder(stringMap.getString(R.string.overlay_permission_title))
+        stringMap.getString(R.string.overlay_permission_title)
             .with(ForegroundColor(color), Bold)
             .build()
     }
@@ -33,7 +31,7 @@ class OverlayPermissionViewModel : BaseViewModel() {
         val color = themeMap.getColor(android.R.attr.textColorSecondary)
         val highlightColor = themeMap.getColor(android.R.attr.colorAccent)
 
-        RichText.Builder(stringMap.getString(R.string.overlay_permission_desc))
+        stringMap.getString(R.string.overlay_permission_desc)
             .with(ForegroundColor(color))
             .withFirst(stringMap.getString(R.string.overlay_permission_highlight), Bold, ForegroundColor(highlightColor))
             .build()

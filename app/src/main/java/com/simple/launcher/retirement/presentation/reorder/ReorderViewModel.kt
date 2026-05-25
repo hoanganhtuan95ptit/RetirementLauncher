@@ -73,7 +73,7 @@ class ReorderViewModel(
             _items.value = selectedApps.map { app ->
                 ReorderItem(
                     id = app.packageName,
-                    label = RichText.Builder(app.label).build(),
+                    label = RichText(app.label),
                     icon = ImageDrawable(app.icon)
                 )
             }
@@ -89,7 +89,7 @@ class ReorderViewModel(
                 }
                 ReorderItem(
                     id = contact.id,
-                    label = RichText.Builder(contact.name).build(),
+                    label = RichText(contact.name),
                     icon = photo,
                     data = contact
                 )

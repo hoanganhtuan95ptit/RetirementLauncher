@@ -3,11 +3,7 @@ package com.simple.launcher.retirement.presentation.base
 import android.graphics.Color
 import com.simple.launcher.retirement.utils.background.Background
 import com.simple.launcher.retirement.utils.size.DP
-import com.simple.launcher.retirement.utils.text.Bold
-import com.simple.launcher.retirement.utils.text.ForegroundColor
-import com.simple.launcher.retirement.utils.text.RichText
-import com.simple.launcher.retirement.utils.text.TextSize
-import com.simple.launcher.retirement.utils.text.emptyText
+import com.simple.launcher.retirement.utils.text.*
 
 /**
  * Trạng thái cho action button (ví dụ: nút Lưu, nút Dọn dẹp).
@@ -42,9 +38,7 @@ fun buildActionState(
     strokeDashGap: Int = 0,
     strokeDashWidth: Int = 0
 ): ActionState = ActionState(
-    text = RichText.Builder(text)
-        .with(ForegroundColor(textColor), TextSize(textSize), Bold)
-        .build(),
+    text = text.with(ForegroundColor(textColor), TextSize(textSize), Bold).build(),
     background = Background.Builder()
         .backgroundColor(backgroundColor)
         .cornerRadius(cornerRadius)
