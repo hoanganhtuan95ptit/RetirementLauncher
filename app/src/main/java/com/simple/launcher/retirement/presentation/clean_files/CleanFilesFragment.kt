@@ -81,19 +81,16 @@ class CleanFilesFragment : BaseFragment<FragmentCleanFilesBinding>() {
 
             binding.scannerRing.ringState = if (it is CleanFilesViewModel.ClearState.IDLE) {
                 RingState.IDLE
-            } else if (it is CleanFilesViewModel.ClearState.SCANNING) {
+            } else if (it is CleanFilesViewModel.ClearState.Scanning) {
                 RingState.SCANNING
             } else {
                 RingState.DONE
             }
 
-            if (it is CleanFilesViewModel.ClearState.DONE) viewLifecycleOwner.lifecycleScope.launch {
+            delay(1000)
 
-                delay(1000)
-
-                binding.animationView.isVisible = true
-                binding.animationView.playAnimation()
-            }
+            binding.animationView.isVisible = true
+            binding.animationView.playAnimation()
         }
 
         screenViewData.observe(this@CleanFilesFragment) {

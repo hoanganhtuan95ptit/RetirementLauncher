@@ -65,28 +65,16 @@ class CleanFilesViewModel : BaseViewModel() {
 
         val text = when {
             screenState is ClearState.IDLE -> R.string.clean_files_start
-            screenState is ClearState.SCANNING -> R.string.clean_files_running
+            screenState is ClearState.Scanning -> R.string.clean_files_running
             else -> R.string.clean_files_retry
         }.let {
 
             stringMap.getString(it)
         }
 
-        val textColor = when {
-            screenState is ClearState.SCANNING -> com.google.android.material.R.attr.colorOnPrimary
-            else -> com.google.android.material.R.attr.colorOnPrimary
-        }.let {
+        val textColor = themeMap.getColor(com.google.android.material.R.attr.colorOnPrimary, Color.LTGRAY)
 
-            themeMap.getColor(it, Color.LTGRAY)
-        }
-
-        val backgroundColor = when {
-            screenState is ClearState.SCANNING -> android.R.attr.colorPrimary
-            else -> android.R.attr.colorPrimary
-        }.let {
-
-            themeMap.getColor(it, Color.LTGRAY)
-        }
+        val backgroundColor = themeMap.getColor(android.R.attr.colorPrimary, Color.LTGRAY)
 
         ActionState(
             text = text
@@ -112,7 +100,7 @@ class CleanFilesViewModel : BaseViewModel() {
         val secondaryColor = themeMap.getColor(android.R.attr.textColorSecondary)
 
         val resultStr by lazy {
-            state.asObjectOrNull<ClearState.DONE>()?.totalFiles.orZero().toString()
+            state.asObjectOrNull<ClearState.Done>()?.totalFiles.orZero().toString()
         }
 
         if (state is ClearState.IDLE && count > 0) RingViewData(
@@ -121,10 +109,7 @@ class CleanFilesViewModel : BaseViewModel() {
                 .with(ForegroundColor(secondaryColor))
                 .withFirst(count.toString(), ForegroundColor(primaryColor), TextSize(26), Bold)
                 .build()
-        ) else if (state is ClearState.IDLE) RingViewData(
-            showIcon = true,
-            icon = ImageRes(R.drawable.ic_clear_black_24dp, themeMap.getColor(android.R.attr.colorPrimary)),
-        ) else if (state is ClearState.SCANNING) RingViewData(
+        ) else if (state is ClearState.IDLE || state is ClearState.Scanning) RingViewData(
             showIcon = true,
             icon = ImageRes(R.drawable.ic_clear_black_24dp, themeMap.getColor(android.R.attr.colorPrimary)),
         ) else RingViewData(
@@ -146,7 +131,7 @@ class CleanFilesViewModel : BaseViewModel() {
         } else {
 
             stringMap.getString(R.string.clean_files_desc)
-        } else if (state is ClearState.SCANNING) {
+        } else if (state is ClearState.Scanning) {
 
             stringMap.getString(R.string.clean_files_running)
         } else {
@@ -161,41 +146,7 @@ class CleanFilesViewModel : BaseViewModel() {
 
     val categoryViewDataList: StateFlow<List<CategoryViewData>> = combineState(flow1 = strings, flow2 = themes, flow3 = screenState, initialValue = emptyList()) { stringMap, themeMap, state ->
 
-        data class CategoryMeta(
-            val id: StrangeFileCategory,
-            val labelRes: Int,
-            val iconRes: Int,
-            val color: Int,
-        )
-
-        val categoryMeta: List<CategoryMeta> = listOf(
-            CategoryMeta(
-                id = StrangeFileCategory.SYSTEM_TEMP,
-                labelRes = R.string.clean_cat_system_temp,
-                iconRes = R.drawable.ic_home_drives_24dp,
-                color = "#192850".toColorInt()
-            ),
-            CategoryMeta(
-                id = StrangeFileCategory.COMPRESSED,
-                labelRes = R.string.clean_cat_compressed,
-                iconRes = R.drawable.ic_home_drives_24dp,
-                color = "#4196FF".toColorInt()
-            ),
-            CategoryMeta(
-                id = StrangeFileCategory.DOCUMENTS,
-                labelRes = R.string.clean_cat_no_extension,
-                iconRes = R.drawable.ic_home_family_24dp,
-                color = "#FFD741".toColorInt()
-            ),
-            CategoryMeta(
-                id = StrangeFileCategory.APK_CACHE,
-                labelRes = R.string.clean_cat_apk_cache,
-                iconRes = R.drawable.ic_home_boost_24dp,
-                color = "#FF374B".toColorInt()
-            )
-        )
-
-        categoryMeta.map {
+        CATEGORY_META.map {
 
             val numberFile = if (state is ClearState.Run && state.categoryMap[it.id] != null) {
 
@@ -238,7 +189,7 @@ class CleanFilesViewModel : BaseViewModel() {
         initialValue = ResultViewData(show = false)
     ) { resources, state ->
 
-        if (state !is ClearState.DONE) return@combineState ResultViewData(show = false)
+        if (state !is ClearState.Done) return@combineState ResultViewData(show = false)
 
         val spaceMB = state.totalBytes / (1024f * 1024f)
         val spaceLabel = if (spaceMB >= 1f) "%.1f MB".format(spaceMB) else "${state.totalBytes / 1024} KB"
@@ -293,14 +244,14 @@ class CleanFilesViewModel : BaseViewModel() {
 
     fun startScan() = viewModelScope.launch {
 
-        if (screenState.value is ClearState.SCANNING) return@launch
+        if (screenState.value is ClearState.Scanning) return@launch
 
         val categoryMap = hashMapOf<StrangeFileCategory, Int>()
 
         var totalFiles = 0
         var totalBytes = 0L
 
-        StrangeFileCategory.entries.toTypedArray().forEachIndexed { index, category ->
+        StrangeFileCategory.entries.toTypedArray().forEachIndexed { _, category ->
 
             val pair = withContext(Dispatchers.IO) {
                 FileRepository.instance.deleteStrangeFilesByCategory(category)
@@ -310,14 +261,14 @@ class CleanFilesViewModel : BaseViewModel() {
             totalBytes += pair.second
 
             categoryMap[category] = pair.first
-            screenState.value = ClearState.SCANNING(categoryMap.toMap())
+            screenState.value = ClearState.Scanning(categoryMap.toMap())
 
             delay(350)
         }
 
         FileRepository.instance.refreshFileStatus()
 
-        screenState.value = ClearState.DONE(categoryMap, totalFiles, totalBytes)
+        screenState.value = ClearState.Done(categoryMap, totalFiles, totalBytes)
     }
 
     sealed class ClearState {
@@ -328,16 +279,23 @@ class CleanFilesViewModel : BaseViewModel() {
             open val categoryMap: Map<StrangeFileCategory, Int>
         ) : ClearState()
 
-        data class SCANNING(
+        data class Scanning(
             override val categoryMap: Map<StrangeFileCategory, Int>
         ) : Run(categoryMap)
 
-        data class DONE(
+        data class Done(
             override val categoryMap: Map<StrangeFileCategory, Int>,
             val totalFiles: Int,
             val totalBytes: Long
         ) : Run(categoryMap)
     }
+
+    data class CategoryMeta(
+        val id: StrangeFileCategory,
+        val labelRes: Int,
+        val iconRes: Int,
+        val color: Int,
+    )
 
     data class RingViewData(
         val icon: RichImage = emptyImage(),
@@ -375,4 +333,34 @@ class CleanFilesViewModel : BaseViewModel() {
         val categoryViewDataList: List<CategoryViewData> = emptyList(),
         val resultViewData: ResultViewData = ResultViewData(),
     )
+
+    companion object {
+
+        private val CATEGORY_META = listOf(
+            CategoryMeta(
+                id = StrangeFileCategory.SYSTEM_TEMP,
+                labelRes = R.string.clean_cat_system_temp,
+                iconRes = R.drawable.ic_home_drives_24dp,
+                color = "#192850".toColorInt()
+            ),
+            CategoryMeta(
+                id = StrangeFileCategory.COMPRESSED,
+                labelRes = R.string.clean_cat_compressed,
+                iconRes = R.drawable.ic_home_drives_24dp,
+                color = "#4196FF".toColorInt()
+            ),
+            CategoryMeta(
+                id = StrangeFileCategory.DOCUMENTS,
+                labelRes = R.string.clean_cat_no_extension,
+                iconRes = R.drawable.ic_home_family_24dp,
+                color = "#FFD741".toColorInt()
+            ),
+            CategoryMeta(
+                id = StrangeFileCategory.APK_CACHE,
+                labelRes = R.string.clean_cat_apk_cache,
+                iconRes = R.drawable.ic_home_boost_24dp,
+                color = "#FF374B".toColorInt()
+            )
+        )
+    }
 }
