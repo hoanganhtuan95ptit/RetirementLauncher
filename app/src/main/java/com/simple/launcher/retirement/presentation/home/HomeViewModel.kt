@@ -194,9 +194,7 @@ class HomeViewModel : BaseViewModel() {
     }
 
 
-    val viewItemMap = MutableStateFlow<Map<Double, List<ViewItem>>>(
-        mapOf(0.0 to listOf(ClockHomeItem))
-    )
+    val viewItemMap = MutableStateFlow<Map<Double, List<ViewItem>>>(mapOf(0.0 to listOf(ClockHomeItem)))
 
     val items: StateFlow<List<ViewItem>> = combineState(
         flow1 = cleanFilesViewItemList,
