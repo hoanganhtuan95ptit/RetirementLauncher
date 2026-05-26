@@ -41,7 +41,7 @@
     <string name="clean_result_files_deleted">file đã xóa</string>
     <string name="clean_result_space_freed">đã giải phóng</string>
     <string name="clean_result_nothing">Thiết bị đã sạch, không tìm thấy file lạ.</string>
-    <string name="clean_files_idle_desc">Phát hiện %1$d file lạ – nhấn để dọn dẹp</string>
+    <string name="clean_files_idle_desc">Phát hiện $number_file file lạ – nhấn để dọn dẹp</string>
     <string name="clean_files_count_unit">file lạ</string>
 
     <!-- Clean Memory -->
@@ -132,7 +132,7 @@
     <string name="pin_error_confirm_mismatch">Mã PIN xác nhận không khớp</string>
     <string name="pin_error_incorrect">Mã PIN không chính xác</string>
     <!-- Clean Files -->
-    <string name="clean_cat_file_count">%1$d file</string>
+    <string name="clean_cat_file_count">$number_file file</string>
 
     <!-- Reorder -->
     <string name="reorder_apps_title">Sắp xếp ứng dụng</string>

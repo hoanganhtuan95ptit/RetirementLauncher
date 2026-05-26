@@ -63,7 +63,7 @@ class HomeViewModel : BaseViewModel() {
                 .withStyleHeadlineMedium()
                 .with(ForegroundColor(textColor), Bold)
                 .build(),
-            icon = ImageRes(R.drawable.img_home_clean_up),
+            icon = ImageRes(R.drawable.ic_clear_black_24dp),
             background = Background.Builder()
                 .backgroundColor(backgroundColor)
                 .cornerRadius(DP.DP_16)

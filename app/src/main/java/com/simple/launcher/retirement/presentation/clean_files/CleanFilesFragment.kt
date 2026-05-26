@@ -4,12 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
-import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.core.view.updatePadding
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.transition.AutoTransition
+import androidx.transition.TransitionManager
 import com.simple.deeplink.Deeplink
 import com.simple.deeplink.DeeplinkHandler
 import com.simple.launcher.retirement.R
@@ -17,114 +18,50 @@ import com.simple.launcher.retirement.databinding.FragmentCleanFilesBinding
 import com.simple.launcher.retirement.databinding.ItemCleanCategoryBinding
 import com.simple.launcher.retirement.presentation.DeepLinks
 import com.simple.launcher.retirement.presentation.base.BaseFragment
+import com.simple.launcher.retirement.presentation.clean_files.ScannerRingView.RingState
 import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.image.setImage
 import com.simple.launcher.retirement.utils.lifecycle.observe
-import com.simple.launcher.retirement.utils.text.RichText
+import com.simple.launcher.retirement.utils.size.DP
 import com.simple.launcher.retirement.utils.text.setText
 import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class CleanFilesFragment : BaseFragment<FragmentCleanFilesBinding>() {
 
     private val viewModel: CleanFilesViewModel by viewModels()
 
-    // 4 category rows – được bind theo đúng thứ tự StrangeFileCategory.values()
-    private val categoryBindings = mutableListOf<ItemCleanCategoryBinding>()
-
-    // ─── Binding inflation ──────────────────────────────────────────────────────
     override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentCleanFilesBinding {
         return FragmentCleanFilesBinding.inflate(inflater, container, false)
     }
 
-    // ─── View setup ─────────────────────────────────────────────────────────────
     override fun setupViews(view: View, savedInstanceState: Bundle?) {
         super.setupViews(view, savedInstanceState)
-
-        inflateCategoryRows()
 
         binding.toolbar.ivLeft.setOnSafeClickListener {
 
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
+        binding.btnClean.tvAction.updatePadding(top = DP.DP_24, bottom = DP.DP_24)
         binding.btnClean.root.setOnSafeClickListener {
 
-            when (viewModel.screenState.value) {
-                CleanFilesViewModel.CleanScreenState.IDLE, CleanFilesViewModel.CleanScreenState.DONE -> {
-                    viewModel.startScan()
-                }
-
-                CleanFilesViewModel.CleanScreenState.SCANNING -> {
-
-                }
-            }
+            viewModel.startScan()
         }
     }
 
-    // ─── Category rows ───────────────────────────────────────────────────────────
-
-    private fun inflateCategoryRows() {
-
-        val inflater = LayoutInflater.from(requireContext())
-        viewModel.categoryMeta.forEachIndexed { index, meta ->
-
-            val itemBinding = ItemCleanCategoryBinding.inflate(inflater, binding.llCategories, true)
-            itemBinding.ivCatIcon.setBackgroundResource(meta.iconBgRes)
-            itemBinding.ivCatIcon.setImageResource(meta.iconRes)
-            itemBinding.ivCatIcon.imageTintList = ContextCompat.getColorStateList(requireContext(), meta.iconTintRes)
-            itemBinding.tvCatName.text = getString(meta.labelRes)
-            itemBinding.tvCatCount.visibility = View.INVISIBLE
-            itemBinding.ivCatCheck.visibility = View.INVISIBLE
-            categoryBindings.add(itemBinding)
-        }
-    }
-
-    private fun resetCategoryRows() {
-
-        categoryBindings.forEach { b ->
-            b.tvCatCount.visibility = View.INVISIBLE
-            b.ivCatCheck.visibility = View.INVISIBLE
-        }
-    }
-
-    private fun markCategoryDone(index: Int, richText: RichText) {
-        val b = categoryBindings.getOrNull(index) ?: return
-        if (b.ivCatCheck.isVisible) return // đã đánh dấu rồi, bỏ qua
-
-        b.tvCatCount.setText(richText)
-        b.tvCatCount.visibility = View.VISIBLE
-        b.ivCatCheck.visibility = View.VISIBLE
-        val anim = AnimationUtils.loadAnimation(requireContext(), android.R.anim.fade_in)
-        b.ivCatCheck.startAnimation(anim)
-    }
-
-    // ─── Ring center ─────────────────────────────────────────────────────────────
-
-    private fun applyRingCenter(state: CleanFilesViewModel.RingCenterState) {
-        if (state.showIcon) {
-            binding.ivRingIcon.visibility = View.VISIBLE
-            binding.tvRingCount.visibility = View.GONE
-            binding.tvRingUnit.visibility = View.GONE
-        } else {
-            binding.ivRingIcon.visibility = View.GONE
-            binding.tvRingCount.visibility = View.VISIBLE
-            binding.tvRingUnit.visibility = View.VISIBLE
-            binding.tvRingCount.setText(state.countText)
-            binding.tvRingUnit.setText(state.unitText)
-        }
-    }
-
-    // ─── Observe ─────────────────────────────────────────────────────────────────
-
-    override fun observeData() {
+    override fun observeData() = with(viewModel) {
         super.observeData()
 
-        viewModel.background.observe(this) { background ->
+        background.observe(this@CleanFilesFragment) { background ->
             binding.root.setBackground(background)
         }
 
-        viewModel.toolbar.observe(this) { state ->
+        toolbar.observe(this@CleanFilesFragment) { state ->
+
             binding.toolbar.tvTitle.setText(state.title)
+
             val backIcon = state.backIcon
             if (backIcon != null) {
                 binding.toolbar.ivLeft.visibility = View.VISIBLE
@@ -134,59 +71,81 @@ class CleanFilesFragment : BaseFragment<FragmentCleanFilesBinding>() {
             }
         }
 
-        viewModel.action.observe(this) { state ->
+        action.observe(this@CleanFilesFragment) { state ->
+
             binding.btnClean.tvAction.setText(state.text)
             binding.btnClean.tvAction.setBackground(state.background)
         }
 
-        viewModel.statusText.observe(this) { rich ->
-            binding.tvStatus.setText(rich)
-        }
+        screenState.observe(this@CleanFilesFragment) {
 
-        viewModel.ringCenter.observe(this) { state ->
-            applyRingCenter(state)
-        }
+            binding.scannerRing.ringState = if (it is CleanFilesViewModel.ClearState.IDLE) {
+                RingState.IDLE
+            } else if (it is CleanFilesViewModel.ClearState.SCANNING) {
+                RingState.SCANNING
+            } else {
+                RingState.DONE
+            }
 
-        viewModel.screenState.observe(this) { state ->
-            when (state) {
-                CleanFilesViewModel.CleanScreenState.IDLE -> {
-                    binding.scannerRing.ringState = ScannerRingView.RingState.IDLE
-                    binding.cardResult.visibility = View.GONE
-                    binding.btnClean.root.isEnabled = true
-                    resetCategoryRows()
-                }
+            if (it is CleanFilesViewModel.ClearState.DONE) viewLifecycleOwner.lifecycleScope.launch {
 
-                CleanFilesViewModel.CleanScreenState.SCANNING -> {
-                    binding.scannerRing.ringState = ScannerRingView.RingState.SCANNING
-                    binding.cardResult.visibility = View.GONE
-                    binding.btnClean.root.isEnabled = false
-                    resetCategoryRows()
-                }
+                delay(1000)
 
-                CleanFilesViewModel.CleanScreenState.DONE -> {
-                    
-                    binding.scannerRing.ringState = ScannerRingView.RingState.DONE
-                    binding.btnClean.root.isEnabled = true
-
-                    val result = viewModel.result.value
-                    if (result != null) {
-                        binding.tvResultFiles.text = result.totalFiles.toString()
-                        binding.tvResultSpace.text = result.spaceLabel
-                        binding.cardResult.visibility = View.VISIBLE
-                        binding.cardResult.alpha = 0f
-                        binding.cardResult.animate().alpha(1f).setDuration(400).start()
-                    }
-
-                    Toast.makeText(requireContext(), R.string.clean_files_toast, Toast.LENGTH_SHORT).show()
-                }
+                binding.animationView.isVisible = true
+                binding.animationView.playAnimation()
             }
         }
 
-        viewModel.categoryCountTexts.observe(this) { texts ->
-            texts.forEachIndexed { index, richText ->
-                if (richText != null) markCategoryDone(index, richText)
-            }
+        screenViewData.observe(this@CleanFilesFragment) {
+
+            TransitionManager.beginDelayedTransition(binding.frameContent, AutoTransition())
+
+            bindingRing(it.ringViewData)
+
+            binding.tvStatus.setText(it.status)
+
+            bindingCategory(it.categoryViewDataList)
+            bindingResult(it.resultViewData)
         }
+    }
+
+    private fun bindingRing(ringViewData: CleanFilesViewModel.RingViewData) {
+
+        binding.ivRingIcon.setImage(ringViewData.icon)
+        binding.ivRingIcon.isVisible = ringViewData.showIcon
+
+        binding.tvRingCount.setText(ringViewData.text)
+        binding.tvRingCount.isVisible = !ringViewData.showIcon
+    }
+
+    private fun bindingCategory(categoryViewDataList: List<CleanFilesViewModel.CategoryViewData>) = categoryViewDataList.forEachIndexed { index, data ->
+
+        val itemBinding = if (binding.llCategories.childCount == categoryViewDataList.size) {
+            ItemCleanCategoryBinding.bind(binding.llCategories.getChildAt(index))
+        } else {
+            ItemCleanCategoryBinding.inflate(LayoutInflater.from(requireContext()), binding.llCategories, true)
+        }
+
+        itemBinding.ivCatIcon.setImage(data.image)
+        itemBinding.ivCatIcon.setBackground(data.imageBackground)
+        itemBinding.tvCatName.setText(data.label)
+        itemBinding.tvCatCount.setText(data.numberFile)
+        itemBinding.ivCatCheck.isVisible = data.showSelected
+    }
+
+    private fun bindingResult(resultViewData: CleanFilesViewModel.ResultViewData) {
+
+        binding.cardResult.isVisible = resultViewData.show
+
+        binding.tvResultTitle.setText(resultViewData.title)
+
+        binding.tvResultFiles.setText(resultViewData.resultFilesLabel)
+        binding.ivResultFiles.setImage(resultViewData.resultFilesImage)
+        binding.frameResultFiles.setBackground(resultViewData.resultFilesBackground)
+
+        binding.tvResultSpace.setText(resultViewData.resultSpaceLabel)
+        binding.ivResultSpace.setImage(resultViewData.resultSpaceImage)
+        binding.frameResultSpace.setBackground(resultViewData.resultSpaceBackground)
     }
 }
 

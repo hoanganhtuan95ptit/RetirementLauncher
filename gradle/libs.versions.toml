@@ -30,6 +30,7 @@ firebaseBom = "33.9.0"
 googleServices = "4.4.2"
 crashlytics = "3.0.3"
 firebasePerf = "2.0.2"
+lottie = "6.7.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -68,6 +69,7 @@ firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.r
 firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics" }
 firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics" }
 firebase-perf = { group = "com.google.firebase", name = "firebase-perf" }
+lottie = { group = "com.airbnb.android", name = "lottie", version.ref = "lottie" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

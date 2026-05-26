@@ -13,7 +13,7 @@ object ThemeColorStore {
     private val _colorMapFlow = MutableStateFlow<Map<String, Int>>(emptyMap())
     val colorMapFlow: StateFlow<Map<String, Int>> = _colorMapFlow.asStateFlow()
 
-    val attrIdMap = mutableMapOf<Int, Int>()
+    val idAndNameMap = mutableMapOf<Int, String>()
 
     /**
      * Load toàn bộ color attr từ theme
@@ -21,7 +21,7 @@ object ThemeColorStore {
     fun load(context: Context) {
         val packageName = context.packageName
         val nameMap = mutableMapOf<String, Int>()
-        val idToNameMap = mutableMapOf<Int, Int>()
+        val idToNameMap = mutableMapOf<Int, String>()
 
         // 1. Load System Attributes (Luôn ưu tiên)
         loadFromClass(context, android.R.attr::class.java, nameMap, idToNameMap)
@@ -40,8 +40,8 @@ object ThemeColorStore {
         } catch (_: Exception) {
         }
 
-        attrIdMap.clear()
-        attrIdMap.putAll(idToNameMap)
+        idAndNameMap.clear()
+        idAndNameMap.putAll(idToNameMap)
 
         _colorMapFlow.value = nameMap
     }
@@ -50,7 +50,7 @@ object ThemeColorStore {
         context: Context,
         clazz: Class<*>,
         nameMap: MutableMap<String, Int>,
-        idMap: MutableMap<Int, Int>
+        idMap: MutableMap<Int, String>
     ) {
         clazz.fields.forEach { field ->
             runCatching {
@@ -58,7 +58,7 @@ object ThemeColorStore {
                 val color = context.getThemeColorOrNull(attrId)
                 if (color != null) {
                     nameMap[field.name] = color
-                    idMap[attrId] = color
+                    idMap[attrId] = field.name
                 }
             }
         }
@@ -69,7 +69,9 @@ object ThemeColorStore {
  * Extension giúp lấy màu từ themeMap thông qua R.attr ID
  */
 fun Map<String, Int>.getColor(@AttrRes attrId: Int, @ColorInt defaultColor: Int = android.graphics.Color.BLACK): Int {
-    return ThemeColorStore.attrIdMap[attrId] ?: defaultColor
+    return ThemeColorStore.idAndNameMap[attrId]?.let {
+        ThemeColorStore.colorMapFlow.value[it]
+    } ?: defaultColor
 }
 
 /**

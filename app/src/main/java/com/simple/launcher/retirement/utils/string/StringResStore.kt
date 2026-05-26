@@ -1,7 +1,6 @@
 package com.simple.launcher.retirement.utils.string
 
 import android.content.Context
-import android.util.Log
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -13,7 +12,7 @@ object StringResStore {
     private val _stringMapFlow = MutableStateFlow<Map<String, String>>(emptyMap())
     val stringMapFlow: StateFlow<Map<String, String>> = _stringMapFlow.asStateFlow()
 
-    val stringByIdMap = mutableMapOf<Int, String>()
+    val idAndNameMap = mutableMapOf<Int, String>()
 
     fun load(context: Context) {
         val resources = context.resources
@@ -30,14 +29,14 @@ object StringResStore {
                     val value = resources.getString(resId)
 
                     nameMap[field.name] = value
-                    idMap[resId] = value
+                    idMap[resId] = field.name
                 }
             }
         } catch (_: Exception) {
         }
 
-        stringByIdMap.clear()
-        stringByIdMap.putAll(idMap)
+        idAndNameMap.clear()
+        idAndNameMap.putAll(idMap)
 
         _stringMapFlow.value = nameMap
     }
@@ -47,7 +46,9 @@ object StringResStore {
  * Extension giúp lấy string từ stringsMap thông qua Resource ID
  */
 fun Map<String, String>.getString(resId: Int): String {
-    return StringResStore.stringByIdMap[resId] ?: return ""
+    return StringResStore.idAndNameMap[resId]?.let {
+        StringResStore.stringMapFlow.value[it]
+    } ?: return ""
 }
 
 /**

@@ -21,6 +21,11 @@ fun ImageView.setImage(source: RichImage, vararg transformations: Transformation
         .into(this)
 }
 
+private val EMPTY by lazy {
+    ImagePath("")
+}
+
+fun emptyImage() = EMPTY
 
 sealed class RichImage
 

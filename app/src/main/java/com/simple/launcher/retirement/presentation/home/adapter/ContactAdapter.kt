@@ -1,9 +1,8 @@
 package com.simple.launcher.retirement.presentation.home.adapter
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.net.toUri
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.simple.adapter.Adapter
 import com.simple.adapter.ViewItemAdapter
 import com.simple.adapter.base.BaseBindingViewHolder
@@ -72,7 +71,7 @@ class ContactAdapter : ViewItemAdapter<ContactHomeItem, ItemContactBinding>() {
             binding.tvName.setText(item.name)
         }
         if (payloads.isEmpty() || payloads.contains("photo")) {
-            binding.ivPhoto.setImage(item.photo)
+            binding.ivPhoto.setImage(item.photo, CircleCrop())
         }
         if (payloads.isEmpty() || payloads.contains("background")) {
             binding.root.setBackground(item.background)
@@ -81,7 +80,7 @@ class ContactAdapter : ViewItemAdapter<ContactHomeItem, ItemContactBinding>() {
             binding.tvTapToCall.setText(item.tapToCallLabel)
         }
         if (payloads.isEmpty() || payloads.contains("tapToCallBackground")) {
-            binding.tvTapToCall.setBackground(item.tapToCallBackground)
+            binding.frameTapToCall.setBackground(item.tapToCallBackground)
         }
     }
 }
