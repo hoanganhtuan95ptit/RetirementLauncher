@@ -1,6 +1,7 @@
 package com.simple.launcher.retirement.presentation.home
 
 import android.graphics.Color
+import androidx.core.graphics.toColorInt
 import com.simple.adapter.ViewItem
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.domain.model.HomeContentEntity
@@ -32,7 +33,6 @@ import com.simple.launcher.retirement.utils.text.withStyleTitleLarge
 import com.simple.launcher.retirement.utils.theme.getColor
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import androidx.core.graphics.toColorInt
 
 class HomeViewModel : BaseViewModel() {
 
@@ -133,15 +133,7 @@ class HomeViewModel : BaseViewModel() {
         }
 
         apps.map {
-            AppHomeItem(
-                entity = it.entity,
-                icon = ImageDrawable(it.entity.icon),
-                label = RichText(it.entity.label),
-                background = Background.Builder()
-                    .backgroundColor(Color.WHITE)
-                    .cornerRadius(DP.DP_24)
-                    .build()
-            )
+            it.toViewItem()
         }.let {
             list.addAll(it)
         }
@@ -160,32 +152,11 @@ class HomeViewModel : BaseViewModel() {
         }
 
         val textColor = themeMap.getColor(android.R.attr.textColorPrimary)
+        val tapToCallLabel = strings.getString(R.string.contact_tap_to_call)
 
-        contacts.map { contact ->
+        contacts.map {
 
-            ContactHomeItem(
-                entity = contact.entity,
-                name = contact.entity.name
-                    .with(ForegroundColor(textColor))
-                    .build(),
-                photo = if (contact.entity.photoUri != null) {
-                    ImagePath(contact.entity.photoUri)
-                } else {
-                    ImageRes(R.drawable.ic_home_contact_24dp)
-                },
-                background = Background.Builder()
-                    .backgroundColor(Color.WHITE)
-                    .cornerRadius(DP.DP_24)
-                    .build(),
-
-                tapToCallLabel = strings.getString(R.string.contact_tap_to_call)
-                    .with(ForegroundColor(textColor))
-                    .build(),
-                tapToCallBackground = Background.Builder()
-                    .backgroundColor("#F0F0F0".toColorInt())
-                    .cornerRadius(DP.DP_24)
-                    .build(),
-            )
+            it.toViewItem(textColor = textColor, tapToCallLabel = tapToCallLabel)
         }.let {
             list.addAll(it)
         }
@@ -213,4 +184,38 @@ class HomeViewModel : BaseViewModel() {
             put(order, list)
         }
     }
+
+    private fun HomeContentEntity.App.toViewItem() = AppHomeItem(
+        entity = entity,
+        icon = ImageDrawable(entity.icon),
+        label = RichText(entity.label),
+        background = Background.Builder()
+            .backgroundColor(Color.WHITE)
+            .cornerRadius(DP.DP_24)
+            .build()
+    )
+
+    private fun HomeContentEntity.Contact.toViewItem(textColor: Int, tapToCallLabel: String) = ContactHomeItem(
+        entity = entity,
+        name = entity.name
+            .with(ForegroundColor(textColor))
+            .build(),
+        photo = if (entity.photoUri != null) {
+            ImagePath(entity.photoUri)
+        } else {
+            ImageRes(R.drawable.ic_home_contact_24dp)
+        },
+        background = Background.Builder()
+            .backgroundColor(Color.WHITE)
+            .cornerRadius(DP.DP_24)
+            .build(),
+
+        tapToCallLabel = tapToCallLabel
+            .with(ForegroundColor(textColor))
+            .build(),
+        tapToCallBackground = Background.Builder()
+            .backgroundColor("#F0F0F0".toColorInt())
+            .cornerRadius(DP.DP_24)
+            .build(),
+    )
 }
