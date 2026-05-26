@@ -4,4 +4,14 @@
         <attr name="insetStatusBars" format="boolean" />
         <attr name="insetNavigationBars" format="boolean" />
     </declare-styleable>
+
+    <!-- Home stat card backgrounds -->
+    <attr name="cleanFilesStatCardBgActive" format="color" />
+    <attr name="cleanFilesStatCardBgIdle" format="color" />
+    <attr name="cleanMemoryStatCardBgActive" format="color" />
+    <attr name="cleanMemoryStatCardBgIdle" format="color" />
+
+    <!-- Home stat card text colors -->
+    <attr name="cleanFilesStatCardTextColor" format="color" />
+    <attr name="cleanMemoryStatCardTextColor" format="color" />
 </resources>

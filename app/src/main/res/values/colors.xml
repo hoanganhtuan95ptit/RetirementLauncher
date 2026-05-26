@@ -52,4 +52,11 @@
     <color name="memory_btn_running_text">#534AB7</color>
     <color name="memory_stat_used">#534AB7</color>
     <color name="memory_stat_free">#0F6E56</color>
+
+    <!-- Home stat cards — active (có việc cần làm) -->
+    <color name="clean_files_stat_card_bg_active">#4CAF50</color>
+    <color name="clean_memory_stat_card_bg_active">#4A90D9</color>
+    <!-- Home stat cards — idle (không có việc cần làm) -->
+    <color name="clean_files_stat_card_bg_idle">#A5D6A7</color>
+    <color name="clean_memory_stat_card_bg_idle">#90CAF9</color>
 </resources>

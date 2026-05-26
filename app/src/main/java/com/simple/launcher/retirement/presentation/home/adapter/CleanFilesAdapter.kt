@@ -20,12 +20,14 @@ import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
 
 data class CleanFilesHomeItem(
     val label: RichText,
+    val value: RichText,
     val icon: RichImage,
     val cardBackground: Background
 ) : HomeItem {
     override fun areItemsTheSame(): List<Any> = listOf("CleanFiles")
     override fun getContentsCompare(): List<Pair<Any, String>> = listOf(
         label to "label",
+        value to "value",
         icon to "icon",
         cardBackground to "cardBackground"
     )
@@ -58,6 +60,9 @@ class CleanFilesAdapter : UtilityAdapter<CleanFilesHomeItem>() {
         }
         if (payloads.isEmpty() || payloads.contains("label")) {
             binding.tvLabel.setText(item.label)
+        }
+        if (payloads.isEmpty() || payloads.contains("value")) {
+            binding.tvValue.setText(item.value)
         }
         if (payloads.isEmpty() || payloads.contains("cardBackground")) {
             binding.root.setBackground(item.cardBackground)

@@ -51,22 +51,19 @@ class HomeViewModel(
         val list = arrayListOf<ViewItem>()
         val hasStrangeFiles = fileCount > 0
 
-        val labelColor = if (hasStrangeFiles) {
-            Color.parseColor("#A32D2D") // clean_cat_red
-        } else {
-            Color.BLACK
-        }
-
+        val cardBgAttr = if (hasStrangeFiles) R.attr.cleanFilesStatCardBgActive else R.attr.cleanFilesStatCardBgIdle
         val cardBackground = Background.Builder()
-            .backgroundColor(if (hasStrangeFiles) Color.parseColor("#FCEBEB") else Color.WHITE)
+            .backgroundColor(themeMap.getColor(cardBgAttr))
             .cornerRadius(DP.DP_16)
             .build()
+        val textColor = themeMap.getColor(R.attr.cleanFilesStatCardTextColor)
 
         CleanFilesHomeItem(
-            label = strings.getString(R.string.home_strange_files)
-                .replace("\$file_number", fileCountLabel)
-                .with(ForegroundColor(labelColor))
-                .withFirst(fileCountLabel, Bold)
+            label = strings.getString(R.string.clean_files_title)
+                .with(ForegroundColor(textColor))
+                .build(),
+            value = fileCountLabel
+                .with(ForegroundColor(textColor), Bold)
                 .build(),
             icon = ImageRes(R.drawable.img_home_clean_up),
             cardBackground = cardBackground
@@ -77,30 +74,27 @@ class HomeViewModel(
 
     val cleanMemoryHomeItem: StateFlow<Pair<Double, List<ViewItem>>> = combineState(
         flow1 = strings,
-        flow2 = memoryRepository.estimateCleanableMemoryMBFlow(),
+        flow2 = themes,
+        flow3 = memoryRepository.estimateCleanableMemoryMBFlow(),
         initialValue = 2.0 to emptyList()
-    ) { strings, memoryMB ->
+    ) { strings, themeMap, memoryMB ->
 
         val memoryLabel = "$memoryMB MB"
         val canCleanMemory = memoryMB > 0
 
-        val labelColor = if (canCleanMemory) {
-            Color.parseColor("#534AB7") // clean_cat_purple
-        } else {
-            Color.BLACK
-        }
-
+        val cardBgAttr = if (canCleanMemory) R.attr.cleanMemoryStatCardBgActive else R.attr.cleanMemoryStatCardBgIdle
         val cardBackground = Background.Builder()
-            .backgroundColor(if (canCleanMemory) Color.parseColor("#EEEDFE") else Color.WHITE)
+            .backgroundColor(themeMap.getColor(cardBgAttr))
             .cornerRadius(DP.DP_16)
             .build()
-
+        val textColor = themeMap.getColor(R.attr.cleanMemoryStatCardTextColor)
 
         2.0 to CleanMemoryHomeItem(
-            label = strings.getString(R.string.home_memory_status)
-                .replace("\$memory_mb", memoryLabel)
-                .with(ForegroundColor(labelColor))
-                .withFirst(memoryLabel, Bold)
+            label = strings.getString(R.string.clean_memory_title)
+                .with(ForegroundColor(textColor))
+                .build(),
+            value = memoryLabel
+                .with(ForegroundColor(textColor), Bold)
                 .build(),
             icon = ImageRes(R.drawable.img_home_boost),
             cardBackground = cardBackground
