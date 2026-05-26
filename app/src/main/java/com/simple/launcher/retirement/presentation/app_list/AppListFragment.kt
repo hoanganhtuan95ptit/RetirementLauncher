@@ -102,6 +102,8 @@ class AppListFragment : BaseFragment<FragmentAppListBinding>() {
     }
 
     private fun navigateToReorder() {
+        binding.layoutSearch.etSearch.setText("")
+
         val currentSelected = viewModel.getAllSelectedIds()
         if (currentSelected.isEmpty()) {
             Toast.makeText(context, R.string.app_list_empty_error, Toast.LENGTH_SHORT).show()
