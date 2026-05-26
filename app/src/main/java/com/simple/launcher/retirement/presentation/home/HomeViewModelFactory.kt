@@ -14,7 +14,7 @@ class HomeViewModelFactory(
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return HomeViewModel(getHomeAppsUseCase, fileRepository, memoryRepository) as T
+            return HomeViewModel() as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

@@ -25,6 +25,7 @@ import com.simple.launcher.retirement.presentation.base.BaseFragment
 import com.simple.launcher.retirement.presentation.home.adapter.HomeItem
 import com.simple.launcher.retirement.presentation.main.MainActivity
 import com.simple.launcher.retirement.utils.lifecycle.observe
+import com.simple.launcher.retirement.utils.size.DP
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
@@ -39,7 +40,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     override fun setupViews(view: View, savedInstanceState: Bundle?) {
         super.setupViews(view, savedInstanceState)
 
-        // Setup LayoutManager
         val layoutManager = GridLayoutManager(requireContext(), HomeItem.TOTAL_COLUMNS)
         layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
@@ -47,20 +47,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             }
         }
         binding.rvApps.layoutManager = layoutManager
-
-        // Thêm khoảng cách giữa các item (dùng dp thay vì pixel cứng)
-        val spacingDp = (12 * resources.displayMetrics.density).toInt()
         binding.rvApps.addItemDecoration(object : RecyclerView.ItemDecoration() {
             override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
-                outRect.set(spacingDp, spacingDp, spacingDp, spacingDp)
+                outRect.set(DP.DP_8, DP.DP_8, DP.DP_8, DP.DP_8)
             }
         })
     }
 
-    override fun observeData() {
+    override fun observeData() = with(viewModel) {
         super.observeData()
 
-        viewModel.items.attachAdapter().observe(this) { (items, adapters) ->
+        items.attachAdapter().observe(this@HomeFragment) { (items, adapters) ->
+
             binding.rvApps.submitListAndAwait(items, adapters, true)
         }
     }

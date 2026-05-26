@@ -1,5 +1,6 @@
 package com.simple.launcher.retirement.utils.view
 
+import android.view.HapticFeedbackConstants
 import android.view.View
 import com.simple.launcher.retirement.utils.size.Padding
 
@@ -8,22 +9,22 @@ fun View.setPadding(padding: Padding) {
 }
 
 fun View.setOnSafeClickListener(onSafeClick: (View) -> Unit) {
-    val safeClickListener = SafeClickListener {
+
+    var lastTimeClicked: Long = 0
+
+    setOnClickListener {
+
+        if (System.currentTimeMillis() - lastTimeClicked < 1000) return@setOnClickListener
+        lastTimeClicked = System.currentTimeMillis()
+
         onSafeClick(it)
     }
-    setOnClickListener(safeClickListener)
 }
 
-class SafeClickListener(
-    private var defaultInterval: Int = 1000,
-    private val onSafeClick: (View) -> Unit
-) : View.OnClickListener {
-    private var lastTimeClicked: Long = 0
-    override fun onClick(v: View) {
-        if (System.currentTimeMillis() - lastTimeClicked < defaultInterval) {
-            return
-        }
-        lastTimeClicked = System.currentTimeMillis()
-        onSafeClick(v)
+fun View.setOnSafeWithPerformHapticFeedbackClickListener(onSafeClick: (View) -> Unit) {
+
+    setOnSafeClickListener {
+        it.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
+        onSafeClick(it)
     }
 }

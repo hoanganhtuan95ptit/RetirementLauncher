@@ -24,14 +24,12 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:orientation="vertical"
-        android:padding="14dp">
+        android:padding="16dp">
 
         <TextView
             android:id="@+id/tvLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#CCFFFFFF"
-            android:textSize="12sp"
             tools:text="Dọn dẹp" />
 
         <TextView
@@ -39,9 +37,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
-            android:textColor="#FFFFFF"
-            android:textSize="30sp"
-            android:fontFamily="sans-serif-medium"
             tools:text="55" />
 
     </LinearLayout>

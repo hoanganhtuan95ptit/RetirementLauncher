@@ -39,14 +39,15 @@
         <item name="colorOutline">#D1D1D6</item>
 
         <!-- Home stat card backgrounds -->
-        <item name="cleanFilesStatCardBgActive">@color/clean_files_stat_card_bg_active</item>
-        <item name="cleanFilesStatCardBgIdle">@color/clean_files_stat_card_bg_idle</item>
-        <item name="cleanMemoryStatCardBgActive">@color/clean_memory_stat_card_bg_active</item>
-        <item name="cleanMemoryStatCardBgIdle">@color/clean_memory_stat_card_bg_idle</item>
+        <item name="colorCleanFilesStatCardBgActive">#FBC4C4</item>
+        <item name="colorCleanFilesStatCardOnBgActive">#FF4950</item>
+        <item name="colorCleanFilesStatCardBgIdle">#6AC674</item>
+        <item name="colorCleanFilesStatCardOnBgIdle">#FFFFFF</item>
 
-        <!-- Home stat card text colors -->
-        <item name="cleanFilesStatCardTextColor">@color/white</item>
-        <item name="cleanMemoryStatCardTextColor">@color/white</item>
+        <item name="colorCleanMemoryStatCardBgActive">#FBC4C4</item>
+        <item name="colorCleanMemoryStatCardOnBgActive">#FF4950</item>
+        <item name="colorCleanMemoryStatCardBgIdle">#6281F0</item>
+        <item name="colorCleanMemoryStatCardOnBgIdle">#FFFFFF</item>
 
         <!-- Inverse -->
 <!--        <item name="colorInverseSurface">#1C1C1E</item>-->

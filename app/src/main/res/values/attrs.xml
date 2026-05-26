@@ -6,12 +6,13 @@
     </declare-styleable>
 
     <!-- Home stat card backgrounds -->
-    <attr name="cleanFilesStatCardBgActive" format="color" />
-    <attr name="cleanFilesStatCardBgIdle" format="color" />
-    <attr name="cleanMemoryStatCardBgActive" format="color" />
-    <attr name="cleanMemoryStatCardBgIdle" format="color" />
+    <attr name="colorCleanFilesStatCardBgActive" format="color" />
+    <attr name="colorCleanFilesStatCardOnBgActive" format="color" />
+    <attr name="colorCleanFilesStatCardBgIdle" format="color" />
+    <attr name="colorCleanFilesStatCardOnBgIdle" format="color" />
 
-    <!-- Home stat card text colors -->
-    <attr name="cleanFilesStatCardTextColor" format="color" />
-    <attr name="cleanMemoryStatCardTextColor" format="color" />
+    <attr name="colorCleanMemoryStatCardBgActive" format="color" />
+    <attr name="colorCleanMemoryStatCardOnBgActive" format="color" />
+    <attr name="colorCleanMemoryStatCardBgIdle" format="color" />
+    <attr name="colorCleanMemoryStatCardOnBgIdle" format="color" />
 </resources>

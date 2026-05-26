@@ -1,39 +1,52 @@
 package com.simple.launcher.retirement.presentation.home.adapter
 
 import android.content.Intent
-import android.net.Uri
-import android.view.HapticFeedbackConstants
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import com.simple.adapter.Adapter
 import com.simple.adapter.ViewItemAdapter
 import com.simple.adapter.base.BaseBindingViewHolder
 import com.simple.launcher.retirement.databinding.ItemContactBinding
 import com.simple.launcher.retirement.domain.model.ContactEntity
+import com.simple.launcher.retirement.utils.background.Background
+import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.getItem
 import com.simple.launcher.retirement.utils.image.RichImage
 import com.simple.launcher.retirement.utils.image.setImage
 import com.simple.launcher.retirement.utils.text.RichText
 import com.simple.launcher.retirement.utils.text.setText
-import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
+import com.simple.launcher.retirement.utils.view.setOnSafeWithPerformHapticFeedbackClickListener
 
 data class ContactHomeItem(
+    val entity: ContactEntity,
     val name: RichText,
-    val tapToCallLabel: RichText,
     val photo: RichImage,
-    val entity: ContactEntity  // chỉ dùng cho onclick
+    val background: Background,
+
+    val tapToCallLabel: RichText,
+    val tapToCallBackground: Background,
 ) : HomeItem {
-    override fun areItemsTheSame(): List<Any> = listOf(entity.id)
+
+    override val spanSize: Int = HomeItem.TOTAL_COLUMNS / 2 // half width
+
+    override fun areItemsTheSame(): List<Any> = listOf(
+        entity.id
+    )
+
     override fun getContentsCompare(): List<Pair<Any, String>> = listOf(
         name to "name",
+        photo to "photo",
+        background to "background",
+
         tapToCallLabel to "tapToCallLabel",
-        photo to "photo"
+        tapToCallBackground to "tapToCallBackground"
     )
-    override val spanSize: Int = HomeItem.TOTAL_COLUMNS / 2 // half width
 }
 
 @Adapter
 class ContactAdapter : ViewItemAdapter<ContactHomeItem, ItemContactBinding>() {
+
     override val viewItemClass: Class<ContactHomeItem> by lazy {
         ContactHomeItem::class.java
     }
@@ -44,17 +57,20 @@ class ContactAdapter : ViewItemAdapter<ContactHomeItem, ItemContactBinding>() {
 
     override fun createViewHolder(parent: ViewGroup, viewType: Int): BaseBindingViewHolder<ItemContactBinding> {
         val viewHolder = super.createViewHolder(parent, viewType)
-        viewHolder.itemView.setOnSafeClickListener {
-            val item = viewHolder.getItem<ContactHomeItem>() ?: return@setOnSafeClickListener
-            it.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
+
+        viewHolder.itemView.setOnSafeWithPerformHapticFeedbackClickListener {
+
+            val item = viewHolder.getItem<ContactHomeItem>() ?: return@setOnSafeWithPerformHapticFeedbackClickListener
+
             val context = it.context
-            val callIntent = Intent(Intent.ACTION_CALL)
-            callIntent.data = Uri.parse("tel:${item.entity.phoneNumber}")
+
             try {
+                val callIntent = Intent(Intent.ACTION_CALL)
+                callIntent.data = "tel:${item.entity.phoneNumber}".toUri()
                 context.startActivity(callIntent)
-            } catch (e: Exception) {
+            } catch (_: Exception) {
                 val dialIntent = Intent(Intent.ACTION_DIAL)
-                dialIntent.data = Uri.parse("tel:${item.entity.phoneNumber}")
+                dialIntent.data = "tel:${item.entity.phoneNumber}".toUri()
                 context.startActivity(dialIntent)
             }
         }
@@ -66,11 +82,17 @@ class ContactAdapter : ViewItemAdapter<ContactHomeItem, ItemContactBinding>() {
         if (payloads.isEmpty() || payloads.contains("name")) {
             binding.tvName.setText(item.name)
         }
+        if (payloads.isEmpty() || payloads.contains("photo")) {
+            binding.ivPhoto.setImage(item.photo)
+        }
+        if (payloads.isEmpty() || payloads.contains("background")) {
+            binding.root.setBackground(item.background)
+        }
         if (payloads.isEmpty() || payloads.contains("tapToCallLabel")) {
             binding.tvTapToCall.setText(item.tapToCallLabel)
         }
-        if (payloads.isEmpty() || payloads.contains("photo")) {
-            binding.ivPhoto.setImage(item.photo)
+        if (payloads.isEmpty() || payloads.contains("tapToCallBackground")) {
+            binding.tvTapToCall.setBackground(item.tapToCallBackground)
         }
     }
 }
