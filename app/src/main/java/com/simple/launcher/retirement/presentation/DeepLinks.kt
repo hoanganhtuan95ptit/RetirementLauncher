@@ -13,6 +13,9 @@ object DeepLinks {
 
     // ─── Screens ──────────────────────────────────────────────────────────────
 
+
+    const val CALL          = "app://call"
+    const val APP          = "app://app"
     const val HOME          = "app://home"
     const val ONBOARDING    = "app://onboarding"
     const val SETTINGS      = "app://settings"

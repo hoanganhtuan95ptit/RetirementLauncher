@@ -5,10 +5,10 @@ import android.view.ViewGroup
 import com.simple.adapter.Adapter
 import com.simple.adapter.ViewItemAdapter
 import com.simple.adapter.base.BaseBindingViewHolder
+import com.simple.deeplink.sendDeeplink
 import com.simple.launcher.retirement.databinding.ItemAppBinding
 import com.simple.launcher.retirement.domain.model.AppEntity
 import com.simple.launcher.retirement.presentation.DeepLinks
-import com.simple.launcher.retirement.presentation.sendDeeplinkWithBackStack
 import com.simple.launcher.retirement.utils.background.Background
 import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.getItem
@@ -53,15 +53,7 @@ class AppAdapter : ViewItemAdapter<AppHomeItem, ItemAppBinding>() {
         val viewHolder = super.createViewHolder(parent, viewType)
         viewHolder.itemView.setOnSafeWithPerformHapticFeedbackClickListener {
             val item = viewHolder.getItem<AppHomeItem>() ?: return@setOnSafeWithPerformHapticFeedbackClickListener
-            val context = it.context
-            if (item.entity.packageName == context.packageName) {
-                sendDeeplinkWithBackStack(DeepLinks.SETTINGS)
-            } else {
-                val launchIntent = context.packageManager.getLaunchIntentForPackage(item.entity.packageName)
-                if (launchIntent != null) {
-                    context.startActivity(launchIntent)
-                }
-            }
+            sendDeeplink(DeepLinks.APP, mapOf("entity" to item.entity))
         }
         return viewHolder
     }

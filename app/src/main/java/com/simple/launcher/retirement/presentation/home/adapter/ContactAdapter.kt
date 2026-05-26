@@ -7,8 +7,10 @@ import androidx.core.net.toUri
 import com.simple.adapter.Adapter
 import com.simple.adapter.ViewItemAdapter
 import com.simple.adapter.base.BaseBindingViewHolder
+import com.simple.deeplink.sendDeeplink
 import com.simple.launcher.retirement.databinding.ItemContactBinding
 import com.simple.launcher.retirement.domain.model.ContactEntity
+import com.simple.launcher.retirement.presentation.DeepLinks
 import com.simple.launcher.retirement.utils.background.Background
 import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.getItem
@@ -57,22 +59,9 @@ class ContactAdapter : ViewItemAdapter<ContactHomeItem, ItemContactBinding>() {
 
     override fun createViewHolder(parent: ViewGroup, viewType: Int): BaseBindingViewHolder<ItemContactBinding> {
         val viewHolder = super.createViewHolder(parent, viewType)
-
         viewHolder.itemView.setOnSafeWithPerformHapticFeedbackClickListener {
-
             val item = viewHolder.getItem<ContactHomeItem>() ?: return@setOnSafeWithPerformHapticFeedbackClickListener
-
-            val context = it.context
-
-            try {
-                val callIntent = Intent(Intent.ACTION_CALL)
-                callIntent.data = "tel:${item.entity.phoneNumber}".toUri()
-                context.startActivity(callIntent)
-            } catch (_: Exception) {
-                val dialIntent = Intent(Intent.ACTION_DIAL)
-                dialIntent.data = "tel:${item.entity.phoneNumber}".toUri()
-                context.startActivity(dialIntent)
-            }
+            sendDeeplink(DeepLinks.CALL, mapOf("entity" to item.entity))
         }
         return viewHolder
     }
