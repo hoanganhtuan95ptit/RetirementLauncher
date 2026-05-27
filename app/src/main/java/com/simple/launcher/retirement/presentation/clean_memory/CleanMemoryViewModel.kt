@@ -3,7 +3,7 @@ package com.simple.launcher.retirement.presentation.clean_memory
 import android.graphics.Color
 import androidx.lifecycle.viewModelScope
 import com.simple.launcher.retirement.R
-import com.simple.launcher.retirement.domain.model.RamInfo
+import com.simple.launcher.retirement.domain.model.StorageInfo
 import com.simple.launcher.retirement.domain.repository.MemoryRepository
 import com.simple.launcher.retirement.presentation.base.ActionState
 import com.simple.launcher.retirement.presentation.base.BaseViewModel
@@ -43,27 +43,27 @@ import kotlinx.coroutines.withContext
 
 class CleanMemoryViewModel : BaseViewModel() {
 
-    var ramWhenStart: RamInfo? = null
+    var storageWhenStart: StorageInfo? = null
 
     val boostState = MutableStateFlow<BoostState>(BoostState.IDLE)
 
-    val ramInfo: StateFlow<RamInfo?> = boostState.filter {
+    val ramInfo: StateFlow<StorageInfo?> = boostState.filter {
 
         it !is BoostState.BOOSTING
     }.map {
 
-        var ram = MemoryRepository.instance.getRamInfo()
+        var storage = MemoryRepository.instance.getStorageInfo()
 
         if (it is BoostState.IDLE) {
-            ramWhenStart = ram
+            storageWhenStart = storage
         }
 
-        val pre = ramWhenStart
-        if (pre != null && pre.freeMB > ram.freeMB) {
-            ram = ram.copy(usedMB = pre.usedMB, freeMB = pre.freeMB)
+        val pre = storageWhenStart
+        if (pre != null && pre.freeMB > storage.freeMB) {
+            storage = storage.copy(usedMB = pre.usedMB, freeMB = pre.freeMB)
         }
 
-        ram
+        storage
     }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
     val toolbar: StateFlow<ToolbarState> = combineState(
@@ -182,7 +182,7 @@ class CleanMemoryViewModel : BaseViewModel() {
 
         val text = if (freeMB > 0) {
             resourceMap.getString(R.string.clean_memory_toast)
-                .replace("\$\$number_ram", freeMB.toString())
+                .replace("\$number_ram", freeMB.toString())
         } else {
 
             resourceMap.getString(R.string.clean_memory_optimal)

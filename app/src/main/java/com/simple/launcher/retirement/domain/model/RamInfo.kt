@@ -1,6 +1,6 @@
 package com.simple.launcher.retirement.domain.model
 
-data class RamInfo(
+data class StorageInfo(
     val totalMB: Long,
     val usedMB: Long,
     val freeMB: Long

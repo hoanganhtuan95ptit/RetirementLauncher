@@ -57,7 +57,7 @@
     <string name="clean_memory_completed">Hệ thống đã được tối ưu!\nĐã giải phóng khoảng %1$d MB RAM</string>
     <string name="clean_memory_optimal">Hệ thống đang ở trạng thái tối ưu nhất!</string>
     <string name="clean_memory_retry">Tối ưu lại</string>
-    <string name="clean_memory_toast">Đã giải phóng $number_ram MB RAM</string>
+    <string name="clean_memory_toast">Đã giải phóng $number_ram MB</string>
 
     <!-- Contacts -->
     <string name="contact_tap_to_call">Gọi ngay</string>

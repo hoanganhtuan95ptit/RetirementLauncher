@@ -1,10 +1,11 @@
 package com.simple.launcher.retirement.data.repository
 
-import android.app.ActivityManager
 import android.content.Context
 import android.os.Build
+import android.os.Environment
+import android.os.StatFs
 import android.os.storage.StorageManager
-import com.simple.launcher.retirement.domain.model.RamInfo
+import com.simple.launcher.retirement.domain.model.StorageInfo
 import com.simple.launcher.retirement.domain.repository.MemoryRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -14,16 +15,15 @@ import kotlinx.coroutines.flow.map
 
 class MemoryRepositoryImpl(private val context: Context) : MemoryRepository {
 
-    override fun getRamInfo(): RamInfo {
-        val am = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
-        val memInfo = ActivityManager.MemoryInfo()
-        am.getMemoryInfo(memInfo)
-        val totalMB = memInfo.totalMem / (1024 * 1024)
-        val freeMB = memInfo.availMem / (1024 * 1024)
-        return RamInfo(
-            totalMB = totalMB,
-            usedMB = totalMB - freeMB,
-            freeMB = freeMB
+    override fun getStorageInfo(): StorageInfo {
+        val stat = StatFs(Environment.getDataDirectory().path)
+        val totalBytes = stat.totalBytes
+        val freeBytes = stat.availableBytes
+        val usedBytes = totalBytes - freeBytes
+        return StorageInfo(
+            totalMB = totalBytes / (1024 * 1024),
+            usedMB = usedBytes / (1024 * 1024),
+            freeMB = freeBytes / (1024 * 1024)
         )
     }
 
