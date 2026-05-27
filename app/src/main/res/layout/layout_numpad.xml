@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <!-- Row 1: 1 2 3 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/btnKey1"
+            android:layout_width="0dp"
+            android:layout_height="72dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_numpad_key"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            tools:text="1" />
+
+        <TextView
+            android:id="@+id/btnKey2"
+            android:layout_width="0dp"
+            android:layout_height="72dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_numpad_key"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            tools:text="2" />
+
+        <TextView
+            android:id="@+id/btnKey3"
+            android:layout_width="0dp"
+            android:layout_height="72dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_numpad_key"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            tools:text="3" />
+
+    </LinearLayout>
+
+    <!-- Row 2: 4 5 6 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/btnKey4"
+            android:layout_width="0dp"
+            android:layout_height="72dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_numpad_key"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            tools:text="4" />
+
+        <TextView
+            android:id="@+id/btnKey5"
+            android:layout_width="0dp"
+            android:layout_height="72dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_numpad_key"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            tools:text="5" />
+
+        <TextView
+            android:id="@+id/btnKey6"
+            android:layout_width="0dp"
+            android:layout_height="72dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_numpad_key"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            tools:text="6" />
+
+    </LinearLayout>
+
+    <!-- Row 3: 7 8 9 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/btnKey7"
+            android:layout_width="0dp"
+            android:layout_height="72dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_numpad_key"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            tools:text="7" />
+
+        <TextView
+            android:id="@+id/btnKey8"
+            android:layout_width="0dp"
+            android:layout_height="72dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_numpad_key"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            tools:text="8" />
+
+        <TextView
+            android:id="@+id/btnKey9"
+            android:layout_width="0dp"
+            android:layout_height="72dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_numpad_key"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            tools:text="9" />
+
+    </LinearLayout>
+
+    <!-- Row 4: (trống) 0 xoá -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="72dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/btnKey0"
+            android:layout_width="0dp"
+            android:layout_height="72dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_numpad_key"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            tools:text="0" />
+
+        <ImageView
+            android:id="@+id/btnKeyDelete"
+            android:layout_width="0dp"
+            android:layout_height="72dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_numpad_key"
+            android:clickable="true"
+            android:contentDescription="@string/pin_key_delete_desc"
+            android:focusable="true"
+            android:padding="22dp"
+            android:src="@drawable/ic_clear" />
+    </LinearLayout>
+
+</LinearLayout>

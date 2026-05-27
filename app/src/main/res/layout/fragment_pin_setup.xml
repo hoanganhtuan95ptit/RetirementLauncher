@@ -94,146 +94,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/llPinDots" />
 
-    <!-- Numpad: 4 hàng x 3 cột dùng LinearLayout -->
-    <LinearLayout
-        android:id="@+id/llNumpad"
+    <!-- Numpad: 4 hàng x 3 cột -->
+    <include
+        android:id="@+id/layoutNumpad"
+        layout="@layout/layout_numpad"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="32dp"
         android:layout_marginTop="32dp"
-        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvError">
-
-        <!-- Row 1: 1 2 3 -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/btnKey1"
-                style="@style/PinNumpadKey"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:text="1"
-                tools:ignore="HardcodedText" />
-
-            <TextView
-                android:id="@+id/btnKey2"
-                style="@style/PinNumpadKey"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:text="2"
-                tools:ignore="HardcodedText" />
-
-            <TextView
-                android:id="@+id/btnKey3"
-                style="@style/PinNumpadKey"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:text="3"
-                tools:ignore="HardcodedText" />
-
-        </LinearLayout>
-
-        <!-- Row 2: 4 5 6 -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/btnKey4"
-                style="@style/PinNumpadKey"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:text="4"
-                tools:ignore="HardcodedText" />
-
-            <TextView
-                android:id="@+id/btnKey5"
-                style="@style/PinNumpadKey"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:text="5"
-                tools:ignore="HardcodedText" />
-
-            <TextView
-                android:id="@+id/btnKey6"
-                style="@style/PinNumpadKey"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:text="6"
-                tools:ignore="HardcodedText" />
-
-        </LinearLayout>
-
-        <!-- Row 3: 7 8 9 -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/btnKey7"
-                style="@style/PinNumpadKey"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:text="7"
-                tools:ignore="HardcodedText" />
-
-            <TextView
-                android:id="@+id/btnKey8"
-                style="@style/PinNumpadKey"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:text="8"
-                tools:ignore="HardcodedText" />
-
-            <TextView
-                android:id="@+id/btnKey9"
-                style="@style/PinNumpadKey"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:text="9"
-                tools:ignore="HardcodedText" />
-
-        </LinearLayout>
-
-        <!-- Row 4: (trống) 0 xoá -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="72dp"
-                android:layout_weight="1" />
-
-            <TextView
-                android:id="@+id/btnKey0"
-                style="@style/PinNumpadKey"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:text="0"
-                tools:ignore="HardcodedText" />
-
-            <ImageView
-                android:id="@+id/btnKeyDelete"
-                android:layout_width="0dp"
-                android:layout_height="72dp"
-                android:layout_weight="1"
-                android:background="@drawable/bg_numpad_key"
-                android:contentDescription="@string/pin_key_delete_desc"
-                android:padding="22dp"
-                android:src="@drawable/ic_clear" />
-
-        </LinearLayout>
-
-    </LinearLayout>
+        app:layout_constraintTop_toBottomOf="@id/tvError" />
 
     <include
         android:id="@+id/btnNext"

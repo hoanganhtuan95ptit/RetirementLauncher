@@ -75,15 +75,4 @@
         <item name="backgroundTint">@android:color/transparent</item>
     </style>
 
-    <style name="PinNumpadKey">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">72dp</item>
-        <item name="android:layout_columnWeight">1</item>
-        <item name="android:gravity">center</item>
-        <item name="android:textSize">24sp</item>
-        <item name="android:textColor">?android:attr/textColorPrimary</item>
-        <item name="android:background">@drawable/bg_numpad_key</item>
-        <item name="android:clickable">true</item>
-        <item name="android:focusable">true</item>
-    </style>
 </resources>

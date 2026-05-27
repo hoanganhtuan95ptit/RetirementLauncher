@@ -1,5 +1,6 @@
 package com.simple.launcher.retirement.presentation.pin_setup
 
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -57,16 +58,16 @@ class PinSetupFragment : BaseFragment<FragmentPinSetupBinding>() {
 
     private fun setupNumpad() {
         val digitKeys = mapOf(
-            binding.btnKey0 to "0",
-            binding.btnKey1 to "1",
-            binding.btnKey2 to "2",
-            binding.btnKey3 to "3",
-            binding.btnKey4 to "4",
-            binding.btnKey5 to "5",
-            binding.btnKey6 to "6",
-            binding.btnKey7 to "7",
-            binding.btnKey8 to "8",
-            binding.btnKey9 to "9"
+            binding.layoutNumpad.btnKey0 to "0",
+            binding.layoutNumpad.btnKey1 to "1",
+            binding.layoutNumpad.btnKey2 to "2",
+            binding.layoutNumpad.btnKey3 to "3",
+            binding.layoutNumpad.btnKey4 to "4",
+            binding.layoutNumpad.btnKey5 to "5",
+            binding.layoutNumpad.btnKey6 to "6",
+            binding.layoutNumpad.btnKey7 to "7",
+            binding.layoutNumpad.btnKey8 to "8",
+            binding.layoutNumpad.btnKey9 to "9"
         )
 
         for ((btn, digit) in digitKeys) {
@@ -81,7 +82,7 @@ class PinSetupFragment : BaseFragment<FragmentPinSetupBinding>() {
             }
         }
 
-        binding.btnKeyDelete.setOnClickListener {
+        binding.layoutNumpad.btnKeyDelete.setOnClickListener {
             if (pinBuilder.isNotEmpty()) {
                 pinBuilder.deleteCharAt(pinBuilder.length - 1)
                 updatePinDots()
@@ -145,6 +146,31 @@ class PinSetupFragment : BaseFragment<FragmentPinSetupBinding>() {
         viewModel.action.observe(this) { state ->
             binding.btnNext.tvAction.setText(state.text)
             binding.btnNext.tvAction.parent.asObjectOrNull<View>()?.setBackground(state.background)
+        }
+
+        viewModel.numpadState.observe(this) { state ->
+            val digitKeys = mapOf(
+                binding.layoutNumpad.btnKey0 to "0",
+                binding.layoutNumpad.btnKey1 to "1",
+                binding.layoutNumpad.btnKey2 to "2",
+                binding.layoutNumpad.btnKey3 to "3",
+                binding.layoutNumpad.btnKey4 to "4",
+                binding.layoutNumpad.btnKey5 to "5",
+                binding.layoutNumpad.btnKey6 to "6",
+                binding.layoutNumpad.btnKey7 to "7",
+                binding.layoutNumpad.btnKey8 to "8",
+                binding.layoutNumpad.btnKey9 to "9"
+            )
+
+            digitKeys.forEach { (btn, text) ->
+                btn.text = text
+                btn.textSize = state.textSize
+                btn.setTextColor(state.textColor)
+                btn.backgroundTintList = ColorStateList.valueOf(state.rippleColor)
+            }
+
+            binding.layoutNumpad.btnKeyDelete.imageTintList = ColorStateList.valueOf(state.deleteIconColor)
+            binding.layoutNumpad.btnKeyDelete.backgroundTintList = ColorStateList.valueOf(state.rippleColor)
         }
     }
 
