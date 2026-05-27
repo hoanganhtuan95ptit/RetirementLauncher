@@ -35,9 +35,8 @@
         android:layout_marginTop="28dp" />
 
     <!-- Numpad: 4 hàng x 3 cột -->
-    <include
-        android:id="@+id/layoutNumpad"
-        layout="@layout/layout_numpad"
+    <com.simple.launcher.retirement.presentation.numpad.NumpadView
+        android:id="@+id/numpadView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"

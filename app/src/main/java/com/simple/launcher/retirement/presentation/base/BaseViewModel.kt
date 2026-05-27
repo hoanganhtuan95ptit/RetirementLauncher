@@ -5,10 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.simple.launcher.retirement.utils.background.Background
 import com.simple.launcher.retirement.utils.combineState
 import com.simple.launcher.retirement.utils.exts.colorBackground
-import com.simple.launcher.retirement.utils.exts.colorPrimary
-import com.simple.launcher.retirement.utils.exts.textColorPrimary
 import com.simple.launcher.retirement.utils.exts.textColorSecondary
-import com.simple.launcher.retirement.utils.exts.withAlpha
 import com.simple.launcher.retirement.utils.string.StringResStore
 import com.simple.launcher.retirement.utils.theme.ThemeColorStore
 import kotlinx.coroutines.flow.SharingStarted
@@ -47,20 +44,4 @@ open class BaseViewModel : ViewModel() {
             showAnchor = true
         )
     }.stateIn(viewModelScope, SharingStarted.Eagerly, BottomSheetState.empty())
-
-    val numpadState: StateFlow<NumpadState> = themes.map { themeMap ->
-        NumpadState(
-            textColor = themeMap.textColorPrimary,
-            rippleColor = themeMap.colorPrimary.withAlpha(0.12f),
-            deleteIconColor = themeMap.textColorPrimary,
-            textSize = 24f
-        )
-    }.stateIn(viewModelScope, SharingStarted.Eagerly, NumpadState(0, 0, 0, 0f))
 }
-
-data class NumpadState(
-    val textColor: Int,
-    val rippleColor: Int,
-    val deleteIconColor: Int,
-    val textSize: Float
-)
