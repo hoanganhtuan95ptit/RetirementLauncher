@@ -18,6 +18,7 @@ import com.simple.launcher.retirement.presentation.base.BaseFragment
 import com.simple.launcher.retirement.utils.AppEvent
 import com.simple.launcher.retirement.utils.AppEventBus
 import com.simple.launcher.retirement.utils.background.setBackground
+import com.simple.launcher.retirement.utils.exts.asObjectOrNull
 import com.simple.launcher.retirement.utils.image.setImage
 import com.simple.launcher.retirement.utils.lifecycle.observe
 import com.simple.launcher.retirement.utils.text.RichText
@@ -143,7 +144,7 @@ class PinSetupFragment : BaseFragment<FragmentPinSetupBinding>() {
 
         viewModel.action.observe(this) { state ->
             binding.btnNext.tvAction.setText(state.text)
-            binding.btnNext.tvAction.setBackground(state.background)
+            binding.btnNext.tvAction.parent.asObjectOrNull<View>()?.setBackground(state.background)
         }
     }
 

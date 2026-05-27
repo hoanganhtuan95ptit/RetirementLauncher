@@ -22,6 +22,7 @@ import com.simple.launcher.retirement.domain.repository.ContactRepository
 import com.simple.launcher.retirement.domain.repository.PreferenceRepository
 import com.simple.launcher.retirement.presentation.base.BaseFragment
 import com.simple.launcher.retirement.utils.background.setBackground
+import com.simple.launcher.retirement.utils.exts.asObjectOrNull
 import com.simple.launcher.retirement.utils.image.setImage
 import com.simple.launcher.retirement.utils.lifecycle.observe
 import com.simple.launcher.retirement.utils.permission.PermissionManager
@@ -114,7 +115,7 @@ class ReorderFragment : BaseFragment<FragmentAppListBinding>() {
 
         viewModel.doneAction.observe(this) { state ->
             binding.btnSave.tvAction.setText(state.text)
-            binding.btnSave.tvAction.setBackground(state.background)
+            binding.btnSave.tvAction.parent.asObjectOrNull<View>()?.setBackground(state.background)
         }
 
         viewModel.items.attachAdapter().observe(this) { (items, adapters) ->

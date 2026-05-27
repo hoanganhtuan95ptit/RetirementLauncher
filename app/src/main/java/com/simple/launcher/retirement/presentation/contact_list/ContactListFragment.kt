@@ -24,6 +24,7 @@ import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.image.setImage
 import com.simple.launcher.retirement.utils.AppEvent
 import com.simple.launcher.retirement.utils.AppEventBus
+import com.simple.launcher.retirement.utils.exts.asObjectOrNull
 import com.simple.launcher.retirement.utils.lifecycle.observe
 import com.simple.launcher.retirement.utils.permission.PermissionManager
 import com.simple.launcher.retirement.utils.text.setText
@@ -101,7 +102,7 @@ class ContactListFragment : BaseFragment<FragmentAppListBinding>() {
 
         viewModel.saveAction.observe(this) { state ->
             binding.btnSave.tvAction.setText(state.text)
-            binding.btnSave.tvAction.setBackground(state.background)
+            binding.btnSave.tvAction.parent.asObjectOrNull<View>()?.setBackground(state.background)
         }
 
         viewModel.items.attachAdapter().observe(this) { (items, adapters) ->

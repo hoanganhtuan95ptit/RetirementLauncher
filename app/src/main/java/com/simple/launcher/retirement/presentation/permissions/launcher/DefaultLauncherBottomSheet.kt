@@ -21,6 +21,7 @@ import com.simple.launcher.retirement.presentation.base.BaseBottomSheetDialogFra
 import com.simple.launcher.retirement.utils.AppEvent
 import com.simple.launcher.retirement.utils.AppEventBus
 import com.simple.launcher.retirement.utils.background.setBackground
+import com.simple.launcher.retirement.utils.exts.asObjectOrNull
 import com.simple.launcher.retirement.utils.lifecycle.observe
 import com.simple.launcher.retirement.utils.permission.PermissionManager
 import com.simple.launcher.retirement.utils.text.setText
@@ -66,7 +67,7 @@ class DefaultLauncherBottomSheet : BaseBottomSheetDialogFragment<BottomSheetDefa
         }
         viewModel.action.observe(this) { state ->
             binding.btnSetDefault.tvAction.setText(state.text)
-            binding.btnSetDefault.tvAction.setBackground(state.background)
+            binding.btnSetDefault.tvAction.parent.asObjectOrNull<View>()?.setBackground(state.background)
         }
     }
 

@@ -10,6 +10,7 @@ import com.simple.launcher.retirement.databinding.ActivityBlockBinding
 import com.simple.launcher.retirement.presentation.base.BaseActivity
 import com.simple.launcher.retirement.presentation.main.MainActivity
 import com.simple.launcher.retirement.utils.background.setBackground
+import com.simple.launcher.retirement.utils.exts.asObjectOrNull
 import com.simple.launcher.retirement.utils.lifecycle.observe
 import com.simple.launcher.retirement.utils.text.setText
 import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
@@ -64,7 +65,7 @@ class BlockActivity : BaseActivity<ActivityBlockBinding>() {
 
         viewModel.action.observe(this) { state ->
             binding.btnGoHome.tvAction.setText(state.text)
-            binding.btnGoHome.tvAction.setBackground(state.background)
+            binding.btnGoHome.tvAction.parent.asObjectOrNull<View>()?.setBackground(state.background)
         }
     }
 

@@ -15,6 +15,7 @@ import com.simple.launcher.retirement.databinding.FragmentOnboardingBinding
 import com.simple.launcher.retirement.domain.repository.PreferenceRepository
 import com.simple.launcher.retirement.presentation.base.BaseFragment
 import com.simple.launcher.retirement.utils.background.setBackground
+import com.simple.launcher.retirement.utils.exts.asObjectOrNull
 import com.simple.launcher.retirement.utils.lifecycle.observe
 import com.simple.launcher.retirement.utils.text.setText
 import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
@@ -47,7 +48,7 @@ class OnboardingFragment : BaseFragment<FragmentOnboardingBinding>() {
 
         viewModel.action.observe(this) { state ->
             binding.btnStart.tvAction.setText(state.text)
-            binding.btnStart.tvAction.setBackground(state.background)
+            binding.btnStart.tvAction.parent.asObjectOrNull<View>()?.setBackground(state.background)
         }
     }
 }

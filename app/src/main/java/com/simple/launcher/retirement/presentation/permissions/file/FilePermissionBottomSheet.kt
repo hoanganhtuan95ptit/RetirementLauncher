@@ -20,6 +20,7 @@ import com.simple.launcher.retirement.presentation.base.BaseBottomSheetDialogFra
 import com.simple.launcher.retirement.utils.AppEvent
 import com.simple.launcher.retirement.utils.AppEventBus
 import com.simple.launcher.retirement.utils.background.setBackground
+import com.simple.launcher.retirement.utils.exts.asObjectOrNull
 import com.simple.launcher.retirement.utils.lifecycle.observe
 import com.simple.launcher.retirement.utils.permission.PermissionManager
 import com.simple.launcher.retirement.utils.text.setText
@@ -76,7 +77,7 @@ class FilePermissionBottomSheet : BaseBottomSheetDialogFragment<BottomSheetFileP
 
         viewModel.action.observe(this) { state ->
             binding.btnGrant.tvAction.setText(state.text)
-            binding.btnGrant.tvAction.setBackground(state.background)
+            binding.btnGrant.tvAction.parent.asObjectOrNull<View>()?.setBackground(state.background)
         }
     }
 

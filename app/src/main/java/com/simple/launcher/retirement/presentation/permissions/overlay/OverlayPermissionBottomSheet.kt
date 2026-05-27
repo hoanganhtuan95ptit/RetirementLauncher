@@ -24,6 +24,7 @@ import com.simple.launcher.retirement.utils.permission.PermissionManager
 import com.simple.launcher.retirement.utils.text.setText
 import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
 import androidx.core.net.toUri
+import com.simple.launcher.retirement.utils.exts.asObjectOrNull
 
 class OverlayPermissionBottomSheet : BaseBottomSheetDialogFragment<BottomSheetOverlayPermissionBinding, OverlayPermissionViewModel>() {
 
@@ -65,7 +66,7 @@ class OverlayPermissionBottomSheet : BaseBottomSheetDialogFragment<BottomSheetOv
         }
         viewModel.action.observe(this) { state ->
             binding.btnGrant.tvAction.setText(state.text)
-            binding.btnGrant.tvAction.setBackground(state.background)
+            binding.btnGrant.tvAction.parent.asObjectOrNull<View>()?.setBackground(state.background)
         }
     }
 
