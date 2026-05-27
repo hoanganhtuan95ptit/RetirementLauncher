@@ -20,9 +20,9 @@ import com.simple.launcher.retirement.presentation.base.buildToolbarTitle
 import com.simple.launcher.retirement.utils.combineState
 import com.simple.launcher.retirement.utils.image.ImagePath
 import com.simple.launcher.retirement.utils.image.ImageRes
-import com.simple.launcher.retirement.utils.string.getString
 import com.simple.launcher.retirement.utils.text.RichText
-import com.simple.launcher.retirement.utils.theme.getColor
+import com.simple.launcher.retirement.utils.exts.getString
+import com.simple.launcher.retirement.utils.exts.getColor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -35,28 +35,27 @@ class ContactListViewModel(
 
     // Toolbar state — title với màu, size, font từ theme; backIcon với màu từ theme
     val toolbar: StateFlow<ToolbarState> = combineState(
-        flow1 = strings,
-        flow2 = themes,
+        flow1 = resources,
         initialValue = ToolbarState.empty()
-    ) { stringMap, themeMap ->
-        val color = themeMap.getColor(android.R.attr.textColorPrimary)
+    ) { resources ->
+        val color = resources.getColor(android.R.attr.textColorPrimary)
         ToolbarState(
-            title = buildToolbarTitle(stringMap.getString(R.string.contact_list_title), color),
+            title = buildToolbarTitle(resources.getString(R.string.contact_list_title), color),
             backIcon = buildBackIcon(color)
         )
     }
 
     val searchState: StateFlow<SearchState> = combineState(
-        flow1 = strings,
-        flow2 = themes,
+        flow1 = resources,
         initialValue = SearchState.empty()
-    ) { stringMap, themeMap ->
-        val textColor = themeMap.getColor(android.R.attr.textColorPrimary)
-        val hintColor = themeMap.getColor(android.R.attr.textColorSecondary, android.graphics.Color.GRAY)
-        val backgroundColor = themeMap.getColor(android.R.attr.colorControlHighlight, android.graphics.Color.LTGRAY)
+    ) { resources ->
+
+        val textColor = resources.getColor(android.R.attr.textColorPrimary)
+        val hintColor = resources.getColor(android.R.attr.textColorSecondary, android.graphics.Color.GRAY)
+        val backgroundColor = resources.getColor(com.google.android.material.R.attr.colorSurface, android.graphics.Color.LTGRAY)
 
         buildSearchState(
-            hint = stringMap.getString(R.string.search),
+            hint = resources.getString(R.string.search),
             textColor = textColor,
             hintColor = hintColor,
             backgroundColor = backgroundColor
@@ -64,15 +63,15 @@ class ContactListViewModel(
     }
 
     val saveAction: StateFlow<ActionState> = combineState(
-        flow1 = strings,
-        flow2 = themes,
+        flow1 = resources,
         initialValue = ActionState.empty()
-    ) { stringMap, themeMap ->
-        val color = themeMap.getColor(android.R.attr.textColorPrimary)
-        val backgroundColor = themeMap.getColor(android.R.attr.colorControlHighlight, android.graphics.Color.LTGRAY)
+    ) { resources ->
+
+        val color = resources.getColor(com.google.android.material.R.attr.colorOnPrimary)
+        val backgroundColor = resources.getColor(android.R.attr.colorPrimary, android.graphics.Color.LTGRAY)
 
         buildActionState(
-            text = stringMap.getString(R.string.save),
+            text = resources.getString(R.string.save),
             textColor = color,
             backgroundColor = backgroundColor
         )

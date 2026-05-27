@@ -9,9 +9,9 @@ import com.simple.launcher.retirement.presentation.base.buildActionState
 import com.simple.launcher.retirement.presentation.base.buildBackIcon
 import com.simple.launcher.retirement.presentation.base.buildToolbarTitle
 import com.simple.launcher.retirement.utils.combineState
-import com.simple.launcher.retirement.utils.string.getString
 import com.simple.launcher.retirement.utils.text.*
-import com.simple.launcher.retirement.utils.theme.getColor
+import com.simple.launcher.retirement.utils.exts.getString
+import com.simple.launcher.retirement.utils.exts.getColor
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -31,45 +31,43 @@ class PinSetupViewModel(
     private val _actionRes = MutableStateFlow(R.string.back)
 
     val toolbar: StateFlow<ToolbarState> = combineState(
-        flow1 = strings,
-        flow2 = themes,
+        flow1 = resources,
         initialValue = ToolbarState.empty()
-    ) { stringMap, themeMap ->
-        val color = themeMap.getColor(android.R.attr.textColorPrimary)
+    ) { resources ->
+        val color = resources.getColor(android.R.attr.textColorPrimary)
         ToolbarState(
-            title = buildToolbarTitle(stringMap.getString(R.string.setting_pin), color),
+            title = buildToolbarTitle(resources.getString(R.string.setting_pin), color),
             backIcon = buildBackIcon(color)
         )
     }
 
     val instruction: StateFlow<RichText> = combineState(
-        flow1 = strings,
-        flow2 = themes,
-        flow3 = _state,
+        flow1 = resources,
+        flow2 = _state,
         initialValue = emptyText()
-    ) { stringMap, themeMap, state ->
-        val color = themeMap.getColor(android.R.attr.textColorPrimary)
+    ) { resources, state ->
+        val color = resources.getColor(android.R.attr.textColorPrimary)
         val resId = when (state) {
             State.ENTER_NEW_PIN -> R.string.pin_enter_new
             State.CONFIRM_NEW_PIN -> R.string.pin_confirm_new
             State.SUCCESS -> R.string.pin_enter_new
         }
-        stringMap.getString(resId)
+        resources.getString(resId)
             .with(ForegroundColor(color))
             .build()
     }
 
     val action: StateFlow<ActionState> = combineState(
-        flow1 = strings,
-        flow2 = themes,
-        flow3 = _actionRes,
+        flow1 = resources,
+        flow2 = _actionRes,
         initialValue = ActionState.empty()
-    ) { stringMap, themeMap, actionRes ->
-        val color = themeMap.getColor(android.R.attr.textColorPrimary)
-        val backgroundColor = themeMap.getColor(android.R.attr.colorControlHighlight, android.graphics.Color.LTGRAY)
+    ) { resources, actionRes ->
+
+        val color = resources.getColor(com.google.android.material.R.attr.colorOnPrimary)
+        val backgroundColor = resources.getColor(android.R.attr.colorPrimary, android.graphics.Color.LTGRAY)
 
         buildActionState(
-            text = stringMap.getString(actionRes),
+            text = resources.getString(actionRes),
             textColor = color,
             backgroundColor = backgroundColor
         )

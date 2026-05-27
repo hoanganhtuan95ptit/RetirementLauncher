@@ -21,7 +21,6 @@ import com.simple.launcher.retirement.utils.image.ImageRes
 import com.simple.launcher.retirement.utils.image.RichImage
 import com.simple.launcher.retirement.utils.image.emptyImage
 import com.simple.launcher.retirement.utils.size.DP
-import com.simple.launcher.retirement.utils.string.getString
 import com.simple.launcher.retirement.utils.text.Bold
 import com.simple.launcher.retirement.utils.text.ForegroundColor
 import com.simple.launcher.retirement.utils.text.RichText
@@ -33,7 +32,6 @@ import com.simple.launcher.retirement.utils.text.withFirst
 import com.simple.launcher.retirement.utils.text.withStyleBodyLarge
 import com.simple.launcher.retirement.utils.text.withStyleBodyMedium
 import com.simple.launcher.retirement.utils.text.withStyleHeadlineSmall
-import com.simple.launcher.retirement.utils.theme.getColor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -72,13 +70,12 @@ class CleanMemoryViewModel : BaseViewModel() {
     }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
     val toolbar: StateFlow<ToolbarState> = combineState(
-        flow1 = strings,
-        flow2 = themes,
+        flow1 = resources,
         initialValue = ToolbarState.empty()
-    ) { stringMap, themeMap ->
-        val color = themeMap.getColor(android.R.attr.textColorPrimary)
+    ) { resources ->
+        val color = resources.getColor(android.R.attr.textColorPrimary)
         ToolbarState(
-            title = buildToolbarTitle(stringMap.getString(R.string.clean_memory_title), color),
+            title = buildToolbarTitle(resources.getString(R.string.clean_memory_title), color),
             backIcon = buildBackIcon(color)
         )
     }

@@ -5,9 +5,9 @@ import com.simple.launcher.retirement.presentation.base.ActionState
 import com.simple.launcher.retirement.presentation.base.BaseViewModel
 import com.simple.launcher.retirement.presentation.base.buildActionState
 import com.simple.launcher.retirement.utils.combineState
-import com.simple.launcher.retirement.utils.string.getString
 import com.simple.launcher.retirement.utils.text.*
-import com.simple.launcher.retirement.utils.theme.getColor
+import com.simple.launcher.retirement.utils.exts.getString
+import com.simple.launcher.retirement.utils.exts.getColor
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -26,18 +26,17 @@ class BlockViewModel : BaseViewModel() {
     }
 
     val content: StateFlow<BlockContentState> = combineState(
-        flow1 = strings,
-        flow2 = themes,
-        flow3 = _appName,
+        flow1 = resources,
+        flow2 = _appName,
         initialValue = BlockContentState(emptyText(), emptyText())
-    ) { stringMap, themeMap, appName ->
-        val titleColor = themeMap.getColor(android.R.attr.textColorPrimary)
-        val messageColor = themeMap.getColor(android.R.attr.textColorSecondary)
+    ) { resources, appName ->
+        val titleColor = resources.getColor(android.R.attr.textColorPrimary)
+        val messageColor = resources.getColor(android.R.attr.textColorSecondary)
         BlockContentState(
-            title = stringMap.getString(R.string.block_title)
+            title = resources.getString(R.string.block_title)
                 .with(ForegroundColor(titleColor))
                 .build(),
-            message = stringMap.getString(R.string.block_desc)
+            message = resources.getString(R.string.block_desc)
                 .with(ForegroundColor(messageColor))
                 .build(),
             appName = appName
@@ -45,15 +44,15 @@ class BlockViewModel : BaseViewModel() {
     }
 
     val action: StateFlow<ActionState> = combineState(
-        flow1 = strings,
-        flow2 = themes,
+        flow1 = resources,
         initialValue = ActionState.empty()
-    ) { stringMap, themeMap ->
-        val color = themeMap.getColor(android.R.attr.textColorPrimary)
-        val backgroundColor = themeMap.getColor(android.R.attr.colorControlHighlight, android.graphics.Color.LTGRAY)
+    ) { resources ->
+
+        val color = resources.getColor(com.google.android.material.R.attr.colorOnPrimary)
+        val backgroundColor = resources.getColor(android.R.attr.colorPrimary, android.graphics.Color.LTGRAY)
 
         buildActionState(
-            text = stringMap.getString(R.string.block_go_home),
+            text = resources.getString(R.string.block_go_home),
             textColor = color,
             backgroundColor = backgroundColor
         )

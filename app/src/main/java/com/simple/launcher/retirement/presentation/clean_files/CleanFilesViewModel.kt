@@ -22,7 +22,6 @@ import com.simple.launcher.retirement.utils.image.ImageRes
 import com.simple.launcher.retirement.utils.image.RichImage
 import com.simple.launcher.retirement.utils.image.emptyImage
 import com.simple.launcher.retirement.utils.size.DP
-import com.simple.launcher.retirement.utils.string.getString
 import com.simple.launcher.retirement.utils.text.Bold
 import com.simple.launcher.retirement.utils.text.ForegroundColor
 import com.simple.launcher.retirement.utils.text.RichText
@@ -34,7 +33,6 @@ import com.simple.launcher.retirement.utils.text.withFirst
 import com.simple.launcher.retirement.utils.text.withStyleBodyLarge
 import com.simple.launcher.retirement.utils.text.withStyleBodyMedium
 import com.simple.launcher.retirement.utils.text.withStyleHeadlineSmall
-import com.simple.launcher.retirement.utils.theme.getColor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -52,12 +50,12 @@ class CleanFilesViewModel : BaseViewModel() {
 
     val screenState = MutableStateFlow<ClearState>(ClearState.IDLE)
 
-    val toolbar: StateFlow<ToolbarState> = combineState(flow1 = strings, flow2 = themes, initialValue = ToolbarState.empty()) { stringMap, themeMap ->
+    val toolbar: StateFlow<ToolbarState> = combineState(flow1 = resources, initialValue = ToolbarState.empty()) { resources ->
 
-        val color = themeMap.getColor(android.R.attr.textColorPrimary)
+        val color = resources.getColor(android.R.attr.textColorPrimary)
 
         ToolbarState(
-            title = buildToolbarTitle(stringMap.getString(R.string.clean_files_title), color),
+            title = buildToolbarTitle(resources.getString(R.string.clean_files_title), color),
             backIcon = buildBackIcon(color)
         )
     }
@@ -95,31 +93,30 @@ class CleanFilesViewModel : BaseViewModel() {
     }
 
     val ringViewData: StateFlow<RingViewData> = combineState(
-        flow1 = strings,
-        flow2 = themes,
-        flow3 = screenState,
-        flow4 = strangeFileCount,
+        flow1 = resources,
+        flow2 = screenState,
+        flow3 = strangeFileCount,
         initialValue = RingViewData(showIcon = true)
-    ) { stringMap, themeMap, state, count ->
+    ) { resources, state, count ->
 
-        val primaryColor = themeMap.getColor(android.R.attr.textColorPrimary)
-        val secondaryColor = themeMap.getColor(android.R.attr.textColorSecondary)
+        val primaryColor = resources.getColor(android.R.attr.textColorPrimary)
+        val secondaryColor = resources.getColor(android.R.attr.textColorSecondary)
 
         val resultStr by lazy {
             state.asObjectOrNull<ClearState.Done>()?.totalFiles.orZero().toString()
         }
 
         if (state is ClearState.IDLE && count > 0) RingViewData(
-            text = (count.toString() + "\n" + stringMap.getString(R.string.clean_files_count_unit))
+            text = (count.toString() + "\n" + resources.getString(R.string.clean_files_count_unit))
                 .withStyleBodyLarge()
                 .with(ForegroundColor(secondaryColor))
                 .withFirst(count.toString(), ForegroundColor(primaryColor), TextSize(26), Bold)
                 .build()
         ) else if (state is ClearState.IDLE || state is ClearState.Scanning) RingViewData(
             showIcon = true,
-            icon = ImageRes(R.drawable.ic_clear_files_black_24dp, themeMap.getColor(android.R.attr.colorPrimary)),
+            icon = ImageRes(R.drawable.ic_clear_files_black_24dp, resources.getColor(android.R.attr.colorPrimary)),
         ) else RingViewData(
-            text = (resultStr + "\n" + stringMap.getString(R.string.clean_result_files_deleted))
+            text = (resultStr + "\n" + resources.getString(R.string.clean_result_files_deleted))
                 .withStyleBodyLarge()
                 .with(ForegroundColor(secondaryColor))
                 .withFirst(resultStr, ForegroundColor(primaryColor), TextSize(26), Bold)
@@ -127,22 +124,22 @@ class CleanFilesViewModel : BaseViewModel() {
         )
     }
 
-    val statusText: StateFlow<RichText> = combineState(flow1 = strings, flow2 = themes, flow3 = screenState, flow4 = strangeFileCount, initialValue = emptyText()) { stringMap, themeMap, state, count ->
+    val statusText: StateFlow<RichText> = combineState(flow1 = resources, flow2 = screenState, flow3 = strangeFileCount, initialValue = emptyText()) { resources, state, count ->
 
-        val color = themeMap.getColor(android.R.attr.textColorSecondary)
+        val color = resources.getColor(android.R.attr.textColorSecondary)
 
         val text = if (state is ClearState.IDLE) if (count > 0) {
 
-            stringMap.getString(R.string.clean_files_idle_desc).replace("\$number_file", "$count")
+            resources.getString(R.string.clean_files_idle_desc).replace("\$number_file", "$count")
         } else {
 
-            stringMap.getString(R.string.clean_files_desc)
+            resources.getString(R.string.clean_files_desc)
         } else if (state is ClearState.Scanning) {
 
-            stringMap.getString(R.string.clean_files_running)
+            resources.getString(R.string.clean_files_running)
         } else {
 
-            stringMap.getString(R.string.clean_files_completed)
+            resources.getString(R.string.clean_files_completed)
         }
 
         text
@@ -150,13 +147,13 @@ class CleanFilesViewModel : BaseViewModel() {
             .build()
     }
 
-    val categoryViewDataList: StateFlow<List<CategoryViewData>> = combineState(flow1 = strings, flow2 = themes, flow3 = screenState, initialValue = emptyList()) { stringMap, themeMap, state ->
+    val categoryViewDataList: StateFlow<List<CategoryViewData>> = combineState(flow1 = resources, flow2 = screenState, initialValue = emptyList()) { resources, state ->
 
         CATEGORY_META.map {
 
             val numberFile = if (state is ClearState.Run && state.categoryMap[it.id] != null) {
 
-                stringMap.getString(R.string.clean_cat_file_count).replace("\$number_file", "${state.categoryMap[it.id] ?: 0}")
+                resources.getString(R.string.clean_cat_file_count).replace("\$number_file", "${state.categoryMap[it.id] ?: 0}")
             } else {
 
                 ""
@@ -176,13 +173,13 @@ class CleanFilesViewModel : BaseViewModel() {
                     .backgroundColor(it.color.withAlpha(0.2f))
                     .cornerRadius(DP.DP_8)
                     .build(),
-                label = stringMap.getString(it.labelRes)
+                label = resources.getString(it.labelRes)
                     .withStyleBodyLarge()
-                    .with(ForegroundColor(themeMap.getColor(com.google.android.material.R.attr.colorOnSurface)))
+                    .with(ForegroundColor(resources.getColor(com.google.android.material.R.attr.colorOnSurface)))
                     .build(),
                 numberFile = numberFile
                     .withStyleBodyMedium()
-                    .with(ForegroundColor(themeMap.getColor(com.google.android.material.R.attr.colorOnSurface)))
+                    .with(ForegroundColor(resources.getColor(com.google.android.material.R.attr.colorOnSurface)))
                     .build(),
                 showSelected = showSelected
             )

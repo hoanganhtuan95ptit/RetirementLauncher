@@ -6,7 +6,16 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+
+fun <T1, R> ViewModel.combineState(
+    flow1: Flow<T1>,
+    initialValue: R,
+    transform: suspend (T1) -> R
+): StateFlow<R> = flow1.map {
+    transform.invoke(it)
+}.stateIn(viewModelScope, SharingStarted.Eagerly, initialValue)
 
 fun <T1, T2, R> ViewModel.combineState(
     flow1: Flow<T1>,

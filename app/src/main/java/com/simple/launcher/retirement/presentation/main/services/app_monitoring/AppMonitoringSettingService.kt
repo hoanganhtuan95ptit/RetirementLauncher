@@ -18,11 +18,11 @@ import com.simple.launcher.retirement.utils.image.ImageRes
 import com.simple.launcher.retirement.utils.permission.PermissionManager
 import com.simple.launcher.retirement.utils.services.FragmentCreatedService
 import com.simple.launcher.retirement.utils.services.launchCollect
-import com.simple.launcher.retirement.utils.string.getString
 import com.simple.launcher.retirement.utils.text.ForegroundColor
 import com.simple.launcher.retirement.utils.text.build
 import com.simple.launcher.retirement.utils.text.with
-import com.simple.launcher.retirement.utils.theme.getColor
+import com.simple.launcher.retirement.utils.exts.getString
+import com.simple.launcher.retirement.utils.exts.getColor
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterIsInstance
@@ -36,14 +36,14 @@ class AppMonitoringSettingViewModel : BaseViewModel() {
 
     val isAppBlockEnabledFlow = repository.isAppBlockEnabledFlow()
 
-    val items: StateFlow<List<ViewItem>> = combineState(flow1 = strings, flow2 = themes, flow3 = refreshTrigger, flow4 = isAppBlockEnabledFlow, initialValue = emptyList()) { stringMap, themeMap, _, isEnabled ->
+    val items: StateFlow<List<ViewItem>> = combineState(flow1 = resources, flow2 = refreshTrigger, flow3 = isAppBlockEnabledFlow, initialValue = emptyList()) { resources, _, isEnabled ->
 
-        val textColor = themeMap.getColor(android.R.attr.textColorPrimary)
+        val textColor = resources.getColor(android.R.attr.textColorPrimary)
 
         SettingItem(
             id = SettingItem.ID_TOGGLE_BLOCK,
             icon = ImageRes(android.R.drawable.ic_lock_lock),
-            title = stringMap.getString(R.string.setting_app_monitoring).with(ForegroundColor(textColor)).build(),
+            title = resources.getString(R.string.setting_app_monitoring).with(ForegroundColor(textColor)).build(),
             isSwitch = true,
             isChecked = isEnabled
         ).let {

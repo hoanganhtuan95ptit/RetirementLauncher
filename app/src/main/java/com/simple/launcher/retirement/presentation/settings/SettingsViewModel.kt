@@ -12,14 +12,14 @@ import com.simple.launcher.retirement.presentation.base.buildBackIcon
 import com.simple.launcher.retirement.presentation.base.buildToolbarTitle
 import com.simple.launcher.retirement.utils.combineState
 import com.simple.launcher.retirement.utils.image.ImageRes
-import com.simple.launcher.retirement.utils.string.getString
 import com.simple.launcher.retirement.utils.text.Bold
 import com.simple.launcher.retirement.utils.text.ForegroundColor
 import com.simple.launcher.retirement.utils.text.build
 import com.simple.launcher.retirement.utils.text.with
 import com.simple.launcher.retirement.utils.text.withStyleBodyLarge
 import com.simple.launcher.retirement.utils.text.withStyleTitleLarge
-import com.simple.launcher.retirement.utils.theme.getColor
+import com.simple.launcher.retirement.utils.exts.getString
+import com.simple.launcher.retirement.utils.exts.getColor
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -29,11 +29,11 @@ class SettingsViewModel : BaseViewModel() {
 
     // ── Toolbar ──────────────────────────────────────────────────────────────
 
-    val toolbar: StateFlow<ToolbarState> = combineState(flow1 = strings, flow2 = themes, initialValue = ToolbarState.empty()) { stringMap, themeMap ->
+    val toolbar: StateFlow<ToolbarState> = combineState(flow1 = resources, initialValue = ToolbarState.empty()) { resources ->
 
-        val color = themeMap.getColor(android.R.attr.textColorPrimary)
+        val color = resources.getColor(android.R.attr.textColorPrimary)
         ToolbarState(
-            title = buildToolbarTitle(stringMap.getString(R.string.settings_title), color),
+            title = buildToolbarTitle(resources.getString(R.string.settings_title), color),
             backIcon = buildBackIcon(color)
         )
     }
@@ -44,21 +44,20 @@ class SettingsViewModel : BaseViewModel() {
     private val _itemMap = MutableStateFlow<Map<Double, List<ViewItem>>>(emptyMap())
 
     val items: StateFlow<List<ViewItem>> = combineState(
-        flow1 = strings,
-        flow2 = themes,
-        flow3 = repository.hasPinFlow(),
-        flow4 = _itemMap,
+        flow1 = resources,
+        flow2 = repository.hasPinFlow(),
+        flow3 = _itemMap,
         initialValue = emptyList()
-    ) { stringMap, themeMap, hasPin, itemMap ->
+    ) { resources, hasPin, itemMap ->
 
-        val textColor = themeMap.getColor(android.R.attr.textColorPrimary)
+        val textColor = resources.getColor(android.R.attr.textColorPrimary)
 
-        fun Int.toSettingHeader() = stringMap.getString(this)
+        fun Int.toSettingHeader() = resources.getString(this)
             .withStyleTitleLarge()
             .with(ForegroundColor(textColor), Bold)
             .build()
 
-        fun Int.toSettingRichText() = stringMap.getString(this)
+        fun Int.toSettingRichText() = resources.getString(this)
             .withStyleBodyLarge()
             .with(ForegroundColor(textColor))
             .build()

@@ -21,7 +21,6 @@ import com.simple.launcher.retirement.utils.image.ImageDrawable
 import com.simple.launcher.retirement.utils.image.ImagePath
 import com.simple.launcher.retirement.utils.image.ImageRes
 import com.simple.launcher.retirement.utils.size.DP
-import com.simple.launcher.retirement.utils.string.getString
 import com.simple.launcher.retirement.utils.text.Bold
 import com.simple.launcher.retirement.utils.text.ForegroundColor
 import com.simple.launcher.retirement.utils.text.RichText
@@ -30,7 +29,8 @@ import com.simple.launcher.retirement.utils.text.with
 import com.simple.launcher.retirement.utils.text.withStyleBodyLarge
 import com.simple.launcher.retirement.utils.text.withStyleHeadlineMedium
 import com.simple.launcher.retirement.utils.text.withStyleTitleLarge
-import com.simple.launcher.retirement.utils.theme.getColor
+import com.simple.launcher.retirement.utils.exts.getString
+import com.simple.launcher.retirement.utils.exts.getColor
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -38,24 +38,24 @@ class HomeViewModel : BaseViewModel() {
 
     val countStrangeFiles = FileRepository.instance.countStrangeFilesFlow()
 
-    val cleanFilesViewItemList: StateFlow<Pair<Double, List<ViewItem>>> = combineState(flow1 = strings, flow2 = themes, flow3 = countStrangeFiles, initialValue = 1.0 to emptyList()) { strings, themeMap, fileCount ->
+    val cleanFilesViewItemList: StateFlow<Pair<Double, List<ViewItem>>> = combineState(flow1 = resources, flow2 = countStrangeFiles, initialValue = 1.0 to emptyList()) { resources, fileCount ->
 
         val hasStrangeFiles = fileCount > 0
 
         val textColor = if (hasStrangeFiles) {
-            themeMap.getColor(R.attr.colorCleanFilesStatCardOnBgActive)
+            resources.getColor(R.attr.colorCleanFilesStatCardOnBgActive)
         } else {
-            themeMap.getColor(R.attr.colorCleanFilesStatCardOnBgIdle)
+            resources.getColor(R.attr.colorCleanFilesStatCardOnBgIdle)
         }
 
         val backgroundColor = if (hasStrangeFiles) {
-            themeMap.getColor(R.attr.colorCleanFilesStatCardBgActive)
+            resources.getColor(R.attr.colorCleanFilesStatCardBgActive)
         } else {
-            themeMap.getColor(R.attr.colorCleanFilesStatCardBgIdle)
+            resources.getColor(R.attr.colorCleanFilesStatCardBgIdle)
         }
 
         1.0 to CleanFilesHomeItem(
-            label = strings.getString(R.string.clean_files_title)
+            label = resources.getString(R.string.clean_files_title)
                 .withStyleBodyLarge()
                 .with(ForegroundColor(textColor))
                 .build(),
@@ -77,25 +77,25 @@ class HomeViewModel : BaseViewModel() {
 
     val estimateCleanableMemory = MemoryRepository.instance.estimateCleanableMemoryMBFlow()
 
-    val cleanMemoryViewItemList: StateFlow<Pair<Double, List<ViewItem>>> = combineState(flow1 = strings, flow2 = themes, flow3 = estimateCleanableMemory, initialValue = 2.0 to emptyList()) { strings, themeMap, memoryMB ->
+    val cleanMemoryViewItemList: StateFlow<Pair<Double, List<ViewItem>>> = combineState(flow1 = resources, flow2 = estimateCleanableMemory, initialValue = 2.0 to emptyList()) { resources, memoryMB ->
 
         val memoryLabel = "$memoryMB MB"
         val canCleanMemory = memoryMB > 0
 
         val textColor = if (canCleanMemory) {
-            themeMap.getColor(R.attr.colorCleanMemoryStatCardOnBgActive)
+            resources.getColor(R.attr.colorCleanMemoryStatCardOnBgActive)
         } else {
-            themeMap.getColor(R.attr.colorCleanMemoryStatCardOnBgIdle)
+            resources.getColor(R.attr.colorCleanMemoryStatCardOnBgIdle)
         }
 
         val backgroundColor = if (canCleanMemory) {
-            themeMap.getColor(R.attr.colorCleanMemoryStatCardBgActive)
+            resources.getColor(R.attr.colorCleanMemoryStatCardBgActive)
         } else {
-            themeMap.getColor(R.attr.colorCleanMemoryStatCardBgIdle)
+            resources.getColor(R.attr.colorCleanMemoryStatCardBgIdle)
         }
 
         2.0 to CleanMemoryHomeItem(
-            label = strings.getString(R.string.clean_memory_title)
+            label = resources.getString(R.string.clean_memory_title)
                 .withStyleBodyLarge()
                 .with(ForegroundColor(textColor))
                 .build(),
@@ -116,7 +116,7 @@ class HomeViewModel : BaseViewModel() {
 
     val appAndContacts = GetHomeAppsUseCase.instance.asFlow()
 
-    val appsAndContactsViewItemList: StateFlow<Pair<Double, List<ViewItem>>> = combineState(flow1 = strings, flow2 = themes, flow3 = appAndContacts, initialValue = 3.0 to emptyList()) { strings, themeMap, entities ->
+    val appsAndContactsViewItemList: StateFlow<Pair<Double, List<ViewItem>>> = combineState(flow1 = resources, flow2 = appAndContacts, initialValue = 3.0 to emptyList()) { resources, entities ->
 
         val list = arrayListOf<ViewItem>()
 
@@ -124,7 +124,7 @@ class HomeViewModel : BaseViewModel() {
         val apps = entities.filterIsInstance<HomeContentEntity.App>()
 
         if (apps.isNotEmpty()) HeaderHomeItem(
-            title = strings.getString(R.string.home_header_apps)
+            title = resources.getString(R.string.home_header_apps)
                 .withStyleTitleLarge()
                 .with(ForegroundColor(Color.WHITE))
                 .build()
@@ -143,7 +143,7 @@ class HomeViewModel : BaseViewModel() {
         val contacts = entities.filterIsInstance<HomeContentEntity.Contact>()
 
         if (contacts.isNotEmpty()) HeaderHomeItem(
-            title = strings.getString(R.string.home_header_contacts)
+            title = resources.getString(R.string.home_header_contacts)
                 .withStyleTitleLarge()
                 .with(ForegroundColor(Color.WHITE))
                 .build()
@@ -151,8 +151,8 @@ class HomeViewModel : BaseViewModel() {
             list.add(it)
         }
 
-        val textColor = themeMap.getColor(android.R.attr.textColorPrimary)
-        val tapToCallLabel = strings.getString(R.string.contact_tap_to_call)
+        val textColor = resources.getColor(android.R.attr.textColorPrimary)
+        val tapToCallLabel = resources.getString(R.string.contact_tap_to_call)
 
         contacts.map {
 

@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.simple.adapter.ViewItem
 import com.simple.launcher.retirement.R
-import com.simple.launcher.retirement.domain.model.AppEntity
 import com.simple.launcher.retirement.domain.model.ContactEntity
 import com.simple.launcher.retirement.domain.repository.AppRepository
 import com.simple.launcher.retirement.domain.repository.ContactRepository
@@ -16,13 +15,17 @@ import com.simple.launcher.retirement.presentation.base.buildActionState
 import com.simple.launcher.retirement.presentation.base.buildBackIcon
 import com.simple.launcher.retirement.presentation.base.buildToolbarTitle
 import com.simple.launcher.retirement.utils.combineState
+import com.simple.launcher.retirement.utils.exts.getColor
+import com.simple.launcher.retirement.utils.exts.getString
 import com.simple.launcher.retirement.utils.image.ImageDrawable
 import com.simple.launcher.retirement.utils.image.ImagePath
 import com.simple.launcher.retirement.utils.image.ImageRes
 import com.simple.launcher.retirement.utils.image.RichImage
-import com.simple.launcher.retirement.utils.string.getString
+import com.simple.launcher.retirement.utils.text.ForegroundColor
 import com.simple.launcher.retirement.utils.text.RichText
-import com.simple.launcher.retirement.utils.theme.getColor
+import com.simple.launcher.retirement.utils.text.build
+import com.simple.launcher.retirement.utils.text.with
+import com.simple.launcher.retirement.utils.text.withStyleBodyLarge
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -36,28 +39,27 @@ class ReorderViewModel(
 ) : BaseViewModel() {
 
     val toolbar: StateFlow<ToolbarState> = combineState(
-        flow1 = strings,
-        flow2 = themes,
+        flow1 = resources,
         initialValue = ToolbarState.empty()
-    ) { stringMap, themeMap ->
-        val color = themeMap.getColor(android.R.attr.textColorPrimary)
+    ) { resources ->
+        val color = resources.getColor(android.R.attr.textColorPrimary)
         val titleRes = if (type == ReorderType.APPS) R.string.reorder_apps_title else R.string.reorder_contacts_title
         ToolbarState(
-            title = buildToolbarTitle(stringMap.getString(titleRes), color),
+            title = buildToolbarTitle(resources.getString(titleRes), color),
             backIcon = buildBackIcon(color)
         )
     }
 
     val doneAction: StateFlow<ActionState> = combineState(
-        flow1 = strings,
-        flow2 = themes,
+        flow1 = resources,
         initialValue = ActionState.empty()
-    ) { stringMap, themeMap ->
-        val color = themeMap.getColor(android.R.attr.textColorPrimary)
-        val backgroundColor = themeMap.getColor(android.R.attr.colorControlHighlight, android.graphics.Color.LTGRAY)
+    ) { resources ->
+
+        val color = resources.getColor(com.google.android.material.R.attr.colorOnPrimary)
+        val backgroundColor = resources.getColor(android.R.attr.colorPrimary, android.graphics.Color.LTGRAY)
 
         buildActionState(
-            text = stringMap.getString(R.string.done),
+            text = resources.getString(R.string.done),
             textColor = color,
             backgroundColor = backgroundColor
         )
@@ -73,7 +75,10 @@ class ReorderViewModel(
             _items.value = selectedApps.map { app ->
                 ReorderItem(
                     id = app.packageName,
-                    label = RichText(app.label),
+                    label = app.label
+                        .withStyleBodyLarge()
+                        .with(ForegroundColor(resources.value.getColor(com.google.android.material.R.attr.colorOnSurface)))
+                        .build(),
                     icon = ImageDrawable(app.icon)
                 )
             }
@@ -89,7 +94,10 @@ class ReorderViewModel(
                 }
                 ReorderItem(
                     id = contact.id,
-                    label = RichText(contact.name),
+                    label = contact.name
+                        .withStyleBodyLarge()
+                        .with(ForegroundColor(resources.value.getColor(com.google.android.material.R.attr.colorOnSurface)))
+                        .build(),
                     icon = photo,
                     data = contact
                 )

@@ -3,9 +3,9 @@ package com.simple.launcher.retirement.presentation.pin_setup
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.presentation.base.BaseViewModel
 import com.simple.launcher.retirement.utils.combineState
-import com.simple.launcher.retirement.utils.string.getString
 import com.simple.launcher.retirement.utils.text.*
-import com.simple.launcher.retirement.utils.theme.getColor
+import com.simple.launcher.retirement.utils.exts.getString
+import com.simple.launcher.retirement.utils.exts.getColor
 import kotlinx.coroutines.flow.StateFlow
 
 data class PinVerifyContent(
@@ -16,17 +16,16 @@ data class PinVerifyContent(
 class PinVerifyViewModel : BaseViewModel() {
 
     val content: StateFlow<PinVerifyContent> = combineState(
-        flow1 = strings,
-        flow2 = themes,
+        flow1 = resources,
         initialValue = PinVerifyContent(emptyText(), emptyText())
-    ) { stringMap, themeMap ->
-        val titleColor = themeMap.getColor(android.R.attr.textColorPrimary)
-        val descColor = themeMap.getColor(android.R.attr.textColorSecondary)
+    ) { resources ->
+        val titleColor = resources.getColor(android.R.attr.textColorPrimary)
+        val descColor = resources.getColor(android.R.attr.textColorSecondary)
         PinVerifyContent(
-            title = stringMap.getString(R.string.pin_verify_title)
+            title = resources.getString(R.string.pin_verify_title)
                 .with(ForegroundColor(titleColor))
                 .build(),
-            desc = stringMap.getString(R.string.pin_verify_desc)
+            desc = resources.getString(R.string.pin_verify_desc)
                 .with(ForegroundColor(descColor))
                 .build()
         )
