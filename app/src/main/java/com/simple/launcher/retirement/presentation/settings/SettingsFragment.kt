@@ -127,14 +127,11 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
 
 @Deeplink
 class SettingsDeeplinkHandler : DeeplinkHandler {
+
     override val deeplink: String = DeepLinks.SETTINGS
 
-    override suspend fun navigate(
-        fragmentActivity: FragmentActivity,
-        deeplink: String,
-        extras: Map<String, Any?>?,
-        sharedElement: Map<String, View>?
-    ): Boolean {
+    override suspend fun navigate(fragmentActivity: FragmentActivity, deeplink: String, extras: Map<String, Any?>?, sharedElement: Map<String, View>?): Boolean {
+
         val transaction = fragmentActivity.supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, SettingsFragment())
         
