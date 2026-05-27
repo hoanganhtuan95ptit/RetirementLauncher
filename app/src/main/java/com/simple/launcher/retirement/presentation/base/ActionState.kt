@@ -2,16 +2,29 @@ package com.simple.launcher.retirement.presentation.base
 
 import android.graphics.Color
 import com.simple.launcher.retirement.utils.background.Background
+import com.simple.launcher.retirement.utils.background.emptyBackground
+import com.simple.launcher.retirement.utils.image.RichImage
+import com.simple.launcher.retirement.utils.image.emptyImage
 import com.simple.launcher.retirement.utils.size.DP
-import com.simple.launcher.retirement.utils.text.*
+import com.simple.launcher.retirement.utils.text.Bold
+import com.simple.launcher.retirement.utils.text.ForegroundColor
+import com.simple.launcher.retirement.utils.text.RichText
+import com.simple.launcher.retirement.utils.text.TextSize
+import com.simple.launcher.retirement.utils.text.build
+import com.simple.launcher.retirement.utils.text.emptyText
+import com.simple.launcher.retirement.utils.text.with
 
 /**
  * Trạng thái cho action button (ví dụ: nút Lưu, nút Dọn dẹp).
  * Bao gồm nội dung text (RichText) và background (Background utility).
  */
 data class ActionState(
-    val text: RichText,
-    val background: Background? = null
+    val text: RichText = emptyText(),
+
+    val image: RichImage = emptyImage(),
+    val imageShow: Boolean = false,
+
+    val background: Background? = emptyBackground()
 ) {
     companion object {
         fun empty() = ActionState(text = emptyText())

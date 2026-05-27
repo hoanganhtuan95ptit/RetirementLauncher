@@ -2,14 +2,19 @@
 
 package com.simple.launcher.retirement.utils.exts
 
+import android.util.Log
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import com.simple.launcher.retirement.utils.string.StringResStore
 import com.simple.launcher.retirement.utils.theme.ThemeColorStore
 
-fun <T> Any.asObject() = this as? T
+inline fun <reified T> Any?.asObject(): T {
+    return this as T
+}
 
-fun <T> Any.asObjectOrNull() = this as? T
+inline fun <reified T> Any?.asObjectOrNull(): T? {
+    return this as? T
+}
 
 
 fun Int?.orZero() = this ?: 0

@@ -33,6 +33,7 @@ import com.simple.launcher.retirement.utils.text.with
 import com.simple.launcher.retirement.utils.text.withFirst
 import com.simple.launcher.retirement.utils.text.withStyleBodyLarge
 import com.simple.launcher.retirement.utils.text.withStyleBodyMedium
+import com.simple.launcher.retirement.utils.text.withStyleHeadlineSmall
 import com.simple.launcher.retirement.utils.theme.getColor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -61,26 +62,31 @@ class CleanFilesViewModel : BaseViewModel() {
         )
     }
 
-    val action: StateFlow<ActionState> = combineState(flow1 = strings, flow2 = themes, flow3 = screenState, initialValue = ActionState.empty()) { stringMap, themeMap, screenState ->
+    val action: StateFlow<ActionState> = combineState(flow1 = resources, flow2 = screenState, initialValue = ActionState.empty()) { resourceMap, screenState ->
 
-        val text = when {
-            screenState is ClearState.IDLE -> R.string.clean_files_start
-            screenState is ClearState.Scanning -> R.string.clean_files_running
-            else -> R.string.clean_files_retry
-        }.let {
-
-            stringMap.getString(it)
+        val labels = when {
+            screenState is ClearState.IDLE -> resourceMap.getString(R.string.clean_files_start)
+            screenState is ClearState.Scanning -> resourceMap.getString(R.string.clean_files_running)
+            else -> resourceMap.getString(R.string.clean_files_retry)
         }
 
-        val textColor = themeMap.getColor(com.google.android.material.R.attr.colorOnPrimary, Color.LTGRAY)
+        val backgroundColor = when {
+            screenState is ClearState.IDLE -> resourceMap.getColor(android.R.attr.colorPrimary)
+            screenState is ClearState.Scanning -> resourceMap.getColor(android.R.attr.colorPrimary).withAlpha(0.2f)
+            else -> resourceMap.getColor(android.R.attr.colorPrimary)
+        }
 
-        val backgroundColor = themeMap.getColor(android.R.attr.colorPrimary, Color.LTGRAY)
+        val textColor = resourceMap.getColor(com.google.android.material.R.attr.colorOnPrimary, Color.LTGRAY)
 
         ActionState(
-            text = text
-                .withStyleBodyLarge()
+            text = labels
+                .withStyleHeadlineSmall()
                 .with(ForegroundColor(textColor), Bold)
                 .build(),
+
+            image = ImageRes(data = R.drawable.ic_clear_files_black_24dp, colorFilter = resourceMap.getColor(com.google.android.material.R.attr.colorOnPrimary)),
+            imageShow = true,
+
             background = Background.Builder()
                 .backgroundColor(backgroundColor)
                 .cornerRadius(DP.DP_24)
@@ -111,7 +117,7 @@ class CleanFilesViewModel : BaseViewModel() {
                 .build()
         ) else if (state is ClearState.IDLE || state is ClearState.Scanning) RingViewData(
             showIcon = true,
-            icon = ImageRes(R.drawable.ic_clear_black_24dp, themeMap.getColor(android.R.attr.colorPrimary)),
+            icon = ImageRes(R.drawable.ic_clear_files_black_24dp, themeMap.getColor(android.R.attr.colorPrimary)),
         ) else RingViewData(
             text = (resultStr + "\n" + stringMap.getString(R.string.clean_result_files_deleted))
                 .withStyleBodyLarge()
@@ -212,7 +218,7 @@ class CleanFilesViewModel : BaseViewModel() {
                 .cornerRadius(DP.DP_24)
                 .build(),
 
-            resultSpaceImage = ImageRes(R.drawable.ic_clear_black_24dp, "#FF4343".toColorInt()),
+            resultSpaceImage = ImageRes(R.drawable.ic_clear_files_black_24dp, "#FF4343".toColorInt()),
             resultSpaceLabel = "${spaceLabel}\n${resources.getString(R.string.clean_result_space_freed)}"
                 .withStyleBodyMedium()
                 .with(ForegroundColor(resources.getColor(com.google.android.material.R.attr.colorOnSurface)))

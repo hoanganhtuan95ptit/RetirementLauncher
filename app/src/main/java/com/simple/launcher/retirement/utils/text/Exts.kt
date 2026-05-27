@@ -2,12 +2,18 @@ package com.simple.launcher.retirement.utils.text
 
 import android.widget.TextView
 
-fun emptyText() = RichText("")
-
 fun TextView.setText(text: RichText?) {
 
     setText(text?.textChar)
 }
+
+
+private val EMPTY by lazy {
+    RichText("")
+}
+
+fun emptyText() = EMPTY
+
 
 fun String.toBuilder(): RichTextBuilder {
 

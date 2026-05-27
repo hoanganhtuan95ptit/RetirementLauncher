@@ -19,6 +19,7 @@ import com.simple.launcher.retirement.presentation.DeepLinks
 import com.simple.launcher.retirement.presentation.base.BaseFragment
 import com.simple.launcher.retirement.presentation.clean_files.ScannerRingView.RingState
 import com.simple.launcher.retirement.utils.background.setBackground
+import com.simple.launcher.retirement.utils.exts.asObjectOrNull
 import com.simple.launcher.retirement.utils.image.setImage
 import com.simple.launcher.retirement.utils.lifecycle.observe
 import com.simple.launcher.retirement.utils.size.DP
@@ -42,6 +43,7 @@ class CleanFilesFragment : BaseFragment<FragmentCleanFilesBinding>() {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
+        binding.btnClean.ivAction.isVisible = true
         binding.btnClean.tvAction.updatePadding(top = DP.DP_24, bottom = DP.DP_24)
         binding.btnClean.root.setOnSafeClickListener {
 
@@ -72,7 +74,8 @@ class CleanFilesFragment : BaseFragment<FragmentCleanFilesBinding>() {
         action.observe(this@CleanFilesFragment) { state ->
 
             binding.btnClean.tvAction.setText(state.text)
-            binding.btnClean.tvAction.setBackground(state.background)
+            binding.btnClean.ivAction.setImage(state.image)
+            binding.btnClean.tvAction.parent.asObjectOrNull<View>()?.setBackground(state.background)
         }
 
         screenState.observe(this@CleanFilesFragment) {

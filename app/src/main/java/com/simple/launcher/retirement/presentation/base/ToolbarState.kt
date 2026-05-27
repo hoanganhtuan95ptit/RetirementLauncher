@@ -4,7 +4,13 @@ import android.graphics.Typeface
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.utils.image.ImageRes
 import com.simple.launcher.retirement.utils.image.RichImage
-import com.simple.launcher.retirement.utils.text.*
+import com.simple.launcher.retirement.utils.text.CustomFont
+import com.simple.launcher.retirement.utils.text.ForegroundColor
+import com.simple.launcher.retirement.utils.text.RichText
+import com.simple.launcher.retirement.utils.text.TextSize
+import com.simple.launcher.retirement.utils.text.build
+import com.simple.launcher.retirement.utils.text.emptyText
+import com.simple.launcher.retirement.utils.text.with
 
 /**
  * Trạng thái toolbar được expose từ ViewModel.
@@ -14,7 +20,7 @@ import com.simple.launcher.retirement.utils.text.*
  * @param backIcon Icon nút back với màu từ theme (null = ẩn nút back).
  */
 data class ToolbarState(
-    val title: RichText,
+    val title: RichText = emptyText(),
     val backIcon: RichImage? = null
 ) {
     companion object {

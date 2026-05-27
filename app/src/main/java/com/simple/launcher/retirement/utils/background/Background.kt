@@ -9,6 +9,12 @@ fun View.setBackground(background: Background?) {
     this.background = background?.drawable
 }
 
+private val EMPTY by lazy {
+    Background()
+}
+
+fun emptyBackground() = EMPTY
+
 data class Background(
     var backgroundColor: Int = Color.TRANSPARENT,
 

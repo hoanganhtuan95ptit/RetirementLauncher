@@ -8,42 +8,68 @@ import com.simple.launcher.retirement.domain.repository.MemoryRepository
 import com.simple.launcher.retirement.presentation.base.ActionState
 import com.simple.launcher.retirement.presentation.base.BaseViewModel
 import com.simple.launcher.retirement.presentation.base.ToolbarState
-import com.simple.launcher.retirement.presentation.base.buildActionState
 import com.simple.launcher.retirement.presentation.base.buildBackIcon
 import com.simple.launcher.retirement.presentation.base.buildToolbarTitle
+import com.simple.launcher.retirement.utils.background.Background
+import com.simple.launcher.retirement.utils.background.emptyBackground
 import com.simple.launcher.retirement.utils.combineState
-import com.simple.launcher.retirement.utils.string.asStringRes
+import com.simple.launcher.retirement.utils.exts.asObjectOrNull
+import com.simple.launcher.retirement.utils.exts.getColor
+import com.simple.launcher.retirement.utils.exts.getString
+import com.simple.launcher.retirement.utils.exts.withAlpha
+import com.simple.launcher.retirement.utils.image.ImageRes
+import com.simple.launcher.retirement.utils.image.RichImage
+import com.simple.launcher.retirement.utils.image.emptyImage
+import com.simple.launcher.retirement.utils.size.DP
 import com.simple.launcher.retirement.utils.string.getString
+import com.simple.launcher.retirement.utils.text.Bold
+import com.simple.launcher.retirement.utils.text.ForegroundColor
 import com.simple.launcher.retirement.utils.text.RichText
+import com.simple.launcher.retirement.utils.text.TextSize
+import com.simple.launcher.retirement.utils.text.build
+import com.simple.launcher.retirement.utils.text.emptyText
+import com.simple.launcher.retirement.utils.text.with
+import com.simple.launcher.retirement.utils.text.withFirst
+import com.simple.launcher.retirement.utils.text.withStyleBodyLarge
+import com.simple.launcher.retirement.utils.text.withStyleBodyMedium
+import com.simple.launcher.retirement.utils.text.withStyleHeadlineSmall
 import com.simple.launcher.retirement.utils.theme.getColor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-enum class BoostState { IDLE, BOOSTING, DONE }
-
-/** Bọc RamInfo kèm flag animate để Fragment quyết định animation gauge. */
-data class RamUpdate(val info: RamInfo, val animate: Boolean)
-
-data class CleanMemoryLabels(
-    val gaugeLabel: String = "",
-    val statUsedLabel: String = "",
-    val statFreeLabel: String = "",
-    val statTotalLabel: String = "",
-    val resultSubLabel: String = "",
-    val statusDesc: String = ""
-)
-
 class CleanMemoryViewModel : BaseViewModel() {
 
-    private val repository = MemoryRepository.instance
+    var ramWhenStart: RamInfo? = null
 
-    // ── Toolbar ──────────────────────────────────────────────────────────────
+    val boostState = MutableStateFlow<BoostState>(BoostState.IDLE)
+
+    val ramInfo: StateFlow<RamInfo?> = boostState.filter {
+
+        it !is BoostState.BOOSTING
+    }.map {
+
+        var ram = MemoryRepository.instance.getRamInfo()
+
+        if (it is BoostState.IDLE) {
+            ramWhenStart = ram
+        }
+
+        val pre = ramWhenStart
+        if (pre != null && pre.freeMB > ram.freeMB) {
+            ram = ram.copy(usedMB = pre.usedMB, freeMB = pre.freeMB)
+        }
+
+        ram
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
     val toolbar: StateFlow<ToolbarState> = combineState(
         flow1 = strings,
@@ -57,113 +83,209 @@ class CleanMemoryViewModel : BaseViewModel() {
         )
     }
 
-    // ── Static labels ─────────────────────────────────────────────────────────
+    val action: StateFlow<ActionState> = combineState(flow1 = resources, flow2 = boostState, initialValue = ActionState.empty()) { resourceMap, state ->
 
-    val labels: StateFlow<CleanMemoryLabels> = combineState(
-        flow1 = strings,
-        flow2 = themes,
-        initialValue = CleanMemoryLabels()
-    ) { stringMap, _ ->
-        CleanMemoryLabels(
-            gaugeLabel = stringMap.getString(R.string.clean_memory_ram_label),
-            statUsedLabel = stringMap.getString(R.string.clean_memory_stat_used),
-            statFreeLabel = stringMap.getString(R.string.clean_memory_stat_free),
-            statTotalLabel = stringMap.getString(R.string.clean_memory_stat_total),
-            resultSubLabel = stringMap.getString(R.string.clean_memory_result_sub),
-            statusDesc = stringMap.getString(R.string.clean_memory_desc)
+        val labels = when (state) {
+            BoostState.IDLE -> resourceMap.getString(R.string.clean_memory_start)
+            BoostState.BOOSTING -> resourceMap.getString(R.string.clean_memory_running)
+            is BoostState.Done -> resourceMap.getString(R.string.clean_memory_retry)
+        }
+
+        val textColor = resourceMap.getColor(com.google.android.material.R.attr.colorOnPrimary, Color.LTGRAY)
+
+        val backgroundColor = when (state) {
+            BoostState.IDLE -> resourceMap.getColor(android.R.attr.colorPrimary)
+            BoostState.BOOSTING -> resourceMap.getColor(android.R.attr.colorPrimary).withAlpha(0.2f)
+            is BoostState.Done -> resourceMap.getColor(android.R.attr.colorPrimary)
+        }
+
+        ActionState(
+            text = labels
+                .withStyleHeadlineSmall()
+                .with(ForegroundColor(textColor), Bold)
+                .build(),
+            image = ImageRes(data = R.drawable.ic_boost_back_24dp, colorFilter = resourceMap.getColor(com.google.android.material.R.attr.colorOnPrimary)),
+            imageShow = true,
+
+            background = Background.Builder()
+                .backgroundColor(backgroundColor)
+                .cornerRadius(DP.DP_24)
+                .build()
         )
     }
 
-    // ── RAM state ─────────────────────────────────────────────────────────────
+    val ringViewData: StateFlow<RingViewData> = combineState(
+        flow1 = resources,
+        flow2 = ramInfo.filterNotNull(),
+        initialValue = RingViewData()
+    ) { resourceMap, ramInfo ->
 
-    private val _ramUpdate = MutableStateFlow<RamUpdate?>(null)
-    val ramUpdate: StateFlow<RamUpdate?> = _ramUpdate
-
-    // ── Boost button state ────────────────────────────────────────────────────
-
-    private val _boostState = MutableStateFlow(BoostState.IDLE)
-    val boostState: StateFlow<BoostState> = _boostState
-
-    private val _actionRes = MutableStateFlow(R.string.clean_memory_start)
-
-    val action: StateFlow<ActionState> = combineState(
-        flow1 = strings,
-        flow2 = themes,
-        flow3 = _actionRes,
-        initialValue = ActionState.empty()
-    ) { stringMap, themeMap, actionRes ->
-        val color = themeMap.getColor(android.R.attr.textColorPrimary)
-        val bgColor = themeMap.getColor(android.R.attr.colorControlHighlight, Color.LTGRAY)
-        buildActionState(
-            text = stringMap.getString(actionRes),
-            textColor = color,
-            backgroundColor = bgColor
+        RingViewData(
+            value = "${ramInfo.percentInt}%\n${ramInfo.usedGB}/${ramInfo.totalGB}"
+                .withStyleBodyLarge()
+                .with(ForegroundColor(resourceMap.getColor(com.google.android.material.R.attr.colorOnSurfaceVariant)))
+                .withFirst("${ramInfo.percentInt}%", ForegroundColor(resourceMap.getColor(android.R.attr.colorPrimary)), TextSize(28), Bold)
+                .build()
         )
     }
 
-    // ── Result title ──────────────────────────────────────────────────────────
+    val loadingViewData: StateFlow<LoadingViewData> = combineState(
+        flow1 = boostState,
+        flow2 = ramInfo.filterNotNull(),
+        initialValue = LoadingViewData()
+    ) { state, ramInfo ->
 
-    private val _freedMB = MutableStateFlow<Long?>(null)
+        LoadingViewData(
+            loading = state is BoostState.BOOSTING,
+            percent = ramInfo.percent,
+        )
+    }
 
-    val resultTitle: StateFlow<RichText?> = combineState(
-        flow1 = strings,
-        flow2 = _freedMB,
-        initialValue = null
-    ) { stringMap, mb ->
-        if (mb == null) null
-        else if (mb > 0) {
-            RichText(String.format(stringMap.getString(R.string.clean_memory_toast), mb.toInt()))
+    val ramViewData: StateFlow<RamViewData> = combineState(
+        flow1 = resources,
+        flow2 = ramInfo.filterNotNull(),
+        initialValue = RamViewData()
+    ) { resourceMap, ramInfo ->
+
+        val background = Background.Builder()
+            .backgroundColor(resourceMap.getColor(com.google.android.material.R.attr.colorSurface))
+            .cornerRadius(DP.DP_16)
+            .build()
+
+        RamViewData(
+            usedRichText = "${ramInfo.usedGB}\n${resourceMap.getString(R.string.clean_memory_stat_used)}"
+                .withStyleBodyMedium()
+                .with(ForegroundColor(resourceMap.getColor(com.google.android.material.R.attr.colorOnSurface)))
+                .withFirst(ramInfo.usedGB, TextSize(20), Bold)
+                .build(),
+            usedBackground = background,
+
+            freedRichText = "${ramInfo.freeGB}\n${resourceMap.getString(R.string.clean_memory_stat_free)}"
+                .withStyleBodyMedium()
+                .with(ForegroundColor(resourceMap.getColor(com.google.android.material.R.attr.colorOnSurface)))
+                .withFirst(ramInfo.freeGB, TextSize(20), Bold)
+                .build(),
+            freedBackground = background,
+
+            totalRichText = "${ramInfo.totalGB}\n${resourceMap.getString(R.string.clean_memory_stat_total)}"
+                .withStyleBodyMedium()
+                .with(ForegroundColor(resourceMap.getColor(com.google.android.material.R.attr.colorOnSurface)))
+                .withFirst(ramInfo.totalGB, TextSize(20), Bold)
+                .build(),
+            totalBackground = background,
+        )
+    }
+
+    val resultViewData: StateFlow<ResultViewData> = combineState(
+        flow1 = resources,
+        flow2 = boostState,
+        initialValue = ResultViewData()
+    ) { resourceMap, state ->
+
+        val freeMB by lazy {
+            state.asObjectOrNull<BoostState.Done>()?.freedMB ?: 0L
+        }
+
+        val text = if (freeMB > 0) {
+            resourceMap.getString(R.string.clean_memory_toast)
+                .replace("\$\$number_ram", freeMB.toString())
         } else {
-            RichText(stringMap.getString(R.string.clean_memory_optimal))
+
+            resourceMap.getString(R.string.clean_memory_optimal)
         }
+
+        val sub = resourceMap.getString(R.string.clean_memory_result_sub)
+
+        ResultViewData(
+            show = state is BoostState.Done,
+
+            text = "$text\n$sub"
+                .withStyleBodyMedium()
+                .with(ForegroundColor(resourceMap.getColor(com.google.android.material.R.attr.colorOnSurface)))
+                .withFirst(text, TextSize(18), Bold)
+                .withFirst(freeMB.toString(), TextSize(24), ForegroundColor(resourceMap.getColor(com.google.android.material.R.attr.colorErrorContainer)))
+                .build(),
+
+            image = ImageRes(R.drawable.ic_check_circle),
+
+            background = Background.Builder()
+                .backgroundColor(resourceMap.getColor(android.R.attr.colorPrimary).withAlpha(0.2f))
+                .cornerRadius(DP.DP_16)
+                .stroke(DP.DP_1, resourceMap.getColor(android.R.attr.colorPrimary))
+                .build()
+        )
     }
 
-    // ── Toast event ───────────────────────────────────────────────────────────
+    val screenViewData: StateFlow<ScreenViewData> = combineState(
+        flow1 = ringViewData,
+        flow2 = ramViewData,
+        flow3 = resultViewData,
+        initialValue = ScreenViewData()
+    ) { ring, ram, result ->
 
-    private val _toastEvent = MutableSharedFlow<String>(extraBufferCapacity = 1)
-    val toastEvent: SharedFlow<String> = _toastEvent
-
-    // ── Init ──────────────────────────────────────────────────────────────────
-
-    init {
-        // Load RAM info ngay khi ViewModel khởi tạo, không cần Fragment gọi thủ công
-        viewModelScope.launch(Dispatchers.IO) {
-            val info = repository.getRamInfo()
-            _ramUpdate.value = RamUpdate(info, animate = false)
-        }
+        ScreenViewData(
+            ringViewData = ring,
+            ramViewData = ram,
+            resultViewData = result
+        )
     }
 
-    // ── Public API ────────────────────────────────────────────────────────────
+    fun startBoost() = viewModelScope.launch {
 
-    fun startBoost() {
-        if (_boostState.value == BoostState.BOOSTING) return
+        if (boostState.value is BoostState.BOOSTING) return@launch
 
-        _freedMB.value = null  // ẩn result card cũ
-        _boostState.value = BoostState.BOOSTING
-        _actionRes.value = R.string.clean_memory_running
+        boostState.value = BoostState.BOOSTING
 
-        viewModelScope.launch {
-            val freedBytes = withContext(Dispatchers.IO) {
-                val result = repository.cleanMemory()
-                delay(2000)
-                result
-            }
-
-            // Refresh RAM info sau boost, animate gauge
-            val updatedInfo = withContext(Dispatchers.IO) { repository.getRamInfo() }
-            _ramUpdate.value = RamUpdate(updatedInfo, animate = true)
-
-            val freedMB = freedBytes / (1024 * 1024)
-            _freedMB.value = freedMB
-            if (freedMB > 0) {
-                val template = R.string.clean_memory_toast.asStringRes()
-                if (template.isNotEmpty()) {
-                    _toastEvent.emit(String.format(template, freedMB.toInt()))
-                }
-            }
-
-            _boostState.value = BoostState.DONE
-            _actionRes.value = R.string.clean_memory_retry
+        val freedBytes = withContext(Dispatchers.IO) {
+            val result = MemoryRepository.instance.cleanMemory()
+            delay(2000)
+            result
         }
+
+        boostState.value = BoostState.Done(freedBytes / (1024 * 1024))
     }
+
+    sealed class BoostState {
+
+        object IDLE : BoostState()
+
+        object BOOSTING : BoostState()
+
+        data class Done(val freedMB: Long) : BoostState()
+    }
+
+    data class RingViewData(
+        val value: RichText = emptyText()
+    )
+
+    data class LoadingViewData(
+        val loading: Boolean = false,
+        val percent: Float = 0f
+    )
+
+    data class RamViewData(
+        val usedRichText: RichText = emptyText(),
+        val usedBackground: Background = emptyBackground(),
+
+        val freedRichText: RichText = emptyText(),
+        val freedBackground: Background = emptyBackground(),
+
+        val totalRichText: RichText = emptyText(),
+        val totalBackground: Background = emptyBackground(),
+    )
+
+    data class ResultViewData(
+        val show: Boolean = false,
+
+        val text: RichText = emptyText(),
+        val image: RichImage = emptyImage(),
+
+        val background: Background = emptyBackground()
+    )
+
+    data class ScreenViewData(
+        val ringViewData: RingViewData = RingViewData(),
+        val ramViewData: RamViewData = RamViewData(),
+        val resultViewData: ResultViewData = ResultViewData()
+    )
 }

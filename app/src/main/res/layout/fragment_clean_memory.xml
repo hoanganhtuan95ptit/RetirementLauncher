@@ -1,283 +1,162 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
-    android:background="@color/memory_bg">
+    android:background="?android:attr/colorBackground">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
+    <!-- Toolbar -->
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/layout_toolbar"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:minHeight="600dp">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Toolbar -->
-        <include
-            android:id="@+id/toolbar"
-            layout="@layout/layout_toolbar"
-            android:layout_width="0dp"
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@id/btnBoost"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/frameContent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:minHeight="600dp">
 
-        <!-- Label -->
-        <TextView
-            android:id="@+id/tvGaugeLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:textColor="@color/memory_text_secondary"
-            android:textSize="11sp"
-            android:letterSpacing="0.08"
-            tools:text="@string/clean_memory_ram_label"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar" />
+            <!-- Circular Gauge -->
+            <com.simple.launcher.retirement.utils.view.MemoryGaugeView
+                android:id="@+id/memoryGauge"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_marginTop="24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Circular Gauge -->
-        <com.simple.launcher.retirement.utils.view.MemoryGaugeView
-            android:id="@+id/memoryGauge"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_marginTop="12dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvGaugeLabel" />
-
-        <!-- Percent overlay (centered on gauge) -->
-        <TextView
-            android:id="@+id/tvPercent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/memory_text_primary"
-            android:textSize="34sp"
-            android:fontFamily="sans-serif-medium"
-            tools:text="0%"
-            app:layout_constraintBottom_toTopOf="@id/tvRamDetail"
-            app:layout_constraintEnd_toEndOf="@id/memoryGauge"
-            app:layout_constraintStart_toStartOf="@id/memoryGauge"
-            app:layout_constraintTop_toTopOf="@id/memoryGauge"
-            app:layout_constraintVertical_chainStyle="packed" />
-
-        <TextView
-            android:id="@+id/tvRamDetail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/memory_text_secondary"
-            android:textSize="12sp"
-            tools:text="-- / -- GB"
-            app:layout_constraintBottom_toBottomOf="@id/memoryGauge"
-            app:layout_constraintEnd_toEndOf="@id/memoryGauge"
-            app:layout_constraintStart_toStartOf="@id/memoryGauge"
-            app:layout_constraintTop_toBottomOf="@id/tvPercent"
-            app:layout_constraintVertical_chainStyle="packed" />
-
-        <!-- Stat Cards -->
-        <LinearLayout
-            android:id="@+id/llStats"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginTop="16dp"
-            android:orientation="horizontal"
-            android:weightSum="3"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/memoryGauge">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginEnd="5dp"
-                android:background="@drawable/bg_memory_stat_card"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:paddingTop="14dp"
-                android:paddingBottom="14dp">
-                <TextView
-                    android:id="@+id/tvStatUsed"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/memory_stat_used"
-                    android:textSize="18sp"
-                    android:fontFamily="sans-serif-medium"
-                    tools:text="--" />
-                <TextView
-                    android:id="@+id/tvStatUsedLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:textColor="@color/memory_text_secondary"
-                    android:textSize="12sp"
-                    tools:text="@string/clean_memory_stat_used" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
-                android:background="@drawable/bg_memory_stat_card"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:paddingTop="14dp"
-                android:paddingBottom="14dp">
-                <TextView
-                    android:id="@+id/tvStatFree"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/memory_stat_free"
-                    android:textSize="18sp"
-                    android:fontFamily="sans-serif-medium"
-                    tools:text="--" />
-                <TextView
-                    android:id="@+id/tvStatFreeLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:textColor="@color/memory_text_secondary"
-                    android:textSize="12sp"
-                    tools:text="@string/clean_memory_stat_free" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginStart="5dp"
-                android:background="@drawable/bg_memory_stat_card"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:paddingTop="14dp"
-                android:paddingBottom="14dp">
-                <TextView
-                    android:id="@+id/tvStatTotal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/memory_text_primary"
-                    android:textSize="18sp"
-                    android:fontFamily="sans-serif-medium"
-                    tools:text="--" />
-                <TextView
-                    android:id="@+id/tvStatTotalLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:textColor="@color/memory_text_secondary"
-                    android:textSize="12sp"
-                    tools:text="@string/clean_memory_stat_total" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <!-- Result Card (hidden by default, shown after boost) -->
-        <LinearLayout
-            android:id="@+id/cardResult"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/bg_memory_result_card"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="12dp"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/llStats">
-
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/ic_check_circle"
-                android:contentDescription="@null"
-                app:tint="@color/memory_result_text" />
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginStart="10dp"
-                android:orientation="vertical">
-                <TextView
-                    android:id="@+id/tvResultTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/memory_result_text"
-                    android:textSize="13sp"
-                    android:fontFamily="sans-serif-medium" />
-                <TextView
-                    android:id="@+id/tvResultSub"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:textColor="@color/memory_text_secondary"
-                    android:textSize="11sp"
-                    tools:text="@string/clean_memory_result_sub" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <!-- Status text -->
-        <TextView
-            android:id="@+id/tvStatus"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginTop="12dp"
-            android:gravity="center"
-            android:textColor="@color/memory_text_secondary"
-            android:textSize="13sp"
-            android:lineSpacingMultiplier="1.4"
-            tools:text="@string/clean_memory_desc"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cardResult" />
-
-        <!-- Boost Button -->
-        <LinearLayout
-            android:id="@+id/btnBoost"
-            android:layout_width="0dp"
-            android:layout_height="56dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="32dp"
-            android:background="@drawable/bg_memory_boost_btn"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:clickable="true"
-            android:focusable="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvStatus">
-
-            <ImageView
-                android:id="@+id/ivBtnIcon"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginEnd="8dp"
-                android:src="@drawable/ic_lightning"
-                android:contentDescription="@null" />
-
+            <!-- Percent overlay (centered on gauge) -->
             <TextView
-                android:id="@+id/tvBtnLabel"
+                android:id="@+id/tvPercent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp"
-                android:fontFamily="sans-serif-medium"
-                tools:text="@string/clean_memory_start" />
+                android:gravity="center"
+                app:layout_constraintBottom_toBottomOf="@id/memoryGauge"
+                app:layout_constraintEnd_toEndOf="@id/memoryGauge"
+                app:layout_constraintStart_toStartOf="@id/memoryGauge"
+                app:layout_constraintTop_toTopOf="@id/memoryGauge"
+                app:layout_constraintVertical_chainStyle="packed"
+                tools:text="0%" />
 
-        </LinearLayout>
+            <!-- Stat Cards -->
+            <LinearLayout
+                android:id="@+id/llStats"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="16dp"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/memoryGauge">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/tvStatUsed"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:elevation="2dp"
+                    android:gravity="center"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="14dp"
+                    tools:background="@drawable/bg_memory_stat_card"
+                    tools:text="--" />
 
-</androidx.core.widget.NestedScrollView>
+                <TextView
+                    android:id="@+id/tvStatFree"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:elevation="2dp"
+                    android:gravity="center"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="14dp"
+                    tools:background="@drawable/bg_memory_stat_card"
+                    tools:text="--" />
+
+                <TextView
+                    android:id="@+id/tvStatTotal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:elevation="2dp"
+                    android:gravity="center"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="14dp"
+                    tools:background="@drawable/bg_memory_stat_card"
+                    tools:text="--" />
+            </LinearLayout>
+
+            <!-- Result Card (hidden by default, shown after boost) -->
+            <LinearLayout
+                android:id="@+id/cardResult"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="16dp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/llStats"
+                tools:background="@drawable/bg_memory_result_card">
+
+                <ImageView
+                    android:id="@+id/ivResult"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:contentDescription="@null"
+                    tools:src="@drawable/ic_check_circle" />
+
+                <TextView
+                    android:id="@+id/tvResult"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    tools:text="@string/clean_memory_result_sub" />
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <include
+        android:id="@+id/btnBoost"
+        layout="@layout/layout_action"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animation_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:lottie_rawRes="@raw/congratulations" />
+</androidx.constraintlayout.widget.ConstraintLayout>

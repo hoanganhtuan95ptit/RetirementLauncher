@@ -62,7 +62,7 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:contentDescription="@null"
-                        tools:src="@drawable/ic_clear_black_24dp" />
+                        tools:src="@drawable/ic_clear_files_black_24dp" />
 
                     <TextView
                         android:id="@+id/tvRingCount"

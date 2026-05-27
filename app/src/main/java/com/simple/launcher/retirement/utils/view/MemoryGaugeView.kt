@@ -9,6 +9,7 @@ import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.View
 import android.view.animation.DecelerateInterpolator
+import android.view.animation.LinearInterpolator
 import kotlin.math.min
 
 /**
@@ -43,8 +44,58 @@ class MemoryGaugeView @JvmOverloads constructor(
     private var strokeWidth: Float = 0f
     private var animator: ValueAnimator? = null
 
+    // ── Spinning (BOOSTING state) ─────────────────────────────────────────────
+
+    private var spinAnimator: ValueAnimator? = null
+    private var settleAnimator: ValueAnimator? = null
+    private var spinStartAngle: Float = -90f
+    private var settleSweep: Float = 0f
+
+    private val isSpinning get() = spinAnimator?.isRunning == true
+    private val isSettling get() = settleAnimator?.isRunning == true
+
+    fun startSpinning() {
+        if (isSpinning) return
+        settleAnimator?.cancel()
+        animator?.cancel()
+        spinAnimator = ValueAnimator.ofFloat(0f, 360f).apply {
+            duration = 1400
+            repeatCount = ValueAnimator.INFINITE
+            interpolator = LinearInterpolator()
+            addUpdateListener {
+                spinStartAngle = -90f + it.animatedValue as Float
+                invalidate()
+            }
+            start()
+        }
+    }
+
     fun setPercent(percent: Float, animate: Boolean = true) {
         val clamped = percent.coerceIn(0f, 1f)
+        currentPercent = clamped
+
+        if (isSpinning) {
+            // Dừng spin và settle thẳng về target mới — không qua percentAnimator
+            spinAnimator?.cancel()
+            spinAnimator = null
+            animatedPercent = clamped
+            arcPaint.color = resolveArcColor(clamped)
+
+            settleAnimator?.cancel()
+            settleAnimator = ValueAnimator.ofFloat(SPIN_SWEEP, clamped * 360f).apply {
+                duration = 700
+                interpolator = DecelerateInterpolator()
+                addUpdateListener {
+                    settleSweep = it.animatedValue as Float
+                    invalidate()
+                }
+                start()
+            }
+            return
+        }
+
+        // Không spinning: update percent bình thường
+        settleAnimator?.cancel()
         if (animate) {
             animator?.cancel()
             animator = ValueAnimator.ofFloat(animatedPercent, clamped).apply {
@@ -58,11 +109,11 @@ class MemoryGaugeView @JvmOverloads constructor(
                 start()
             }
         } else {
+            animator?.cancel()
             animatedPercent = clamped
             arcPaint.color = resolveArcColor(clamped)
             invalidate()
         }
-        currentPercent = clamped
     }
 
     /**
@@ -95,10 +146,23 @@ class MemoryGaugeView @JvmOverloads constructor(
         trackPaint.color = colorTrack
         canvas.drawArc(oval, -90f, 360f, false, trackPaint)
 
-        // Arc: bắt đầu từ đỉnh (12 giờ = -90°), quét theo % RAM
-        val sweep = animatedPercent * 360f
-        if (sweep > 0f) {
-            canvas.drawArc(oval, -90f, sweep, false, arcPaint)
+        when {
+            isSpinning -> {
+                // Cung 90° cố định, xoay liên tục
+                arcPaint.color = colorNormal
+                canvas.drawArc(oval, spinStartAngle, SPIN_SWEEP, false, arcPaint)
+            }
+            isSettling -> {
+                // Settle: freeze tại -90°, animate sweep về % đích
+                canvas.drawArc(oval, -90f, settleSweep, false, arcPaint)
+            }
+            else -> {
+                // Normal: cung theo % RAM từ đỉnh
+                val sweep = animatedPercent * 360f
+                if (sweep > 0f) {
+                    canvas.drawArc(oval, -90f, sweep, false, arcPaint)
+                }
+            }
         }
     }
 
@@ -113,5 +177,11 @@ class MemoryGaugeView @JvmOverloads constructor(
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
         animator?.cancel()
+        spinAnimator?.cancel()
+        settleAnimator?.cancel()
+    }
+
+    companion object {
+        private const val SPIN_SWEEP = 90f
     }
 }
