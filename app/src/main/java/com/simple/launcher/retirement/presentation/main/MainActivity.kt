@@ -40,11 +40,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             }
         }
 
-        window.navigationBarColor = Color.TRANSPARENT
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            window.isNavigationBarContrastEnforced = false
-        }
-
         val repository = PreferenceRepository.instance
 
         // Khởi động BackgroundService nếu ít nhất một tính năng được bật và có đủ quyền

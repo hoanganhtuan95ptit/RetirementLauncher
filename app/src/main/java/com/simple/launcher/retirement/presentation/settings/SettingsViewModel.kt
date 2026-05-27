@@ -20,6 +20,7 @@ import com.simple.launcher.retirement.utils.text.withStyleBodyLarge
 import com.simple.launcher.retirement.utils.text.withStyleTitleLarge
 import com.simple.launcher.retirement.utils.exts.getString
 import com.simple.launcher.retirement.utils.exts.textColorPrimary
+import com.simple.launcher.retirement.utils.permission.PermissionManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -68,7 +69,7 @@ class SettingsViewModel : BaseViewModel() {
             add(SettingItem.ORDER_HEADER_GENERAL to listOf(
                 SettingHeaderItem(R.string.setting_header_general.toSettingHeader())
             ))
-            add(SettingItem.ORDER_DEFAULT_LAUNCHER to listOf(
+            if(!PermissionManager.isDefaultLauncher())add(SettingItem.ORDER_DEFAULT_LAUNCHER to listOf(
                 SettingItem(SettingItem.ID_DEFAULT_LAUNCHER, R.string.setting_default_launcher.toSettingRichText(), ImageRes(android.R.drawable.ic_menu_manage))
             ))
             add(SettingItem.ORDER_APP_LIST to listOf(
