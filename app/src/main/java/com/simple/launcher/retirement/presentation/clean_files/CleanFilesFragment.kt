@@ -17,7 +17,7 @@ import com.simple.launcher.retirement.databinding.FragmentCleanFilesBinding
 import com.simple.launcher.retirement.databinding.ItemCleanCategoryBinding
 import com.simple.launcher.retirement.presentation.DeepLinks
 import com.simple.launcher.retirement.presentation.base.BaseFragment
-import com.simple.launcher.retirement.presentation.clean_files.ScannerRingView.RingState
+import com.simple.launcher.retirement.utils.view.ScannerRingView.RingState
 import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.exts.asObjectOrNull
 import com.simple.launcher.retirement.utils.image.setImage

@@ -1,9 +1,8 @@
-package com.simple.launcher.retirement.presentation.clean_files
+package com.simple.launcher.retirement.utils.view
 
 import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.RectF
 import android.util.AttributeSet

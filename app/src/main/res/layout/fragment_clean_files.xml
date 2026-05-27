@@ -41,7 +41,7 @@
                 android:layout_height="188dp"
                 android:layout_gravity="center_horizontal">
 
-                <com.simple.launcher.retirement.presentation.clean_files.ScannerRingView
+                <com.simple.launcher.retirement.utils.view.ScannerRingView
                     android:id="@+id/scannerRing"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
