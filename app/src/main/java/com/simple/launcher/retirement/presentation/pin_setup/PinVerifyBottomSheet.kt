@@ -34,8 +34,8 @@ class PinVerifyBottomSheet : BaseBottomSheetDialogFragment<BottomSheetPinVerifyB
 
     private val pinDots: List<View> by lazy {
         listOf(
-            binding.vPin1, binding.vPin2, binding.vPin3,
-            binding.vPin4, binding.vPin5, binding.vPin6
+            binding.layoutPinDots.vPin1, binding.layoutPinDots.vPin2, binding.layoutPinDots.vPin3,
+            binding.layoutPinDots.vPin4, binding.layoutPinDots.vPin5, binding.layoutPinDots.vPin6
         )
     }
 

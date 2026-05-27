@@ -26,57 +26,13 @@
         tools:text="@string/pin_verify_desc" />
 
     <!-- PIN dot indicators -->
-    <LinearLayout
-        android:id="@+id/llPinDots"
+    <include
+        android:id="@+id/layoutPinDots"
+        layout="@layout/layout_pin_dots"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="28dp"
-        android:orientation="horizontal">
-
-        <View
-            android:id="@+id/vPin1"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_marginHorizontal="8dp"
-            android:background="@drawable/bg_pin_dot_empty" />
-
-        <View
-            android:id="@+id/vPin2"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_marginHorizontal="8dp"
-            android:background="@drawable/bg_pin_dot_empty" />
-
-        <View
-            android:id="@+id/vPin3"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_marginHorizontal="8dp"
-            android:background="@drawable/bg_pin_dot_empty" />
-
-        <View
-            android:id="@+id/vPin4"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_marginHorizontal="8dp"
-            android:background="@drawable/bg_pin_dot_empty" />
-
-        <View
-            android:id="@+id/vPin5"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_marginHorizontal="8dp"
-            android:background="@drawable/bg_pin_dot_empty" />
-
-        <View
-            android:id="@+id/vPin6"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_marginHorizontal="8dp"
-            android:background="@drawable/bg_pin_dot_empty" />
-
-    </LinearLayout>
+        android:layout_marginTop="28dp" />
 
     <!-- Numpad: 4 hàng x 3 cột -->
     <include

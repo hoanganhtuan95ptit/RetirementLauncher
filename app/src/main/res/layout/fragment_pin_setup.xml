@@ -28,60 +28,15 @@
         app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
     <!-- PIN dot indicators -->
-    <LinearLayout
-        android:id="@+id/llPinDots"
+    <include
+        android:id="@+id/layoutPinDots"
+        layout="@layout/layout_pin_dots"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:gravity="center"
-        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvInstruction">
-
-        <View
-            android:id="@+id/vPin1"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_marginHorizontal="8dp"
-            android:background="@drawable/bg_pin_dot_empty" />
-
-        <View
-            android:id="@+id/vPin2"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_marginHorizontal="8dp"
-            android:background="@drawable/bg_pin_dot_empty" />
-
-        <View
-            android:id="@+id/vPin3"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_marginHorizontal="8dp"
-            android:background="@drawable/bg_pin_dot_empty" />
-
-        <View
-            android:id="@+id/vPin4"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_marginHorizontal="8dp"
-            android:background="@drawable/bg_pin_dot_empty" />
-
-        <View
-            android:id="@+id/vPin5"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_marginHorizontal="8dp"
-            android:background="@drawable/bg_pin_dot_empty" />
-
-        <View
-            android:id="@+id/vPin6"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_marginHorizontal="8dp"
-            android:background="@drawable/bg_pin_dot_empty" />
-
-    </LinearLayout>
+        app:layout_constraintTop_toBottomOf="@id/tvInstruction" />
 
     <TextView
         android:id="@+id/tvError"
@@ -92,7 +47,7 @@
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/llPinDots" />
+        app:layout_constraintTop_toBottomOf="@id/layoutPinDots" />
 
     <!-- Numpad: 4 hàng x 3 cột -->
     <include

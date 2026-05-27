@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/llPinDots"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="horizontal">
+
+    <View
+        android:id="@+id/vPin1"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginHorizontal="8dp"
+        android:background="@drawable/bg_pin_dot_empty" />
+
+    <View
+        android:id="@+id/vPin2"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginHorizontal="8dp"
+        android:background="@drawable/bg_pin_dot_empty" />
+
+    <View
+        android:id="@+id/vPin3"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginHorizontal="8dp"
+        android:background="@drawable/bg_pin_dot_empty" />
+
+    <View
+        android:id="@+id/vPin4"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginHorizontal="8dp"
+        android:background="@drawable/bg_pin_dot_empty" />
+
+    <View
+        android:id="@+id/vPin5"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginHorizontal="8dp"
+        android:background="@drawable/bg_pin_dot_empty" />
+
+    <View
+        android:id="@+id/vPin6"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginHorizontal="8dp"
+        android:background="@drawable/bg_pin_dot_empty" />
+
+</LinearLayout>
