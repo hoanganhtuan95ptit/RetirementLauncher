@@ -8,7 +8,6 @@ import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
 import com.simple.deeplink.Deeplink
@@ -26,7 +25,6 @@ import com.simple.launcher.retirement.utils.size.DP
 import com.simple.launcher.retirement.utils.text.setText
 import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 class CleanFilesFragment : BaseFragment<FragmentCleanFilesBinding>() {
 
@@ -86,6 +84,8 @@ class CleanFilesFragment : BaseFragment<FragmentCleanFilesBinding>() {
             } else {
                 RingState.DONE
             }
+
+            if (it !is CleanFilesViewModel.ClearState.Done) return@observe
 
             delay(1000)
 
