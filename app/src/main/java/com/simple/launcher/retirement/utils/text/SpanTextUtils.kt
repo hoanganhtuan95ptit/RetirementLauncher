@@ -8,6 +8,7 @@ import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.StaticLayout
 import android.text.TextPaint
+import androidx.core.graphics.withTranslation
 import kotlin.math.ceil
 
 object SpanTextUtils {
@@ -63,15 +64,14 @@ object SpanTextUtils {
 
     /** Draw spannable text manually on canvas */
     fun drawText(canvas: Canvas, text: CharSequence, textPaint: TextPaint = TEXT_PAINT, x: Float, y: Float, width: Int) {
-        canvas.save()
-        canvas.translate(x, y)
-        val staticLayout = StaticLayout.Builder
-            .obtain(text, 0, text.length, textPaint, width)
-            .setAlignment(Layout.Alignment.ALIGN_NORMAL)
-            .setIncludePad(false)
-            .build()
-        staticLayout.draw(canvas)
-        canvas.restore()
+        canvas.withTranslation(x, y) {
+            val staticLayout = StaticLayout.Builder
+                .obtain(text, 0, text.length, textPaint, width)
+                .setAlignment(Layout.Alignment.ALIGN_NORMAL)
+                .setIncludePad(false)
+                .build()
+            staticLayout.draw(this)
+        }
     }
 
     data class Size(val width: Int, val height: Int)

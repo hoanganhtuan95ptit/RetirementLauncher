@@ -93,11 +93,7 @@ class DefaultLauncherBottomSheet : BaseBottomSheetDialogFragment<BottomSheetDefa
     }
 
     private fun openHomeSettingsFallback() {
-        val intent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            Intent(Settings.ACTION_HOME_SETTINGS)
-        } else {
-            Intent(Settings.ACTION_SETTINGS)
-        }
+        val intent = Intent(Settings.ACTION_HOME_SETTINGS)
         startForResult.launch(intent)
     }
 

@@ -50,6 +50,7 @@
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
+                android:contentDescription="@null"
                 android:src="@android:drawable/ic_menu_report_image"
                 app:tint="#FFB300" />
 
@@ -67,6 +68,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginStart="12dp"
+                android:contentDescription="@null"
                 android:src="@android:drawable/ic_lock_idle_low_battery"
                 app:tint="#4CAF50" />
 

@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
@@ -17,14 +12,8 @@
 
     <!-- Clean Files – category icon backgrounds -->
     <color name="clean_cat_purple_bg">#EEEDFE</color>
-    <color name="clean_cat_amber_bg">#FAEEDA</color>
-    <color name="clean_cat_red_bg">#FCEBEB</color>
-    <color name="clean_cat_green_bg">#E1F5EE</color>
     <!-- Clean Files – category icon tints -->
     <color name="clean_cat_purple">#534AB7</color>
-    <color name="clean_cat_amber">#BA7517</color>
-    <color name="clean_cat_red">#A32D2D</color>
-    <color name="clean_cat_green">#0F6E56</color>
     <!-- Scanner ring -->
     <color name="scanner_ring_idle">#AFA9EC</color>
     <color name="scanner_ring_scanning">#7F77DD</color>
@@ -32,31 +21,9 @@
     <color name="scanner_ring_track">#E0E0E0</color>
     <!-- Clean Memory – light UI -->
     <color name="memory_bg">#F5F5FA</color>
-    <color name="memory_surface">#FFFFFF</color>
     <color name="memory_card_bg">#FFFFFF</color>
     <color name="memory_card_border">#E0DFF0</color>
-    <color name="memory_gauge_track">#EEEDFE</color>
-    <color name="memory_gauge_normal">#7F77DD</color>
-    <color name="memory_gauge_optimal">#1D9E75</color>
     <color name="memory_text_primary">#1A1A2E</color>
-    <color name="memory_text_secondary">#888888</color>
-    <color name="memory_chip_bg">#FFFFFF</color>
-    <color name="memory_chip_border">#E0DFF0</color>
-    <color name="memory_boost_btn_start">#7F77DD</color>
-    <color name="memory_boost_btn_end">#534AB7</color>
     <color name="memory_result_bg">#E1F5EE</color>
     <color name="memory_result_border">#9FE1CB</color>
-    <color name="memory_result_text">#085041</color>
-    <color name="memory_btn_running_bg">#EEEDFE</color>
-    <color name="memory_btn_running_border">#AFA9EC</color>
-    <color name="memory_btn_running_text">#534AB7</color>
-    <color name="memory_stat_used">#534AB7</color>
-    <color name="memory_stat_free">#0F6E56</color>
-
-    <!-- Home stat cards — active (có việc cần làm) -->
-    <color name="clean_files_stat_card_bg_active">#4CAF50</color>
-    <color name="clean_memory_stat_card_bg_active">#4A90D9</color>
-    <!-- Home stat cards — idle (không có việc cần làm) -->
-    <color name="clean_files_stat_card_bg_idle">#A5D6A7</color>
-    <color name="clean_memory_stat_card_bg_idle">#90CAF9</color>
 </resources>

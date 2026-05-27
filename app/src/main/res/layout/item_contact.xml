@@ -27,31 +27,19 @@
         android:textSize="18sp"
         android:textStyle="bold" />
 
-    <LinearLayout
-        android:id="@+id/frameTapToCall"
+    <TextView
+        android:id="@+id/tvTapToCall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
+        android:drawablePadding="8dp"
         android:gravity="center"
-        android:orientation="horizontal"
         android:paddingHorizontal="16dp"
         android:paddingVertical="8dp"
-        tools:background="@drawable/bg_tap_to_call">
-
-        <ImageView
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:src="@android:drawable/ic_menu_call"
-            app:tint="#000000" />
-
-        <TextView
-            android:id="@+id/tvTapToCall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            tools:text="@string/contact_tap_to_call" />
-
-    </LinearLayout>
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:drawableStartCompat="@android:drawable/ic_menu_call"
+        app:drawableTint="#000000"
+        tools:background="@drawable/bg_tap_to_call"
+        tools:text="@string/contact_tap_to_call" />
 </LinearLayout>

@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">RetirementLauncher</string>
 
     <!-- Settings -->
@@ -16,7 +16,6 @@
     <string name="setting_auto_cleanup_apk">Tự động xóa APK</string>
     <string name="setting_call_block">Chặn cuộc gọi lạ</string>
     <string name="setting_pocket_mode">Chống chạm nhầm (túi quần)</string>
-    <string name="setting_pin_required">Bạn cần thiết lập mã PIN trước khi tắt tính năng này</string>
 
     <!-- Onboarding -->
     <string name="onboarding_title">Chào mừng bạn đến với Retirement Launcher</string>
@@ -30,7 +29,6 @@
     <string name="clean_files_running">Đang quét và dọn dẹp…</string>
     <string name="clean_files_completed">Đã dọn dẹp hoàn tất!</string>
     <string name="clean_files_retry">Dọn dẹp lại</string>
-    <string name="clean_files_toast">Đã dọn dẹp các file lạ</string>
     <!-- Clean Files – categories -->
     <string name="clean_cat_system_temp">File tạm hệ thống (.tmp, .log…)</string>
     <string name="clean_cat_compressed">File nén không rõ nguồn</string>
@@ -40,21 +38,17 @@
     <string name="clean_result_title">Kết quả dọn dẹp</string>
     <string name="clean_result_files_deleted">file đã xóa</string>
     <string name="clean_result_space_freed">đã giải phóng</string>
-    <string name="clean_result_nothing">Thiết bị đã sạch, không tìm thấy file lạ.</string>
-    <string name="clean_files_idle_desc">Phát hiện $number_file file lạ – nhấn để dọn dẹp</string>
+    <string name="clean_files_idle_desc">Phát hiện $number_file tệp lạ – nhấn để dọn dẹp</string>
     <string name="clean_files_count_unit">file lạ</string>
 
     <!-- Clean Memory -->
     <string name="clean_memory_title">Giải phóng bộ nhớ</string>
-    <string name="clean_memory_ram_label">RAM ĐANG DÙNG</string>
     <string name="clean_memory_stat_used">Đang dùng</string>
     <string name="clean_memory_stat_free">Còn trống</string>
     <string name="clean_memory_stat_total">Tổng cộng</string>
     <string name="clean_memory_result_sub">Hệ thống đã được tối ưu</string>
-    <string name="clean_memory_desc">Tối ưu hóa hệ thống bằng cách đóng các ứng dụng\nchạy ngầm không cần thiết.</string>
     <string name="clean_memory_start">Tăng tốc ngay</string>
-    <string name="clean_memory_running">Đang tối ưu hệ thống...</string>
-    <string name="clean_memory_completed">Hệ thống đã được tối ưu!\nĐã giải phóng khoảng %1$d MB RAM</string>
+    <string name="clean_memory_running">Đang tối ưu hệ thống…</string>
     <string name="clean_memory_optimal">Hệ thống đang ở trạng thái tối ưu nhất!</string>
     <string name="clean_memory_retry">Tối ưu lại</string>
     <string name="clean_memory_toast">Đã giải phóng $number_ram MB</string>
@@ -70,18 +64,13 @@
     <!-- Common -->
     <string name="save">Lưu</string>
     <string name="back">Quay lại</string>
-    <string name="cancel">Hủy</string>
-    <string name="search">Tìm kiếm...</string>
+    <string name="search">Tìm kiếm…</string>
 
     <!-- Call Block -->
     <string name="call_block_title">Quyền chặn cuộc gọi</string>
     <string name="call_block_desc">Ứng dụng cần quyền quản lý cuộc gọi và danh bạ để có thể tự động chặn các cuộc gọi từ người lạ.</string>
     <string name="call_block_highlight">quản lý cuộc gọi và danh bạ</string>
-    <string name="call_block_grant">Cấp quyền ngay</string>
-    <string name="call_block_skip">Để sau</string>
     <!-- Home Status -->
-    <string name="home_strange_files">Dọn dẹp ($file_number)</string>
-    <string name="home_memory_status">Tăng tốc ($memory_mb)</string>
     <string name="home_header_apps">Ứng dụng</string>
     <string name="home_header_contacts">Liên hệ nhanh</string>
 
@@ -89,7 +78,6 @@
     <string name="block_title">Ứng dụng bị chặn</string>
     <string name="block_desc">Ứng dụng này không có trong danh sách được phép sử dụng. Vui lòng liên hệ quản trị viên.</string>
     <string name="block_go_home">Quay về màn hình chính</string>
-    <string name="block_app_label">Ứng dụng: %s</string>
 
     <!-- Debug-only settings (chỉ hiển thị trong debug build) -->
     <string name="setting_header_debug">🐛 Debug</string>
@@ -101,15 +89,13 @@
     <string name="default_launcher_desc">Để sử dụng Retirement Launcher làm màn hình chính, bạn cần thiết lập nó làm ứng dụng mặc định trong cài đặt hệ thống.</string>
     <string name="default_launcher_highlight">Retirement Launcher</string>
     <string name="permission_grant">Cấp quyền ngay</string>
-    <string name="permission_skip">Bỏ qua</string>
-    <string name="pin_verify_action">Xác nhận</string>
     <string name="pin_verify_title">Xác nhận mã PIN</string>
     <string name="pin_verify_desc">Vui lòng nhập mã PIN để thay đổi thiết lập này.</string>
     <string name="pin_key_delete_desc">Xoá</string>
 
     <!-- File Permission -->
     <string name="file_permission_title">Bảo vệ bộ nhớ</string>
-    <string name="file_permission_desc">Để tính năng tự động xóa các file APK/AAB lạ hoạt động, ứng dụng cần quyền truy cập toàn bộ bộ nhớ. Điều này giúp thiết bị của bạn luôn sạch sẽ và an toàn.</string>
+    <string name="file_permission_desc">Để tính năng tự động xóa các file APK/AAB lạ hoạt động, ứng dụng cần quyền truy cập tất cả bộ nhớ. Điều này giúp thiết bị của bạn luôn sạch sẽ và an toàn.</string>
     <string name="file_permission_highlight">APK/AAB lạ</string>
 
     <!-- Usage Stats Permission -->
@@ -122,17 +108,14 @@
     <string name="overlay_permission_desc">Ứng dụng cần quyền \'Hiển thị trên các ứng dụng khác\' để có thể hiển thị màn hình khóa khi một ứng dụng bị chặn được mở.</string>
     <string name="overlay_permission_highlight">\'Hiển thị trên các ứng dụng khác\'</string>
     <!-- PIN Setup -->
-    <string name="pin_setup_title">Nhập mã PIN</string>
-    <string name="pin_enter_current">Nhập mã PIN hiện tại</string>
     <string name="pin_enter_new">Nhập mã PIN mới (6 chữ số)</string>
     <string name="pin_confirm_new">Xác nhận mã PIN mới</string>
     <string name="pin_setup_success">Thiết lập mã PIN thành công</string>
     <string name="pin_error_length">Mã PIN phải có 6 chữ số</string>
-    <string name="pin_error_old_incorrect">Mã PIN cũ không chính xác</string>
     <string name="pin_error_confirm_mismatch">Mã PIN xác nhận không khớp</string>
     <string name="pin_error_incorrect">Mã PIN không chính xác</string>
     <!-- Clean Files -->
-    <string name="clean_cat_file_count">$number_file file</string>
+    <string name="clean_cat_file_count" tools:ignore="PluralsCandidate">$number_file file</string>
 
     <!-- Reorder -->
     <string name="reorder_apps_title">Sắp xếp ứng dụng</string>

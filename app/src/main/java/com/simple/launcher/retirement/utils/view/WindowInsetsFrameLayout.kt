@@ -3,6 +3,7 @@ package com.simple.launcher.retirement.utils.view
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.FrameLayout
+import androidx.core.content.withStyledAttributes
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
@@ -18,10 +19,10 @@ class WindowInsetsFrameLayout @JvmOverloads constructor(
     private var insetNavigationBars = false
 
     init {
-        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.WindowInsetsFrameLayout)
-        insetStatusBars = typedArray.getBoolean(R.styleable.WindowInsetsFrameLayout_insetStatusBars, false)
-        insetNavigationBars = typedArray.getBoolean(R.styleable.WindowInsetsFrameLayout_insetNavigationBars, false)
-        typedArray.recycle()
+        context.withStyledAttributes(attrs, R.styleable.WindowInsetsFrameLayout) {
+            insetStatusBars = getBoolean(R.styleable.WindowInsetsFrameLayout_insetStatusBars, false)
+            insetNavigationBars = getBoolean(R.styleable.WindowInsetsFrameLayout_insetNavigationBars, false)
+        }
 
         setupInsets()
     }

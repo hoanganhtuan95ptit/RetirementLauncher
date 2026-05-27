@@ -1,6 +1,7 @@
 package com.simple.launcher.retirement.data.repository
 
 import android.content.Context
+import androidx.core.content.edit
 import com.simple.launcher.retirement.domain.repository.PreferenceRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -29,7 +30,7 @@ class PreferenceRepositoryImpl(context: Context) : PreferenceRepository {
     override fun getPin(): String? = sharedPrefs.getString(KEY_PIN, null)
 
     override fun savePin(pin: String) {
-        sharedPrefs.edit().putString(KEY_PIN, pin).apply()
+        sharedPrefs.edit { putString(KEY_PIN, pin) }
         _hasPin.value = true
     }
 
@@ -41,14 +42,14 @@ class PreferenceRepositoryImpl(context: Context) : PreferenceRepository {
         sharedPrefs.getBoolean(KEY_ONBOARDING_COMPLETED, false)
 
     override fun setOnboardingCompleted(completed: Boolean) {
-        sharedPrefs.edit().putBoolean(KEY_ONBOARDING_COMPLETED, completed).apply()
+        sharedPrefs.edit { putBoolean(KEY_ONBOARDING_COMPLETED, completed) }
     }
 
     override fun isAppBlockEnabled(): Boolean =
         sharedPrefs.getBoolean(KEY_APP_BLOCK_ENABLED, false)
 
     override fun setAppBlockEnabled(enabled: Boolean) {
-        sharedPrefs.edit().putBoolean(KEY_APP_BLOCK_ENABLED, enabled).apply()
+        sharedPrefs.edit { putBoolean(KEY_APP_BLOCK_ENABLED, enabled) }
         _appBlockEnabled.value = enabled
     }
 
@@ -58,7 +59,7 @@ class PreferenceRepositoryImpl(context: Context) : PreferenceRepository {
         sharedPrefs.getBoolean(KEY_FILE_CLEANUP_ENABLED, false)
 
     override fun setFileCleanupEnabled(enabled: Boolean) {
-        sharedPrefs.edit().putBoolean(KEY_FILE_CLEANUP_ENABLED, enabled).apply()
+        sharedPrefs.edit { putBoolean(KEY_FILE_CLEANUP_ENABLED, enabled) }
         _fileCleanupEnabled.value = enabled
     }
 
@@ -68,7 +69,7 @@ class PreferenceRepositoryImpl(context: Context) : PreferenceRepository {
         sharedPrefs.getBoolean(KEY_CALL_BLOCK_ENABLED, false)
 
     override fun setCallBlockEnabled(enabled: Boolean) {
-        sharedPrefs.edit().putBoolean(KEY_CALL_BLOCK_ENABLED, enabled).apply()
+        sharedPrefs.edit { putBoolean(KEY_CALL_BLOCK_ENABLED, enabled) }
         _callBlockEnabled.value = enabled
     }
 
@@ -78,7 +79,7 @@ class PreferenceRepositoryImpl(context: Context) : PreferenceRepository {
         sharedPrefs.getBoolean(KEY_POCKET_MODE_ENABLED, false)
 
     override fun setPocketModeEnabled(enabled: Boolean) {
-        sharedPrefs.edit().putBoolean(KEY_POCKET_MODE_ENABLED, enabled).apply()
+        sharedPrefs.edit { putBoolean(KEY_POCKET_MODE_ENABLED, enabled) }
         _pocketModeEnabled.value = enabled
     }
 

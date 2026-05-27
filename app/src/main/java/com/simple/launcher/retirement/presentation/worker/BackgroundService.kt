@@ -91,7 +91,8 @@ class BackgroundService : Service() {
         }
 
         fun stop(context: Context) {
-            context.stopService(Intent(context, BackgroundService::class.java))
+            val intent = Intent(context, BackgroundService::class.java)
+            context.stopService(intent)
         }
     }
 }

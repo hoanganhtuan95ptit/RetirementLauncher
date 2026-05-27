@@ -2,7 +2,6 @@ package com.simple.launcher.retirement.presentation.permissions.file
 
 import android.content.DialogInterface
 import android.content.Intent
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
@@ -10,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.net.toUri
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
 import com.simple.deeplink.Deeplink
@@ -92,7 +92,7 @@ class FilePermissionBottomSheet : BaseBottomSheetDialogFragment<BottomSheetFileP
             try {
                 val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
                 intent.addCategory("android.intent.category.DEFAULT")
-                intent.data = Uri.parse("package:${requireContext().packageName}")
+                intent.data = "package:${requireContext().packageName}".toUri()
                 startForResult.launch(intent)
             } catch (e: Exception) {
                 val intent = Intent()

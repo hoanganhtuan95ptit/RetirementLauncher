@@ -3,6 +3,7 @@ package com.simple.launcher.retirement.data.repository
 import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.provider.ContactsContract
+import androidx.core.content.edit
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simple.launcher.retirement.domain.model.ContactEntity
@@ -96,7 +97,7 @@ class ContactRepositoryImpl(private val context: Context) : ContactRepository {
 
     override fun saveSelectedContacts(contacts: List<ContactEntity>) {
         val json = gson.toJson(contacts)
-        sharedPrefs.edit().putString(KEY_SELECTED_CONTACTS, json).apply()
+        sharedPrefs.edit { putString(KEY_SELECTED_CONTACTS, json) }
         cachedContacts = contacts  // cập nhật cache ngay
         _dataTrigger.tryEmit(Unit)
     }

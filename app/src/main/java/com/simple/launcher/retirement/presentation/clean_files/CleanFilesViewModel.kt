@@ -1,6 +1,5 @@
 package com.simple.launcher.retirement.presentation.clean_files
 
-import android.graphics.Color
 import androidx.core.graphics.toColorInt
 import androidx.lifecycle.viewModelScope
 import com.simple.launcher.retirement.R
@@ -13,7 +12,16 @@ import com.simple.launcher.retirement.presentation.base.buildBackIcon
 import com.simple.launcher.retirement.presentation.base.buildToolbarTitle
 import com.simple.launcher.retirement.utils.background.Background
 import com.simple.launcher.retirement.utils.combineState
-import com.simple.launcher.retirement.utils.exts.*
+import com.simple.launcher.retirement.utils.exts.asObjectOrNull
+import com.simple.launcher.retirement.utils.exts.colorOnPrimary
+import com.simple.launcher.retirement.utils.exts.colorOnSurface
+import com.simple.launcher.retirement.utils.exts.colorPrimary
+import com.simple.launcher.retirement.utils.exts.colorSurface
+import com.simple.launcher.retirement.utils.exts.getString
+import com.simple.launcher.retirement.utils.exts.orZero
+import com.simple.launcher.retirement.utils.exts.textColorPrimary
+import com.simple.launcher.retirement.utils.exts.textColorSecondary
+import com.simple.launcher.retirement.utils.exts.withAlpha
 import com.simple.launcher.retirement.utils.image.ImageRes
 import com.simple.launcher.retirement.utils.image.RichImage
 import com.simple.launcher.retirement.utils.image.emptyImage
@@ -149,7 +157,7 @@ class CleanFilesViewModel : BaseViewModel() {
 
             val numberFile = if (state is ClearState.Run && state.categoryMap[it.id] != null) {
 
-                resources.getString(R.string.clean_cat_file_count).replace("\$number_file", "${state.categoryMap[it.id] ?: 0}")
+                resources.getString(R.string.clean_cat_file_count).replace("\$number_file","${state.categoryMap[it.id]}")
             } else {
 
                 ""

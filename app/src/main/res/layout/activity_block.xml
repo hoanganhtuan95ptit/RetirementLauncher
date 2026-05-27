@@ -23,6 +23,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_gravity="center"
+            android:contentDescription="@null"
             android:src="@android:drawable/ic_lock_lock"
             app:tint="@color/block_icon_tint" />
     </FrameLayout>

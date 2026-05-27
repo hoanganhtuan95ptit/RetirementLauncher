@@ -31,7 +31,7 @@ val Map<String, Any>.colorOnTertiary: Int @ColorInt get() = getColor(com.google.
 val Map<String, Any>.colorTertiaryContainer: Int @ColorInt get() = getColor(com.google.android.material.R.attr.colorTertiaryContainer)
 val Map<String, Any>.colorOnTertiaryContainer: Int @ColorInt get() = getColor(com.google.android.material.R.attr.colorOnTertiaryContainer)
 
-val Map<String, Any>.colorError: Int @ColorInt get() = getColor(android.R.attr.colorError)
+//val Map<String, Any>.colorError: Int @ColorInt get() = getColor(android.R.attr.colorError)
 val Map<String, Any>.colorOnError: Int @ColorInt get() = getColor(com.google.android.material.R.attr.colorOnError)
 val Map<String, Any>.colorErrorContainer: Int @ColorInt get() = getColor(com.google.android.material.R.attr.colorErrorContainer)
 val Map<String, Any>.colorOnErrorContainer: Int @ColorInt get() = getColor(com.google.android.material.R.attr.colorOnErrorContainer)

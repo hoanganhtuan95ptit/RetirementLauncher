@@ -80,7 +80,7 @@ class ContactAdapter : ViewItemAdapter<ContactHomeItem, ItemContactBinding>() {
             binding.tvTapToCall.setText(item.tapToCallLabel)
         }
         if (payloads.isEmpty() || payloads.contains("tapToCallBackground")) {
-            binding.frameTapToCall.setBackground(item.tapToCallBackground)
+            binding.tvTapToCall.setBackground(item.tapToCallBackground)
         }
     }
 }

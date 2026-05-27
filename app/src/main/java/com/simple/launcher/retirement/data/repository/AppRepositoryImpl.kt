@@ -16,6 +16,8 @@ import android.util.Log
 import android.speech.RecognizerIntent
 import android.speech.tts.TextToSpeech
 import android.view.inputmethod.InputMethodManager
+import androidx.core.content.edit
+import androidx.core.net.toUri
 import com.google.gson.Gson
 import com.simple.launcher.retirement.BuildConfig
 import com.google.gson.reflect.TypeToken
@@ -250,7 +252,7 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
 
     override fun saveSelectedPackages(packages: List<String>) {
         val json = gson.toJson(packages)
-        sharedPrefs.edit().putString(KEY_SELECTED_APPS, json).apply()
+        sharedPrefs.edit { putString(KEY_SELECTED_APPS, json) }
         cachedSelectedPackages = packages  // cập nhật cache ngay, không cần đọc lại
         _dataTrigger.tryEmit(Unit)
     }
@@ -323,7 +325,7 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
 
         // Default Browser
         try {
-            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.example.com"))
+            val browserIntent = Intent(Intent.ACTION_VIEW, "https://www.example.com".toUri())
             val browserPkg = pm.resolveActivity(browserIntent, PackageManager.MATCH_DEFAULT_ONLY)
                 ?.activityInfo?.packageName
             if (browserPkg == packageName) return true
@@ -331,7 +333,7 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
 
         // Default Email
         try {
-            val emailIntent = Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:"))
+            val emailIntent = Intent(Intent.ACTION_SENDTO, "mailto:".toUri())
             val emailPkg = pm.resolveActivity(emailIntent, PackageManager.MATCH_DEFAULT_ONLY)
                 ?.activityInfo?.packageName
             if (emailPkg == packageName) return true
@@ -365,7 +367,7 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
         // Default Gallery / Photos
         try {
             val galleryIntent = Intent(Intent.ACTION_VIEW)
-                .setDataAndType(Uri.parse("content://media/external/images/media/1"), "image/*")
+                .setDataAndType("content://media/external/images/media/1".toUri(), "image/*")
             val galleryPkg = pm.resolveActivity(galleryIntent, PackageManager.MATCH_DEFAULT_ONLY)
                 ?.activityInfo?.packageName
             if (galleryPkg == packageName) return true
@@ -373,7 +375,7 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
 
         // Default Maps / Navigation
         try {
-            val mapIntent = Intent(Intent.ACTION_VIEW, Uri.parse("geo:0,0"))
+            val mapIntent = Intent(Intent.ACTION_VIEW, "geo:0,0".toUri())
             val mapPkg = pm.resolveActivity(mapIntent, PackageManager.MATCH_DEFAULT_ONLY)
                 ?.activityInfo?.packageName
             if (mapPkg == packageName) return true
@@ -398,7 +400,7 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
         // Default File Manager
         try {
             val filesIntent = Intent(Intent.ACTION_VIEW)
-                .setDataAndType(Uri.parse("content://com.android.externalstorage.documents/root/primary"), "vnd.android.document/root")
+                .setDataAndType("content://com.android.externalstorage.documents/root/primary".toUri(), "vnd.android.document/root")
             val filesPkg = pm.resolveActivity(filesIntent, PackageManager.MATCH_DEFAULT_ONLY)
                 ?.activityInfo?.packageName
             if (filesPkg == packageName) return true
@@ -407,7 +409,7 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
         // Default Music Player
         try {
             val musicIntent = Intent(Intent.ACTION_VIEW)
-                .setDataAndType(Uri.parse("content://media/external/audio/media/1"), "audio/*")
+                .setDataAndType("content://media/external/audio/media/1".toUri(), "audio/*")
             val musicPkg = pm.resolveActivity(musicIntent, PackageManager.MATCH_DEFAULT_ONLY)
                 ?.activityInfo?.packageName
             if (musicPkg == packageName) return true
@@ -455,7 +457,7 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
         // Default Video Player
         try {
             val videoIntent = Intent(Intent.ACTION_VIEW)
-                .setDataAndType(Uri.parse("content://media/external/video/media/1"), "video/*")
+                .setDataAndType("content://media/external/video/media/1".toUri(), "video/*")
             val videoPkg = pm.resolveActivity(videoIntent, PackageManager.MATCH_DEFAULT_ONLY)
                 ?.activityInfo?.packageName
             if (videoPkg == packageName) return true
@@ -464,7 +466,7 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
         // Default PDF / Document Viewer
         try {
             val pdfIntent = Intent(Intent.ACTION_VIEW)
-                .setDataAndType(Uri.parse("content://com.android.providers.downloads.documents/document/1"), "application/pdf")
+                .setDataAndType("content://com.android.providers.downloads.documents/document/1".toUri(), "application/pdf")
             val pdfPkg = pm.resolveActivity(pdfIntent, PackageManager.MATCH_DEFAULT_ONLY)
                 ?.activityInfo?.packageName
             if (pdfPkg == packageName) return true
@@ -502,10 +504,12 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
 
         // Default Notes / Memo
         try {
-            val noteIntent = Intent(Intent.ACTION_CREATE_NOTE)
-            val notePkg = pm.resolveActivity(noteIntent, PackageManager.MATCH_DEFAULT_ONLY)
-                ?.activityInfo?.packageName
-            if (notePkg == packageName) return true
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                val noteIntent = Intent(Intent.ACTION_CREATE_NOTE)
+                val notePkg = pm.resolveActivity(noteIntent, PackageManager.MATCH_DEFAULT_ONLY)
+                    ?.activityInfo?.packageName
+                if (notePkg == packageName) return true
+            }
         } catch (_: Exception) {}
 
         return false

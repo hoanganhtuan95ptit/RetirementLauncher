@@ -79,7 +79,7 @@ android {
     defaultConfig {
         applicationId "com.simple.launcher.retirement"
         minSdk 24
-        targetSdk 35
+        targetSdk 36
         versionCode getGitVersionCode()
         versionName "1.${new Date().format('yy.MM')}.${getGitHash()}"
 
@@ -139,7 +139,7 @@ dependencies {
     implementation libs.glide
     implementation libs.glide.transformations
     implementation libs.lottie
-    implementation "androidx.work:work-runtime-ktx:2.9.1"
+    implementation libs.androidx.work.runtime.ktx
 
     // Firebase
     implementation platform(libs.firebase.bom)

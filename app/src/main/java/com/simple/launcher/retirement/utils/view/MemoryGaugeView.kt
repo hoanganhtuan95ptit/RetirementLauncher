@@ -10,6 +10,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.animation.DecelerateInterpolator
 import android.view.animation.LinearInterpolator
+import androidx.core.graphics.toColorInt
 import kotlin.math.min
 
 /**
@@ -22,9 +23,9 @@ class MemoryGaugeView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
 
-    var colorNormal: Int = Color.parseColor("#7F77DD")
-    var colorOptimal: Int = Color.parseColor("#1D9E75")
-    var colorTrack: Int = Color.parseColor("#EEEDFE")
+    var colorNormal: Int = "#7F77DD".toColorInt()
+    var colorOptimal: Int = "#1D9E75".toColorInt()
+    var colorTrack: Int = "#EEEDFE".toColorInt()
 
     private val trackPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.STROKE
