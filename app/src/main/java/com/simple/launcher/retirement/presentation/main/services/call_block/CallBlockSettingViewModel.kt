@@ -9,7 +9,7 @@ import com.simple.launcher.retirement.utils.combineState
 import com.simple.launcher.retirement.utils.image.ImageRes
 import com.simple.launcher.retirement.utils.text.*
 import com.simple.launcher.retirement.utils.exts.getString
-import com.simple.launcher.retirement.utils.exts.getColor
+import com.simple.launcher.retirement.utils.exts.textColorPrimary
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -26,7 +26,7 @@ class CallBlockSettingViewModel : BaseViewModel() {
         initialValue = emptyList()
     ) { resources, isEnabled, _ ->
 
-        val textColor = resources.getColor(android.R.attr.textColorPrimary)
+        val textColor = resources.textColorPrimary
 
         listOf(
             SettingItem(

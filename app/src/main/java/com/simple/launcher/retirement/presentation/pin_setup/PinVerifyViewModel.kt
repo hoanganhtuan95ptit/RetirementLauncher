@@ -5,7 +5,8 @@ import com.simple.launcher.retirement.presentation.base.BaseViewModel
 import com.simple.launcher.retirement.utils.combineState
 import com.simple.launcher.retirement.utils.text.*
 import com.simple.launcher.retirement.utils.exts.getString
-import com.simple.launcher.retirement.utils.exts.getColor
+import com.simple.launcher.retirement.utils.exts.textColorPrimary
+import com.simple.launcher.retirement.utils.exts.textColorSecondary
 import kotlinx.coroutines.flow.StateFlow
 
 data class PinVerifyContent(
@@ -19,8 +20,8 @@ class PinVerifyViewModel : BaseViewModel() {
         flow1 = resources,
         initialValue = PinVerifyContent(emptyText(), emptyText())
     ) { resources ->
-        val titleColor = resources.getColor(android.R.attr.textColorPrimary)
-        val descColor = resources.getColor(android.R.attr.textColorSecondary)
+        val titleColor = resources.textColorPrimary
+        val descColor = resources.textColorSecondary
         PinVerifyContent(
             title = resources.getString(R.string.pin_verify_title)
                 .with(ForegroundColor(titleColor))

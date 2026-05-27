@@ -1,11 +1,19 @@
 package com.simple.launcher.retirement.utils.exts
 
+import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import androidx.core.graphics.ColorUtils
 import com.simple.launcher.retirement.R
+import com.simple.launcher.retirement.utils.theme.ThemeColorStore
 
 fun Int.withAlpha(alpha: Float): Int {
     return ColorUtils.setAlphaComponent(this, (alpha * 255).toInt().coerceIn(0, 255))
+}
+
+private fun Map<String, Any>.getColor(@AttrRes attrId: Int, @ColorInt defaultColor: Int = android.graphics.Color.BLACK): Int {
+    return ThemeColorStore.idAndNameMap[attrId]?.let {
+        ThemeColorStore.colorMapFlow.value[it]
+    } ?: defaultColor
 }
 
 val Map<String, Any>.colorPrimary: Int @ColorInt get() = getColor(android.R.attr.colorPrimary)
@@ -25,6 +33,8 @@ val Map<String, Any>.colorOnTertiaryContainer: Int @ColorInt get() = getColor(co
 
 val Map<String, Any>.colorError: Int @ColorInt get() = getColor(android.R.attr.colorError)
 val Map<String, Any>.colorOnError: Int @ColorInt get() = getColor(com.google.android.material.R.attr.colorOnError)
+val Map<String, Any>.colorErrorContainer: Int @ColorInt get() = getColor(com.google.android.material.R.attr.colorErrorContainer)
+val Map<String, Any>.colorOnErrorContainer: Int @ColorInt get() = getColor(com.google.android.material.R.attr.colorOnErrorContainer)
 
 val Map<String, Any>.colorBackground: Int @ColorInt get() = getColor(android.R.attr.colorBackground)
 val Map<String, Any>.colorOnBackground: Int @ColorInt get() = getColor(com.google.android.material.R.attr.colorOnBackground)
@@ -38,6 +48,12 @@ val Map<String, Any>.colorOnSurfaceVariant: Int @ColorInt get() = getColor(com.g
 val Map<String, Any>.colorOutline: Int @ColorInt get() = getColor(com.google.android.material.R.attr.colorOutline)
 
 val Map<String, Any>.colorPrimaryInverse: Int @ColorInt get() = getColor(com.google.android.material.R.attr.colorPrimaryInverse)
+
+// ─── Common Attributes ───────────────────────────────────────────────────────
+
+val Map<String, Any>.textColorPrimary: Int @ColorInt get() = getColor(android.R.attr.textColorPrimary)
+val Map<String, Any>.textColorSecondary: Int @ColorInt get() = getColor(android.R.attr.textColorSecondary)
+val Map<String, Any>.colorAccent: Int @ColorInt get() = getColor(android.R.attr.colorAccent)
 
 // ─── Custom — Clean Files Stat Card ──────────────────────────────────────────
 

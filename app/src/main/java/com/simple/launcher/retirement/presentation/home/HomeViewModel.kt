@@ -17,6 +17,7 @@ import com.simple.launcher.retirement.presentation.home.adapter.ContactHomeItem
 import com.simple.launcher.retirement.presentation.home.adapter.HeaderHomeItem
 import com.simple.launcher.retirement.utils.background.Background
 import com.simple.launcher.retirement.utils.combineState
+import com.simple.launcher.retirement.utils.exts.*
 import com.simple.launcher.retirement.utils.image.ImageDrawable
 import com.simple.launcher.retirement.utils.image.ImagePath
 import com.simple.launcher.retirement.utils.image.ImageRes
@@ -29,8 +30,6 @@ import com.simple.launcher.retirement.utils.text.with
 import com.simple.launcher.retirement.utils.text.withStyleBodyLarge
 import com.simple.launcher.retirement.utils.text.withStyleHeadlineMedium
 import com.simple.launcher.retirement.utils.text.withStyleTitleLarge
-import com.simple.launcher.retirement.utils.exts.getString
-import com.simple.launcher.retirement.utils.exts.getColor
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -43,15 +42,15 @@ class HomeViewModel : BaseViewModel() {
         val hasStrangeFiles = fileCount > 0
 
         val textColor = if (hasStrangeFiles) {
-            resources.getColor(R.attr.colorCleanFilesStatCardOnBgActive)
+            resources.colorCleanFilesStatCardOnBgActive
         } else {
-            resources.getColor(R.attr.colorCleanFilesStatCardOnBgIdle)
+            resources.colorCleanFilesStatCardOnBgIdle
         }
 
         val backgroundColor = if (hasStrangeFiles) {
-            resources.getColor(R.attr.colorCleanFilesStatCardBgActive)
+            resources.colorCleanFilesStatCardBgActive
         } else {
-            resources.getColor(R.attr.colorCleanFilesStatCardBgIdle)
+            resources.colorCleanFilesStatCardBgIdle
         }
 
         1.0 to CleanFilesHomeItem(
@@ -83,15 +82,15 @@ class HomeViewModel : BaseViewModel() {
         val canCleanMemory = memoryMB > 0
 
         val textColor = if (canCleanMemory) {
-            resources.getColor(R.attr.colorCleanMemoryStatCardOnBgActive)
+            resources.colorCleanMemoryStatCardOnBgActive
         } else {
-            resources.getColor(R.attr.colorCleanMemoryStatCardOnBgIdle)
+            resources.colorCleanMemoryStatCardOnBgIdle
         }
 
         val backgroundColor = if (canCleanMemory) {
-            resources.getColor(R.attr.colorCleanMemoryStatCardBgActive)
+            resources.colorCleanMemoryStatCardBgActive
         } else {
-            resources.getColor(R.attr.colorCleanMemoryStatCardBgIdle)
+            resources.colorCleanMemoryStatCardBgIdle
         }
 
         2.0 to CleanMemoryHomeItem(
@@ -151,7 +150,7 @@ class HomeViewModel : BaseViewModel() {
             list.add(it)
         }
 
-        val textColor = resources.getColor(android.R.attr.textColorPrimary)
+        val textColor = resources.textColorPrimary
         val tapToCallLabel = resources.getString(R.string.contact_tap_to_call)
 
         contacts.map {

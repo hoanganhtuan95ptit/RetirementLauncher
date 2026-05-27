@@ -6,9 +6,8 @@ import com.simple.launcher.retirement.presentation.base.ActionState
 import com.simple.launcher.retirement.presentation.base.BaseViewModel
 import com.simple.launcher.retirement.presentation.base.buildActionState
 import com.simple.launcher.retirement.utils.combineState
+import com.simple.launcher.retirement.utils.exts.*
 import com.simple.launcher.retirement.utils.text.*
-import com.simple.launcher.retirement.utils.exts.getString
-import com.simple.launcher.retirement.utils.exts.getColor
 import kotlinx.coroutines.flow.StateFlow
 
 class CallBlockPermissionViewModel : BaseViewModel() {
@@ -17,7 +16,7 @@ class CallBlockPermissionViewModel : BaseViewModel() {
         flow1 = resources,
         initialValue = RichText("")
     ) { resources ->
-        val color = resources.getColor(android.R.attr.textColorPrimary)
+        val color = resources.textColorPrimary
         resources.getString(R.string.call_block_title)
             .with(ForegroundColor(color), Bold)
             .build()
@@ -27,8 +26,8 @@ class CallBlockPermissionViewModel : BaseViewModel() {
         flow1 = resources,
         initialValue = RichText("")
     ) { resources ->
-        val color = resources.getColor(android.R.attr.textColorSecondary)
-        val highlightColor = resources.getColor(android.R.attr.colorAccent)
+        val color = resources.textColorSecondary
+        val highlightColor = resources.colorAccent
 
         resources.getString(R.string.call_block_desc)
             .with(ForegroundColor(color))
@@ -41,8 +40,8 @@ class CallBlockPermissionViewModel : BaseViewModel() {
         initialValue = ActionState.empty()
     ) { resources ->
 
-        val color = resources.getColor(com.google.android.material.R.attr.colorOnPrimary)
-        val backgroundColor = resources.getColor(android.R.attr.colorPrimary, android.graphics.Color.LTGRAY)
+        val color = resources.colorOnPrimary
+        val backgroundColor = resources.colorPrimary
 
         buildActionState(
             text = resources.getString(R.string.permission_grant),

@@ -18,11 +18,15 @@ import com.simple.launcher.retirement.presentation.base.buildBackIcon
 import com.simple.launcher.retirement.presentation.base.buildSearchState
 import com.simple.launcher.retirement.presentation.base.buildToolbarTitle
 import com.simple.launcher.retirement.utils.combineState
+import com.simple.launcher.retirement.utils.exts.colorOnPrimary
+import com.simple.launcher.retirement.utils.exts.colorPrimary
+import com.simple.launcher.retirement.utils.exts.colorSurface
 import com.simple.launcher.retirement.utils.image.ImagePath
 import com.simple.launcher.retirement.utils.image.ImageRes
 import com.simple.launcher.retirement.utils.text.RichText
 import com.simple.launcher.retirement.utils.exts.getString
-import com.simple.launcher.retirement.utils.exts.getColor
+import com.simple.launcher.retirement.utils.exts.textColorPrimary
+import com.simple.launcher.retirement.utils.exts.textColorSecondary
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -38,7 +42,7 @@ class ContactListViewModel(
         flow1 = resources,
         initialValue = ToolbarState.empty()
     ) { resources ->
-        val color = resources.getColor(android.R.attr.textColorPrimary)
+        val color = resources.textColorPrimary
         ToolbarState(
             title = buildToolbarTitle(resources.getString(R.string.contact_list_title), color),
             backIcon = buildBackIcon(color)
@@ -50,9 +54,9 @@ class ContactListViewModel(
         initialValue = SearchState.empty()
     ) { resources ->
 
-        val textColor = resources.getColor(android.R.attr.textColorPrimary)
-        val hintColor = resources.getColor(android.R.attr.textColorSecondary, android.graphics.Color.GRAY)
-        val backgroundColor = resources.getColor(com.google.android.material.R.attr.colorSurface, android.graphics.Color.LTGRAY)
+        val textColor = resources.textColorPrimary
+        val hintColor = resources.textColorSecondary
+        val backgroundColor = resources.colorSurface
 
         buildSearchState(
             hint = resources.getString(R.string.search),
@@ -67,8 +71,8 @@ class ContactListViewModel(
         initialValue = ActionState.empty()
     ) { resources ->
 
-        val color = resources.getColor(com.google.android.material.R.attr.colorOnPrimary)
-        val backgroundColor = resources.getColor(android.R.attr.colorPrimary, android.graphics.Color.LTGRAY)
+        val color = resources.colorOnPrimary
+        val backgroundColor = resources.colorPrimary
 
         buildActionState(
             text = resources.getString(R.string.save),

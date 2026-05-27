@@ -5,8 +5,9 @@ import com.simple.launcher.retirement.presentation.base.ActionState
 import com.simple.launcher.retirement.presentation.base.BaseViewModel
 import com.simple.launcher.retirement.presentation.base.buildActionState
 import com.simple.launcher.retirement.utils.combineState
+import com.simple.launcher.retirement.utils.exts.colorOnPrimary
+import com.simple.launcher.retirement.utils.exts.colorPrimary
 import com.simple.launcher.retirement.utils.exts.getString
-import com.simple.launcher.retirement.utils.exts.getColor
 import kotlinx.coroutines.flow.StateFlow
 
 class OnboardingViewModel : BaseViewModel() {
@@ -16,8 +17,8 @@ class OnboardingViewModel : BaseViewModel() {
         initialValue = ActionState.empty()
     ) { resources ->
 
-        val color = resources.getColor(com.google.android.material.R.attr.colorOnPrimary)
-        val backgroundColor = resources.getColor(android.R.attr.colorPrimary, android.graphics.Color.LTGRAY)
+        val color = resources.colorOnPrimary
+        val backgroundColor = resources.colorPrimary
 
         buildActionState(
             text = resources.getString(R.string.onboarding_start),

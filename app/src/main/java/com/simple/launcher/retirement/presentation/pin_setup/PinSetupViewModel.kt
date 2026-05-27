@@ -9,9 +9,11 @@ import com.simple.launcher.retirement.presentation.base.buildActionState
 import com.simple.launcher.retirement.presentation.base.buildBackIcon
 import com.simple.launcher.retirement.presentation.base.buildToolbarTitle
 import com.simple.launcher.retirement.utils.combineState
+import com.simple.launcher.retirement.utils.exts.colorOnPrimary
+import com.simple.launcher.retirement.utils.exts.colorPrimary
 import com.simple.launcher.retirement.utils.text.*
 import com.simple.launcher.retirement.utils.exts.getString
-import com.simple.launcher.retirement.utils.exts.getColor
+import com.simple.launcher.retirement.utils.exts.textColorPrimary
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -34,7 +36,7 @@ class PinSetupViewModel(
         flow1 = resources,
         initialValue = ToolbarState.empty()
     ) { resources ->
-        val color = resources.getColor(android.R.attr.textColorPrimary)
+        val color = resources.textColorPrimary
         ToolbarState(
             title = buildToolbarTitle(resources.getString(R.string.setting_pin), color),
             backIcon = buildBackIcon(color)
@@ -46,7 +48,7 @@ class PinSetupViewModel(
         flow2 = _state,
         initialValue = emptyText()
     ) { resources, state ->
-        val color = resources.getColor(android.R.attr.textColorPrimary)
+        val color = resources.textColorPrimary
         val resId = when (state) {
             State.ENTER_NEW_PIN -> R.string.pin_enter_new
             State.CONFIRM_NEW_PIN -> R.string.pin_confirm_new
@@ -63,8 +65,8 @@ class PinSetupViewModel(
         initialValue = ActionState.empty()
     ) { resources, actionRes ->
 
-        val color = resources.getColor(com.google.android.material.R.attr.colorOnPrimary)
-        val backgroundColor = resources.getColor(android.R.attr.colorPrimary, android.graphics.Color.LTGRAY)
+        val color = resources.colorOnPrimary
+        val backgroundColor = resources.colorPrimary
 
         buildActionState(
             text = resources.getString(actionRes),

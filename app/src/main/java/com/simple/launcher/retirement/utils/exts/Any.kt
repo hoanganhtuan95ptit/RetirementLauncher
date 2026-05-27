@@ -25,9 +25,3 @@ fun Map<String, Any>.getString(resId: Int): String {
         StringResStore.stringMapFlow.value[it]
     } ?: return ""
 }
-
-fun Map<String, Any>.getColor(@AttrRes attrId: Int, @ColorInt defaultColor: Int = android.graphics.Color.BLACK): Int {
-    return ThemeColorStore.idAndNameMap[attrId]?.let {
-        ThemeColorStore.colorMapFlow.value[it]
-    } ?: defaultColor
-}

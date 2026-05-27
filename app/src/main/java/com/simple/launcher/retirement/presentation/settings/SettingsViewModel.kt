@@ -19,7 +19,7 @@ import com.simple.launcher.retirement.utils.text.with
 import com.simple.launcher.retirement.utils.text.withStyleBodyLarge
 import com.simple.launcher.retirement.utils.text.withStyleTitleLarge
 import com.simple.launcher.retirement.utils.exts.getString
-import com.simple.launcher.retirement.utils.exts.getColor
+import com.simple.launcher.retirement.utils.exts.textColorPrimary
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -31,7 +31,7 @@ class SettingsViewModel : BaseViewModel() {
 
     val toolbar: StateFlow<ToolbarState> = combineState(flow1 = resources, initialValue = ToolbarState.empty()) { resources ->
 
-        val color = resources.getColor(android.R.attr.textColorPrimary)
+        val color = resources.textColorPrimary
         ToolbarState(
             title = buildToolbarTitle(resources.getString(R.string.settings_title), color),
             backIcon = buildBackIcon(color)
@@ -50,7 +50,7 @@ class SettingsViewModel : BaseViewModel() {
         initialValue = emptyList()
     ) { resources, hasPin, itemMap ->
 
-        val textColor = resources.getColor(android.R.attr.textColorPrimary)
+        val textColor = resources.textColorPrimary
 
         fun Int.toSettingHeader() = resources.getString(this)
             .withStyleTitleLarge()

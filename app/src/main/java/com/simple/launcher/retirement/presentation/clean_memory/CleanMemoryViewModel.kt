@@ -13,10 +13,7 @@ import com.simple.launcher.retirement.presentation.base.buildToolbarTitle
 import com.simple.launcher.retirement.utils.background.Background
 import com.simple.launcher.retirement.utils.background.emptyBackground
 import com.simple.launcher.retirement.utils.combineState
-import com.simple.launcher.retirement.utils.exts.asObjectOrNull
-import com.simple.launcher.retirement.utils.exts.getColor
-import com.simple.launcher.retirement.utils.exts.getString
-import com.simple.launcher.retirement.utils.exts.withAlpha
+import com.simple.launcher.retirement.utils.exts.*
 import com.simple.launcher.retirement.utils.image.ImageRes
 import com.simple.launcher.retirement.utils.image.RichImage
 import com.simple.launcher.retirement.utils.image.emptyImage
@@ -73,7 +70,7 @@ class CleanMemoryViewModel : BaseViewModel() {
         flow1 = resources,
         initialValue = ToolbarState.empty()
     ) { resources ->
-        val color = resources.getColor(android.R.attr.textColorPrimary)
+        val color = resources.textColorPrimary
         ToolbarState(
             title = buildToolbarTitle(resources.getString(R.string.clean_memory_title), color),
             backIcon = buildBackIcon(color)
@@ -88,12 +85,12 @@ class CleanMemoryViewModel : BaseViewModel() {
             is BoostState.Done -> resourceMap.getString(R.string.clean_memory_retry)
         }
 
-        val textColor = resourceMap.getColor(com.google.android.material.R.attr.colorOnPrimary, Color.LTGRAY)
+        val textColor = resourceMap.colorOnPrimary
 
         val backgroundColor = when (state) {
-            BoostState.IDLE -> resourceMap.getColor(android.R.attr.colorPrimary)
-            BoostState.BOOSTING -> resourceMap.getColor(android.R.attr.colorPrimary).withAlpha(0.2f)
-            is BoostState.Done -> resourceMap.getColor(android.R.attr.colorPrimary)
+            BoostState.IDLE -> resourceMap.colorPrimary
+            BoostState.BOOSTING -> resourceMap.colorPrimary.withAlpha(0.2f)
+            is BoostState.Done -> resourceMap.colorPrimary
         }
 
         ActionState(
@@ -101,7 +98,7 @@ class CleanMemoryViewModel : BaseViewModel() {
                 .withStyleHeadlineSmall()
                 .with(ForegroundColor(textColor), Bold)
                 .build(),
-            image = ImageRes(data = R.drawable.ic_boost_back_24dp, colorFilter = resourceMap.getColor(com.google.android.material.R.attr.colorOnPrimary)),
+            image = ImageRes(data = R.drawable.ic_boost_back_24dp, colorFilter = resourceMap.colorOnPrimary),
             imageShow = true,
 
             background = Background.Builder()
@@ -120,8 +117,8 @@ class CleanMemoryViewModel : BaseViewModel() {
         RingViewData(
             value = "${ramInfo.percentInt}%\n${ramInfo.usedGB}/${ramInfo.totalGB}"
                 .withStyleBodyLarge()
-                .with(ForegroundColor(resourceMap.getColor(com.google.android.material.R.attr.colorOnSurfaceVariant)))
-                .withFirst("${ramInfo.percentInt}%", ForegroundColor(resourceMap.getColor(android.R.attr.colorPrimary)), TextSize(28), Bold)
+                .with(ForegroundColor(resourceMap.colorOnSurfaceVariant))
+                .withFirst("${ramInfo.percentInt}%", ForegroundColor(resourceMap.colorPrimary), TextSize(28), Bold)
                 .build()
         )
     }
@@ -145,28 +142,28 @@ class CleanMemoryViewModel : BaseViewModel() {
     ) { resourceMap, ramInfo ->
 
         val background = Background.Builder()
-            .backgroundColor(resourceMap.getColor(com.google.android.material.R.attr.colorSurface))
+            .backgroundColor(resourceMap.colorSurface)
             .cornerRadius(DP.DP_16)
             .build()
 
         RamViewData(
             usedRichText = "${ramInfo.usedGB}\n${resourceMap.getString(R.string.clean_memory_stat_used)}"
                 .withStyleBodyMedium()
-                .with(ForegroundColor(resourceMap.getColor(com.google.android.material.R.attr.colorOnSurface)))
+                .with(ForegroundColor(resourceMap.colorOnSurface))
                 .withFirst(ramInfo.usedGB, TextSize(20), Bold)
                 .build(),
             usedBackground = background,
 
             freedRichText = "${ramInfo.freeGB}\n${resourceMap.getString(R.string.clean_memory_stat_free)}"
                 .withStyleBodyMedium()
-                .with(ForegroundColor(resourceMap.getColor(com.google.android.material.R.attr.colorOnSurface)))
+                .with(ForegroundColor(resourceMap.colorOnSurface))
                 .withFirst(ramInfo.freeGB, TextSize(20), Bold)
                 .build(),
             freedBackground = background,
 
             totalRichText = "${ramInfo.totalGB}\n${resourceMap.getString(R.string.clean_memory_stat_total)}"
                 .withStyleBodyMedium()
-                .with(ForegroundColor(resourceMap.getColor(com.google.android.material.R.attr.colorOnSurface)))
+                .with(ForegroundColor(resourceMap.colorOnSurface))
                 .withFirst(ramInfo.totalGB, TextSize(20), Bold)
                 .build(),
             totalBackground = background,
@@ -193,24 +190,25 @@ class CleanMemoryViewModel : BaseViewModel() {
 
         val sub = resourceMap.getString(R.string.clean_memory_result_sub)
 
-        ResultViewData(
+        val resultViewData1 = ResultViewData(
             show = state is BoostState.Done,
 
             text = "$text\n$sub"
                 .withStyleBodyMedium()
-                .with(ForegroundColor(resourceMap.getColor(com.google.android.material.R.attr.colorOnSurface)))
+                .with(ForegroundColor(resourceMap.colorOnSurface))
                 .withFirst(text, TextSize(18), Bold)
-                .withFirst(freeMB.toString(), TextSize(24), ForegroundColor(resourceMap.getColor(com.google.android.material.R.attr.colorErrorContainer)))
+                .withFirst(freeMB.toString(), TextSize(24), ForegroundColor(resourceMap.colorErrorContainer))
                 .build(),
 
             image = ImageRes(R.drawable.ic_check_circle),
 
             background = Background.Builder()
-                .backgroundColor(resourceMap.getColor(android.R.attr.colorPrimary).withAlpha(0.2f))
+                .backgroundColor(resourceMap.colorPrimary.withAlpha(0.2f))
                 .cornerRadius(DP.DP_16)
-                .stroke(DP.DP_1, resourceMap.getColor(android.R.attr.colorPrimary))
+                .stroke(DP.DP_1, resourceMap.colorPrimary)
                 .build()
         )
+        resultViewData1
     }
 
     val screenViewData: StateFlow<ScreenViewData> = combineState(

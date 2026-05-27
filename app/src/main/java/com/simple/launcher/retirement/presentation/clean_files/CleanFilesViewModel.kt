@@ -13,11 +13,7 @@ import com.simple.launcher.retirement.presentation.base.buildBackIcon
 import com.simple.launcher.retirement.presentation.base.buildToolbarTitle
 import com.simple.launcher.retirement.utils.background.Background
 import com.simple.launcher.retirement.utils.combineState
-import com.simple.launcher.retirement.utils.exts.asObjectOrNull
-import com.simple.launcher.retirement.utils.exts.getColor
-import com.simple.launcher.retirement.utils.exts.getString
-import com.simple.launcher.retirement.utils.exts.orZero
-import com.simple.launcher.retirement.utils.exts.withAlpha
+import com.simple.launcher.retirement.utils.exts.*
 import com.simple.launcher.retirement.utils.image.ImageRes
 import com.simple.launcher.retirement.utils.image.RichImage
 import com.simple.launcher.retirement.utils.image.emptyImage
@@ -52,7 +48,7 @@ class CleanFilesViewModel : BaseViewModel() {
 
     val toolbar: StateFlow<ToolbarState> = combineState(flow1 = resources, initialValue = ToolbarState.empty()) { resources ->
 
-        val color = resources.getColor(android.R.attr.textColorPrimary)
+        val color = resources.textColorPrimary
 
         ToolbarState(
             title = buildToolbarTitle(resources.getString(R.string.clean_files_title), color),
@@ -69,12 +65,12 @@ class CleanFilesViewModel : BaseViewModel() {
         }
 
         val backgroundColor = when {
-            screenState is ClearState.IDLE -> resourceMap.getColor(android.R.attr.colorPrimary)
-            screenState is ClearState.Scanning -> resourceMap.getColor(android.R.attr.colorPrimary).withAlpha(0.2f)
-            else -> resourceMap.getColor(android.R.attr.colorPrimary)
+            screenState is ClearState.IDLE -> resourceMap.colorPrimary
+            screenState is ClearState.Scanning -> resourceMap.colorPrimary.withAlpha(0.2f)
+            else -> resourceMap.colorPrimary
         }
 
-        val textColor = resourceMap.getColor(com.google.android.material.R.attr.colorOnPrimary, Color.LTGRAY)
+        val textColor = resourceMap.colorOnPrimary
 
         ActionState(
             text = labels
@@ -82,7 +78,7 @@ class CleanFilesViewModel : BaseViewModel() {
                 .with(ForegroundColor(textColor), Bold)
                 .build(),
 
-            image = ImageRes(data = R.drawable.ic_clear_files_black_24dp, colorFilter = resourceMap.getColor(com.google.android.material.R.attr.colorOnPrimary)),
+            image = ImageRes(data = R.drawable.ic_clear_files_black_24dp, colorFilter = resourceMap.colorOnPrimary),
             imageShow = true,
 
             background = Background.Builder()
@@ -99,8 +95,8 @@ class CleanFilesViewModel : BaseViewModel() {
         initialValue = RingViewData(showIcon = true)
     ) { resources, state, count ->
 
-        val primaryColor = resources.getColor(android.R.attr.textColorPrimary)
-        val secondaryColor = resources.getColor(android.R.attr.textColorSecondary)
+        val primaryColor = resources.textColorPrimary
+        val secondaryColor = resources.textColorSecondary
 
         val resultStr by lazy {
             state.asObjectOrNull<ClearState.Done>()?.totalFiles.orZero().toString()
@@ -114,7 +110,7 @@ class CleanFilesViewModel : BaseViewModel() {
                 .build()
         ) else if (state is ClearState.IDLE || state is ClearState.Scanning) RingViewData(
             showIcon = true,
-            icon = ImageRes(R.drawable.ic_clear_files_black_24dp, resources.getColor(android.R.attr.colorPrimary)),
+            icon = ImageRes(R.drawable.ic_clear_files_black_24dp, resources.colorPrimary),
         ) else RingViewData(
             text = (resultStr + "\n" + resources.getString(R.string.clean_result_files_deleted))
                 .withStyleBodyLarge()
@@ -126,7 +122,7 @@ class CleanFilesViewModel : BaseViewModel() {
 
     val statusText: StateFlow<RichText> = combineState(flow1 = resources, flow2 = screenState, flow3 = strangeFileCount, initialValue = emptyText()) { resources, state, count ->
 
-        val color = resources.getColor(android.R.attr.textColorSecondary)
+        val color = resources.textColorSecondary
 
         val text = if (state is ClearState.IDLE) if (count > 0) {
 
@@ -175,11 +171,11 @@ class CleanFilesViewModel : BaseViewModel() {
                     .build(),
                 label = resources.getString(it.labelRes)
                     .withStyleBodyLarge()
-                    .with(ForegroundColor(resources.getColor(com.google.android.material.R.attr.colorOnSurface)))
+                    .with(ForegroundColor(resources.colorOnSurface))
                     .build(),
                 numberFile = numberFile
                     .withStyleBodyMedium()
-                    .with(ForegroundColor(resources.getColor(com.google.android.material.R.attr.colorOnSurface)))
+                    .with(ForegroundColor(resources.colorOnSurface))
                     .build(),
                 showSelected = showSelected
             )
@@ -201,28 +197,28 @@ class CleanFilesViewModel : BaseViewModel() {
             show = true,
             title = resources.getString(R.string.clean_result_title)
                 .withStyleBodyLarge()
-                .with(ForegroundColor(resources.getColor(com.google.android.material.R.attr.colorOnSurface)))
+                .with(ForegroundColor(resources.colorOnSurface))
                 .build(),
 
             resultFilesImage = ImageRes(R.drawable.ic_file_black_24dp, "#FFBB00".toColorInt()),
             resultFilesLabel = "${state.totalFiles.orZero()}\n${resources.getString(R.string.clean_result_files_deleted)}"
                 .withStyleBodyMedium()
-                .with(ForegroundColor(resources.getColor(com.google.android.material.R.attr.colorOnSurface)))
+                .with(ForegroundColor(resources.colorOnSurface))
                 .withFirst("${state.totalFiles.orZero()}", TextSize(24), Bold)
                 .build(),
             resultFilesBackground = Background.Builder()
-                .backgroundColor(resources.getColor(com.google.android.material.R.attr.colorSurface))
+                .backgroundColor(resources.colorSurface)
                 .cornerRadius(DP.DP_24)
                 .build(),
 
             resultSpaceImage = ImageRes(R.drawable.ic_clear_files_black_24dp, "#FF4343".toColorInt()),
             resultSpaceLabel = "${spaceLabel}\n${resources.getString(R.string.clean_result_space_freed)}"
                 .withStyleBodyMedium()
-                .with(ForegroundColor(resources.getColor(com.google.android.material.R.attr.colorOnSurface)))
+                .with(ForegroundColor(resources.colorOnSurface))
                 .withFirst(spaceLabel, TextSize(24), Bold)
                 .build(),
             resultSpaceBackground = Background.Builder()
-                .backgroundColor(resources.getColor(com.google.android.material.R.attr.colorSurface))
+                .backgroundColor(resources.colorSurface)
                 .cornerRadius(DP.DP_24)
                 .build()
 

@@ -15,8 +15,7 @@ import com.simple.launcher.retirement.presentation.base.buildActionState
 import com.simple.launcher.retirement.presentation.base.buildBackIcon
 import com.simple.launcher.retirement.presentation.base.buildToolbarTitle
 import com.simple.launcher.retirement.utils.combineState
-import com.simple.launcher.retirement.utils.exts.getColor
-import com.simple.launcher.retirement.utils.exts.getString
+import com.simple.launcher.retirement.utils.exts.*
 import com.simple.launcher.retirement.utils.image.ImageDrawable
 import com.simple.launcher.retirement.utils.image.ImagePath
 import com.simple.launcher.retirement.utils.image.ImageRes
@@ -42,7 +41,7 @@ class ReorderViewModel(
         flow1 = resources,
         initialValue = ToolbarState.empty()
     ) { resources ->
-        val color = resources.getColor(android.R.attr.textColorPrimary)
+        val color = resources.textColorPrimary
         val titleRes = if (type == ReorderType.APPS) R.string.reorder_apps_title else R.string.reorder_contacts_title
         ToolbarState(
             title = buildToolbarTitle(resources.getString(titleRes), color),
@@ -55,8 +54,8 @@ class ReorderViewModel(
         initialValue = ActionState.empty()
     ) { resources ->
 
-        val color = resources.getColor(com.google.android.material.R.attr.colorOnPrimary)
-        val backgroundColor = resources.getColor(android.R.attr.colorPrimary, android.graphics.Color.LTGRAY)
+        val color = resources.colorOnPrimary
+        val backgroundColor = resources.colorPrimary
 
         buildActionState(
             text = resources.getString(R.string.done),
@@ -77,7 +76,7 @@ class ReorderViewModel(
                     id = app.packageName,
                     label = app.label
                         .withStyleBodyLarge()
-                        .with(ForegroundColor(resources.value.getColor(com.google.android.material.R.attr.colorOnSurface)))
+                        .with(ForegroundColor(resources.value.colorOnSurface))
                         .build(),
                     icon = ImageDrawable(app.icon)
                 )
@@ -96,7 +95,7 @@ class ReorderViewModel(
                     id = contact.id,
                     label = contact.name
                         .withStyleBodyLarge()
-                        .with(ForegroundColor(resources.value.getColor(com.google.android.material.R.attr.colorOnSurface)))
+                        .with(ForegroundColor(resources.value.colorOnSurface))
                         .build(),
                     icon = photo,
                     data = contact
