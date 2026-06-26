@@ -2,14 +2,22 @@ package com.simple.launcher.retirement.presentation.home.services
 
 import androidx.fragment.app.Fragment
 import com.simple.launcher.retirement.presentation.home.HomeFragment
+import com.simple.launcher.retirement.presentation.home.HomeViewModel
 import com.simple.launcher.retirement.utils.services.FragmentViewCreatedService
 
 abstract class HomeService : FragmentViewCreatedService {
+
+    protected lateinit var homeViewModel: HomeViewModel
 
     abstract fun setup(homeFragment: HomeFragment)
 
     final override fun setup(fragment: Fragment) {
 
-        if (fragment is HomeFragment) setup(homeFragment = fragment)
+        if (fragment is HomeFragment) {
+
+            homeViewModel = fragment.viewModel
+
+            setup(homeFragment = fragment)
+        }
     }
 }

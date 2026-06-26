@@ -1,4 +1,4 @@
-package com.simple.launcher.retirement.presentation.home.adapter
+package com.simple.launcher.retirement.presentation.home.services.contact
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,6 +10,7 @@ import com.simple.deeplink.sendDeeplink
 import com.simple.launcher.retirement.databinding.ItemContactBinding
 import com.simple.launcher.retirement.domain.model.ContactEntity
 import com.simple.launcher.retirement.presentation.DeepLinks
+import com.simple.launcher.retirement.presentation.home.adapter.HomeItem
 import com.simple.launcher.retirement.utils.background.Background
 import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.getItem

@@ -1,4 +1,4 @@
-package com.simple.launcher.retirement.presentation.home.services.clock
+package com.simple.launcher.retirement.presentation.home.services.contact
 
 import androidx.fragment.app.viewModels
 import com.simple.auto.register.AutoRegister
@@ -8,13 +8,13 @@ import com.simple.launcher.retirement.utils.services.launchCollect
 import kotlinx.coroutines.flow.filterNotNull
 
 @AutoRegister([HomeFragment::class])
-class ClockHomeService : HomeService() {
+class ContactHomeService : HomeService() {
 
     override fun setup(homeFragment: HomeFragment) {
 
-        val viewModel = homeFragment.viewModels<ClockViewModel>().value
+        val viewModel = homeFragment.viewModels<ContactViewModel>().value
 
-        viewModel.timeViewItemList.filterNotNull().launchCollect(homeFragment.viewLifecycleOwner) {
+        viewModel.contactViewItemList.filterNotNull().launchCollect(homeFragment.viewLifecycleOwner) {
 
             homeViewModel.updateItem(it)
         }
