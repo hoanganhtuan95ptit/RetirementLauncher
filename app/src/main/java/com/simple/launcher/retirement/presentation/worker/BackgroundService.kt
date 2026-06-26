@@ -30,6 +30,7 @@ class BackgroundService : Service() {
 
         workers += AppMonitoringWorker(this)
         workers += FileWatcherWorker(this)
+        workers += EmergencyCallWorker(this)
 
         // Mỗi worker tự lắng nghe config và on/off tương ứng
         workers.forEach { it.attach(serviceScope) }

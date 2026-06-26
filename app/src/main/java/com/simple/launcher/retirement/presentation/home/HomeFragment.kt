@@ -2,6 +2,7 @@ package com.simple.launcher.retirement.presentation.home
 
 import android.graphics.Rect
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,7 +30,7 @@ import com.simple.launcher.retirement.utils.size.DP
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
-    private val viewModel: HomeViewModel by activityViewModels {
+    val viewModel: HomeViewModel by activityViewModels {
         HomeViewModelFactory(GetHomeAppsUseCase.instance, FileRepository.instance, MemoryRepository.instance)
     }
 
@@ -59,6 +60,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
         items.attachAdapter().observe(this@HomeFragment) { (items, adapters) ->
 
+            Log.d("tuanha", "observeData: ${items.size}")
             binding.rvApps.submitListAndAwait(items, adapters, true)
         }
     }

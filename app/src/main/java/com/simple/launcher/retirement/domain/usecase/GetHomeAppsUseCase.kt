@@ -1,5 +1,6 @@
 package com.simple.launcher.retirement.domain.usecase
 
+import android.util.Log
 import com.simple.launcher.retirement.domain.model.HomeContentEntity
 import com.simple.launcher.retirement.domain.repository.AppRepository
 import com.simple.launcher.retirement.domain.repository.ContactRepository
@@ -17,6 +18,7 @@ class GetHomeAppsUseCase(
     private val appRepository: AppRepository,
     private val contactRepository: ContactRepository
 ) {
+
     // Scope riêng cho usecase — tồn tại suốt vòng đời của singleton instance
     private val usecaseScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
@@ -32,6 +34,7 @@ class GetHomeAppsUseCase(
     fun asFlow(): Flow<List<HomeContentEntity>> = sharedFlow
 
     operator fun invoke(): List<HomeContentEntity> {
+        Log.d("tuanha", "invoke: ")
         val allApps = appRepository.getInstalledApps()
         val selectedPackages = appRepository.getSelectedPackages()
 

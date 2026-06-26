@@ -47,9 +47,10 @@ class SettingsViewModel : BaseViewModel() {
     val items: StateFlow<List<ViewItem>> = combineState(
         flow1 = resources,
         flow2 = repository.hasPinFlow(),
-        flow3 = _itemMap,
+        flow3 = repository.isEmergencyCallEnabledFlow(),
+        flow4 = _itemMap,
         initialValue = emptyList()
-    ) { resources, hasPin, itemMap ->
+    ) { resources, hasPin, isEmergencyEnabled, itemMap ->
 
         val textColor = resources.textColorPrimary
 
@@ -82,6 +83,15 @@ class SettingsViewModel : BaseViewModel() {
             // Group 2: Security & Protection
             add(SettingItem.ORDER_HEADER_SECURITY to listOf(
                 SettingHeaderItem(R.string.setting_header_security.toSettingHeader())
+            ))
+            add(SettingItem.ORDER_EMERGENCY_CALL_TOGGLE to listOf(
+                SettingItem(
+                    SettingItem.ID_EMERGENCY_CALL_TOGGLE,
+                    R.string.setting_emergency_call.toSettingRichText(),
+                    ImageRes(android.R.drawable.ic_menu_call),
+                    isSwitch = true,
+                    isChecked = isEmergencyEnabled
+                )
             ))
             if (hasPin)add(SettingItem.ORDER_PIN to listOf(
                 SettingItem(SettingItem.ID_PIN, R.string.setting_pin.toSettingRichText(), ImageRes(android.R.drawable.ic_lock_idle_lock))

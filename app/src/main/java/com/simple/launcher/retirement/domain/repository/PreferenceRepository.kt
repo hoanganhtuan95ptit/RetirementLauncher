@@ -33,6 +33,19 @@ interface PreferenceRepository {
     fun setPocketModeEnabled(enabled: Boolean)
     fun isPocketModeEnabledFlow(): Flow<Boolean>
 
+    fun isEmergencyCallEnabled(): Boolean
+    fun setEmergencyCallEnabled(enabled: Boolean)
+    fun isEmergencyCallEnabledFlow(): Flow<Boolean>
+
+    fun getEmergencyPhoneNumber(): String
+    fun setEmergencyPhoneNumber(number: String)
+
+    fun getLastUserActivity(): Long
+    fun setLastUserActivity(timestamp: Long)
+
+    fun getLastEmergencyIndex(): Int
+    fun setLastEmergencyIndex(index: Int)
+
     companion object {
         val instance: PreferenceRepository by lazy { PreferenceRepositoryImpl(MainApplication.instance) }
     }

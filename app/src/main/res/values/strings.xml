@@ -12,6 +12,7 @@
     <string name="setting_contact_list">Thiết lập liên hệ nhanh</string>
     <string name="setting_clean_files">Dọn dẹp file lạ</string>
     <string name="setting_clean_memory">Giải phóng bộ nhớ</string>
+    <string name="setting_emergency_call">Bật cuộc gọi khẩn cấp tự động (theo liên hệ nhanh)</string>
     <string name="setting_app_monitoring">Giám sát ứng dụng</string>
     <string name="setting_auto_cleanup_apk">Tự động xóa APK</string>
     <string name="setting_call_block">Chặn cuộc gọi lạ</string>
@@ -123,4 +124,13 @@
     <string name="done">Hoàn tất</string>
     <string name="app_list_empty_error">Vui lòng chọn ít nhất một ứng dụng</string>
     <string name="contact_list_empty_error">Vui lòng chọn ít nhất một liên hệ</string>
+
+    <!-- Emergency Call -->
+    <string name="emergency_call_title">Cuộc gọi khẩn cấp</string>
+    <string name="emergency_call_desc">Nếu không sử dụng điện thoại sau 12 tiếng, ứng dụng sẽ tự động thực hiện cuộc gọi khẩn cấp.</string>
+    <string name="emergency_call_enable">Kích hoạt tính năng</string>
+    <string name="emergency_call_phone_number">Số điện thoại khẩn cấp</string>
+    <string name="emergency_call_phone_number_hint">Nhập số điện thoại</string>
+    <string name="emergency_call_save_success">Đã lưu cấu hình cuộc gọi khẩn cấp</string>
+    <string name="emergency_call_permission_denied">Cần quyền gọi điện để thực hiện tính năng này</string>
 </resources>

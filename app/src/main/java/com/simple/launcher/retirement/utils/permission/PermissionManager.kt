@@ -85,6 +85,10 @@ object PermissionManager {
         return PreferenceRepository.instance.hasPin()
     }
 
+    fun hasCallPermission(): Boolean {
+        return ContextCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED
+    }
+
 
     /**
      * Yêu cầu quyền Usage Stats.

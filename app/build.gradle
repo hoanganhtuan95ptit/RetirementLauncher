@@ -15,7 +15,7 @@ if (localPropertiesFile.exists()) {
 }
 
 // Apply config from retirement_launcher if exists (keep specific logic for signing)
-def retirementPath = localProperties.getProperty('module.retirement_launcher')
+def retirementPath = localProperties.getProperty('module.config')
 if (retirementPath != null) {
     def configFile = file("${retirementPath}/config.gradle")
     if (configFile.exists()) {

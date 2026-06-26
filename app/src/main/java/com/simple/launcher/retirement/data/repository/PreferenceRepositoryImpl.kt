@@ -19,12 +19,17 @@ class PreferenceRepositoryImpl(context: Context) : PreferenceRepository {
         private const val KEY_FILE_CLEANUP_ENABLED = "file_cleanup_enabled"
         private const val KEY_CALL_BLOCK_ENABLED = "call_block_enabled"
         private const val KEY_POCKET_MODE_ENABLED = "pocket_mode_enabled"
+        private const val KEY_EMERGENCY_CALL_ENABLED = "emergency_call_enabled"
+        private const val KEY_EMERGENCY_PHONE_NUMBER = "emergency_phone_number"
+        private const val KEY_LAST_USER_ACTIVITY = "last_user_activity"
+        private const val KEY_LAST_EMERGENCY_INDEX = "last_emergency_index"
     }
 
     private val _appBlockEnabled = MutableStateFlow(isAppBlockEnabled())
     private val _fileCleanupEnabled = MutableStateFlow(isFileCleanupEnabled())
     private val _callBlockEnabled = MutableStateFlow(isCallBlockEnabled())
     private val _pocketModeEnabled = MutableStateFlow(isPocketModeEnabled())
+    private val _emergencyCallEnabled = MutableStateFlow(isEmergencyCallEnabled())
     private val _hasPin = MutableStateFlow(hasPin())
 
     override fun getPin(): String? = sharedPrefs.getString(KEY_PIN, null)
@@ -84,4 +89,31 @@ class PreferenceRepositoryImpl(context: Context) : PreferenceRepository {
     }
 
     override fun isPocketModeEnabledFlow(): Flow<Boolean> = _pocketModeEnabled.asStateFlow()
+
+    override fun isEmergencyCallEnabled(): Boolean = sharedPrefs.getBoolean(KEY_EMERGENCY_CALL_ENABLED, false)
+
+    override fun setEmergencyCallEnabled(enabled: Boolean) {
+        sharedPrefs.edit { putBoolean(KEY_EMERGENCY_CALL_ENABLED, enabled) }
+        _emergencyCallEnabled.value = enabled
+    }
+
+    override fun isEmergencyCallEnabledFlow(): Flow<Boolean> = _emergencyCallEnabled.asStateFlow()
+
+    override fun getEmergencyPhoneNumber(): String = sharedPrefs.getString(KEY_EMERGENCY_PHONE_NUMBER, "") ?: ""
+
+    override fun setEmergencyPhoneNumber(number: String) {
+        sharedPrefs.edit { putString(KEY_EMERGENCY_PHONE_NUMBER, number) }
+    }
+
+    override fun getLastUserActivity(): Long = sharedPrefs.getLong(KEY_LAST_USER_ACTIVITY, System.currentTimeMillis())
+
+    override fun setLastUserActivity(timestamp: Long) {
+        sharedPrefs.edit { putLong(KEY_LAST_USER_ACTIVITY, timestamp) }
+    }
+
+    override fun getLastEmergencyIndex(): Int = sharedPrefs.getInt(KEY_LAST_EMERGENCY_INDEX, -1)
+
+    override fun setLastEmergencyIndex(index: Int) {
+        sharedPrefs.edit { putInt(KEY_LAST_EMERGENCY_INDEX, index) }
+    }
 }

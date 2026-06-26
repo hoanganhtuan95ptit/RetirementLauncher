@@ -26,6 +26,7 @@ object DeepLinks {
     const val REORDER       = "app://reorder"
     const val PIN_SETUP     = "app://pin_setup"
     const val PIN_VERIFY    = "app://pin_verify"
+    const val EMERGENCY_CALL = "app://emergency_call"
 
     // ─── Permissions ──────────────────────────────────────────────────────────
 

@@ -12,12 +12,21 @@ import com.simple.launcher.retirement.presentation.base.BaseViewModel
 import com.simple.launcher.retirement.presentation.home.adapter.AppHomeItem
 import com.simple.launcher.retirement.presentation.home.adapter.CleanFilesHomeItem
 import com.simple.launcher.retirement.presentation.home.adapter.CleanMemoryHomeItem
-import com.simple.launcher.retirement.presentation.home.adapter.ClockHomeItem
 import com.simple.launcher.retirement.presentation.home.adapter.ContactHomeItem
 import com.simple.launcher.retirement.presentation.home.adapter.HeaderHomeItem
+import com.simple.launcher.retirement.presentation.home.services.time.ClockHomeItem
 import com.simple.launcher.retirement.utils.background.Background
 import com.simple.launcher.retirement.utils.combineState
-import com.simple.launcher.retirement.utils.exts.*
+import com.simple.launcher.retirement.utils.exts.colorCleanFilesStatCardBgActive
+import com.simple.launcher.retirement.utils.exts.colorCleanFilesStatCardBgIdle
+import com.simple.launcher.retirement.utils.exts.colorCleanFilesStatCardOnBgActive
+import com.simple.launcher.retirement.utils.exts.colorCleanFilesStatCardOnBgIdle
+import com.simple.launcher.retirement.utils.exts.colorCleanMemoryStatCardBgActive
+import com.simple.launcher.retirement.utils.exts.colorCleanMemoryStatCardBgIdle
+import com.simple.launcher.retirement.utils.exts.colorCleanMemoryStatCardOnBgActive
+import com.simple.launcher.retirement.utils.exts.colorCleanMemoryStatCardOnBgIdle
+import com.simple.launcher.retirement.utils.exts.getString
+import com.simple.launcher.retirement.utils.exts.textColorPrimary
 import com.simple.launcher.retirement.utils.image.ImageDrawable
 import com.simple.launcher.retirement.utils.image.ImagePath
 import com.simple.launcher.retirement.utils.image.ImageRes
@@ -115,7 +124,11 @@ class HomeViewModel : BaseViewModel() {
 
     val appAndContacts = GetHomeAppsUseCase.instance.asFlow()
 
-    val appsAndContactsViewItemList: StateFlow<Pair<Double, List<ViewItem>>> = combineState(flow1 = resources, flow2 = appAndContacts, initialValue = 3.0 to emptyList()) { resources, entities ->
+    val appsAndContactsViewItemList: StateFlow<Pair<Double, List<ViewItem>>> = combineState(
+        resources,
+        appAndContacts,
+        3.0 to emptyList()
+    ) { resources, entities ->
 
         val list = arrayListOf<ViewItem>()
 
@@ -164,18 +177,25 @@ class HomeViewModel : BaseViewModel() {
     }
 
 
-    val viewItemMap = MutableStateFlow<Map<Double, List<ViewItem>>>(mapOf(0.0 to listOf(ClockHomeItem)))
+    val viewItemMap = MutableStateFlow<Map<Double, List<ViewItem>>>(mapOf())
 
     val items: StateFlow<List<ViewItem>> = combineState(
-        flow1 = cleanFilesViewItemList,
-        flow2 = cleanMemoryViewItemList,
-        flow3 = appsAndContactsViewItemList,
-        flow4 = viewItemMap, initialValue = emptyList()
+        cleanFilesViewItemList,
+        cleanMemoryViewItemList,
+        appsAndContactsViewItemList,
+        viewItemMap, initialValue = emptyList()
     ) { cleanFiles, cleanMemory, appsAndContacts, viewItemMap ->
 
-        (listOf(cleanFiles, cleanMemory, appsAndContacts) + viewItemMap.toList())
+        (listOf(appsAndContacts) + viewItemMap.toList())
             .sortedBy { it.first }
             .flatMap { it.second }
+    }
+
+
+    fun updateItem(order: Int, list: List<ViewItem>) {
+        viewItemMap.value = viewItemMap.value.toMutableMap().apply {
+            put(order.toDouble(), list)
+        }
     }
 
     fun updateItem(order: Double, list: List<ViewItem>) {

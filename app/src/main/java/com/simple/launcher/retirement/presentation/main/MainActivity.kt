@@ -48,8 +48,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         val hasUsagePerm = PermissionManager.hasUsageStatsPermission()
         val hasOverlayPerm = PermissionManager.hasOverlayPermission()
         val appBlockEnabled = repository.isAppBlockEnabled()
-        Log.d(TAG, "BackgroundService | hasFilePerm=$hasFilePerm | fileCleanupEnabled=$fileCleanupEnabled | hasUsagePerm=$hasUsagePerm | appBlockEnabled=$appBlockEnabled")
-        if ((hasFilePerm && fileCleanupEnabled) || (hasUsagePerm && hasOverlayPerm && appBlockEnabled)) {
+        val emergencyCallEnabled = repository.isEmergencyCallEnabled()
+        Log.d(TAG, "BackgroundService | hasFilePerm=$hasFilePerm | fileCleanupEnabled=$fileCleanupEnabled | hasUsagePerm=$hasUsagePerm | appBlockEnabled=$appBlockEnabled | emergencyCallEnabled=$emergencyCallEnabled")
+        if ((hasFilePerm && fileCleanupEnabled) || (hasUsagePerm && hasOverlayPerm && appBlockEnabled) || emergencyCallEnabled) {
             startBackgroundService()
         }
 
@@ -59,7 +60,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
             val deeplink = when {
                 !isOnboardingCompleted -> DeepLinks.ONBOARDING
-                isHomeIntent -> DeepLinks.HOME
+                isHomeIntent -> return
                 else -> DeepLinks.SETTINGS
             }
 
@@ -110,6 +111,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         val repository = PreferenceRepository.instance
         val shouldStart = (PermissionManager.hasFilePermission() && repository.isFileCleanupEnabled())
             || (PermissionManager.hasUsageStatsPermission() && PermissionManager.hasOverlayPermission() && repository.isAppBlockEnabled())
+            || repository.isEmergencyCallEnabled()
         if (shouldStart) startBackgroundService()
     }
 

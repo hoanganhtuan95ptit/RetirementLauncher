@@ -1,10 +1,11 @@
-package com.simple.launcher.retirement.presentation.home.adapter
+package com.simple.launcher.retirement.presentation.home.services.time
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.simple.adapter.Adapter
 import com.simple.adapter.ViewItemAdapter
 import com.simple.launcher.retirement.databinding.ItemClockBinding
+import com.simple.launcher.retirement.presentation.home.adapter.HomeItem
 
 object ClockHomeItem : HomeItem {
     override val spanSize: Int = HomeItem.TOTAL_COLUMNS // full width
