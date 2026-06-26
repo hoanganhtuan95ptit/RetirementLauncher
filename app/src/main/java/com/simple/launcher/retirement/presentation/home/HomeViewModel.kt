@@ -14,7 +14,6 @@ import com.simple.launcher.retirement.presentation.home.adapter.CleanFilesHomeIt
 import com.simple.launcher.retirement.presentation.home.adapter.CleanMemoryHomeItem
 import com.simple.launcher.retirement.presentation.home.adapter.ContactHomeItem
 import com.simple.launcher.retirement.presentation.home.adapter.HeaderHomeItem
-import com.simple.launcher.retirement.presentation.home.services.time.ClockHomeItem
 import com.simple.launcher.retirement.utils.background.Background
 import com.simple.launcher.retirement.utils.combineState
 import com.simple.launcher.retirement.utils.exts.colorCleanFilesStatCardBgActive
@@ -177,7 +176,7 @@ class HomeViewModel : BaseViewModel() {
     }
 
 
-    val viewItemMap = MutableStateFlow<Map<Double, List<ViewItem>>>(mapOf())
+    val viewItemMap = MutableStateFlow<MutableMap<Double, List<ViewItem>>>(mutableMapOf())
 
     val items: StateFlow<List<ViewItem>> = combineState(
         cleanFilesViewItemList,
@@ -193,13 +192,11 @@ class HomeViewModel : BaseViewModel() {
 
 
     fun updateItem(order: Int, list: List<ViewItem>) {
-        viewItemMap.value = viewItemMap.value.toMutableMap().apply {
-            put(order.toDouble(), list)
-        }
+        updateItem(order.toDouble(), list)
     }
 
     fun updateItem(order: Double, list: List<ViewItem>) {
-        viewItemMap.value = viewItemMap.value.toMutableMap().apply {
+        viewItemMap.value = viewItemMap.value.apply {
             put(order, list)
         }
     }

@@ -1,4 +1,4 @@
-package com.simple.launcher.retirement.presentation.home.services.time
+package com.simple.launcher.retirement.presentation.home.services.clock
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
