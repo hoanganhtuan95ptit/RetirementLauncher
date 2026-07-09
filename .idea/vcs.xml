@@ -2,6 +2,10 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$/../1CorePrivate" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../Adapter" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../AutoRegister" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../ComponentService" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../Deeplink" vcs="Git" />
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../TProject" vcs="Git" />
   </component>

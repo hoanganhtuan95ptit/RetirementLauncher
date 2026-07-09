@@ -1,5 +1,6 @@
 package com.simple.launcher.retirement.presentation.settings.services
 
+import android.graphics.Color
 import androidx.fragment.app.Fragment
 import com.simple.component.service.FragmentViewCreatedService
 import com.simple.launcher.retirement.presentation.settings.SettingsFragment
@@ -8,6 +9,7 @@ import com.simple.launcher.retirement.presentation.settings.adapters.SettingHead
 import com.simple.launcher.retirement.presentation.settings.adapters.SettingItem
 import com.simple.launcher.retirement.utils.background.Background
 import com.simple.launcher.retirement.utils.exts.colorBackground
+import com.simple.launcher.retirement.utils.exts.colorOnPrimary
 import com.simple.launcher.retirement.utils.exts.colorOnSurface
 import com.simple.launcher.retirement.utils.exts.colorOnSurfaceVariant
 import com.simple.launcher.retirement.utils.exts.getString
@@ -15,7 +17,10 @@ import com.simple.launcher.retirement.utils.exts.textColorPrimary
 import com.simple.launcher.retirement.utils.size.DP
 import com.simple.launcher.retirement.utils.text.withStyleBodyLarge
 import com.simple.launcher.retirement.utils.text.withStyleTitleLarge
-import com.simple.ui.precompute.image.BigImage
+import com.simple.ui.precompute.image.ColorFilter
+import com.simple.ui.precompute.image.addTransform
+import com.simple.ui.precompute.image.build
+import com.simple.ui.precompute.image.toBuilder
 import com.simple.ui.precompute.text.build
 import com.simple.ui.precompute.text.span.BigBold
 import com.simple.ui.precompute.text.span.BigForegroundColor
@@ -34,7 +39,9 @@ fun settingItem(
         .withStyleBodyLarge()
         .with(BigForegroundColor(resources.textColorPrimary))
         .build(),
-    icon = BigImage(icon),
+    icon = icon.toBuilder()
+        .addTransform(ColorFilter(Color.WHITE))
+        .build(),
     iconBackground = Background.Builder()
         .backgroundColor(resources.colorOnSurface)
         .cornerRadius(DP.DP_24)
@@ -55,7 +62,7 @@ fun settingHeader(
 ): SettingHeaderItem = SettingHeaderItem(
     title = resources.getString(title)
         .withStyleTitleLarge()
-        .with(BigForegroundColor(resources.textColorPrimary), BigBold)
+        .with(BigBold, BigForegroundColor(resources.textColorPrimary))
         .build()
 )
 

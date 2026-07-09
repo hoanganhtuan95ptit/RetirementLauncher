@@ -12,13 +12,11 @@ import kotlinx.coroutines.flow.StateFlow
 
 class ProtectSettingViewModel : BaseViewModel() {
 
-    private val preferenceRepository by lazy { PreferenceRepository.instance }
-
     val viewItemList: StateFlow<GroupViewItem?> = combineState(
-        flow1 = resources,
-        flow2 = preferenceRepository.hasPinFlow(),
-        flow3 = preferenceRepository.isEmergencyCallEnabledFlow(),
-        initialValue = null
+        resources,
+        PreferenceRepository.instance.hasPinFlow(),
+        PreferenceRepository.instance.isEmergencyCallEnabledFlow(),
+        null
     ) { resources, hasPin, isEmergencyCallEnabled ->
 
         value = buildProtectGroup(
@@ -36,34 +34,34 @@ class ProtectSettingViewModel : BaseViewModel() {
 
         val items = buildList {
 
-            add(
-                settingHeader(
-                    title = R.string.setting_header_security,
-                    resources = resources
-                )
-            )
+            settingHeader(
+                title = R.string.setting_header_security,
+                resources = resources
+            ).let {
 
-            add(
-                settingItem(
-                    id = SettingItem.ID_EMERGENCY_CALL_TOGGLE,
-                    icon = android.R.drawable.ic_menu_manage,
-                    title = R.string.setting_emergency_call,
-                    isSwitch = true,
-                    isChecked = isEmergencyCallEnabled,
-                    resources = resources
-                )
-            )
+                add(it)
+            }
 
-            if (hasPin) {
+//            settingItem(
+//                id = SettingItem.ID_EMERGENCY_CALL_TOGGLE,
+//                icon = R.drawable.ic_sos_black_24dp,
+//                title = R.string.setting_emergency_call,
+//                isSwitch = true,
+//                isChecked = isEmergencyCallEnabled,
+//                resources = resources
+//            ).let {
+//
+//                add(it)
+//            }
 
-                add(
-                    settingItem(
-                        id = SettingItem.ID_PIN,
-                        icon = android.R.drawable.ic_lock_idle_lock,
-                        title = R.string.setting_pin,
-                        resources = resources
-                    )
-                )
+            if (hasPin) settingItem(
+                id = SettingItem.ID_PIN,
+                icon = android.R.drawable.ic_lock_idle_lock,
+                title = R.string.setting_pin,
+                resources = resources
+            ).let {
+
+                add(it)
             }
         }
 

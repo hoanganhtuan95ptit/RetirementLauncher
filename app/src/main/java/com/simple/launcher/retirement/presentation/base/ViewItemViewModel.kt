@@ -36,9 +36,9 @@ abstract class ViewItemViewModel : BaseViewModel() {
             .flatMap { it.second }
     }
 
-    fun updateItem(groupViewItem: GroupViewItem) {
+    fun updateItem(groupViewItem: GroupViewItem?) {
 
-        updateItem(groupViewItem.order, groupViewItem.list)
+        updateItem(groupViewItem?.order ?: return, groupViewItem.list)
     }
 
     fun updateItem(order: Int, list: List<ViewItem>?) {

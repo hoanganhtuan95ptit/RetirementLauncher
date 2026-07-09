@@ -12,7 +12,10 @@ import kotlinx.coroutines.flow.StateFlow
 
 class CommonSettingViewModel : BaseViewModel() {
 
-    val viewItemList: StateFlow<GroupViewItem?> = combineState(resources, null) { resources ->
+    val viewItemList: StateFlow<GroupViewItem?> = combineState(
+        resources,
+        null
+    ) { resources ->
 
         value = buildCommonGroup(resources)
     }
@@ -28,22 +31,19 @@ class CommonSettingViewModel : BaseViewModel() {
                 )
             )
 
-            if (!PermissionManager.isDefaultLauncher()) {
-
-                add(
-                    settingItem(
-                        id = SettingItem.ID_DEFAULT_LAUNCHER,
-                        icon = android.R.drawable.ic_menu_manage,
-                        title = R.string.setting_default_launcher,
-                        resources = resources
-                    )
+            if (!PermissionManager.isDefaultLauncher()) add(
+                settingItem(
+                    id = SettingItem.ID_DEFAULT_LAUNCHER,
+                    icon = android.R.drawable.ic_menu_manage,
+                    title = R.string.setting_default_launcher,
+                    resources = resources
                 )
-            }
+            )
 
             add(
                 settingItem(
                     id = SettingItem.ID_APP_LIST,
-                    icon = android.R.drawable.ic_menu_agenda,
+                    icon = R.drawable.ic_apps_black_24dp,
                     title = R.string.setting_app_list,
                     resources = resources
                 )
@@ -52,7 +52,7 @@ class CommonSettingViewModel : BaseViewModel() {
             add(
                 settingItem(
                     id = SettingItem.ID_CONTACT_LIST,
-                    icon = android.R.drawable.ic_menu_call,
+                    icon = R.drawable.ic_call_calling_black_24dp,
                     title = R.string.setting_contact_list,
                     resources = resources
                 )

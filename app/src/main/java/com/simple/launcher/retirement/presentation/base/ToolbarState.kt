@@ -3,6 +3,7 @@ package com.simple.launcher.retirement.presentation.base
 import android.graphics.Typeface
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.utils.size.toPx
+import com.simple.launcher.retirement.utils.text.withStyleBodyLarge
 import com.simple.ui.precompute.image.BigImage
 import com.simple.ui.precompute.image.ColorFilter
 import com.simple.ui.precompute.image.addTransform
@@ -11,6 +12,7 @@ import com.simple.ui.precompute.image.toBuilder
 import com.simple.ui.precompute.text.BigText
 import com.simple.ui.precompute.text.build
 import com.simple.ui.precompute.text.emptyText
+import com.simple.ui.precompute.text.span.BigBold
 import com.simple.ui.precompute.text.span.BigCustomFont
 import com.simple.ui.precompute.text.span.BigForegroundColor
 import com.simple.ui.precompute.text.span.BigTextSize
@@ -44,10 +46,9 @@ data class ToolbarState(
 fun buildToolbarTitle(
     text: String,
     color: Int,
-    sizeDip: Int = 18,
-    typeface: Typeface = Typeface.create("sans-serif-medium", Typeface.NORMAL)
 ): BigText = text
-    .with(BigForegroundColor(color), BigTextSize(sizeDip.toPx()), BigCustomFont(typeface))
+    .withStyleBodyLarge()
+    .with(BigBold, BigForegroundColor(color))
     .build()
 
 /**

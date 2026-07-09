@@ -66,7 +66,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             // Dùng doOnLayout để đảm bảo container đã được measure/layout trước khi
             // commit fragment transaction — tránh race condition với onCreate.
             binding.root.doOnLayout {
-//                lifecycleScope.launch { sendDeeplink(deeplink) }
+                lifecycleScope.launch { sendDeeplink(deeplink) }
             }
         } else {
             Log.d(TAG, "navigate | skipped — restoring from savedInstanceState")

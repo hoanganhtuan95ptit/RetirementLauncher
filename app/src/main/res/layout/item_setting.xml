@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="8dp"
+    android:layout_marginVertical="8dp"
     android:gravity="center_horizontal"
     android:orientation="vertical"
     android:paddingHorizontal="12dp"
@@ -17,15 +17,14 @@
         android:layout_gravity="center"
         android:background="@drawable/bg_setting_icon"
         android:contentDescription="@null"
-        android:padding="10dp"
-        app:tint="@color/clean_cat_purple" />
+        android:padding="16dp" />
 
     <TextView
         android:id="@+id/tvSettingTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textColor="@color/memory_text_primary" />
+        android:layout_marginTop="8dp"
+        android:gravity="center" />
 
     <com.google.android.material.switchmaterial.SwitchMaterial
         android:id="@+id/swSetting"

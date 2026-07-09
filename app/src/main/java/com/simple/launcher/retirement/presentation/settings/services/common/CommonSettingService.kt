@@ -14,7 +14,7 @@ class CommonSettingService : SettingService() {
 
         val viewModel = settingsFragment.viewModels<CommonSettingViewModel>().value
 
-        viewModel.viewItemList.filterNotNull().launchCollect(settingsFragment.viewLifecycleOwner) {
+        viewModel.viewItemList.launchCollect(settingsFragment.viewLifecycleOwner) {
 
             settingsViewModel.updateItem(it)
         }

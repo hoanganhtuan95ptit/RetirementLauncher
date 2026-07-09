@@ -7,7 +7,7 @@ import com.simple.launcher.retirement.presentation.settings.SettingsFragment
 import com.simple.launcher.retirement.presentation.settings.services.SettingService
 import kotlinx.coroutines.flow.filterNotNull
 
-@AutoRegister(apis = [SettingsFragment::class])
+//@AutoRegister(apis = [SettingsFragment::class])
 class OptimizationSettingService : SettingService() {
 
     override fun setup(settingsFragment: SettingsFragment) {
