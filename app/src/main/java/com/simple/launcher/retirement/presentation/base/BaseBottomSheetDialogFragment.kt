@@ -171,13 +171,14 @@ abstract class BaseBottomSheetDialogFragment<VB : ViewBinding, VM : BaseViewMode
     }
 
     private fun configureWindow(bottomSheetDialog: BottomSheetDialog) {
-
         val window = bottomSheetDialog.window ?: return
-        window.statusBarColor = Color.TRANSPARENT
-        window.navigationBarColor = Color.TRANSPARENT
 
+        // Thay thế việc tự set statusBarColor/navigationBarColor.
+        // Tự xử lý tương thích ngược trên Android cũ.
+        WindowCompat.enableEdgeToEdge(window)
+
+        // Bỏ lớp scrim mặc định khi dùng điều hướng 3 nút.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-
             window.isNavigationBarContrastEnforced = false
         }
     }

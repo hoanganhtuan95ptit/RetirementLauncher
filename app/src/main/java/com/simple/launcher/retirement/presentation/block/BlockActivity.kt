@@ -26,6 +26,8 @@ class BlockActivity : BaseActivity<ActivityBlockBinding>() {
         val appName = intent.getStringExtra(EXTRA_APP_NAME)
         viewModel.setAppName(appName)
 
+        val binding = binding ?: return
+
         binding.btnGoHome.root.setOnSafeClickListener {
             val intent = Intent(this, MainActivity::class.java)
             intent.action = Intent.ACTION_MAIN
@@ -37,6 +39,9 @@ class BlockActivity : BaseActivity<ActivityBlockBinding>() {
 
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
+
+                val binding = binding ?: return
+
                 binding.btnGoHome.root.performClick()
             }
         })
@@ -47,10 +52,16 @@ class BlockActivity : BaseActivity<ActivityBlockBinding>() {
 
         // Apply background từ theme — không hardcode màu trong XML
         viewModel.background.observe(this) { background ->
+
+            val binding = binding ?: return@observe
+
             binding.root.setBackground(background)
         }
 
         viewModel.content.observe(this) { state ->
+
+            val binding = binding ?: return@observe
+
             binding.tvTitle.setText(state.title)
             binding.tvMessage.setText(state.message)
 
@@ -64,6 +75,9 @@ class BlockActivity : BaseActivity<ActivityBlockBinding>() {
         }
 
         viewModel.action.observe(this) { state ->
+
+            val binding = binding ?: return@observe
+
             binding.btnGoHome.tvAction.setText(state.text)
             binding.btnGoHome.tvAction.parent.asObjectOrNull<View>()?.setBackground(state.background)
         }

@@ -1,6 +1,5 @@
 package com.simple.launcher.retirement.presentation.settings.services
 
-import android.graphics.Color
 import androidx.fragment.app.Fragment
 import com.simple.component.service.FragmentViewCreatedService
 import com.simple.launcher.retirement.presentation.settings.SettingsFragment
@@ -9,10 +8,7 @@ import com.simple.launcher.retirement.presentation.settings.adapters.SettingHead
 import com.simple.launcher.retirement.presentation.settings.adapters.SettingItem
 import com.simple.launcher.retirement.utils.background.Background
 import com.simple.launcher.retirement.utils.exts.colorBackground
-import com.simple.launcher.retirement.utils.exts.colorOnPrimary
 import com.simple.launcher.retirement.utils.exts.colorOnPrimaryContainer
-import com.simple.launcher.retirement.utils.exts.colorOnSurface
-import com.simple.launcher.retirement.utils.exts.colorOnSurfaceVariant
 import com.simple.launcher.retirement.utils.exts.colorPrimary
 import com.simple.launcher.retirement.utils.exts.colorPrimaryContainer
 import com.simple.launcher.retirement.utils.exts.dp

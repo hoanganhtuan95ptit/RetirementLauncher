@@ -1,6 +1,5 @@
 package com.simple.launcher.retirement.presentation.base
 
-import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,9 +10,7 @@ import androidx.viewbinding.ViewBinding
 
 abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
-    private var _binding: VB? = null
-
-    protected val binding get() = _binding!!
+    var binding: VB? = null
 
     abstract fun inflateBinding(inflater: LayoutInflater): VB
 
@@ -23,14 +20,19 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
         enableEdgeToEdge()
 
-        window.navigationBarColor = Color.TRANSPARENT
-        WindowCompat.getInsetsController(window, window.decorView).isAppearanceLightStatusBars = true
+        WindowCompat.getInsetsController(window, window.decorView).apply {
+            // true = icon tối, phù hợp với nền sáng
+            isAppearanceLightStatusBars = true
+            isAppearanceLightNavigationBars = true
+        }
+
+        // Bỏ lớp nền mờ của navigation bar khi dùng chế độ 3 nút.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             window.isNavigationBarContrastEnforced = false
         }
 
-        _binding = inflateBinding(layoutInflater)
-        setContentView(binding.root)
+        binding = inflateBinding(layoutInflater)
+        setContentView(binding?.root ?: return)
         setupViews(savedInstanceState)
         observeData()
     }
@@ -40,8 +42,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
     open fun observeData() {}
 
     override fun onDestroy() {
-
         super.onDestroy()
-        _binding = null
+        binding = null
     }
 }

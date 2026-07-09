@@ -90,6 +90,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         val deeplink = resolveInitialDeeplink(repository)
         Log.d(TAG, "navigate | deeplink=$deeplink")
 
+        val binding = binding ?: return
+
         // Đợi root layout xong để fragment transaction không đụng race condition lúc onCreate.
         binding.root.doOnLayout {
             lifecycleScope.launch {
