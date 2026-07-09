@@ -82,4 +82,11 @@ class NumpadView @JvmOverloads constructor(
         binding.btnKeyDelete.imageTintList = ColorStateList.valueOf(state.deleteIconColor)
         binding.btnKeyDelete.backgroundTintList = ColorStateList.valueOf(state.rippleColor)
     }
+
+    fun setIsClickable(isClickable: Boolean) {
+
+        orderedButtons.forEach {
+            it.isClickable = isClickable
+        }
+    }
 }

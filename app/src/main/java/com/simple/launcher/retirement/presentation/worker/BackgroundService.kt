@@ -36,7 +36,11 @@ class BackgroundService : Service() {
         workers.forEach { it.attach(serviceScope) }
 
         // Tự dừng service khi tất cả worker đều tắt
-        combine(workers.map { it.observeEnabled() }) { states -> states.any { it } }.launchCollect(serviceScope) { anyEnabled ->
+        combine(workers.map { it.observeEnabled() }) { states ->
+
+            states.any { it }
+        }.launchCollect(serviceScope) { anyEnabled ->
+
             if (!anyEnabled) stopSelf()
         }
     }
@@ -56,12 +60,9 @@ class BackgroundService : Service() {
     override fun onBind(intent: Intent?): IBinder? = null
 
     private fun createNotificationChannel() {
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(
-                CHANNEL_ID,
-                "Background Service",
-                NotificationManager.IMPORTANCE_MIN
-            ).apply {
+            val channel = NotificationChannel(CHANNEL_ID, "Background Service", NotificationManager.IMPORTANCE_MIN).apply {
                 setShowBadge(false)
                 description = "Background monitoring service"
             }

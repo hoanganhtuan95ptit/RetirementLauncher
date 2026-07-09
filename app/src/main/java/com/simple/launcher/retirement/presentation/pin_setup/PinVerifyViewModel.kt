@@ -24,8 +24,10 @@ class PinVerifyViewModel : BaseViewModel() {
         flow1 = resources,
         initialValue = PinVerifyContent(emptyText(), emptyText())
     ) { resources ->
+
         val titleColor = resources.textColorPrimary
         val descColor = resources.textColorSecondary
+
         value = PinVerifyContent(
             title = resources.getString(R.string.pin_verify_title)
                 .with(BigForegroundColor(titleColor))

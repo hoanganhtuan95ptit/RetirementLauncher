@@ -4,6 +4,7 @@ import android.graphics.Typeface
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.utils.size.toPx
 import com.simple.launcher.retirement.utils.text.withStyleBodyLarge
+import com.simple.launcher.retirement.utils.text.withStyleTitleLarge
 import com.simple.ui.precompute.image.BigImage
 import com.simple.ui.precompute.image.ColorFilter
 import com.simple.ui.precompute.image.addTransform
@@ -47,7 +48,7 @@ fun buildToolbarTitle(
     text: String,
     color: Int,
 ): BigText = text
-    .withStyleBodyLarge()
+    .withStyleTitleLarge()
     .with(BigBold, BigForegroundColor(color))
     .build()
 

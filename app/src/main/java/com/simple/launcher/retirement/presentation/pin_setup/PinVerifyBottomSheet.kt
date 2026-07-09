@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.simple.deeplink.Deeplink
 import com.simple.deeplink.DeeplinkHandler
 import com.simple.launcher.retirement.R
@@ -19,12 +20,13 @@ import com.simple.launcher.retirement.utils.AppEvent
 import com.simple.launcher.retirement.utils.AppEventBus
 import com.simple.launcher.retirement.utils.lifecycle.observe
 import com.simple.ui.precompute.text.setText
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class PinVerifyBottomSheet : BaseBottomSheetDialogFragment<BottomSheetPinVerifyBinding, PinVerifyViewModel>() {
 
     override val viewModel: PinVerifyViewModel by viewModels()
 
-    // Tránh double-post: khi PIN đúng thì dismiss() sẽ gọi onDismiss → không post Cancel nữa
     private var pinVerified = false
 
     private val pinBuilder = StringBuilder()
@@ -38,67 +40,114 @@ class PinVerifyBottomSheet : BaseBottomSheetDialogFragment<BottomSheetPinVerifyB
     }
 
     override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?): BottomSheetPinVerifyBinding {
+
         return BottomSheetPinVerifyBinding.inflate(inflater, container, false)
     }
 
     override fun setupViews(view: View, savedInstanceState: Bundle?) {
+
         super.setupViews(view, savedInstanceState)
 
-        val repository = PreferenceRepository.instance
-
         binding.numpadView.onDigitClick = { digit ->
-            if (pinBuilder.length < PIN_LENGTH) {
-                pinBuilder.append(digit)
-                updatePinDots()
-                if (pinBuilder.length == PIN_LENGTH) {
-                    val savedPin = repository.getPin()
-                    if (pinBuilder.toString() == savedPin) {
-                        pinVerified = true
-                        AppEventBus.post(AppEvent.PinVerifySuccess)
-                        dismiss()
-                    } else {
-                        Toast.makeText(context, R.string.pin_error_incorrect, Toast.LENGTH_SHORT).show()
-                        resetPin()
-                    }
-                }
-            }
+
+            appendDigit(digit)
         }
 
         binding.numpadView.onDeleteClick = {
-            if (pinBuilder.isNotEmpty()) {
-                pinBuilder.deleteCharAt(pinBuilder.length - 1)
-                updatePinDots()
-            }
+
+            deleteLastDigit()
         }
     }
 
     override fun observeData() {
+
         super.observeData()
+
         viewModel.content.observe(this) { state ->
+
             binding.tvTitle.setText(state.title)
             binding.tvDesc.setText(state.desc)
         }
     }
 
+    private fun appendDigit(digit: String) {
+
+        if (pinBuilder.length >= PIN_LENGTH) {
+
+            return
+        }
+
+        pinBuilder.append(digit)
+        updatePinDots()
+        verifyPinIfNeeded()
+    }
+
+    private fun deleteLastDigit() {
+
+        if (pinBuilder.isEmpty()) {
+
+            return
+        }
+
+        pinBuilder.deleteCharAt(pinBuilder.length - 1)
+        updatePinDots()
+    }
+
+    private fun verifyPinIfNeeded() {
+
+        if (pinBuilder.length < PIN_LENGTH) {
+
+            return
+        }
+
+        val savedPin = PreferenceRepository.instance.getPin()
+        if (pinBuilder.toString() == savedPin) {
+
+            handlePinVerified()
+            return
+        }
+
+        showInvalidPin()
+        resetPin()
+    }
+
+    private fun handlePinVerified() {
+
+        pinVerified = true
+        AppEventBus.post(AppEvent.PinVerifySuccess)
+        dismiss()
+    }
+
+    private fun showInvalidPin() {
+
+        Toast.makeText(context, R.string.pin_error_incorrect, Toast.LENGTH_SHORT).show()
+    }
+
     private fun updatePinDots() {
+
         val filled = pinBuilder.length
         pinDots.forEachIndexed { index, dot ->
-            dot.setBackgroundResource(
-                if (index < filled) R.drawable.bg_pin_dot_filled
-                else R.drawable.bg_pin_dot_empty
-            )
+
+            val background = if (index < filled) R.drawable.bg_pin_dot_filled
+            else R.drawable.bg_pin_dot_empty
+
+            dot.setBackgroundResource(background)
         }
     }
 
-    private fun resetPin() {
+    private fun resetPin() = viewLifecycleOwner.lifecycleScope.launch {
+        binding.numpadView.setIsClickable(false)
+        delay(500)
+        binding.numpadView.setIsClickable(true)
         pinBuilder.clear()
         updatePinDots()
     }
 
     override fun onDismiss(dialog: DialogInterface) {
+
         super.onDismiss(dialog)
-        // Chỉ post Cancel khi người dùng thực sự huỷ (không phải sau khi xác thực thành công)
         if (!pinVerified) {
+
             AppEventBus.post(AppEvent.PinCancel)
         }
     }

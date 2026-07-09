@@ -1,7 +1,9 @@
 package com.simple.launcher.retirement.presentation.settings.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.widget.SwitchCompat
 import androidx.core.view.isVisible
 import com.simple.adapter.Adapter
 import com.simple.adapter.ViewItem
@@ -78,77 +80,57 @@ data class SettingItem(
 class SettingsAdapter : ViewItemAdapter<SettingItem, ItemSettingBinding>() {
 
     override val viewItemClass: Class<SettingItem> by lazy {
-
         SettingItem::class.java
     }
 
     override fun createViewBinding(layoutInflater: LayoutInflater, parent: ViewGroup, viewType: Int): ItemSettingBinding {
-
         return ItemSettingBinding.inflate(layoutInflater, parent, false)
     }
 
     override fun createViewHolder(parent: ViewGroup, viewType: Int): BaseBindingViewHolder<ItemSettingBinding> {
-
         val viewHolder = super.createViewHolder(parent, viewType)
+
+        viewHolder.binding.swSetting.disableUserChange()
 
         viewHolder.binding.root.setOnSafeClickListener {
 
             val item = viewHolder.getItem<SettingItem>() ?: return@setOnSafeClickListener
-            if (item.isSwitch) {
-
-                viewHolder.binding.swSetting.toggle()
-            } else {
-
-                AppEventBus.post(AppEvent.SettingClicked(item))
-            }
-        }
-
-        viewHolder.binding.swSetting.setOnCheckedChangeListener { _, isChecked ->
-
-            val item = viewHolder.getItem<SettingItem>() ?: return@setOnCheckedChangeListener
-            if (item.isChecked != isChecked) {
-
-                // Switch chỉ đổi state cục bộ để UI mượt, trạng thái thật vẫn do ViewModel/repository quyết định.
-                item.isChecked = isChecked
-                AppEventBus.post(AppEvent.SettingClicked(item))
-            }
+            AppEventBus.post(AppEvent.SettingClicked(item))
         }
 
         return viewHolder
     }
 
     override fun onBindViewHolder(binding: ItemSettingBinding, viewType: Int, position: Int, item: SettingItem, payloads: List<String>) {
-
         super.onBindViewHolder(binding, viewType, position, item, payloads)
 
         if (payloads.isEmpty() || payloads.contains("title")) {
-
             binding.tvSettingTitle.setText(item.title)
         }
 
         if (payloads.isEmpty() || payloads.contains("icon")) {
-
             binding.ivSettingIcon.setImage(item.icon)
         }
 
         if (payloads.isEmpty() || payloads.contains("iconBackground")) {
-
             binding.ivSettingIcon.setBackground(item.iconBackground)
         }
 
         if (payloads.isEmpty() || payloads.contains("isSwitch")) {
-
             binding.swSetting.isVisible = item.isSwitch
         }
 
         if (payloads.isEmpty() || payloads.contains("isChecked")) {
-
             binding.swSetting.isChecked = item.isChecked
         }
 
         if (payloads.isEmpty() || payloads.contains("background")) {
-
             binding.root.setBackground(item.background)
         }
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private fun SwitchCompat.disableUserChange() = setOnTouchListener { _, _ ->
+        true
     }
 }

@@ -37,9 +37,4 @@ class AppMonitoringSettingViewModel : BaseViewModel() {
             GroupViewItem(order = 1.1, list = listOf(it))
         }
     }
-
-    fun refresh() {
-
-        refreshTrigger.value++
-    }
 }

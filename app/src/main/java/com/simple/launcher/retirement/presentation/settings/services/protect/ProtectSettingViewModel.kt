@@ -56,7 +56,7 @@ class ProtectSettingViewModel : BaseViewModel() {
 
             if (hasPin) settingItem(
                 id = SettingItem.ID_PIN,
-                icon = android.R.drawable.ic_lock_idle_lock,
+                icon = R.drawable.ic_pin_black_24dp,
                 title = R.string.setting_pin,
                 resources = resources
             ).let {
