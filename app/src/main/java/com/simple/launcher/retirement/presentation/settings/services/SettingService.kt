@@ -10,8 +10,12 @@ import com.simple.launcher.retirement.presentation.settings.adapters.SettingItem
 import com.simple.launcher.retirement.utils.background.Background
 import com.simple.launcher.retirement.utils.exts.colorBackground
 import com.simple.launcher.retirement.utils.exts.colorOnPrimary
+import com.simple.launcher.retirement.utils.exts.colorOnPrimaryContainer
 import com.simple.launcher.retirement.utils.exts.colorOnSurface
 import com.simple.launcher.retirement.utils.exts.colorOnSurfaceVariant
+import com.simple.launcher.retirement.utils.exts.colorPrimary
+import com.simple.launcher.retirement.utils.exts.colorPrimaryContainer
+import com.simple.launcher.retirement.utils.exts.dp
 import com.simple.launcher.retirement.utils.exts.getString
 import com.simple.launcher.retirement.utils.exts.textColorPrimary
 import com.simple.launcher.retirement.utils.size.DP
@@ -35,23 +39,27 @@ fun settingItem(
     resources: Map<String, Any>
 ): SettingItem = SettingItem(
     id = id,
+
     title = resources.getString(title)
         .withStyleBodyLarge()
         .with(BigForegroundColor(resources.textColorPrimary))
         .build(),
+
     icon = icon.toBuilder()
-        .addTransform(ColorFilter(Color.WHITE))
+        .addTransform(ColorFilter(resources.colorOnPrimaryContainer))
         .build(),
     iconBackground = Background.Builder()
-        .backgroundColor(resources.colorOnSurface)
+        .backgroundColor(resources.colorPrimaryContainer)
         .cornerRadius(DP.DP_24)
         .build(),
+
     isSwitch = isSwitch,
     isChecked = isChecked,
+
     background = Background.Builder()
         .backgroundColor(resources.colorBackground)
         .cornerRadius(DP.DP_24)
-        .stroke(DP.DP_1, resources.colorOnSurfaceVariant)
+        .stroke(DP.DP_2, resources.colorPrimary, dashGap = 4.dp().toInt(), dashWidth = 4.dp().toInt())
         .build(),
 )
 
