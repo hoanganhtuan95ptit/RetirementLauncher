@@ -1,4 +1,4 @@
-package com.simple.launcher.retirement.presentation.pin_setup
+package com.simple.launcher.retirement.presentation.pin
 
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.domain.usecase.SavePinUseCase
@@ -21,9 +21,7 @@ import com.simple.ui.precompute.text.with
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
-class PinSetupViewModel(
-    private val savePinUseCase: SavePinUseCase
-) : BaseViewModel() {
+class PinSetupViewModel : BaseViewModel() {
 
     enum class State {
         ENTER_NEW_PIN,
@@ -40,6 +38,7 @@ class PinSetupViewModel(
         flow1 = resources,
         initialValue = ToolbarState.empty()
     ) { resources ->
+
         val color = resources.textColorPrimary
         value = ToolbarState(
             title = buildToolbarTitle(resources.getString(R.string.setting_pin), color),
@@ -52,12 +51,14 @@ class PinSetupViewModel(
         flow2 = _state,
         initialValue = emptyText()
     ) { resources, state ->
+
         val color = resources.textColorPrimary
         val resId = when (state) {
             State.ENTER_NEW_PIN -> R.string.pin_enter_new
             State.CONFIRM_NEW_PIN -> R.string.pin_confirm_new
             State.SUCCESS -> R.string.pin_enter_new
         }
+
         value = resources.getString(resId)
             .with(BigForegroundColor(color))
             .build()
@@ -85,32 +86,44 @@ class PinSetupViewModel(
     private var tempPin: String = ""
 
     init {
+
         _state.value = State.ENTER_NEW_PIN
         _actionRes.value = R.string.onboarding_start
     }
 
     fun handlePinInput(pin: String) {
+
         if (pin.length != 6) {
+
             _error.value = R.string.pin_error_length
             return
         }
+
         _error.value = null
 
         when (_state.value) {
             State.ENTER_NEW_PIN -> {
+
                 tempPin = pin
                 _state.value = State.CONFIRM_NEW_PIN
                 _actionRes.value = R.string.save
             }
+
             State.CONFIRM_NEW_PIN -> {
+
                 if (pin == tempPin) {
-                    savePinUseCase(pin)
+
+                    SavePinUseCase.instance(pin)
                     _state.value = State.SUCCESS
                 } else {
+
                     _error.value = R.string.pin_error_confirm_mismatch
                 }
             }
-            else -> {}
+
+            else -> {
+
+            }
         }
     }
 }

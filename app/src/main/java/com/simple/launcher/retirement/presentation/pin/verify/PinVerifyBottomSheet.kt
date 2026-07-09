@@ -1,4 +1,4 @@
-package com.simple.launcher.retirement.presentation.pin_setup
+package com.simple.launcher.retirement.presentation.pin.verify
 
 import android.content.DialogInterface
 import android.os.Bundle

@@ -1,4 +1,4 @@
-package com.simple.launcher.retirement.presentation.pin_setup
+package com.simple.launcher.retirement.presentation.pin
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,7 +11,6 @@ import com.simple.deeplink.Deeplink
 import com.simple.deeplink.DeeplinkHandler
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.databinding.FragmentPinSetupBinding
-import com.simple.launcher.retirement.domain.usecase.SavePinUseCase
 import com.simple.launcher.retirement.presentation.DeepLinks
 import com.simple.launcher.retirement.presentation.base.BaseFragment
 import com.simple.launcher.retirement.utils.AppEvent
@@ -26,9 +25,8 @@ import com.simple.ui.precompute.text.setText
 
 class PinSetupFragment : BaseFragment<FragmentPinSetupBinding>() {
 
-    private val viewModel: PinSetupViewModel by viewModels {
-        PinSetupViewModelFactory(SavePinUseCase.instance)
-    }
+    private val viewModel: PinSetupViewModel by viewModels()
+    private var pinSetupCompleted = false
 
     private val pinBuilder = StringBuilder()
     private val PIN_LENGTH = 6
@@ -41,37 +39,68 @@ class PinSetupFragment : BaseFragment<FragmentPinSetupBinding>() {
     }
 
     override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentPinSetupBinding {
+
         return FragmentPinSetupBinding.inflate(inflater, container, false)
     }
 
     override fun setupViews(view: View, savedInstanceState: Bundle?) {
+
         super.setupViews(view, savedInstanceState)
 
         binding.toolbar.ivLeft.setOnSafeClickListener {
+
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
         binding.numpadView.onDigitClick = { digit ->
-            if (pinBuilder.length < PIN_LENGTH) {
-                pinBuilder.append(digit)
-                updatePinDots()
-                if (pinBuilder.length == PIN_LENGTH) {
-                    viewModel.handlePinInput(pinBuilder.toString())
-                }
-            }
+
+            appendDigit(digit)
         }
 
         binding.numpadView.onDeleteClick = {
-            if (pinBuilder.isNotEmpty()) {
-                pinBuilder.deleteCharAt(pinBuilder.length - 1)
-                updatePinDots()
-            }
+
+            deleteLastDigit()
         }
     }
 
+    private fun appendDigit(digit: String) {
+
+        if (pinBuilder.length >= PIN_LENGTH) {
+
+            return
+        }
+
+        pinBuilder.append(digit)
+        updatePinDots()
+        submitPinIfNeeded()
+    }
+
+    private fun deleteLastDigit() {
+
+        if (pinBuilder.isEmpty()) {
+
+            return
+        }
+
+        pinBuilder.deleteCharAt(pinBuilder.length - 1)
+        updatePinDots()
+    }
+
+    private fun submitPinIfNeeded() {
+
+        if (pinBuilder.length < PIN_LENGTH) {
+
+            return
+        }
+
+        viewModel.handlePinInput(pinBuilder.toString())
+    }
+
     private fun updatePinDots() {
+
         val filled = pinBuilder.length
         pinDots.forEachIndexed { index, dot ->
+
             dot.setBackgroundResource(
                 if (index < filled) R.drawable.bg_pin_dot_filled
                 else R.drawable.bg_pin_dot_empty
@@ -80,57 +109,74 @@ class PinSetupFragment : BaseFragment<FragmentPinSetupBinding>() {
     }
 
     private fun resetPin() {
+
         pinBuilder.clear()
         updatePinDots()
     }
 
     override fun observeData() {
+
         super.observeData()
 
         viewModel.background.observe(this) { background ->
+
             binding.root.setBackground(background)
         }
 
         viewModel.instruction.observe(this) { instruction ->
+
             binding.tvInstruction.setText(instruction)
         }
 
         viewModel.state.observe(this) { state ->
+
             resetPin()
             when (state) {
                 PinSetupViewModel.State.SUCCESS -> {
+
+                    pinSetupCompleted = true
                     Toast.makeText(context, R.string.pin_setup_success, Toast.LENGTH_SHORT).show()
                     AppEventBus.post(AppEvent.PinSetupSuccess)
                     requireActivity().onBackPressedDispatcher.onBackPressed()
                 }
+
                 else -> Unit
             }
         }
 
         viewModel.error.observe(this) { errorRes ->
+
             binding.tvError.setText(errorRes?.let { BigText(getString(it)) })
         }
 
         viewModel.toolbar.observe(this) { state ->
+
             binding.toolbar.tvTitle.setText(state.title)
             val backIcon = state.backIcon
             if (backIcon != null) {
+
                 binding.toolbar.ivLeft.visibility = View.VISIBLE
                 binding.toolbar.ivLeft.setImage(backIcon)
             } else {
+
                 binding.toolbar.ivLeft.visibility = View.GONE
             }
         }
 
         viewModel.action.observe(this) { state ->
+
             binding.btnNext.tvAction.setText(state.text)
             binding.btnNext.tvAction.parent.asObjectOrNull<View>()?.setBackground(state.background)
         }
     }
 
     override fun onDestroy() {
+
         super.onDestroy()
-        AppEventBus.post(AppEvent.PinCancel)
+        if (!pinSetupCompleted) {
+
+            AppEventBus.post(AppEvent.PinCancel)
+        }
     }
 }
 
