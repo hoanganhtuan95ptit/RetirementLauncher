@@ -31,7 +31,7 @@ class AppViewModel : BaseViewModel() {
         val screenWidth = calculateScreenWidth()
         val items = buildList<ViewItem> {
 
-            buildHeader(resources, screenWidth)?.let(::add)
+            if (apps.isNotEmpty()) buildHeader(resources, screenWidth)?.let(::add)
             addAll(apps.map { it.toViewItem(resources, screenWidth) })
         }
 

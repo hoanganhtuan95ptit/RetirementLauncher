@@ -6,8 +6,10 @@ import com.simple.auto.register.AutoRegister
 import com.simple.component.service.ActivityCreatedService
 
 @AutoRegister(apis = [ActivityCreatedService::class])
-class TrackingMainService: ActivityCreatedService {
+class TrackingMainService : ActivityCreatedService {
+
     override fun setup(fragmentActivity: FragmentActivity) {
+
         Log.d("tuanha", "setup: ")
     }
 }

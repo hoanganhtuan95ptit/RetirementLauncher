@@ -4,12 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.simple.adapter.MultiAdapter
 import com.simple.adapter.utils.attachAdapter
 import com.simple.adapter.utils.submitListAndAwait
+import com.simple.deeplink.Deeplink
+import com.simple.deeplink.DeeplinkHandler
+import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.databinding.FragmentHomeBinding
+import com.simple.launcher.retirement.presentation.DeepLinks
 import com.simple.launcher.retirement.presentation.base.BaseFragment
 import com.simple.launcher.retirement.presentation.home.adapter.HomeItem
 import com.simple.launcher.retirement.utils.lifecycle.observe
@@ -41,5 +46,26 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
             binding.rvApps.submitListAndAwait(items, adapters, true)
         }
+    }
+}
+
+@Deeplink
+class HomeDeeplinkHandler : DeeplinkHandler {
+
+    override val deeplink: String = DeepLinks.HOME
+
+    override suspend fun navigate(fragmentActivity: FragmentActivity, deeplink: String, extras: Map<String, Any?>?, sharedElement: Map<String, View>?): Boolean {
+
+        val fragmentManager = fragmentActivity.supportFragmentManager
+        while (fragmentManager.backStackEntryCount > 0) {
+            fragmentManager.popBackStackImmediate()
+        }
+
+        val fragment = fragmentManager.findFragmentById(R.id.fragment_container)
+        if (fragment != null) {
+            fragmentManager.beginTransaction().remove(fragment).commit()
+        }
+
+        return true
     }
 }

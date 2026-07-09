@@ -21,6 +21,7 @@ import com.simple.launcher.retirement.presentation.main.MainActivity
 class PocketModeMainService : ActivityCreatedService {
 
     override fun setup(fragmentActivity: FragmentActivity) {
+
         val sensorManager = fragmentActivity.getSystemService(Context.SENSOR_SERVICE) as SensorManager
         val proximitySensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY)
 
@@ -29,33 +30,17 @@ class PocketModeMainService : ActivityCreatedService {
             return
         }
 
-        // View trong suốt phủ toàn màn hình, chặn toàn bộ touch khi điện thoại trong túi
-        val overlayView = View(fragmentActivity).apply {
-            setBackgroundColor(Color.TRANSPARENT)
-            isClickable = true
-            isFocusable = true
-            isFocusableInTouchMode = true
-        }
-
-        val sensorListener = object : SensorEventListener {
-            override fun onSensorChanged(event: SensorEvent) {
-                val repository = PreferenceRepository.Companion.instance
-                if (!repository.isPocketModeEnabled()) {
-                    removeOverlay(fragmentActivity, overlayView)
-                    return
-                }
-                val isNear = event.values[0] < proximitySensor.maximumRange
-                Log.d(TAG, "onSensorChanged: isNear=$isNear")
-                if (isNear) showOverlay(fragmentActivity, overlayView)
-                else removeOverlay(fragmentActivity, overlayView)
-            }
-
-            override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {}
-        }
+        val overlayView = createOverlayView(fragmentActivity)
+        val sensorListener = createSensorListener(
+            fragmentActivity = fragmentActivity,
+            overlayView = overlayView,
+            proximitySensor = proximitySensor
+        )
 
         fragmentActivity.lifecycle.addObserver(object : DefaultLifecycleObserver {
 
             override fun onResume(owner: LifecycleOwner) {
+
                 Log.d(TAG, "onResume: registering proximity sensor listener")
                 sensorManager.registerListener(
                     sensorListener,
@@ -65,6 +50,7 @@ class PocketModeMainService : ActivityCreatedService {
             }
 
             override fun onPause(owner: LifecycleOwner) {
+
                 Log.d(TAG, "onPause: unregistering proximity sensor listener")
                 sensorManager.unregisterListener(sensorListener)
                 removeOverlay(fragmentActivity, overlayView)
@@ -76,7 +62,50 @@ class PocketModeMainService : ActivityCreatedService {
         })
     }
 
+    private fun createOverlayView(fragmentActivity: FragmentActivity): View {
+
+        // View trong suốt phủ toàn màn hình để chặn toàn bộ thao tác khi máy đang ở trong túi.
+        return View(fragmentActivity).apply {
+            setBackgroundColor(Color.TRANSPARENT)
+            isClickable = true
+            isFocusable = true
+            isFocusableInTouchMode = true
+        }
+    }
+
+    private fun createSensorListener(
+        fragmentActivity: FragmentActivity,
+        overlayView: View,
+        proximitySensor: Sensor
+    ): SensorEventListener {
+
+        return object : SensorEventListener {
+
+            override fun onSensorChanged(event: SensorEvent) {
+
+                if (!PreferenceRepository.instance.isPocketModeEnabled()) {
+                    removeOverlay(fragmentActivity, overlayView)
+                    return
+                }
+
+                val isNear = event.values[0] < proximitySensor.maximumRange
+                Log.d(TAG, "onSensorChanged: isNear=$isNear")
+
+                if (isNear) {
+                    showOverlay(fragmentActivity, overlayView)
+                    return
+                }
+
+                removeOverlay(fragmentActivity, overlayView)
+            }
+
+            override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {
+            }
+        }
+    }
+
     private fun showOverlay(activity: FragmentActivity, overlayView: View) {
+
         val decorView = activity.window.decorView as? ViewGroup ?: return
         if (overlayView.parent == null) {
             Log.d(TAG, "showOverlay: blocking touches (pocket detected)")
@@ -91,6 +120,7 @@ class PocketModeMainService : ActivityCreatedService {
     }
 
     private fun removeOverlay(activity: FragmentActivity, overlayView: View) {
+
         val decorView = activity.window.decorView as? ViewGroup ?: return
         if (overlayView.parent != null) {
             Log.d(TAG, "removeOverlay: restoring touch input")
@@ -99,6 +129,7 @@ class PocketModeMainService : ActivityCreatedService {
     }
 
     companion object {
+
         private const val TAG = "tuanha"
     }
 }

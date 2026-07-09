@@ -31,7 +31,7 @@ class ContactViewModel : BaseViewModel() {
         val screenWidth = calculateScreenWidth()
         val items = buildList<ViewItem> {
 
-            buildHeader(resources, screenWidth)?.let(::add)
+            if (contacts.isNotEmpty()) buildHeader(resources, screenWidth)?.let(::add)
             addAll(contacts.map { it.toViewItem(resources, screenWidth) })
         }
 
