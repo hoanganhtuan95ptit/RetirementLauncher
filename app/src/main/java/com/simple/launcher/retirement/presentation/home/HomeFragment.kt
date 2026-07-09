@@ -35,11 +35,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             }
         }
         binding.rvApps.layoutManager = layoutManager
-        binding.rvApps.addItemDecoration(object : RecyclerView.ItemDecoration() {
-            override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
-                outRect.set(DP.DP_8, DP.DP_8, DP.DP_8, DP.DP_8)
-            }
-        })
+//        binding.rvApps.addItemDecoration(object : RecyclerView.ItemDecoration() {
+//            override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
+//                outRect.set(DP.DP_8, DP.DP_8, DP.DP_8, DP.DP_8)
+//            }
+//        })
     }
 
     override fun observeData() = with(viewModel) {

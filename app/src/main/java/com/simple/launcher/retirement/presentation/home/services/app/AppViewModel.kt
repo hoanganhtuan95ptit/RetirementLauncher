@@ -19,6 +19,7 @@ import com.simple.ui.precompute.node.BackgroundNode
 import com.simple.ui.precompute.node.ConstraintChild
 import com.simple.ui.precompute.node.ConstraintNode
 import com.simple.ui.precompute.node.Constraints
+import com.simple.ui.precompute.node.EdgeInsets
 import com.simple.ui.precompute.node.ImageNode
 import com.simple.ui.precompute.node.LayoutDimension
 import com.simple.ui.precompute.node.TextNode
@@ -46,11 +47,12 @@ class AppViewModel : BaseViewModel() {
         apps: List<HomeContentEntity.App>
     ): GroupViewItem {
 
-        val itemWidth = calculateItemWidth()
+
+        val screenWidth = android.content.res.Resources.getSystem().displayMetrics.widthPixels - 2 * 12.dp().toInt()
         val items = buildList<ViewItem> {
 
             buildHeader(resources)?.let(::add)
-            addAll(apps.map { it.toViewItem(itemWidth = itemWidth, resources = resources) })
+            addAll(apps.map { it.toViewItem(screenWidth = screenWidth, resources = resources) })
         }
 
         return GroupViewItem(order = 1, list = items)
@@ -72,20 +74,14 @@ class AppViewModel : BaseViewModel() {
         )
     }
 
-    private fun calculateItemWidth(): Int {
-
-        val screenWidth = android.content.res.Resources.getSystem().displayMetrics.widthPixels
-        return (screenWidth - 72.dp().toInt()) / (HomeItem.TOTAL_COLUMNS / 2)
-    }
-
     private fun HomeContentEntity.App.toViewItem(
-        itemWidth: Int,
+        screenWidth: Int,
         resources: Map<String, Any>
     ): AppHomeItem = AppHomeItem(
         entity = entity,
         spec = LayoutEngine.measure(
-            node = createAppCardNode(itemWidth = itemWidth, resources = resources),
-            constraints = Constraints(maxWidth = itemWidth),
+            node = createAppCardNode(itemWidth = screenWidth / 3 - 2 * 8.dp().toInt(), resources = resources),
+            constraints = Constraints(maxWidth = screenWidth / 3),
             id = entity.packageName
         )
     )
@@ -100,6 +96,7 @@ class AppViewModel : BaseViewModel() {
             createIconChild(),
             createLabelChild(resources)
         ),
+        padding = EdgeInsets.symmetric(h = 8.dp().toInt(), v = 8.dp().toInt()),
         layoutWidth = LayoutDimension.MatchParent
     )
 
