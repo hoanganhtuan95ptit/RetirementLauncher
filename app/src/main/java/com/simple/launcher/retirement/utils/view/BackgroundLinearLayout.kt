@@ -11,7 +11,7 @@ import com.simple.launcher.retirement.presentation.base.BaseViewModel
 import com.simple.launcher.retirement.utils.background.Background
 import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.combineState
-import com.simple.launcher.retirement.utils.services.launchCollect
+import com.simple.component.service.launchCollect
 import com.simple.launcher.retirement.utils.size.DP
 import kotlinx.coroutines.flow.StateFlow
 

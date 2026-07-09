@@ -9,8 +9,8 @@ import com.simple.launcher.retirement.presentation.settings.SettingItem
 import com.simple.launcher.retirement.presentation.settings.SettingsFragment
 import com.simple.launcher.retirement.presentation.settings.SettingsViewModel
 import com.simple.launcher.retirement.utils.permission.PermissionManager
-import com.simple.launcher.retirement.utils.services.FragmentCreatedService
-import com.simple.launcher.retirement.utils.services.launchCollect
+import com.simple.component.service.FragmentCreatedService
+import com.simple.component.service.launchCollect
 import com.simple.launcher.retirement.utils.AppEvent
 import com.simple.launcher.retirement.utils.AppEventBus
 import kotlinx.coroutines.flow.filterIsInstance

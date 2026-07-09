@@ -92,7 +92,7 @@
             android:exported="false"
             tools:node="merge">
             <meta-data
-                android:name="com.simple.launcher.retirement.utils.services.ServiceInitializer"
+                android:name="com.simple.component.service.ServiceInitializer"
                 android:value="androidx.startup" />
         </provider>
     </application>

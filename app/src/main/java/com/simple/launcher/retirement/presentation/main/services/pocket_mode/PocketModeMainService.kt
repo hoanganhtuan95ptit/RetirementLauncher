@@ -15,7 +15,7 @@ import androidx.lifecycle.LifecycleOwner
 import com.simple.auto.register.AutoRegister
 import com.simple.launcher.retirement.domain.repository.PreferenceRepository
 import com.simple.launcher.retirement.presentation.main.MainActivity
-import com.simple.launcher.retirement.utils.services.ActivityCreatedService
+import com.simple.component.service.ActivityCreatedService
 
 @AutoRegister(apis = [MainActivity::class])
 class PocketModeMainService : ActivityCreatedService {

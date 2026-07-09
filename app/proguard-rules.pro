@@ -23,7 +23,7 @@
 # Custom libraries (CRITICAL for auto-registration & reflection)
 -keep class * implements com.simple.deeplink.DeeplinkRegister { *; }
 -keep class * implements com.simple.auto.register.ModuleInitializer { *; }
--keep class * implements com.simple.launcher.retirement.utils.services.ComponentService { *; }
+-keep class * implements com.simple.component.service.ComponentService { *; }
 -keep class * implements com.simple.adapter.ViewItemAdapter { *; }
 -keep class * implements com.simple.adapter.ViewItemAdapterProvider { *; }
 

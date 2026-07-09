@@ -9,6 +9,13 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/../1CorePrivate/config/retirement_launcher" />
+            <option value="$PROJECT_DIR$/../Adapter/adapter" />
+            <option value="$PROJECT_DIR$/../Adapter/adapter-processor" />
+            <option value="$PROJECT_DIR$/../AutoRegister/auto-register" />
+            <option value="$PROJECT_DIR$/../AutoRegister/auto-register-processor" />
+            <option value="$PROJECT_DIR$/../ComponentService/component-service" />
+            <option value="$PROJECT_DIR$/../Deeplink/deeplink" />
+            <option value="$PROJECT_DIR$/../Deeplink/deeplink-processor" />
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/../TProject/glide-loader" />

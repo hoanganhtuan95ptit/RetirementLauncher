@@ -12,7 +12,7 @@ import com.simple.launcher.retirement.utils.exts.colorOnSurfaceVariant
 import com.simple.launcher.retirement.utils.exts.getString
 import com.simple.launcher.retirement.utils.exts.textColorPrimary
 import com.simple.launcher.retirement.utils.image.ImageRes
-import com.simple.launcher.retirement.utils.services.FragmentViewCreatedService
+import com.simple.component.service.FragmentViewCreatedService
 import com.simple.launcher.retirement.utils.size.DP
 import com.simple.launcher.retirement.utils.text.Bold
 import com.simple.launcher.retirement.utils.text.ForegroundColor

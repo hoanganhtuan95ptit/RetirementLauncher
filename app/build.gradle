@@ -128,12 +128,18 @@ dependencies {
     implementation libs.androidx.fragment.ktx
     implementation libs.androidx.metrics
     implementation libs.gson
-    implementation libs.adapter
-    ksp libs.adapter.processor
-    implementation libs.deeplink
-    ksp libs.deeplink.processor
-    implementation libs.auto.register
-    ksp libs.auto.register.processor
+    if (!findProject(":adapter")) {
+        implementation libs.adapter
+        ksp libs.adapter.processor
+    }
+    if (!findProject(":deeplink")) {
+        implementation libs.deeplink
+        ksp libs.deeplink.processor
+    }
+    if (!findProject(":auto-register")) {
+        implementation libs.auto.register
+        ksp libs.auto.register.processor
+    }
     implementation libs.auto.service
     ksp libs.auto.service.ksp
     implementation libs.glide
@@ -152,7 +158,11 @@ dependencies {
         if (key.startsWith("module.")) {
             def moduleName = key.substring("module.".length())
             if (findProject(":${moduleName}") != null) {
-                implementation project(":${moduleName}")
+                if (moduleName.contains("processor") || moduleName.contains("ksp")) {
+                    ksp project(":${moduleName}")
+                } else {
+                    implementation project(":${moduleName}")
+                }
             }
         }
     }

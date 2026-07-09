@@ -11,8 +11,8 @@ import com.simple.launcher.retirement.presentation.settings.SettingsViewModel
 import com.simple.launcher.retirement.utils.AppEvent
 import com.simple.launcher.retirement.utils.AppEventBus
 import com.simple.launcher.retirement.utils.permission.PermissionManager
-import com.simple.launcher.retirement.utils.services.FragmentCreatedService
-import com.simple.launcher.retirement.utils.services.launchCollect
+import com.simple.component.service.FragmentCreatedService
+import com.simple.component.service.launchCollect
 import kotlinx.coroutines.flow.filterIsInstance
 
 // Legacy toggle service này đang tắt vì Settings mới đã tách group theo service/view model khác.

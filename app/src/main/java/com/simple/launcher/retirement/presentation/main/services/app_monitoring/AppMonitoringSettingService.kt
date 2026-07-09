@@ -16,8 +16,8 @@ import com.simple.launcher.retirement.utils.AppEventBus
 import com.simple.launcher.retirement.utils.combineState
 import com.simple.launcher.retirement.utils.image.ImageRes
 import com.simple.launcher.retirement.utils.permission.PermissionManager
-import com.simple.launcher.retirement.utils.services.FragmentCreatedService
-import com.simple.launcher.retirement.utils.services.launchCollect
+import com.simple.component.service.FragmentCreatedService
+import com.simple.component.service.launchCollect
 import com.simple.launcher.retirement.utils.text.ForegroundColor
 import com.simple.launcher.retirement.utils.text.build
 import com.simple.launcher.retirement.utils.text.with
