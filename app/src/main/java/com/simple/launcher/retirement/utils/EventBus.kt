@@ -15,7 +15,6 @@ open class EventBus<T> {
     val events: Flow<T> = _events
 
     fun post(item: T) {
-        Log.d("tuanha", "post: ${item}")
         _events.tryEmit(item)
     }
 }
