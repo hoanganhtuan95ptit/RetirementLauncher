@@ -27,11 +27,11 @@ class AppListViewModel(
     private val saveSelectedAppsUseCase: SaveSelectedAppsUseCase
 ) : BaseViewModel() {
 
-    // Toolbar state — title với màu, size, font từ theme; backIcon với màu từ theme
     val toolbar: StateFlow<ToolbarState> = combineState(
         flow1 = resources,
         initialValue = ToolbarState.empty()
     ) { resources ->
+
         val color = resources.textColorPrimary
         value = ToolbarState(
             title = buildToolbarTitle(resources.getString(R.string.setting_app_list), color),
@@ -71,26 +71,23 @@ class AppListViewModel(
         )
     }
 
-    // Nội bộ: domain entities (không chứa trạng thái selected)
     private val _apps = MutableStateFlow<List<SelectableAppEntity>>(emptyList())
     private val _query = MutableStateFlow("")
 
-    // Tách riêng trạng thái selected — độc lập với search query
-    // Khởi tạo từ danh sách đã lưu trong cache
     private val _selectedIds = MutableStateFlow<Set<String>>(
         AppRepository.instance.getSelectedPackages().toSet()
     )
 
-    // Expose ra ngoài: ViewItems đã được xử lý sẵn, adapter chỉ set data
     val items: StateFlow<List<SelectableAppItem>> = combineState(
         flow1 = _apps,
         flow2 = _query,
         flow3 = _selectedIds,
         initialValue = emptyList()
     ) { apps, query, selectedIds ->
-        value = apps.filter {
-            query.isBlank() || it.app.label.contains(query, ignoreCase = true)
-        }.map { entity ->
+
+        value = apps
+            .filter { query.isBlank() || it.app.label.contains(query, ignoreCase = true) }
+            .map { entity ->
             SelectableAppItem(
                 label = RichText(entity.app.label),
                 icon = ImageDrawable(entity.app.icon),
@@ -105,24 +102,27 @@ class AppListViewModel(
     }
 
     fun loadApps() {
+
         _apps.value = getSelectableAppsUseCase()
     }
 
-    // Nhận entity từ EventBus (adapter gửi nguyên entity, không toggle), ViewModel xử lý toggle
     fun updateItem(entity: SelectableAppEntity) {
+
         val packageName = entity.app.packageName
         val current = _selectedIds.value
         _selectedIds.value = if (packageName in current) {
+
             current - packageName
         } else {
+
             current + packageName
         }
     }
 
-    /** Trả về tất cả package name đang được chọn (không phụ thuộc search query) */
     fun getAllSelectedIds(): Set<String> = _selectedIds.value
 
     fun saveSelection() {
+
         saveSelectedAppsUseCase(_selectedIds.value.toList())
     }
 }
@@ -131,11 +131,15 @@ class AppListViewModelFactory(
     private val getSelectableAppsUseCase: GetSelectableAppsUseCase,
     private val saveSelectedAppsUseCase: SaveSelectedAppsUseCase
 ) : ViewModelProvider.Factory {
+
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
+
         if (modelClass.isAssignableFrom(AppListViewModel::class.java)) {
+
             @Suppress("UNCHECKED_CAST")
             return AppListViewModel(getSelectableAppsUseCase, saveSelectedAppsUseCase) as T
         }
+
         throw IllegalArgumentException("Unknown ViewModel class")
     }
 }

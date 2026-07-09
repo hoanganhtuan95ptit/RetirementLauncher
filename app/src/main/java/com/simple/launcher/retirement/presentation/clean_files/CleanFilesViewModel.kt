@@ -131,20 +131,7 @@ class CleanFilesViewModel : BaseViewModel() {
     val statusText: StateFlow<RichText> = combineState(flow1 = resources, flow2 = screenState, flow3 = strangeFileCount, initialValue = emptyText()) { resources, state, count ->
 
         val color = resources.textColorSecondary
-
-        val text = if (state is ClearState.IDLE) if (count > 0) {
-
-            resources.getString(R.string.clean_files_idle_desc).replace("\$number_file", "$count")
-        } else {
-
-            resources.getString(R.string.clean_files_desc)
-        } else if (state is ClearState.Scanning) {
-
-            resources.getString(R.string.clean_files_running)
-        } else {
-
-            resources.getString(R.string.clean_files_completed)
-        }
+        val text = buildStatusText(resources = resources, state = state, count = count)
 
         value = text
             .with(ForegroundColor(color))
@@ -155,21 +142,8 @@ class CleanFilesViewModel : BaseViewModel() {
 
         value = CATEGORY_META.map {
 
-            val numberFile = if (state is ClearState.Run && state.categoryMap[it.id] != null) {
-
-                resources.getString(R.string.clean_cat_file_count).replace("\$number_file","${state.categoryMap[it.id]}")
-            } else {
-
-                ""
-            }
-
-            val showSelected = if (state is ClearState.Run) {
-
-                state.categoryMap[it.id] != null
-            } else {
-
-                false
-            }
+            val numberFile = buildCategoryFileCount(resources = resources, state = state, category = it.id)
+            val showSelected = state is ClearState.Run && state.categoryMap[it.id] != null
 
             CategoryViewData(
                 image = ImageRes(it.iconRes, colorFilter = it.color),
@@ -188,6 +162,41 @@ class CleanFilesViewModel : BaseViewModel() {
                 showSelected = showSelected
             )
         }
+    }
+
+    private fun buildStatusText(resources: Map<String, Any>, state: ClearState, count: Int): String {
+
+        if (state is ClearState.IDLE) {
+
+            if (count > 0) {
+
+                return resources.getString(R.string.clean_files_idle_desc).replace("\$number_file", "$count")
+            }
+
+            return resources.getString(R.string.clean_files_desc)
+        }
+
+        if (state is ClearState.Scanning) {
+
+            return resources.getString(R.string.clean_files_running)
+        }
+
+        return resources.getString(R.string.clean_files_completed)
+    }
+
+    private fun buildCategoryFileCount(
+        resources: Map<String, Any>,
+        state: ClearState,
+        category: StrangeFileCategory
+    ): String {
+
+        if (state !is ClearState.Run) {
+
+            return ""
+        }
+
+        val count = state.categoryMap[category] ?: return ""
+        return resources.getString(R.string.clean_cat_file_count).replace("\$number_file", "$count")
     }
 
     val resultViewData: StateFlow<ResultViewData> = combineState(

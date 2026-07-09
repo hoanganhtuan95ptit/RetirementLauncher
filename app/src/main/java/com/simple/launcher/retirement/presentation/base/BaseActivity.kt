@@ -12,11 +12,13 @@ import androidx.viewbinding.ViewBinding
 abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
     private var _binding: VB? = null
+
     protected val binding get() = _binding!!
 
     abstract fun inflateBinding(inflater: LayoutInflater): VB
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
 
         enableEdgeToEdge()
@@ -38,6 +40,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
     open fun observeData() {}
 
     override fun onDestroy() {
+
         super.onDestroy()
         _binding = null
     }

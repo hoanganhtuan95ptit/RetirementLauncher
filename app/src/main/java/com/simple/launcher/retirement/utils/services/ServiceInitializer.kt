@@ -32,40 +32,51 @@ class ServiceInitializer : Initializer<Unit> {
     private fun setupApplication(application: Application) {
 
         AutoRegisterManager.subscribe(ApplicationService::class.java).map { it.toList() }.launchCollect(ProcessLifecycleOwner.get()) { list ->
+
             list.setup(application)
         }
 
         application.registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks {
 
             override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
+
                 if (activity is FragmentActivity) {
+
                     activity.updateState(LifecycleState.Created)
                     setupActivity(activity)
                 }
             }
 
             override fun onActivityStarted(activity: Activity) {
+
                 if (activity is FragmentActivity) {
+
                     activity.updateState(LifecycleState.Started)
                     setupComponentCallbacksLifecycle(activity, ActivityStartedService::class.java)
                 }
             }
 
             override fun onActivityResumed(activity: Activity) {
+
                 if (activity is FragmentActivity) {
+
                     activity.updateState(LifecycleState.Resumed)
                     setupComponentCallbacksLifecycle(activity, ActivityResumedService::class.java)
                 }
             }
 
             override fun onActivityPaused(activity: Activity) {
+
                 if (activity is FragmentActivity) {
+
                     activity.updateState(LifecycleState.Paused)
                 }
             }
 
             override fun onActivityStopped(activity: Activity) {
+
                 if (activity is FragmentActivity) {
+
                     activity.updateState(LifecycleState.Stopped)
                 }
             }
@@ -74,7 +85,9 @@ class ServiceInitializer : Initializer<Unit> {
             }
 
             override fun onActivityDestroyed(activity: Activity) {
+
                 if (activity is FragmentActivity) {
+
                     activity.updateState(LifecycleState.Destroyed)
                 }
             }
@@ -88,43 +101,52 @@ class ServiceInitializer : Initializer<Unit> {
         fragmentActivity.supportFragmentManager.registerFragmentLifecycleCallbacks(object : FragmentManager.FragmentLifecycleCallbacks() {
 
             override fun onFragmentAttached(fm: FragmentManager, f: Fragment, context: Context) {
+
                 f.updateState(LifecycleState.Attached)
                 setupComponentCallbacksLifecycle(f, FragmentAttachedService::class.java)
             }
 
             override fun onFragmentCreated(fm: FragmentManager, f: Fragment, savedInstanceState: Bundle?) {
+
                 f.updateState(LifecycleState.Created)
                 setupComponentCallbacksLifecycle(f, FragmentCreatedService::class.java)
             }
 
             override fun onFragmentViewCreated(fm: FragmentManager, f: Fragment, v: View, savedInstanceState: Bundle?) {
+
                 f.updateState(LifecycleState.ViewCreated)
                 setupComponentCallbacksLifecycle(f, FragmentViewCreatedService::class.java)
             }
 
             override fun onFragmentStarted(fm: FragmentManager, f: Fragment) {
+
                 f.updateState(LifecycleState.Started)
                 setupComponentCallbacksLifecycle(f, FragmentStartedService::class.java)
             }
 
             override fun onFragmentResumed(fm: FragmentManager, f: Fragment) {
+
                 f.updateState(LifecycleState.Resumed)
                 setupComponentCallbacksLifecycle(f, FragmentResumedService::class.java)
             }
 
             override fun onFragmentPaused(fm: FragmentManager, f: Fragment) {
+
                 f.updateState(LifecycleState.Paused)
             }
 
             override fun onFragmentStopped(fm: FragmentManager, f: Fragment) {
+
                 f.updateState(LifecycleState.Stopped)
             }
 
             override fun onFragmentViewDestroyed(fm: FragmentManager, f: Fragment) {
+
                 f.updateState(LifecycleState.ViewDestroyed)
             }
 
             override fun onFragmentDestroyed(fm: FragmentManager, f: Fragment) {
+
                 f.updateState(LifecycleState.Destroyed)
             }
 
@@ -134,7 +156,9 @@ class ServiceInitializer : Initializer<Unit> {
     }
 
     private fun Any.updateState(state: LifecycleState) {
+
         (this as? ViewModelStoreOwner)?.let {
+
             ViewModelProvider(it)[LifecycleStateViewModel::class.java].updateState(state)
         }
     }

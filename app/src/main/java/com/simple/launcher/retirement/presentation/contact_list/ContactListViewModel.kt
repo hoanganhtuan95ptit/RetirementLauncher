@@ -37,11 +37,11 @@ class ContactListViewModel(
     private val repository: ContactRepository
 ) : BaseViewModel() {
 
-    // Toolbar state — title với màu, size, font từ theme; backIcon với màu từ theme
     val toolbar: StateFlow<ToolbarState> = combineState(
         flow1 = resources,
         initialValue = ToolbarState.empty()
     ) { resources ->
+
         val color = resources.textColorPrimary
         value = ToolbarState(
             title = buildToolbarTitle(resources.getString(R.string.contact_list_title), color),
@@ -81,17 +81,13 @@ class ContactListViewModel(
         )
     }
 
-    // Nội bộ: danh sách contact thuần (không chứa trạng thái selected)
     private val _contacts = MutableStateFlow<List<ContactEntity>>(emptyList())
     private val _query = MutableStateFlow("")
 
-    // Tách riêng trạng thái selected — độc lập với search query
-    // Khởi tạo từ danh sách đã lưu trong cache
     private val _selectedIds = MutableStateFlow<Set<String>>(
         repository.getSelectedContacts().map { it.id }.toSet()
     )
 
-    // Expose ra ngoài: ViewItems đã được xử lý sẵn, adapter chỉ set data
     val items: StateFlow<List<SelectableContactItem>> = combineState(
         flow1 = _contacts,
         flow2 = _query,
@@ -99,23 +95,20 @@ class ContactListViewModel(
         initialValue = emptyList()
     ) { contacts, query, selectedIds ->
         val filtered = if (query.isBlank()) {
-            // Không có query → trả về toàn bộ, giữ thứ tự gốc (A-Z)
+
             contacts.map { it to 0 }
         } else {
-            // Lọc + gán priority: 0 = khớp chính xác tên, 1 = tên bắt đầu bằng query,
-            // 2 = tên chứa query, 3 = SĐT chứa query
+
             contacts.mapNotNull { contact ->
+
                 val name = contact.name
                 val phone = contact.phoneNumber
 
                 val priority = when {
-                    // Ưu tiên cao nhất: tên khớp chính xác (có hoặc không dấu)
+
                     VietnameseStringUtils.equalsIgnoreDiacritics(name, query) -> 0
-                    // Tên bắt đầu bằng query
                     VietnameseStringUtils.startsWithIgnoreDiacritics(name, query) -> 1
-                    // Tên chứa query (ở giữa/cuối)
                     VietnameseStringUtils.containsIgnoreDiacritics(name, query) -> 2
-                    // SĐT chứa query (tìm theo số)
                     phone.contains(query) -> 3
                     else -> return@mapNotNull null
                 }
@@ -128,8 +121,10 @@ class ContactListViewModel(
             .map { (contact, _) ->
                 val isSelected = contact.id in selectedIds
                 val photo = if (contact.photoUri != null) {
+
                     ImagePath(contact.photoUri)
                 } else {
+
                     ImageRes(R.drawable.ic_home_contact_24dp)
                 }
                 SelectableContactItem(
@@ -142,11 +137,14 @@ class ContactListViewModel(
     }
 
     fun search(text: String) {
+
         _query.value = text
     }
 
     fun loadContacts(context: Context) {
+
         viewModelScope.launch {
+
             val result = withContext(Dispatchers.IO) {
                 repository.getAllContacts(context)
             }
@@ -154,29 +152,33 @@ class ContactListViewModel(
         }
     }
 
-    // Toggle trạng thái selected — chỉ thao tác trên _selectedIds
     fun updateItem(entity: SelectableContactEntity) {
+
         val id = entity.contact.id
         val current = _selectedIds.value
         _selectedIds.value = if (id in current) {
+
             current - id
         } else {
+
             current + id
         }
     }
 
     fun saveSelection() {
+
         val selectedIds = _selectedIds.value
         val selected = _contacts.value.filter { it.id in selectedIds }
         repository.saveSelectedContacts(selected)
     }
 
-    /** Trả về tất cả contact ID đang được chọn (không phụ thuộc search query) */
     fun getAllSelectedIds(): Set<String> = _selectedIds.value
 }
 
 class ContactListViewModelFactory(private val repository: ContactRepository) : ViewModelProvider.Factory {
+
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
+
         @Suppress("UNCHECKED_CAST")
         return ContactListViewModel(repository) as T
     }

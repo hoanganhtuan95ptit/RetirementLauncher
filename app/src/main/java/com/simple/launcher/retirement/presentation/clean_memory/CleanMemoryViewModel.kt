@@ -176,17 +176,8 @@ class CleanMemoryViewModel : BaseViewModel() {
         initialValue = ResultViewData()
     ) { resourceMap, state ->
 
-        val freeMB by lazy {
-            state.asObjectOrNull<BoostState.Done>()?.freedMB ?: 0L
-        }
-
-        val text = if (freeMB > 0) {
-            resourceMap.getString(R.string.clean_memory_toast)
-                .replace("\$number_ram", freeMB.toString())
-        } else {
-
-            resourceMap.getString(R.string.clean_memory_optimal)
-        }
+        val freeMB = state.asObjectOrNull<BoostState.Done>()?.freedMB ?: 0L
+        val text = buildResultTitle(resourceMap, freeMB)
 
         val sub = resourceMap.getString(R.string.clean_memory_result_sub)
 
@@ -208,6 +199,17 @@ class CleanMemoryViewModel : BaseViewModel() {
                 .stroke(DP.DP_1, resourceMap.colorPrimary)
                 .build()
         )
+    }
+
+    private fun buildResultTitle(resourceMap: Map<String, Any>, freeMB: Long): String {
+
+        if (freeMB <= 0) {
+
+            return resourceMap.getString(R.string.clean_memory_optimal)
+        }
+
+        return resourceMap.getString(R.string.clean_memory_toast)
+            .replace("\$number_ram", freeMB.toString())
     }
 
     val screenViewData: StateFlow<ScreenViewData> = combineState(
