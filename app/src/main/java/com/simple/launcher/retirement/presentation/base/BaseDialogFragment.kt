@@ -9,8 +9,7 @@ import androidx.viewbinding.ViewBinding
 
 abstract class BaseDialogFragment<VB : ViewBinding> : DialogFragment() {
 
-    private var _binding: VB? = null
-    protected val binding get() = _binding!!
+    var binding: VB? = null
 
     abstract fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?): VB
 
@@ -19,8 +18,8 @@ abstract class BaseDialogFragment<VB : ViewBinding> : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = inflateBinding(inflater, container)
-        return binding.root
+        binding = inflateBinding(inflater, container)
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -35,6 +34,6 @@ abstract class BaseDialogFragment<VB : ViewBinding> : DialogFragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null
+        binding = null
     }
 }

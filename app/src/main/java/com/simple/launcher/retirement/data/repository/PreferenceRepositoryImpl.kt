@@ -12,6 +12,7 @@ class PreferenceRepositoryImpl(context: Context) : PreferenceRepository {
     private val sharedPrefs = context.getSharedPreferences("launcher_prefs", Context.MODE_PRIVATE)
 
     companion object {
+
         private const val KEY_SELECTED_APPS = "selected_apps"
         private const val KEY_PIN = "app_pin"
         private const val KEY_ONBOARDING_COMPLETED = "onboarding_completed"
@@ -35,6 +36,7 @@ class PreferenceRepositoryImpl(context: Context) : PreferenceRepository {
     override fun getPin(): String? = sharedPrefs.getString(KEY_PIN, null)
 
     override fun savePin(pin: String) {
+
         sharedPrefs.edit { putString(KEY_PIN, pin) }
         _hasPin.value = true
     }
@@ -47,6 +49,7 @@ class PreferenceRepositoryImpl(context: Context) : PreferenceRepository {
         sharedPrefs.getBoolean(KEY_ONBOARDING_COMPLETED, false)
 
     override fun setOnboardingCompleted(completed: Boolean) {
+
         sharedPrefs.edit { putBoolean(KEY_ONBOARDING_COMPLETED, completed) }
     }
 
@@ -54,6 +57,7 @@ class PreferenceRepositoryImpl(context: Context) : PreferenceRepository {
         sharedPrefs.getBoolean(KEY_APP_BLOCK_ENABLED, false)
 
     override fun setAppBlockEnabled(enabled: Boolean) {
+
         sharedPrefs.edit { putBoolean(KEY_APP_BLOCK_ENABLED, enabled) }
         _appBlockEnabled.value = enabled
     }
@@ -64,6 +68,7 @@ class PreferenceRepositoryImpl(context: Context) : PreferenceRepository {
         sharedPrefs.getBoolean(KEY_FILE_CLEANUP_ENABLED, false)
 
     override fun setFileCleanupEnabled(enabled: Boolean) {
+
         sharedPrefs.edit { putBoolean(KEY_FILE_CLEANUP_ENABLED, enabled) }
         _fileCleanupEnabled.value = enabled
     }
@@ -74,6 +79,7 @@ class PreferenceRepositoryImpl(context: Context) : PreferenceRepository {
         sharedPrefs.getBoolean(KEY_CALL_BLOCK_ENABLED, false)
 
     override fun setCallBlockEnabled(enabled: Boolean) {
+
         sharedPrefs.edit { putBoolean(KEY_CALL_BLOCK_ENABLED, enabled) }
         _callBlockEnabled.value = enabled
     }
@@ -84,36 +90,45 @@ class PreferenceRepositoryImpl(context: Context) : PreferenceRepository {
         sharedPrefs.getBoolean(KEY_POCKET_MODE_ENABLED, false)
 
     override fun setPocketModeEnabled(enabled: Boolean) {
+
         sharedPrefs.edit { putBoolean(KEY_POCKET_MODE_ENABLED, enabled) }
         _pocketModeEnabled.value = enabled
     }
 
     override fun isPocketModeEnabledFlow(): Flow<Boolean> = _pocketModeEnabled.asStateFlow()
 
-    override fun isEmergencyCallEnabled(): Boolean = sharedPrefs.getBoolean(KEY_EMERGENCY_CALL_ENABLED, false)
+    override fun isEmergencyCallEnabled(): Boolean =
+        sharedPrefs.getBoolean(KEY_EMERGENCY_CALL_ENABLED, false)
 
     override fun setEmergencyCallEnabled(enabled: Boolean) {
+
         sharedPrefs.edit { putBoolean(KEY_EMERGENCY_CALL_ENABLED, enabled) }
         _emergencyCallEnabled.value = enabled
     }
 
     override fun isEmergencyCallEnabledFlow(): Flow<Boolean> = _emergencyCallEnabled.asStateFlow()
 
-    override fun getEmergencyPhoneNumber(): String = sharedPrefs.getString(KEY_EMERGENCY_PHONE_NUMBER, "") ?: ""
+    override fun getEmergencyPhoneNumber(): String =
+        sharedPrefs.getString(KEY_EMERGENCY_PHONE_NUMBER, "") ?: ""
 
     override fun setEmergencyPhoneNumber(number: String) {
+
         sharedPrefs.edit { putString(KEY_EMERGENCY_PHONE_NUMBER, number) }
     }
 
-    override fun getLastUserActivity(): Long = sharedPrefs.getLong(KEY_LAST_USER_ACTIVITY, System.currentTimeMillis())
+    override fun getLastUserActivity(): Long =
+        sharedPrefs.getLong(KEY_LAST_USER_ACTIVITY, System.currentTimeMillis())
 
     override fun setLastUserActivity(timestamp: Long) {
+
         sharedPrefs.edit { putLong(KEY_LAST_USER_ACTIVITY, timestamp) }
     }
 
-    override fun getLastEmergencyIndex(): Int = sharedPrefs.getInt(KEY_LAST_EMERGENCY_INDEX, -1)
+    override fun getLastEmergencyIndex(): Int =
+        sharedPrefs.getInt(KEY_LAST_EMERGENCY_INDEX, -1)
 
     override fun setLastEmergencyIndex(index: Int) {
+
         sharedPrefs.edit { putInt(KEY_LAST_EMERGENCY_INDEX, index) }
     }
 }

@@ -59,6 +59,8 @@ class FilePermissionBottomSheet : BaseBottomSheetDialogFragment<BottomSheetFileP
     override fun setupViews(view: View, savedInstanceState: Bundle?) {
         super.setupViews(view, savedInstanceState)
 
+        val binding = binding ?: return
+
         binding.btnGrant.root.setOnSafeClickListener {
             requestFilePermission()
         }
@@ -68,14 +70,17 @@ class FilePermissionBottomSheet : BaseBottomSheetDialogFragment<BottomSheetFileP
         super.observeData()
 
         viewModel.title.observe(this) {
+            val binding = binding ?: return@observe
             binding.tvTitle.setText(it)
         }
 
         viewModel.message.observe(this) {
+            val binding = binding ?: return@observe
             binding.tvMessage.setText(it)
         }
 
         viewModel.action.observe(this) { state ->
+            val binding = binding ?: return@observe
             binding.btnGrant.tvAction.setText(state.text)
             binding.btnGrant.tvAction.parent.asObjectOrNull<View>()?.setBackground(state.background)
         }

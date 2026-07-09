@@ -38,6 +38,8 @@ class CleanFilesFragment : BaseFragment<FragmentCleanFilesBinding>() {
     override fun setupViews(view: View, savedInstanceState: Bundle?) {
         super.setupViews(view, savedInstanceState)
 
+        val binding = binding ?: return
+
         binding.toolbar.ivLeft.setOnSafeClickListener {
 
             requireActivity().onBackPressedDispatcher.onBackPressed()
@@ -51,66 +53,72 @@ class CleanFilesFragment : BaseFragment<FragmentCleanFilesBinding>() {
         }
     }
 
-    override fun observeData() = with(viewModel) {
+    override fun observeData() {
         super.observeData()
-
-        background.observe(this@CleanFilesFragment) { background ->
-            binding.root.setBackground(background)
-        }
-
-        toolbar.observe(this@CleanFilesFragment) { state ->
-
-            binding.toolbar.tvTitle.setText(state.title)
-
-            val backIcon = state.backIcon
-            if (backIcon != null) {
-                binding.toolbar.ivLeft.visibility = View.VISIBLE
-                binding.toolbar.ivLeft.setImage(backIcon)
-            } else {
-                binding.toolbar.ivLeft.visibility = View.GONE
-            }
-        }
-
-        action.observe(this@CleanFilesFragment) { state ->
-
-            binding.btnClean.tvAction.setText(state.text)
-            binding.btnClean.ivAction.setImage(state.image)
-            binding.btnClean.tvAction.parent.asObjectOrNull<View>()?.setBackground(state.background)
-        }
-
-        screenState.observe(this@CleanFilesFragment) {
-
-            binding.scannerRing.ringState = if (it is CleanFilesViewModel.ClearState.IDLE) {
-                RingState.IDLE
-            } else if (it is CleanFilesViewModel.ClearState.Scanning) {
-                RingState.SCANNING
-            } else {
-                RingState.DONE
+        with(viewModel) {
+            background.observe(this@CleanFilesFragment) { background ->
+                val binding = binding ?: return@observe
+                binding.root.setBackground(background)
             }
 
-            if (it !is CleanFilesViewModel.ClearState.Done) return@observe
+            toolbar.observe(this@CleanFilesFragment) { state ->
+                val binding = binding ?: return@observe
 
-            delay(1000)
+                binding.toolbar.tvTitle.setText(state.title)
 
-            binding.animationView.isVisible = true
-            binding.animationView.playAnimation()
-        }
+                val backIcon = state.backIcon
+                if (backIcon != null) {
+                    binding.toolbar.ivLeft.visibility = View.VISIBLE
+                    binding.toolbar.ivLeft.setImage(backIcon)
+                } else {
+                    binding.toolbar.ivLeft.visibility = View.GONE
+                }
+            }
 
-        screenViewData.observe(this@CleanFilesFragment) {
+            action.observe(this@CleanFilesFragment) { state ->
+                val binding = binding ?: return@observe
 
-            TransitionManager.beginDelayedTransition(binding.frameContent, AutoTransition())
+                binding.btnClean.tvAction.setText(state.text)
+                binding.btnClean.ivAction.setImage(state.image)
+                binding.btnClean.tvAction.parent.asObjectOrNull<View>()?.setBackground(state.background)
+            }
 
-            bindingRing(it.ringViewData)
+            screenState.observe(this@CleanFilesFragment) {
+                val binding = binding ?: return@observe
 
-            binding.tvStatus.setText(it.status)
+                binding.scannerRing.ringState = if (it is CleanFilesViewModel.ClearState.IDLE) {
+                    RingState.IDLE
+                } else if (it is CleanFilesViewModel.ClearState.Scanning) {
+                    RingState.SCANNING
+                } else {
+                    RingState.DONE
+                }
 
-            bindingCategory(it.categoryViewDataList)
-            bindingResult(it.resultViewData)
+                if (it !is CleanFilesViewModel.ClearState.Done) return@observe
+
+                delay(1000)
+
+                binding.animationView.isVisible = true
+                binding.animationView.playAnimation()
+            }
+
+            screenViewData.observe(this@CleanFilesFragment) {
+                val binding = binding ?: return@observe
+
+                TransitionManager.beginDelayedTransition(binding.frameContent, AutoTransition())
+
+                bindingRing(it.ringViewData)
+
+                binding.tvStatus.setText(it.status)
+
+                bindingCategory(it.categoryViewDataList)
+                bindingResult(it.resultViewData)
+            }
         }
     }
 
     private fun bindingRing(ringViewData: CleanFilesViewModel.RingViewData) {
-
+        val binding = binding ?: return
         binding.ivRingIcon.setImage(ringViewData.icon)
         binding.ivRingIcon.isVisible = ringViewData.showIcon
 
@@ -118,23 +126,26 @@ class CleanFilesFragment : BaseFragment<FragmentCleanFilesBinding>() {
         binding.tvRingCount.isVisible = !ringViewData.showIcon
     }
 
-    private fun bindingCategory(categoryViewDataList: List<CleanFilesViewModel.CategoryViewData>) = categoryViewDataList.forEachIndexed { index, data ->
+    private fun bindingCategory(categoryViewDataList: List<CleanFilesViewModel.CategoryViewData>) {
+        val binding = binding ?: return
+        categoryViewDataList.forEachIndexed { index, data ->
 
-        val itemBinding = if (binding.llCategories.childCount == categoryViewDataList.size) {
-            ItemCleanCategoryBinding.bind(binding.llCategories.getChildAt(index))
-        } else {
-            ItemCleanCategoryBinding.inflate(LayoutInflater.from(requireContext()), binding.llCategories, true)
+            val itemBinding = if (binding.llCategories.childCount == categoryViewDataList.size) {
+                ItemCleanCategoryBinding.bind(binding.llCategories.getChildAt(index))
+            } else {
+                ItemCleanCategoryBinding.inflate(LayoutInflater.from(requireContext()), binding.llCategories, true)
+            }
+
+            itemBinding.ivCatIcon.setImage(data.image)
+            itemBinding.ivCatIcon.setBackground(data.imageBackground)
+            itemBinding.tvCatName.setText(data.label)
+            itemBinding.tvCatCount.setText(data.numberFile)
+            itemBinding.ivCatCheck.isVisible = data.showSelected
         }
-
-        itemBinding.ivCatIcon.setImage(data.image)
-        itemBinding.ivCatIcon.setBackground(data.imageBackground)
-        itemBinding.tvCatName.setText(data.label)
-        itemBinding.tvCatCount.setText(data.numberFile)
-        itemBinding.ivCatCheck.isVisible = data.showSelected
     }
 
     private fun bindingResult(resultViewData: CleanFilesViewModel.ResultViewData) {
-
+        val binding = binding ?: return
         binding.cardResult.isVisible = resultViewData.show
 
         binding.tvResultTitle.setText(resultViewData.title)

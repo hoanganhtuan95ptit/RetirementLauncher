@@ -42,6 +42,12 @@
 -keep class com.google.android.gms.ads.** { *; }
 -keep class com.google.ads.** { *; }
 
+-keep class com.simple.** { *; }
+
+-keep,allowobfuscation,allowoptimization class * implements com.simple.auto.register.AutoKeep {
+    public <init>();
+}
+
 # General suppression
 -dontnote **
 -dontwarn **

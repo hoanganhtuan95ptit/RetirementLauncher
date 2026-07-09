@@ -30,6 +30,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     override fun setupViews(view: View, savedInstanceState: Bundle?) {
         super.setupViews(view, savedInstanceState)
 
+        val binding = binding ?: return
+
         val layoutManager = GridLayoutManager(requireContext(), HomeItem.TOTAL_COLUMNS)
         layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
@@ -39,12 +41,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         binding.rvApps.layoutManager = layoutManager
     }
 
-    override fun observeData() = with(viewModel) {
+    override fun observeData() {
         super.observeData()
-
-        viewItemList.attachAdapter().observe(viewLifecycleOwner) { (items, adapters) ->
-
-            binding.rvApps.submitListAndAwait(items, adapters, true)
+        with(viewModel) {
+            viewItemList.attachAdapter().observe(viewLifecycleOwner) { (items, adapters) ->
+                val binding = binding ?: return@observe
+                binding.rvApps.submitListAndAwait(items, adapters, true)
+            }
         }
     }
 }

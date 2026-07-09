@@ -54,6 +54,8 @@ class ContactListFragment : BaseFragment<FragmentAppListBinding>() {
     override fun setupViews(view: View, savedInstanceState: Bundle?) {
         super.setupViews(view, savedInstanceState)
 
+        val binding = binding ?: return
+
         binding.toolbar.ivLeft.setOnSafeClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
@@ -78,10 +80,12 @@ class ContactListFragment : BaseFragment<FragmentAppListBinding>() {
     override fun observeData() {
         super.observeData()
         viewModel.background.observe(this) { background ->
+            val binding = binding ?: return@observe
             binding.root.setBackground(background)
         }
 
         viewModel.toolbar.observe(this) { state ->
+            val binding = binding ?: return@observe
             binding.toolbar.tvTitle.setText(state.title)
             val backIcon = state.backIcon
             if (backIcon != null) {
@@ -93,6 +97,7 @@ class ContactListFragment : BaseFragment<FragmentAppListBinding>() {
         }
 
         viewModel.searchState.observe(this) { state ->
+            val binding = binding ?: return@observe
             binding.layoutSearch.root.setBackground(state.background)
             binding.layoutSearch.etSearch.hint = state.hint
             binding.layoutSearch.etSearch.setHintTextColor(state.hintColor)
@@ -101,11 +106,13 @@ class ContactListFragment : BaseFragment<FragmentAppListBinding>() {
         }
 
         viewModel.saveAction.observe(this) { state ->
+            val binding = binding ?: return@observe
             binding.btnSave.tvAction.setText(state.text)
             binding.btnSave.tvAction.parent.asObjectOrNull<View>()?.setBackground(state.background)
         }
 
         viewModel.items.attachAdapter().observe(this) { (items, adapters) ->
+            val binding = binding ?: return@observe
             binding.rvAppList.submitListAndAwait(items, adapters, true)
             binding.rvAppList.scrollToPosition(0)
         }
@@ -116,6 +123,7 @@ class ContactListFragment : BaseFragment<FragmentAppListBinding>() {
     }
 
     private fun navigateToReorder() {
+        val binding = binding ?: return
         binding.layoutSearch.etSearch.setText("")
 
         val currentSelected = viewModel.getAllSelectedIds()

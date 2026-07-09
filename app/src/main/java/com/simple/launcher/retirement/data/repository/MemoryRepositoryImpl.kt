@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.map
 class MemoryRepositoryImpl(private val context: Context) : MemoryRepository {
 
     override fun getStorageInfo(): StorageInfo {
+
         val stat = StatFs(Environment.getDataDirectory().path)
         val totalBytes = stat.totalBytes
         val freeBytes = stat.availableBytes
@@ -35,10 +36,12 @@ class MemoryRepositoryImpl(private val context: Context) : MemoryRepository {
         .flowOn(Dispatchers.IO)
 
     override fun refreshMemoryStatus() {
+
         _systemTrigger.tryEmit(Unit)
     }
 
     override fun estimateCleanableMemory(): Long {
+
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return 0L
 
         val storageManager = context.getSystemService(StorageManager::class.java)
@@ -49,6 +52,7 @@ class MemoryRepositoryImpl(private val context: Context) : MemoryRepository {
     }
 
     override fun cleanMemory(): Long {
+
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return 0L
 
         val storageManager = context.getSystemService(StorageManager::class.java)

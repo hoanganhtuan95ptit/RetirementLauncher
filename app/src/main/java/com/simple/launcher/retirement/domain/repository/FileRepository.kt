@@ -44,6 +44,7 @@ interface FileRepository {
     fun watchFilesFlow(): Flow<File>
 
     companion object {
+
         val instance: FileRepository by lazy { FileRepositoryImpl }
     }
 }

@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.Flow
  * Chỉ giữ lại ảnh / nhạc / video — mọi thứ còn lại đều bị coi là không cần thiết.
  */
 enum class StrangeFileCategory(val extensions: Set<String>) {
+
     /** File tạm, log, cache hệ thống — và mọi file không có đuôi */
     SYSTEM_TEMP(setOf("tmp", "log", "bak", "dat", "db-journal", "db-shm", "db-wal")),
     /** File nén, archive */
@@ -24,6 +25,7 @@ enum class StrangeFileCategory(val extensions: Set<String>) {
  * Quản lý danh sách ứng dụng và lựa chọn ứng dụng được phép trên màn hình home.
  */
 interface AppRepository {
+
     fun getInstalledApps(): List<AppEntity>
     fun getCurrentApp(): AppEntity
     fun getSelectedPackages(): List<String>
@@ -34,6 +36,7 @@ interface AppRepository {
     fun homeDataFlow(): Flow<Unit>
 
     companion object {
+
         val instance: AppRepository by lazy { AppRepositoryImpl(MainApplication.instance) }
     }
 }

@@ -36,6 +36,8 @@ class CleanMemoryFragment : BaseFragment<FragmentCleanMemoryBinding>() {
     override fun setupViews(view: View, savedInstanceState: Bundle?) {
         super.setupViews(view, savedInstanceState)
 
+        val binding = binding ?: return
+
         binding.toolbar.ivLeft.setOnSafeClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
@@ -47,61 +49,68 @@ class CleanMemoryFragment : BaseFragment<FragmentCleanMemoryBinding>() {
         }
     }
 
-    override fun observeData() = with(viewModel) {
+    override fun observeData() {
         super.observeData()
-
-        background.observe(this@CleanMemoryFragment) { background ->
-            binding.root.setBackground(background)
-        }
-
-        toolbar.observe(this@CleanMemoryFragment) { state ->
-
-            binding.toolbar.tvTitle.setText(state.title)
-
-            val backIcon = state.backIcon
-            if (backIcon != null) {
-                binding.toolbar.ivLeft.isVisible = true
-                binding.toolbar.ivLeft.setImage(backIcon)
-            } else {
-                binding.toolbar.ivLeft.isVisible = false
+        with(viewModel) {
+            background.observe(this@CleanMemoryFragment) { background ->
+                val binding = binding ?: return@observe
+                binding.root.setBackground(background)
             }
-        }
 
-        action.observe(this@CleanMemoryFragment) { state ->
+            toolbar.observe(this@CleanMemoryFragment) { state ->
+                val binding = binding ?: return@observe
 
-            binding.btnBoost.tvAction.setText(state.text)
-            binding.btnBoost.ivAction.setImage(state.image)
-            binding.btnBoost.tvAction.parent.asObjectOrNull<View>()?.setBackground(state.background)
-        }
+                binding.toolbar.tvTitle.setText(state.title)
 
-        boostState.observe(this@CleanMemoryFragment) {
+                val backIcon = state.backIcon
+                if (backIcon != null) {
+                    binding.toolbar.ivLeft.isVisible = true
+                    binding.toolbar.ivLeft.setImage(backIcon)
+                } else {
+                    binding.toolbar.ivLeft.isVisible = false
+                }
+            }
 
-            if (it !is CleanMemoryViewModel.BoostState.Done) return@observe
+            action.observe(this@CleanMemoryFragment) { state ->
+                val binding = binding ?: return@observe
 
-            delay(1000)
+                binding.btnBoost.tvAction.setText(state.text)
+                binding.btnBoost.ivAction.setImage(state.image)
+                binding.btnBoost.tvAction.parent.asObjectOrNull<View>()?.setBackground(state.background)
+            }
 
-            binding.animationView.isVisible = true
-            binding.animationView.playAnimation()
-        }
+            boostState.observe(this@CleanMemoryFragment) {
+                val binding = binding ?: return@observe
 
-        loadingViewData.observe(this@CleanMemoryFragment) {
+                if (it !is CleanMemoryViewModel.BoostState.Done) return@observe
 
-            if (it.loading) binding.memoryGauge.startSpinning()
-            else binding.memoryGauge.setPercent(it.percent, animate = true)
-        }
+                delay(1000)
 
-        screenViewData.observe(this@CleanMemoryFragment) {
+                binding.animationView.isVisible = true
+                binding.animationView.playAnimation()
+            }
 
-            TransitionManager.beginDelayedTransition(binding.frameContent, AutoTransition())
+            loadingViewData.observe(this@CleanMemoryFragment) {
+                val binding = binding ?: return@observe
 
-            bindingRam(it.ramViewData)
-            bindingRing(it.ringViewData)
-            bindingResult(it.resultViewData)
+                if (it.loading) binding.memoryGauge.startSpinning()
+                else binding.memoryGauge.setPercent(it.percent, animate = true)
+            }
+
+            screenViewData.observe(this@CleanMemoryFragment) {
+                val binding = binding ?: return@observe
+
+                TransitionManager.beginDelayedTransition(binding.frameContent, AutoTransition())
+
+                bindingRam(it.ramViewData)
+                bindingRing(it.ringViewData)
+                bindingResult(it.resultViewData)
+            }
         }
     }
 
     private fun bindingRam(ramViewData: CleanMemoryViewModel.RamViewData) {
-
+        val binding = binding ?: return
         binding.tvStatUsed.setText(ramViewData.usedBigText)
         binding.tvStatUsed.setBackground(ramViewData.usedBackground)
 
@@ -113,12 +122,12 @@ class CleanMemoryFragment : BaseFragment<FragmentCleanMemoryBinding>() {
     }
 
     private fun bindingRing(ringViewData: CleanMemoryViewModel.RingViewData) {
-
+        val binding = binding ?: return
         binding.tvPercent.setText(ringViewData.value)
     }
 
     private fun bindingResult(resultViewData: CleanMemoryViewModel.ResultViewData) {
-
+        val binding = binding ?: return
         binding.tvResult.setText(resultViewData.text)
         binding.ivResult.setImage(resultViewData.image)
 

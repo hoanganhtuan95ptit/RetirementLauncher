@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.Flow
  * Quản lý bộ nhớ lưu trữ (bộ nhớ cứng) của thiết bị.
  */
 interface MemoryRepository {
+
     /** Đọc thông tin bộ nhớ lưu trữ hiện tại (total, used, free) từ StatFs. */
     fun getStorageInfo(): StorageInfo
 
@@ -24,6 +25,7 @@ interface MemoryRepository {
     fun refreshMemoryStatus()
 
     companion object {
+
         val instance: MemoryRepository by lazy { MemoryRepositoryImpl(MainApplication.instance) }
     }
 }

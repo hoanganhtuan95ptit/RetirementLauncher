@@ -32,6 +32,7 @@ class PinSetupFragment : BaseFragment<FragmentPinSetupBinding>() {
     private val PIN_LENGTH = 6
 
     private val pinDots: List<View> by lazy {
+        val binding = binding ?: return@lazy emptyList()
         listOf(
             binding.layoutPinDots.vPin1, binding.layoutPinDots.vPin2, binding.layoutPinDots.vPin3,
             binding.layoutPinDots.vPin4, binding.layoutPinDots.vPin5, binding.layoutPinDots.vPin6
@@ -46,6 +47,8 @@ class PinSetupFragment : BaseFragment<FragmentPinSetupBinding>() {
     override fun setupViews(view: View, savedInstanceState: Bundle?) {
 
         super.setupViews(view, savedInstanceState)
+
+        val binding = binding ?: return
 
         binding.toolbar.ivLeft.setOnSafeClickListener {
 
@@ -119,11 +122,13 @@ class PinSetupFragment : BaseFragment<FragmentPinSetupBinding>() {
         super.observeData()
 
         viewModel.background.observe(this) { background ->
+            val binding = binding ?: return@observe
 
             binding.root.setBackground(background)
         }
 
         viewModel.instruction.observe(this) { instruction ->
+            val binding = binding ?: return@observe
 
             binding.tvInstruction.setText(instruction)
         }
@@ -145,11 +150,13 @@ class PinSetupFragment : BaseFragment<FragmentPinSetupBinding>() {
         }
 
         viewModel.error.observe(this) { errorRes ->
+            val binding = binding ?: return@observe
 
             binding.tvError.setText(errorRes?.let { BigText(getString(it)) })
         }
 
         viewModel.toolbar.observe(this) { state ->
+            val binding = binding ?: return@observe
 
             binding.toolbar.tvTitle.setText(state.title)
             val backIcon = state.backIcon
@@ -164,6 +171,7 @@ class PinSetupFragment : BaseFragment<FragmentPinSetupBinding>() {
         }
 
         viewModel.action.observe(this) { state ->
+            val binding = binding ?: return@observe
 
             binding.btnNext.tvAction.setText(state.text)
             binding.btnNext.tvAction.parent.asObjectOrNull<View>()?.setBackground(state.background)

@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.Flow
  * PIN, onboarding, app-block, file-cleanup, call-block.
  */
 interface PreferenceRepository {
+
     fun getPin(): String?
     fun savePin(pin: String)
     fun hasPin(): Boolean
@@ -47,6 +48,7 @@ interface PreferenceRepository {
     fun setLastEmergencyIndex(index: Int)
 
     companion object {
+
         val instance: PreferenceRepository by lazy { PreferenceRepositoryImpl(MainApplication.instance) }
     }
 }

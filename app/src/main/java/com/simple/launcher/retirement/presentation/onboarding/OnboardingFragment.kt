@@ -31,6 +31,8 @@ class OnboardingFragment : BaseFragment<FragmentOnboardingBinding>() {
     override fun setupViews(view: View, savedInstanceState: Bundle?) {
         super.setupViews(view, savedInstanceState)
 
+        val binding = binding ?: return
+
         binding.btnStart.root.setOnSafeClickListener {
             val repository = PreferenceRepository.instance
             repository.setOnboardingCompleted(true)
@@ -43,10 +45,13 @@ class OnboardingFragment : BaseFragment<FragmentOnboardingBinding>() {
         super.observeData()
 
         viewModel.background.observe(this) { background ->
+            val binding = binding ?: return@observe
             binding.root.setBackground(background)
         }
 
         viewModel.action.observe(this) { state ->
+            val binding = binding ?: return@observe
+
             binding.btnStart.tvAction.setText(state.text)
             binding.btnStart.tvAction.parent.asObjectOrNull<View>()?.setBackground(state.background)
         }

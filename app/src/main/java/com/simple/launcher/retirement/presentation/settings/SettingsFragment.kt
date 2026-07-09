@@ -58,6 +58,8 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
 
         super.setupViews(view, savedInstanceState)
 
+        val binding = binding ?: return
+
         binding.toolbar.ivLeft.setOnSafeClickListener {
 
             requireActivity().onBackPressedDispatcher.onBackPressed()
@@ -74,38 +76,44 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
         binding.rvSettings.layoutManager = layoutManager
     }
 
-    override fun observeData() = with(viewModel) {
+    override fun observeData() {
 
         super.observeData()
 
-        toolbar.observe(this@SettingsFragment) { state ->
+        with(viewModel) {
 
-            binding.toolbar.tvTitle.setText(state.title)
-            val backIcon = state.backIcon
-            if (backIcon != null) {
+            toolbar.observe(this@SettingsFragment) { state ->
+                val binding = binding ?: return@observe
 
-                binding.toolbar.ivLeft.visibility = View.VISIBLE
-                binding.toolbar.ivLeft.setImage(backIcon)
-            } else {
+                binding.toolbar.tvTitle.setText(state.title)
+                val backIcon = state.backIcon
+                if (backIcon != null) {
 
-                binding.toolbar.ivLeft.visibility = View.GONE
+                    binding.toolbar.ivLeft.visibility = View.VISIBLE
+                    binding.toolbar.ivLeft.setImage(backIcon)
+                } else {
+
+                    binding.toolbar.ivLeft.visibility = View.GONE
+                }
             }
-        }
 
-        background.observe(this@SettingsFragment) { background ->
+            background.observe(this@SettingsFragment) { background ->
+                val binding = binding ?: return@observe
 
-            binding.root.setBackground(background)
-        }
+                binding.root.setBackground(background)
+            }
 
-        viewItemList.attachAdapter().observe(this@SettingsFragment) { (items, adapters) ->
+            viewItemList.attachAdapter().observe(this@SettingsFragment) { (items, adapters) ->
+                val binding = binding ?: return@observe
 
-            binding.rvSettings.submitListAndAwait(items, adapters, true)
-        }
+                binding.rvSettings.submitListAndAwait(items, adapters, true)
+            }
 
-        // Adapter chỉ phát event; Fragment giữ trách nhiệm điều hướng và xin quyền.
-        AppEventBus.events.filterIsInstance<AppEvent.SettingClicked>().observe(this@SettingsFragment) { event ->
+            // Adapter chỉ phát event; Fragment giữ trách nhiệm điều hướng và xin quyền.
+            AppEventBus.events.filterIsInstance<AppEvent.SettingClicked>().observe(this@SettingsFragment) { event ->
 
-            handleSettingItemClick(event.item)
+                handleSettingItemClick(event.item)
+            }
         }
     }
 

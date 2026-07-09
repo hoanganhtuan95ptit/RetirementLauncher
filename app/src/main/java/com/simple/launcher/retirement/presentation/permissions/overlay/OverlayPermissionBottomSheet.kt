@@ -50,6 +50,8 @@ class OverlayPermissionBottomSheet : BaseBottomSheetDialogFragment<BottomSheetOv
     override fun setupViews(view: View, savedInstanceState: Bundle?) {
         super.setupViews(view, savedInstanceState)
 
+        val binding = binding ?: return
+
         binding.btnGrant.root.setOnSafeClickListener {
             requestOverlayPermission()
         }
@@ -57,13 +59,17 @@ class OverlayPermissionBottomSheet : BaseBottomSheetDialogFragment<BottomSheetOv
 
     override fun observeData() {
         super.observeData()
+
         viewModel.title.observe(this) { title ->
+            val binding = binding ?: return@observe
             binding.tvTitle.setText(title)
         }
         viewModel.description.observe(this) { description ->
+            val binding = binding ?: return@observe
             binding.tvDescription.setText(description)
         }
         viewModel.action.observe(this) { state ->
+            val binding = binding ?: return@observe
             binding.btnGrant.tvAction.setText(state.text)
             binding.btnGrant.tvAction.parent.asObjectOrNull<View>()?.setBackground(state.background)
         }

@@ -33,6 +33,7 @@ class PinVerifyBottomSheet : BaseBottomSheetDialogFragment<BottomSheetPinVerifyB
     private val PIN_LENGTH = 6
 
     private val pinDots: List<View> by lazy {
+        val binding = binding ?: return@lazy emptyList()
         listOf(
             binding.layoutPinDots.vPin1, binding.layoutPinDots.vPin2, binding.layoutPinDots.vPin3,
             binding.layoutPinDots.vPin4, binding.layoutPinDots.vPin5, binding.layoutPinDots.vPin6
@@ -47,6 +48,8 @@ class PinVerifyBottomSheet : BaseBottomSheetDialogFragment<BottomSheetPinVerifyB
     override fun setupViews(view: View, savedInstanceState: Bundle?) {
 
         super.setupViews(view, savedInstanceState)
+
+        val binding = binding ?: return
 
         binding.numpadView.onDigitClick = { digit ->
 
@@ -64,6 +67,7 @@ class PinVerifyBottomSheet : BaseBottomSheetDialogFragment<BottomSheetPinVerifyB
         super.observeData()
 
         viewModel.content.observe(this) { state ->
+            val binding = binding ?: return@observe
 
             binding.tvTitle.setText(state.title)
             binding.tvDesc.setText(state.desc)
@@ -136,6 +140,7 @@ class PinVerifyBottomSheet : BaseBottomSheetDialogFragment<BottomSheetPinVerifyB
     }
 
     private fun resetPin() = viewLifecycleOwner.lifecycleScope.launch {
+        val binding = binding ?: return@launch
         binding.numpadView.setIsClickable(false)
         delay(500)
         binding.numpadView.setIsClickable(true)

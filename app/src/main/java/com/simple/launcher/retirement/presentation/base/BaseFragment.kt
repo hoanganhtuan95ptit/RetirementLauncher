@@ -9,9 +9,7 @@ import androidx.viewbinding.ViewBinding
 
 abstract class BaseFragment<VB : ViewBinding> : Fragment() {
 
-    private var _binding: VB? = null
-
-    protected val binding get() = _binding!!
+    var binding: VB? = null
 
     abstract fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?): VB
 
@@ -21,8 +19,8 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        _binding = inflateBinding(inflater, container)
-        return binding.root
+        binding = inflateBinding(inflater, container)
+        return binding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -39,6 +37,6 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
     override fun onDestroyView() {
 
         super.onDestroyView()
-        _binding = null
+        binding = null
     }
 }
