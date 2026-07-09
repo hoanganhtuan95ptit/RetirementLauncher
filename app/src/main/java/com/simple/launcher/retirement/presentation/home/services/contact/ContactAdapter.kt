@@ -2,7 +2,6 @@ package com.simple.launcher.retirement.presentation.home.services.contact
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.simple.adapter.Adapter
 import com.simple.adapter.ViewItemAdapter
 import com.simple.adapter.base.BaseBindingViewHolder
@@ -14,19 +13,19 @@ import com.simple.launcher.retirement.presentation.home.adapter.HomeItem
 import com.simple.launcher.retirement.utils.background.Background
 import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.getItem
-import com.simple.launcher.retirement.utils.image.RichImage
-import com.simple.launcher.retirement.utils.image.setImage
-import com.simple.launcher.retirement.utils.text.RichText
-import com.simple.launcher.retirement.utils.text.setText
+import com.simple.ui.precompute.image.BigImage
+import com.simple.ui.precompute.image.setImage
+import com.simple.ui.precompute.text.BigText
+import com.simple.ui.precompute.text.setText
 import com.simple.launcher.retirement.utils.view.setOnSafeWithPerformHapticFeedbackClickListener
 
 data class ContactHomeItem(
     val entity: ContactEntity,
-    val name: RichText,
-    val photo: RichImage,
+    val name: BigText,
+    val photo: BigImage,
     val background: Background,
 
-    val tapToCallLabel: RichText,
+    val tapToCallLabel: BigText,
     val tapToCallBackground: Background,
 ) : HomeItem {
 
@@ -50,37 +49,53 @@ data class ContactHomeItem(
 class ContactAdapter : ViewItemAdapter<ContactHomeItem, ItemContactBinding>() {
 
     override val viewItemClass: Class<ContactHomeItem> by lazy {
+
         ContactHomeItem::class.java
     }
 
     override fun createViewBinding(layoutInflater: LayoutInflater, parent: ViewGroup, viewType: Int): ItemContactBinding {
+
         return ItemContactBinding.inflate(layoutInflater, parent, false)
     }
 
     override fun createViewHolder(parent: ViewGroup, viewType: Int): BaseBindingViewHolder<ItemContactBinding> {
+
         val viewHolder = super.createViewHolder(parent, viewType)
         viewHolder.itemView.setOnSafeWithPerformHapticFeedbackClickListener {
+
             val item = viewHolder.getItem<ContactHomeItem>() ?: return@setOnSafeWithPerformHapticFeedbackClickListener
             sendDeeplink(DeepLinks.CALL, mapOf("entity" to item.entity))
         }
+
         return viewHolder
     }
 
     override fun onBindViewHolder(binding: ItemContactBinding, viewType: Int, position: Int, item: ContactHomeItem, payloads: List<String>) {
+
         super.onBindViewHolder(binding, viewType, position, item, payloads)
+
         if (payloads.isEmpty() || payloads.contains("name")) {
+
             binding.tvName.setText(item.name)
         }
+
         if (payloads.isEmpty() || payloads.contains("photo")) {
-            binding.ivPhoto.setImage(item.photo, CircleCrop())
+
+            binding.ivPhoto.setImage(item.photo)
         }
+
         if (payloads.isEmpty() || payloads.contains("background")) {
+
             binding.root.setBackground(item.background)
         }
+
         if (payloads.isEmpty() || payloads.contains("tapToCallLabel")) {
+
             binding.tvTapToCall.setText(item.tapToCallLabel)
         }
+
         if (payloads.isEmpty() || payloads.contains("tapToCallBackground")) {
+
             binding.tvTapToCall.setBackground(item.tapToCallBackground)
         }
     }

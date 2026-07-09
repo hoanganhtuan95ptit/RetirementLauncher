@@ -194,39 +194,41 @@ class CleanFilesViewModel : BaseViewModel() {
         flow1 = resources,
         flow2 = screenState,
         initialValue = ResultViewData(show = false)
-    ) { resources, state ->
+    ) { res, state ->
 
-        if (state !is ClearState.Done) return@combineState ResultViewData(show = false)
+        if (state !is ClearState.Done) {
+            return@combineState ResultViewData(show = false)
+        }
 
         val spaceMB = state.totalBytes / (1024f * 1024f)
         val spaceLabel = if (spaceMB >= 1f) "%.1f MB".format(spaceMB) else "${state.totalBytes / 1024} KB"
 
         ResultViewData(
             show = true,
-            title = resources.getString(R.string.clean_result_title)
+            title = res.getString(R.string.clean_result_title)
                 .withStyleBodyLarge()
-                .with(ForegroundColor(resources.colorOnSurface))
+                .with(ForegroundColor(res.colorOnSurface))
                 .build(),
 
             resultFilesImage = ImageRes(R.drawable.ic_file_black_24dp, "#FFBB00".toColorInt()),
-            resultFilesLabel = "${state.totalFiles.orZero()}\n${resources.getString(R.string.clean_result_files_deleted)}"
+            resultFilesLabel = "${state.totalFiles.orZero()}\n${res.getString(R.string.clean_result_files_deleted)}"
                 .withStyleBodyMedium()
-                .with(ForegroundColor(resources.colorOnSurface))
+                .with(ForegroundColor(res.colorOnSurface))
                 .withFirst("${state.totalFiles.orZero()}", TextSize(24), Bold)
                 .build(),
             resultFilesBackground = Background.Builder()
-                .backgroundColor(resources.colorSurface)
+                .backgroundColor(res.colorSurface)
                 .cornerRadius(DP.DP_24)
                 .build(),
 
             resultSpaceImage = ImageRes(R.drawable.ic_clear_files_black_24dp, "#FF4343".toColorInt()),
-            resultSpaceLabel = "${spaceLabel}\n${resources.getString(R.string.clean_result_space_freed)}"
+            resultSpaceLabel = "${spaceLabel}\n${res.getString(R.string.clean_result_space_freed)}"
                 .withStyleBodyMedium()
-                .with(ForegroundColor(resources.colorOnSurface))
+                .with(ForegroundColor(res.colorOnSurface))
                 .withFirst(spaceLabel, TextSize(24), Bold)
                 .build(),
             resultSpaceBackground = Background.Builder()
-                .backgroundColor(resources.colorSurface)
+                .backgroundColor(res.colorSurface)
                 .cornerRadius(DP.DP_24)
                 .build()
 

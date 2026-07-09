@@ -5,10 +5,10 @@ import android.view.ViewGroup
 import com.simple.adapter.Adapter
 import com.simple.adapter.ViewItemAdapter
 import com.simple.launcher.retirement.databinding.ItemHeaderBinding
-import com.simple.launcher.retirement.utils.text.RichText
-import com.simple.launcher.retirement.utils.text.setText
+import com.simple.ui.precompute.text.BigText
+import com.simple.ui.precompute.text.setText
 
-data class HeaderHomeItem(val title: RichText) : HomeItem {
+data class HeaderHomeItem(val title: BigText) : HomeItem {
 
     override val spanSize: Int = HomeItem.TOTAL_COLUMNS // full width
 

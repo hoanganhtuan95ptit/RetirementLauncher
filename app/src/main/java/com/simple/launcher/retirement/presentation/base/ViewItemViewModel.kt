@@ -6,8 +6,6 @@ import com.simple.launcher.retirement.utils.combineState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
-
-
 fun GroupViewItem(
     order: Int,
     list: List<ViewItem>? = null
@@ -23,31 +21,40 @@ data class GroupViewItem(
 
 abstract class ViewItemViewModel : BaseViewModel() {
 
-    val jobQueue by lazy { JobQueue() }
+    private val jobQueue by lazy { JobQueue() }
 
-    val viewItemMap = MutableStateFlow<MutableMap<Double, List<ViewItem>>>(mutableMapOf())
+    // Mỗi service sở hữu một slot riêng và thay toàn bộ list cho slot đó.
+    private val viewItemMap = MutableStateFlow<Map<Double, List<ViewItem>>>(emptyMap())
 
     val viewItemList: StateFlow<List<ViewItem>> = combineState(
-        viewItemMap,
-        emptyList()
-    ) { viewItemMap ->
+        flow1 = viewItemMap,
+        initialValue = emptyList()
+    ) { itemMap ->
 
-        viewItemMap.toList()
+        value = itemMap.toList()
             .sortedBy { it.first }
             .flatMap { it.second }
     }
 
-
     fun updateItem(groupViewItem: GroupViewItem) {
+
         updateItem(groupViewItem.order, groupViewItem.list)
     }
 
     fun updateItem(order: Int, list: List<ViewItem>?) {
+
         updateItem(order.toDouble(), list)
     }
 
     fun updateItem(order: Double, list: List<ViewItem>?) = jobQueue.submit {
-        if (list != null) viewItemMap.value = viewItemMap.value.toMutableMap().apply {
+
+        viewItemMap.value = viewItemMap.value.toMutableMap().apply {
+            if (list.isNullOrEmpty()) {
+
+                remove(order)
+                return@apply
+            }
+
             put(order, list)
         }
     }

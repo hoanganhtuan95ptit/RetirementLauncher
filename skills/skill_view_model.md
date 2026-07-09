@@ -101,11 +101,18 @@ val items = combineState(..., flow5 = _itemMap, ...) { ..., extraMap ->
 | Hàm | Khi nào dùng |
 |---|---|
 | `mutableSharedFlow<T> { ... }` | Tạo `MutableSharedFlow<T>` chạy một coroutine nền khi khởi tạo. |
+| `launchState` | Tạo `StateFlow<R>` bằng cách cho phép `emit` hoặc logic phức tạp trong lambda (dùng `MutableStateFlow` receiver). |
 | `combineSources(vararg flows) { ... }` | Re-execute khi **bất kỳ** source flow nào emit — cancel job cũ. |
 | `listenerSources(vararg flows) { ... }` | Tương tự `combineSources` nhưng dùng `merge` (một flow emit là chạy). Thường dùng với EventBus. |
 | `combineSourcesWithDiff` / `listenerSourcesWithDiff` | Giống trên nhưng chỉ emit khi giá trị **thực sự thay đổi** (`distinctUntilChanged`). |
 
 ```kotlin
+// Ví dụ: launchState để handle logic phức tạp
+val state: StateFlow<MyState> = launchState(flow1, initialValue) { value ->
+    // Perform complex logic, side effects, or multiple emits
+    emit(process(value))
+}
+
 // Ví dụ: listenerSources để phản ứng với EventBus
 val result: MutableSharedFlow<String> = listenerSources(AppListEventBus.events) {
     val entity = AppListEventBus.events.first()
@@ -127,6 +134,7 @@ val processed: MutableSharedFlow<List<ViewItem>> = combineSources(strings, theme
 
 ```kotlin
 import com.simple.launcher.retirement.utils.combineState
+import com.simple.launcher.retirement.utils.launchState
 import com.simple.launcher.retirement.utils.mutableSharedFlow
 import com.simple.launcher.retirement.utils.combineSources
 import com.simple.launcher.retirement.utils.listenerSources

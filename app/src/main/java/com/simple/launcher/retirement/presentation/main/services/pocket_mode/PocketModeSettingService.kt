@@ -14,7 +14,8 @@ import com.simple.launcher.retirement.utils.services.FragmentCreatedService
 import com.simple.launcher.retirement.utils.services.launchCollect
 import kotlinx.coroutines.flow.filterIsInstance
 
-@AutoRegister(apis = [SettingsFragment::class])
+// Legacy toggle service này đang tắt vì Settings mới đã tách group theo service/view model khác.
+//@AutoRegister(apis = [SettingsFragment::class])
 class PocketModeSettingService : FragmentCreatedService {
 
     private lateinit var settingsViewModel: SettingsViewModel

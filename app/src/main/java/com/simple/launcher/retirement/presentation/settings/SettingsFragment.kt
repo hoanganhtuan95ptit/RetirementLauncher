@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
@@ -37,118 +36,143 @@ import kotlinx.coroutines.launch
 
 class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
 
-    private val viewModel: SettingsViewModel by viewModels {
-        SettingsViewModelFactory()
-    }
+    // Service layer dùng chung instance này để ghép từng nhóm setting vào một list duy nhất.
+    val viewModel: SettingsViewModel by viewModels<SettingsViewModel>()
 
     private val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+
         if (isGranted) {
+
             PreferenceRepository.instance.setEmergencyCallEnabled(true)
             BackgroundService.start(requireContext())
         }
     }
 
     override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentSettingsBinding {
+
         return FragmentSettingsBinding.inflate(inflater, container, false)
     }
 
     override fun setupViews(view: View, savedInstanceState: Bundle?) {
+
         super.setupViews(view, savedInstanceState)
 
         binding.toolbar.ivLeft.setOnSafeClickListener {
+
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
         val layoutManager = GridLayoutManager(requireContext(), 2)
         layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+
             override fun getSpanSize(position: Int): Int {
-                return (viewModel.items.value.getOrNull(position) as? SpanSizeLookupViewItem)?.getSpanSize() ?: 1
+
+                return (viewModel.viewItemList.value.getOrNull(position) as? SpanSizeLookupViewItem)?.getSpanSize() ?: 1
             }
         }
         binding.rvSettings.layoutManager = layoutManager
     }
 
     override fun observeData() = with(viewModel) {
-        super.observeData()
 
-        background.observe(this@SettingsFragment) { background ->
-            binding.root.setBackground(background)
-        }
+        super.observeData()
 
         toolbar.observe(this@SettingsFragment) { state ->
 
             binding.toolbar.tvTitle.setText(state.title)
             val backIcon = state.backIcon
             if (backIcon != null) {
+
                 binding.toolbar.ivLeft.visibility = View.VISIBLE
                 binding.toolbar.ivLeft.setImage(backIcon)
             } else {
+
                 binding.toolbar.ivLeft.visibility = View.GONE
             }
         }
 
-        items.attachAdapter().observe(this@SettingsFragment) { (items, adapters) ->
+        background.observe(this@SettingsFragment) { background ->
+
+            binding.root.setBackground(background)
+        }
+
+        viewItemList.attachAdapter().observe(this@SettingsFragment) { (items, adapters) ->
+
             binding.rvSettings.submitListAndAwait(items, adapters, true)
         }
 
+        // Adapter chỉ phát event; Fragment giữ trách nhiệm điều hướng và xin quyền.
         AppEventBus.events.filterIsInstance<AppEvent.SettingClicked>().observe(this@SettingsFragment) { event ->
+
             handleSettingItemClick(event.item)
         }
     }
 
-    private fun handleSettingItemClick(item: SettingItem): Any = when (item.id) {
+    private fun handleSettingItemClick(item: SettingItem) {
 
-        SettingItem.ID_PIN -> viewLifecycleOwner.lifecycleScope.launch {
+        when (item.id) {
+
+            SettingItem.ID_PIN -> openPinSetup()
+            SettingItem.ID_APP_LIST -> sendDeeplinkWithBackStack(DeepLinks.APP_LIST)
+            SettingItem.ID_CONTACT_LIST -> sendDeeplinkWithBackStack(DeepLinks.CONTACT_LIST)
+            SettingItem.ID_DEFAULT_LAUNCHER -> requireDefaultLauncher()
+            SettingItem.ID_CLEAN_FILES -> sendDeeplinkWithBackStack(DeepLinks.CLEAN_FILES)
+            SettingItem.ID_CLEAN_MEMORY -> sendDeeplinkWithBackStack(DeepLinks.CLEAN_MEMORY)
+            SettingItem.ID_EMERGENCY_CALL_TOGGLE -> updateEmergencyCall(item)
+            SettingItem.ID_DEBUG_BLOCK_SCREEN -> openDebugBlockScreen()
+        }
+    }
+
+    private fun openPinSetup() {
+
+        viewLifecycleOwner.lifecycleScope.launch {
 
             val hasPin = PermissionManager.hasPinPermission()
             if (PermissionManager.requirePinPermissions() && hasPin) {
+
                 sendDeeplinkWithBackStack(DeepLinks.PIN_SETUP)
             }
         }
+    }
 
-        SettingItem.ID_APP_LIST -> {
-            sendDeeplinkWithBackStack(DeepLinks.APP_LIST)
-        }
+    private fun requireDefaultLauncher() {
 
-        SettingItem.ID_CONTACT_LIST -> {
-            sendDeeplinkWithBackStack(DeepLinks.CONTACT_LIST)
-        }
+        viewLifecycleOwner.lifecycleScope.launch {
 
-        SettingItem.ID_DEFAULT_LAUNCHER -> viewLifecycleOwner.lifecycleScope.launch {
             PermissionManager.requireDefaultLauncher()
         }
+    }
 
-        SettingItem.ID_CLEAN_FILES -> {
-            sendDeeplinkWithBackStack(DeepLinks.CLEAN_FILES)
-        }
+    private fun updateEmergencyCall(item: SettingItem) {
 
-        SettingItem.ID_CLEAN_MEMORY -> {
-            sendDeeplinkWithBackStack(DeepLinks.CLEAN_MEMORY)
-        }
+        viewLifecycleOwner.lifecycleScope.launch {
 
-        SettingItem.ID_EMERGENCY_CALL_TOGGLE -> viewLifecycleOwner.lifecycleScope.launch {
             val isTurningOn = item.isChecked
             if (isTurningOn && !PermissionManager.hasCallPermission()) {
-                // Yêu cầu quyền trực tiếp
+
+                // Emergency call chỉ xin quyền gọi điện khi user bật tính năng.
                 requestPermissionLauncher.launch(android.Manifest.permission.CALL_PHONE)
                 return@launch
             }
 
             if (!isTurningOn && !PermissionManager.requirePinPermissions()) {
+
                 return@launch
             }
 
             PreferenceRepository.instance.setEmergencyCallEnabled(isTurningOn)
-            if (isTurningOn) BackgroundService.start(requireContext())
-        }
+            if (isTurningOn) {
 
-        SettingItem.ID_DEBUG_BLOCK_SCREEN -> Intent(requireContext(), BlockActivity::class.java).putExtra(BlockActivity.EXTRA_APP_NAME, "Facebook (demo)").let {
-            startActivity(it)
+                BackgroundService.start(requireContext())
+            }
         }
+    }
 
-        else -> {
+    private fun openDebugBlockScreen() {
 
-        }
+        Intent(requireContext(), BlockActivity::class.java)
+            .putExtra(BlockActivity.EXTRA_APP_NAME, "Facebook (demo)")
+            .let(::startActivity)
     }
 }
 
@@ -163,6 +187,7 @@ class SettingsDeeplinkHandler : DeeplinkHandler {
             .replace(R.id.fragment_container, SettingsFragment())
 
         if (extras?.get("addToBackStack") == true) {
+
             transaction.addToBackStack(null)
         }
 

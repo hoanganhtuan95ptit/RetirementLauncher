@@ -11,6 +11,8 @@
             <option value="$PROJECT_DIR$/../1CorePrivate/config/retirement_launcher" />
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/../TProject/glide-loader" />
+            <option value="$PROJECT_DIR$/../TProject/node-engine" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="true" />

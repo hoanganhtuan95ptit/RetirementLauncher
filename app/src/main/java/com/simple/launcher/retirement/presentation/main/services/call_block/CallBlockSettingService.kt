@@ -15,7 +15,8 @@ import com.simple.launcher.retirement.utils.AppEvent
 import com.simple.launcher.retirement.utils.AppEventBus
 import kotlinx.coroutines.flow.filterIsInstance
 
-@AutoRegister(apis = [SettingsFragment::class])
+// Legacy toggle service này đang tắt vì Settings mới đã tách group theo service/view model khác.
+//@AutoRegister(apis = [SettingsFragment::class])
 class CallBlockSettingService : FragmentCreatedService {
 
     private lateinit var settingsViewModel: SettingsViewModel
