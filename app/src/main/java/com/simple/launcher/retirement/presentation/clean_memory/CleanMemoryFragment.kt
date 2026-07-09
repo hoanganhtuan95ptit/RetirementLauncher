@@ -18,11 +18,11 @@ import com.simple.launcher.retirement.presentation.DeepLinks
 import com.simple.launcher.retirement.presentation.base.BaseFragment
 import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.exts.asObjectOrNull
-import com.simple.launcher.retirement.utils.image.setImage
 import com.simple.launcher.retirement.utils.lifecycle.observe
 import com.simple.launcher.retirement.utils.size.DP
-import com.simple.launcher.retirement.utils.text.setText
 import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
+import com.simple.ui.precompute.image.setImage
+import com.simple.ui.precompute.text.setText
 import kotlinx.coroutines.delay
 
 class CleanMemoryFragment : BaseFragment<FragmentCleanMemoryBinding>() {
@@ -102,13 +102,13 @@ class CleanMemoryFragment : BaseFragment<FragmentCleanMemoryBinding>() {
 
     private fun bindingRam(ramViewData: CleanMemoryViewModel.RamViewData) {
 
-        binding.tvStatUsed.setText(ramViewData.usedRichText)
+        binding.tvStatUsed.setText(ramViewData.usedBigText)
         binding.tvStatUsed.setBackground(ramViewData.usedBackground)
 
-        binding.tvStatFree.setText(ramViewData.freedRichText)
+        binding.tvStatFree.setText(ramViewData.freedBigText)
         binding.tvStatFree.setBackground(ramViewData.freedBackground)
 
-        binding.tvStatTotal.setText(ramViewData.totalRichText)
+        binding.tvStatTotal.setText(ramViewData.totalBigText)
         binding.tvStatTotal.setBackground(ramViewData.totalBackground)
     }
 

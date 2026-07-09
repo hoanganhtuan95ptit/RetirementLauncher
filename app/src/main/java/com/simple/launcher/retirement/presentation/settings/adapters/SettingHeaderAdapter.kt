@@ -9,12 +9,12 @@ import com.simple.launcher.retirement.databinding.ItemSettingHeaderBinding
 import com.simple.launcher.retirement.utils.exts.SpanSizeLookupViewItem
 import com.simple.launcher.retirement.utils.size.DP
 import com.simple.launcher.retirement.utils.size.Padding
-import com.simple.launcher.retirement.utils.text.RichText
-import com.simple.launcher.retirement.utils.text.setText
 import com.simple.launcher.retirement.utils.view.setPadding
+import com.simple.ui.precompute.text.BigText
+import com.simple.ui.precompute.text.setText
 
 data class SettingHeaderItem(
-    val title: RichText,
+    val title: BigText,
     val padding: Padding = Padding(DP.DP_16, DP.DP_24, DP.DP_16, DP.DP_8)
 ) : ViewItem, SpanSizeLookupViewItem {
 

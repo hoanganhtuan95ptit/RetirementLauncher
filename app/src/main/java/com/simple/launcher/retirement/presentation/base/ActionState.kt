@@ -3,25 +3,26 @@ package com.simple.launcher.retirement.presentation.base
 import android.graphics.Color
 import com.simple.launcher.retirement.utils.background.Background
 import com.simple.launcher.retirement.utils.background.emptyBackground
-import com.simple.launcher.retirement.utils.image.RichImage
-import com.simple.launcher.retirement.utils.image.emptyImage
 import com.simple.launcher.retirement.utils.size.DP
-import com.simple.launcher.retirement.utils.text.Bold
-import com.simple.launcher.retirement.utils.text.ForegroundColor
-import com.simple.launcher.retirement.utils.text.RichText
-import com.simple.launcher.retirement.utils.text.TextSize
-import com.simple.launcher.retirement.utils.text.build
-import com.simple.launcher.retirement.utils.text.emptyText
-import com.simple.launcher.retirement.utils.text.with
+import com.simple.launcher.retirement.utils.size.toPx
+import com.simple.ui.precompute.image.BigImage
+import com.simple.ui.precompute.image.emptyImage
+import com.simple.ui.precompute.text.BigText
+import com.simple.ui.precompute.text.build
+import com.simple.ui.precompute.text.emptyText
+import com.simple.ui.precompute.text.span.BigBold
+import com.simple.ui.precompute.text.span.BigForegroundColor
+import com.simple.ui.precompute.text.span.BigTextSize
+import com.simple.ui.precompute.text.with
 
 /**
  * Trạng thái cho action button (ví dụ: nút Lưu, nút Dọn dẹp).
- * Bao gồm nội dung text (RichText) và background (Background utility).
+ * Bao gồm nội dung text (BigText) và background (Background utility).
  */
 data class ActionState(
-    val text: RichText = emptyText(),
+    val text: BigText = emptyText(),
 
-    val image: RichImage = emptyImage(),
+    val image: BigImage = emptyImage(),
     val imageShow: Boolean = false,
 
     val background: Background? = emptyBackground()
@@ -51,7 +52,7 @@ fun buildActionState(
     strokeDashGap: Int = 0,
     strokeDashWidth: Int = 0
 ): ActionState = ActionState(
-    text = text.with(ForegroundColor(textColor), TextSize(textSize), Bold).build(),
+    text = text.with(BigForegroundColor(textColor), BigTextSize(textSize.toPx()), BigBold).build(),
     background = Background.Builder()
         .backgroundColor(backgroundColor)
         .cornerRadius(cornerRadius)

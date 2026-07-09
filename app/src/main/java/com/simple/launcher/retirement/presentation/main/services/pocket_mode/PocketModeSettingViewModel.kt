@@ -6,10 +6,12 @@ import com.simple.launcher.retirement.domain.repository.PreferenceRepository
 import com.simple.launcher.retirement.presentation.base.BaseViewModel
 import com.simple.launcher.retirement.presentation.settings.SettingItem
 import com.simple.launcher.retirement.utils.combineState
-import com.simple.launcher.retirement.utils.image.ImageRes
-import com.simple.launcher.retirement.utils.text.*
 import com.simple.launcher.retirement.utils.exts.getString
 import com.simple.launcher.retirement.utils.exts.textColorPrimary
+import com.simple.ui.precompute.image.BigImage
+import com.simple.ui.precompute.text.build
+import com.simple.ui.precompute.text.span.BigForegroundColor
+import com.simple.ui.precompute.text.with
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -31,8 +33,8 @@ class PocketModeSettingViewModel : BaseViewModel() {
         value = listOf(
             SettingItem(
                 SettingItem.ID_TOGGLE_POCKET_MODE,
-                resources.getString(R.string.setting_pocket_mode).with(ForegroundColor(textColor)).build(),
-                ImageRes(android.R.drawable.ic_menu_compass),
+                resources.getString(R.string.setting_pocket_mode).with(BigForegroundColor(textColor)).build(),
+                BigImage(android.R.drawable.ic_menu_compass),
                 isSwitch = true,
                 isChecked = isEnabled
             )

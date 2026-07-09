@@ -10,15 +10,15 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
 import com.simple.deeplink.Deeplink
 import com.simple.deeplink.DeeplinkHandler
-import com.simple.launcher.retirement.presentation.DeepLinks
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.databinding.BottomSheetPinVerifyBinding
 import com.simple.launcher.retirement.domain.repository.PreferenceRepository
+import com.simple.launcher.retirement.presentation.DeepLinks
 import com.simple.launcher.retirement.presentation.base.BaseBottomSheetDialogFragment
 import com.simple.launcher.retirement.utils.AppEvent
 import com.simple.launcher.retirement.utils.AppEventBus
 import com.simple.launcher.retirement.utils.lifecycle.observe
-import com.simple.launcher.retirement.utils.text.setText
+import com.simple.ui.precompute.text.setText
 
 class PinVerifyBottomSheet : BaseBottomSheetDialogFragment<BottomSheetPinVerifyBinding, PinVerifyViewModel>() {
 

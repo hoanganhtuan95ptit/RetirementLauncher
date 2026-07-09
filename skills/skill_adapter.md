@@ -81,15 +81,15 @@ class AppAdapter : ViewItemAdapter<AppHomeItem, ItemAppBinding>() { ... }
 
 ### Quy tắc 2 — ViewItem chỉ chứa dữ liệu cơ bản
 
-ViewItem **chỉ được chứa**: `RichText`, `RichImage`, `Boolean`, `Int`, `String`, v.v. — dữ liệu đã sẵn sàng để set vào view.
+ViewItem **chỉ được chứa**: `BigText`, `BigImage`, `Boolean`, `Int`, `String`, v.v. — dữ liệu đã sẵn sàng để set vào view.
 
 **Entity (domain object) chỉ được giữ trong ViewItem nếu cần cho onclick**, không được dùng để adapter tự extract dữ liệu từ đó.
 
 ```kotlin
 // ✅ Đúng
 data class AppHomeItem(
-    val label: RichText,   // đã xử lý sẵn, adapter chỉ setText
-    val icon: RichImage,   // đã xử lý sẵn, adapter chỉ setImage
+    val label: BigText,   // đã xử lý sẵn, adapter chỉ setText
+    val icon: BigImage,   // đã xử lý sẵn, adapter chỉ setImage
     val entity: AppEntity  // chỉ dùng trong onClick để mở app
 ) : HomeItem
 
@@ -99,16 +99,16 @@ data class AppHomeItem(val entity: AppEntity) : HomeItem
 
 ### Quy tắc 3 — Adapter không xử lý dữ liệu
 
-Adapter **chỉ được gọi** `setText(item.xxx)`, `setImage(item.xxx)`, `item.xxx.isChecked` — không được có logic transform, toRich(), ImageDrawable(), điều kiện if/else trên dữ liệu.
+Adapter **chỉ được gọi** `setText(item.xxx)`, `setImage(item.xxx)`, `item.xxx.isChecked` — không được có logic transform, toRich(), toBigImage(), điều kiện if/else trên dữ liệu.
 
-Toàn bộ xử lý (`.toRich()`, `ImageDrawable()`, `ImagePath()`, conditional image selection...) phải nằm trong **ViewModel**.
+Toàn bộ xử lý (`.toRich()`, `BigImage()`, `toBigImage()`, conditional image selection...) phải nằm trong **ViewModel**.
 
 ```kotlin
 // ✅ Đúng — ViewModel xử lý
 // HomeViewModel.kt
 AppHomeItem(
-    label = entity.label.toRich(),
-    icon  = ImageDrawable(entity.icon),
+    label = entity.label.toBig(),
+    icon  = BigImage(entity.icon),
     entity = entity
 )
 
@@ -120,8 +120,8 @@ override fun onBindViewHolder(...) {
 
 // ❌ Sai — Adapter tự xử lý
 override fun onBindViewHolder(...) {
-    binding.tvLabel.setText(item.entity.label.toRich())
-    binding.ivIcon.setImage(ImageDrawable(item.entity.icon))
+    binding.tvLabel.setText(item.entity.label.toBig())
+    binding.ivIcon.setImage(BigImage(item.entity.icon))
 }
 ```
 
@@ -163,8 +163,8 @@ class AppListViewModel : BaseViewModel() {
         apps.filter { query.isBlank() || it.app.label.contains(query, ignoreCase = true) }
             .map { entity ->
                 SelectableAppItem(
-                    label      = entity.app.label.toRich(),
-                    icon       = ImageDrawable(entity.app.icon),
+                    label      = entity.app.label.toBig(),
+                    icon       = BigImage(entity.app.icon),
                     isSelected = entity.isSelected,
                     entity     = entity
                 )
@@ -199,7 +199,7 @@ data class TestViewItem(
 
 **Quy tắc:**
 - `areItemsTheSame()` — nên chứa ID hoặc tổ hợp trường duy nhất.
-- `getContentsCompare()` — **mỗi field hiển thị** đều phải có entry. Tag đặt trùng tên property. Nếu field là `RichText`, so sánh toàn bộ object (`title to "title"`), không chỉ `.text` — để detect cả thay đổi span (ForegroundColor, Bold...).
+- `getContentsCompare()` — **mỗi field hiển thị** đều phải có entry. Tag đặt trùng tên property. Nếu field là `BigText`, so sánh toàn bộ object (`title to "title"`), không chỉ `.text` — để detect cả thay đổi span (ForegroundColor, Bold...).
 
 ### Bước 2 — Tạo ViewItemAdapter
 
@@ -438,7 +438,7 @@ import com.simple.launcher.retirement.utils.EventBus           // Base EventBus 
 
 ## Checklist khi tạo mới một item type
 
-1. [ ] Tạo `data class XxxViewItem(...) : ViewItem` — chỉ chứa `RichText`/`RichImage`/primitive. Override `areItemsTheSame()` và `getContentsCompare()` (mỗi field hiển thị một entry, `RichText` so sánh full object không chỉ `.text`).
+1. [ ] Tạo `data class XxxViewItem(...) : ViewItem` — chỉ chứa `BigText`/`BigImage`/primitive. Override `areItemsTheSame()` và `getContentsCompare()` (mỗi field hiển thị một entry, `BigText` so sánh full object không chỉ `.text`).
 2. [ ] Nếu cần onclick: giữ thêm `val entity: XxxEntity` trong ViewItem.
 3. [ ] Tạo `object XxxEventBus : EventBus<XxxEntity>()` nếu có onclick.
 4. [ ] Tạo layout XML cho item → sẽ sinh ra ViewBinding class.

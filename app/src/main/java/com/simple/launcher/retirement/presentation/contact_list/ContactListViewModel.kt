@@ -8,7 +8,6 @@ import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.domain.model.ContactEntity
 import com.simple.launcher.retirement.domain.model.SelectableContactEntity
 import com.simple.launcher.retirement.domain.repository.ContactRepository
-import com.simple.launcher.retirement.utils.string.VietnameseStringUtils
 import com.simple.launcher.retirement.presentation.base.ActionState
 import com.simple.launcher.retirement.presentation.base.BaseViewModel
 import com.simple.launcher.retirement.presentation.base.SearchState
@@ -21,12 +20,12 @@ import com.simple.launcher.retirement.utils.combineState
 import com.simple.launcher.retirement.utils.exts.colorOnPrimary
 import com.simple.launcher.retirement.utils.exts.colorPrimary
 import com.simple.launcher.retirement.utils.exts.colorSurface
-import com.simple.launcher.retirement.utils.image.ImagePath
-import com.simple.launcher.retirement.utils.image.ImageRes
-import com.simple.launcher.retirement.utils.text.RichText
 import com.simple.launcher.retirement.utils.exts.getString
 import com.simple.launcher.retirement.utils.exts.textColorPrimary
 import com.simple.launcher.retirement.utils.exts.textColorSecondary
+import com.simple.launcher.retirement.utils.string.VietnameseStringUtils
+import com.simple.ui.precompute.image.BigImage
+import com.simple.ui.precompute.text.toBig
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -122,13 +121,13 @@ class ContactListViewModel(
                 val isSelected = contact.id in selectedIds
                 val photo = if (contact.photoUri != null) {
 
-                    ImagePath(contact.photoUri)
+                    BigImage(contact.photoUri)
                 } else {
 
-                    ImageRes(R.drawable.ic_home_contact_24dp)
+                    BigImage(R.drawable.ic_home_contact_24dp)
                 }
                 SelectableContactItem(
-                    name = RichText(contact.name),
+                    name = contact.name.toBig(),
                     photo = photo,
                     isSelected = isSelected,
                     entity = SelectableContactEntity(contact, isSelected)

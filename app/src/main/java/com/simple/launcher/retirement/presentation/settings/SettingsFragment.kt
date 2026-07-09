@@ -26,11 +26,11 @@ import com.simple.launcher.retirement.utils.AppEvent
 import com.simple.launcher.retirement.utils.AppEventBus
 import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.exts.SpanSizeLookupViewItem
-import com.simple.launcher.retirement.utils.image.setImage
 import com.simple.launcher.retirement.utils.lifecycle.observe
 import com.simple.launcher.retirement.utils.permission.PermissionManager
-import com.simple.launcher.retirement.utils.text.setText
 import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
+import com.simple.ui.precompute.image.setImage
+import com.simple.ui.precompute.text.setText
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.launch
 

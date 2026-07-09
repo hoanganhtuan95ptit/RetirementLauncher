@@ -46,8 +46,8 @@ val appHomeItems: StateFlow<Pair<Double, List<ViewItem>>> = combineState(
 ) { strings, entities ->
     val list = entities.map { 
         AppHomeItem(
-            label = it.entity.label.toRich(), // ✅ Transform ngay tại đây
-            icon = ImageDrawable(it.entity.icon),
+            label = it.entity.label.toBig(), // ✅ Transform ngay tại đây
+            icon = BigImage(it.entity.icon),
             entity = it.entity
         ) 
     }
@@ -62,7 +62,7 @@ Tất cả ViewModels nên kế thừa `BaseViewModel` để tận dụng:
 - `themes`: Flow chứa toàn bộ theme colors.
 - `background`: `StateFlow<Background>` — màu nền toàn màn hình từ theme. Fragment observe và gọi `binding.root.setBackground(background)`.
 - `bottomSheet`: `StateFlow<BottomSheetState>` — `BaseBottomSheetDialogFragment` tự observe; ViewModel con có thể override.
-- `buildToolbarTitle(...)`, `buildBackIcon(...)`, `buildActionState(...)`, `buildSearchState(...)`: Các hàm helper để tạo `RichText`/`RichImage`/`ActionState` chuẩn UI.
+- `buildToolbarTitle(...)`, `buildBackIcon(...)`, `buildActionState(...)`, `buildSearchState(...)`: Các hàm helper để tạo `BigText`/`BigImage`/`ActionState` chuẩn UI.
 
 ```kotlin
 class HomeViewModel(...) : BaseViewModel() {

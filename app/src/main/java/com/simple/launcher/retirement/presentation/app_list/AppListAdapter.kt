@@ -8,18 +8,18 @@ import com.simple.adapter.ViewItemAdapter
 import com.simple.adapter.base.BaseBindingViewHolder
 import com.simple.launcher.retirement.databinding.ItemSelectableAppBinding
 import com.simple.launcher.retirement.domain.model.SelectableAppEntity
-import com.simple.launcher.retirement.utils.getItem
-import com.simple.launcher.retirement.utils.image.RichImage
-import com.simple.launcher.retirement.utils.image.setImage
-import com.simple.launcher.retirement.utils.text.RichText
-import com.simple.launcher.retirement.utils.text.setText
 import com.simple.launcher.retirement.utils.AppEvent
 import com.simple.launcher.retirement.utils.AppEventBus
+import com.simple.launcher.retirement.utils.getItem
 import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
+import com.simple.ui.precompute.image.BigImage
+import com.simple.ui.precompute.image.setImage
+import com.simple.ui.precompute.text.BigText
+import com.simple.ui.precompute.text.setText
 
 data class SelectableAppItem(
-    val label: RichText,
-    val icon: RichImage,
+    val label: BigText,
+    val icon: BigImage,
     val isSelected: Boolean,
     val entity: SelectableAppEntity  // chỉ dùng cho onclick
 ) : ViewItem {

@@ -4,6 +4,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.simple.adapter.ViewItem
 import com.simple.auto.register.AutoRegister
+import com.simple.component.service.FragmentCreatedService
+import com.simple.component.service.launchCollect
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.domain.repository.PreferenceRepository
 import com.simple.launcher.retirement.presentation.base.BaseViewModel
@@ -14,15 +16,13 @@ import com.simple.launcher.retirement.presentation.settings.SettingsViewModel
 import com.simple.launcher.retirement.utils.AppEvent
 import com.simple.launcher.retirement.utils.AppEventBus
 import com.simple.launcher.retirement.utils.combineState
-import com.simple.launcher.retirement.utils.image.ImageRes
-import com.simple.launcher.retirement.utils.permission.PermissionManager
-import com.simple.component.service.FragmentCreatedService
-import com.simple.component.service.launchCollect
-import com.simple.launcher.retirement.utils.text.ForegroundColor
-import com.simple.launcher.retirement.utils.text.build
-import com.simple.launcher.retirement.utils.text.with
 import com.simple.launcher.retirement.utils.exts.getString
 import com.simple.launcher.retirement.utils.exts.textColorPrimary
+import com.simple.launcher.retirement.utils.permission.PermissionManager
+import com.simple.ui.precompute.image.BigImage
+import com.simple.ui.precompute.text.build
+import com.simple.ui.precompute.text.span.BigForegroundColor
+import com.simple.ui.precompute.text.with
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterIsInstance
@@ -42,8 +42,8 @@ class AppMonitoringSettingViewModel : BaseViewModel() {
 
         value = SettingItem(
             id = SettingItem.ID_TOGGLE_BLOCK,
-            icon = ImageRes(android.R.drawable.ic_lock_lock),
-            title = resources.getString(R.string.setting_app_monitoring).with(ForegroundColor(textColor)).build(),
+            icon = BigImage(android.R.drawable.ic_lock_lock),
+            title = resources.getString(R.string.setting_app_monitoring).with(BigForegroundColor(textColor)).build(),
             isSwitch = true,
             isChecked = isEnabled
         ).let {

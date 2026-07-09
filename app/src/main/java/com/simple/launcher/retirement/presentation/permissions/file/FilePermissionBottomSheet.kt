@@ -23,8 +23,8 @@ import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.exts.asObjectOrNull
 import com.simple.launcher.retirement.utils.lifecycle.observe
 import com.simple.launcher.retirement.utils.permission.PermissionManager
-import com.simple.launcher.retirement.utils.text.setText
 import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
+import com.simple.ui.precompute.text.setText
 
 class FilePermissionBottomSheet : BaseBottomSheetDialogFragment<BottomSheetFilePermissionBinding, FilePermissionViewModel>() {
 

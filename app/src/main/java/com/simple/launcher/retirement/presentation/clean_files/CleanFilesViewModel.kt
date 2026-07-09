@@ -22,21 +22,21 @@ import com.simple.launcher.retirement.utils.exts.orZero
 import com.simple.launcher.retirement.utils.exts.textColorPrimary
 import com.simple.launcher.retirement.utils.exts.textColorSecondary
 import com.simple.launcher.retirement.utils.exts.withAlpha
-import com.simple.launcher.retirement.utils.image.ImageRes
-import com.simple.launcher.retirement.utils.image.RichImage
-import com.simple.launcher.retirement.utils.image.emptyImage
 import com.simple.launcher.retirement.utils.size.DP
-import com.simple.launcher.retirement.utils.text.Bold
-import com.simple.launcher.retirement.utils.text.ForegroundColor
-import com.simple.launcher.retirement.utils.text.RichText
-import com.simple.launcher.retirement.utils.text.TextSize
-import com.simple.launcher.retirement.utils.text.build
-import com.simple.launcher.retirement.utils.text.emptyText
-import com.simple.launcher.retirement.utils.text.with
-import com.simple.launcher.retirement.utils.text.withFirst
 import com.simple.launcher.retirement.utils.text.withStyleBodyLarge
 import com.simple.launcher.retirement.utils.text.withStyleBodyMedium
 import com.simple.launcher.retirement.utils.text.withStyleHeadlineSmall
+import com.simple.ui.precompute.image.BigImage
+import com.simple.ui.precompute.image.emptyImage
+import com.simple.ui.precompute.image.toBigImage
+import com.simple.ui.precompute.text.BigText
+import com.simple.ui.precompute.text.build
+import com.simple.ui.precompute.text.emptyText
+import com.simple.ui.precompute.text.span.BigBold
+import com.simple.ui.precompute.text.span.BigForegroundColor
+import com.simple.ui.precompute.text.span.BigTextSize
+import com.simple.ui.precompute.text.with
+import com.simple.ui.precompute.text.withFirst
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -83,10 +83,10 @@ class CleanFilesViewModel : BaseViewModel() {
         value = ActionState(
             text = labels
                 .withStyleHeadlineSmall()
-                .with(ForegroundColor(textColor), Bold)
+                .with(BigForegroundColor(textColor), BigBold)
                 .build(),
 
-            image = ImageRes(data = R.drawable.ic_clear_files_black_24dp, colorFilter = resourceMap.colorOnPrimary),
+            image = R.drawable.ic_clear_files_black_24dp.toBigImage(resourceMap.colorOnPrimary),
             imageShow = true,
 
             background = Background.Builder()
@@ -113,28 +113,28 @@ class CleanFilesViewModel : BaseViewModel() {
         value = if (state is ClearState.IDLE && count > 0) RingViewData(
             text = (count.toString() + "\n" + resources.getString(R.string.clean_files_count_unit))
                 .withStyleBodyLarge()
-                .with(ForegroundColor(secondaryColor))
-                .withFirst(count.toString(), ForegroundColor(primaryColor), TextSize(26), Bold)
+                .with(BigForegroundColor(secondaryColor))
+                .withFirst(count.toString(), BigForegroundColor(primaryColor), BigTextSize(26), BigBold)
                 .build()
         ) else if (state is ClearState.IDLE || state is ClearState.Scanning) RingViewData(
             showIcon = true,
-            icon = ImageRes(R.drawable.ic_clear_files_black_24dp, resources.colorPrimary),
+            icon = R.drawable.ic_clear_files_black_24dp.toBigImage(resources.colorPrimary),
         ) else RingViewData(
             text = (resultStr + "\n" + resources.getString(R.string.clean_result_files_deleted))
                 .withStyleBodyLarge()
-                .with(ForegroundColor(secondaryColor))
-                .withFirst(resultStr, ForegroundColor(primaryColor), TextSize(26), Bold)
+                .with(BigForegroundColor(secondaryColor))
+                .withFirst(resultStr, BigForegroundColor(primaryColor), BigTextSize(26), BigBold)
                 .build(),
         )
     }
 
-    val statusText: StateFlow<RichText> = combineState(flow1 = resources, flow2 = screenState, flow3 = strangeFileCount, initialValue = emptyText()) { resources, state, count ->
+    val statusText: StateFlow<BigText> = combineState(flow1 = resources, flow2 = screenState, flow3 = strangeFileCount, initialValue = emptyText()) { resources, state, count ->
 
         val color = resources.textColorSecondary
         val text = buildStatusText(resources = resources, state = state, count = count)
 
         value = text
-            .with(ForegroundColor(color))
+            .with(BigForegroundColor(color))
             .build()
     }
 
@@ -146,18 +146,18 @@ class CleanFilesViewModel : BaseViewModel() {
             val showSelected = state is ClearState.Run && state.categoryMap[it.id] != null
 
             CategoryViewData(
-                image = ImageRes(it.iconRes, colorFilter = it.color),
+                image = it.iconRes.toBigImage(it.color),
                 imageBackground = Background.Builder()
                     .backgroundColor(it.color.withAlpha(0.2f))
                     .cornerRadius(DP.DP_8)
                     .build(),
                 label = resources.getString(it.labelRes)
                     .withStyleBodyLarge()
-                    .with(ForegroundColor(resources.colorOnSurface))
+                    .with(BigForegroundColor(resources.colorOnSurface))
                     .build(),
                 numberFile = numberFile
                     .withStyleBodyMedium()
-                    .with(ForegroundColor(resources.colorOnSurface))
+                    .with(BigForegroundColor(resources.colorOnSurface))
                     .build(),
                 showSelected = showSelected
             )
@@ -215,25 +215,25 @@ class CleanFilesViewModel : BaseViewModel() {
                 show = true,
                 title = res.getString(R.string.clean_result_title)
                     .withStyleBodyLarge()
-                    .with(ForegroundColor(res.colorOnSurface))
+                    .with(BigForegroundColor(res.colorOnSurface))
                     .build(),
 
-                resultFilesImage = ImageRes(R.drawable.ic_file_black_24dp, "#FFBB00".toColorInt()),
+                resultFilesImage = R.drawable.ic_file_black_24dp.toBigImage("#FFBB00".toColorInt()),
                 resultFilesLabel = "${state.totalFiles.orZero()}\n${res.getString(R.string.clean_result_files_deleted)}"
                     .withStyleBodyMedium()
-                    .with(ForegroundColor(res.colorOnSurface))
-                    .withFirst("${state.totalFiles.orZero()}", TextSize(24), Bold)
+                    .with(BigForegroundColor(res.colorOnSurface))
+                    .withFirst("${state.totalFiles.orZero()}", BigTextSize(24), BigBold)
                     .build(),
                 resultFilesBackground = Background.Builder()
                     .backgroundColor(res.colorSurface)
                     .cornerRadius(DP.DP_24)
                     .build(),
 
-                resultSpaceImage = ImageRes(R.drawable.ic_clear_files_black_24dp, "#FF4343".toColorInt()),
+                resultSpaceImage = R.drawable.ic_clear_files_black_24dp.toBigImage("#FF4343".toColorInt()),
                 resultSpaceLabel = "${spaceLabel}\n${res.getString(R.string.clean_result_space_freed)}"
                     .withStyleBodyMedium()
-                    .with(ForegroundColor(res.colorOnSurface))
-                    .withFirst(spaceLabel, TextSize(24), Bold)
+                    .with(BigForegroundColor(res.colorOnSurface))
+                    .withFirst(spaceLabel, BigTextSize(24), BigBold)
                     .build(),
                 resultSpaceBackground = Background.Builder()
                     .backgroundColor(res.colorSurface)
@@ -315,17 +315,17 @@ class CleanFilesViewModel : BaseViewModel() {
     )
 
     data class RingViewData(
-        val icon: RichImage = emptyImage(),
-        val text: RichText = emptyText(),
+        val icon: BigImage = emptyImage(),
+        val text: BigText = emptyText(),
         val showIcon: Boolean = false,
     )
 
     data class CategoryViewData(
-        val image: RichImage = emptyImage(),
+        val image: BigImage = emptyImage(),
         val imageBackground: Background = Background(),
 
-        val label: RichText = emptyText(),
-        val numberFile: RichText = emptyText(),
+        val label: BigText = emptyText(),
+        val numberFile: BigText = emptyText(),
 
         val showSelected: Boolean = false
     )
@@ -333,20 +333,20 @@ class CleanFilesViewModel : BaseViewModel() {
     data class ResultViewData(
         val show: Boolean = false,
 
-        val title: RichText = emptyText(),
+        val title: BigText = emptyText(),
 
-        val resultFilesLabel: RichText = emptyText(),
-        val resultFilesImage: RichImage = emptyImage(),
+        val resultFilesLabel: BigText = emptyText(),
+        val resultFilesImage: BigImage = emptyImage(),
         val resultFilesBackground: Background = Background(),
 
-        val resultSpaceLabel: RichText = emptyText(),
-        val resultSpaceImage: RichImage = emptyImage(),
+        val resultSpaceLabel: BigText = emptyText(),
+        val resultSpaceImage: BigImage = emptyImage(),
         val resultSpaceBackground: Background = Background(),
     )
 
     data class ScreenViewData(
         val ringViewData: RingViewData = RingViewData(),
-        val status: RichText = emptyText(),
+        val status: BigText = emptyText(),
         val categoryViewDataList: List<CategoryViewData> = emptyList(),
         val resultViewData: ResultViewData = ResultViewData(),
     )

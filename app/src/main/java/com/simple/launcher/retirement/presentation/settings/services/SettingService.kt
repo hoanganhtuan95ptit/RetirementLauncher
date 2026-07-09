@@ -1,6 +1,7 @@
 package com.simple.launcher.retirement.presentation.settings.services
 
 import androidx.fragment.app.Fragment
+import com.simple.component.service.FragmentViewCreatedService
 import com.simple.launcher.retirement.presentation.settings.SettingHeaderItem
 import com.simple.launcher.retirement.presentation.settings.SettingItem
 import com.simple.launcher.retirement.presentation.settings.SettingsFragment
@@ -11,15 +12,14 @@ import com.simple.launcher.retirement.utils.exts.colorOnSurface
 import com.simple.launcher.retirement.utils.exts.colorOnSurfaceVariant
 import com.simple.launcher.retirement.utils.exts.getString
 import com.simple.launcher.retirement.utils.exts.textColorPrimary
-import com.simple.launcher.retirement.utils.image.ImageRes
-import com.simple.component.service.FragmentViewCreatedService
 import com.simple.launcher.retirement.utils.size.DP
-import com.simple.launcher.retirement.utils.text.Bold
-import com.simple.launcher.retirement.utils.text.ForegroundColor
-import com.simple.launcher.retirement.utils.text.build
-import com.simple.launcher.retirement.utils.text.with
 import com.simple.launcher.retirement.utils.text.withStyleBodyLarge
 import com.simple.launcher.retirement.utils.text.withStyleTitleLarge
+import com.simple.ui.precompute.image.BigImage
+import com.simple.ui.precompute.text.build
+import com.simple.ui.precompute.text.span.BigBold
+import com.simple.ui.precompute.text.span.BigForegroundColor
+import com.simple.ui.precompute.text.with
 
 fun settingItem(
     id: Int,
@@ -32,9 +32,9 @@ fun settingItem(
     id = id,
     title = resources.getString(title)
         .withStyleBodyLarge()
-        .with(ForegroundColor(resources.textColorPrimary))
+        .with(BigForegroundColor(resources.textColorPrimary))
         .build(),
-    icon = ImageRes(icon),
+    icon = BigImage(icon),
     iconBackground = Background.Builder()
         .backgroundColor(resources.colorOnSurface)
         .cornerRadius(DP.DP_24)
@@ -55,7 +55,7 @@ fun settingHeader(
 ): SettingHeaderItem = SettingHeaderItem(
     title = resources.getString(title)
         .withStyleTitleLarge()
-        .with(ForegroundColor(resources.textColorPrimary), Bold)
+        .with(BigForegroundColor(resources.textColorPrimary), BigBold)
         .build()
 )
 

@@ -7,16 +7,20 @@ import com.simple.launcher.retirement.presentation.base.buildActionState
 import com.simple.launcher.retirement.utils.combineState
 import com.simple.launcher.retirement.utils.exts.colorOnPrimary
 import com.simple.launcher.retirement.utils.exts.colorPrimary
-import com.simple.launcher.retirement.utils.text.*
 import com.simple.launcher.retirement.utils.exts.getString
 import com.simple.launcher.retirement.utils.exts.textColorPrimary
 import com.simple.launcher.retirement.utils.exts.textColorSecondary
+import com.simple.ui.precompute.text.BigText
+import com.simple.ui.precompute.text.build
+import com.simple.ui.precompute.text.emptyText
+import com.simple.ui.precompute.text.span.BigForegroundColor
+import com.simple.ui.precompute.text.with
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
 data class BlockContentState(
-    val title: RichText,
-    val message: RichText,
+    val title: BigText,
+    val message: BigText,
     val appName: String? = null
 )
 
@@ -37,10 +41,10 @@ class BlockViewModel : BaseViewModel() {
         val messageColor = resources.textColorSecondary
         value = BlockContentState(
             title = resources.getString(R.string.block_title)
-                .with(ForegroundColor(titleColor))
+                .with(BigForegroundColor(titleColor))
                 .build(),
             message = resources.getString(R.string.block_desc)
-                .with(ForegroundColor(messageColor))
+                .with(BigForegroundColor(messageColor))
                 .build(),
             appName = appName
         )

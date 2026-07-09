@@ -16,9 +16,14 @@ import com.simple.launcher.retirement.presentation.base.buildBackIcon
 import com.simple.launcher.retirement.presentation.base.buildSearchState
 import com.simple.launcher.retirement.presentation.base.buildToolbarTitle
 import com.simple.launcher.retirement.utils.combineState
-import com.simple.launcher.retirement.utils.exts.*
-import com.simple.launcher.retirement.utils.image.ImageDrawable
-import com.simple.launcher.retirement.utils.text.RichText
+import com.simple.launcher.retirement.utils.exts.colorOnPrimary
+import com.simple.launcher.retirement.utils.exts.colorPrimary
+import com.simple.launcher.retirement.utils.exts.colorSurface
+import com.simple.launcher.retirement.utils.exts.getString
+import com.simple.launcher.retirement.utils.exts.textColorPrimary
+import com.simple.launcher.retirement.utils.exts.textColorSecondary
+import com.simple.ui.precompute.image.BigImage
+import com.simple.ui.precompute.text.toBig
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -89,8 +94,8 @@ class AppListViewModel(
             .filter { query.isBlank() || it.app.label.contains(query, ignoreCase = true) }
             .map { entity ->
             SelectableAppItem(
-                label = RichText(entity.app.label),
-                icon = ImageDrawable(entity.app.icon),
+                label = entity.app.label.toBig(),
+                icon = BigImage(entity.app.icon),
                 isSelected = entity.app.packageName in selectedIds,
                 entity = entity
             )

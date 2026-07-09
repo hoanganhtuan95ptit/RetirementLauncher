@@ -161,7 +161,7 @@ fun buildActionState(
     strokeWidth: Int = 0,
     strokeColor: Int = Color.TRANSPARENT
 ): ActionState = ActionState(
-    text = RichText.Builder(text)
+    text = BigText.Builder(text)
         .with(ForegroundColor(textColor), TextSize(18), Bold)
         .build(),
     background = Background.Builder()

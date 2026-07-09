@@ -122,11 +122,11 @@ import com.simple.adapter.ViewItemAdapter
 import com.simple.launcher.retirement.databinding.ItemFooBinding
 import com.simple.launcher.retirement.utils.background.Background
 import com.simple.launcher.retirement.utils.background.setBackground
-import com.simple.launcher.retirement.utils.text.RichText
+import com.simple.launcher.retirement.utils.text.BigText
 import com.simple.launcher.retirement.utils.text.setText
 
 data class FooScreenItem(
-    val title: RichText,
+    val title: BigText,
     val background: Background
 ) : {Screen}Item {
 
@@ -169,8 +169,8 @@ class FooAdapter : ViewItemAdapter<FooScreenItem, ItemFooBinding>() {
 data class BarScreenItem(
     val entity: BarEntity,      // chỉ dùng trong onClick
 
-    val label: RichText,
-    val icon: RichImage,
+    val label: BigText,
+    val icon: BigImage,
     val background: Background
 ) : {Screen}Item {
 
@@ -297,7 +297,7 @@ class {Screen}ViewModel : BaseViewModel() {
 - Expose `StateFlow<List<ViewItem>>` ra ngoài, **không** expose entity trực tiếp.
 - Mỗi nhóm dữ liệu tạo một `StateFlow<Pair<Double, List<ViewItem>>>` với key `Double` là thứ tự.
 - Nếu màn hình đơn giản (không cần `viewItemMap`), bỏ đi phần đó.
-- Toàn bộ logic biến đổi (`.toRich()`, `ImageDrawable()`, color, background…) nằm trong ViewModel.
+- Toàn bộ logic biến đổi (`.toBig()`, `BigImage()`, color, background…) nằm trong ViewModel.
 
 ---
 
@@ -465,12 +465,12 @@ const val {SCREEN} = "app://{screen}"
 - [ ] Expose `StateFlow<List<ViewItem>>` tên `items`
 - [ ] Mỗi nhóm dữ liệu là `StateFlow<Pair<Double, List<ViewItem>>>` với Double là order
 - [ ] Có `viewItemMap` + `updateItem(order, list)` nếu màn hình có item động
-- [ ] Toàn bộ transform (RichText, RichImage, Background) nằm trong ViewModel
+- [ ] Toàn bộ transform (BigText, BigImage, Background) nằm trong ViewModel
 
 ### Adapter
 - [ ] ViewItem và Adapter cùng file
 - [ ] `areItemsTheSame()` dùng ID duy nhất
-- [ ] `getContentsCompare()` có entry cho mọi field hiển thị (RichText so sánh full object)
+- [ ] `getContentsCompare()` có entry cho mọi field hiển thị (BigText so sánh full object)
 - [ ] `onBindViewHolder`: từng field có `if (payloads.isEmpty() || payloads.contains("tag"))`
 - [ ] Gọi `super.onBindViewHolder(...)` đầu tiên
 - [ ] Nếu có click: dùng `setOnSafeWithPerformHapticFeedbackClickListener` + `getItem<T>()`

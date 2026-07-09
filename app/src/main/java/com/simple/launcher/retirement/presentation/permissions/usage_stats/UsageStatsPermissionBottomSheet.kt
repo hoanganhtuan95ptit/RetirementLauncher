@@ -12,18 +12,17 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
 import com.simple.deeplink.Deeplink
 import com.simple.deeplink.DeeplinkHandler
-import com.simple.launcher.retirement.presentation.DeepLinks
 import com.simple.launcher.retirement.databinding.BottomSheetUsageStatsPermissionBinding
+import com.simple.launcher.retirement.presentation.DeepLinks
 import com.simple.launcher.retirement.presentation.base.BaseBottomSheetDialogFragment
-import com.simple.launcher.retirement.presentation.pin_setup.PinVerifyBottomSheet
 import com.simple.launcher.retirement.utils.AppEvent
 import com.simple.launcher.retirement.utils.AppEventBus
 import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.exts.asObjectOrNull
 import com.simple.launcher.retirement.utils.lifecycle.observe
 import com.simple.launcher.retirement.utils.permission.PermissionManager
-import com.simple.launcher.retirement.utils.text.setText
 import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
+import com.simple.ui.precompute.text.setText
 
 class UsageStatsPermissionBottomSheet : BaseBottomSheetDialogFragment<BottomSheetUsageStatsPermissionBinding, UsageStatsPermissionViewModel>() {
 

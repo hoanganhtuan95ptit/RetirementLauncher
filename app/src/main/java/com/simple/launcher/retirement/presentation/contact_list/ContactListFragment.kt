@@ -14,21 +14,21 @@ import com.simple.adapter.utils.attachAdapter
 import com.simple.adapter.utils.submitListAndAwait
 import com.simple.deeplink.Deeplink
 import com.simple.deeplink.DeeplinkHandler
-import com.simple.launcher.retirement.presentation.DeepLinks
-import com.simple.launcher.retirement.presentation.sendReorderContactsDeeplink
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.databinding.FragmentAppListBinding
 import com.simple.launcher.retirement.domain.repository.ContactRepository
+import com.simple.launcher.retirement.presentation.DeepLinks
 import com.simple.launcher.retirement.presentation.base.BaseFragment
-import com.simple.launcher.retirement.utils.background.setBackground
-import com.simple.launcher.retirement.utils.image.setImage
+import com.simple.launcher.retirement.presentation.sendReorderContactsDeeplink
 import com.simple.launcher.retirement.utils.AppEvent
 import com.simple.launcher.retirement.utils.AppEventBus
+import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.exts.asObjectOrNull
 import com.simple.launcher.retirement.utils.lifecycle.observe
 import com.simple.launcher.retirement.utils.permission.PermissionManager
-import com.simple.launcher.retirement.utils.text.setText
 import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
+import com.simple.ui.precompute.image.setImage
+import com.simple.ui.precompute.text.setText
 import kotlinx.coroutines.flow.filterIsInstance
 
 class ContactListFragment : BaseFragment<FragmentAppListBinding>() {

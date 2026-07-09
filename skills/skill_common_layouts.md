@@ -141,6 +141,6 @@ ViewModel con **không cần override** `background` trừ khi màn hình cần 
 
 ## Lưu ý quan trọng
 - **Tách biệt logic**: ViewModel tính toán màu sắc (từ `themes`) và nội dung (từ `strings`), Fragment chỉ nhận State và bind vào View.
-- **Tiện ích mở rộng**: Luôn sử dụng các extension functions như `.setText(richText)`, `.setImage(richImage)`, `.setBackground(background)` để đảm bảo hỗ trợ đầy đủ các thuộc tính custom.
+- **Tiện ích mở rộng**: Luôn sử dụng các extension functions như `.setText(bigText)`, `.setImage(bigImage)`, `.setBackground(background)` để đảm bảo hỗ trợ đầy đủ các thuộc tính custom.
 - **Sự kiện Click**: Đối với `layout_action`, luôn gán sự kiện click vào `binding.btnXxx.root`.
 - **`.observe(this)` là extension function tùy chỉnh**: Không phải LiveData's `.observe()`. Đây là `Flow<T>.observe(Fragment)` từ `com.simple.launcher.retirement.utils.lifecycle` — nội bộ dùng `viewLifecycleOwner.lifecycleScope.launch { collectLatest { } }`. Import: `import com.simple.launcher.retirement.utils.lifecycle.observe`.

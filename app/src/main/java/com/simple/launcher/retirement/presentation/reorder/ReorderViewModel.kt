@@ -15,16 +15,17 @@ import com.simple.launcher.retirement.presentation.base.buildActionState
 import com.simple.launcher.retirement.presentation.base.buildBackIcon
 import com.simple.launcher.retirement.presentation.base.buildToolbarTitle
 import com.simple.launcher.retirement.utils.combineState
-import com.simple.launcher.retirement.utils.exts.*
-import com.simple.launcher.retirement.utils.image.ImageDrawable
-import com.simple.launcher.retirement.utils.image.ImagePath
-import com.simple.launcher.retirement.utils.image.ImageRes
-import com.simple.launcher.retirement.utils.image.RichImage
-import com.simple.launcher.retirement.utils.text.ForegroundColor
-import com.simple.launcher.retirement.utils.text.RichText
-import com.simple.launcher.retirement.utils.text.build
-import com.simple.launcher.retirement.utils.text.with
+import com.simple.launcher.retirement.utils.exts.colorOnPrimary
+import com.simple.launcher.retirement.utils.exts.colorOnSurface
+import com.simple.launcher.retirement.utils.exts.colorPrimary
+import com.simple.launcher.retirement.utils.exts.getString
+import com.simple.launcher.retirement.utils.exts.textColorPrimary
 import com.simple.launcher.retirement.utils.text.withStyleBodyLarge
+import com.simple.ui.precompute.image.BigImage
+import com.simple.ui.precompute.text.BigText
+import com.simple.ui.precompute.text.build
+import com.simple.ui.precompute.text.span.BigForegroundColor
+import com.simple.ui.precompute.text.with
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -76,9 +77,9 @@ class ReorderViewModel(
                     id = app.packageName,
                     label = app.label
                         .withStyleBodyLarge()
-                        .with(ForegroundColor(resources.value.colorOnSurface))
+                        .with(BigForegroundColor(resources.value.colorOnSurface))
                         .build(),
-                    icon = ImageDrawable(app.icon)
+                    icon = BigImage(app.icon)
                 )
             }
         } else {
@@ -87,15 +88,15 @@ class ReorderViewModel(
             
             _items.value = orderedContacts.map { contact ->
                 val photo = if (contact.photoUri != null) {
-                    ImagePath(contact.photoUri)
+                    BigImage(contact.photoUri)
                 } else {
-                    ImageRes(R.drawable.ic_home_contact_24dp)
+                    BigImage(R.drawable.ic_home_contact_24dp)
                 }
                 ReorderItem(
                     id = contact.id,
                     label = contact.name
                         .withStyleBodyLarge()
-                        .with(ForegroundColor(resources.value.colorOnSurface))
+                        .with(BigForegroundColor(resources.value.colorOnSurface))
                         .build(),
                     icon = photo,
                     data = contact
@@ -118,8 +119,8 @@ class ReorderViewModel(
 
 data class ReorderItem(
     val id: String,
-    val label: RichText,
-    val icon: RichImage,
+    val label: BigText,
+    val icon: BigImage,
     val data: Any? = null
 ) : ViewItem {
     override fun areItemsTheSame(): List<Any> = listOf(id)

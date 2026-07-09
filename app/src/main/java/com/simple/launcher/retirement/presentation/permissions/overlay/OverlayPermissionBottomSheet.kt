@@ -2,13 +2,13 @@ package com.simple.launcher.retirement.presentation.permissions.overlay
 
 import android.content.DialogInterface
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.net.toUri
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
 import com.simple.deeplink.Deeplink
@@ -19,12 +19,11 @@ import com.simple.launcher.retirement.presentation.base.BaseBottomSheetDialogFra
 import com.simple.launcher.retirement.utils.AppEvent
 import com.simple.launcher.retirement.utils.AppEventBus
 import com.simple.launcher.retirement.utils.background.setBackground
+import com.simple.launcher.retirement.utils.exts.asObjectOrNull
 import com.simple.launcher.retirement.utils.lifecycle.observe
 import com.simple.launcher.retirement.utils.permission.PermissionManager
-import com.simple.launcher.retirement.utils.text.setText
 import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
-import androidx.core.net.toUri
-import com.simple.launcher.retirement.utils.exts.asObjectOrNull
+import com.simple.ui.precompute.text.setText
 
 class OverlayPermissionBottomSheet : BaseBottomSheetDialogFragment<BottomSheetOverlayPermissionBinding, OverlayPermissionViewModel>() {
 

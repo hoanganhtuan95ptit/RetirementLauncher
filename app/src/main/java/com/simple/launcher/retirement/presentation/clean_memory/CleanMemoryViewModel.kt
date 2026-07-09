@@ -1,6 +1,5 @@
 package com.simple.launcher.retirement.presentation.clean_memory
 
-import android.graphics.Color
 import androidx.lifecycle.viewModelScope
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.domain.model.StorageInfo
@@ -13,22 +12,31 @@ import com.simple.launcher.retirement.presentation.base.buildToolbarTitle
 import com.simple.launcher.retirement.utils.background.Background
 import com.simple.launcher.retirement.utils.background.emptyBackground
 import com.simple.launcher.retirement.utils.combineState
-import com.simple.launcher.retirement.utils.exts.*
-import com.simple.launcher.retirement.utils.image.ImageRes
-import com.simple.launcher.retirement.utils.image.RichImage
-import com.simple.launcher.retirement.utils.image.emptyImage
+import com.simple.launcher.retirement.utils.exts.asObjectOrNull
+import com.simple.launcher.retirement.utils.exts.colorErrorContainer
+import com.simple.launcher.retirement.utils.exts.colorOnPrimary
+import com.simple.launcher.retirement.utils.exts.colorOnSurface
+import com.simple.launcher.retirement.utils.exts.colorOnSurfaceVariant
+import com.simple.launcher.retirement.utils.exts.colorPrimary
+import com.simple.launcher.retirement.utils.exts.colorSurface
+import com.simple.launcher.retirement.utils.exts.getString
+import com.simple.launcher.retirement.utils.exts.textColorPrimary
+import com.simple.launcher.retirement.utils.exts.withAlpha
 import com.simple.launcher.retirement.utils.size.DP
-import com.simple.launcher.retirement.utils.text.Bold
-import com.simple.launcher.retirement.utils.text.ForegroundColor
-import com.simple.launcher.retirement.utils.text.RichText
-import com.simple.launcher.retirement.utils.text.TextSize
-import com.simple.launcher.retirement.utils.text.build
-import com.simple.launcher.retirement.utils.text.emptyText
-import com.simple.launcher.retirement.utils.text.with
-import com.simple.launcher.retirement.utils.text.withFirst
 import com.simple.launcher.retirement.utils.text.withStyleBodyLarge
 import com.simple.launcher.retirement.utils.text.withStyleBodyMedium
 import com.simple.launcher.retirement.utils.text.withStyleHeadlineSmall
+import com.simple.ui.precompute.image.BigImage
+import com.simple.ui.precompute.image.emptyImage
+import com.simple.ui.precompute.image.toBigImage
+import com.simple.ui.precompute.text.BigText
+import com.simple.ui.precompute.text.build
+import com.simple.ui.precompute.text.emptyText
+import com.simple.ui.precompute.text.span.BigBold
+import com.simple.ui.precompute.text.span.BigForegroundColor
+import com.simple.ui.precompute.text.span.BigTextSize
+import com.simple.ui.precompute.text.with
+import com.simple.ui.precompute.text.withFirst
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -96,9 +104,9 @@ class CleanMemoryViewModel : BaseViewModel() {
         value = ActionState(
             text = labels
                 .withStyleHeadlineSmall()
-                .with(ForegroundColor(textColor), Bold)
+                .with(BigForegroundColor(textColor), BigBold)
                 .build(),
-            image = ImageRes(data = R.drawable.ic_boost_back_24dp, colorFilter = resourceMap.colorOnPrimary),
+            image = R.drawable.ic_boost_back_24dp.toBigImage(resourceMap.colorOnPrimary),
             imageShow = true,
 
             background = Background.Builder()
@@ -117,8 +125,8 @@ class CleanMemoryViewModel : BaseViewModel() {
         value = RingViewData(
             value = "${ramInfo.percentInt}%\n${ramInfo.usedGB}/${ramInfo.totalGB}"
                 .withStyleBodyLarge()
-                .with(ForegroundColor(resourceMap.colorOnSurfaceVariant))
-                .withFirst("${ramInfo.percentInt}%", ForegroundColor(resourceMap.colorPrimary), TextSize(28), Bold)
+                .with(BigForegroundColor(resourceMap.colorOnSurfaceVariant))
+                .withFirst("${ramInfo.percentInt}%", BigForegroundColor(resourceMap.colorPrimary), BigTextSize(28), BigBold)
                 .build()
         )
     }
@@ -147,24 +155,24 @@ class CleanMemoryViewModel : BaseViewModel() {
             .build()
 
         value = RamViewData(
-            usedRichText = "${ramInfo.usedGB}\n${resourceMap.getString(R.string.clean_memory_stat_used)}"
+            usedBigText = "${ramInfo.usedGB}\n${resourceMap.getString(R.string.clean_memory_stat_used)}"
                 .withStyleBodyMedium()
-                .with(ForegroundColor(resourceMap.colorOnSurface))
-                .withFirst(ramInfo.usedGB, TextSize(20), Bold)
+                .with(BigForegroundColor(resourceMap.colorOnSurface))
+                .withFirst(ramInfo.usedGB, BigTextSize(20), BigBold)
                 .build(),
             usedBackground = background,
 
-            freedRichText = "${ramInfo.freeGB}\n${resourceMap.getString(R.string.clean_memory_stat_free)}"
+            freedBigText = "${ramInfo.freeGB}\n${resourceMap.getString(R.string.clean_memory_stat_free)}"
                 .withStyleBodyMedium()
-                .with(ForegroundColor(resourceMap.colorOnSurface))
-                .withFirst(ramInfo.freeGB, TextSize(20), Bold)
+                .with(BigForegroundColor(resourceMap.colorOnSurface))
+                .withFirst(ramInfo.freeGB, BigTextSize(20), BigBold)
                 .build(),
             freedBackground = background,
 
-            totalRichText = "${ramInfo.totalGB}\n${resourceMap.getString(R.string.clean_memory_stat_total)}"
+            totalBigText = "${ramInfo.totalGB}\n${resourceMap.getString(R.string.clean_memory_stat_total)}"
                 .withStyleBodyMedium()
-                .with(ForegroundColor(resourceMap.colorOnSurface))
-                .withFirst(ramInfo.totalGB, TextSize(20), Bold)
+                .with(BigForegroundColor(resourceMap.colorOnSurface))
+                .withFirst(ramInfo.totalGB, BigTextSize(20), BigBold)
                 .build(),
             totalBackground = background,
         )
@@ -186,12 +194,12 @@ class CleanMemoryViewModel : BaseViewModel() {
 
             text = "$text\n$sub"
                 .withStyleBodyMedium()
-                .with(ForegroundColor(resourceMap.colorOnSurface))
-                .withFirst(text, TextSize(18), Bold)
-                .withFirst(freeMB.toString(), TextSize(24), ForegroundColor(resourceMap.colorErrorContainer))
+                .with(BigForegroundColor(resourceMap.colorOnSurface))
+                .withFirst(text, BigTextSize(18), BigBold)
+                .withFirst(freeMB.toString(), BigTextSize(24), BigForegroundColor(resourceMap.colorErrorContainer))
                 .build(),
 
-            image = ImageRes(R.drawable.ic_check_circle),
+            image = R.drawable.ic_check_circle.toBigImage(),
 
             background = Background.Builder()
                 .backgroundColor(resourceMap.colorPrimary.withAlpha(0.2f))
@@ -251,7 +259,7 @@ class CleanMemoryViewModel : BaseViewModel() {
     }
 
     data class RingViewData(
-        val value: RichText = emptyText()
+        val value: BigText = emptyText()
     )
 
     data class LoadingViewData(
@@ -260,21 +268,21 @@ class CleanMemoryViewModel : BaseViewModel() {
     )
 
     data class RamViewData(
-        val usedRichText: RichText = emptyText(),
+        val usedBigText: BigText = emptyText(),
         val usedBackground: Background = emptyBackground(),
 
-        val freedRichText: RichText = emptyText(),
+        val freedBigText: BigText = emptyText(),
         val freedBackground: Background = emptyBackground(),
 
-        val totalRichText: RichText = emptyText(),
+        val totalBigText: BigText = emptyText(),
         val totalBackground: Background = emptyBackground(),
     )
 
     data class ResultViewData(
         val show: Boolean = false,
 
-        val text: RichText = emptyText(),
-        val image: RichImage = emptyImage(),
+        val text: BigText = emptyText(),
+        val image: BigImage = emptyImage(),
 
         val background: Background = emptyBackground()
     )

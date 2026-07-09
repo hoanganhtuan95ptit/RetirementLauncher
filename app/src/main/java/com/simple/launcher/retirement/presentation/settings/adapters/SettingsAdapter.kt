@@ -14,17 +14,17 @@ import com.simple.launcher.retirement.utils.background.Background
 import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.exts.SpanSizeLookupViewItem
 import com.simple.launcher.retirement.utils.getItem
-import com.simple.launcher.retirement.utils.image.RichImage
-import com.simple.launcher.retirement.utils.image.setImage
-import com.simple.launcher.retirement.utils.text.RichText
-import com.simple.launcher.retirement.utils.text.setText
 import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
+import com.simple.ui.precompute.image.BigImage
+import com.simple.ui.precompute.image.setImage
+import com.simple.ui.precompute.text.BigText
+import com.simple.ui.precompute.text.setText
 
 data class SettingItem(
     val id: Int,
-    val title: RichText,
+    val title: BigText,
 
-    val icon: RichImage,
+    val icon: BigImage,
     val iconBackground: Background = Background(),
 
     val isSwitch: Boolean = false,

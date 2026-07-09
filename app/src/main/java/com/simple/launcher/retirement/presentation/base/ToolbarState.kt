@@ -2,15 +2,19 @@ package com.simple.launcher.retirement.presentation.base
 
 import android.graphics.Typeface
 import com.simple.launcher.retirement.R
-import com.simple.launcher.retirement.utils.image.ImageRes
-import com.simple.launcher.retirement.utils.image.RichImage
-import com.simple.launcher.retirement.utils.text.CustomFont
-import com.simple.launcher.retirement.utils.text.ForegroundColor
-import com.simple.launcher.retirement.utils.text.RichText
-import com.simple.launcher.retirement.utils.text.TextSize
-import com.simple.launcher.retirement.utils.text.build
-import com.simple.launcher.retirement.utils.text.emptyText
-import com.simple.launcher.retirement.utils.text.with
+import com.simple.launcher.retirement.utils.size.toPx
+import com.simple.ui.precompute.image.BigImage
+import com.simple.ui.precompute.image.ColorFilter
+import com.simple.ui.precompute.image.addTransform
+import com.simple.ui.precompute.image.build
+import com.simple.ui.precompute.image.toBuilder
+import com.simple.ui.precompute.text.BigText
+import com.simple.ui.precompute.text.build
+import com.simple.ui.precompute.text.emptyText
+import com.simple.ui.precompute.text.span.BigCustomFont
+import com.simple.ui.precompute.text.span.BigForegroundColor
+import com.simple.ui.precompute.text.span.BigTextSize
+import com.simple.ui.precompute.text.with
 
 /**
  * Trạng thái toolbar được expose từ ViewModel.
@@ -20,8 +24,8 @@ import com.simple.launcher.retirement.utils.text.with
  * @param backIcon Icon nút back với màu từ theme (null = ẩn nút back).
  */
 data class ToolbarState(
-    val title: RichText = emptyText(),
-    val backIcon: RichImage? = null
+    val title: BigText = emptyText(),
+    val backIcon: BigImage? = null
 ) {
     companion object {
         fun empty() = ToolbarState(title = emptyText())
@@ -29,7 +33,7 @@ data class ToolbarState(
 }
 
 /**
- * Tạo RichText cho toolbar title với màu, size và font được truyền từ ViewModel.
+ * Tạo BigText cho toolbar title với màu, size và font được truyền từ ViewModel.
  * Adapter/Fragment chỉ cần setText(title) mà không tự xử lý style.
  *
  * @param text     Chuỗi văn bản tiêu đề (đã được resolve từ stringMap).
@@ -42,14 +46,17 @@ fun buildToolbarTitle(
     color: Int,
     sizeDip: Int = 18,
     typeface: Typeface = Typeface.create("sans-serif-medium", Typeface.NORMAL)
-): RichText = text
-    .with(ForegroundColor(color), TextSize(sizeDip), CustomFont(typeface))
+): BigText = text
+    .with(BigForegroundColor(color), BigTextSize(sizeDip.toPx()), BigCustomFont(typeface))
     .build()
 
 /**
- * Tạo RichImage cho nút back với màu icon được lấy từ theme.
+ * Tạo BigImage cho nút back với màu icon được lấy từ theme.
  * Fragment chỉ cần setImage(backIcon) mà không tự hardcode drawable hay color.
  *
  * @param color Màu tint (lấy từ themeMap, ví dụ: textColorPrimary).
  */
-fun buildBackIcon(color: Int): RichImage = ImageRes(R.drawable.ic_back, color)
+fun buildBackIcon(color: Int): BigImage = R.drawable.ic_back
+    .toBuilder()
+    .addTransform(ColorFilter(color))
+    .build()

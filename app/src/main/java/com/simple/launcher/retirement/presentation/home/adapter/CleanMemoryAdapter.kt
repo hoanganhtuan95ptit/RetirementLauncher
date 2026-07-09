@@ -2,8 +2,6 @@ package com.simple.launcher.retirement.presentation.home.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.bumptech.glide.load.resource.bitmap.CenterInside
-import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.simple.adapter.Adapter
 import com.simple.adapter.base.BaseBindingViewHolder
 import com.simple.launcher.retirement.databinding.ItemUtilityBinding
@@ -11,16 +9,16 @@ import com.simple.launcher.retirement.presentation.DeepLinks
 import com.simple.launcher.retirement.presentation.sendDeeplinkWithBackStack
 import com.simple.launcher.retirement.utils.background.Background
 import com.simple.launcher.retirement.utils.background.setBackground
-import com.simple.launcher.retirement.utils.image.RichImage
-import com.simple.launcher.retirement.utils.image.setImage
-import com.simple.launcher.retirement.utils.text.RichText
-import com.simple.launcher.retirement.utils.text.setText
 import com.simple.launcher.retirement.utils.view.setOnSafeWithPerformHapticFeedbackClickListener
+import com.simple.ui.precompute.image.BigImage
+import com.simple.ui.precompute.image.setImage
+import com.simple.ui.precompute.text.BigText
+import com.simple.ui.precompute.text.setText
 
 data class CleanMemoryHomeItem(
-    val label: RichText,
-    val value: RichText,
-    val icon: RichImage,
+    val label: BigText,
+    val value: BigText,
+    val icon: BigImage,
     val background: Background
 ) : HomeItem {
 
@@ -60,7 +58,7 @@ class CleanMemoryAdapter : UtilityAdapter<CleanMemoryHomeItem>() {
     override fun onBindViewHolder(binding: ItemUtilityBinding, viewType: Int, position: Int, item: CleanMemoryHomeItem, payloads: List<String>) {
         super.onBindViewHolder(binding, viewType, position, item, payloads)
         if (payloads.isEmpty() || payloads.contains("icon")) {
-            binding.ivIcon.setImage(item.icon, CenterInside(), CircleCrop())
+            binding.ivIcon.setImage(item.icon)
         }
         if (payloads.isEmpty() || payloads.contains("label")) {
             binding.tvLabel.setText(item.label)

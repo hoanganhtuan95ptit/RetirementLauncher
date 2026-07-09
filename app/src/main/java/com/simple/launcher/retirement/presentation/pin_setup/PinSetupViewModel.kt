@@ -11,9 +11,13 @@ import com.simple.launcher.retirement.presentation.base.buildToolbarTitle
 import com.simple.launcher.retirement.utils.combineState
 import com.simple.launcher.retirement.utils.exts.colorOnPrimary
 import com.simple.launcher.retirement.utils.exts.colorPrimary
-import com.simple.launcher.retirement.utils.text.*
 import com.simple.launcher.retirement.utils.exts.getString
 import com.simple.launcher.retirement.utils.exts.textColorPrimary
+import com.simple.ui.precompute.text.BigText
+import com.simple.ui.precompute.text.build
+import com.simple.ui.precompute.text.emptyText
+import com.simple.ui.precompute.text.span.BigForegroundColor
+import com.simple.ui.precompute.text.with
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -43,7 +47,7 @@ class PinSetupViewModel(
         )
     }
 
-    val instruction: StateFlow<RichText> = combineState(
+    val instruction: StateFlow<BigText> = combineState(
         flow1 = resources,
         flow2 = _state,
         initialValue = emptyText()
@@ -55,7 +59,7 @@ class PinSetupViewModel(
             State.SUCCESS -> R.string.pin_enter_new
         }
         value = resources.getString(resId)
-            .with(ForegroundColor(color))
+            .with(BigForegroundColor(color))
             .build()
     }
 
