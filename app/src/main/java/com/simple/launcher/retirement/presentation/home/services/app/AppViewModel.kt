@@ -51,14 +51,14 @@ class AppViewModel : BaseViewModel() {
         val screenWidth = android.content.res.Resources.getSystem().displayMetrics.widthPixels - 2 * 12.dp().toInt()
         val items = buildList<ViewItem> {
 
-            buildHeader(resources)?.let(::add)
+            buildHeader(resources, screenWidth)?.let(::add)
             addAll(apps.map { it.toViewItem(screenWidth = screenWidth, resources = resources) })
         }
 
         return GroupViewItem(order = 1, list = items)
     }
 
-    private fun buildHeader(resources: Map<String, Any>): HeaderHomeItem? {
+    private fun buildHeader(resources: Map<String, Any>, screenWidth: Int): HeaderHomeItem? {
 
         val title = resources.getString(R.string.home_header_apps)
         if (title.isBlank()) {
@@ -67,10 +67,18 @@ class AppViewModel : BaseViewModel() {
         }
 
         return HeaderHomeItem(
-            title = title
-                .toBuilder()
-                .with(BigTextSize(22.sp()), BigForegroundColor(Color.WHITE))
-                .build()
+            title = title,
+            spec = LayoutEngine.measure(
+                node = TextNode(
+                    text = title
+                        .toBuilder()
+                        .with(BigBold, BigTextSize(22.sp()), BigForegroundColor(Color.WHITE))
+                        .build(),
+                    padding = EdgeInsets(left = 8.dp().toInt(), right = 8.dp().toInt(), top = 24.dp().toInt())
+                ),
+                constraints = Constraints(maxWidth = screenWidth),
+                id = title
+            )
         )
     }
 

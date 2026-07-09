@@ -6,27 +6,17 @@ import com.simple.adapter.Adapter
 import com.simple.adapter.ViewItemAdapter
 import com.simple.adapter.base.BaseBindingViewHolder
 import com.simple.deeplink.sendDeeplink
-import com.simple.launcher.retirement.databinding.ItemContactBinding
+import com.simple.launcher.retirement.databinding.ItemNodeBinding
 import com.simple.launcher.retirement.domain.model.ContactEntity
 import com.simple.launcher.retirement.presentation.DeepLinks
 import com.simple.launcher.retirement.presentation.home.adapter.HomeItem
-import com.simple.launcher.retirement.utils.background.Background
-import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.getItem
-import com.simple.ui.precompute.image.BigImage
-import com.simple.ui.precompute.image.setImage
-import com.simple.ui.precompute.text.BigText
-import com.simple.ui.precompute.text.setText
+import com.simple.ui.precompute.DrawSpec
 import com.simple.launcher.retirement.utils.view.setOnSafeWithPerformHapticFeedbackClickListener
 
 data class ContactHomeItem(
     val entity: ContactEntity,
-    val name: BigText,
-    val photo: BigImage,
-    val background: Background,
-
-    val tapToCallLabel: BigText,
-    val tapToCallBackground: Background,
+    val spec: DrawSpec
 ) : HomeItem {
 
     override val spanSize: Int = HomeItem.TOTAL_COLUMNS / 2 // half width
@@ -36,29 +26,24 @@ data class ContactHomeItem(
     )
 
     override fun getContentsCompare(): List<Pair<Any, String>> = listOf(
-        name to "name",
-        photo to "photo",
-        background to "background",
-
-        tapToCallLabel to "tapToCallLabel",
-        tapToCallBackground to "tapToCallBackground"
+        spec to "spec"
     )
 }
 
 @Adapter
-class ContactAdapter : ViewItemAdapter<ContactHomeItem, ItemContactBinding>() {
+class ContactAdapter : ViewItemAdapter<ContactHomeItem, ItemNodeBinding>() {
 
     override val viewItemClass: Class<ContactHomeItem> by lazy {
 
         ContactHomeItem::class.java
     }
 
-    override fun createViewBinding(layoutInflater: LayoutInflater, parent: ViewGroup, viewType: Int): ItemContactBinding {
+    override fun createViewBinding(layoutInflater: LayoutInflater, parent: ViewGroup, viewType: Int): ItemNodeBinding {
 
-        return ItemContactBinding.inflate(layoutInflater, parent, false)
+        return ItemNodeBinding.inflate(layoutInflater, parent, false)
     }
 
-    override fun createViewHolder(parent: ViewGroup, viewType: Int): BaseBindingViewHolder<ItemContactBinding> {
+    override fun createViewHolder(parent: ViewGroup, viewType: Int): BaseBindingViewHolder<ItemNodeBinding> {
 
         val viewHolder = super.createViewHolder(parent, viewType)
         viewHolder.itemView.setOnSafeWithPerformHapticFeedbackClickListener {
@@ -70,33 +55,13 @@ class ContactAdapter : ViewItemAdapter<ContactHomeItem, ItemContactBinding>() {
         return viewHolder
     }
 
-    override fun onBindViewHolder(binding: ItemContactBinding, viewType: Int, position: Int, item: ContactHomeItem, payloads: List<String>) {
+    override fun onBindViewHolder(binding: ItemNodeBinding, viewType: Int, position: Int, item: ContactHomeItem, payloads: List<String>) {
 
         super.onBindViewHolder(binding, viewType, position, item, payloads)
 
-        if (payloads.isEmpty() || payloads.contains("name")) {
+        if (payloads.isEmpty() || payloads.contains("spec")) {
 
-            binding.tvName.setText(item.name)
-        }
-
-        if (payloads.isEmpty() || payloads.contains("photo")) {
-
-            binding.ivPhoto.setImage(item.photo)
-        }
-
-        if (payloads.isEmpty() || payloads.contains("background")) {
-
-            binding.root.setBackground(item.background)
-        }
-
-        if (payloads.isEmpty() || payloads.contains("tapToCallLabel")) {
-
-            binding.tvTapToCall.setText(item.tapToCallLabel)
-        }
-
-        if (payloads.isEmpty() || payloads.contains("tapToCallBackground")) {
-
-            binding.tvTapToCall.setBackground(item.tapToCallBackground)
+            binding.nodeView.spec = item.spec
         }
     }
 }
