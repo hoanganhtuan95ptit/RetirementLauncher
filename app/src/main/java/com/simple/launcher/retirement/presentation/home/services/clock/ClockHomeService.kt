@@ -2,9 +2,9 @@ package com.simple.launcher.retirement.presentation.home.services.clock
 
 import androidx.fragment.app.viewModels
 import com.simple.auto.register.AutoRegister
+import com.simple.component.service.launchCollect
 import com.simple.launcher.retirement.presentation.home.HomeFragment
 import com.simple.launcher.retirement.presentation.home.services.HomeService
-import com.simple.component.service.launchCollect
 import kotlinx.coroutines.flow.filterNotNull
 
 @AutoRegister([HomeFragment::class])

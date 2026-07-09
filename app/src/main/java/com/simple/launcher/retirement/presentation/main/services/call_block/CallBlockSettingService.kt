@@ -3,16 +3,14 @@ package com.simple.launcher.retirement.presentation.main.services.call_block
 import android.os.Build
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.simple.auto.register.AutoRegister
-import com.simple.launcher.retirement.domain.repository.PreferenceRepository
-import com.simple.launcher.retirement.presentation.settings.SettingItem
-import com.simple.launcher.retirement.presentation.settings.SettingsFragment
-import com.simple.launcher.retirement.presentation.settings.SettingsViewModel
-import com.simple.launcher.retirement.utils.permission.PermissionManager
 import com.simple.component.service.FragmentCreatedService
 import com.simple.component.service.launchCollect
+import com.simple.launcher.retirement.domain.repository.PreferenceRepository
+import com.simple.launcher.retirement.presentation.settings.SettingsViewModel
+import com.simple.launcher.retirement.presentation.settings.adapters.SettingItem
 import com.simple.launcher.retirement.utils.AppEvent
 import com.simple.launcher.retirement.utils.AppEventBus
+import com.simple.launcher.retirement.utils.permission.PermissionManager
 import kotlinx.coroutines.flow.filterIsInstance
 
 // Legacy toggle service này đang tắt vì Settings mới đã tách group theo service/view model khác.

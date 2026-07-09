@@ -1,4 +1,4 @@
-package com.simple.launcher.retirement.presentation.settings
+package com.simple.launcher.retirement.presentation.settings.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

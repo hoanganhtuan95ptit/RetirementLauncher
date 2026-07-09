@@ -2,7 +2,7 @@ package com.simple.launcher.retirement.utils
 
 import com.simple.launcher.retirement.domain.model.SelectableAppEntity
 import com.simple.launcher.retirement.domain.model.SelectableContactEntity
-import com.simple.launcher.retirement.presentation.settings.SettingItem
+import com.simple.launcher.retirement.presentation.settings.adapters.SettingItem
 
 /**
  * Tất cả event của app được định nghĩa tập trung tại đây.

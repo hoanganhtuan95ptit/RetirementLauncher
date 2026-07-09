@@ -1,6 +1,5 @@
 package com.simple.launcher.retirement.presentation.home.services.contact
 
-import android.graphics.Color
 import com.simple.adapter.ViewItem
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.domain.model.HomeContentEntity
@@ -11,17 +10,6 @@ import com.simple.launcher.retirement.presentation.home.adapter.HeaderHomeItem
 import com.simple.launcher.retirement.utils.combineState
 import com.simple.launcher.retirement.utils.exts.dp
 import com.simple.launcher.retirement.utils.exts.getString
-import com.simple.launcher.retirement.utils.exts.sp
-import com.simple.ui.precompute.LayoutEngine
-import com.simple.ui.precompute.node.Constraints
-import com.simple.ui.precompute.node.EdgeInsets
-import com.simple.ui.precompute.node.TextNode
-import com.simple.ui.precompute.text.build
-import com.simple.ui.precompute.text.span.BigBold
-import com.simple.ui.precompute.text.span.BigForegroundColor
-import com.simple.ui.precompute.text.span.BigTextSize
-import com.simple.ui.precompute.text.toBuilder
-import com.simple.ui.precompute.text.with
 import kotlinx.coroutines.flow.StateFlow
 
 class ContactViewModel : BaseViewModel() {

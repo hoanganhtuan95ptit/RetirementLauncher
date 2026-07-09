@@ -2,10 +2,10 @@ package com.simple.launcher.retirement.presentation.settings.services
 
 import androidx.fragment.app.Fragment
 import com.simple.component.service.FragmentViewCreatedService
-import com.simple.launcher.retirement.presentation.settings.SettingHeaderItem
-import com.simple.launcher.retirement.presentation.settings.SettingItem
 import com.simple.launcher.retirement.presentation.settings.SettingsFragment
 import com.simple.launcher.retirement.presentation.settings.SettingsViewModel
+import com.simple.launcher.retirement.presentation.settings.adapters.SettingHeaderItem
+import com.simple.launcher.retirement.presentation.settings.adapters.SettingItem
 import com.simple.launcher.retirement.utils.background.Background
 import com.simple.launcher.retirement.utils.exts.colorBackground
 import com.simple.launcher.retirement.utils.exts.colorOnSurface

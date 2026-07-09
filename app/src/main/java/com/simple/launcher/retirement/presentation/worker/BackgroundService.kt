@@ -8,8 +8,8 @@ import android.content.Intent
 import android.os.Build
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
-import com.simple.launcher.retirement.R
 import com.simple.component.service.launchCollect
+import com.simple.launcher.retirement.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

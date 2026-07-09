@@ -3,6 +3,10 @@ package com.simple.launcher.retirement.data.repository
 import android.os.Build
 import android.os.Environment
 import android.os.FileObserver
+import com.simple.launcher.retirement.data.repository.FileRepositoryImpl.ALLOWED_EXTENSIONS
+import com.simple.launcher.retirement.data.repository.FileRepositoryImpl._fileChangeTrigger
+import com.simple.launcher.retirement.data.repository.FileRepositoryImpl.isExcludedDirectory
+import com.simple.launcher.retirement.data.repository.FileRepositoryImpl.notifyFileSystemChanged
 import com.simple.launcher.retirement.domain.repository.FileRepository
 import com.simple.launcher.retirement.domain.repository.PreferenceRepository
 import com.simple.launcher.retirement.domain.repository.StrangeFileCategory

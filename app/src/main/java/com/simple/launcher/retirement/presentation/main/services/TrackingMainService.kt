@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.fragment.app.FragmentActivity
 import com.simple.auto.register.AutoRegister
 import com.simple.component.service.ActivityCreatedService
-import com.simple.component.service.ActivityStartedService
 
 @AutoRegister(apis = [ActivityCreatedService::class])
 class TrackingMainService: ActivityCreatedService {
