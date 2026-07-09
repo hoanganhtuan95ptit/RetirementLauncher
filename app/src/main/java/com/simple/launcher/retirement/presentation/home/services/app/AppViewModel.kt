@@ -13,7 +13,6 @@ import com.simple.launcher.retirement.utils.combineState
 import com.simple.launcher.retirement.utils.exts.dp
 import com.simple.launcher.retirement.utils.exts.getString
 import com.simple.launcher.retirement.utils.exts.sp
-import com.simple.launcher.retirement.utils.exts.textColorPrimary
 import com.simple.ui.precompute.LayoutEngine
 import com.simple.ui.precompute.image.BigImage
 import com.simple.ui.precompute.node.BackgroundNode
@@ -23,8 +22,8 @@ import com.simple.ui.precompute.node.Constraints
 import com.simple.ui.precompute.node.ImageNode
 import com.simple.ui.precompute.node.LayoutDimension
 import com.simple.ui.precompute.node.TextNode
-import com.simple.ui.precompute.text.BigText
 import com.simple.ui.precompute.text.build
+import com.simple.ui.precompute.text.span.BigBold
 import com.simple.ui.precompute.text.span.BigForegroundColor
 import com.simple.ui.precompute.text.span.BigTextSize
 import com.simple.ui.precompute.text.toBuilder
@@ -68,7 +67,7 @@ class AppViewModel : BaseViewModel() {
         return HeaderHomeItem(
             title = title
                 .toBuilder()
-                .with(BigTextSize(22), BigForegroundColor(Color.WHITE))
+                .with(BigTextSize(22.sp()), BigForegroundColor(Color.WHITE))
                 .build()
         )
     }
@@ -104,7 +103,7 @@ class AppViewModel : BaseViewModel() {
         layoutWidth = LayoutDimension.MatchParent
     )
 
-    private fun HomeContentEntity.App.createBackgroundChild(itemWidth: Int): ConstraintChild = ConstraintChild(
+    private fun createBackgroundChild(itemWidth: Int): ConstraintChild = ConstraintChild(
         id = "background",
         node = BackgroundNode(
             backgroundColor = Color.WHITE,
@@ -133,9 +132,9 @@ class AppViewModel : BaseViewModel() {
     private fun HomeContentEntity.App.createLabelChild(resources: Map<String, Any>): ConstraintChild = ConstraintChild(
         id = "label",
         node = TextNode(
-            text = BigText(entity.label),
-            textSizePx = 18.sp(),
-            color = resources.textColorPrimary,
+            text = entity.label.toBuilder()
+                .with(BigBold, BigTextSize(18.sp()), BigForegroundColor(Color.WHITE))
+                .build(),
             maxLines = 1
         ),
         startToStartOf = ConstraintNode.PARENT,
