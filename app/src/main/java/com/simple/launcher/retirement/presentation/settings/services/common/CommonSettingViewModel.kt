@@ -14,7 +14,7 @@ class CommonSettingViewModel : BaseViewModel() {
 
     val viewItemList: StateFlow<GroupViewItem?> = combineState(resources, null) { resources ->
 
-        buildCommonGroup(resources)
+        value = buildCommonGroup(resources)
     }
 
     private fun buildCommonGroup(resources: Map<String, Any>): GroupViewItem {

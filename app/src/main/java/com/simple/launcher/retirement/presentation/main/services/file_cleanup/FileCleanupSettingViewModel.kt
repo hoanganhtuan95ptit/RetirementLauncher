@@ -28,7 +28,7 @@ class FileCleanupSettingViewModel : BaseViewModel() {
 
         val textColor = resources.textColorPrimary
 
-        listOf(
+        value = listOf(
             SettingItem(
                 SettingItem.ID_TOGGLE_CLEANUP,
                 resources.getString(R.string.setting_auto_cleanup_apk).with(ForegroundColor(textColor)).build(),

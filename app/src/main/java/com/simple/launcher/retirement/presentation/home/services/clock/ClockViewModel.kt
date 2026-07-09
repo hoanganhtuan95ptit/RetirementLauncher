@@ -25,6 +25,6 @@ class ClockViewModel : BaseViewModel() {
             listOf(it)
         }
 
-        GroupViewItem(0, list)
+        value = GroupViewItem(0, list)
     }
 }

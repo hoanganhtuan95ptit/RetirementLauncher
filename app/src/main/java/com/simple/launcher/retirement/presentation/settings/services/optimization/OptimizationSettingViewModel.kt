@@ -13,7 +13,7 @@ class OptimizationSettingViewModel : BaseViewModel() {
 
     val viewItemList: StateFlow<GroupViewItem?> = combineState(resources, null) { resources ->
 
-        buildOptimizationGroup(resources)
+        value = buildOptimizationGroup(resources)
     }
 
     private fun buildOptimizationGroup(resources: Map<String, Any>): GroupViewItem {

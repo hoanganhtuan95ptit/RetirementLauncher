@@ -20,7 +20,7 @@ class OnboardingViewModel : BaseViewModel() {
         val color = resources.colorOnPrimary
         val backgroundColor = resources.colorPrimary
 
-        buildActionState(
+        value = buildActionState(
             text = resources.getString(R.string.onboarding_start),
             textColor = color,
             backgroundColor = backgroundColor

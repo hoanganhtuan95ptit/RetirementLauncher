@@ -58,7 +58,7 @@ class CleanFilesViewModel : BaseViewModel() {
 
         val color = resources.textColorPrimary
 
-        ToolbarState(
+        value = ToolbarState(
             title = buildToolbarTitle(resources.getString(R.string.clean_files_title), color),
             backIcon = buildBackIcon(color)
         )
@@ -80,7 +80,7 @@ class CleanFilesViewModel : BaseViewModel() {
 
         val textColor = resourceMap.colorOnPrimary
 
-        ActionState(
+        value = ActionState(
             text = labels
                 .withStyleHeadlineSmall()
                 .with(ForegroundColor(textColor), Bold)
@@ -110,7 +110,7 @@ class CleanFilesViewModel : BaseViewModel() {
             state.asObjectOrNull<ClearState.Done>()?.totalFiles.orZero().toString()
         }
 
-        if (state is ClearState.IDLE && count > 0) RingViewData(
+        value = if (state is ClearState.IDLE && count > 0) RingViewData(
             text = (count.toString() + "\n" + resources.getString(R.string.clean_files_count_unit))
                 .withStyleBodyLarge()
                 .with(ForegroundColor(secondaryColor))
@@ -146,14 +146,14 @@ class CleanFilesViewModel : BaseViewModel() {
             resources.getString(R.string.clean_files_completed)
         }
 
-        text
+        value = text
             .with(ForegroundColor(color))
             .build()
     }
 
     val categoryViewDataList: StateFlow<List<CategoryViewData>> = combineState(flow1 = resources, flow2 = screenState, initialValue = emptyList()) { resources, state ->
 
-        CATEGORY_META.map {
+        value = CATEGORY_META.map {
 
             val numberFile = if (state is ClearState.Run && state.categoryMap[it.id] != null) {
 
@@ -197,42 +197,41 @@ class CleanFilesViewModel : BaseViewModel() {
     ) { res, state ->
 
         if (state !is ClearState.Done) {
-            return@combineState ResultViewData(show = false)
+            value = ResultViewData(show = false)
+        } else {
+            val spaceMB = state.totalBytes / (1024f * 1024f)
+            val spaceLabel = if (spaceMB >= 1f) "%.1f MB".format(spaceMB) else "${state.totalBytes / 1024} KB"
+
+            value = ResultViewData(
+                show = true,
+                title = res.getString(R.string.clean_result_title)
+                    .withStyleBodyLarge()
+                    .with(ForegroundColor(res.colorOnSurface))
+                    .build(),
+
+                resultFilesImage = ImageRes(R.drawable.ic_file_black_24dp, "#FFBB00".toColorInt()),
+                resultFilesLabel = "${state.totalFiles.orZero()}\n${res.getString(R.string.clean_result_files_deleted)}"
+                    .withStyleBodyMedium()
+                    .with(ForegroundColor(res.colorOnSurface))
+                    .withFirst("${state.totalFiles.orZero()}", TextSize(24), Bold)
+                    .build(),
+                resultFilesBackground = Background.Builder()
+                    .backgroundColor(res.colorSurface)
+                    .cornerRadius(DP.DP_24)
+                    .build(),
+
+                resultSpaceImage = ImageRes(R.drawable.ic_clear_files_black_24dp, "#FF4343".toColorInt()),
+                resultSpaceLabel = "${spaceLabel}\n${res.getString(R.string.clean_result_space_freed)}"
+                    .withStyleBodyMedium()
+                    .with(ForegroundColor(res.colorOnSurface))
+                    .withFirst(spaceLabel, TextSize(24), Bold)
+                    .build(),
+                resultSpaceBackground = Background.Builder()
+                    .backgroundColor(res.colorSurface)
+                    .cornerRadius(DP.DP_24)
+                    .build()
+            )
         }
-
-        val spaceMB = state.totalBytes / (1024f * 1024f)
-        val spaceLabel = if (spaceMB >= 1f) "%.1f MB".format(spaceMB) else "${state.totalBytes / 1024} KB"
-
-        ResultViewData(
-            show = true,
-            title = res.getString(R.string.clean_result_title)
-                .withStyleBodyLarge()
-                .with(ForegroundColor(res.colorOnSurface))
-                .build(),
-
-            resultFilesImage = ImageRes(R.drawable.ic_file_black_24dp, "#FFBB00".toColorInt()),
-            resultFilesLabel = "${state.totalFiles.orZero()}\n${res.getString(R.string.clean_result_files_deleted)}"
-                .withStyleBodyMedium()
-                .with(ForegroundColor(res.colorOnSurface))
-                .withFirst("${state.totalFiles.orZero()}", TextSize(24), Bold)
-                .build(),
-            resultFilesBackground = Background.Builder()
-                .backgroundColor(res.colorSurface)
-                .cornerRadius(DP.DP_24)
-                .build(),
-
-            resultSpaceImage = ImageRes(R.drawable.ic_clear_files_black_24dp, "#FF4343".toColorInt()),
-            resultSpaceLabel = "${spaceLabel}\n${res.getString(R.string.clean_result_space_freed)}"
-                .withStyleBodyMedium()
-                .with(ForegroundColor(res.colorOnSurface))
-                .withFirst(spaceLabel, TextSize(24), Bold)
-                .build(),
-            resultSpaceBackground = Background.Builder()
-                .backgroundColor(res.colorSurface)
-                .cornerRadius(DP.DP_24)
-                .build()
-
-        )
     }
 
     val screenViewData: StateFlow<ScreenViewData> = combineState(
@@ -243,7 +242,7 @@ class CleanFilesViewModel : BaseViewModel() {
         initialValue = ScreenViewData()
     ) { ringCenter, statusText, categoryViewDataList, resultViewData ->
 
-        ScreenViewData(
+        value = ScreenViewData(
             ringViewData = ringCenter,
             status = statusText,
             categoryViewDataList = categoryViewDataList,

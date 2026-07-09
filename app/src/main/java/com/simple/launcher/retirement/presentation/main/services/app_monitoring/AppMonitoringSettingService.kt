@@ -40,7 +40,7 @@ class AppMonitoringSettingViewModel : BaseViewModel() {
 
         val textColor = resources.textColorPrimary
 
-        SettingItem(
+        value = SettingItem(
             id = SettingItem.ID_TOGGLE_BLOCK,
             icon = ImageRes(android.R.drawable.ic_lock_lock),
             title = resources.getString(R.string.setting_app_monitoring).with(ForegroundColor(textColor)).build(),

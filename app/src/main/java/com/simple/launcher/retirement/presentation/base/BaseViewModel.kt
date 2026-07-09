@@ -24,7 +24,7 @@ open class BaseViewModel : ViewModel() {
         val data = hashMapOf<String, Any>()
         data.putAll(themes)
         data.putAll(strings)
-        data
+        value = data
     }
 
     val background: StateFlow<Background> = themes.map { themeMap ->

@@ -36,7 +36,7 @@ class BackgroundViewModel : BaseViewModel() {
 
     val background2: StateFlow<Background?> = combineState(resources, null) {
 
-        Background.Builder()
+        value = Background.Builder()
             .backgroundColor(Color.WHITE)
             .cornerRadius(DP.DP_16)
             .build()

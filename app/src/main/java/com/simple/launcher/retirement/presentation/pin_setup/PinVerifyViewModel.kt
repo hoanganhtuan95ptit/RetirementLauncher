@@ -22,7 +22,7 @@ class PinVerifyViewModel : BaseViewModel() {
     ) { resources ->
         val titleColor = resources.textColorPrimary
         val descColor = resources.textColorSecondary
-        PinVerifyContent(
+        value = PinVerifyContent(
             title = resources.getString(R.string.pin_verify_title)
                 .with(ForegroundColor(titleColor))
                 .build(),

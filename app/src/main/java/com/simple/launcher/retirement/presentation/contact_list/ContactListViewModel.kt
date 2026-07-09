@@ -43,7 +43,7 @@ class ContactListViewModel(
         initialValue = ToolbarState.empty()
     ) { resources ->
         val color = resources.textColorPrimary
-        ToolbarState(
+        value = ToolbarState(
             title = buildToolbarTitle(resources.getString(R.string.contact_list_title), color),
             backIcon = buildBackIcon(color)
         )
@@ -58,7 +58,7 @@ class ContactListViewModel(
         val hintColor = resources.textColorSecondary
         val backgroundColor = resources.colorSurface
 
-        buildSearchState(
+        value = buildSearchState(
             hint = resources.getString(R.string.search),
             textColor = textColor,
             hintColor = hintColor,
@@ -74,7 +74,7 @@ class ContactListViewModel(
         val color = resources.colorOnPrimary
         val backgroundColor = resources.colorPrimary
 
-        buildActionState(
+        value = buildActionState(
             text = resources.getString(R.string.save),
             textColor = color,
             backgroundColor = backgroundColor
@@ -123,7 +123,7 @@ class ContactListViewModel(
             }
         }
 
-        filtered
+        value = filtered
             .sortedWith(compareBy({ it.second }, { it.first.name.lowercase() }))
             .map { (contact, _) ->
                 val isSelected = contact.id in selectedIds
@@ -177,6 +177,7 @@ class ContactListViewModel(
 
 class ContactListViewModelFactory(private val repository: ContactRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        @Suppress("UNCHECKED_CAST")
         return ContactListViewModel(repository) as T
     }
 }

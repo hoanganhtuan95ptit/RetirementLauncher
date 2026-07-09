@@ -35,7 +35,7 @@ class BlockViewModel : BaseViewModel() {
     ) { resources, appName ->
         val titleColor = resources.textColorPrimary
         val messageColor = resources.textColorSecondary
-        BlockContentState(
+        value = BlockContentState(
             title = resources.getString(R.string.block_title)
                 .with(ForegroundColor(titleColor))
                 .build(),
@@ -54,7 +54,7 @@ class BlockViewModel : BaseViewModel() {
         val color = resources.colorOnPrimary
         val backgroundColor = resources.colorPrimary
 
-        buildActionState(
+        value = buildActionState(
             text = resources.getString(R.string.block_go_home),
             textColor = color,
             backgroundColor = backgroundColor

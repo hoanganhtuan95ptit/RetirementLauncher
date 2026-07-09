@@ -43,7 +43,7 @@ class ReorderViewModel(
     ) { resources ->
         val color = resources.textColorPrimary
         val titleRes = if (type == ReorderType.APPS) R.string.reorder_apps_title else R.string.reorder_contacts_title
-        ToolbarState(
+        value = ToolbarState(
             title = buildToolbarTitle(resources.getString(titleRes), color),
             backIcon = buildBackIcon(color)
         )
@@ -57,7 +57,7 @@ class ReorderViewModel(
         val color = resources.colorOnPrimary
         val backgroundColor = resources.colorPrimary
 
-        buildActionState(
+        value = buildActionState(
             text = resources.getString(R.string.done),
             textColor = color,
             backgroundColor = backgroundColor

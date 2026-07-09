@@ -15,7 +15,7 @@ class SettingsViewModel : ViewItemViewModel() {
     val toolbar: StateFlow<ToolbarState> = combineState(flow1 = resources, initialValue = ToolbarState.empty()) { resources ->
 
         val color = resources.textColorPrimary
-        ToolbarState(
+        value = ToolbarState(
             title = buildToolbarTitle(resources.getString(R.string.settings_title), color),
             backIcon = buildBackIcon(color)
         )

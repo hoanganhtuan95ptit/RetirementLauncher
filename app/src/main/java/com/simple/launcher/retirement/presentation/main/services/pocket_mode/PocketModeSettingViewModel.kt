@@ -28,7 +28,7 @@ class PocketModeSettingViewModel : BaseViewModel() {
 
         val textColor = resources.textColorPrimary
 
-        listOf(
+        value = listOf(
             SettingItem(
                 SettingItem.ID_TOGGLE_POCKET_MODE,
                 resources.getString(R.string.setting_pocket_mode).with(ForegroundColor(textColor)).build(),

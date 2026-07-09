@@ -33,7 +33,7 @@ class AppListViewModel(
         initialValue = ToolbarState.empty()
     ) { resources ->
         val color = resources.textColorPrimary
-        ToolbarState(
+        value = ToolbarState(
             title = buildToolbarTitle(resources.getString(R.string.setting_app_list), color),
             backIcon = buildBackIcon(color)
         )
@@ -48,7 +48,7 @@ class AppListViewModel(
         val hintColor = resources.textColorSecondary
         val backgroundColor = resources.colorSurface
 
-        buildSearchState(
+        value = buildSearchState(
             hint = resources.getString(R.string.search),
             textColor = textColor,
             hintColor = hintColor,
@@ -64,7 +64,7 @@ class AppListViewModel(
         val color = resources.colorOnPrimary
         val backgroundColor = resources.colorPrimary
 
-        buildActionState(
+        value = buildActionState(
             text = resources.getString(R.string.app_list_save_action),
             textColor = color,
             backgroundColor = backgroundColor
@@ -88,7 +88,7 @@ class AppListViewModel(
         flow3 = _selectedIds,
         initialValue = emptyList()
     ) { apps, query, selectedIds ->
-        apps.filter {
+        value = apps.filter {
             query.isBlank() || it.app.label.contains(query, ignoreCase = true)
         }.map { entity ->
             SelectableAppItem(

@@ -31,7 +31,7 @@ class ContactViewModel : BaseViewModel() {
         initialValue = null
     ) { resources, contacts ->
 
-        buildContactGroup(resources = resources, contacts = contacts)
+        value = buildContactGroup(resources = resources, contacts = contacts)
     }
 
     private fun buildContactGroup(

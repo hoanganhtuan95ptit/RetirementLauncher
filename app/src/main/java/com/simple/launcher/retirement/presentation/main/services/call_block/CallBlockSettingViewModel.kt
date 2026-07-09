@@ -28,7 +28,7 @@ class CallBlockSettingViewModel : BaseViewModel() {
 
         val textColor = resources.textColorPrimary
 
-        listOf(
+        value = listOf(
             SettingItem(
                 SettingItem.ID_TOGGLE_CALL_BLOCK,
                 resources.getString(R.string.setting_call_block).with(ForegroundColor(textColor)).build(),

@@ -37,7 +37,7 @@ class PinSetupViewModel(
         initialValue = ToolbarState.empty()
     ) { resources ->
         val color = resources.textColorPrimary
-        ToolbarState(
+        value = ToolbarState(
             title = buildToolbarTitle(resources.getString(R.string.setting_pin), color),
             backIcon = buildBackIcon(color)
         )
@@ -54,7 +54,7 @@ class PinSetupViewModel(
             State.CONFIRM_NEW_PIN -> R.string.pin_confirm_new
             State.SUCCESS -> R.string.pin_enter_new
         }
-        resources.getString(resId)
+        value = resources.getString(resId)
             .with(ForegroundColor(color))
             .build()
     }
@@ -68,7 +68,7 @@ class PinSetupViewModel(
         val color = resources.colorOnPrimary
         val backgroundColor = resources.colorPrimary
 
-        buildActionState(
+        value = buildActionState(
             text = resources.getString(actionRes),
             textColor = color,
             backgroundColor = backgroundColor

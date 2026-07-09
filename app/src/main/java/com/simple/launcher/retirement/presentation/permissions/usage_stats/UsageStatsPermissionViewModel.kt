@@ -16,7 +16,7 @@ class UsageStatsPermissionViewModel : BaseViewModel() {
         initialValue = RichText("")
     ) { resources ->
         val color = resources.textColorPrimary
-        resources.getString(R.string.usage_stats_permission_title)
+        value = resources.getString(R.string.usage_stats_permission_title)
             .with(ForegroundColor(color), Bold)
             .build()
     }
@@ -28,7 +28,7 @@ class UsageStatsPermissionViewModel : BaseViewModel() {
         val color = resources.textColorSecondary
         val highlightColor = resources.colorAccent
 
-        resources.getString(R.string.usage_stats_permission_desc)
+        value = resources.getString(R.string.usage_stats_permission_desc)
             .with(ForegroundColor(color))
             .withFirst(resources.getString(R.string.usage_stats_permission_highlight), Bold, ForegroundColor(highlightColor))
             .build()
@@ -42,7 +42,7 @@ class UsageStatsPermissionViewModel : BaseViewModel() {
         val color = resources.colorOnPrimary
         val backgroundColor = resources.colorPrimary
 
-        buildActionState(
+        value = buildActionState(
             text = resources.getString(R.string.permission_grant),
             textColor = color,
             backgroundColor = backgroundColor

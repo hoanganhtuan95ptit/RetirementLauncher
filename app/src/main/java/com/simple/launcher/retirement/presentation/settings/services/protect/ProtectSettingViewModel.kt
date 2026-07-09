@@ -21,7 +21,7 @@ class ProtectSettingViewModel : BaseViewModel() {
         initialValue = null
     ) { resources, hasPin, isEmergencyCallEnabled ->
 
-        buildProtectGroup(
+        value = buildProtectGroup(
             resources = resources,
             hasPin = hasPin,
             isEmergencyCallEnabled = isEmergencyCallEnabled

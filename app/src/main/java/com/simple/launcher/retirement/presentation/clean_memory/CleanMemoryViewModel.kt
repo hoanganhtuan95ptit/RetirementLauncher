@@ -71,7 +71,7 @@ class CleanMemoryViewModel : BaseViewModel() {
         initialValue = ToolbarState.empty()
     ) { resources ->
         val color = resources.textColorPrimary
-        ToolbarState(
+        value = ToolbarState(
             title = buildToolbarTitle(resources.getString(R.string.clean_memory_title), color),
             backIcon = buildBackIcon(color)
         )
@@ -93,7 +93,7 @@ class CleanMemoryViewModel : BaseViewModel() {
             is BoostState.Done -> resourceMap.colorPrimary
         }
 
-        ActionState(
+        value = ActionState(
             text = labels
                 .withStyleHeadlineSmall()
                 .with(ForegroundColor(textColor), Bold)
@@ -114,7 +114,7 @@ class CleanMemoryViewModel : BaseViewModel() {
         initialValue = RingViewData()
     ) { resourceMap, ramInfo ->
 
-        RingViewData(
+        value = RingViewData(
             value = "${ramInfo.percentInt}%\n${ramInfo.usedGB}/${ramInfo.totalGB}"
                 .withStyleBodyLarge()
                 .with(ForegroundColor(resourceMap.colorOnSurfaceVariant))
@@ -129,7 +129,7 @@ class CleanMemoryViewModel : BaseViewModel() {
         initialValue = LoadingViewData()
     ) { state, ramInfo ->
 
-        LoadingViewData(
+        value = LoadingViewData(
             loading = state is BoostState.BOOSTING,
             percent = ramInfo.percent,
         )
@@ -146,7 +146,7 @@ class CleanMemoryViewModel : BaseViewModel() {
             .cornerRadius(DP.DP_16)
             .build()
 
-        RamViewData(
+        value = RamViewData(
             usedRichText = "${ramInfo.usedGB}\n${resourceMap.getString(R.string.clean_memory_stat_used)}"
                 .withStyleBodyMedium()
                 .with(ForegroundColor(resourceMap.colorOnSurface))
@@ -190,7 +190,7 @@ class CleanMemoryViewModel : BaseViewModel() {
 
         val sub = resourceMap.getString(R.string.clean_memory_result_sub)
 
-        val resultViewData1 = ResultViewData(
+        value = ResultViewData(
             show = state is BoostState.Done,
 
             text = "$text\n$sub"
@@ -208,7 +208,6 @@ class CleanMemoryViewModel : BaseViewModel() {
                 .stroke(DP.DP_1, resourceMap.colorPrimary)
                 .build()
         )
-        resultViewData1
     }
 
     val screenViewData: StateFlow<ScreenViewData> = combineState(
@@ -218,7 +217,7 @@ class CleanMemoryViewModel : BaseViewModel() {
         initialValue = ScreenViewData()
     ) { ring, ram, result ->
 
-        ScreenViewData(
+        value = ScreenViewData(
             ringViewData = ring,
             ramViewData = ram,
             resultViewData = result
