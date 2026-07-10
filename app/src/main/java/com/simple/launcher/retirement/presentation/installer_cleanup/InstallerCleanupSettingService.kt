@@ -43,8 +43,15 @@ class InstallerCleanupSettingService : ProtectSettingService() {
                 return@launchCollect
             }
 
-            if (isTurningOn && !PermissionManager.requireFilePermission()) {
-                return@launchCollect
+            if (isTurningOn) {
+
+                if (!PermissionManager.requireFileCleanupIntro()) {
+                    return@launchCollect
+                }
+
+                if (!PermissionManager.requireFilePermission()) {
+                    return@launchCollect
+                }
             }
 
             if (!isTurningOn && !PermissionManager.requirePinPermissions()) {

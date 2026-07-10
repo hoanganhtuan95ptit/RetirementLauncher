@@ -17,10 +17,14 @@ class PreferenceRepositoryImpl(context: Context) : PreferenceRepository {
         private const val KEY_PIN = "app_pin"
         private const val KEY_ONBOARDING_COMPLETED = "onboarding_completed"
         private const val KEY_APP_BLOCK_ENABLED = "app_block_enabled"
+        private const val KEY_APP_BLOCK_FIRST_TIME = "app_block_first_time"
         private const val KEY_FILE_CLEANUP_ENABLED = "file_cleanup_enabled"
+        private const val KEY_FILE_CLEANUP_FIRST_TIME = "file_cleanup_first_time"
         private const val KEY_CALL_BLOCK_ENABLED = "call_block_enabled"
+        private const val KEY_CALL_BLOCK_FIRST_TIME = "call_block_first_time"
         private const val KEY_POCKET_MODE_ENABLED = "pocket_mode_enabled"
         private const val KEY_EMERGENCY_CALL_ENABLED = "emergency_call_enabled"
+        private const val KEY_EMERGENCY_CALL_FIRST_TIME = "emergency_call_first_time"
         private const val KEY_EMERGENCY_PHONE_NUMBER = "emergency_phone_number"
         private const val KEY_LAST_USER_ACTIVITY = "last_user_activity"
         private const val KEY_LAST_EMERGENCY_INDEX = "last_emergency_index"
@@ -64,6 +68,14 @@ class PreferenceRepositoryImpl(context: Context) : PreferenceRepository {
 
     override fun isAppBlockEnabledFlow(): Flow<Boolean> = _appBlockEnabled.asStateFlow()
 
+    override fun isAppBlockFirstTime(): Boolean =
+        sharedPrefs.getBoolean(KEY_APP_BLOCK_FIRST_TIME, true)
+
+    override fun setAppBlockFirstTime(firstTime: Boolean) {
+
+        sharedPrefs.edit { putBoolean(KEY_APP_BLOCK_FIRST_TIME, firstTime) }
+    }
+
     override fun isFileCleanupEnabled(): Boolean =
         sharedPrefs.getBoolean(KEY_FILE_CLEANUP_ENABLED, false)
 
@@ -75,6 +87,14 @@ class PreferenceRepositoryImpl(context: Context) : PreferenceRepository {
 
     override fun isFileCleanupEnabledFlow(): Flow<Boolean> = _fileCleanupEnabled.asStateFlow()
 
+    override fun isFileCleanupFirstTime(): Boolean =
+        sharedPrefs.getBoolean(KEY_FILE_CLEANUP_FIRST_TIME, true)
+
+    override fun setFileCleanupFirstTime(firstTime: Boolean) {
+
+        sharedPrefs.edit { putBoolean(KEY_FILE_CLEANUP_FIRST_TIME, firstTime) }
+    }
+
     override fun isCallBlockEnabled(): Boolean =
         sharedPrefs.getBoolean(KEY_CALL_BLOCK_ENABLED, false)
 
@@ -85,6 +105,14 @@ class PreferenceRepositoryImpl(context: Context) : PreferenceRepository {
     }
 
     override fun isCallBlockEnabledFlow(): Flow<Boolean> = _callBlockEnabled.asStateFlow()
+
+    override fun isCallBlockFirstTime(): Boolean =
+        sharedPrefs.getBoolean(KEY_CALL_BLOCK_FIRST_TIME, true)
+
+    override fun setCallBlockFirstTime(firstTime: Boolean) {
+
+        sharedPrefs.edit { putBoolean(KEY_CALL_BLOCK_FIRST_TIME, firstTime) }
+    }
 
     override fun isPocketModeEnabled(): Boolean =
         sharedPrefs.getBoolean(KEY_POCKET_MODE_ENABLED, false)
@@ -107,6 +135,14 @@ class PreferenceRepositoryImpl(context: Context) : PreferenceRepository {
     }
 
     override fun isEmergencyCallEnabledFlow(): Flow<Boolean> = _emergencyCallEnabled.asStateFlow()
+
+    override fun isEmergencyCallFirstTime(): Boolean =
+        sharedPrefs.getBoolean(KEY_EMERGENCY_CALL_FIRST_TIME, true)
+
+    override fun setEmergencyCallFirstTime(firstTime: Boolean) {
+
+        sharedPrefs.edit { putBoolean(KEY_EMERGENCY_CALL_FIRST_TIME, firstTime) }
+    }
 
     override fun getEmergencyPhoneNumber(): String =
         sharedPrefs.getString(KEY_EMERGENCY_PHONE_NUMBER, "") ?: ""

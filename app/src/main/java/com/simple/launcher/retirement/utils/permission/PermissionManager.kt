@@ -187,4 +187,88 @@ object PermissionManager {
 //        return AppEventBus.events.filterIsInstance<AppEvent.PinResult>().first() !is AppEvent.PinCancel
         return true
     }
+
+    /**
+     * Yêu cầu hiển thị giới thiệu tính năng Giám sát ứng dụng nếu là lần đầu.
+     * @return true nếu đã xem hoặc vừa nhấn chấp nhận, false nếu user huỷ.
+     */
+    suspend fun requireAppMonitoringIntro(): Boolean {
+        val repository = PreferenceRepository.instance
+        if (!repository.isAppBlockFirstTime()) return true
+
+        sendDeeplink(DeepLinks.APP_MONITORING_INTRO)
+        val result = AppEventBus.events
+            .filterIsInstance<AppEvent.AppMonitoringIntroResult>()
+            .first()
+
+        return if (result is AppEvent.AppMonitoringIntroAccept) {
+            repository.setAppBlockFirstTime(false)
+            true
+        } else {
+            false
+        }
+    }
+
+    /**
+     * Yêu cầu hiển thị giới thiệu tính năng Cuộc gọi khẩn cấp nếu là lần đầu.
+     * @return true nếu đã xem hoặc vừa nhấn chấp nhận, false nếu user huỷ.
+     */
+    suspend fun requireEmergencyCallIntro(): Boolean {
+        val repository = PreferenceRepository.instance
+        if (!repository.isEmergencyCallFirstTime()) return true
+
+        sendDeeplink(DeepLinks.EMERGENCY_CALL_INTRO)
+        val result = AppEventBus.events
+            .filterIsInstance<AppEvent.EmergencyCallIntroResult>()
+            .first()
+
+        return if (result is AppEvent.EmergencyCallIntroAccept) {
+            repository.setEmergencyCallFirstTime(false)
+            true
+        } else {
+            false
+        }
+    }
+
+    /**
+     * Yêu cầu hiển thị giới thiệu tính năng Dọn dẹp file APK nếu là lần đầu.
+     * @return true nếu đã xem hoặc vừa nhấn chấp nhận, false nếu user huỷ.
+     */
+    suspend fun requireFileCleanupIntro(): Boolean {
+        val repository = PreferenceRepository.instance
+        if (!repository.isFileCleanupFirstTime()) return true
+
+        sendDeeplink(DeepLinks.FILE_CLEANUP_INTRO)
+        val result = AppEventBus.events
+            .filterIsInstance<AppEvent.FileCleanupIntroResult>()
+            .first()
+
+        return if (result is AppEvent.FileCleanupIntroAccept) {
+            repository.setFileCleanupFirstTime(false)
+            true
+        } else {
+            false
+        }
+    }
+
+    /**
+     * Yêu cầu hiển thị giới thiệu tính năng Chặn cuộc gọi lạ nếu là lần đầu.
+     * @return true nếu đã xem hoặc vừa nhấn chấp nhận, false nếu user huỷ.
+     */
+    suspend fun requireCallBlockIntro(): Boolean {
+        val repository = PreferenceRepository.instance
+        if (!repository.isCallBlockFirstTime()) return true
+
+        sendDeeplink(DeepLinks.CALL_BLOCK_INTRO)
+        val result = AppEventBus.events
+            .filterIsInstance<AppEvent.CallBlockIntroResult>()
+            .first()
+
+        return if (result is AppEvent.CallBlockIntroAccept) {
+            repository.setCallBlockFirstTime(false)
+            true
+        } else {
+            false
+        }
+    }
 }

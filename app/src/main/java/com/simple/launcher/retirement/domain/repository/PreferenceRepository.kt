@@ -22,13 +22,22 @@ interface PreferenceRepository {
     fun setAppBlockEnabled(enabled: Boolean)
     fun isAppBlockEnabledFlow(): Flow<Boolean>
 
+    fun isAppBlockFirstTime(): Boolean
+    fun setAppBlockFirstTime(firstTime: Boolean)
+
     fun isFileCleanupEnabled(): Boolean
     fun setFileCleanupEnabled(enabled: Boolean)
     fun isFileCleanupEnabledFlow(): Flow<Boolean>
 
+    fun isFileCleanupFirstTime(): Boolean
+    fun setFileCleanupFirstTime(firstTime: Boolean)
+
     fun isCallBlockEnabled(): Boolean
     fun setCallBlockEnabled(enabled: Boolean)
     fun isCallBlockEnabledFlow(): Flow<Boolean>
+
+    fun isCallBlockFirstTime(): Boolean
+    fun setCallBlockFirstTime(firstTime: Boolean)
 
     fun isPocketModeEnabled(): Boolean
     fun setPocketModeEnabled(enabled: Boolean)
@@ -37,6 +46,9 @@ interface PreferenceRepository {
     fun isEmergencyCallEnabled(): Boolean
     fun setEmergencyCallEnabled(enabled: Boolean)
     fun isEmergencyCallEnabledFlow(): Flow<Boolean>
+
+    fun isEmergencyCallFirstTime(): Boolean
+    fun setEmergencyCallFirstTime(firstTime: Boolean)
 
     fun getEmergencyPhoneNumber(): String
     fun setEmergencyPhoneNumber(number: String)

@@ -42,6 +42,10 @@ class AppMonitoringSettingService : ProtectSettingService() {
                 return@launchCollect
             }
 
+            if (isTurningOn && !PermissionManager.requireAppMonitoringIntro()) {
+                return@launchCollect
+            }
+
             if (isTurningOn && !PermissionManager.requireUsageStatsPermission()) {
                 return@launchCollect
             }

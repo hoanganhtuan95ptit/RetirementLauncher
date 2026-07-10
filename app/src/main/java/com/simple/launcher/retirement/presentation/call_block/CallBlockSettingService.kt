@@ -40,8 +40,15 @@ class CallBlockSettingService : ProtectSettingService() {
                 return@launchCollect
             }
 
-            if (isTurningOn && !PermissionManager.requireCallBlockPermissions()) {
-                return@launchCollect
+            if (isTurningOn) {
+
+                if (!PermissionManager.requireCallBlockIntro()) {
+                    return@launchCollect
+                }
+
+                if (!PermissionManager.requireCallBlockPermissions()) {
+                    return@launchCollect
+                }
             }
 
             if (!isTurningOn && !PermissionManager.requirePinPermissions()) {

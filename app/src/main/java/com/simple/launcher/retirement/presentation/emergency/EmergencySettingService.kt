@@ -43,8 +43,15 @@ class EmergencySettingService : ProtectSettingService() {
                 return@launchCollect
             }
 
-            if (isTurningOn && !PermissionManager.requireCallPermission()) {
-                return@launchCollect
+            if (isTurningOn) {
+
+                if (!PermissionManager.requireEmergencyCallIntro()) {
+                    return@launchCollect
+                }
+
+                if (!PermissionManager.requireCallPermission()) {
+                    return@launchCollect
+                }
             }
 
             if (!isTurningOn && !PermissionManager.requirePinPermissions()) {

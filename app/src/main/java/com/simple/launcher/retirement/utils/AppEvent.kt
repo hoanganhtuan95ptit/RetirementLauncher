@@ -30,6 +30,23 @@ sealed class AppEvent {
     object PinSetupSuccess : PinResult()
     object PinVerifySuccess : PinResult()
 
+    // ── App Monitoring Intro ────────────────────────────────────────────────
+    sealed class AppMonitoringIntroResult : AppEvent()
+    object AppMonitoringIntroAccept : AppMonitoringIntroResult()
+    object AppMonitoringIntroCancel : AppMonitoringIntroResult()
+
+    sealed class EmergencyCallIntroResult : AppEvent()
+    object EmergencyCallIntroAccept : EmergencyCallIntroResult()
+    object EmergencyCallIntroCancel : EmergencyCallIntroResult()
+
+    sealed class FileCleanupIntroResult : AppEvent()
+    object FileCleanupIntroAccept : FileCleanupIntroResult()
+    object FileCleanupIntroCancel : FileCleanupIntroResult()
+
+    sealed class CallBlockIntroResult : AppEvent()
+    object CallBlockIntroAccept : CallBlockIntroResult()
+    object CallBlockIntroCancel : CallBlockIntroResult()
+
     // ── Chọn app trong danh sách ────────────────────────────────────────────
     data class AppSelected(val entity: SelectableAppEntity) : AppEvent()
 
