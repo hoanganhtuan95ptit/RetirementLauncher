@@ -1,78 +1,40 @@
-# Skill: Theme Color Management with ThemeColorStore
+# Skill: ThemeColorStore và `resources` color access
 
-## 1. Overview
-`ThemeColorStore` is a utility designed to dynamically retrieve and observe theme colors from Android's `R.attr`. It allows components (ViewModels, Adapters, Views) to access theme-defined colors easily and reactively without needing to manually resolve attributes from `Context` or `Resources` every time.
+## Mục tiêu
 
----
+Lấy màu theme đúng với code hiện tại, đặc biệt cho `SettingsViewModel` và các setting builders.
 
-## 2. How it Works
-1.  **Reflection Discovery**: It uses reflection to scan the app's `R.attr` class and identify all available theme attributes.
-2.  **Attribute Resolution**: It resolves the actual color values for these attributes using the provided `Context` theme.
-3.  **Centralized Storage**: Colors are stored in an internal map and exposed via a `StateFlow` for reactive updates.
-
----
-
-## 3. Implementation Steps
-
-### Step 1: Initialization
-`ThemeColorStore` must be initialized once, typically in `Application.onCreate()` or the entry `Activity.onCreate()`, to load the theme colors.
+## API gốc
 
 ```kotlin
-// In your Application or MainActivity
-ThemeColorStore.load(context)
-```
-
-### Step 2: Static Color Access
-You can retrieve colors directly using the attribute name or the resource ID.
-
-*   **Using Attribute ID (Type-safe):**
-    ```kotlin
-    val color = ThemeColorStore.getColor(R.attr.colorPrimary)
-    ```
-
-*   **Using Attribute Name (String):**
-    ```kotlin
-    val color = ThemeColorStore.getColor("colorAccent")
-    ```
-
-### Step 3: Reactive Usage in ViewModel
-To make the UI reactive to theme changes, observe the `colorMapFlow` (exposed as `themes` in `BaseViewModel`). Use the `getColor` extension for `Map` to access colors via resource IDs safely.
-
-```kotlin
-class HomeViewModel : BaseViewModel() {
-    val items = combine(strings, themes) { stringMap, themeMap ->
-        val textColor = themeMap.getColor(android.R.attr.textColorPrimary)
-        // Build your items here
-    }.stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
+object ThemeColorStore {
+    val colorMapFlow: StateFlow<Map<String, Int>>
+    fun load(context: Context)
 }
+
+fun Map<String, Int>.getColor(@AttrRes attrId: Int, defaultColor: Int = Color.BLACK): Int
+fun Context.getThemeColor(@AttrRes attrId: Int): Int
 ```
 
-### Step 4: Direct Context Extension
-If you have a `Context` and just need a one-off color resolution:
+## Pattern đang dùng thật trong repo
+
+Project hiện không hay gọi `themeMap.getColor(...)` trực tiếp ở tầng feature nữa. Thay vào đó, `BaseViewModel.resources` được gắn thêm các extension property:
+
 ```kotlin
-val color = context.getThemeColor(R.attr.colorSurface)
+val color = resources.textColorPrimary
+val bg = resources.colorBackground
+val stroke = resources.colorPrimary
+val iconTint = resources.colorOnPrimaryContainer
 ```
 
----
+Các extension này nằm ở `utils/exts/Color.kt`.
 
-## 4. API Reference
+## Khi nào dùng gì
 
-### `ThemeColorStore` Object
-*   **`fun load(context: Context)`**: Scans `R.attr` and populates the store with current theme colors.
-*   **`val colorMapFlow: StateFlow<Map<String, Int>>`**: A flow that emits the entire color map whenever `load()` is called.
+- Trong feature ViewModel: ưu tiên `resources.textColorPrimary`, `resources.colorBackground`, ...
+- Trong code framework hoặc util cấp thấp: có thể dùng `ThemeColorStore.colorMapFlow` hoặc `Context.getThemeColor(...)`.
 
-### Extensions
-*   **`Map<String, Int>.getColor(@AttrRes attrId: Int, @ColorInt defaultColor: Int = Color.BLACK): Int`**: **(Recommended)** Resolves color from the map using attribute ID. It handles both system (`android.R.attr`) and app attributes. Returns `defaultColor` if attribute is not found.
-*   **`Context.getThemeColor(@AttrRes attrId: Int): Int`**: Resolves a theme attribute to a color integer directly from the context.
+## Lưu ý
 
----
-
-## 5. Important Notes & Edge Cases
-*   **Call `load()` after Theme Changes**: If the app supports dynamic theme switching (e.g., Light/Dark mode or custom themes), you **must** call `ThemeColorStore.load(context)` again after the theme changes to refresh the stored values.
-*   **ProGuard/R8**: If using `getColor(String)`, ensure that the `R.attr` class is not obfuscated or stripped by ProGuard, as it relies on reflection:
-    ```proguard
-    -keepclassmembers class **.R$attr {
-        public static <fields>;
-    }
-    ```
-*   **Null Safety**: `getColor()` has a default value (default is `Color.BLACK`). You can override it by passing a second argument: `themeMap.getColor(R.attr.myAttr, Color.RED)`.
+- `ThemeColorStore.load(context)` phải được gọi lại nếu app đổi theme runtime.
+- `BaseViewModel.background` và `bottomSheet` đang build từ `themes`, nên màn hình thường không cần tự resolve lại các màu nền cơ bản.

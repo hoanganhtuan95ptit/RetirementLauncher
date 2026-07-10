@@ -1,169 +1,94 @@
-# Skill: Sử dụng ComponentService
+# Skill: ComponentService pattern của Home và Settings
 
-## Mục đích
+## Mục tiêu
 
-`ComponentService` là hệ thống **dependency injection theo lifecycle** — cho phép inject logic vào một Activity hoặc Fragment cụ thể (hoặc toàn bộ) mà **không cần sửa code của Activity/Fragment đó**. Mỗi service là một class độc lập, được đăng ký tự động qua `@AutoRegister` và được `ServiceInitializer` gọi đúng thời điểm lifecycle.
+Đây là kiến trúc rất quan trọng của repo hiện tại. `Home` và `Settings` đều được ghép từ nhiều service nhỏ thay vì dồn hết logic vào Fragment hoặc một ViewModel lớn.
 
-## Vị trí file
+## 1. Pattern thật của Home
 
-| File | Package |
-|---|---|
-| `ComponentService.kt` | `com.simple.launcher.retirement.utils.services` |
-| `ServiceInitializer.kt` | `com.simple.launcher.retirement.utils.services` |
-
-## Kiến trúc tổng quan
-
-```
-@AutoRegister(apis = [XxxService::class])
-class MyService : XxxService {
-    override fun setup(target) { /* logic */ }
-}
-```
-
-`ServiceInitializer` (chạy qua `androidx.startup`) lắng nghe lifecycle của Application, Activity và Fragment. Mỗi khi lifecycle tương ứng được trigger, nó tự động collect tất cả service đã đăng ký qua `AutoRegisterManager` và gọi `setup()` theo thứ tự `priority()`.
-
-## Danh sách interface có sẵn
-
-| Interface | Lifecycle callback tương ứng | Tham số `setup()` |
-|---|---|---|
-| `ApplicationService` | Application khởi động | `Application` |
-| `ActivityCreatedService` | `onActivityCreated` | `FragmentActivity` |
-| `ActivityStartedService` | `onActivityStarted` | `FragmentActivity` |
-| `ActivityResumedService` | `onActivityResumed` | `FragmentActivity` |
-| `FragmentAttachedService` | `onFragmentAttached` | `Fragment` |
-| `FragmentCreatedService` | `onFragmentCreated` | `Fragment` |
-| `FragmentViewCreatedService` | `onFragmentViewCreated` | `Fragment` |
-| `FragmentStartedService` | `onFragmentStarted` | `Fragment` |
-| `FragmentResumedService` | `onFragmentResumed` | `Fragment` |
-
-## Hai cách đăng ký với `@AutoRegister`
-
-### 1. Đăng ký toàn cục — chạy trên **mọi** Activity/Fragment
-
-Dùng khi muốn service chạy cho tất cả Activity hoặc Fragment thuộc loại đó.
+`HomeService` là base class:
 
 ```kotlin
-// Chạy mỗi khi BẤT KỲ FragmentActivity nào được tạo
-@AutoRegister(apis = [ActivityCreatedService::class])
-class TrackingMainService : ActivityCreatedService {
-    override fun setup(fragmentActivity: FragmentActivity) {
-        // logic chạy trên mọi activity
-    }
+abstract class HomeService : FragmentViewCreatedService {
+    protected lateinit var homeViewModel: HomeViewModel
+    abstract fun setup(homeFragment: HomeFragment)
 }
 ```
 
-### 2. Đăng ký theo target cụ thể — chỉ chạy trên **một** Activity/Fragment nhất định
+Service con:
 
-Dùng khi muốn service chỉ chạy cho một màn hình cụ thể.
+- lấy ViewModel nhóm bằng `homeFragment.viewModels<...>().value`
+- collect flow nhóm
+- gọi `homeViewModel.updateItem(groupViewItem)`
 
-```kotlin
-// Chỉ chạy khi MainActivity được tạo
-@AutoRegister(apis = [MainActivity::class])
-class PocketModeMainService : ActivityCreatedService {
-    override fun setup(fragmentActivity: FragmentActivity) {
-        // logic chỉ dành cho MainActivity
-    }
-}
-
-// Chỉ chạy khi SettingsFragment được tạo
-@AutoRegister(apis = [SettingsFragment::class])
-class CallBlockSettingService : FragmentCreatedService {
-    override fun setup(fragment: Fragment) {
-        // logic chỉ dành cho SettingsFragment
-    }
-}
-```
-
-> **Lưu ý:** Khi `apis` là một Activity/Fragment class (không phải interface), `ServiceInitializer` dùng `AutoRegisterManager.subscribe(componentCallbacks.javaClass.name, api)` để match đúng target.
-
-## Ví dụ đầy đủ — Service inject vào Fragment
+Ví dụ:
 
 ```kotlin
-@AutoRegister(apis = [SettingsFragment::class])
-class CallBlockSettingService : FragmentCreatedService {
-
-    private lateinit var settingsViewModel: SettingsViewModel
-    private lateinit var callBlockViewModel: CallBlockSettingViewModel
-
-    override fun setup(fragment: Fragment) {
-        settingsViewModel = fragment.viewModels<SettingsViewModel>().value
-        callBlockViewModel = fragment.viewModels<CallBlockSettingViewModel>().value
-
-        // Dùng launchCollect để observe Flow theo lifecycle của fragment
-        callBlockViewModel.items.launchCollect(fragment) { items ->
-            settingsViewModel.updateItem(SettingItem.ORDER_TOGGLE_CALL_BLOCK, items)
+@AutoRegister([HomeFragment::class])
+class AppHomeService : HomeService() {
+    override fun setup(homeFragment: HomeFragment) {
+        val viewModel = homeFragment.viewModels<AppViewModel>().value
+        viewModel.appViewItemList.filterNotNull().launchCollect(homeFragment.viewLifecycleOwner) {
+            homeViewModel.updateItem(it)
         }
     }
 }
 ```
 
-## Ví dụ đầy đủ — Service inject vào Activity
+## 2. Pattern thật của Settings
+
+`SettingService` là base class:
 
 ```kotlin
-@AutoRegister(apis = [MainActivity::class])
-class PocketModeMainService : ActivityCreatedService {
-
-    override fun setup(fragmentActivity: FragmentActivity) {
-        val sensorManager = fragmentActivity.getSystemService(Context.SENSOR_SERVICE) as SensorManager
-
-        // Gắn lifecycle observer để register/unregister sensor đúng lúc
-        fragmentActivity.lifecycle.addObserver(object : DefaultLifecycleObserver {
-            override fun onResume(owner: LifecycleOwner) { /* register */ }
-            override fun onPause(owner: LifecycleOwner)  { /* unregister */ }
-        })
-    }
+abstract class SettingService : FragmentViewCreatedService {
+    protected lateinit var settingsViewModel: SettingsViewModel
+    abstract fun setup(settingsFragment: SettingsFragment)
 }
 ```
 
-## Priority — kiểm soát thứ tự thực thi
+Service con hiện đang active:
 
-Nếu nhiều service cùng target, override `priority()` để chạy theo thứ tự mong muốn (số nhỏ hơn chạy trước).
+- `CommonSettingService`
+- `ProtectSettingService`
+- `AppMonitoringSettingService`
 
-```kotlin
-@AutoRegister(apis = [ActivityCreatedService::class])
-class EarlyInitService : ActivityCreatedService {
-    override fun priority() = -10  // chạy trước
-    override fun setup(fragmentActivity: FragmentActivity) { /* ... */ }
-}
+Pattern:
 
-@AutoRegister(apis = [ActivityCreatedService::class])
-class LateInitService : ActivityCreatedService {
-    override fun priority() = 10   // chạy sau
-    override fun setup(fragmentActivity: FragmentActivity) { /* ... */ }
-}
-```
+- ViewModel nhóm build `GroupViewItem`
+- service collect
+- service đẩy vào `settingsViewModel.updateItem(...)`
 
-## launchCollect — collect Flow theo lifecycle
+## 3. Helper builder cho Settings
 
-`launchCollect` là extension function nội bộ trong package `services`, dùng để collect Flow gắn với lifecycle của target:
+`SettingService.kt` hiện còn chứa helper dùng chung:
 
-```kotlin
-import com.simple.launcher.retirement.utils.services.launchCollect
+- `settingItem(...)`
+- `settingHeader(...)`
 
-someFlow.launchCollect(fragment) { value ->
-    // tự động hủy khi fragment destroy
-}
-```
+Khi thêm setting mới cho group hiện tại, ưu tiên tái dùng các helper này để giữ style đồng nhất.
 
-## Import cần thiết
+## 4. Lifecycle nên dùng khi collect
 
-```kotlin
-import com.simple.auto.register.AutoRegister
-import com.simple.launcher.retirement.utils.services.ApplicationService
-import com.simple.launcher.retirement.utils.services.ActivityCreatedService
-import com.simple.launcher.retirement.utils.services.ActivityStartedService
-import com.simple.launcher.retirement.utils.services.ActivityResumedService
-import com.simple.launcher.retirement.utils.services.FragmentAttachedService
-import com.simple.launcher.retirement.utils.services.FragmentCreatedService
-import com.simple.launcher.retirement.utils.services.FragmentViewCreatedService
-import com.simple.launcher.retirement.utils.services.FragmentStartedService
-import com.simple.launcher.retirement.utils.services.FragmentResumedService
-import com.simple.launcher.retirement.utils.services.launchCollect
-```
+Code hiện tại dùng cả hai:
 
-## Lưu ý quan trọng
+- `launchCollect(settingsFragment.viewLifecycleOwner)`
+- `launchCollect(settingsFragment)`
 
-- **Không inject logic trực tiếp vào Activity/Fragment** khi có thể tách ra thành service — giúp code dễ test và mở rộng.
-- **Service phải stateless hoặc quản lý state cẩn thận**: `setup()` có thể được gọi nhiều lần (mỗi lần lifecycle trigger).
-- **Dùng `fragment.viewModels<>()` để lấy ViewModel** trong Fragment service — ViewModel sẽ được share đúng scope.
-- **Không lưu reference dài hạn** tới `FragmentActivity` hoặc `Fragment` trong service để tránh memory leak. Dùng `launchCollect` hoặc `lifecycle.addObserver` để tự động dọn dẹp.
+Ưu tiên `viewLifecycleOwner` khi flow chỉ liên quan tới view/list render.
+
+## 5. Legacy services
+
+Một số service cũ đã bị tắt `@AutoRegister`, ví dụ:
+
+- `CallBlockSettingService`
+- `FileCleanupSettingService`
+- `PocketModeSettingService`
+- `OptimizationSettingService`
+
+Khi cập nhật tính năng, kiểm tra xem service đó đang active hay chỉ còn làm tài liệu tham khảo.
+
+## 6. Rule cần giữ
+
+- Service chịu trách nhiệm ghép section vào màn cha.
+- ViewModel nhóm không tự gọi sang ViewModel cha.
+- Fragment không nên tự manual compose từng section nếu đã có service pattern.
