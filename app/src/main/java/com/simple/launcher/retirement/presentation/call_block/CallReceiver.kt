@@ -1,10 +1,8 @@
 package com.simple.launcher.retirement.presentation.call_block
 
-import android.Manifest
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.database.Cursor
 import android.net.Uri
 import android.os.Build
@@ -12,9 +10,9 @@ import android.provider.ContactsContract
 import android.telecom.TelecomManager
 import android.telephony.TelephonyManager
 import android.util.Log
-import androidx.core.content.ContextCompat
 import com.simple.launcher.retirement.BuildConfig
 import com.simple.launcher.retirement.domain.repository.PreferenceRepository
+import com.simple.launcher.retirement.utils.permission.PermissionManager
 
 class CallReceiver : BroadcastReceiver() {
 
@@ -39,7 +37,7 @@ class CallReceiver : BroadcastReceiver() {
     private fun isNumberInContacts(context: Context, number: String): Boolean {
 
         // Thiếu quyền đọc contact thì ưu tiên fail-open để tránh chặn nhầm cuộc gọi thật.
-        if (!hasReadContactsPermission(context)) return true
+        if (!PermissionManager.hasContactPermission()) return true
 
         val uri = Uri.withAppendedPath(
             ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
@@ -65,7 +63,7 @@ class CallReceiver : BroadcastReceiver() {
     private fun blockCall(context: Context) {
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) return
-        if (!hasAnswerPhoneCallsPermission(context)) return
+        if (!PermissionManager.hasAnswerPhoneCallsPermission()) return
 
         val telecomManager = context.getSystemService(Context.TELECOM_SERVICE) as TelecomManager
         try {
@@ -84,23 +82,9 @@ class CallReceiver : BroadcastReceiver() {
         val state = intent.getStringExtra(TelephonyManager.EXTRA_STATE)
         if (state != TelephonyManager.EXTRA_STATE_RINGING) return null
 
+        // Từ Android 9 (API 28), EXTRA_INCOMING_NUMBER yêu cầu quyền READ_CALL_LOG.
+        // Nếu không có quyền này, intent.getStringExtra sẽ trả về null.
         return intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER)
-    }
-
-    private fun hasReadContactsPermission(context: Context): Boolean {
-
-        return ContextCompat.checkSelfPermission(
-            context,
-            Manifest.permission.READ_CONTACTS
-        ) == PackageManager.PERMISSION_GRANTED
-    }
-
-    private fun hasAnswerPhoneCallsPermission(context: Context): Boolean {
-
-        return ContextCompat.checkSelfPermission(
-            context,
-            Manifest.permission.ANSWER_PHONE_CALLS
-        ) == PackageManager.PERMISSION_GRANTED
     }
 
     private fun logDebug(message: String) {

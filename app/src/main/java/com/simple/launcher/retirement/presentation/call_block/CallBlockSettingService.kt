@@ -31,6 +31,7 @@ class CallBlockSettingService : ProtectSettingService() {
             protectSettingViewModel.updateItem(it)
         }
 
+
         AppEventBus.events.filterIsInstance<AppEvent.SettingClicked>().launchCollect(settingsFragment.viewLifecycleOwner) { event ->
 
             val item = event.item
@@ -40,15 +41,16 @@ class CallBlockSettingService : ProtectSettingService() {
                 return@launchCollect
             }
 
-            if (isTurningOn) {
+            if (isTurningOn && !PermissionManager.requireCallBlockIntro()) {
+                return@launchCollect
+            }
 
-                if (!PermissionManager.requireCallBlockIntro()) {
-                    return@launchCollect
-                }
+            if (isTurningOn && !PermissionManager.requireCallBlockPermissions()) {
+                return@launchCollect
+            }
 
-                if (!PermissionManager.requireCallBlockPermissions()) {
-                    return@launchCollect
-                }
+            if (isTurningOn && !PermissionManager.requireCallBlockPermissions()) {
+                return@launchCollect
             }
 
             if (!isTurningOn && !PermissionManager.requirePinPermissions()) {

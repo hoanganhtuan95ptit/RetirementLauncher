@@ -59,6 +59,9 @@ object PermissionManager {
             Manifest.permission.READ_PHONE_STATE,
             Manifest.permission.READ_CONTACTS
         )
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            permissions.add(Manifest.permission.READ_CALL_LOG)
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             permissions.add(Manifest.permission.ANSWER_PHONE_CALLS)
         }
@@ -79,6 +82,11 @@ object PermissionManager {
 
     fun hasContactPermission(): Boolean {
         return ContextCompat.checkSelfPermission(context, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED
+    }
+
+    fun hasAnswerPhoneCallsPermission(): Boolean {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return false
+        return ContextCompat.checkSelfPermission(context, Manifest.permission.ANSWER_PHONE_CALLS) == PackageManager.PERMISSION_GRANTED
     }
 
     fun hasPinPermission(): Boolean {
