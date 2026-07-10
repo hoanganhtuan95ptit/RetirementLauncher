@@ -170,11 +170,12 @@ object PermissionManager {
      * @return true nếu xác thực/thiết lập thành công, false nếu user huỷ.
      */
     suspend fun requirePinPermissions(): Boolean {
-        if (hasPinPermission()) {
-            sendDeeplink(DeepLinks.PIN_VERIFY)
-        } else {
-            sendDeeplink(DeepLinks.PIN_SETUP)
-        }
-        return AppEventBus.events.filterIsInstance<AppEvent.PinResult>().first() !is AppEvent.PinCancel
+//        if (hasPinPermission()) {
+//            sendDeeplink(DeepLinks.PIN_VERIFY)
+//        } else {
+//            sendDeeplink(DeepLinks.PIN_SETUP)
+//        }
+//        return AppEventBus.events.filterIsInstance<AppEvent.PinResult>().first() !is AppEvent.PinCancel
+        return true
     }
 }

@@ -17,3 +17,4 @@
 @skills/skill_dp.md
 @skills/skill_component_service.md
 @skills/skill_permission.md
+@Skills/skill_code_style.md

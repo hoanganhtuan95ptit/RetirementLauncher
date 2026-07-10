@@ -32,16 +32,16 @@ class ProtectSettingViewModel : BaseViewModel() {
         isEmergencyCallEnabled: Boolean
     ): GroupViewItem {
 
-        val items = buildList {
-
-            settingHeader(
-                title = R.string.setting_header_security,
-                resources = resources
-            ).let {
-
-                add(it)
-            }
-
+//        val items = buildList {
+//
+//            settingHeader(
+//                title = R.string.setting_header_security,
+//                resources = resources
+//            ).let {
+//
+//                add(it)
+//            }
+//
 //            settingItem(
 //                id = SettingItem.ID_EMERGENCY_CALL_TOGGLE,
 //                icon = R.drawable.ic_sos_black_24dp,
@@ -53,18 +53,9 @@ class ProtectSettingViewModel : BaseViewModel() {
 //
 //                add(it)
 //            }
+//
+//        }
 
-            if (hasPin) settingItem(
-                id = SettingItem.ID_PIN,
-                icon = R.drawable.ic_pin_black_24dp,
-                title = R.string.setting_pin,
-                resources = resources
-            ).let {
-
-                add(it)
-            }
-        }
-
-        return GroupViewItem(order = 1, list = items)
+        return GroupViewItem(order = 1, list = emptyList())
     }
 }

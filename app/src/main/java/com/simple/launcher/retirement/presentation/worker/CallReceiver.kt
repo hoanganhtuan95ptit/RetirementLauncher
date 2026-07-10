@@ -13,68 +13,100 @@ import android.telecom.TelecomManager
 import android.telephony.TelephonyManager
 import android.util.Log
 import androidx.core.content.ContextCompat
+import com.simple.launcher.retirement.BuildConfig
 import com.simple.launcher.retirement.domain.repository.PreferenceRepository
 
 class CallReceiver : BroadcastReceiver() {
 
-    private val TAG = "CallReceiver"
-
     override fun onReceive(context: Context, intent: Intent) {
+
         if (intent.action != TelephonyManager.ACTION_PHONE_STATE_CHANGED) return
 
         val repository = PreferenceRepository.instance
         if (!repository.isCallBlockEnabled()) return
 
-        val state = intent.getStringExtra(TelephonyManager.EXTRA_STATE)
-        val incomingNumber = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER)
+        val incomingNumber = getIncomingNumber(intent) ?: return
+        logDebug("Incoming call from: $incomingNumber")
 
-        if (state == TelephonyManager.EXTRA_STATE_RINGING && incomingNumber != null) {
-            Log.d(TAG, "Incoming call from: $incomingNumber")
-            if (!isNumberInContacts(context, incomingNumber)) {
-                Log.d(TAG, "Number not in contacts, blocking...")
-                blockCall(context)
-            }
-        }
+        if (isNumberInContacts(context, incomingNumber)) return
+
+        logDebug("Number not in contacts, blocking...")
+        blockCall(context)
     }
 
     private fun isNumberInContacts(context: Context, number: String): Boolean {
-        if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_CONTACTS) 
-            != PackageManager.PERMISSION_GRANTED) {
-            return true // Không có quyền thì coi như cho phép để an toàn
-        }
+
+        if (!hasReadContactsPermission(context)) return true
 
         val uri = Uri.withAppendedPath(
             ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
             Uri.encode(number)
         )
         val projection = arrayOf(ContactsContract.PhoneLookup.DISPLAY_NAME)
-        
+
         var cursor: Cursor? = null
         try {
+
             cursor = context.contentResolver.query(uri, projection, null, null, null)
-            if (cursor != null && cursor.count > 0) {
-                return true
-            }
-        } catch (e: Exception) {
-            Log.e(TAG, "Error checking contacts: ${e.message}")
+            return cursor?.count?.let { it > 0 } == true
+        } catch (exception: Exception) {
+            Log.e(TAG, "Error checking contacts", exception)
         } finally {
+
             cursor?.close()
         }
+
         return false
     }
 
     private fun blockCall(context: Context) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            val telecomManager = context.getSystemService(Context.TELECOM_SERVICE) as TelecomManager
-            if (ContextCompat.checkSelfPermission(context, Manifest.permission.ANSWER_PHONE_CALLS) 
-                == PackageManager.PERMISSION_GRANTED) {
-                try {
-                    telecomManager.endCall()
-                    Log.d(TAG, "Call ended successfully via TelecomManager")
-                } catch (e: Exception) {
-                    Log.e(TAG, "Error ending call: ${e.message}")
-                }
-            }
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) return
+        if (!hasAnswerPhoneCallsPermission(context)) return
+
+        val telecomManager = context.getSystemService(Context.TELECOM_SERVICE) as TelecomManager
+        try {
+
+            telecomManager.endCall()
+            logDebug("Call ended successfully via TelecomManager")
+        } catch (securityException: SecurityException) {
+            Log.e(TAG, "Missing permission to end call", securityException)
+        } catch (exception: Exception) {
+            Log.e(TAG, "Error ending call", exception)
         }
+    }
+
+    private fun getIncomingNumber(intent: Intent): String? {
+
+        val state = intent.getStringExtra(TelephonyManager.EXTRA_STATE)
+        if (state != TelephonyManager.EXTRA_STATE_RINGING) return null
+
+        return intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER)
+    }
+
+    private fun hasReadContactsPermission(context: Context): Boolean {
+
+        return ContextCompat.checkSelfPermission(
+            context,
+            Manifest.permission.READ_CONTACTS
+        ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun hasAnswerPhoneCallsPermission(context: Context): Boolean {
+
+        return ContextCompat.checkSelfPermission(
+            context,
+            Manifest.permission.ANSWER_PHONE_CALLS
+        ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun logDebug(message: String) {
+
+        if (BuildConfig.DEBUG) Log.d(TAG, message)
+    }
+
+    companion object {
+
+        private const val TAG = "CallReceiver"
     }
 }

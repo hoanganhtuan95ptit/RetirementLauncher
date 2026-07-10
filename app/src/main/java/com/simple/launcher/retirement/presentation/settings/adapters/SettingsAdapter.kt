@@ -92,7 +92,7 @@ class SettingsAdapter : ViewItemAdapter<SettingItem, ItemSettingBinding>() {
 
         viewHolder.binding.swSetting.disableUserChange()
 
-        viewHolder.binding.root.setOnSafeClickListener {
+        viewHolder.binding.vClick.setOnSafeClickListener {
 
             val item = viewHolder.getItem<SettingItem>() ?: return@setOnSafeClickListener
             AppEventBus.post(AppEvent.SettingClicked(item))
@@ -125,7 +125,7 @@ class SettingsAdapter : ViewItemAdapter<SettingItem, ItemSettingBinding>() {
         }
 
         if (payloads.isEmpty() || payloads.contains("background")) {
-            binding.root.setBackground(item.background)
+            binding.content.setBackground(item.background)
         }
     }
 
