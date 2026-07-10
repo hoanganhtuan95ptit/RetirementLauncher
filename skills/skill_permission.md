@@ -30,10 +30,21 @@ Các hàm require hiện có:
 
 ```kotlin
 if (hasXxxPermission()) return true
-sendDeeplink(DeepLinks.PERMISSION_XXX)
-val result = AppEventBus.events.filterIsInstance<AppEvent.PermissionResult>().first()
-return result is AppEvent.PermissionAccept
+return awaitPermissionResult(DeepLinks.PERMISSION_XXX)
 ```
+
+Helper `awaitPermissionResult` / `awaitEventAfterDeeplink` subscribe vào `AppEventBus`
+TRƯỚC rồi mới gửi deeplink (qua `onSubscription`):
+
+```kotlin
+AppEventBus.events
+    .onSubscription { sendDeeplink(deeplink) }
+    .filterIsInstance<T>()
+    .first()
+```
+
+Không được gửi deeplink trước rồi mới subscribe — nếu bottom sheet trả kết quả quá nhanh
+sẽ lỡ event và coroutine treo vĩnh viễn ở `first()`.
 
 PIN là ngoại lệ:
 

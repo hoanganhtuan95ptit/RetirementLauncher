@@ -17,8 +17,10 @@ import com.simple.launcher.retirement.domain.repository.PreferenceRepository
 import com.simple.launcher.retirement.presentation.DeepLinks
 import com.simple.launcher.retirement.utils.AppEvent
 import com.simple.launcher.retirement.utils.AppEventBus
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.onSubscription
 
 object PermissionManager {
 
@@ -49,8 +51,18 @@ object PermissionManager {
     }
 
     fun hasCallBlockPermissions(): Boolean {
-        return getCallBlockPermissions().all {
+        val hasRuntimePermissions = getCallBlockPermissions().all {
             ContextCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED
+        }
+        return hasRuntimePermissions && hasCallScreeningRole()
+    }
+
+    fun hasCallScreeningRole(): Boolean {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            val roleManager = context.getSystemService(Context.ROLE_SERVICE) as RoleManager
+            roleManager.isRoleHeld(RoleManager.ROLE_CALL_SCREENING)
+        } else {
+            true
         }
     }
 
@@ -99,18 +111,36 @@ object PermissionManager {
 
 
     /**
+     * Gửi deeplink mở bottom sheet và chờ event kết quả từ AppEventBus.
+     *
+     * Quan trọng: subscribe vào AppEventBus TRƯỚC rồi mới gửi deeplink (qua onSubscription)
+     * để không bao giờ bỏ lỡ event nếu bottom sheet trả kết quả quá nhanh.
+     * Nếu gửi deeplink trước rồi mới subscribe, coroutine có thể treo vĩnh viễn ở first().
+     */
+    private suspend inline fun <reified T : AppEvent> awaitEventAfterDeeplink(deeplink: String): T {
+
+        return AppEventBus.events
+            .onSubscription { sendDeeplink(deeplink) }
+            .filterIsInstance<T>()
+            .first()
+    }
+
+    private suspend fun awaitPermissionResult(deeplink: String): Boolean {
+
+        val result = awaitEventAfterDeeplink<AppEvent.PermissionResult>(deeplink)
+        return result is AppEvent.PermissionAccept
+    }
+
+    /**
      * Yêu cầu quyền Usage Stats.
      * - Nếu đã có quyền: trả về true ngay.
      * - Nếu chưa: mở bottom sheet xin quyền, chờ kết quả từ AppEventBus.
      * @return true nếu đã có hoặc vừa được cấp quyền, false nếu user huỷ.
      */
     suspend fun requireUsageStatsPermission(): Boolean {
+
         if (hasUsageStatsPermission()) return true
-        sendDeeplink(DeepLinks.PERMISSION_USAGE_STATS)
-        val result = AppEventBus.events
-            .filterIsInstance<AppEvent.PermissionResult>()
-            .first()
-        return result is AppEvent.PermissionAccept
+        return awaitPermissionResult(DeepLinks.PERMISSION_USAGE_STATS)
     }
 
     /**
@@ -120,12 +150,9 @@ object PermissionManager {
      * @return true nếu đã có hoặc vừa được cấp quyền, false nếu user huỷ.
      */
     suspend fun requireFilePermission(): Boolean {
+
         if (hasFilePermission()) return true
-        sendDeeplink(DeepLinks.PERMISSION_FILE)
-        val result = AppEventBus.events
-            .filterIsInstance<AppEvent.PermissionResult>()
-            .first()
-        return result is AppEvent.PermissionAccept
+        return awaitPermissionResult(DeepLinks.PERMISSION_FILE)
     }
 
     /**
@@ -135,12 +162,9 @@ object PermissionManager {
      * @return true nếu đã có hoặc vừa được cấp quyền, false nếu user huỷ.
      */
     suspend fun requireOverlayPermission(): Boolean {
+
         if (hasOverlayPermission()) return true
-        sendDeeplink(DeepLinks.PERMISSION_OVERLAY)
-        val result = AppEventBus.events
-            .filterIsInstance<AppEvent.PermissionResult>()
-            .first()
-        return result is AppEvent.PermissionAccept
+        return awaitPermissionResult(DeepLinks.PERMISSION_OVERLAY)
     }
 
     /**
@@ -150,36 +174,27 @@ object PermissionManager {
      * @return true nếu đã là hoặc vừa được đặt làm default, false nếu user huỷ.
      */
     suspend fun requireDefaultLauncher(): Boolean {
+
         if (isDefaultLauncher()) return true
-        sendDeeplink(DeepLinks.PERMISSION_DEFAULT_LAUNCHER)
-        val result = AppEventBus.events
-            .filterIsInstance<AppEvent.PermissionResult>()
-            .first()
-        return result is AppEvent.PermissionAccept
+        return awaitPermissionResult(DeepLinks.PERMISSION_DEFAULT_LAUNCHER)
     }
 
     suspend fun requireCallPermission(): Boolean {
+
         if (hasCallPermission()) return true
-        sendDeeplink(DeepLinks.PERMISSION_CALL)
-        val result = AppEventBus.events
-            .filterIsInstance<AppEvent.PermissionResult>()
-            .first()
-        return result is AppEvent.PermissionAccept
+        return awaitPermissionResult(DeepLinks.PERMISSION_CALL)
     }
 
     /**
-     * Yêu cầu quyền chặn cuộc gọi.
-     * - Nếu đã có quyền: trả về true ngay.
+     * Yêu cầu quyền chặn cuộc gọi (runtime permissions + role CALL_SCREENING).
+     * - Nếu đã có đủ: trả về true ngay.
      * - Nếu chưa: mở bottom sheet xin quyền, chờ kết quả từ AppEventBus.
      * @return true nếu đã có hoặc vừa được cấp quyền, false nếu user huỷ.
      */
     suspend fun requireCallBlockPermissions(): Boolean {
+
         if (hasCallBlockPermissions()) return true
-        sendDeeplink(DeepLinks.PERMISSION_CALL_BLOCK)
-        val result = AppEventBus.events
-            .filterIsInstance<AppEvent.PermissionResult>()
-            .first()
-        return result is AppEvent.PermissionAccept
+        return awaitPermissionResult(DeepLinks.PERMISSION_CALL_BLOCK)
     }
 
     /**

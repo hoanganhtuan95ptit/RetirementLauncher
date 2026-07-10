@@ -1,8 +1,8 @@
 package com.simple.launcher.retirement.utils
 
 import kotlinx.coroutines.channels.BufferOverflow
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 
 /**
  * Generic event bus base class.
@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 open class EventBus<T> {
 
     private val _events = MutableSharedFlow<T>(replay = 0, extraBufferCapacity = Int.MAX_VALUE, onBufferOverflow = BufferOverflow.SUSPEND)
-    val events: Flow<T> = _events
+    val events: SharedFlow<T> = _events
 
     fun post(item: T) {
         _events.tryEmit(item)

@@ -18,6 +18,7 @@ class CallReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) return
         if (intent.action != TelephonyManager.ACTION_PHONE_STATE_CHANGED) return
         logDebug("action call")
 
@@ -77,6 +78,7 @@ class CallReceiver : BroadcastReceiver() {
         }
     }
 
+    @Suppress("DEPRECATION")
     private fun getIncomingNumber(intent: Intent): String? {
 
         val state = intent.getStringExtra(TelephonyManager.EXTRA_STATE)
@@ -84,6 +86,7 @@ class CallReceiver : BroadcastReceiver() {
 
         // Từ Android 9 (API 28), EXTRA_INCOMING_NUMBER yêu cầu quyền READ_CALL_LOG.
         // Nếu không có quyền này, intent.getStringExtra sẽ trả về null.
+        // Từ API 29+, hằng số này bị deprecated và được thay thế bằng CallScreeningService.
         return intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER)
     }
 
