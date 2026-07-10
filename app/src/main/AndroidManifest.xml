@@ -78,7 +78,7 @@
             android:foregroundServiceType="dataSync" />
 
         <receiver
-            android:name=".presentation.worker.CallReceiver"
+            android:name=".presentation.services.worker.CallReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>

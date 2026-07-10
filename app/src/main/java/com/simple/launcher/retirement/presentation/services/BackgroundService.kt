@@ -1,4 +1,4 @@
-package com.simple.launcher.retirement.presentation.worker
+package com.simple.launcher.retirement.presentation.services
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -10,32 +10,59 @@ import android.os.IBinder
 import androidx.core.app.NotificationCompat
 import com.simple.component.service.launchCollect
 import com.simple.launcher.retirement.R
+import com.simple.launcher.retirement.presentation.services.worker.AppMonitoringWorker
+import com.simple.launcher.retirement.presentation.services.worker.BackgroundWorker
+import com.simple.launcher.retirement.presentation.services.worker.EmergencyCallWorker
+import com.simple.launcher.retirement.presentation.services.worker.FileWatcherWorker
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.combine
+import kotlin.collections.plusAssign
 
 class BackgroundService : Service() {
 
-    private val workers = mutableListOf<BackgroundWorker>()
+    private val workers: List<BackgroundWorker> by lazy {
+
+        listOf(
+            AppMonitoringWorker(this),
+            FileWatcherWorker(this),
+            EmergencyCallWorker(this)
+        )
+    }
     private val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
     override fun onCreate() {
+
         super.onCreate()
-        createNotificationChannel()
-        // Phải gọi startForeground() ngay trong onCreate() để tránh ForegroundServiceDidNotStartInTimeException.
-        // onStartCommand() có thể đến sau vài ms — nếu workers khởi tạo chậm thì đã quá 5 giây.
-        startForeground(NOTIFICATION_ID, buildNotification())
+        startAsForegroundService()
+        attachWorkers()
+        observeWorkerStates()
+    }
 
-        workers += AppMonitoringWorker(this)
-        workers += FileWatcherWorker(this)
-        workers += EmergencyCallWorker(this)
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
-        // Mỗi worker tự lắng nghe config và on/off tương ứng
+        startAsForegroundService()
+        return START_STICKY
+    }
+
+    override fun onDestroy() {
+
+        workers.forEach { it.detach() }
+        serviceScope.cancel()
+        super.onDestroy()
+    }
+
+    override fun onBind(intent: Intent?): IBinder? = null
+
+    private fun attachWorkers() {
+
         workers.forEach { it.attach(serviceScope) }
+    }
 
-        // Tự dừng service khi tất cả worker đều tắt
+    private fun observeWorkerStates() {
+
         combine(workers.map { it.observeEnabled() }) { states ->
 
             states.any { it }
@@ -45,30 +72,27 @@ class BackgroundService : Service() {
         }
     }
 
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        // Phải gọi startForeground() ngay để tránh crash BackgroundServiceStartNotAllowedException trên API 26+
+    private fun startAsForegroundService() {
+
+        createNotificationChannel()
         startForeground(NOTIFICATION_ID, buildNotification())
-        return START_STICKY
     }
-
-    override fun onDestroy() {
-        workers.forEach { it.detach() }
-        serviceScope.cancel()
-        super.onDestroy()
-    }
-
-    override fun onBind(intent: Intent?): IBinder? = null
 
     private fun createNotificationChannel() {
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(CHANNEL_ID, "Background Service", NotificationManager.IMPORTANCE_MIN).apply {
-                setShowBadge(false)
-                description = "Background monitoring service"
-            }
-            val nm = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            nm.createNotificationChannel(channel)
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return
+
+        val channel = NotificationChannel(
+            CHANNEL_ID,
+            CHANNEL_NAME,
+            NotificationManager.IMPORTANCE_MIN
+        ).apply {
+
+            setShowBadge(false)
+            description = CHANNEL_DESCRIPTION
         }
+        val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.createNotificationChannel(channel)
     }
 
     private fun buildNotification() = NotificationCompat.Builder(this, CHANNEL_ID)
@@ -80,19 +104,26 @@ class BackgroundService : Service() {
         .build()
 
     companion object {
+
         private const val CHANNEL_ID = "background_service_channel"
+        private const val CHANNEL_NAME = "Background Service"
+        private const val CHANNEL_DESCRIPTION = "Background monitoring service"
         private const val NOTIFICATION_ID = 1001
 
         fun start(context: Context) {
+
             val intent = Intent(context, BackgroundService::class.java)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
                 context.startForegroundService(intent)
             } else {
+
                 context.startService(intent)
             }
         }
 
         fun stop(context: Context) {
+
             val intent = Intent(context, BackgroundService::class.java)
             context.stopService(intent)
         }

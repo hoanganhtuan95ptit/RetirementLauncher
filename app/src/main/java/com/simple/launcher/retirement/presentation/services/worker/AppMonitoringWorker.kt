@@ -1,4 +1,4 @@
-package com.simple.launcher.retirement.presentation.worker
+package com.simple.launcher.retirement.presentation.services.worker
 
 import android.app.usage.UsageEvents
 import android.app.usage.UsageStatsManager

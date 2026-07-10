@@ -1,10 +1,13 @@
-package com.simple.launcher.retirement.presentation.worker
+package com.simple.launcher.retirement.presentation.services.worker
 
+import android.Manifest
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.telecom.TelecomManager
@@ -12,6 +15,7 @@ import android.telephony.TelephonyManager
 import android.util.Log
 import androidx.core.content.ContextCompat
 import com.simple.launcher.retirement.BuildConfig
+import com.simple.launcher.retirement.domain.repository.ContactRepository
 import com.simple.launcher.retirement.domain.repository.PreferenceRepository
 import kotlinx.coroutines.flow.Flow
 
@@ -48,7 +52,7 @@ class EmergencyCallWorker(context: Context) : BackgroundWorker(context) {
             addAction(Intent.ACTION_USER_PRESENT)
             addAction(Intent.ACTION_SCREEN_OFF)
         }
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             context.registerReceiver(activityReceiver, filter, Context.RECEIVER_NOT_EXPORTED)
         } else {
             context.registerReceiver(activityReceiver, filter)
@@ -78,7 +82,7 @@ class EmergencyCallWorker(context: Context) : BackgroundWorker(context) {
             // Nếu vừa gọi trong vòng 10 phút thì chưa gọi tiếp để tránh spam
             if (currentTime - lastCallTime < 10 * 60 * 1000L) return
 
-            val contacts = com.simple.launcher.retirement.domain.repository.ContactRepository.instance.getSelectedContacts()
+            val contacts = ContactRepository.instance.getSelectedContacts()
             if (contacts.isEmpty()) return
 
             var nextIndex = repository.getLastEmergencyIndex() + 1
@@ -118,7 +122,7 @@ class EmergencyCallWorker(context: Context) : BackgroundWorker(context) {
         return try {
             val uri = Uri.fromParts("tel", phoneNumber, null)
             
-            if (ContextCompat.checkSelfPermission(context, android.Manifest.permission.CALL_PHONE) == android.content.pm.PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
                 telecomManager.placeCall(uri, null)
                 // Chúng ta không biết chắc họ có nghe máy không, nhưng lệnh gọi đã được gửi đi thành công
                 true

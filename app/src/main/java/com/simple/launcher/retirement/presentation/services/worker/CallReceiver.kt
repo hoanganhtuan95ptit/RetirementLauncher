@@ -1,4 +1,4 @@
-package com.simple.launcher.retirement.presentation.worker
+package com.simple.launcher.retirement.presentation.services.worker
 
 import android.Manifest
 import android.content.BroadcastReceiver
