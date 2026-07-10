@@ -51,6 +51,7 @@ object PermissionManager {
     }
 
     fun hasCallBlockPermissions(): Boolean {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) return false
         val hasRuntimePermissions = getCallBlockPermissions().all {
             ContextCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED
         }
@@ -58,26 +59,13 @@ object PermissionManager {
     }
 
     fun hasCallScreeningRole(): Boolean {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            val roleManager = context.getSystemService(Context.ROLE_SERVICE) as RoleManager
-            roleManager.isRoleHeld(RoleManager.ROLE_CALL_SCREENING)
-        } else {
-            true
-        }
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) return false
+        val roleManager = context.getSystemService(Context.ROLE_SERVICE) as RoleManager
+        return roleManager.isRoleHeld(RoleManager.ROLE_CALL_SCREENING)
     }
 
     fun getCallBlockPermissions(): Array<String> {
-        val permissions = mutableListOf(
-            Manifest.permission.READ_PHONE_STATE,
-            Manifest.permission.READ_CONTACTS
-        )
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            permissions.add(Manifest.permission.READ_CALL_LOG)
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            permissions.add(Manifest.permission.ANSWER_PHONE_CALLS)
-        }
-        return permissions.toTypedArray()
+        return arrayOf(Manifest.permission.READ_CONTACTS)
     }
 
     fun isDefaultLauncher(): Boolean {
@@ -94,11 +82,6 @@ object PermissionManager {
 
     fun hasContactPermission(): Boolean {
         return ContextCompat.checkSelfPermission(context, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED
-    }
-
-    fun hasAnswerPhoneCallsPermission(): Boolean {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return false
-        return ContextCompat.checkSelfPermission(context, Manifest.permission.ANSWER_PHONE_CALLS) == PackageManager.PERMISSION_GRANTED
     }
 
     fun hasPinPermission(): Boolean {

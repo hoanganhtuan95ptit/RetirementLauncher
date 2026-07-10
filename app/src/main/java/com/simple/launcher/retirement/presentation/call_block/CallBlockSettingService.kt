@@ -20,7 +20,7 @@ class CallBlockSettingService : ProtectSettingService() {
 
     override fun setup(settingsFragment: SettingsFragment) {
 
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) return
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) return
 
         super.setup(settingsFragment)
 
