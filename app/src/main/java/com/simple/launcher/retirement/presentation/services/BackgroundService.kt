@@ -13,8 +13,8 @@ import com.simple.component.service.launchCollect
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.presentation.app_monitoring.AppMonitoringWorker
 import com.simple.launcher.retirement.presentation.emergency.EmergencyWorker
+import com.simple.launcher.retirement.presentation.installer_cleanup.InstallerCleanupWorker
 import com.simple.launcher.retirement.presentation.services.worker.BackgroundWorker
-import com.simple.launcher.retirement.presentation.services.worker.FileWatcherWorker
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -27,7 +27,7 @@ class BackgroundService : Service() {
 
         listOf(
             AppMonitoringWorker(this),
-            FileWatcherWorker(this),
+            InstallerCleanupWorker(this),
             EmergencyWorker(this)
         )
     }

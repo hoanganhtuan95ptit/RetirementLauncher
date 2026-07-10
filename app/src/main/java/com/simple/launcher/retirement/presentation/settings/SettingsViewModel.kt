@@ -14,6 +14,7 @@ import com.simple.launcher.retirement.utils.exts.dp
 import com.simple.launcher.retirement.utils.exts.getString
 import com.simple.launcher.retirement.utils.exts.textColorPrimary
 import com.simple.launcher.retirement.utils.size.navigationBarHeight
+import com.simple.launcher.retirement.utils.size.width
 import kotlinx.coroutines.flow.StateFlow
 
 class SettingsViewModel : ViewItemViewModel() {
@@ -36,7 +37,10 @@ class SettingsViewModel : ViewItemViewModel() {
     ) { resources ->
 
         value = SpaceViewItem(
-            height = resources.navigationBarHeight + 24.dp().toInt()
+            width = resources.width,
+            height = resources.navigationBarHeight + 24.dp().toInt(),
+
+            span = 2
         ).apply {
             buildDrawSpec(resources)
         }.let {

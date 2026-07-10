@@ -1,5 +1,6 @@
 package com.simple.launcher.retirement.utils.size
 
+import android.util.Log
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.asFlow
 import com.simple.auto.register.AutoRegister

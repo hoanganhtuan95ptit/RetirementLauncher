@@ -236,7 +236,7 @@ class EmergencyWorker(context: Context) : BackgroundWorker(context) {
     companion object {
 
         private const val TAG = "EmergencyCallWorker"
-        private val INACTIVITY_TIMEOUT_MILLIS = if (BuildConfig.DEBUG) 10 * 60 * 1000L else 12 * 60 * 60 * 1000L
+        private val INACTIVITY_TIMEOUT_MILLIS = if (BuildConfig.DEBUG) 10 * 60 * 1000L else 10 * 60 * 60 * 1000L
         private val CALL_COOLDOWN_MILLIS = if (BuildConfig.DEBUG) 1 * 60 * 1000L else 10 * 60 * 1000L
         private val CHECK_INTERVAL_MILLIS = if (BuildConfig.DEBUG) 30 * 1000L else 30 * 60 * 1000L
         private const val AUTO_CALL_SCREEN_EVENT_IGNORE_WINDOW_MILLIS = 60 * 1000L

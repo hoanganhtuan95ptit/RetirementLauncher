@@ -60,7 +60,7 @@ data class SettingItem(
         const val ID_CLEAN_MEMORY = 5
         const val ID_CONTACT_LIST = 6
         const val ID_TOGGLE_BLOCK = 7
-        const val ID_TOGGLE_CLEANUP = 8
+        const val ID_TOGGLE_INSTALLER_CLEANUP = 8
         const val ID_TOGGLE_CALL_BLOCK = 9
         const val ID_TOGGLE_POCKET_MODE = 10
         const val ID_EMERGENCY_CALL_TOGGLE = 11
@@ -68,7 +68,7 @@ data class SettingItem(
         // ── Slot orders (dùng cho _itemMap trong SettingsViewModel) ──────────
         const val ORDER_TOGGLE_BLOCK = 22.0
         const val ORDER_TOGGLE_CALL_BLOCK = 23.0
-        const val ORDER_TOGGLE_CLEANUP = 24.0
+        const val ORDER_TOGGLE_INSTALLER_CLEANUP = 24.0
         const val ORDER_TOGGLE_POCKET_MODE = 33.0
 
         // ── Debug-only ────────────────────────────────────────────────────────

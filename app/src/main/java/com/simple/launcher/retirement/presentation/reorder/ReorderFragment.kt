@@ -162,7 +162,7 @@ class ReorderFragment : BaseFragment<FragmentAppListBinding>() {
      * Tự động bật cấu hình xóa APK và giám sát ứng dụng khi thiết lập
      * danh sách app hoặc liên hệ nhanh hoàn tất.
      * Việc start/stop service thực tế do AppMonitoringSettingService
-     * và FileCleanupSettingService xử lý qua Flow.
+     * và InstallerCleanupSettingService xử lý qua Flow.
      */
     private fun activateAutoFeatures() {
         val repository = PreferenceRepository.instance
