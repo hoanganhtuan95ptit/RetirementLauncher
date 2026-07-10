@@ -12,11 +12,11 @@ import kotlinx.coroutines.flow.StateFlow
 
 class InstallerCleanupSettingViewModel : BaseViewModel() {
 
-    val isFileCleanupEnabledFlow = PreferenceRepository.instance.isFileCleanupEnabledFlow()
+    val fileCleanupEnabledFlow = PreferenceRepository.instance.fileCleanupEnabledFlow()
 
     val viewItemList: StateFlow<GroupViewItem?> = combineState(
         resources,
-        isFileCleanupEnabledFlow,
+        fileCleanupEnabledFlow,
         null
     ) { resources, isEnabled ->
 

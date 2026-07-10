@@ -13,7 +13,6 @@ class PreferenceRepositoryImpl(context: Context) : PreferenceRepository {
 
     companion object {
 
-        private const val KEY_SELECTED_APPS = "selected_apps"
         private const val KEY_PIN = "app_pin"
         private const val KEY_ONBOARDING_COMPLETED = "onboarding_completed"
         private const val KEY_APP_BLOCK_ENABLED = "app_block_enabled"
@@ -37,18 +36,20 @@ class PreferenceRepositoryImpl(context: Context) : PreferenceRepository {
     private val _emergencyCallEnabled = MutableStateFlow(isEmergencyCallEnabled())
     private val _hasPin = MutableStateFlow(hasPin())
 
+    // PIN
+    override fun hasPin(): Boolean = sharedPrefs.contains(KEY_PIN)
+
+    override fun hasPinFlow(): Flow<Boolean> = _hasPin.asStateFlow()
+
     override fun getPin(): String? = sharedPrefs.getString(KEY_PIN, null)
 
-    override fun savePin(pin: String) {
+    override fun setPin(pin: String) {
 
         sharedPrefs.edit { putString(KEY_PIN, pin) }
         _hasPin.value = true
     }
 
-    override fun hasPin(): Boolean = sharedPrefs.contains(KEY_PIN)
-
-    override fun hasPinFlow(): Flow<Boolean> = _hasPin.asStateFlow()
-
+    // Onboarding
     override fun isOnboardingCompleted(): Boolean =
         sharedPrefs.getBoolean(KEY_ONBOARDING_COMPLETED, false)
 
@@ -57,16 +58,17 @@ class PreferenceRepositoryImpl(context: Context) : PreferenceRepository {
         sharedPrefs.edit { putBoolean(KEY_ONBOARDING_COMPLETED, completed) }
     }
 
+    // App Block
     override fun isAppBlockEnabled(): Boolean =
         sharedPrefs.getBoolean(KEY_APP_BLOCK_ENABLED, false)
+
+    override fun appBlockEnabledFlow(): Flow<Boolean> = _appBlockEnabled.asStateFlow()
 
     override fun setAppBlockEnabled(enabled: Boolean) {
 
         sharedPrefs.edit { putBoolean(KEY_APP_BLOCK_ENABLED, enabled) }
         _appBlockEnabled.value = enabled
     }
-
-    override fun isAppBlockEnabledFlow(): Flow<Boolean> = _appBlockEnabled.asStateFlow()
 
     override fun isAppBlockFirstTime(): Boolean =
         sharedPrefs.getBoolean(KEY_APP_BLOCK_FIRST_TIME, true)
@@ -76,16 +78,17 @@ class PreferenceRepositoryImpl(context: Context) : PreferenceRepository {
         sharedPrefs.edit { putBoolean(KEY_APP_BLOCK_FIRST_TIME, firstTime) }
     }
 
+    // File Cleanup
     override fun isFileCleanupEnabled(): Boolean =
         sharedPrefs.getBoolean(KEY_FILE_CLEANUP_ENABLED, false)
+
+    override fun fileCleanupEnabledFlow(): Flow<Boolean> = _fileCleanupEnabled.asStateFlow()
 
     override fun setFileCleanupEnabled(enabled: Boolean) {
 
         sharedPrefs.edit { putBoolean(KEY_FILE_CLEANUP_ENABLED, enabled) }
         _fileCleanupEnabled.value = enabled
     }
-
-    override fun isFileCleanupEnabledFlow(): Flow<Boolean> = _fileCleanupEnabled.asStateFlow()
 
     override fun isFileCleanupFirstTime(): Boolean =
         sharedPrefs.getBoolean(KEY_FILE_CLEANUP_FIRST_TIME, true)
@@ -95,16 +98,17 @@ class PreferenceRepositoryImpl(context: Context) : PreferenceRepository {
         sharedPrefs.edit { putBoolean(KEY_FILE_CLEANUP_FIRST_TIME, firstTime) }
     }
 
+    // Call Block
     override fun isCallBlockEnabled(): Boolean =
         sharedPrefs.getBoolean(KEY_CALL_BLOCK_ENABLED, false)
+
+    override fun callBlockEnabledFlow(): Flow<Boolean> = _callBlockEnabled.asStateFlow()
 
     override fun setCallBlockEnabled(enabled: Boolean) {
 
         sharedPrefs.edit { putBoolean(KEY_CALL_BLOCK_ENABLED, enabled) }
         _callBlockEnabled.value = enabled
     }
-
-    override fun isCallBlockEnabledFlow(): Flow<Boolean> = _callBlockEnabled.asStateFlow()
 
     override fun isCallBlockFirstTime(): Boolean =
         sharedPrefs.getBoolean(KEY_CALL_BLOCK_FIRST_TIME, true)
@@ -114,8 +118,11 @@ class PreferenceRepositoryImpl(context: Context) : PreferenceRepository {
         sharedPrefs.edit { putBoolean(KEY_CALL_BLOCK_FIRST_TIME, firstTime) }
     }
 
+    // Pocket Mode
     override fun isPocketModeEnabled(): Boolean =
         sharedPrefs.getBoolean(KEY_POCKET_MODE_ENABLED, false)
+
+    override fun pocketModeEnabledFlow(): Flow<Boolean> = _pocketModeEnabled.asStateFlow()
 
     override fun setPocketModeEnabled(enabled: Boolean) {
 
@@ -123,18 +130,17 @@ class PreferenceRepositoryImpl(context: Context) : PreferenceRepository {
         _pocketModeEnabled.value = enabled
     }
 
-    override fun isPocketModeEnabledFlow(): Flow<Boolean> = _pocketModeEnabled.asStateFlow()
-
+    // Emergency Call
     override fun isEmergencyCallEnabled(): Boolean =
         sharedPrefs.getBoolean(KEY_EMERGENCY_CALL_ENABLED, false)
+
+    override fun emergencyCallEnabledFlow(): Flow<Boolean> = _emergencyCallEnabled.asStateFlow()
 
     override fun setEmergencyCallEnabled(enabled: Boolean) {
 
         sharedPrefs.edit { putBoolean(KEY_EMERGENCY_CALL_ENABLED, enabled) }
         _emergencyCallEnabled.value = enabled
     }
-
-    override fun isEmergencyCallEnabledFlow(): Flow<Boolean> = _emergencyCallEnabled.asStateFlow()
 
     override fun isEmergencyCallFirstTime(): Boolean =
         sharedPrefs.getBoolean(KEY_EMERGENCY_CALL_FIRST_TIME, true)
@@ -152,19 +158,20 @@ class PreferenceRepositoryImpl(context: Context) : PreferenceRepository {
         sharedPrefs.edit { putString(KEY_EMERGENCY_PHONE_NUMBER, number) }
     }
 
-    override fun getLastUserActivity(): Long =
-        sharedPrefs.getLong(KEY_LAST_USER_ACTIVITY, System.currentTimeMillis())
-
-    override fun setLastUserActivity(timestamp: Long) {
-
-        sharedPrefs.edit { putLong(KEY_LAST_USER_ACTIVITY, timestamp) }
-    }
-
     override fun getLastEmergencyIndex(): Int =
         sharedPrefs.getInt(KEY_LAST_EMERGENCY_INDEX, -1)
 
     override fun setLastEmergencyIndex(index: Int) {
 
         sharedPrefs.edit { putInt(KEY_LAST_EMERGENCY_INDEX, index) }
+    }
+
+    // User Activity
+    override fun getLastUserActivity(): Long =
+        sharedPrefs.getLong(KEY_LAST_USER_ACTIVITY, System.currentTimeMillis())
+
+    override fun setLastUserActivity(timestamp: Long) {
+
+        sharedPrefs.edit { putLong(KEY_LAST_USER_ACTIVITY, timestamp) }
     }
 }

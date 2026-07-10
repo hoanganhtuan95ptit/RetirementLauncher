@@ -55,7 +55,7 @@ class EmergencyWorker(context: Context) : BackgroundWorker(context) {
         }
     }
 
-    override fun observeEnabled(): Flow<Boolean> = repository.isEmergencyCallEnabledFlow()
+    override fun observeEnabled(): Flow<Boolean> = repository.emergencyCallEnabledFlow()
 
     override fun onStart() {
 

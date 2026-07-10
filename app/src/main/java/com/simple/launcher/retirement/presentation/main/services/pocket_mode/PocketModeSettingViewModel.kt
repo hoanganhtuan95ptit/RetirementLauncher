@@ -23,7 +23,7 @@ class PocketModeSettingViewModel : BaseViewModel() {
 
     val items: StateFlow<List<ViewItem>> = combineState(
         flow1 = resources,
-        flow2 = repository.isPocketModeEnabledFlow(),
+        flow2 = repository.pocketModeEnabledFlow(),
         flow3 = refreshTrigger,
         initialValue = emptyList()
     ) { resources, isEnabled, _ ->

@@ -11,7 +11,7 @@ import android.util.Log
 import com.simple.launcher.retirement.BuildConfig
 import com.simple.launcher.retirement.domain.repository.AppRepository
 import com.simple.launcher.retirement.domain.repository.PreferenceRepository
-import com.simple.launcher.retirement.presentation.block.BlockActivity
+import com.simple.launcher.retirement.presentation.app_block.BlockActivity
 import com.simple.launcher.retirement.presentation.services.worker.BackgroundWorker
 import kotlinx.coroutines.flow.Flow
 
@@ -34,7 +34,7 @@ class AppMonitoringWorker(context: Context) : BackgroundWorker(context) {
         }
     }
 
-    override fun observeEnabled(): Flow<Boolean> = PreferenceRepository.instance.isAppBlockEnabledFlow()
+    override fun observeEnabled(): Flow<Boolean> = PreferenceRepository.instance.appBlockEnabledFlow()
 
     override fun onStart() {
 

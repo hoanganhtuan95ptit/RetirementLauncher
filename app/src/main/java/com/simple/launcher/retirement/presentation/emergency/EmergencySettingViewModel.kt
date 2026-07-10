@@ -21,12 +21,12 @@ class EmergencySettingViewModel : BaseViewModel() {
         value = ContactRepository.instance.getSelectedContacts().isNotEmpty()
     }
 
-    val isEmergencyCallEnabledFlow = PreferenceRepository.instance.isEmergencyCallEnabledFlow()
+    val emergencyCallEnabledFlow = PreferenceRepository.instance.emergencyCallEnabledFlow()
 
     val viewItemList: StateFlow<GroupViewItem?> = combineState(
         resources,
         isHasContactFlow,
-        isEmergencyCallEnabledFlow,
+        emergencyCallEnabledFlow,
         null
     ) { resources, isHasContact, isEnabled ->
 

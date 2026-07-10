@@ -1,4 +1,4 @@
-package com.simple.launcher.retirement.presentation.block
+package com.simple.launcher.retirement.presentation.app_block
 
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.presentation.base.ActionState

@@ -10,54 +10,56 @@ import kotlinx.coroutines.flow.Flow
  */
 interface PreferenceRepository {
 
-    fun getPin(): String?
-    fun savePin(pin: String)
+    // PIN
     fun hasPin(): Boolean
     fun hasPinFlow(): Flow<Boolean>
+    fun getPin(): String?
+    fun setPin(pin: String)
 
+    // Onboarding
     fun isOnboardingCompleted(): Boolean
     fun setOnboardingCompleted(completed: Boolean)
 
+    // App Block
     fun isAppBlockEnabled(): Boolean
+    fun appBlockEnabledFlow(): Flow<Boolean>
     fun setAppBlockEnabled(enabled: Boolean)
-    fun isAppBlockEnabledFlow(): Flow<Boolean>
-
     fun isAppBlockFirstTime(): Boolean
     fun setAppBlockFirstTime(firstTime: Boolean)
 
+    // File Cleanup
     fun isFileCleanupEnabled(): Boolean
+    fun fileCleanupEnabledFlow(): Flow<Boolean>
     fun setFileCleanupEnabled(enabled: Boolean)
-    fun isFileCleanupEnabledFlow(): Flow<Boolean>
-
     fun isFileCleanupFirstTime(): Boolean
     fun setFileCleanupFirstTime(firstTime: Boolean)
 
+    // Call Block
     fun isCallBlockEnabled(): Boolean
+    fun callBlockEnabledFlow(): Flow<Boolean>
     fun setCallBlockEnabled(enabled: Boolean)
-    fun isCallBlockEnabledFlow(): Flow<Boolean>
-
     fun isCallBlockFirstTime(): Boolean
     fun setCallBlockFirstTime(firstTime: Boolean)
 
+    // Pocket Mode
     fun isPocketModeEnabled(): Boolean
+    fun pocketModeEnabledFlow(): Flow<Boolean>
     fun setPocketModeEnabled(enabled: Boolean)
-    fun isPocketModeEnabledFlow(): Flow<Boolean>
 
+    // Emergency Call
     fun isEmergencyCallEnabled(): Boolean
+    fun emergencyCallEnabledFlow(): Flow<Boolean>
     fun setEmergencyCallEnabled(enabled: Boolean)
-    fun isEmergencyCallEnabledFlow(): Flow<Boolean>
-
     fun isEmergencyCallFirstTime(): Boolean
     fun setEmergencyCallFirstTime(firstTime: Boolean)
-
     fun getEmergencyPhoneNumber(): String
     fun setEmergencyPhoneNumber(number: String)
-
-    fun getLastUserActivity(): Long
-    fun setLastUserActivity(timestamp: Long)
-
     fun getLastEmergencyIndex(): Int
     fun setLastEmergencyIndex(index: Int)
+
+    // User Activity
+    fun getLastUserActivity(): Long
+    fun setLastUserActivity(timestamp: Long)
 
     companion object {
 

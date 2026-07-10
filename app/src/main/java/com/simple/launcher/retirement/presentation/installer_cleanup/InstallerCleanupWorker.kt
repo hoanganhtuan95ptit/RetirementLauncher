@@ -12,7 +12,7 @@ class InstallerCleanupWorker(context: Context) : BackgroundWorker(context) {
 
     private var job: Job? = null
 
-    override fun observeEnabled(): Flow<Boolean> = PreferenceRepository.instance.isFileCleanupEnabledFlow()
+    override fun observeEnabled(): Flow<Boolean> = PreferenceRepository.instance.fileCleanupEnabledFlow()
 
     override fun onStart() {
 

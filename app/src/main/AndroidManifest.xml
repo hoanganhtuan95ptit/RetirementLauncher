@@ -64,7 +64,7 @@
         </activity>
 
         <activity
-            android:name=".presentation.block.BlockActivity"
+            android:name=".presentation.app_block.BlockActivity"
             android:exported="false"
             android:launchMode="singleInstance"
             android:excludeFromRecents="true"

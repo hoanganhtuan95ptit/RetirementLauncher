@@ -29,7 +29,7 @@ class InstallerCleanupSettingService : ProtectSettingService() {
             protectSettingViewModel.updateItem(it)
         }
 
-        viewModel.isFileCleanupEnabledFlow.launchCollect(settingsFragment.viewLifecycleOwner) {
+        viewModel.fileCleanupEnabledFlow.launchCollect(settingsFragment.viewLifecycleOwner) {
 
             if (it) (settingsFragment.activity as? MainActivity)?.startBackgroundService()
         }

@@ -29,7 +29,7 @@ class EmergencySettingService : ProtectSettingService() {
             protectSettingViewModel.updateItem(it)
         }
 
-        viewModel.isEmergencyCallEnabledFlow.launchCollect(settingsFragment.viewLifecycleOwner) {
+        viewModel.emergencyCallEnabledFlow.launchCollect(settingsFragment.viewLifecycleOwner) {
 
             if (it) (settingsFragment.activity as? MainActivity)?.startBackgroundService()
         }

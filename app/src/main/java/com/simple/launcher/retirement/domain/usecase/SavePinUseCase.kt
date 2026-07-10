@@ -6,7 +6,7 @@ class SavePinUseCase(private val repository: PreferenceRepository) {
 
     operator fun invoke(pin: String) {
 
-        repository.savePin(pin)
+        repository.setPin(pin)
     }
 
     companion object {

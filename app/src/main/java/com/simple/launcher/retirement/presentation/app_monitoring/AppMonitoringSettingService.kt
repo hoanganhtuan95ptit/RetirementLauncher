@@ -28,7 +28,7 @@ class AppMonitoringSettingService : ProtectSettingService() {
             protectSettingViewModel.updateItem(it)
         }
 
-        viewModel.isAppBlockEnabledFlow.launchCollect(settingsFragment.viewLifecycleOwner) {
+        viewModel.appBlockEnabledFlow.launchCollect(settingsFragment.viewLifecycleOwner) {
 
             if (it) (settingsFragment.activity as? MainActivity)?.startBackgroundService()
         }

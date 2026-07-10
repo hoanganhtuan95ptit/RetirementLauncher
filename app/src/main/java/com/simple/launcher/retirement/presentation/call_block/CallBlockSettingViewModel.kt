@@ -14,11 +14,11 @@ class CallBlockSettingViewModel : BaseViewModel() {
 
     private val repository = PreferenceRepository.instance
 
-    val isCallBlockEnabledFlow = repository.isCallBlockEnabledFlow()
+    val callBlockEnabledFlow = repository.callBlockEnabledFlow()
 
     val viewItemList: StateFlow<GroupViewItem?> = combineState(
         resources,
-        isCallBlockEnabledFlow,
+        callBlockEnabledFlow,
         null
     ) { resources, isEnabled ->
 

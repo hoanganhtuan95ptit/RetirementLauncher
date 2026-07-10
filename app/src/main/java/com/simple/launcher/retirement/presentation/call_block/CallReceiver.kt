@@ -21,16 +21,18 @@ class CallReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
 
         if (intent.action != TelephonyManager.ACTION_PHONE_STATE_CHANGED) return
+        logDebug("action call")
 
         val repository = PreferenceRepository.instance
         if (!repository.isCallBlockEnabled()) return
+        logDebug("call block enabled")
 
         val incomingNumber = getIncomingNumber(intent) ?: return
         logDebug("Incoming call from: $incomingNumber")
 
         if (isNumberInContacts(context, incomingNumber)) return
-
         logDebug("Number not in contacts, blocking...")
+
         blockCall(context)
     }
 

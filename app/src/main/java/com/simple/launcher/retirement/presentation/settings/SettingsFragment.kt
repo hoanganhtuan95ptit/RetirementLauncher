@@ -17,7 +17,7 @@ import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.databinding.FragmentSettingsBinding
 import com.simple.launcher.retirement.presentation.DeepLinks
 import com.simple.launcher.retirement.presentation.base.BaseFragment
-import com.simple.launcher.retirement.presentation.block.BlockActivity
+import com.simple.launcher.retirement.presentation.app_block.BlockActivity
 import com.simple.launcher.retirement.presentation.sendDeeplinkWithBackStack
 import com.simple.launcher.retirement.presentation.settings.adapters.SettingItem
 import com.simple.launcher.retirement.utils.AppEvent

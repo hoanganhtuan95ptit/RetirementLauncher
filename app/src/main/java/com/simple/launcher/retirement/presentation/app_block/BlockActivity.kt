@@ -1,4 +1,4 @@
-package com.simple.launcher.retirement.presentation.block
+package com.simple.launcher.retirement.presentation.app_block
 
 import android.content.Intent
 import android.os.Bundle

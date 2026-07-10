@@ -20,12 +20,12 @@ class AppMonitoringSettingViewModel : BaseViewModel() {
         AppRepository.instance.getSelectedPackages().isNotEmpty()
     }.flowOn(Dispatchers.Default)
 
-    val isAppBlockEnabledFlow = PreferenceRepository.instance.isAppBlockEnabledFlow()
+    val appBlockEnabledFlow = PreferenceRepository.instance.appBlockEnabledFlow()
 
     val viewItemList: StateFlow<GroupViewItem?> = combineState(
         resources,
         isHasAppFlow,
-        isAppBlockEnabledFlow,
+        appBlockEnabledFlow,
         null
     ) { resources, isHasApp, isEnabled ->
 
