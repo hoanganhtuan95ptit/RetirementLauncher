@@ -1,4 +1,4 @@
-package com.simple.launcher.retirement.presentation.main.services.app_monitoring
+package com.simple.launcher.retirement.presentation.app_monitoring
 
 import com.simple.adapter.ViewItem
 import com.simple.launcher.retirement.R

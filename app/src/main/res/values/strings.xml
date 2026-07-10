@@ -67,6 +67,11 @@
     <string name="back">Quay lại</string>
     <string name="search">Tìm kiếm…</string>
 
+    <!-- Call Permission -->
+    <string name="call_permission_title">Quyền thực hiện cuộc gọi</string>
+    <string name="call_permission_desc">Ứng dụng cần quyền thực hiện cuộc gọi để có thể tự động gọi cho người thân trong trường hợp khẩn cấp.</string>
+    <string name="call_permission_highlight">thực hiện cuộc gọi</string>
+
     <!-- Call Block -->
     <string name="call_block_title">Quyền chặn cuộc gọi</string>
     <string name="call_block_desc">Ứng dụng cần quyền quản lý cuộc gọi và danh bạ để có thể tự động chặn các cuộc gọi từ người lạ.</string>

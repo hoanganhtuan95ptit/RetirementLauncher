@@ -7,19 +7,19 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.IBinder
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.simple.component.service.launchCollect
 import com.simple.launcher.retirement.R
-import com.simple.launcher.retirement.presentation.services.worker.AppMonitoringWorker
+import com.simple.launcher.retirement.presentation.app_monitoring.AppMonitoringWorker
+import com.simple.launcher.retirement.presentation.emergency.EmergencyWorker
 import com.simple.launcher.retirement.presentation.services.worker.BackgroundWorker
-import com.simple.launcher.retirement.presentation.services.worker.EmergencyCallWorker
 import com.simple.launcher.retirement.presentation.services.worker.FileWatcherWorker
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.combine
-import kotlin.collections.plusAssign
 
 class BackgroundService : Service() {
 
@@ -28,7 +28,7 @@ class BackgroundService : Service() {
         listOf(
             AppMonitoringWorker(this),
             FileWatcherWorker(this),
-            EmergencyCallWorker(this)
+            EmergencyWorker(this)
         )
     }
     private val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
@@ -37,12 +37,14 @@ class BackgroundService : Service() {
 
         super.onCreate()
         startAsForegroundService()
+        Log.d("tuanha", "onCreate: ")
         attachWorkers()
         observeWorkerStates()
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
+        Log.d("tuanha", "onStartCommand: ")
         startAsForegroundService()
         return START_STICKY
     }
@@ -58,11 +60,13 @@ class BackgroundService : Service() {
 
     private fun attachWorkers() {
 
+        Log.d("tuanha", "attachWorkers: ")
         workers.forEach { it.attach(serviceScope) }
     }
 
     private fun observeWorkerStates() {
 
+        // Service chỉ tồn tại khi ít nhất một feature nền vẫn đang được bật.
         combine(workers.map { it.observeEnabled() }) { states ->
 
             states.any { it }
@@ -74,6 +78,7 @@ class BackgroundService : Service() {
 
     private fun startAsForegroundService() {
 
+        // Gọi lại an toàn ở cả onCreate/onStartCommand để tránh timeout khi Android khởi service nền.
         createNotificationChannel()
         startForeground(NOTIFICATION_ID, buildNotification())
     }
@@ -112,6 +117,7 @@ class BackgroundService : Service() {
 
         fun start(context: Context) {
 
+            Log.d("tuanha", "start: ")
             val intent = Intent(context, BackgroundService::class.java)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 

@@ -1,4 +1,4 @@
-package com.simple.launcher.retirement.presentation.services.worker
+package com.simple.launcher.retirement.presentation.app_monitoring
 
 import android.app.usage.UsageEvents
 import android.app.usage.UsageStatsManager
@@ -12,6 +12,7 @@ import com.simple.launcher.retirement.BuildConfig
 import com.simple.launcher.retirement.domain.repository.AppRepository
 import com.simple.launcher.retirement.domain.repository.PreferenceRepository
 import com.simple.launcher.retirement.presentation.block.BlockActivity
+import com.simple.launcher.retirement.presentation.services.worker.BackgroundWorker
 import kotlinx.coroutines.flow.Flow
 
 class AppMonitoringWorker(context: Context) : BackgroundWorker(context) {
@@ -57,6 +58,7 @@ class AppMonitoringWorker(context: Context) : BackgroundWorker(context) {
 
     private fun checkForegroundApp() {
 
+        // Tắt màn hình hoặc đang sleep thì không cần poll foreground app.
         if (!powerManager.isInteractive) return
 
         val endTime = System.currentTimeMillis()
@@ -106,6 +108,7 @@ class AppMonitoringWorker(context: Context) : BackgroundWorker(context) {
 
     private fun shouldIgnorePackage(packageName: String): Boolean {
 
+        // Bỏ qua app hệ thống, launcher OEM, và mọi package đang được OS coi là "default app".
         if (packageName in systemPackages) return true
         if (packageName.contains(LAUNCHER_KEYWORD, ignoreCase = true)) return true
 

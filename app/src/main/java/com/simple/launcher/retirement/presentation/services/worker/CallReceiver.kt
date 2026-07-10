@@ -36,6 +36,7 @@ class CallReceiver : BroadcastReceiver() {
 
     private fun isNumberInContacts(context: Context, number: String): Boolean {
 
+        // Thiếu quyền đọc contact thì ưu tiên fail-open để tránh chặn nhầm cuộc gọi thật.
         if (!hasReadContactsPermission(context)) return true
 
         val uri = Uri.withAppendedPath(

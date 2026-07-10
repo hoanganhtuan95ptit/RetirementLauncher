@@ -1,61 +1,55 @@
 package com.simple.launcher.retirement.presentation.settings.services.protect
 
+import androidx.lifecycle.viewModelScope
+import com.simple.adapter.ViewItem
+import com.simple.component.service.launchCollect
 import com.simple.launcher.retirement.R
-import com.simple.launcher.retirement.domain.repository.PreferenceRepository
-import com.simple.launcher.retirement.presentation.base.BaseViewModel
-import com.simple.launcher.retirement.presentation.base.GroupViewItem
-import com.simple.launcher.retirement.presentation.settings.adapters.SettingItem
+import com.simple.launcher.retirement.presentation.base.ViewItemViewModel
+import com.simple.launcher.retirement.presentation.settings.adapters.SettingHeaderItem
 import com.simple.launcher.retirement.presentation.settings.services.settingHeader
-import com.simple.launcher.retirement.presentation.settings.services.settingItem
 import com.simple.launcher.retirement.utils.combineState
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.map
 
-class ProtectSettingViewModel : BaseViewModel() {
 
-    val viewItemList: StateFlow<GroupViewItem?> = combineState(
+class ProtectSettingViewModel : ViewItemViewModel() {
+
+    val enable = MutableStateFlow<Boolean?>(null)
+
+    val titleViewItem: StateFlow<List<ViewItem>> = combineState(
         resources,
-        PreferenceRepository.instance.hasPinFlow(),
-        PreferenceRepository.instance.isEmergencyCallEnabledFlow(),
-        null
-    ) { resources, hasPin, isEmergencyCallEnabled ->
+        enable.filterNotNull(),
+        emptyList()
+    ) { resources, enable ->
 
-        value = buildProtectGroup(
-            resources = resources,
-            hasPin = hasPin,
-            isEmergencyCallEnabled = isEmergencyCallEnabled
-        )
+        val list = arrayListOf<ViewItem>()
+
+        if (enable) settingHeader(
+            title = R.string.setting_header_security,
+            resources = resources
+        ).let {
+
+            list.add(it)
+        }
+
+        value = list
     }
 
-    private fun buildProtectGroup(
-        resources: Map<String, Any>,
-        hasPin: Boolean,
-        isEmergencyCallEnabled: Boolean
-    ): GroupViewItem {
+    init {
 
-//        val items = buildList {
-//
-//            settingHeader(
-//                title = R.string.setting_header_security,
-//                resources = resources
-//            ).let {
-//
-//                add(it)
-//            }
-//
-//            settingItem(
-//                id = SettingItem.ID_EMERGENCY_CALL_TOGGLE,
-//                icon = R.drawable.ic_sos_black_24dp,
-//                title = R.string.setting_emergency_call,
-//                isSwitch = true,
-//                isChecked = isEmergencyCallEnabled,
-//                resources = resources
-//            ).let {
-//
-//                add(it)
-//            }
-//
-//        }
+        viewItemList.map { items ->
 
-        return GroupViewItem(order = 1, list = emptyList())
+            items.any { it !is SettingHeaderItem }
+        }.launchCollect(viewModelScope) {
+
+            enable.value = it
+        }
+
+        titleViewItem.launchCollect(viewModelScope) {
+
+            updateItem(0, it)
+        }
     }
 }

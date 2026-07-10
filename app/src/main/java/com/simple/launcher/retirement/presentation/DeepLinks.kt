@@ -30,6 +30,7 @@ object DeepLinks {
 
     // ─── Permissions ──────────────────────────────────────────────────────────
 
+    const val PERMISSION_CALL            = "app://CallPermission"
     const val PERMISSION_FILE           = "app://FilePermission"
     const val PERMISSION_OVERLAY        = "app://OverlayPermission"
     const val PERMISSION_USAGE_STATS    = "app://UsageStatsPermission"

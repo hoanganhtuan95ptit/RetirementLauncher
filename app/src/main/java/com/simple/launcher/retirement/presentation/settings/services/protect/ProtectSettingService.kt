@@ -1,22 +1,25 @@
 package com.simple.launcher.retirement.presentation.settings.services.protect
 
+import androidx.annotation.CallSuper
 import androidx.fragment.app.viewModels
 import com.simple.auto.register.AutoRegister
 import com.simple.component.service.launchCollect
 import com.simple.launcher.retirement.presentation.settings.SettingsFragment
 import com.simple.launcher.retirement.presentation.settings.services.SettingService
-import kotlinx.coroutines.flow.filterNotNull
 
 @AutoRegister(apis = [SettingsFragment::class])
-class ProtectSettingService : SettingService() {
+open class ProtectSettingService : SettingService() {
 
+    protected lateinit var protectSettingViewModel: ProtectSettingViewModel
+
+    @CallSuper
     override fun setup(settingsFragment: SettingsFragment) {
 
-        val viewModel = settingsFragment.viewModels<ProtectSettingViewModel>().value
+        protectSettingViewModel = settingsFragment.viewModels<ProtectSettingViewModel>().value
 
-        viewModel.viewItemList.filterNotNull().launchCollect(settingsFragment.viewLifecycleOwner) {
+        protectSettingViewModel.viewItemList.launchCollect(settingsFragment.viewLifecycleOwner) {
 
-            settingsViewModel.updateItem(it)
+            settingsViewModel.updateItem(1, it)
         }
     }
 }

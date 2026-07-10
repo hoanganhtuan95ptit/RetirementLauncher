@@ -72,7 +72,7 @@
             android:theme="@style/Theme.RetirementLauncher.NoActionBar" />
 
         <service
-            android:name=".presentation.worker.BackgroundService"
+            android:name=".presentation.services.BackgroundService"
             android:enabled="true"
             android:exported="false"
             android:foregroundServiceType="dataSync" />

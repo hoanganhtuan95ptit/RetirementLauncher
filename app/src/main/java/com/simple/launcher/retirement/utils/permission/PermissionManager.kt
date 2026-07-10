@@ -150,6 +150,15 @@ object PermissionManager {
         return result is AppEvent.PermissionAccept
     }
 
+    suspend fun requireCallPermission(): Boolean {
+        if (hasCallPermission()) return true
+        sendDeeplink(DeepLinks.PERMISSION_CALL)
+        val result = AppEventBus.events
+            .filterIsInstance<AppEvent.PermissionResult>()
+            .first()
+        return result is AppEvent.PermissionAccept
+    }
+
     /**
      * Yêu cầu quyền chặn cuộc gọi.
      * - Nếu đã có quyền: trả về true ngay.
