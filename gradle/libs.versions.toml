@@ -67,12 +67,10 @@ glide-loader = { group = "com.github.hoanganhtuan95ptit.core", name = "glide-loa
 node-engine = { group = "com.github.hoanganhtuan95ptit.core", name = "node-engine", version = "1.0.0" }
 deeplink = { group = "com.github.hoanganhtuan95ptit", name = "deeplink", version.ref = "deeplink" }
 deeplink-processor = { group = "com.github.hoanganhtuan95ptit", name = "deeplink-processor", version.ref = "deeplink" }
-auto-register = { group = "com.github.hoanganhtuan95ptit", name = "auto-register", version.ref = "autoRegister" }
-auto-register-processor = { group = "com.github.hoanganhtuan95ptit", name = "auto-register-processor", version.ref = "autoRegister" }
+auto-register = { group = "com.github.hoanganhtuan95ptit.AutoRegister", name = "auto-register", version.ref = "autoRegister" }
+auto-register-processor = { group = "com.github.hoanganhtuan95ptit.AutoRegister", name = "auto-register-processor", version.ref = "autoRegister" }
 component-service = { group = "com.github.hoanganhtuan95ptit", name = "component-service", version = "1.0.0" }
 auto-service = { group = "com.google.auto.service", name = "auto-service-annotations", version.ref = "autoService" }
-google-auto-service = { group = "com.google.auto.service", name = "auto-service", version.ref = "autoService" }
-google-auto-service-annotations = { group = "com.google.auto.service", name = "auto-service-annotations", version.ref = "autoService" }
 auto-service-ksp = { group = "dev.zacsweers.autoservice", name = "auto-service-ksp", version = "1.2.0" }
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
 firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics" }
