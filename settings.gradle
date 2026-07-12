@@ -57,14 +57,12 @@ localProperties.each { key, path ->
 
 // Thực hiện includeBuild cho từng Repo root
 rootProjects.each { rootDir, modules ->
+    def repoName = new File(rootDir).name
     includeBuild(rootDir) {
         dependencySubstitution {
             modules.each { name ->
-                // Xác định group dựa trên project (TProject dùng .core, còn lại dùng group chung)
-                def group = "com.github.hoanganhtuan95ptit"
-                if (name == "node-engine" || name == "glide-loader") {
-                    group = "com.github.hoanganhtuan95ptit.core"
-                }
+                // Xác định group dựa trên project (group theo tên Repo)
+                def group = "com.github.hoanganhtuan95ptit.${repoName}"
                 
                 substitute module("${group}:${name}") using project(":${name}")
             }
