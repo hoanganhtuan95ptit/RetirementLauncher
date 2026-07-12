@@ -124,18 +124,15 @@ dependencies {
     implementation libs.androidx.fragment.ktx
     implementation libs.androidx.metrics
     implementation libs.gson
-    if (!findProject(":adapter")) {
-        implementation libs.adapter
-        ksp libs.adapter.processor
-    }
-    if (!findProject(":deeplink")) {
-        implementation libs.deeplink
-        ksp libs.deeplink.processor
-    }
-    if (!findProject(":auto-register")) {
-        implementation libs.auto.register
-        ksp libs.auto.register.processor
-    }
+    implementation libs.adapter
+    ksp libs.adapter.processor
+    implementation libs.deeplink
+    ksp libs.deeplink.processor
+    implementation libs.auto.register
+    ksp libs.auto.register.processor
+    implementation libs.component.service
+    implementation libs.node.engine
+    implementation libs.glide.loader
     implementation libs.auto.service
     ksp libs.auto.service.ksp
     implementation libs.glide
@@ -148,20 +145,6 @@ dependencies {
     implementation libs.firebase.analytics
     implementation libs.firebase.crashlytics
     implementation libs.firebase.perf
-
-    // Optimization: Automatically implement all modules defined in local.properties
-    localProperties.each { key, path ->
-        if (key.startsWith("module.")) {
-            def moduleName = key.substring("module.".length())
-            if (findProject(":${moduleName}") != null) {
-                if (moduleName.contains("processor") || moduleName.contains("ksp")) {
-                    ksp project(":${moduleName}")
-                } else {
-                    implementation project(":${moduleName}")
-                }
-            }
-        }
-    }
 
     testImplementation libs.junit
     androidTestImplementation libs.androidx.junit

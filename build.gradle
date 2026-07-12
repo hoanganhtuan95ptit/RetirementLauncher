@@ -7,23 +7,3 @@ plugins {
     alias(libs.plugins.crashlytics) apply false
     alias(libs.plugins.firebase.perf) apply false
 }
-
-allprojects {
-    configurations.all {
-        resolutionStrategy.dependencySubstitution {
-            def modules = [
-                    'auto-register',
-                    'auto-register-processor',
-                    'adapter',
-                    'adapter-processor',
-                    'deeplink',
-                    'deeplink-processor'
-            ]
-            modules.each { name ->
-                if (findProject(":${name}") != null) {
-                    substitute module("com.github.hoanganhtuan95ptit:${name}") using project(":${name}")
-                }
-            }
-        }
-    }
-}

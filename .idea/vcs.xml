@@ -6,7 +6,7 @@
     <mapping directory="$PROJECT_DIR$/../AutoRegister" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../ComponentService" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../Deeplink" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../LayoutNode" vcs="Git" />
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/../TProject" vcs="Git" />
   </component>
 </project>

@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel target="11" />
+    <bytecodeTargetLevel target="21">
+      <module name="RetirementLauncher.adapter" target="21" />
+      <module name="RetirementLauncher.auto-register" target="21" />
+      <module name="RetirementLauncher.component-service" target="21" />
+      <module name="RetirementLauncher.config" target="21" />
+      <module name="RetirementLauncher.deeplink" target="21" />
+      <module name="RetirementLauncher.glide-loader" target="21" />
+      <module name="RetirementLauncher.node-engine" target="21" />
+    </bytecodeTargetLevel>
   </component>
 </project>
