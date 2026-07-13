@@ -23,7 +23,7 @@ gson = "2.14.0"
 glide = "5.0.7"
 glide-transformations = "4.3.0"
 adapter = "1.2.1.10"
-deeplink = "1.2.1.10"
+deeplink = "1.2.1.13"
 autoService = "1.1.1"
 autoRegister = "1.2.1.4"
 firebaseBom = "34.15.0"
@@ -69,7 +69,7 @@ deeplink = { group = "com.github.hoanganhtuan95ptit.Deeplink", name = "deeplink"
 deeplink-processor = { group = "com.github.hoanganhtuan95ptit.Deeplink", name = "deeplink-processor", version.ref = "deeplink" }
 auto-register = { group = "com.github.hoanganhtuan95ptit.AutoRegister", name = "auto-register", version.ref = "autoRegister" }
 auto-register-processor = { group = "com.github.hoanganhtuan95ptit.AutoRegister", name = "auto-register-processor", version.ref = "autoRegister" }
-component-service = { group = "com.github.hoanganhtuan95ptit.ComponentService", name = "component-service", version = "1.2.1.10" }
+component-service = { group = "com.github.hoanganhtuan95ptit", name = "ComponentService", version = "1.2.1.13" }
 auto-service = { group = "com.google.auto.service", name = "auto-service-annotations", version.ref = "autoService" }
 auto-service-ksp = { group = "dev.zacsweers.autoservice", name = "auto-service-ksp", version = "1.2.0" }
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
