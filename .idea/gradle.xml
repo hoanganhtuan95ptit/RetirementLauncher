@@ -4,82 +4,10 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
-        <compositeConfiguration>
-          <compositeBuild compositeDefinitionSource="SCRIPT">
-            <builds>
-              <build path="$PROJECT_DIR$/../Adapter" name="Adapter">
-                <projects>
-                  <project path="$PROJECT_DIR$/../Adapter" />
-                  <project path="$PROJECT_DIR$/../Adapter/adapter" />
-                  <project path="$PROJECT_DIR$/../Adapter/adapter-processor" />
-                  <project path="$PROJECT_DIR$/../Adapter/app" />
-                </projects>
-              </build>
-              <build path="$PROJECT_DIR$/../AutoRegister" name="AutoRegister">
-                <projects>
-                  <project path="$PROJECT_DIR$/../AutoRegister" />
-                  <project path="$PROJECT_DIR$/../AutoRegister/app" />
-                  <project path="$PROJECT_DIR$/../AutoRegister/auto-register" />
-                  <project path="$PROJECT_DIR$/../AutoRegister/auto-register-dynamic-feature" />
-                  <project path="$PROJECT_DIR$/../AutoRegister/auto-register-processor" />
-                  <project path="$PROJECT_DIR$/../AutoRegister/samples" />
-                  <project path="$PROJECT_DIR$/../AutoRegister/samples/feature_dynamic" />
-                  <project path="$PROJECT_DIR$/../AutoRegister/samples/feature_library" />
-                </projects>
-              </build>
-              <build path="$PROJECT_DIR$/../ComponentService" name="ComponentService">
-                <projects>
-                  <project path="$PROJECT_DIR$/../ComponentService" />
-                  <project path="$PROJECT_DIR$/../ComponentService/app" />
-                  <project path="$PROJECT_DIR$/../ComponentService/component-service" />
-                </projects>
-              </build>
-              <build path="$PROJECT_DIR$/../Deeplink" name="Deeplink">
-                <projects>
-                  <project path="$PROJECT_DIR$/../Deeplink" />
-                  <project path="$PROJECT_DIR$/../Deeplink/app" />
-                  <project path="$PROJECT_DIR$/../Deeplink/deeplink" />
-                  <project path="$PROJECT_DIR$/../Deeplink/deeplink-processor" />
-                </projects>
-              </build>
-              <build path="$PROJECT_DIR$/../LayoutNode" name="LayoutNode">
-                <projects>
-                  <project path="$PROJECT_DIR$/../LayoutNode" />
-                  <project path="$PROJECT_DIR$/../LayoutNode/app" />
-                  <project path="$PROJECT_DIR$/../LayoutNode/glide-loader" />
-                  <project path="$PROJECT_DIR$/../LayoutNode/node-engine" />
-                </projects>
-              </build>
-            </builds>
-          </compositeBuild>
-        </compositeConfiguration>
         <option name="testRunner" value="CHOOSE_PER_TEST" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$/../Adapter" />
-            <option value="$PROJECT_DIR$/../Adapter/adapter" />
-            <option value="$PROJECT_DIR$/../Adapter/adapter-processor" />
-            <option value="$PROJECT_DIR$/../Adapter/app" />
-            <option value="$PROJECT_DIR$/../AutoRegister" />
-            <option value="$PROJECT_DIR$/../AutoRegister/app" />
-            <option value="$PROJECT_DIR$/../AutoRegister/auto-register" />
-            <option value="$PROJECT_DIR$/../AutoRegister/auto-register-dynamic-feature" />
-            <option value="$PROJECT_DIR$/../AutoRegister/auto-register-processor" />
-            <option value="$PROJECT_DIR$/../AutoRegister/samples" />
-            <option value="$PROJECT_DIR$/../AutoRegister/samples/feature_dynamic" />
-            <option value="$PROJECT_DIR$/../AutoRegister/samples/feature_library" />
-            <option value="$PROJECT_DIR$/../ComponentService" />
-            <option value="$PROJECT_DIR$/../ComponentService/app" />
-            <option value="$PROJECT_DIR$/../ComponentService/component-service" />
-            <option value="$PROJECT_DIR$/../Deeplink" />
-            <option value="$PROJECT_DIR$/../Deeplink/app" />
-            <option value="$PROJECT_DIR$/../Deeplink/deeplink" />
-            <option value="$PROJECT_DIR$/../Deeplink/deeplink-processor" />
-            <option value="$PROJECT_DIR$/../LayoutNode" />
-            <option value="$PROJECT_DIR$/../LayoutNode/app" />
-            <option value="$PROJECT_DIR$/../LayoutNode/glide-loader" />
-            <option value="$PROJECT_DIR$/../LayoutNode/node-engine" />
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
           </set>

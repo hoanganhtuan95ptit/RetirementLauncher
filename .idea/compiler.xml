@@ -2,6 +2,17 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="21">
+      <module name="Adapter.adapter" target="17" />
+      <module name="Adapter.adapter-processor" target="17" />
+      <module name="Adapter.adapter-processor.main" target="17" />
+      <module name="Adapter.adapter-processor.test" target="17" />
+      <module name="Adapter.app" target="17" />
+      <module name="AutoRegister.auto-register-processor" target="11" />
+      <module name="AutoRegister.auto-register-processor.main" target="11" />
+      <module name="AutoRegister.auto-register-processor.test" target="11" />
+      <module name="Deeplink.deeplink-processor" target="11" />
+      <module name="Deeplink.deeplink-processor.main" target="11" />
+      <module name="Deeplink.deeplink-processor.test" target="11" />
       <module name="RetirementLauncher.adapter" target="21" />
       <module name="RetirementLauncher.auto-register" target="21" />
       <module name="RetirementLauncher.component-service" target="21" />

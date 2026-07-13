@@ -1,22 +1,25 @@
-# RetirementLauncher
-
-<p align="center">
-  <img src="images/icon.png" width="120" height="120" alt="RetirementLauncher Icon">
-</p>
+<table align="center" border="0">
+  <tr>
+    <td align="center">
+      <img src="images/icon.png" width="120" height="120" alt="RetirementLauncher Icon">
+    </td>
+    <td align="left">
+      <h1>RetirementLauncher</h1>
+      <a href="https://play.google.com/store/apps/details?id=com.simple.launcher.retirement">
+        <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" width="180" alt="Get it on Google Play">
+      </a>
+    </td>
+  </tr>
+</table>
 
 **RetirementLauncher** là ứng dụng Android Launcher được thiết kế chuyên biệt nhằm bảo vệ và hỗ trợ người cao tuổi sử dụng điện thoại một cách an toàn nhất. Ứng dụng tập trung vào việc ngăn chặn các rủi ro từ phần mềm độc hại, lừa đảo và cung cấp cơ chế cứu hộ khẩn cấp tự động.
-
-<p align="center">
-  <a href="https://play.google.com/store/apps/details?id=com.simple.launcher.retirement">
-    <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" width="180" alt="Get it on Google Play">
-  </a>
-</p>
 
 ## 📸 Screenshots
 
 <p align="center">
-  <img src="images/home.png" width="30%" alt="Home Screen">
-  <img src="images/setting.png" width="30%" alt="Settings Screen">
+  <img src="images/home.png" height="500" alt="Home Screen">
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="images/setting.png" height="500" alt="Settings Screen">
 </p>
 
 ## 🌟 Tính năng chính
