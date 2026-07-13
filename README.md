@@ -1,4 +1,4 @@
-<table align="center" border="0">
+<table align="left" border="0">
   <tr>
     <td align="center">
       <img src="images/icon.png" width="120" height="120" alt="RetirementLauncher Icon">
@@ -11,6 +11,8 @@
     </td>
   </tr>
 </table>
+
+<br clear="left"/>
 
 **RetirementLauncher** là ứng dụng Android Launcher được thiết kế chuyên biệt nhằm bảo vệ và hỗ trợ người cao tuổi sử dụng điện thoại một cách an toàn nhất. Ứng dụng tập trung vào việc ngăn chặn các rủi ro từ phần mềm độc hại, lừa đảo và cung cấp cơ chế cứu hộ khẩn cấp tự động.
 
