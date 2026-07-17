@@ -1,0 +1,101 @@
+<resources>
+    <string name="app_name">RetirementLauncher</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Impostazioni</string>
+    <string name="setting_header_general">Impostazioni Generali</string>
+    <string name="setting_header_security">Sicurezza e Protezione</string>
+    <string name="setting_header_optimization">Ottimizzazione e Utility</string>
+    <string name="setting_pin">Configurazione PIN</string>
+    <string name="setting_app_list">Configurazione Elenco App</string>
+    <string name="setting_default_launcher">Imposta Launcher Predefinito</string>
+    <string name="setting_contact_list">Configurazione Contatti Rapidi</string>
+    <string name="setting_clean_files">Pulisci File Inutili</string>
+    <string name="setting_clean_memory">Libera Memoria</string>
+    <string name="setting_emergency_call">Chiamata di Emergenza Automatica</string>
+    <string name="setting_app_monitoring">Monitoraggio Applicazioni</string>
+    <string name="setting_auto_cleanup_apk">Eliminazione Automatica APK</string>
+    <string name="setting_call_block">Blocca Chiamate Sconosciute</string>
+    <string name="setting_pocket_mode">Modalità Tasca</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_title">Benvenuto su Retirement Launcher</string>
+    <string name="onboarding_desc">Un\'applicazione per semplificare l\'interfaccia del tuo telefono e proteggere il tuo dispositivo.</string>
+    <string name="onboarding_start">Inizia</string>
+
+    <!-- Clean Files -->
+    <string name="clean_files_title">Pulisci File Inutili</string>
+    <string name="clean_files_desc">Pronto per la scansione del dispositivo</string>
+    <string name="clean_files_start">Inizia Pulizia</string>
+    <string name="clean_files_running">Scansione e pulizia in corso…</string>
+    <string name="clean_files_completed">Pulizia completata!</string>
+    <string name="clean_files_retry">Pulisci di Nuovo</string>
+
+    <!-- Clean Memory -->
+    <string name="clean_memory_title">Libera Memoria</string>
+    <string name="clean_memory_stat_used">Usata</string>
+    <string name="clean_memory_stat_free">Libera</string>
+    <string name="clean_memory_stat_total">Totale</string>
+    <string name="clean_memory_result_sub">Sistema ottimizzato</string>
+    <string name="clean_memory_start">Accelera Ora</string>
+    <string name="clean_memory_running">Ottimizzazione sistema…</string>
+    <string name="clean_memory_optimal">Il sistema è in uno stato ottimale!</string>
+    <string name="clean_memory_retry">Ottimizza di Nuovo</string>
+    <string name="clean_memory_toast">Liberati $number_ram MB</string>
+
+    <!-- Contacts -->
+    <string name="contact_tap_to_call">Chiama Ora</string>
+    <string name="contact_list_title">Seleziona Contatti Rapidi</string>
+    <string name="contact_list_saved">Elenco contatti salvato</string>
+    <string name="contact_permission_denied">È necessario il permesso per i contatti per usare questa funzione</string>
+    <string name="app_list_save_action">Salva Configurazione</string>
+    <string name="app_list_saved">Elenco app salvato</string>
+
+    <!-- Common -->
+    <string name="save">Salva</string>
+    <string name="back">Indietro</string>
+    <string name="search">Cerca…</string>
+
+    <!-- Call Permission -->
+    <string name="call_permission_title">Permesso per Effettuare Chiamate</string>
+    <string name="call_permission_desc">L\'app ha bisogno del permesso per effettuare chiamate per chiamare automaticamente i parenti in caso di emergenza.</string>
+
+    <!-- Call Block -->
+    <string name="call_block_title">Permesso per Bloccare Chiamate</string>
+    <string name="call_block_desc">L\'app ha bisogno del permesso per gestire chiamate e contatti per bloccare automaticamente le chiamate da sconosciuti.</string>
+
+    <!-- Home Status -->
+    <string name="home_header_apps">Applicazioni</string>
+    <string name="home_header_contacts">Contatti Rapidi</string>
+
+    <!-- Block -->
+    <string name="block_title">Applicazione Bloccata</string>
+    <string name="block_desc">Questa applicazione non è nell\'elenco consentito. Contattare l\'amministratore.</string>
+    <string name="block_go_home">Vai alla Schermata Iniziale</string>
+
+    <!-- Permissions & Setup -->
+    <string name="default_launcher_setup">Configura Ora</string>
+    <string name="default_launcher_title">Imposta Launcher Predefinito</string>
+    <string name="default_launcher_desc">Per usare Retirement Launcher come schermata iniziale, devi impostarlo come app predefinita nelle impostazioni di sistema.</string>
+    <string name="permission_grant">Concedi Permesso</string>
+    <string name="understood">Capito</string>
+    <string name="pin_verify_title">Conferma PIN</string>
+    <string name="pin_verify_desc">Inserisci il tuo PIN per modificare questa impostazione.</string>
+    <string name="pin_key_delete_desc">Elimina</string>
+
+    <!-- PIN Setup -->
+    <string name="pin_enter_new">Inserisci nuovo PIN (6 cifre)</string>
+    <string name="pin_confirm_new">Conferma nuovo PIN</string>
+    <string name="pin_setup_success">Configurazione PIN riuscita</string>
+    <string name="pin_error_length">Il PIN deve essere di 6 cifre</string>
+    <string name="pin_error_confirm_mismatch">Il PIN di conferma non corrisponde</string>
+    <string name="pin_error_incorrect">PIN errato</string>
+
+    <string name="done">Fatto</string>
+    <string name="emergency_call_title">Chiamata di Emergenza</string>
+    <string name="emergency_call_desc">Se il telefono non viene usato per 12 ore, l\'app effettuerà automaticamente una chiamata di emergenza.</string>
+    <string name="emergency_call_enable">Attiva funzione</string>
+    <string name="emergency_call_phone_number">Numero di Telefono di Emergenza</string>
+    <string name="emergency_call_phone_number_hint">Inserisci numero</string>
+    <string name="emergency_call_save_success">Configurazione chiamata di emergenza salvata</string>
+</resources>

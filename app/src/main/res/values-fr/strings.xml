@@ -1,0 +1,101 @@
+<resources>
+    <string name="app_name">RetirementLauncher</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Paramètres</string>
+    <string name="setting_header_general">Paramètres Généraux</string>
+    <string name="setting_header_security">Sécurité &amp; Protection</string>
+    <string name="setting_header_optimization">Optimisation &amp; Utilitaires</string>
+    <string name="setting_pin">Configuration du code PIN</string>
+    <string name="setting_app_list">Configuration de la liste d\'applications</string>
+    <string name="setting_default_launcher">Définir le lanceur par défaut</string>
+    <string name="setting_contact_list">Configuration des contacts rapides</string>
+    <string name="setting_clean_files">Nettoyer les fichiers inutiles</string>
+    <string name="setting_clean_memory">Libérer de la mémoire</string>
+    <string name="setting_emergency_call">Appel d\'urgence automatique</string>
+    <string name="setting_app_monitoring">Surveillance des applications</string>
+    <string name="setting_auto_cleanup_apk">Suppression automatique des APK</string>
+    <string name="setting_call_block">Bloquer les appels inconnus</string>
+    <string name="setting_pocket_mode">Mode poche</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_title">Bienvenue sur Retirement Launcher</string>
+    <string name="onboarding_desc">Une application pour simplifier l\'interface de votre téléphone et protéger votre appareil.</string>
+    <string name="onboarding_start">Commencer</string>
+
+    <!-- Clean Files -->
+    <string name="clean_files_title">Nettoyer les fichiers inutiles</string>
+    <string name="clean_files_desc">Prêt à analyser l\'appareil</string>
+    <string name="clean_files_start">Démarrer le nettoyage</string>
+    <string name="clean_files_running">Analyse et nettoyage en cours…</string>
+    <string name="clean_files_completed">Nettoyage terminé !</string>
+    <string name="clean_files_retry">Nettoyer à nouveau</string>
+
+    <!-- Clean Memory -->
+    <string name="clean_memory_title">Libérer de la mémoire</string>
+    <string name="clean_memory_stat_used">Utilisé</string>
+    <string name="clean_memory_stat_free">Libre</string>
+    <string name="clean_memory_stat_total">Total</string>
+    <string name="clean_memory_result_sub">Système optimisé</string>
+    <string name="clean_memory_start">Accélérer maintenant</string>
+    <string name="clean_memory_running">Optimisation du système…</string>
+    <string name="clean_memory_optimal">Le système est dans un état optimal !</string>
+    <string name="clean_memory_retry">Optimiser à nouveau</string>
+    <string name="clean_memory_toast">$number_ram Mo libérés</string>
+
+    <!-- Contacts -->
+    <string name="contact_tap_to_call">Appeler maintenant</string>
+    <string name="contact_list_title">Sélectionner les contacts rapides</string>
+    <string name="contact_list_saved">Liste de contacts enregistrée</string>
+    <string name="contact_permission_denied">L\'autorisation d\'accès aux contacts est requise pour utiliser cette fonctionnalité</string>
+    <string name="app_list_save_action">Enregistrer la configuration</string>
+    <string name="app_list_saved">Liste d\'applications enregistrée</string>
+
+    <!-- Common -->
+    <string name="save">Enregistrer</string>
+    <string name="back">Retour</string>
+    <string name="search">Rechercher…</string>
+
+    <!-- Call Permission -->
+    <string name="call_permission_title">Autorisation de passer des appels</string>
+    <string name="call_permission_desc">L\'application a besoin de l\'autorisation de passer des appels pour appeler automatiquement vos proches en cas d\'urgence.</string>
+
+    <!-- Call Block -->
+    <string name="call_block_title">Autorisation de bloquer les appels</string>
+    <string name="call_block_desc">L\'application a besoin de l\'autorisation de gérer les appels et les contacts pour bloquer automatiquement les appels d\'inconnus.</string>
+
+    <!-- Home Status -->
+    <string name="home_header_apps">Applications</string>
+    <string name="home_header_contacts">Contacts rapides</string>
+
+    <!-- Block -->
+    <string name="block_title">Application bloquée</string>
+    <string name="block_desc">Cette application ne figure pas dans la liste autorisée. Veuillez contacter l\'administrateur.</string>
+    <string name="block_go_home">Retour à l\'écran d\'accueil</string>
+
+    <!-- Permissions & Setup -->
+    <string name="default_launcher_setup">Configurer maintenant</string>
+    <string name="default_launcher_title">Définir le lanceur par défaut</string>
+    <string name="default_launcher_desc">Pour utiliser Retirement Launcher comme écran d\'accueil, vous devez le définir comme application par défaut dans les paramètres du système.</string>
+    <string name="permission_grant">Accorder l\'autorisation</string>
+    <string name="understood">Compris</string>
+    <string name="pin_verify_title">Confirmer le code PIN</string>
+    <string name="pin_verify_desc">Veuillez saisir votre code PIN pour modifier ce paramètre.</string>
+    <string name="pin_key_delete_desc">Supprimer</string>
+
+    <!-- PIN Setup -->
+    <string name="pin_enter_new">Saisir le nouveau code PIN (6 chiffres)</string>
+    <string name="pin_confirm_new">Confirmer le nouveau code PIN</string>
+    <string name="pin_setup_success">Configuration du code PIN réussie</string>
+    <string name="pin_error_length">Le code PIN doit comporter 6 chiffres</string>
+    <string name="pin_error_confirm_mismatch">Le code PIN de confirmation ne correspond pas</string>
+    <string name="pin_error_incorrect">Code PIN incorrect</string>
+
+    <string name="done">Terminé</string>
+    <string name="emergency_call_title">Appel d\'urgence</string>
+    <string name="emergency_call_desc">Si le téléphone n\'est pas utilisé pendant 12 heures, l\'application passera automatiquement un appel d\'urgence.</string>
+    <string name="emergency_call_enable">Activer la fonctionnalité</string>
+    <string name="emergency_call_phone_number">Numéro d\'urgence</string>
+    <string name="emergency_call_phone_number_hint">Saisir le numéro</string>
+    <string name="emergency_call_save_success">Configuration de l\'appel d\'urgence enregistrée</string>
+</resources>

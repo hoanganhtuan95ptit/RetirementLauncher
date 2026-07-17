@@ -1,0 +1,101 @@
+<resources>
+    <string name="app_name">RetirementLauncher</string>
+
+    <!-- Settings -->
+    <string name="settings_title">การตั้งค่า</string>
+    <string name="setting_header_general">การตั้งค่าทั่วไป</string>
+    <string name="setting_header_security">ความปลอดภัยและการป้องกัน</string>
+    <string name="setting_header_optimization">การเพิ่มประสิทธิภาพและยูทิลิตี้</string>
+    <string name="setting_pin">ตั้งค่า PIN</string>
+    <string name="setting_app_list">ตั้งค่ารายการแอป</string>
+    <string name="setting_default_launcher">ตั้งค่าตัวเปิดเริ่มต้น</string>
+    <string name="setting_contact_list">ตั้งค่าผู้ติดต่อด่วน</string>
+    <string name="setting_clean_files">ล้างไฟล์ขยะ</string>
+    <string name="setting_clean_memory">เพิ่มหน่วยความจำ</string>
+    <string name="setting_emergency_call">โทรฉุกเฉินอัตโนมัติ</string>
+    <string name="setting_app_monitoring">การตรวจสอบแอป</string>
+    <string name="setting_auto_cleanup_apk">ลบ APK อัตโนมัติ</string>
+    <string name="setting_call_block">บล็อกเบอร์แปลก</string>
+    <string name="setting_pocket_mode">โหมดพ็อกเก็ต</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_title">ยินดีต้อนรับสู่ Retirement Launcher</string>
+    <string name="onboarding_desc">แอปเพื่อลดความซับซ้อนของส่วนต่อประสานโทรศัพท์และปกป้องอุปกรณ์ของคุณ</string>
+    <string name="onboarding_start">เริ่มต้นใช้งาน</string>
+
+    <!-- Clean Files -->
+    <string name="clean_files_title">ล้างไฟล์ขยะ</string>
+    <string name="clean_files_desc">พร้อมสแกนอุปกรณ์</string>
+    <string name="clean_files_start">เริ่มการล้าง</string>
+    <string name="clean_files_running">กำลังสแกนและล้างข้อมูล…</string>
+    <string name="clean_files_completed">ล้างข้อมูลเสร็จสิ้น!</string>
+    <string name="clean_files_retry">ล้างอีกครั้ง</string>
+
+    <!-- Clean Memory -->
+    <string name="clean_memory_title">เพิ่มหน่วยความจำ</string>
+    <string name="clean_memory_stat_used">ใช้ไป</string>
+    <string name="clean_memory_stat_free">ว่าง</string>
+    <string name="clean_memory_stat_total">ทั้งหมด</string>
+    <string name="clean_memory_result_sub">ระบบได้รับการปรับแต่งแล้ว</string>
+    <string name="clean_memory_start">เร่งความเร็วตอนนี้</string>
+    <string name="clean_memory_running">กำลังปรับแต่งระบบ…</string>
+    <string name="clean_memory_optimal">ระบบอยู่ในสถานะที่เหมาะสมที่สุดแล้ว!</string>
+    <string name="clean_memory_retry">ปรับแต่งอีกครั้ง</string>
+    <string name="clean_memory_toast">เพิ่มพื้นที่แล้ว $number_ram MB</string>
+
+    <!-- Contacts -->
+    <string name="contact_tap_to_call">โทรทันที</string>
+    <string name="contact_list_title">เลือกผู้ติดต่อด่วน</string>
+    <string name="contact_list_saved">บันทึกรายการผู้ติดต่อแล้ว</string>
+    <string name="contact_permission_denied">จำเป็นต้องได้รับอนุญาตเข้าถึงผู้ติดต่อเพื่อใช้ฟีเจอร์นี้</string>
+    <string name="app_list_save_action">บันทึกการกำหนดค่า</string>
+    <string name="app_list_saved">บันทึกรายการแอปแล้ว</string>
+
+    <!-- Common -->
+    <string name="save">บันทึก</string>
+    <string name="back">กลับ</string>
+    <string name="search">ค้นหา…</string>
+
+    <!-- Call Permission -->
+    <string name="call_permission_title">สิทธิ์ในการโทร</string>
+    <string name="call_permission_desc">แอปต้องการสิทธิ์ในการโทรเพื่อโทรหาญาติโดยอัตโนมัติในกรณีฉุกเฉิน</string>
+
+    <!-- Call Block -->
+    <string name="call_block_title">สิทธิ์ในการบล็อกการโทร</string>
+    <string name="call_block_desc">แอปต้องการสิทธิ์ในการจัดการการโทรและผู้ติดต่อเพื่อบล็อกการโทรจากคนแปลกหน้าโดยอัตโนมัติ</string>
+
+    <!-- Home Status -->
+    <string name="home_header_apps">แอปพลิเคชัน</string>
+    <string name="home_header_contacts">ผู้ติดต่อด่วน</string>
+
+    <!-- Block -->
+    <string name="block_title">แอปถูกบล็อก</string>
+    <string name="block_desc">แอปพลิเคชันนี้ไม่ได้อยู่ในรายการที่อนุญาต โปรดติดต่อผู้ดูแลระบบ</string>
+    <string name="block_go_home">กลับไปที่หน้าหลัก</string>
+
+    <!-- Permissions & Setup -->
+    <string name="default_launcher_setup">ตั้งค่าตอนนี้</string>
+    <string name="default_launcher_title">ตั้งค่าตัวเปิดเริ่มต้น</string>
+    <string name="default_launcher_desc">หากต้องการใช้ Retirement Launcher เป็นหน้าหลัก คุณต้องตั้งค่าให้เป็นแอปเริ่มต้นในการตั้งค่าระบบ</string>
+    <string name="permission_grant">ให้สิทธิ์</string>
+    <string name="understood">เข้าใจแล้ว</string>
+    <string name="pin_verify_title">ยืนยัน PIN</string>
+    <string name="pin_verify_desc">โปรดป้อน PIN ของคุณเพื่อเปลี่ยนการตั้งค่านี้</string>
+    <string name="pin_key_delete_desc">ลบ</string>
+
+    <!-- PIN Setup -->
+    <string name="pin_enter_new">ป้อน PIN ใหม่ (6 หลัก)</string>
+    <string name="pin_confirm_new">ยืนยัน PIN ใหม่</string>
+    <string name="pin_setup_success">ตั้งค่า PIN สำเร็จ</string>
+    <string name="pin_error_length">PIN ต้องมี 6 หลัก</string>
+    <string name="pin_error_confirm_mismatch">PIN ยืนยันไม่ตรงกัน</string>
+    <string name="pin_error_incorrect">PIN ไม่ถูกต้อง</string>
+
+    <string name="done">เสร็จสิ้น</string>
+    <string name="emergency_call_title">โทรฉุกเฉิน</string>
+    <string name="emergency_call_desc">หากไม่มีการใช้งานโทรศัพท์เป็นเวลา 12 ชั่วโมง แอปจะทำการโทรฉุกเฉินโดยอัตโนมัติ</string>
+    <string name="emergency_call_enable">เปิดใช้งานฟีเจอร์</string>
+    <string name="emergency_call_phone_number">หมายเลขโทรศัพท์ฉุกเฉิน</string>
+    <string name="emergency_call_phone_number_hint">ป้อนหมายเลขโทรศัพท์</string>
+    <string name="emergency_call_save_success">บันทึกการกำหนดค่าการโทรฉุกเฉินแล้ว</string>
+</resources>

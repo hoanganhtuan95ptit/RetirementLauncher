@@ -1,0 +1,101 @@
+<resources>
+    <string name="app_name">RetirementLauncher</string>
+
+    <!-- Settings -->
+    <string name="settings_title">설정</string>
+    <string name="setting_header_general">일반 설정</string>
+    <string name="setting_header_security">보안 및 보호</string>
+    <string name="setting_header_optimization">최적화 및 유틸리티</string>
+    <string name="setting_pin">PIN 설정</string>
+    <string name="setting_app_list">앱 목록 설정</string>
+    <string name="setting_default_launcher">기본 런처 설정</string>
+    <string name="setting_contact_list">단축 번호 설정</string>
+    <string name="setting_clean_files">정크 파일 정리</string>
+    <string name="setting_clean_memory">메모리 최적화</string>
+    <string name="setting_emergency_call">자동 긴급 전화</string>
+    <string name="setting_app_monitoring">앱 모니터링</string>
+    <string name="setting_auto_cleanup_apk">APK 자동 삭제</string>
+    <string name="setting_call_block">스팸 전화 차단</string>
+    <string name="setting_pocket_mode">포켓 모드</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_title">Retirement Launcher에 오신 것을 환영합니다</string>
+    <string name="onboarding_desc">전화기 인터페이스를 단순화하고 장치를 보호하는 앱입니다.</string>
+    <string name="onboarding_start">시작하기</string>
+
+    <!-- Clean Files -->
+    <string name="clean_files_title">정크 파일 정리</string>
+    <string name="clean_files_desc">장치를 스캔할 준비가 되었습니다</string>
+    <string name="clean_files_start">정리 시작</string>
+    <string name="clean_files_running">스캔 및 정리 중…</string>
+    <string name="clean_files_completed">정리 완료!</string>
+    <string name="clean_files_retry">다시 정리</string>
+
+    <!-- Clean Memory -->
+    <string name="clean_memory_title">메모리 최적화</string>
+    <string name="clean_memory_stat_used">사용 중</string>
+    <string name="clean_memory_stat_free">여유</string>
+    <string name="clean_memory_stat_total">전체</string>
+    <string name="clean_memory_result_sub">시스템이 최적화되었습니다</string>
+    <string name="clean_memory_start">지금 가속</string>
+    <string name="clean_memory_running">시스템 최적화 중…</string>
+    <string name="clean_memory_optimal">시스템이 최적의 상태입니다!</string>
+    <string name="clean_memory_retry">다시 최적화</string>
+    <string name="clean_memory_toast">$number_ram MB 최적화됨</string>
+
+    <!-- Contacts -->
+    <string name="contact_tap_to_call">지금 전화</string>
+    <string name="contact_list_title">단축 번호 선택</string>
+    <string name="contact_list_saved">연락처 목록이 저장되었습니다</string>
+    <string name="contact_permission_denied">이 기능을 사용하려면 연락처 권한이 필요합니다</string>
+    <string name="app_list_save_action">설정 저장</string>
+    <string name="app_list_saved">앱 목록이 저장되었습니다</string>
+
+    <!-- Common -->
+    <string name="save">저장</string>
+    <string name="back">뒤로</string>
+    <string name="search">검색…</string>
+
+    <!-- Call Permission -->
+    <string name="call_permission_title">전화 걸기 권한</string>
+    <string name="call_permission_desc">응급 상황 시 자동으로 지인에게 전화를 걸기 위해 전화 걸기 권한이 필요합니다.</string>
+
+    <!-- Call Block -->
+    <string name="call_block_title">전화 차단 권한</string>
+    <string name="call_block_desc">모르는 번호의 전화를 자동으로 차단하기 위해 전화 및 연락처 관리 권한이 필요합니다.</string>
+
+    <!-- Home Status -->
+    <string name="home_header_apps">애플리케이션</string>
+    <string name="home_header_contacts">단축 번호</string>
+
+    <!-- Block -->
+    <string name="block_title">앱 차단됨</string>
+    <string name="block_desc">이 앱은 허용 목록에 없습니다. 관리자에게 문의하세요.</string>
+    <string name="block_go_home">홈 화면으로 이동</string>
+
+    <!-- Permissions & Setup -->
+    <string name="default_launcher_setup">지금 설정</string>
+    <string name="default_launcher_title">기본 런처 설정</string>
+    <string name="default_launcher_desc">Retirement Launcher를 홈 화면으로 사용하려면 시스템 설정에서 기본 앱으로 설정해야 합니다.</string>
+    <string name="permission_grant">권한 허용</string>
+    <string name="understood">확인</string>
+    <string name="pin_verify_title">PIN 확인</string>
+    <string name="pin_verify_desc">이 설정을 변경하려면 PIN을 입력하세요.</string>
+    <string name="pin_key_delete_desc">삭제</string>
+
+    <!-- PIN Setup -->
+    <string name="pin_enter_new">새 PIN 입력 (6자리)</string>
+    <string name="pin_confirm_new">새 PIN 확인</string>
+    <string name="pin_setup_success">PIN 설정 완료</string>
+    <string name="pin_error_length">PIN은 6자리여야 합니다</string>
+    <string name="pin_error_confirm_mismatch">확인 PIN이 일치하지 않습니다</string>
+    <string name="pin_error_incorrect">PIN이 올바르지 않습니다</string>
+
+    <string name="done">완료</string>
+    <string name="emergency_call_title">긴급 전화</string>
+    <string name="emergency_call_desc">전화기를 12시간 동안 사용하지 않으면 앱에서 자동으로 긴급 전화를 겁니다.</string>
+    <string name="emergency_call_enable">기능 활성화</string>
+    <string name="emergency_call_phone_number">긴급 전화번호</string>
+    <string name="emergency_call_phone_number_hint">번호 입력</string>
+    <string name="emergency_call_save_success">긴급 전화 설정이 저장되었습니다</string>
+</resources>

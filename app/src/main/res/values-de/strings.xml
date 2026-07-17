@@ -1,0 +1,101 @@
+<resources>
+    <string name="app_name">RetirementLauncher</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Einstellungen</string>
+    <string name="setting_header_general">Allgemeine Einstellungen</string>
+    <string name="setting_header_security">Sicherheit &amp; Schutz</string>
+    <string name="setting_header_optimization">Optimierung &amp; Dienstprogramme</string>
+    <string name="setting_pin">PIN-Einrichtung</string>
+    <string name="setting_app_list">App-Listen-Einrichtung</string>
+    <string name="setting_default_launcher">Standard-Launcher festlegen</string>
+    <string name="setting_contact_list">Schnellkontakt-Einrichtung</string>
+    <string name="setting_clean_files">Junk-Dateien bereinigen</string>
+    <string name="setting_clean_memory">Speicher freigeben</string>
+    <string name="setting_emergency_call">Automatischer Notruf</string>
+    <string name="setting_app_monitoring">App-Überwachung</string>
+    <string name="setting_auto_cleanup_apk">APK automatisch löschen</string>
+    <string name="setting_call_block">Unbekannte Anrufe blockieren</string>
+    <string name="setting_pocket_mode">Taschenmodus</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_title">Willkommen bei Retirement Launcher</string>
+    <string name="onboarding_desc">Eine App, um Ihre Benutzeroberfläche zu vereinfachen und Ihr Gerät zu schützen.</string>
+    <string name="onboarding_start">Los geht\'s</string>
+
+    <!-- Clean Files -->
+    <string name="clean_files_title">Junk-Dateien bereinigen</string>
+    <string name="clean_files_desc">Bereit zum Scannen des Geräts</string>
+    <string name="clean_files_start">Reinigung starten</string>
+    <string name="clean_files_running">Scannen und Reinigen…</string>
+    <string name="clean_files_completed">Reinigung abgeschlossen!</string>
+    <string name="clean_files_retry">Erneut reinigen</string>
+
+    <!-- Clean Memory -->
+    <string name="clean_memory_title">Speicher freigeben</string>
+    <string name="clean_memory_stat_used">Belegt</string>
+    <string name="clean_memory_stat_free">Frei</string>
+    <string name="clean_memory_stat_total">Gesamt</string>
+    <string name="clean_memory_result_sub">System optimiert</string>
+    <string name="clean_memory_start">Jetzt beschleunigen</string>
+    <string name="clean_memory_running">System wird optimiert…</string>
+    <string name="clean_memory_optimal">Das System ist im optimalen Zustand!</string>
+    <string name="clean_memory_retry">Erneut optimieren</string>
+    <string name="clean_memory_toast">$number_ram MB freigegeben</string>
+
+    <!-- Contacts -->
+    <string name="contact_tap_to_call">Jetzt anrufen</string>
+    <string name="contact_list_title">Schnellkontakte auswählen</string>
+    <string name="contact_list_saved">Kontaktliste gespeichert</string>
+    <string name="contact_permission_denied">Kontaktberechtigung ist erforderlich</string>
+    <string name="app_list_save_action">Konfiguration speichern</string>
+    <string name="app_list_saved">App-Liste gespeichert</string>
+
+    <!-- Common -->
+    <string name="save">Speichern</string>
+    <string name="back">Zurück</string>
+    <string name="search">Suchen…</string>
+
+    <!-- Call Permission -->
+    <string name="call_permission_title">Anrufberechtigung</string>
+    <string name="call_permission_desc">Die App benötigt die Berechtigung zum Telefonieren, um im Notfall automatisch Angehörige anzurufen.</string>
+
+    <!-- Call Block -->
+    <string name="call_block_title">Anrufe blockieren Berechtigung</string>
+    <string name="call_block_desc">Die App benötigt Zugriff auf Anrufe und Kontakte, um Anrufe von Unbekannten automatisch zu blockieren.</string>
+
+    <!-- Home Status -->
+    <string name="home_header_apps">Anwendungen</string>
+    <string name="home_header_contacts">Schnellkontakte</string>
+
+    <!-- Block -->
+    <string name="block_title">Anwendung blockiert</string>
+    <string name="block_desc">Diese Anwendung befindet sich nicht auf der Liste der erlaubten Anwendungen.</string>
+    <string name="block_go_home">Zum Startbildschirm</string>
+
+    <!-- Permissions & Setup -->
+    <string name="default_launcher_setup">Jetzt einrichten</string>
+    <string name="default_launcher_title">Standard-Launcher festlegen</string>
+    <string name="default_launcher_desc">Um den Retirement Launcher als Startbildschirm zu verwenden, müssen Sie ihn in den Systemeinstellungen als Standard-App festlegen.</string>
+    <string name="permission_grant">Berechtigung erteilen</string>
+    <string name="understood">Verstanden</string>
+    <string name="pin_verify_title">PIN bestätigen</string>
+    <string name="pin_verify_desc">Bitte geben Sie Ihre PIN ein, um diese Einstellung zu ändern.</string>
+    <string name="pin_key_delete_desc">Löschen</string>
+
+    <!-- PIN Setup -->
+    <string name="pin_enter_new">Neue PIN eingeben (6 Ziffern)</string>
+    <string name="pin_confirm_new">Neue PIN bestätigen</string>
+    <string name="pin_setup_success">PIN-Einrichtung erfolgreich</string>
+    <string name="pin_error_length">Die PIN muss 6 Ziffern lang sein</string>
+    <string name="pin_error_confirm_mismatch">Die Bestätigungs-PIN stimmt nicht überein</string>
+    <string name="pin_error_incorrect">Falsche PIN</string>
+
+    <string name="done">Fertig</string>
+    <string name="emergency_call_title">Notruf</string>
+    <string name="emergency_call_desc">Wenn das Telefon 12 Stunden lang nicht benutzt wird, setzt die App automatisch einen Notruf ab.</string>
+    <string name="emergency_call_enable">Funktion aktivieren</string>
+    <string name="emergency_call_phone_number">Notrufnummer</string>
+    <string name="emergency_call_phone_number_hint">Nummer eingeben</string>
+    <string name="emergency_call_save_success">Notrufkonfiguration gespeichert</string>
+</resources>

@@ -1,0 +1,101 @@
+<resources>
+    <string name="app_name">RetirementLauncher</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Instellingen</string>
+    <string name="setting_header_general">Algemene Instellingen</string>
+    <string name="setting_header_security">Beveiliging &amp; Bescherming</string>
+    <string name="setting_header_optimization">Optimalisatie &amp; Hulpprogramma\'s</string>
+    <string name="setting_pin">PIN instellen</string>
+    <string name="setting_app_list">App-lijst instellen</string>
+    <string name="setting_default_launcher">Standaard Launcher instellen</string>
+    <string name="setting_contact_list">Snelcontacten instellen</string>
+    <string name="setting_clean_files">Bestaanden opschonen</string>
+    <string name="setting_clean_memory">Geheugen vrijmaken</string>
+    <string name="setting_emergency_call">Automatische noodoproep</string>
+    <string name="setting_app_monitoring">App-monitoring</string>
+    <string name="setting_auto_cleanup_apk">APK automatisch verwijderen</string>
+    <string name="setting_call_block">Onbekende oproepen blokkeren</string>
+    <string name="setting_pocket_mode">Zakmodus</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_title">Welkom bij Retirement Launcher</string>
+    <string name="onboarding_desc">Een app om uw telefooninterface te vereenvoudigen en uw apparaat te beschermen.</string>
+    <string name="onboarding_start">Aan de slag</string>
+
+    <!-- Clean Files -->
+    <string name="clean_files_title">Bestanden opschonen</string>
+    <string name="clean_files_desc">Klaar om apparaat te scannen</string>
+    <string name="clean_files_start">Start opschonen</string>
+    <string name="clean_files_running">Scannen en opschonen…</string>
+    <string name="clean_files_completed">Opschonen voltooid!</string>
+    <string name="clean_files_retry">Opnieuw opschonen</string>
+
+    <!-- Clean Memory -->
+    <string name="clean_memory_title">Geheugen vrijmaken</string>
+    <string name="clean_memory_stat_used">In gebruik</string>
+    <string name="clean_memory_stat_free">Vrij</string>
+    <string name="clean_memory_stat_total">Totaal</string>
+    <string name="clean_memory_result_sub">Systeem geoptimaliseerd</string>
+    <string name="clean_memory_start">Nu versnellen</string>
+    <string name="clean_memory_running">Systeem optimaliseren…</string>
+    <string name="clean_memory_optimal">Systeem is in optimale staat!</string>
+    <string name="clean_memory_retry">Opnieuw optimaliseren</string>
+    <string name="clean_memory_toast">$number_ram MB vrijgemaakt</string>
+
+    <!-- Contacts -->
+    <string name="contact_tap_to_call">Nu bellen</string>
+    <string name="contact_list_title">Selecteer snelcontacten</string>
+    <string name="contact_list_saved">Contactlijst opgeslagen</string>
+    <string name="contact_permission_denied">Contacttoestemming is vereist voor deze functie</string>
+    <string name="app_list_save_action">Configuratie opslaan</string>
+    <string name="app_list_saved">App-lijst opgeslagen</string>
+
+    <!-- Common -->
+    <string name="save">Opslaan</string>
+    <string name="back">Terug</string>
+    <string name="search">Zoeken…</string>
+
+    <!-- Call Permission -->
+    <string name="call_permission_title">Toestemming voor bellen</string>
+    <string name="call_permission_desc">De app heeft toestemming nodig om te bellen om automatisch familieleden te bellen in geval van nood.</string>
+
+    <!-- Call Block -->
+    <string name="call_block_title">Toestemming voor oproepblokkering</string>
+    <string name="call_block_desc">De app heeft toestemming nodig om oproepen en contacten te beheren om automatisch oproepen van vreemden te blokkeren.</string>
+
+    <!-- Home Status -->
+    <string name="home_header_apps">Applicaties</string>
+    <string name="home_header_contacts">Snelcontacten</string>
+
+    <!-- Block -->
+    <string name="block_title">Applicatie geblokkeerd</string>
+    <string name="block_desc">Deze applicatie staat niet in de toegestane lijst. Neem contact op met de beheerder.</string>
+    <string name="block_go_home">Ga naar startscherm</string>
+
+    <!-- Permissions & Setup -->
+    <string name="default_launcher_setup">Nu instellen</string>
+    <string name="default_launcher_title">Standaard Launcher instellen</string>
+    <string name="default_launcher_desc">Om Retirement Launcher als uw startscherm te gebruiken, moet u deze als standaard-app instellen in de systeeminstellingen.</string>
+    <string name="permission_grant">Toestemming verlenen</string>
+    <string name="understood">Begrepen</string>
+    <string name="pin_verify_title">PIN bevestigen</string>
+    <string name="pin_verify_desc">Voer uw PIN in om deze instelling te wijzigen.</string>
+    <string name="pin_key_delete_desc">Verwijderen</string>
+
+    <!-- PIN Setup -->
+    <string name="pin_enter_new">Voer nieuwe PIN in (6 cijfers)</string>
+    <string name="pin_confirm_new">Bevestig nieuwe PIN</string>
+    <string name="pin_setup_success">PIN instellen voltooid</string>
+    <string name="pin_error_length">PIN moet 6 cijfers zijn</string>
+    <string name="pin_error_confirm_mismatch">Bevestigings-PIN komt niet overeen</string>
+    <string name="pin_error_incorrect">Onjuiste PIN</string>
+
+    <string name="done">Klaar</string>
+    <string name="emergency_call_title">Noodoproep</string>
+    <string name="emergency_call_desc">Als de telefoon 12 uur niet wordt gebruikt, maakt de app automatisch een noodoproep.</string>
+    <string name="emergency_call_enable">Functie inschakelen</string>
+    <string name="emergency_call_phone_number">Noodnummer</string>
+    <string name="emergency_call_phone_number_hint">Voer nummer in</string>
+    <string name="emergency_call_save_success">Configuratie noodoproep opgeslagen</string>
+</resources>

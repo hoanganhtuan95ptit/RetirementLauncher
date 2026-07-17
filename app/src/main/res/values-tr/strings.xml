@@ -1,0 +1,101 @@
+<resources>
+    <string name="app_name">RetirementLauncher</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Ayarlar</string>
+    <string name="setting_header_general">Genel Ayarlar</string>
+    <string name="setting_header_security">Güvenlik ve Koruma</string>
+    <string name="setting_header_optimization">Optimizasyon ve Araçlar</string>
+    <string name="setting_pin">PIN Kurulumu</string>
+    <string name="setting_app_list">Uygulama Listesi Kurulumu</string>
+    <string name="setting_default_launcher">Varsayılan Başlatıcıyı Ayarla</string>
+    <string name="setting_contact_list">Hızlı Rehber Kurulumu</string>
+    <string name="setting_clean_files">Gereksiz Dosyaları Temizle</string>
+    <string name="setting_clean_memory">Hafızayı Boşalt</string>
+    <string name="setting_emergency_call">Otomatik Acil Arama</string>
+    <string name="setting_app_monitoring">Uygulama İzleme</string>
+    <string name="setting_auto_cleanup_apk">APK Otomatik Sil</string>
+    <string name="setting_call_block">Bilinmeyen Aramaları Engelle</string>
+    <string name="setting_pocket_mode">Cep Modu</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_title">Retirement Launcher\'a Hoş Geldiniz</string>
+    <string name="onboarding_desc">Telefon arayüzünüzü basitleştirmek ve cihazınızı korumak için bir uygulama.</string>
+    <string name="onboarding_start">Başla</string>
+
+    <!-- Clean Files -->
+    <string name="clean_files_title">Gereksiz Dosyaları Temizle</string>
+    <string name="clean_files_desc">Cihaz taranmaya hazır</string>
+    <string name="clean_files_start">Temizliği Başlat</string>
+    <string name="clean_files_running">Tarama ve temizleme devam ediyor…</string>
+    <string name="clean_files_completed">Temizlik tamamlandı!</string>
+    <string name="clean_files_retry">Tekrar Temizle</string>
+
+    <!-- Clean Memory -->
+    <string name="clean_memory_title">Hafızayı Boşalt</string>
+    <string name="clean_memory_stat_used">Kullanılan</string>
+    <string name="clean_memory_stat_free">Boş</string>
+    <string name="clean_memory_stat_total">Toplam</string>
+    <string name="clean_memory_result_sub">Sistem optimize edildi</string>
+    <string name="clean_memory_start">Şimdi Hızlandır</string>
+    <string name="clean_memory_running">Sistem optimize ediliyor…</string>
+    <string name="clean_memory_optimal">Sistem en iyi durumda!</string>
+    <string name="clean_memory_retry">Tekrar Optimize Et</string>
+    <string name="clean_memory_toast">$number_ram MB alan boşaltıldı</string>
+
+    <!-- Contacts -->
+    <string name="contact_tap_to_call">Şimdi Ara</string>
+    <string name="contact_list_title">Hızlı Rehber Seç</string>
+    <string name="contact_list_saved">Rehber listesi kaydedildi</string>
+    <string name="contact_permission_denied">Bu özelliği kullanmak için rehber izni gereklidir</string>
+    <string name="app_list_save_action">Yapılandırmayı Kaydet</string>
+    <string name="app_list_saved">Uygulama listesi kaydedildi</string>
+
+    <!-- Common -->
+    <string name="save">Kaydet</string>
+    <string name="back">Geri</string>
+    <string name="search">Ara…</string>
+
+    <!-- Call Permission -->
+    <string name="call_permission_title">Arama İzni</string>
+    <string name="call_permission_desc">Uygulamanın acil durumlarda yakınlarınızı otomatik olarak arayabilmesi için arama yapma iznine ihtiyacı vardır.</string>
+
+    <!-- Call Block -->
+    <string name="call_block_title">Arama Engelleme İzni</string>
+    <string name="call_block_desc">Uygulamanın bilinmeyen aramaları otomatik engellemesi için arama ve rehber yönetimi iznine ihtiyacı vardır.</string>
+
+    <!-- Home Status -->
+    <string name="home_header_apps">Uygulamalar</string>
+    <string name="home_header_contacts">Hızlı Rehber</string>
+
+    <!-- Block -->
+    <string name="block_title">Uygulama Engellendi</string>
+    <string name="block_desc">Bu uygulama izin verilenler listesinde değil. Lütfen yöneticiyle iletişime geçin.</string>
+    <string name="block_go_home">Ana Ekrana Git</string>
+
+    <!-- Permissions & Setup -->
+    <string name="default_launcher_setup">Şimdi Kur</string>
+    <string name="default_launcher_title">Varsayılan Başlatıcıyı Ayarla</string>
+    <string name="default_launcher_desc">Retirement Launcher\'ı ana ekranınız olarak kullanmak için sistem ayarlarından varsayılan uygulama olarak ayarlamanız gerekir.</string>
+    <string name="permission_grant">İzin Ver</string>
+    <string name="understood">Anladım</string>
+    <string name="pin_verify_title">PIN Onayla</string>
+    <string name="pin_verify_desc">Bu ayarı değiştirmek için lütfen PIN kodunuzu girin.</string>
+    <string name="pin_key_delete_desc">Sil</string>
+
+    <!-- PIN Setup -->
+    <string name="pin_enter_new">Yeni PIN girin (6 haneli)</string>
+    <string name="pin_confirm_new">Yeni PIN\'i onaylayın</string>
+    <string name="pin_setup_success">PIN kurulumu başarılı</string>
+    <string name="pin_error_length">PIN 6 haneli olmalıdır</string>
+    <string name="pin_error_confirm_mismatch">PIN onayı eşleşmiyor</string>
+    <string name="pin_error_incorrect">Hatalı PIN</string>
+
+    <string name="done">Tamam</string>
+    <string name="emergency_call_title">Acil Arama</string>
+    <string name="emergency_call_desc">Telefon 12 saat boyunca kullanılmazsa, uygulama otomatik olarak acil arama yapacaktır.</string>
+    <string name="emergency_call_enable">Özelliği etkinleştir</string>
+    <string name="emergency_call_phone_number">Acil Durum Numarası</string>
+    <string name="emergency_call_phone_number_hint">Numara girin</string>
+    <string name="emergency_call_save_success">Acil arama yapılandırması kaydedildi</string>
+</resources>

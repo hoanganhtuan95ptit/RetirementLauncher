@@ -1,0 +1,101 @@
+<resources>
+    <string name="app_name">RetirementLauncher</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Configurações</string>
+    <string name="setting_header_general">Configurações Gerais</string>
+    <string name="setting_header_security">Segurança e Proteção</string>
+    <string name="setting_header_optimization">Otimização e Utilitários</string>
+    <string name="setting_pin">Configuração de PIN</string>
+    <string name="setting_app_list">Configuração da Lista de Apps</string>
+    <string name="setting_default_launcher">Definir Lançador Padrão</string>
+    <string name="setting_contact_list">Configuração de Contatos Rápidos</string>
+    <string name="setting_clean_files">Limpar Arquivos Inúteis</string>
+    <string name="setting_clean_memory">Liberar Memória</string>
+    <string name="setting_emergency_call">Chamada de Emergência Automática</string>
+    <string name="setting_app_monitoring">Monitoramento de Aplicativos</string>
+    <string name="setting_auto_cleanup_apk">Excluir APK Automaticamente</string>
+    <string name="setting_call_block">Bloquear Chamadas Desconhecidas</string>
+    <string name="setting_pocket_mode">Modo Bolso</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_title">Bem-vindo ao Retirement Launcher</string>
+    <string name="onboarding_desc">Um aplicativo para simplificar a interface do seu telefone e proteger o seu dispositivo.</string>
+    <string name="onboarding_start">Começar</string>
+
+    <!-- Clean Files -->
+    <string name="clean_files_title">Limpar Arquivos Inúteis</string>
+    <string name="clean_files_desc">Pronto para escanear o dispositivo</string>
+    <string name="clean_files_start">Iniciar Limpeza</string>
+    <string name="clean_files_running">Escaneando e limpando…</string>
+    <string name="clean_files_completed">Limpeza concluída!</string>
+    <string name="clean_files_retry">Limpar Novamente</string>
+
+    <!-- Clean Memory -->
+    <string name="clean_memory_title">Liberar Memória</string>
+    <string name="clean_memory_stat_used">Usado</string>
+    <string name="clean_memory_stat_free">Livre</string>
+    <string name="clean_memory_stat_total">Total</string>
+    <string name="clean_memory_result_sub">Sistema otimizado</string>
+    <string name="clean_memory_start">Acelerar Agora</string>
+    <string name="clean_memory_running">Otimizando sistema…</string>
+    <string name="clean_memory_optimal">O sistema está em estado ideal!</string>
+    <string name="clean_memory_retry">Otimizar Novamente</string>
+    <string name="clean_memory_toast">Liberados $number_ram MB</string>
+
+    <!-- Contacts -->
+    <string name="contact_tap_to_call">Ligar Agora</string>
+    <string name="contact_list_title">Selecionar Contatos Rápidos</string>
+    <string name="contact_list_saved">Lista de contatos salva</string>
+    <string name="contact_permission_denied">É necessária permissão de contatos para usar esta função</string>
+    <string name="app_list_save_action">Salvar Configuração</string>
+    <string name="app_list_saved">Lista de aplicativos salva</string>
+
+    <!-- Common -->
+    <string name="save">Salvar</string>
+    <string name="back">Voltar</string>
+    <string name="search">Pesquisar…</string>
+
+    <!-- Call Permission -->
+    <string name="call_permission_title">Permissão para Fazer Chamadas</string>
+    <string name="call_permission_desc">O aplicativo precisa de permissão para fazer chamadas e ligar automaticamente para parentes em caso de emergência.</string>
+
+    <!-- Call Block -->
+    <string name="call_block_title">Permissão para Bloquear Chamadas</string>
+    <string name="call_block_desc">O aplicativo precisa de permissão para gerenciar chamadas e contatos para bloquear automaticamente chamadas de desconhecidos.</string>
+
+    <!-- Home Status -->
+    <string name="home_header_apps">Aplicativos</string>
+    <string name="home_header_contacts">Contatos Rápidos</string>
+
+    <!-- Block -->
+    <string name="block_title">Aplicativo Bloqueado</string>
+    <string name="block_desc">Este aplicativo não está na lista permitida. Por favor, entre em contato com o administrador.</string>
+    <string name="block_go_home">Ir para a Tela Inicial</string>
+
+    <!-- Permissions & Setup -->
+    <string name="default_launcher_setup">Configurar Agora</string>
+    <string name="default_launcher_title">Definir Lançador Padrão</string>
+    <string name="default_launcher_desc">Para usar o Retirement Launcher como sua tela inicial, você precisa defini-lo como o aplicativo padrão nas configurações do sistema.</string>
+    <string name="permission_grant">Conceder Permissão</string>
+    <string name="understood">Entendido</string>
+    <string name="pin_verify_title">Confirmar PIN</string>
+    <string name="pin_verify_desc">Por favor, insira o seu PIN para alterar esta configuração.</string>
+    <string name="pin_key_delete_desc">Excluir</string>
+
+    <!-- PIN Setup -->
+    <string name="pin_enter_new">Inserir novo PIN (6 dígitos)</string>
+    <string name="pin_confirm_new">Confirmar novo PIN</string>
+    <string name="pin_setup_success">Configuração de PIN bem-sucedida</string>
+    <string name="pin_error_length">O PIN deve ter 6 dígitos</string>
+    <string name="pin_error_confirm_mismatch">O PIN de confirmação não coincide</string>
+    <string name="pin_error_incorrect">PIN incorreto</string>
+
+    <string name="done">Concluído</string>
+    <string name="emergency_call_title">Chamada de Emergência</string>
+    <string name="emergency_call_desc">Se o telefone não for usado por 12 horas, o aplicativo fará automaticamente uma chamada de emergência.</string>
+    <string name="emergency_call_enable">Ativar recurso</string>
+    <string name="emergency_call_phone_number">Número de Telefone de Emergência</string>
+    <string name="emergency_call_phone_number_hint">Inserir número</string>
+    <string name="emergency_call_save_success">Configuração de chamada de emergência salva</string>
+</resources>

@@ -1,0 +1,101 @@
+<resources>
+    <string name="app_name">RetirementLauncher</string>
+
+    <!-- Settings -->
+    <string name="settings_title">সেটিংস</string>
+    <string name="setting_header_general">সাধারণ সেটিংস</string>
+    <string name="setting_header_security">নিরাপত্তা ও সুরক্ষা</string>
+    <string name="setting_header_optimization">অপ্টিমাইজেশান ও ইউটিলিটি</string>
+    <string name="setting_pin">পিন সেটআপ</string>
+    <string name="setting_app_list">অ্যাপ তালিকা সেটআপ</string>
+    <string name="setting_default_launcher">ডিফল্ট লঞ্চার সেট করুন</string>
+    <string name="setting_contact_list">দ্রুত যোগাযোগ সেটআপ</string>
+    <string name="setting_clean_files">অপ্রয়োজনীয় ফাইল পরিষ্কার করুন</string>
+    <string name="setting_clean_memory">মেমরি খালি করুন</string>
+    <string name="setting_emergency_call">স্বয়ংক্রিয় জরুরি কল</string>
+    <string name="setting_app_monitoring">অ্যাপ মনিটরিং</string>
+    <string name="setting_auto_cleanup_apk">APK স্বয়ংক্রিয়ভাবে মুছুন</string>
+    <string name="setting_call_block">অজানা কল ব্লক করুন</string>
+    <string name="setting_pocket_mode">পকেট মোড</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_title">Retirement Launcher-এ আপনাকে স্বাগতম</string>
+    <string name="onboarding_desc">আপনার ফোন ইন্টারফেস সহজ করতে এবং আপনার ডিভাইস সুরক্ষিত করতে একটি অ্যাপ।</string>
+    <string name="onboarding_start">শুরু করুন</string>
+
+    <!-- Clean Files -->
+    <string name="clean_files_title">অপ্রয়োজনীয় ফাইল পরিষ্কার করুন</string>
+    <string name="clean_files_desc">ডিভাইস স্ক্যান করার জন্য প্রস্তুত</string>
+    <string name="clean_files_start">পরিষ্কার শুরু করুন</string>
+    <string name="clean_files_running">স্ক্যান এবং পরিষ্কার হচ্ছে…</string>
+    <string name="clean_files_completed">পরিষ্কার সম্পন্ন হয়েছে!</string>
+    <string name="clean_files_retry">আবার পরিষ্কার করুন</string>
+
+    <!-- Clean Memory -->
+    <string name="clean_memory_title">মেমরি খালি করুন</string>
+    <string name="clean_memory_stat_used">ব্যবহৃত</string>
+    <string name="clean_memory_stat_free">খালি</string>
+    <string name="clean_memory_stat_total">মোট</string>
+    <string name="clean_memory_result_sub">সিস্টেম অপ্টিমাইজ করা হয়েছে</string>
+    <string name="clean_memory_start">এখনই গতি বাড়ান</string>
+    <string name="clean_memory_running">সিস্টেম অপ্টিমাইজ হচ্ছে…</string>
+    <string name="clean_memory_optimal">সিস্টেম সর্বোত্তম অবস্থায় আছে!</string>
+    <string name="clean_memory_retry">আবার অপ্টিমাইজ করুন</string>
+    <string name="clean_memory_toast">$number_ram MB খালি করা হয়েছে</string>
+
+    <!-- Contacts -->
+    <string name="contact_tap_to_call">এখনই কল করুন</string>
+    <string name="contact_list_title">দ্রুত যোগাযোগ নির্বাচন করুন</string>
+    <string name="contact_list_saved">যোগাযোগ তালিকা সংরক্ষিত হয়েছে</string>
+    <string name="contact_permission_denied">এই বৈশিষ্ট্যটি ব্যবহার করতে যোগাযোগের অনুমতি প্রয়োজন</string>
+    <string name="app_list_save_action">কনফিগারেশন সংরক্ষণ করুন</string>
+    <string name="app_list_saved">অ্যাপ তালিকা সংরক্ষিত হয়েছে</string>
+
+    <!-- Common -->
+    <string name="save">সংরক্ষণ করুন</string>
+    <string name="back">ফিরে যান</string>
+    <string name="search">অনুসন্ধান…</string>
+
+    <!-- Call Permission -->
+    <string name="call_permission_title">কল করার অনুমতি</string>
+    <string name="call_permission_desc">জরুরি অবস্থায় আত্মীয়দের স্বয়ংক্রিয়ভাবে কল করার জন্য অ্যাপটির কল করার অনুমতি প্রয়োজন।</string>
+
+    <!-- Call Block -->
+    <string name="call_block_title">কল ব্লক করার অনুমতি</string>
+    <string name="call_block_desc">অজানা নম্বর থেকে কল স্বয়ংক্রিয়ভাবে ব্লক করতে অ্যাপটির কল এবং যোগাযোগ ব্যবস্থাপনার অনুমতি প্রয়োজন।</string>
+
+    <!-- Home Status -->
+    <string name="home_header_apps">অ্যাপ্লিকেশন</string>
+    <string name="home_header_contacts">দ্রুত যোগাযোগ</string>
+
+    <!-- Block -->
+    <string name="block_title">অ্যাপ্লিকেশন ব্লক করা হয়েছে</string>
+    <string name="block_desc">এই অ্যাপ্লিকেশনটি অনুমোদিত তালিকায় নেই। অনুগ্রহ করে প্রশাসকের সাথে যোগাযোগ করুন।</string>
+    <string name="block_go_home">হোম স্ক্রিনে যান</string>
+
+    <!-- Permissions & Setup -->
+    <string name="default_launcher_setup">এখনই সেটআপ করুন</string>
+    <string name="default_launcher_title">ডিফল্ট লঞ্চার সেট করুন</string>
+    <string name="default_launcher_desc">Retirement Launcher আপনার হোম স্ক্রিন হিসেবে ব্যবহার করতে হলে, আপনাকে এটি সিস্টেম সেটিংসে ডিফল্ট অ্যাপ হিসেবে সেট করতে হবে।</string>
+    <string name="permission_grant">অনুমতি দিন</string>
+    <string name="understood">বুঝেছি</string>
+    <string name="pin_verify_title">পিন নিশ্চিত করুন</string>
+    <string name="pin_verify_desc">এই সেটিং পরিবর্তন করতে অনুগ্রহ করে আপনার পিন লিখুন।</string>
+    <string name="pin_key_delete_desc">মুছে ফেলুন</string>
+
+    <!-- PIN Setup -->
+    <string name="pin_enter_new">নতুন পিন লিখুন (৬ সংখ্যার)</string>
+    <string name="pin_confirm_new">নতুন পিন নিশ্চিত করুন</string>
+    <string name="pin_setup_success">পিন সেটআপ সফল হয়েছে</string>
+    <string name="pin_error_length">পিন অবশ্যই ৬ সংখ্যার হতে হবে</string>
+    <string name="pin_error_confirm_mismatch">নিশ্চিতকরণ পিন মেলেনি</string>
+    <string name="pin_error_incorrect">ভুল পিন</string>
+
+    <string name="done">সম্পন্ন</string>
+    <string name="emergency_call_title">জরুরি কল</string>
+    <string name="emergency_call_desc">যদি ফোনটি ১২ ঘণ্টা ব্যবহার করা না হয়, তবে অ্যাপটি স্বয়ংক্রিয়ভাবে একটি জরুরি কল করবে।</string>
+    <string name="emergency_call_enable">বৈশিষ্ট্যটি সক্ষম করুন</string>
+    <string name="emergency_call_phone_number">জরুরি ফোন নম্বর</string>
+    <string name="emergency_call_phone_number_hint">নম্বর লিখুন</string>
+    <string name="emergency_call_save_success">জরুরি কল কনফিগারেশন সংরক্ষিত হয়েছে</string>
+</resources>

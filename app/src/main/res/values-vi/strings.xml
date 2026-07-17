@@ -1,0 +1,166 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">RetirementLauncher</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Cài đặt</string>
+    <string name="setting_header_general">Thiết lập chung</string>
+    <string name="setting_header_security">Bảo mật &amp; Bảo vệ</string>
+    <string name="setting_header_optimization">Tối ưu &amp; Tiện ích</string>
+    <string name="setting_pin">Thiết lập mã PIN</string>
+    <string name="setting_app_list">Thiết lập danh sách app</string>
+    <string name="setting_default_launcher">Thiết lập launcher mặc định</string>
+    <string name="setting_contact_list">Thiết lập liên hệ nhanh</string>
+    <string name="setting_clean_files">Dọn dẹp file lạ</string>
+    <string name="setting_clean_memory">Giải phóng bộ nhớ</string>
+    <string name="setting_emergency_call">Bật cuộc gọi khẩn cấp tự động (theo liên hệ nhanh)</string>
+    <string name="setting_app_monitoring">Giám sát ứng dụng</string>
+    <string name="setting_auto_cleanup_apk">Tự động xóa APK</string>
+    <string name="setting_call_block">Chặn cuộc gọi lạ</string>
+    <string name="setting_pocket_mode">Chống chạm nhầm (túi quần)</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_title">Chào mừng bạn đến với Retirement Launcher</string>
+    <string name="onboarding_desc">Ứng dụng giúp đơn giản hóa giao diện điện thoại và bảo vệ an toàn cho thiết bị của bạn.</string>
+    <string name="onboarding_start">Bắt đầu ngay</string>
+
+    <!-- Clean Files -->
+    <string name="clean_files_title">Dọn dẹp file lạ</string>
+    <string name="clean_files_desc">Sẵn sàng quét thiết bị</string>
+    <string name="clean_files_start">Bắt đầu dọn dẹp</string>
+    <string name="clean_files_running">Đang quét và dọn dẹp…</string>
+    <string name="clean_files_completed">Đã dọn dẹp hoàn tất!</string>
+    <string name="clean_files_retry">Dọn dẹp lại</string>
+    <!-- Clean Files – categories -->
+    <string name="clean_cat_system_temp">File tạm hệ thống (.tmp, .log…)</string>
+    <string name="clean_cat_compressed">File nén không rõ nguồn</string>
+    <string name="clean_cat_no_extension">Tài liệu (.pdf, .doc, .txt…)</string>
+    <string name="clean_cat_apk_cache">APK &amp; cache cũ</string>
+    <!-- Clean Files – result card -->
+    <string name="clean_result_title">Kết quả dọn dẹp</string>
+    <string name="clean_result_files_deleted">file đã xóa</string>
+    <string name="clean_result_space_freed">đã giải phóng</string>
+    <string name="clean_files_idle_desc">Phát hiện $number_file tệp lạ – nhấn để dọn dẹp</string>
+    <string name="clean_files_count_unit">file lạ</string>
+
+    <!-- Clean Memory -->
+    <string name="clean_memory_title">Giải phóng bộ nhớ</string>
+    <string name="clean_memory_stat_used">Đang dùng</string>
+    <string name="clean_memory_stat_free">Còn trống</string>
+    <string name="clean_memory_stat_total">Tổng cộng</string>
+    <string name="clean_memory_result_sub">Hệ thống đã được tối ưu</string>
+    <string name="clean_memory_start">Tăng tốc ngay</string>
+    <string name="clean_memory_running">Đang tối ưu hệ thống…</string>
+    <string name="clean_memory_optimal">Hệ thống đang ở trạng thái tối ưu nhất!</string>
+    <string name="clean_memory_retry">Tối ưu lại</string>
+    <string name="clean_memory_toast">Đã giải phóng $number_ram MB</string>
+
+    <!-- Contacts -->
+    <string name="contact_tap_to_call">Gọi ngay</string>
+    <string name="contact_list_title">Chọn liên hệ nhanh</string>
+    <string name="contact_list_saved">Đã lưu danh sách liên hệ</string>
+    <string name="contact_permission_denied">Cần quyền truy cập danh bạ để sử dụng tính năng này</string>
+    <string name="app_list_save_action">Lưu cấu hình</string>
+    <string name="app_list_saved">Đã lưu danh sách ứng dụng</string>
+
+    <!-- Common -->
+    <string name="save">Lưu</string>
+    <string name="back">Quay lại</string>
+    <string name="search">Tìm kiếm…</string>
+
+    <!-- Call Permission -->
+    <string name="call_permission_title">Quyền thực hiện cuộc gọi</string>
+    <string name="call_permission_desc">Ứng dụng cần quyền thực hiện cuộc gọi để có thể tự động gọi cho người thân trong trường hợp khẩn cấp.</string>
+    <string name="call_permission_highlight">thực hiện cuộc gọi</string>
+
+    <!-- Call Block -->
+    <string name="call_block_title">Quyền chặn cuộc gọi</string>
+    <string name="call_block_desc">Ứng dụng cần quyền quản lý cuộc gọi và danh bạ để có thể tự động chặn các cuộc gọi từ người lạ.</string>
+    <string name="call_block_highlight">quản lý cuộc gọi và danh bạ</string>
+    <!-- Home Status -->
+    <string name="home_header_apps">Ứng dụng</string>
+    <string name="home_header_contacts">Liên hệ nhanh</string>
+
+    <!-- Block -->
+    <string name="block_title">Ứng dụng bị chặn</string>
+    <string name="block_desc">Ứng dụng này không có trong danh sách được phép sử dụng. Vui lòng liên hệ quản trị viên.</string>
+    <string name="block_go_home">Quay về màn hình chính</string>
+
+    <!-- Debug-only settings (chỉ hiển thị trong debug build) -->
+    <string name="setting_header_debug">🐛 Debug</string>
+    <string name="setting_debug_block_screen">Xem màn hình Block</string>
+
+    <!-- Permissions & Setup -->
+    <string name="default_launcher_setup">Thiết lập ngay</string>
+    <string name="default_launcher_title">Thiết lập Launcher mặc định</string>
+    <string name="default_launcher_desc">Để sử dụng Retirement Launcher làm màn hình chính, bạn cần thiết lập nó làm ứng dụng mặc định trong cài đặt hệ thống.</string>
+    <string name="default_launcher_highlight">Retirement Launcher</string>
+    <string name="permission_grant">Cấp quyền ngay</string>
+    <string name="understood">Đã hiểu</string>
+    <string name="pin_verify_title">Xác nhận mã PIN</string>
+    <string name="pin_verify_desc">Vui lòng nhập mã PIN để thay đổi thiết lập này.</string>
+    <string name="pin_key_delete_desc">Xoá</string>
+
+    <!-- File Permission -->
+    <string name="file_permission_title">Bảo vệ bộ nhớ</string>
+    <string name="file_permission_desc">Để tính năng tự động xóa các file APK/AAB lạ hoạt động, ứng dụng cần quyền truy cập tất cả bộ nhớ. Điều này giúp thiết bị của bạn luôn sạch sẽ và an toàn.</string>
+    <string name="file_permission_highlight">APK/AAB lạ</string>
+
+    <!-- Usage Stats Permission -->
+    <string name="usage_stats_permission_title">Giám sát ứng dụng</string>
+    <string name="usage_stats_permission_desc">Để tính năng chặn ứng dụng hoạt động, bạn cần cấp quyền \'Truy cập dữ liệu sử dụng\'. Điều này giúp ứng dụng biết khi nào một ứng dụng không được phép được mở.</string>
+    <string name="usage_stats_permission_highlight">\'Truy cập dữ liệu sử dụng\'</string>
+
+    <!-- App Monitoring Intro -->
+    <string name="app_monitoring_intro_title">Giới thiệu tính năng</string>
+    <string name="app_monitoring_intro_desc">Tính năng này giúp bảo vệ người dùng bằng cách chỉ cho phép các ứng dụng đã được chọn hoạt động. Các ứng dụng khác sẽ bị chặn để tránh sự cố không mong muốn.</string>
+    <string name="app_monitoring_intro_highlight">chỉ cho phép các ứng dụng đã được chọn</string>
+    <string name="app_monitoring_intro_action">Tôi đã hiểu</string>
+
+    <!-- Emergency Call Intro -->
+    <string name="emergency_call_intro_title">Giới thiệu tính năng</string>
+    <string name="emergency_call_intro_desc">Để đảm bảo an toàn, ứng dụng sẽ tự động gọi cho danh sách liên hệ nhanh nếu sau 10 giờ không thấy người dùng thao tác gì trên điện thoại.</string>
+    <string name="emergency_call_intro_highlight">tự động gọi cho danh sách liên hệ nhanh</string>
+    <string name="emergency_call_intro_action">Tôi đã hiểu</string>
+
+    <!-- File Cleanup Intro -->
+    <string name="file_cleanup_intro_title">Giới thiệu tính năng</string>
+    <string name="file_cleanup_intro_desc">Tính năng này giúp bảo vệ người dùng bằng cách tự động xóa các file cài đặt (APK) lạ được tải về máy, tránh việc cài đặt nhầm mã độc.</string>
+    <string name="file_cleanup_intro_highlight">tự động xóa các file cài đặt (APK) lạ</string>
+    <string name="file_cleanup_intro_action">Tôi đã hiểu</string>
+
+    <!-- Call Block Intro -->
+    <string name="call_block_intro_title">Giới thiệu tính năng</string>
+    <string name="call_block_intro_desc">Tính năng này giúp bảo vệ người dùng bằng cách tự động chặn các cuộc gọi từ số lạ không có trong danh bạ, tránh bị làm phiền bởi quảng cáo hoặc lừa đảo.</string>
+    <string name="call_block_intro_highlight">tự động chặn các cuộc gọi từ số lạ</string>
+    <string name="call_block_intro_action">Tôi đã hiểu</string>
+
+    <!-- Overlay Permission -->
+    <string name="overlay_permission_title">Hiển thị trên ứng dụng khác</string>
+    <string name="overlay_permission_desc">Ứng dụng cần quyền \'Hiển thị trên các ứng dụng khác\' để có thể hiển thị màn hình khóa khi một ứng dụng bị chặn được mở.</string>
+    <string name="overlay_permission_highlight">\'Hiển thị trên các ứng dụng khác\'</string>
+    <!-- PIN Setup -->
+    <string name="pin_enter_new">Nhập mã PIN mới (6 chữ số)</string>
+    <string name="pin_confirm_new">Xác nhận mã PIN mới</string>
+    <string name="pin_setup_success">Thiết lập mã PIN thành công</string>
+    <string name="pin_error_length">Mã PIN phải có 6 chữ số</string>
+    <string name="pin_error_confirm_mismatch">Mã PIN xác nhận không khớp</string>
+    <string name="pin_error_incorrect">Mã PIN không chính xác</string>
+    <!-- Clean Files -->
+    <string name="clean_cat_file_count" tools:ignore="PluralsCandidate">$number_file file</string>
+
+    <!-- Reorder -->
+    <string name="reorder_apps_title">Sắp xếp ứng dụng</string>
+    <string name="reorder_contacts_title">Sắp xếp liên hệ</string>
+    <string name="done">Hoàn tất</string>
+    <string name="app_list_empty_error">Vui lòng chọn ít nhất một ứng dụng</string>
+    <string name="contact_list_empty_error">Vui lòng chọn ít nhất một liên hệ</string>
+
+    <!-- Emergency Call -->
+    <string name="emergency_call_title">Cuộc gọi khẩn cấp</string>
+    <string name="emergency_call_desc">Nếu không sử dụng điện thoại sau 12 tiếng, ứng dụng sẽ tự động thực hiện cuộc gọi khẩn cấp.</string>
+    <string name="emergency_call_enable">Kích hoạt tính năng</string>
+    <string name="emergency_call_phone_number">Số điện thoại khẩn cấp</string>
+    <string name="emergency_call_phone_number_hint">Nhập số điện thoại</string>
+    <string name="emergency_call_save_success">Đã lưu cấu hình cuộc gọi khẩn cấp</string>
+    <string name="emergency_call_permission_denied">Cần quyền gọi điện để thực hiện tính năng này</string>
+</resources>

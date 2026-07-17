@@ -1,0 +1,101 @@
+<resources>
+    <string name="app_name">RetirementLauncher</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Pengaturan</string>
+    <string name="setting_header_general">Pengaturan Umum</string>
+    <string name="setting_header_security">Keamanan &amp; Perlindungan</string>
+    <string name="setting_header_optimization">Optimalisasi &amp; Utilitas</string>
+    <string name="setting_pin">Atur PIN</string>
+    <string name="setting_app_list">Atur Daftar Aplikasi</string>
+    <string name="setting_default_launcher">Atur Launcher Default</string>
+    <string name="setting_contact_list">Atur Kontak Cepat</string>
+    <string name="setting_clean_files">Bersihkan File Sampah</string>
+    <string name="setting_clean_memory">Bersihkan Memori</string>
+    <string name="setting_emergency_call">Panggilan Darurat Otomatis</string>
+    <string name="setting_app_monitoring">Pemantauan Aplikasi</string>
+    <string name="setting_auto_cleanup_apk">Hapus APK Otomatis</string>
+    <string name="setting_call_block">Blokir Panggilan Asing</string>
+    <string name="setting_pocket_mode">Mode Saku</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_title">Selamat Datang di Retirement Launcher</string>
+    <string name="onboarding_desc">Aplikasi untuk menyederhanakan antarmuka ponsel Anda dan melindungi perangkat Anda.</string>
+    <string name="onboarding_start">Mulai</string>
+
+    <!-- Clean Files -->
+    <string name="clean_files_title">Bersihkan File Sampah</string>
+    <string name="clean_files_desc">Siap memindai perangkat</string>
+    <string name="clean_files_start">Mulai Bersihkan</string>
+    <string name="clean_files_running">Memindai dan membersihkan…</string>
+    <string name="clean_files_completed">Pembersihan selesai!</string>
+    <string name="clean_files_retry">Bersihkan Lagi</string>
+
+    <!-- Clean Memory -->
+    <string name="clean_memory_title">Bersihkan Memori</string>
+    <string name="clean_memory_stat_used">Digunakan</string>
+    <string name="clean_memory_stat_free">Tersedia</string>
+    <string name="clean_memory_stat_total">Total</string>
+    <string name="clean_memory_result_sub">Sistem telah dioptimalkan</string>
+    <string name="clean_memory_start">Percepat Sekarang</string>
+    <string name="clean_memory_running">Mengoptimalkan sistem…</string>
+    <string name="clean_memory_optimal">Sistem dalam kondisi optimal!</string>
+    <string name="clean_memory_retry">Optimalkan Lagi</string>
+    <string name="clean_memory_toast">Memori $number_ram MB dibebaskan</string>
+
+    <!-- Contacts -->
+    <string name="contact_tap_to_call">Panggil Sekarang</string>
+    <string name="contact_list_title">Pilih Kontak Cepat</string>
+    <string name="contact_list_saved">Daftar kontak disimpan</string>
+    <string name="contact_permission_denied">Izin kontak diperlukan untuk fitur ini</string>
+    <string name="app_list_save_action">Simpan Konfigurasi</string>
+    <string name="app_list_saved">Daftar aplikasi disimpan</string>
+
+    <!-- Common -->
+    <string name="save">Simpan</string>
+    <string name="back">Kembali</string>
+    <string name="search">Cari…</string>
+
+    <!-- Call Permission -->
+    <string name="call_permission_title">Izin Panggilan</string>
+    <string name="call_permission_desc">Aplikasi memerlukan izin untuk melakukan panggilan agar dapat menghubungi kerabat secara otomatis saat darurat.</string>
+
+    <!-- Call Block -->
+    <string name="call_block_title">Izin Blokir Panggilan</string>
+    <string name="call_block_desc">Aplikasi memerlukan izin untuk mengelola panggilan dan kontak agar dapat memblokir panggilan asing secara otomatis.</string>
+
+    <!-- Home Status -->
+    <string name="home_header_apps">Aplikasi</string>
+    <string name="home_header_contacts">Kontak Cepat</string>
+
+    <!-- Block -->
+    <string name="block_title">Aplikasi Diblokir</string>
+    <string name="block_desc">Aplikasi ini tidak ada dalam daftar yang diizinkan. Silakan hubungi administrator.</string>
+    <string name="block_go_home">Kembali ke Layar Utama</string>
+
+    <!-- Permissions & Setup -->
+    <string name="default_launcher_setup">Atur Sekarang</string>
+    <string name="default_launcher_title">Atur Launcher Default</string>
+    <string name="default_launcher_desc">Untuk menggunakan Retirement Launcher sebagai layar utama, Anda harus mengaturnya sebagai aplikasi default di pengaturan sistem.</string>
+    <string name="permission_grant">Berikan Izin</string>
+    <string name="understood">Paham</string>
+    <string name="pin_verify_title">Konfirmasi PIN</string>
+    <string name="pin_verify_desc">Masukkan PIN Anda untuk mengubah pengaturan ini.</string>
+    <string name="pin_key_delete_desc">Hapus</string>
+
+    <!-- PIN Setup -->
+    <string name="pin_enter_new">Masukkan PIN baru (6 digit)</string>
+    <string name="pin_confirm_new">Konfirmasi PIN baru</string>
+    <string name="pin_setup_success">Pengaturan PIN berhasil</string>
+    <string name="pin_error_length">PIN harus 6 digit</string>
+    <string name="pin_error_confirm_mismatch">PIN konfirmasi tidak cocok</string>
+    <string name="pin_error_incorrect">PIN salah</string>
+
+    <string name="done">Selesai</string>
+    <string name="emergency_call_title">Panggilan Darurat</string>
+    <string name="emergency_call_desc">Jika ponsel tidak digunakan selama 12 jam, aplikasi akan melakukan panggilan darurat secara otomatis.</string>
+    <string name="emergency_call_enable">Aktifkan fitur</string>
+    <string name="emergency_call_phone_number">Nomor Telepon Darurat</string>
+    <string name="emergency_call_phone_number_hint">Masukkan nomor</string>
+    <string name="emergency_call_save_success">Konfigurasi panggilan darurat disimpan</string>
+</resources>
