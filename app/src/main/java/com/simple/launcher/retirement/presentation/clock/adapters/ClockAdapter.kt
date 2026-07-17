@@ -1,24 +1,31 @@
-package com.simple.launcher.retirement.presentation.home.services.clock
+package com.simple.launcher.retirement.presentation.clock.adapters
 
 import android.graphics.Color
 import com.simple.adapter.Adapter
+import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.presentation.base.adapters.PrecomputedAdapter
 import com.simple.launcher.retirement.presentation.base.adapters.PrecomputedViewItem
 import com.simple.launcher.retirement.presentation.home.adapter.HomeItem
 import com.simple.launcher.retirement.utils.exts.dp
 import com.simple.launcher.retirement.utils.exts.sp
 import com.simple.ui.precompute.LayoutEngine
+import com.simple.ui.precompute.image.BigImage
 import com.simple.ui.precompute.node.BackgroundNode
 import com.simple.ui.precompute.node.ConstraintChild
 import com.simple.ui.precompute.node.ConstraintNode
 import com.simple.ui.precompute.node.Constraints
 import com.simple.ui.precompute.node.EdgeInsets
+import com.simple.ui.precompute.node.ImageNode
 import com.simple.ui.precompute.node.LayoutDimension
 import com.simple.ui.precompute.node.LinearNode
 import com.simple.ui.precompute.node.Orientation
 
 data class ClockHomeItem(
-    val screenWidth: Int
+    val screenWidth: Int,
+    val is24h: Boolean = false,
+    val isAmPm: Boolean = false,
+    val isSolar: Boolean = true,
+    val isLunar: Boolean = false
 ) : PrecomputedViewItem(), HomeItem {
 
     override val spanSize: Int = HomeItem.TOTAL_COLUMNS
@@ -51,19 +58,49 @@ data class ClockHomeItem(
                 id = "content",
                 node = LinearNode(
                     orientation = Orientation.VERTICAL,
-                    children = listOf(
-                        TimeNode(
-                            pattern = "hh:mm",
-                            textSizePx = 48.sp(),
-                            color = Color.BLACK,
-                            isBold = true
-                        ),
-                        TimeNode(
-                            pattern = "EEEE, MMM/dd/yyyy",
-                            textSizePx = 18.sp(),
-                            color = Color.parseColor("#666666")
+                    children = buildList {
+                        add(
+                            TimeNode(
+                                pattern = if (is24h) "HH:mm" else "hh:mm",
+                                showAmPm = !is24h && isAmPm,
+                                textSizePx = 48.sp(),
+                                color = Color.BLACK,
+                                isBold = true
+                            )
                         )
-                    ),
+                        if (isSolar) {
+                            add(
+                                TimeNode(
+                                    pattern = "EEEE, MMM/dd/yyyy",
+                                    textSizePx = 18.sp(),
+                                    color = Color.parseColor("#666666")
+                                )
+                            )
+                        }
+                        if (isLunar) {
+                            add(
+                                LinearNode(
+                                    orientation = Orientation.HORIZONTAL,
+                                    padding = EdgeInsets(top = 8.dp().toInt()),
+                                    children = listOf(
+                                        ImageNode(
+                                            source = BigImage(R.drawable.ic_moon),
+                                            layoutWidth = LayoutDimension.Fixed(20.dp().toInt()),
+                                            layoutHeight = LayoutDimension.Fixed(20.dp().toInt()),
+                                            padding = EdgeInsets(right = 8.dp().toInt())
+                                        ),
+                                        TimeNode(
+                                            pattern = "",
+                                            isLunar = true,
+                                            textSizePx = 20.sp(),
+                                            color = Color.parseColor("#6C63FF"),
+                                            isBold = true
+                                        )
+                                    )
+                                )
+                            )
+                        }
+                    },
                     padding = EdgeInsets.all(24.dp().toInt())
                 ),
                 width = LayoutDimension.MatchParent,
@@ -79,7 +116,11 @@ data class ClockHomeItem(
     override fun areItemsTheSame(): List<Any> = listOf("Clock")
 
     override fun getContentsCompare(): List<Pair<Any, String>> = listOf(
-        screenWidth to "screenWidth"
+        screenWidth to "screenWidth",
+        is24h to "is24h",
+        isAmPm to "isAmPm",
+        isSolar to "isSolar",
+        isLunar to "isLunar"
     )
 }
 

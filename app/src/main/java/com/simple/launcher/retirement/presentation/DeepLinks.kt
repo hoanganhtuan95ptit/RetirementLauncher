@@ -31,6 +31,7 @@ object DeepLinks {
     const val EMERGENCY_CALL_INTRO = "app://emergency_call_intro"
     const val FILE_CLEANUP_INTRO = "app://file_cleanup_intro"
     const val CALL_BLOCK_INTRO = "app://call_block_intro"
+    const val CLOCK_SETTING     = "app://clock_setting"
 
     // ─── Permissions ──────────────────────────────────────────────────────────
 

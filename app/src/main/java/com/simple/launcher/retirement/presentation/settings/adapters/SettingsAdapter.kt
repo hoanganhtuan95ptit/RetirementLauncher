@@ -64,12 +64,14 @@ data class SettingItem(
         const val ID_TOGGLE_CALL_BLOCK = 9
         const val ID_TOGGLE_POCKET_MODE = 10
         const val ID_EMERGENCY_CALL_TOGGLE = 11
+        const val ID_LUNAR_CALENDAR_TOGGLE = 12
 
         // ── Slot orders (dùng cho _itemMap trong SettingsViewModel) ──────────
         const val ORDER_TOGGLE_BLOCK = 22.0
         const val ORDER_TOGGLE_CALL_BLOCK = 23.0
         const val ORDER_TOGGLE_INSTALLER_CLEANUP = 24.0
         const val ORDER_TOGGLE_POCKET_MODE = 33.0
+        const val ORDER_PLUGIN_SETTINGS = 40.0
 
         // ── Debug-only ────────────────────────────────────────────────────────
         const val ID_DEBUG_BLOCK_SCREEN = 100

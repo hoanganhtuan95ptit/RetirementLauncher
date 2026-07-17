@@ -3,6 +3,7 @@ package com.simple.launcher.retirement.domain.repository
 import com.simple.launcher.retirement.MainApplication
 import com.simple.launcher.retirement.data.repository.PreferenceRepositoryImpl
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
 
 /**
  * Quản lý tất cả preference / cài đặt người dùng:
@@ -60,6 +61,24 @@ interface PreferenceRepository {
     // User Activity
     fun getLastUserActivity(): Long
     fun setLastUserActivity(timestamp: Long)
+
+    // Lunar Calendar
+    fun isLunarCalendarEnabled(): Boolean
+    fun lunarCalendarEnabledFlow(): StateFlow<Boolean>
+    fun setLunarCalendarEnabled(enabled: Boolean)
+
+    // Clock Format
+    fun is24HourFormat(): Boolean
+    fun is24HourFormatFlow(): StateFlow<Boolean>
+    fun set24HourFormat(is24Hour: Boolean)
+
+    fun isAmPmEnabled(): Boolean
+    fun isAmPmEnabledFlow(): StateFlow<Boolean>
+    fun setAmPmEnabled(enabled: Boolean)
+
+    fun isSolarCalendarEnabled(): Boolean
+    fun isSolarCalendarEnabledFlow(): StateFlow<Boolean>
+    fun setSolarCalendarEnabled(enabled: Boolean)
 
     companion object {
 

@@ -1,4 +1,4 @@
-package com.simple.launcher.retirement.presentation.home.services.clock
+package com.simple.launcher.retirement.presentation.clock
 
 import androidx.fragment.app.viewModels
 import com.simple.auto.register.AutoRegister
@@ -12,7 +12,7 @@ class ClockHomeService : HomeService() {
 
     override fun setup(homeFragment: HomeFragment) {
 
-        val viewModel = homeFragment.viewModels<ClockViewModel>().value
+        val viewModel = homeFragment.viewModels<ClockHomeViewModel>().value
 
         viewModel.timeViewItemList.filterNotNull().launchCollect(homeFragment.viewLifecycleOwner) {
 

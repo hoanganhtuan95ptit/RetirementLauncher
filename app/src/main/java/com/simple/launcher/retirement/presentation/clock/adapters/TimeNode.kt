@@ -1,4 +1,4 @@
-package com.simple.launcher.retirement.presentation.home.services.clock
+package com.simple.launcher.retirement.presentation.clock.adapters
 
 import android.graphics.Canvas
 import android.graphics.Paint
@@ -7,6 +7,7 @@ import android.text.Layout
 import android.text.StaticLayout
 import android.text.TextPaint
 import android.view.View
+import com.simple.launcher.retirement.utils.time.LunarCalendar
 import com.simple.ui.precompute.DrawSpec
 import com.simple.ui.precompute.MeasureContext
 import com.simple.ui.precompute.node.Constraints
@@ -28,6 +29,8 @@ data class TimeNode(
     val color: Int,
     val typeface: Typeface? = null,
     val isBold: Boolean = false,
+    val isLunar: Boolean = false,
+    val showAmPm: Boolean = false,
     override val padding: EdgeInsets = EdgeInsets.ZERO,
     override val layoutWidth: LayoutDimension = LayoutDimension.WrapContent,
     override val layoutHeight: LayoutDimension = LayoutDimension.WrapContent
@@ -35,7 +38,7 @@ data class TimeNode(
 
     override fun measure(ctx: MeasureContext, c: Constraints, x: Int, y: Int): TimeSpec {
         val p = padding
-        val timeStr = SimpleDateFormat(pattern, Locale.getDefault()).format(Date())
+        val timeStr = buildTimeText()
         
         val paint = TextPaint(Paint.ANTI_ALIAS_FLAG).apply {
             textSize = textSizePx
@@ -64,6 +67,15 @@ data class TimeNode(
         val h = layoutHeight.resolveSize(contentH, c.maxHeight)
 
         return TimeSpec(x, y, w, h, p.left, p.top, layout, this, paint, innerWidth)
+    }
+
+    fun buildTimeText(): String {
+        return if (isLunar) {
+            LunarCalendar.getLunarDateString(Date())
+        } else {
+            val formatPattern = if (showAmPm) "$pattern a" else pattern
+            SimpleDateFormat(formatPattern, Locale.getDefault()).format(Date())
+        }
     }
 
     private fun LayoutDimension.maxForMeasure(parentMax: Int): Int =
@@ -117,7 +129,7 @@ class TimeSpec(
     }
 
     private fun updateTime() {
-        val timeStr = SimpleDateFormat(node.pattern, Locale.getDefault()).format(Date())
+        val timeStr = node.buildTimeText()
         val newLayout = node.buildLayout(timeStr, paint, innerWidth)
         
         if (newLayout.text == layout.text) return

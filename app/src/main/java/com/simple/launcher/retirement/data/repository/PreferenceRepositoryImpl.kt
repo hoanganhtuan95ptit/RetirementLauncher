@@ -5,6 +5,7 @@ import androidx.core.content.edit
 import com.simple.launcher.retirement.domain.repository.PreferenceRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 class PreferenceRepositoryImpl(context: Context) : PreferenceRepository {
@@ -27,6 +28,10 @@ class PreferenceRepositoryImpl(context: Context) : PreferenceRepository {
         private const val KEY_EMERGENCY_PHONE_NUMBER = "emergency_phone_number"
         private const val KEY_LAST_USER_ACTIVITY = "last_user_activity"
         private const val KEY_LAST_EMERGENCY_INDEX = "last_emergency_index"
+        private const val KEY_LUNAR_CALENDAR_ENABLED = "lunar_calendar_enabled"
+        private const val KEY_CLOCK_24H_FORMAT = "clock_24h_format"
+        private const val KEY_CLOCK_AM_PM_ENABLED = "clock_am_pm_enabled"
+        private const val KEY_SOLAR_CALENDAR_ENABLED = "solar_calendar_enabled"
     }
 
     private val _appBlockEnabled = MutableStateFlow(isAppBlockEnabled())
@@ -34,6 +39,10 @@ class PreferenceRepositoryImpl(context: Context) : PreferenceRepository {
     private val _callBlockEnabled = MutableStateFlow(isCallBlockEnabled())
     private val _pocketModeEnabled = MutableStateFlow(isPocketModeEnabled())
     private val _emergencyCallEnabled = MutableStateFlow(isEmergencyCallEnabled())
+    private val _lunarCalendarEnabled = MutableStateFlow(isLunarCalendarEnabled())
+    private val _is24HourFormat = MutableStateFlow(is24HourFormat())
+    private val _isAmPmEnabled = MutableStateFlow(isAmPmEnabled())
+    private val _isSolarCalendarEnabled = MutableStateFlow(isSolarCalendarEnabled())
     private val _hasPin = MutableStateFlow(hasPin())
 
     // PIN
@@ -173,5 +182,51 @@ class PreferenceRepositoryImpl(context: Context) : PreferenceRepository {
     override fun setLastUserActivity(timestamp: Long) {
 
         sharedPrefs.edit { putLong(KEY_LAST_USER_ACTIVITY, timestamp) }
+    }
+
+    // Lunar Calendar
+    override fun isLunarCalendarEnabled(): Boolean =
+        sharedPrefs.getBoolean(KEY_LUNAR_CALENDAR_ENABLED, false)
+
+    override fun lunarCalendarEnabledFlow(): StateFlow<Boolean> = _lunarCalendarEnabled.asStateFlow()
+
+    override fun setLunarCalendarEnabled(enabled: Boolean) {
+
+        sharedPrefs.edit { putBoolean(KEY_LUNAR_CALENDAR_ENABLED, enabled) }
+        _lunarCalendarEnabled.value = enabled
+    }
+
+    // Clock Format
+    override fun is24HourFormat(): Boolean =
+        sharedPrefs.getBoolean(KEY_CLOCK_24H_FORMAT, false)
+
+    override fun is24HourFormatFlow(): StateFlow<Boolean> = _is24HourFormat.asStateFlow()
+
+    override fun set24HourFormat(is24Hour: Boolean) {
+
+        sharedPrefs.edit { putBoolean(KEY_CLOCK_24H_FORMAT, is24Hour) }
+        _is24HourFormat.value = is24Hour
+    }
+
+    override fun isAmPmEnabled(): Boolean =
+        sharedPrefs.getBoolean(KEY_CLOCK_AM_PM_ENABLED, false)
+
+    override fun isAmPmEnabledFlow(): StateFlow<Boolean> = _isAmPmEnabled.asStateFlow()
+
+    override fun setAmPmEnabled(enabled: Boolean) {
+
+        sharedPrefs.edit { putBoolean(KEY_CLOCK_AM_PM_ENABLED, enabled) }
+        _isAmPmEnabled.value = enabled
+    }
+
+    override fun isSolarCalendarEnabled(): Boolean =
+        sharedPrefs.getBoolean(KEY_SOLAR_CALENDAR_ENABLED, true)
+
+    override fun isSolarCalendarEnabledFlow(): StateFlow<Boolean> = _isSolarCalendarEnabled.asStateFlow()
+
+    override fun setSolarCalendarEnabled(enabled: Boolean) {
+
+        sharedPrefs.edit { putBoolean(KEY_SOLAR_CALENDAR_ENABLED, enabled) }
+        _isSolarCalendarEnabled.value = enabled
     }
 }
