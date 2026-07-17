@@ -11,6 +11,9 @@ class PreferenceRepositoryImpl(context: Context) : PreferenceRepository {
 
     private val sharedPrefs = context.getSharedPreferences("launcher_prefs", Context.MODE_PRIVATE)
 
+    private var isPendingDefaultLauncherRam: Boolean = false
+    private var pendingEmergencyCallEnabledRam: Boolean? = null
+
     companion object {
 
         private const val KEY_PIN = "app_pin"
@@ -164,6 +167,20 @@ class PreferenceRepositoryImpl(context: Context) : PreferenceRepository {
     override fun setLastEmergencyIndex(index: Int) {
 
         sharedPrefs.edit { putInt(KEY_LAST_EMERGENCY_INDEX, index) }
+    }
+
+    override fun getPendingEmergencyCallEnabled(): Boolean? = pendingEmergencyCallEnabledRam
+
+    override fun setPendingEmergencyCallEnabled(enabled: Boolean?) {
+
+        pendingEmergencyCallEnabledRam = enabled
+    }
+
+    override fun isPendingDefaultLauncher(): Boolean = isPendingDefaultLauncherRam
+
+    override fun setPendingDefaultLauncher(pending: Boolean) {
+
+        isPendingDefaultLauncherRam = pending
     }
 
     // User Activity

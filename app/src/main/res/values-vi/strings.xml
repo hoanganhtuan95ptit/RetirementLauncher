@@ -134,6 +134,12 @@
     <string name="call_block_intro_highlight">tự động chặn các cuộc gọi từ số lạ</string>
     <string name="call_block_intro_action">Tôi đã hiểu</string>
 
+    <!-- Emergency Contact Required -->
+    <string name="emergency_contact_required_title">Yêu cầu thiết lập liên hệ</string>
+    <string name="emergency_contact_required_desc">Bạn chưa thiết lập danh sách liên hệ nhanh. Để tính năng này hoạt động, vui lòng chọn ít nhất một liên hệ.</string>
+    <string name="emergency_contact_required_highlight">chọn ít nhất một liên hệ</string>
+    <string name="emergency_contact_required_action">Thiết lập ngay</string>
+
     <!-- Overlay Permission -->
     <string name="overlay_permission_title">Hiển thị trên ứng dụng khác</string>
     <string name="overlay_permission_desc">Ứng dụng cần quyền \'Hiển thị trên các ứng dụng khác\' để có thể hiển thị màn hình khóa khi một ứng dụng bị chặn được mở.</string>

@@ -29,6 +29,7 @@ object DeepLinks {
     const val EMERGENCY_CALL = "app://emergency_call"
     const val APP_MONITORING_INTRO = "app://app_monitoring_intro"
     const val EMERGENCY_CALL_INTRO = "app://emergency_call_intro"
+    const val EMERGENCY_CONTACT_REQUIRED = "app://emergency_contact_required"
     const val FILE_CLEANUP_INTRO = "app://file_cleanup_intro"
     const val CALL_BLOCK_INTRO = "app://call_block_intro"
 
@@ -47,6 +48,7 @@ object DeepLinks {
         const val ADD_TO_BACK_STACK = "addToBackStack"
         const val REORDER_TYPE      = "type"
         const val REORDER_IDS       = "ids"
+        const val IS_FLOW_SETUP     = "is_flow_setup"
     }
 
     // ─── Reorder types ────────────────────────────────────────────────────────
@@ -59,38 +61,48 @@ object DeepLinks {
     // ─── Helper extras builders ───────────────────────────────────────────────
 
     /** Extras để navigate với back-stack. */
-    fun withBackStack(): Map<String, Any?> =
-        mapOf(Extras.ADD_TO_BACK_STACK to true)
+    fun withBackStack(vararg pairs: Pair<String, Any?>): Map<String, Any?> =
+        mutableMapOf<String, Any?>(Extras.ADD_TO_BACK_STACK to true).apply {
+            putAll(pairs)
+        }
 
     /**
      * Extras cho màn Reorder.
      * @param type  [ReorderType.APPS] hoặc [ReorderType.CONTACTS]
      * @param ids   Danh sách ID theo thứ tự mới
      */
-    fun reorderExtras(type: String, ids: List<*>): Map<String, Any?> =
-        mapOf(
+    fun reorderExtras(type: String, ids: List<*>, vararg additional: Pair<String, Any?>): Map<String, Any?> =
+        mutableMapOf<String, Any?>(
             Extras.REORDER_TYPE     to type,
             Extras.REORDER_IDS      to ids,
             Extras.ADD_TO_BACK_STACK to true
-        )
+        ).apply {
+            putAll(additional)
+        }
 }
 
 // ─── Convenience send functions ───────────────────────────────────────────────
 
 /** Navigate tới một màn có addToBackStack = true. */
-fun sendDeeplinkWithBackStack(deeplink: String) {
-    sendDeeplink(deeplink, extras = DeepLinks.withBackStack())
+fun sendDeeplinkWithBackStack(deeplink: String, extras: Map<String, Any?> = emptyMap()) {
+    val finalExtras = DeepLinks.withBackStack().toMutableMap().apply {
+        putAll(extras)
+    }
+    sendDeeplink(deeplink, extras = finalExtras)
 }
 
 /** Navigate tới màn Reorder với type và danh sách IDs. */
-fun sendReorderDeeplink(type: String, ids: List<*>) {
-    sendDeeplink(DeepLinks.REORDER, extras = DeepLinks.reorderExtras(type, ids))
+fun sendReorderDeeplink(type: String, ids: List<*>, extras: Map<String, Any?> = emptyMap()) {
+    val finalExtras = DeepLinks.reorderExtras(type, ids).toMutableMap().apply {
+        putAll(extras)
+    }
+    sendDeeplink(DeepLinks.REORDER, extras = finalExtras)
 }
 
 /** Navigate tới màn Reorder app. */
-fun sendReorderAppsDeeplink(ids: List<*>) =
-    sendReorderDeeplink(DeepLinks.ReorderType.APPS, ids)
+fun sendReorderAppsDeeplink(ids: List<*>, extras: Map<String, Any?> = emptyMap()) =
+    sendReorderDeeplink(DeepLinks.ReorderType.APPS, ids, extras)
 
 /** Navigate tới màn Reorder contact. */
-fun sendReorderContactsDeeplink(ids: List<*>) =
-    sendReorderDeeplink(DeepLinks.ReorderType.CONTACTS, ids)
+fun sendReorderContactsDeeplink(ids: List<*>, extras: Map<String, Any?> = emptyMap()) =
+    sendReorderDeeplink(DeepLinks.ReorderType.CONTACTS, ids, extras)

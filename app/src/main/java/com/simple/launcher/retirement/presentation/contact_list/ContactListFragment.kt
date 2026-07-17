@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.FragmentActivity
@@ -47,6 +48,10 @@ class ContactListFragment : BaseFragment<FragmentAppListBinding>() {
         }
     }
 
+    private val isFlowSetup: Boolean by lazy {
+        arguments?.getBoolean(DeepLinks.Extras.IS_FLOW_SETUP) ?: false
+    }
+
     override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentAppListBinding {
         return FragmentAppListBinding.inflate(inflater, container, false)
     }
@@ -57,8 +62,17 @@ class ContactListFragment : BaseFragment<FragmentAppListBinding>() {
         val binding = binding ?: return
 
         binding.toolbar.ivLeft.setOnSafeClickListener {
+            if (isFlowSetup) AppEventBus.post(AppEvent.ContactSetupCancel)
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (isFlowSetup) AppEventBus.post(AppEvent.ContactSetupCancel)
+                isEnabled = false
+                requireActivity().onBackPressedDispatcher.onBackPressed()
+            }
+        })
 
         binding.layoutSearch.etSearch.doAfterTextChanged {
             val text = it?.toString() ?: ""
@@ -137,7 +151,10 @@ class ContactListFragment : BaseFragment<FragmentAppListBinding>() {
         val orderedIds = savedIds.filter { it in currentSelected }.toMutableList()
         orderedIds.addAll(currentSelected.filter { it !in savedIds })
 
-        sendReorderContactsDeeplink(orderedIds)
+        sendReorderContactsDeeplink(
+            orderedIds,
+            mapOf(DeepLinks.Extras.IS_FLOW_SETUP to isFlowSetup)
+        )
     }
 
     private fun checkPermissionAndLoad() {
@@ -159,11 +176,16 @@ class ContactListDeeplinkHandler : DeeplinkHandler {
         extras: Map<String, Any?>?,
         sharedElement: Map<String, View>?
     ): Boolean {
+        val fragment = ContactListFragment().apply {
+            arguments = Bundle().apply {
+                putBoolean(DeepLinks.Extras.IS_FLOW_SETUP, extras?.get(DeepLinks.Extras.IS_FLOW_SETUP) as? Boolean ?: false)
+            }
+        }
         val transaction = fragmentActivity.supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, ContactListFragment())
+            .replace(R.id.fragment_container, fragment)
         
         if (extras?.get("addToBackStack") == true) {
-            transaction.addToBackStack(null)
+            transaction.addToBackStack(DeepLinks.CONTACT_LIST)
         }
         
         transaction.commit()

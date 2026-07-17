@@ -57,6 +57,12 @@ interface PreferenceRepository {
     fun getLastEmergencyIndex(): Int
     fun setLastEmergencyIndex(index: Int)
 
+    fun getPendingEmergencyCallEnabled(): Boolean?
+    fun setPendingEmergencyCallEnabled(enabled: Boolean?)
+
+    fun isPendingDefaultLauncher(): Boolean
+    fun setPendingDefaultLauncher(pending: Boolean)
+
     // User Activity
     fun getLastUserActivity(): Long
     fun setLastUserActivity(timestamp: Long)

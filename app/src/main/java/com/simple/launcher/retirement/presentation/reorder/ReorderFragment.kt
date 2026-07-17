@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -21,6 +22,8 @@ import com.simple.launcher.retirement.domain.repository.ContactRepository
 import com.simple.launcher.retirement.domain.repository.PreferenceRepository
 import com.simple.launcher.retirement.presentation.DeepLinks
 import com.simple.launcher.retirement.presentation.base.BaseFragment
+import com.simple.launcher.retirement.utils.AppEvent
+import com.simple.launcher.retirement.utils.AppEventBus
 import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.exts.asObjectOrNull
 import com.simple.launcher.retirement.utils.lifecycle.observe
@@ -33,11 +36,12 @@ import kotlinx.coroutines.launch
 class ReorderFragment : BaseFragment<FragmentAppListBinding>() {
 
     companion object {
-        fun newInstance(type: ReorderType, ids: List<String>): ReorderFragment {
+        fun newInstance(type: ReorderType, ids: List<String>, isFlowSetup: Boolean = false): ReorderFragment {
             return ReorderFragment().apply {
                 arguments = Bundle().apply {
                     putSerializable("type", type)
                     putStringArrayList("ids", ArrayList(ids))
+                    putBoolean(DeepLinks.Extras.IS_FLOW_SETUP, isFlowSetup)
                 }
             }
         }
@@ -45,6 +49,10 @@ class ReorderFragment : BaseFragment<FragmentAppListBinding>() {
 
     private val type: ReorderType by lazy {
         arguments?.getSerializable("type") as? ReorderType ?: ReorderType.APPS
+    }
+
+    private val isFlowSetup: Boolean by lazy {
+        arguments?.getBoolean(DeepLinks.Extras.IS_FLOW_SETUP) ?: false
     }
 
     private val initialIds: List<String> by lazy {
@@ -131,10 +139,17 @@ class ReorderFragment : BaseFragment<FragmentAppListBinding>() {
 
     private suspend fun checkPermissionsAndSave() {
         // Lưu thứ tự trước khi xin quyền
-        if (type == ReorderType.APPS) {
-            AppRepository.instance.saveSelectedPackages(viewModel.getFinalIds())
-        } else {
+        if (type == ReorderType.CONTACTS) {
             ContactRepository.instance.saveSelectedContacts(viewModel.getFinalContacts())
+        } else {
+            AppRepository.instance.saveSelectedPackages(viewModel.getFinalIds())
+        }
+
+        if (isFlowSetup && type == ReorderType.CONTACTS) {
+
+            AppEventBus.post(AppEvent.ContactSetupAccept)
+            requireActivity().supportFragmentManager.popBackStack(DeepLinks.CONTACT_LIST, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+            return
         }
 
         // Xin quyền tuần tự — nếu bất kỳ quyền nào bị từ chối thì dừng
@@ -192,9 +207,10 @@ class ReorderDeeplinkHandler : DeeplinkHandler {
             else -> ReorderType.APPS
         }
         val ids = extras?.get("ids") as? List<String> ?: emptyList()
+        val isFlowSetup = extras?.get(DeepLinks.Extras.IS_FLOW_SETUP) as? Boolean ?: false
         
         val transaction = fragmentActivity.supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, ReorderFragment.newInstance(type, ids))
+            .replace(R.id.fragment_container, ReorderFragment.newInstance(type, ids, isFlowSetup))
         
         if (extras?.get("addToBackStack") == true) {
             transaction.addToBackStack(null)

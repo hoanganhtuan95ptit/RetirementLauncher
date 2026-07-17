@@ -41,7 +41,6 @@ class PocketModeMainService : ActivityCreatedService {
 
             override fun onResume(owner: LifecycleOwner) {
 
-                Log.d(TAG, "onResume: registering proximity sensor listener")
                 sensorManager.registerListener(
                     sensorListener,
                     proximitySensor,
@@ -51,7 +50,6 @@ class PocketModeMainService : ActivityCreatedService {
 
             override fun onPause(owner: LifecycleOwner) {
 
-                Log.d(TAG, "onPause: unregistering proximity sensor listener")
                 sensorManager.unregisterListener(sensorListener)
                 removeOverlay(fragmentActivity, overlayView)
             }

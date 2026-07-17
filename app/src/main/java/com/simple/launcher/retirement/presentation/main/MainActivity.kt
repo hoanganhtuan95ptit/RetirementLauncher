@@ -22,22 +22,31 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+var a = true
+
 class MainActivity : BaseActivity<ActivityMainBinding>() {
+
+    init {
+        Log.d("tuanha", "init: $this")
+    }
 
     override fun inflateBinding(inflater: LayoutInflater) = ActivityMainBinding.inflate(inflater)
 
     override fun setupViews(savedInstanceState: Bundle?) {
 
-        Log.d(TAG, "setupViews | savedInstanceState=${savedInstanceState != null} | action=${intent.action} | categories=${intent.categories}")
+        Log.d(TAG, "setupViews | a=$a | savedInstanceState=${savedInstanceState != null} | action=${intent.action} | categories=${intent.categories}")
+        a = false
 
         val repository = PreferenceRepository.instance
 
         preloadResourceStores()
+
         if (shouldStartBackgroundService(repository)) {
             startBackgroundService()
         }
 
-        navigateInitialScreen(savedInstanceState, repository)
+        navigateInitialScreen()
+
         registerBackPressedHandler()
     }
 
@@ -64,11 +73,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         Log.d(
             TAG,
             "BackgroundService | hasFilePermission=$hasFilePermission | " +
-                "isFileCleanupEnabled=$isFileCleanupEnabled | " +
-                "hasUsageStatsPermission=$hasUsageStatsPermission | " +
-                "hasOverlayPermission=$hasOverlayPermission | " +
-                "isAppBlockEnabled=$isAppBlockEnabled | " +
-                "isEmergencyCallEnabled=$isEmergencyCallEnabled"
+                    "isFileCleanupEnabled=$isFileCleanupEnabled | " +
+                    "hasUsageStatsPermission=$hasUsageStatsPermission | " +
+                    "hasOverlayPermission=$hasOverlayPermission | " +
+                    "isAppBlockEnabled=$isAppBlockEnabled | " +
+                    "isEmergencyCallEnabled=$isEmergencyCallEnabled"
         )
 
         val canRunFileCleanup = hasFilePermission && isFileCleanupEnabled
@@ -77,17 +86,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         return canRunFileCleanup || canRunAppBlock || isEmergencyCallEnabled
     }
 
-    private fun navigateInitialScreen(
-        savedInstanceState: Bundle?,
-        repository: PreferenceRepository
-    ) {
+    private fun navigateInitialScreen() {
 
-        if (savedInstanceState != null) {
-            Log.d(TAG, "navigate | skipped | restoring from savedInstanceState")
-            return
-        }
-
-        val deeplink = resolveInitialDeeplink(repository)
+        val deeplink = resolveInitialDeeplink(PreferenceRepository.instance)
         Log.d(TAG, "navigate | deeplink=$deeplink")
 
         val binding = binding ?: return
@@ -107,13 +108,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
         return when {
             !isOnboardingCompleted -> DeepLinks.ONBOARDING
+            isHomeIntent && repository.isPendingDefaultLauncher() -> DeepLinks.SETTINGS
             isHomeIntent -> DeepLinks.HOME
             else -> DeepLinks.SETTINGS
         }.also { deeplink ->
             Log.d(
                 TAG,
                 "resolveInitialDeeplink | isOnboardingCompleted=$isOnboardingCompleted | " +
-                    "isHomeIntent=$isHomeIntent | deeplink=$deeplink"
+                        "isHomeIntent=$isHomeIntent | deeplink=$deeplink | isPendingDefaultLauncher=${repository.isPendingDefaultLauncher()}"
             )
         }
     }
@@ -141,7 +143,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         Log.d(
             TAG,
             "onBackPressed | backStackCount=$backStackCount | " +
-                "currentFragment=${currentFragment?.javaClass?.simpleName}"
+                    "currentFragment=${currentFragment?.javaClass?.simpleName}"
         )
 
         return backStackCount > 0
@@ -154,19 +156,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     }
 
     override fun onNewIntent(intent: Intent) {
-
         super.onNewIntent(intent)
-        Log.d(TAG, "onNewIntent | action=${intent.action} | categories=${intent.categories}")
-
-        // Home intent cần đẩy user về launcher screen thay vì giữ màn hình cũ.
-        if (Intent.ACTION_MAIN == intent.action && intent.hasCategory(Intent.CATEGORY_HOME)) {
-            sendDeeplink(DeepLinks.HOME)
-        }
+        navigateInitialScreen()
     }
 
     fun startBackgroundService() {
-
-        Log.d(TAG, "startBackgroundService")
         BackgroundService.start(this)
     }
 
