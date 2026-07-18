@@ -10,38 +10,13 @@
     <string name="setting_app_list">Pag-setup ng Listahan ng App</string>
     <string name="setting_default_launcher">I-set ang Default na Launcher</string>
     <string name="setting_contact_list">Pag-setup ng Mabilis na Contact</string>
-    <string name="setting_clean_files">Linisin ang Mga Junk File</string>
-    <string name="setting_clean_memory">Magbakante ng Memory</string>
-    <string name="setting_emergency_call">Awtomatikong Tawag sa Emergency</string>
-    <string name="setting_app_monitoring">Pagsubaybay sa App</string>
-    <string name="setting_auto_cleanup_apk">Awtomatikong Pagbura ng APK</string>
-    <string name="setting_call_block">I-block ang Mga Hindi Kilalang Tawag</string>
+
     <string name="setting_pocket_mode">Pocket Mode</string>
 
     <!-- Onboarding -->
     <string name="onboarding_title">Maligayang Pagdating sa Retirement Launcher</string>
     <string name="onboarding_desc">Isang app upang gawing simple ang interface ng iyong telepono at protektahan ang iyong device.</string>
     <string name="onboarding_start">Magsimula</string>
-
-    <!-- Clean Files -->
-    <string name="clean_files_title">Linisin ang Mga Junk File</string>
-    <string name="clean_files_desc">Handa nang i-scan ang device</string>
-    <string name="clean_files_start">Simulan ang Paglilinis</string>
-    <string name="clean_files_running">Nagsusuri at naglilinis…</string>
-    <string name="clean_files_completed">Tapos na ang paglilinis!</string>
-    <string name="clean_files_retry">Linisin Muli</string>
-
-    <!-- Clean Memory -->
-    <string name="clean_memory_title">Magbakante ng Memory</string>
-    <string name="clean_memory_stat_used">Ginamit</string>
-    <string name="clean_memory_stat_free">Libre</string>
-    <string name="clean_memory_stat_total">Kabuuan</string>
-    <string name="clean_memory_result_sub">Na-optimize na ang system</string>
-    <string name="clean_memory_start">Bilisan Ngayon</string>
-    <string name="clean_memory_running">Ino-optimize ang system…</string>
-    <string name="clean_memory_optimal">Nasa optimal na estado ang system!</string>
-    <string name="clean_memory_retry">I-optimize Muli</string>
-    <string name="clean_memory_toast">$number_ram MB ang nabakante</string>
 
     <!-- Contacts -->
     <string name="contact_tap_to_call">Tumawag Ngayon</string>
@@ -56,13 +31,6 @@
     <string name="back">Bumalik</string>
     <string name="search">Maghanap…</string>
 
-    <!-- Call Permission -->
-    <string name="call_permission_title">Pahintulot sa Pagtawag</string>
-    <string name="call_permission_desc">Kailangan ng app ng pahintulot na tumawag upang awtomatikong matawagan ang mga kamag-anak sakaling may emergency.</string>
-
-    <!-- Call Block -->
-    <string name="call_block_title">Pahintulot sa Pag-block ng Tawag</string>
-    <string name="call_block_desc">Kailangan ng app ng pahintulot na pamahalaan ang mga tawag at contact para awtomatikong ma-block ang mga tawag mula sa mga hindi kilala.</string>
 
     <!-- Home Status -->
     <string name="home_header_apps">Mga Application</string>
@@ -92,80 +60,4 @@
     <string name="pin_error_incorrect">Maling PIN</string>
 
     <string name="done">Tapos na</string>
-    <string name="emergency_call_title">Tawag sa Emergency</string>
-    <string name="emergency_call_desc">Kung hindi ginamit ang telepono sa loob ng 10 oras, awtomatikong tatawag ang app sa emergency.</string>
-    <string name="emergency_call_enable">I-enable ang feature</string>
-    <string name="emergency_call_phone_number">Numero ng Telepono sa Emergency</string>
-    <string name="emergency_call_phone_number_hint">Ilagay ang numero</string>
-    <string name="emergency_call_save_success">Nai-save na ang configuration ng tawag sa emergency</string>
-
-    <string name="clean_cat_system_temp">Mga pansamantalang file ng system (.tmp, .log…)</string>
-    <string name="clean_cat_compressed">Hindi kilalang mga compressed file</string>
-    <string name="clean_cat_no_extension">Mga dokumento (.pdf, .doc, .txt…)</string>
-    <string name="clean_cat_apk_cache">Mga lumang APK at cache</string>
-    <string name="clean_result_title">Mga Resulta ng Paglilinis</string>
-    <string name="clean_result_files_deleted">mga file na nabura</string>
-    <string name="clean_result_space_freed">espasyong nabakante</string>
-    <string name="clean_files_idle_desc">May natukoy na $number_file na junk file – i-tap para linisin</string>
-    <string name="clean_files_count_unit">mga junk file</string>
-    <string name="call_permission_highlight">tumawag</string>
-    <string name="call_block_highlight">pamahalaan ang mga tawag at contact</string>
-    <string name="setting_header_debug">🐛 Debug</string>
-    <string name="setting_debug_block_screen">Tingnan ang Block Screen</string>
-    <string name="default_launcher_highlight">Retirement Launcher</string>
-    <string name="file_permission_title">Proteksyon sa Storage</string>
-    <string name="file_permission_desc">Para gumana ang awtomatikong pagbura ng mga hindi kilalang APK/AAB file, kailangan ng app ng access sa lahat ng storage. Nakakatulong ito na panatilihing malinis at ligtas ang iyong device.</string>
-    <string name="file_permission_highlight">hindi kilalang APK/AAB</string>
-    <string name="usage_stats_permission_title">Pagsubaybay sa App</string>
-    <string name="usage_stats_permission_desc">Para gumana ang feature na pag-block ng app, kailangan mong ibigay ang \'Access sa Data ng Paggamit\'. Nakakatulong ito sa app na malaman kung kailan binubuksan ang isang hindi awtorisadong app.</string>
-    <string name="usage_stats_permission_highlight">\'Access sa Data ng Paggamit\'</string>
-    <string name="accessibility_permission_title">Pag-detect ng Aktibidad ng User</string>
-    <string name="accessibility_permission_desc">Ginagamit ng SOS ang Accessibility para lang ma-detect kung kailan nagsisimulang humawak ang user sa screen. Hindi nito binabasa ang nilalaman ng screen, nagre-record ng text, nagbabago ng mga setting, kumokontrol sa telepono, o nagbabahagi ng data na ito. Ang timestamp ng aktibidad ay nananatili sa device na ito at ginagamit lamang upang magpasya kung dapat tumawag ang SOS sa mga emergency contact.</string>
-    <string name="accessibility_permission_highlight">hindi nito binabasa ang nilalaman ng screen</string>
-    <string name="user_activity_accessibility_service_label">SOS Pag-detect ng Aktibidad ng User</string>
-    <string name="user_activity_accessibility_service_summary">Nagde-detect ng totoong aktibidad ng user para sa mga SOS inactivity check.</string>
-    <string name="user_activity_accessibility_service_desc">Ginagamit lamang ng Auto SOS upang ma-detect kung aktibo pa ring ginagamit ang telepono. Nakikinig lamang ang serbisyo para sa kaganapan ng system na nagpapahiwatig na nagsimulang humawak ang user sa screen, pagkatapos ay i-save ang pinakabagong oras ng aktibidad sa device na ito. Hindi nito binabasa ang nilalaman ng screen, kinokolekta ang tina-type na teksto, sinusuri ang iba pang mga app, binabago ang mga setting, nagsasagawa ng mga galaw, nag-click ng mga button, o nagbabahagi ng data ng aktibidad na ito.</string>
-    <string name="app_monitoring_intro_title">Panimula sa Feature</string>
-    <string name="app_monitoring_intro_desc">Ang feature na ito ay tumutulong sa pagprotekta sa mga user sa pamamagitan lamang ng pagpapahintulot sa mga piling app na tumakbo. Ang ibang mga app ay iba-block para maiwasan ang mga hindi sinasadyang problema.</string>
-    <string name="app_monitoring_intro_highlight">pagpapahintulot sa mga piling app na tumakbo</string>
-    <string name="app_monitoring_intro_action">Naintindihan ko</string>
-    <string name="emergency_call_intro_title">Panimula sa Feature</string>
-    <string name="emergency_call_intro_desc">Upang matiyak ang kaligtasan, awtomatikong tatawag ang app sa mabilis na listahan ng contact kung walang interaction ng user na nakita sa telepono sa loob ng 10 oras.</string>
-    <string name="emergency_call_intro_highlight">awtomatikong tatawag sa mabilis na listahan ng contact</string>
-    <string name="emergency_call_intro_action">Naintindihan ko</string>
-    <string name="file_cleanup_intro_title">Panimula sa Feature</string>
-    <string name="file_cleanup_intro_desc">Ang feature na ito ay tumutulong sa pagprotekta sa mga user sa pamamagitan ng awtomatikong pagbura ng mga hindi kilalang installation file (APK) na na-download sa device, na umiiwas sa aksidenteng pag-install ng malware.</string>
-    <string name="file_cleanup_intro_highlight">awtomatikong pagbura ng mga hindi kilalang installation file (APK)</string>
-    <string name="file_cleanup_intro_action">Naintindihan ko</string>
-    <string name="call_block_intro_title">Panimula sa Feature</string>
-    <string name="call_block_intro_desc">Ang feature na ito ay tumutulong sa pagprotekta sa mga user sa pamamagitan ng awtomatikong pag-block ng mga tawag mula sa mga hindi kilalang numero na wala sa mga contact, na umiiwas na maabala ng mga ad o scam.</string>
-    <string name="call_block_intro_highlight">awtomatikong pag-block ng mga tawag mula sa mga hindi kilalang numero</string>
-    <string name="call_block_intro_action">Naintindihan ko</string>
-    <string name="emergency_contact_required_title">Kailangan ng Pag-setup ng Contact</string>
-    <string name="emergency_contact_required_desc">Hindi mo pa nai-set up ang iyong mabilis na listahan ng contact. Para gumana ang feature na ito, mangyaring pumili ng kahit isang contact.</string>
-    <string name="emergency_contact_required_highlight">pumili ng kahit isang contact</string>
-    <string name="emergency_contact_required_action">I-set up Ngayon</string>
-    <string name="overlay_permission_title">I-display sa Ibabaw ng Ibang mga App</string>
-    <string name="overlay_permission_desc">Kailangan ng app ng pahintulot na \'I-display sa ibabaw ng ibang mga app\' para ipakita ang lock screen kapag binuksan ang isang naka-block na app.</string>
-    <string name="overlay_permission_highlight">\'I-display sa ibabaw ng ibang mga app\'</string>
-    <string name="clean_cat_file_count">$number_file na mga file</string>
-    <string name="reorder_apps_title">I-reorder ang mga App</string>
-    <string name="reorder_contacts_title">I-reorder ang mga Contact</string>
-    <string name="app_list_empty_error">Mangyaring pumili ng kahit isang app</string>
-    <string name="contact_list_empty_error">Mangyaring pumili ng kahit isang contact</string>
-    <string name="emergency_call_permission_denied">Kailangan ng pahintulot sa pagtawag para sa feature na ito</string>
-    <string name="setting_emergency_advanced">Mga Advanced na Setting ng SOS</string>
-    <string name="sos_settings_title">Advanced na SOS</string>
-    <string name="sos_master_toggle">I-enable ang Awtomatikong Tawag sa Emergency</string>
-    <string name="sos_save_changes">I-save ang mga Pagbabago</string>
-    <string name="sos_timeout_label">Inactivity Timeout</string>
-    <string name="sos_timeout_value">%1$d oras</string>
-    <string name="sos_timeout_seconds">%1$d segundo</string>
-    <string name="sos_exclusion_periods_header">Mga Panahon ng Exclusion (Tulog/Pahinga)</string>
-    <string name="sos_add_exclusion_period">Magdagdag ng Panahon ng Exclusion</string>
-    <string name="sos_add_exclusion_period_desc">Hindi kasama ang oras ng tulog o pahinga</string>
-    <string name="sos_exclusion_period_format">%1$02d:%2$02d - %3$02d:%4$02d</string>
-    <string name="sos_delete_exclusion_period">Burahin</string>
-    <string name="sos_select_start_time">Pumili ng Oras ng Pagsisimula</string>
-    <string name="sos_select_end_time">Pumili ng Oras ng Pagtatapos</string>
 </resources>

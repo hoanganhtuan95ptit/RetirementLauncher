@@ -10,38 +10,13 @@
     <string name="setting_app_list">Alkalmazáslista beállítása</string>
     <string name="setting_default_launcher">Alapértelmezett indító beállítása</string>
     <string name="setting_contact_list">Gyors kapcsolatok beállítása</string>
-    <string name="setting_clean_files">Szemétfájlok törlése</string>
-    <string name="setting_clean_memory">Memória felszabadítása</string>
-    <string name="setting_emergency_call">Automatikus segélyhívás</string>
-    <string name="setting_app_monitoring">Alkalmazásfigyelés</string>
-    <string name="setting_auto_cleanup_apk">APK automatikus törlése</string>
-    <string name="setting_call_block">Ismeretlen hívások blokkolása</string>
+
     <string name="setting_pocket_mode">Zseb mód</string>
 
     <!-- Onboarding -->
     <string name="onboarding_title">Üdvözöljük a Retirement Launcherben</string>
     <string name="onboarding_desc">Egy alkalmazás a telefon kezelőfelületének egyszerűsítésére és a készülék védelmére.</string>
     <string name="onboarding_start">Kezdés</string>
-
-    <!-- Clean Files -->
-    <string name="clean_files_title">Szemétfájlok törlése</string>
-    <string name="clean_files_desc">Készen áll a készülék átvizsgálására</string>
-    <string name="clean_files_start">Törlés indítása</string>
-    <string name="clean_files_running">Átvizsgálás és törlés…</string>
-    <string name="clean_files_completed">Törlés befejezve!</string>
-    <string name="clean_files_retry">Törlés újra</string>
-
-    <!-- Clean Memory -->
-    <string name="clean_memory_title">Memória felszabadítása</string>
-    <string name="clean_memory_stat_used">Használt</string>
-    <string name="clean_memory_stat_free">Szabad</string>
-    <string name="clean_memory_stat_total">Összesen</string>
-    <string name="clean_memory_result_sub">Rendszer optimalizálva</string>
-    <string name="clean_memory_start">Gyorsítás most</string>
-    <string name="clean_memory_running">Rendszer optimalizálása…</string>
-    <string name="clean_memory_optimal">A rendszer optimális állapotban van!</string>
-    <string name="clean_memory_retry">Optimalizálás újra</string>
-    <string name="clean_memory_toast">$number_ram MB felszabadítva</string>
 
     <!-- Contacts -->
     <string name="contact_tap_to_call">Hívás most</string>
@@ -56,13 +31,6 @@
     <string name="back">Vissza</string>
     <string name="search">Keresés…</string>
 
-    <!-- Call Permission -->
-    <string name="call_permission_title">Hívásindítási engedély</string>
-    <string name="call_permission_desc">Az alkalmazásnak hívásindítási engedélyre van szüksége, hogy vészhelyzetben automatikusan hívhassa a hozzátartozókat.</string>
-
-    <!-- Call Block -->
-    <string name="call_block_title">Hívásblokkolási engedély</string>
-    <string name="call_block_desc">Az alkalmazásnak hívás- és névjegykezelési engedélyre van szüksége az ismeretlen hívások automatikus blokkolásához.</string>
 
     <!-- Home Status -->
     <string name="home_header_apps">Alkalmazások</string>
@@ -92,80 +60,4 @@
     <string name="pin_error_incorrect">Helytelen PIN</string>
 
     <string name="done">Kész</string>
-    <string name="emergency_call_title">Segélyhívás</string>
-    <string name="emergency_call_desc">Ha a telefont 10 órán át nem használják, az alkalmazás automatikusan segélyhívást indít.</string>
-    <string name="emergency_call_enable">Funkció aktiválása</string>
-    <string name="emergency_call_phone_number">Segélyhívó szám</string>
-    <string name="emergency_call_phone_number_hint">Adja meg a számot</string>
-    <string name="emergency_call_save_success">Segélyhívási konfiguráció elmentve</string>
-
-    <string name="clean_cat_system_temp">Rendszer ideiglenes fájlok (.tmp, .log…)</string>
-    <string name="clean_cat_compressed">Ismeretlen tömörített fájlok</string>
-    <string name="clean_cat_no_extension">Dokumentumok (.pdf, .doc, .txt…)</string>
-    <string name="clean_cat_apk_cache">Régi APK-k és gyorsítótár</string>
-    <string name="clean_result_title">Tisztítási eredmények</string>
-    <string name="clean_result_files_deleted">fájl törölve</string>
-    <string name="clean_result_space_freed">hely felszabadítva</string>
-    <string name="clean_files_idle_desc">$number_file szemétfájl észlelve – koppintson a tisztításhoz</string>
-    <string name="clean_files_count_unit">szemétfájlok</string>
-    <string name="call_permission_highlight">hívások kezdeményezése</string>
-    <string name="call_block_highlight">hívások és névjegyek kezelése</string>
-    <string name="setting_header_debug">🐛 Debug</string>
-    <string name="setting_debug_block_screen">Blokkolási képernyő megtekintése</string>
-    <string name="default_launcher_highlight">Retirement Launcher</string>
-    <string name="file_permission_title">Tárhelyvédelem</string>
-    <string name="file_permission_desc">Az ismeretlen APK/AAB fájlok automatikus törlésének működéséhez az alkalmazásnak hozzá kell férnie a teljes tárhelyhez. Ez segít tisztán és biztonságban tartani a készüléket.</string>
-    <string name="file_permission_highlight">ismeretlen APK/AAB</string>
-    <string name="usage_stats_permission_title">Alkalmazásfigyelés</string>
-    <string name="usage_stats_permission_desc">Az alkalmazásblokkoló funkció működéséhez engedélyeznie kell a „Használati adatokhoz való hozzáférést”. Ez segít az alkalmazásnak felismerni, ha egy nem engedélyezett alkalmazást nyitnak meg.</string>
-    <string name="usage_stats_permission_highlight">„Használati adatokhoz való hozzáférés”</string>
-    <string name="accessibility_permission_title">Felhasználói tevékenység észlelése</string>
-    <string name="accessibility_permission_desc">Az SOS a Kisegítő lehetőségeket csak annak észlelésére használja, hogy a felhasználó mikor kezdi megérinteni a képernyőt. Nem olvassa a képernyő tartalmát, nem rögzít szöveget, nem módosítja a beállításokat, nem vezérli a telefont, és nem osztja meg ezeket az adatokat. A tevékenység időbélyege ezen az eszközön marad, és csak annak eldöntésére szolgál, hogy az SOS-nek hívnia kell-e a segélyhívó kapcsolatokat.</string>
-    <string name="accessibility_permission_highlight">nem olvassa a képernyő tartalmát</string>
-    <string name="user_activity_accessibility_service_label">SOS Felhasználói tevékenység észlelése</string>
-    <string name="user_activity_accessibility_service_summary">Valódi felhasználói tevékenységet észlel az SOS inaktivitási ellenőrzéseihez.</string>
-    <string name="user_activity_accessibility_service_desc">Csak az Auto SOS használja annak észlelésére, hogy a telefont még mindig aktívan használják-e. A szolgáltatás csak azt a rendszereseményt figyeli, amely azt jelzi, hogy a felhasználó elkezdte megérinteni a képernyőt, majd elmenti a legutóbbi tevékenység idejét ezen az eszközön. Nem olvassa a képernyő tartalmát, nem gyűjt beírt szöveget, nem vizsgál más alkalmazásokat, nem módosítja a beállításokat, nem hajt végre gesztusokat, nem kattint gombokra, és nem osztja meg ezeket a tevékenységi adatokat.</string>
-    <string name="app_monitoring_intro_title">Funkció bemutatása</string>
-    <string name="app_monitoring_intro_desc">Ez a funkció segít megvédeni a felhasználókat azáltal, hogy csak a kiválasztott alkalmazások futtatását teszi lehetővé. Más alkalmazások blokkolva lesznek a nem kívánt problémák elkerülése érdekében.</string>
-    <string name="app_monitoring_intro_highlight">csak a kiválasztott alkalmazások futtatását teszi lehetővé</string>
-    <string name="app_monitoring_intro_action">Értem</string>
-    <string name="emergency_call_intro_title">Funkció bemutatása</string>
-    <string name="emergency_call_intro_desc">A biztonság garantálása érdekében az alkalmazás automatikusan hívja a gyors kapcsolatok listáját, ha 10 órán keresztül nem észlelhető felhasználói interakció a telefonon.</string>
-    <string name="emergency_call_intro_highlight">automatikusan hívja a gyors kapcsolatok listáját</string>
-    <string name="emergency_call_intro_action">Értem</string>
-    <string name="file_cleanup_intro_title">Funkció bemutatása</string>
-    <string name="file_cleanup_intro_desc">Ez a funkció segít megvédeni a felhasználókat azáltal, hogy automatikusan törli a készülékre letöltött ismeretlen telepítőfájlokat (APK), elkerülve a rosszindulatú programok véletlen telepítését.</string>
-    <string name="file_cleanup_intro_highlight">automatikusan törli az ismeretlen telepítőfájlokat (APK)</string>
-    <string name="file_cleanup_intro_action">Értem</string>
-    <string name="call_block_intro_title">Funkció bemutatása</string>
-    <string name="call_block_intro_desc">Ez a funkció segít megvédeni a felhasználókat azáltal, hogy automatikusan blokkolja a névjegyzékben nem szereplő ismeretlen számokról érkező hívásokat, elkerülve a reklámok vagy csalások okozta kellemetlenségeket.</string>
-    <string name="call_block_intro_highlight">automatikusan blokkolja az ismeretlen számokról érkező hívásokat</string>
-    <string name="call_block_intro_action">Értem</string>
-    <string name="emergency_contact_required_title">Kapcsolat beállítása szükséges</string>
-    <string name="emergency_contact_required_desc">Még nem állította be a gyors kapcsolatok listáját. A funkció működéséhez válasszon ki legalább egy névjegyet.</string>
-    <string name="emergency_contact_required_highlight">válasszon ki legalább egy névjegyet</string>
-    <string name="emergency_contact_required_action">Beállítás most</string>
-    <string name="overlay_permission_title">Megjelenítés más alkalmazások felett</string>
-    <string name="overlay_permission_desc">Az alkalmazásnak szüksége van a „Megjelenítés más alkalmazások felett” engedélyre, hogy megmutathassa a lezárási képernyőt egy blokkolt alkalmazás megnyitásakor.</string>
-    <string name="overlay_permission_highlight">„Megjelenítés más alkalmazások felett”</string>
-    <string name="clean_cat_file_count">$number_file fájl</string>
-    <string name="reorder_apps_title">Alkalmazások sorrendjének módosítása</string>
-    <string name="reorder_contacts_title">Névjegyek sorrendjének módosítása</string>
-    <string name="app_list_empty_error">Válasszon ki legalább egy alkalmazást</string>
-    <string name="contact_list_empty_error">Válasszon ki legalább egy névjegyet</string>
-    <string name="emergency_call_permission_denied">Ehhez a funkcióhoz hívásindítási engedély szükséges</string>
-    <string name="setting_emergency_advanced">Speciális SOS beállítások</string>
-    <string name="sos_settings_title">Speciális SOS</string>
-    <string name="sos_master_toggle">Automatikus segélyhívás engedélyezése</string>
-    <string name="sos_save_changes">Módosítások mentése</string>
-    <string name="sos_timeout_label">Inaktivitási időtúllépés</string>
-    <string name="sos_timeout_value">%1$d óra</string>
-    <string name="sos_timeout_seconds">%1$d másodperc</string>
-    <string name="sos_exclusion_periods_header">Kizárási időszakok (Alvás/Pihenés)</string>
-    <string name="sos_add_exclusion_period">Kizárási időszak hozzáadása</string>
-    <string name="sos_add_exclusion_period_desc">Alvási vagy pihenőidő kizárása</string>
-    <string name="sos_exclusion_period_format">%1$02d:%2$02d - %3$02d:%4$02d</string>
-    <string name="sos_delete_exclusion_period">Törlés</string>
-    <string name="sos_select_start_time">Kezdési idő kiválasztása</string>
-    <string name="sos_select_end_time">Befejezési idő kiválasztása</string>
 </resources>

@@ -10,38 +10,13 @@
     <string name="setting_app_list">Konfiguracja listy aplikacji</string>
     <string name="setting_default_launcher">Ustaw domyślny launcher</string>
     <string name="setting_contact_list">Konfiguracja szybkich kontaktów</string>
-    <string name="setting_clean_files">Oczyszczanie plików śmieci</string>
-    <string name="setting_clean_memory">Zwalnianie pamięci</string>
-    <string name="setting_emergency_call">Automatyczne połączenie alarmowe</string>
-    <string name="setting_app_monitoring">Monitorowanie aplikacji</string>
-    <string name="setting_auto_cleanup_apk">Automatyczne usuwanie APK</string>
-    <string name="setting_call_block">Blokowanie nieznanych połączeń</string>
+
     <string name="setting_pocket_mode">Tryb kieszonkowy</string>
 
     <!-- Onboarding -->
     <string name="onboarding_title">Witaj w Retirement Launcher</string>
     <string name="onboarding_desc">Aplikacja upraszczająca interfejs telefonu i chroniąca Twoje urządzenie.</string>
     <string name="onboarding_start">Rozpocznij</string>
-
-    <!-- Clean Files -->
-    <string name="clean_files_title">Oczyszczanie plików śmieci</string>
-    <string name="clean_files_desc">Gotowy do skanowania urządzenia</string>
-    <string name="clean_files_start">Rozpocznij oczyszczanie</string>
-    <string name="clean_files_running">Skanowanie i oczyszczanie…</string>
-    <string name="clean_files_completed">Oczyszczanie zakończone!</string>
-    <string name="clean_files_retry">Oczyść ponownie</string>
-
-    <!-- Clean Memory -->
-    <string name="clean_memory_title">Zwalnianie pamięci</string>
-    <string name="clean_memory_stat_used">Używane</string>
-    <string name="clean_memory_stat_free">Wolne</string>
-    <string name="clean_memory_stat_total">Łącznie</string>
-    <string name="clean_memory_result_sub">System został zoptymalizowany</string>
-    <string name="clean_memory_start">Przyspiesz teraz</string>
-    <string name="clean_memory_running">Optymalizacja systemu…</string>
-    <string name="clean_memory_optimal">System jest w optymalnym stanie!</string>
-    <string name="clean_memory_retry">Optymalizuj ponownie</string>
-    <string name="clean_memory_toast">Zwolniono $number_ram MB</string>
 
     <!-- Contacts -->
     <string name="contact_tap_to_call">Zadzwoń teraz</string>
@@ -56,13 +31,6 @@
     <string name="back">Wstecz</string>
     <string name="search">Szukaj…</string>
 
-    <!-- Call Permission -->
-    <string name="call_permission_title">Uprawnienie do wykonywania połączeń</string>
-    <string name="call_permission_desc">Aplikacja potrzebuje uprawnień do wykonywania połączeń, aby automatycznie dzwonić do bliskich w nagłych wypadkach.</string>
-
-    <!-- Call Block -->
-    <string name="call_block_title">Uprawnienie do blokowania połączeń</string>
-    <string name="call_block_desc">Aplikacja potrzebuje uprawnień do zarządzania połączeniami i kontaktami, aby automatycznie blokować połączenia od nieznajomych.</string>
 
     <!-- Home Status -->
     <string name="home_header_apps">Aplikacje</string>
@@ -92,80 +60,4 @@
     <string name="pin_error_incorrect">Nieprawidłowy PIN</string>
 
     <string name="done">Gotowe</string>
-    <string name="emergency_call_title">Połączenie alarmowe</string>
-    <string name="emergency_call_desc">Jeśli telefon nie będzie używany przez 10 godzin, aplikacja automatycznie wykona połączenie alarmowe.</string>
-    <string name="emergency_call_enable">Włącz funkcję</string>
-    <string name="emergency_call_phone_number">Numer alarmowy</string>
-    <string name="emergency_call_phone_number_hint">Wprowadź numer</string>
-    <string name="emergency_call_save_success">Konfiguracja połączenia alarmowego zapisana</string>
-
-    <string name="clean_cat_system_temp">Systemowe pliki tymczasowe (.tmp, .log…)</string>
-    <string name="clean_cat_compressed">Nieznane pliki skompresowane</string>
-    <string name="clean_cat_no_extension">Dokumenty (.pdf, .doc, .txt…)</string>
-    <string name="clean_cat_apk_cache">Stare pliki APK i pamięć podręczna</string>
-    <string name="clean_result_title">Wyniki oczyszczania</string>
-    <string name="clean_result_files_deleted">pliki usunięte</string>
-    <string name="clean_result_space_freed">miejsce zwolnione</string>
-    <string name="clean_files_idle_desc">Wykryto $number_file plików śmieci – dotknij, aby oczyścić</string>
-    <string name="clean_files_count_unit">pliki śmieci</string>
-    <string name="call_permission_highlight">wykonywanie połączeń</string>
-    <string name="call_block_highlight">zarządzanie połączeniami i kontaktami</string>
-    <string name="setting_header_debug">🐛 Debug</string>
-    <string name="setting_debug_block_screen">Wyświetl ekran blokady</string>
-    <string name="default_launcher_highlight">Retirement Launcher</string>
-    <string name="file_permission_title">Ochrona pamięci</string>
-    <string name="file_permission_desc">Aby automatyczne usuwanie nieznanych plików APK/AAB działało, aplikacja potrzebuje dostępu do całej pamięci. Pomaga to utrzymać urządzenie w czystości i bezpieczeństwie.</string>
-    <string name="file_permission_highlight">nieznane APK/AAB</string>
-    <string name="usage_stats_permission_title">Monitorowanie aplikacji</string>
-    <string name="usage_stats_permission_desc">Aby funkcja blokowania aplikacji działała, musisz przyznać „Dostęp do danych o użyciu”. Pomaga to aplikacji dowiedzieć się, kiedy otwierana jest nieautoryzowana aplikacja.</string>
-    <string name="usage_stats_permission_highlight">„Dostęp do danych o użyciu”</string>
-    <string name="accessibility_permission_title">Wykrywanie aktywności użytkownika</string>
-    <string name="accessibility_permission_desc">SOS korzysta z Ułatwień dostępu wyłącznie w celu wykrycia, kiedy użytkownik zaczyna dotykać ekranu. Nie czyta zawartości ekranu, nie rejestruje tekstu, nie zmienia ustawień, nie steruje telefonem ani nie udostępnia tych danych. Sygnatura czasowa aktywności pozostaje na tym urządzeniu i jest używana wyłącznie do podjęcia decyzji, czy SOS powinien zadzwonić do kontaktów alarmowych.</string>
-    <string name="accessibility_permission_highlight">nie czyta zawartości ekranu</string>
-    <string name="user_activity_accessibility_service_label">Wykrywanie aktywności użytkownika SOS</string>
-    <string name="user_activity_accessibility_service_summary">Wykrywa rzeczywistą aktywność użytkownika na potrzeby kontroli braku aktywności SOS.</string>
-    <string name="user_activity_accessibility_service_desc">Używane wyłącznie przez Auto SOS do wykrywania, czy telefon jest nadal aktywnie używany. Usługa nasłuchuje wyłącznie zdarzenia systemowego wskazującego, że użytkownik zaczął dotykać ekranu, a następnie zapisuje czas ostatniej aktywności na tym urządzeniu. Nie czyta zawartości ekranu, nie gromadzi wpisywanego tekstu, nie sprawdza innych aplikacji, nie zmienia ustawień, nie wykonuje gestów, nie klika przycisków ani nie udostępnia tych danych o aktywności.</string>
-    <string name="app_monitoring_intro_title">Wprowadzenie do funkcji</string>
-    <string name="app_monitoring_intro_desc">Ta funkcja pomaga chronić użytkowników, zezwalając na uruchamianie wyłącznie wybranych aplikacji. Inne aplikacje zostaną zablokowane, aby uniknąć niezamierzonych problemów.</string>
-    <string name="app_monitoring_intro_highlight">zezwalając na uruchamianie wyłącznie wybranych aplikacji</string>
-    <string name="app_monitoring_intro_action">Rozumiem</string>
-    <string name="emergency_call_intro_title">Wprowadzenie do funkcji</string>
-    <string name="emergency_call_intro_desc">Aby zapewnić bezpieczeństwo, aplikacja automatycznie zadzwoni do listy szybkich kontaktów, jeśli przez 10 godzin nie zostanie wykryta żadna interakcja użytkownika z telefonem.</string>
-    <string name="emergency_call_intro_highlight">automatycznie zadzwoni do listy szybkich kontaktów</string>
-    <string name="emergency_call_intro_action">Rozumiem</string>
-    <string name="file_cleanup_intro_title">Wprowadzenie do funkcji</string>
-    <string name="file_cleanup_intro_desc">Ta funkcja pomaga chronić użytkowników poprzez automatyczne usuwanie nieznanych plików instalacyjnych (APK) pobranych na urządzenie, co zapobiega przypadkowej instalacji złośliwego oprogramowania.</string>
-    <string name="file_cleanup_intro_highlight">automatyczne usuwanie nieznanych plików instalacyjnych (APK)</string>
-    <string name="file_cleanup_intro_action">Rozumiem</string>
-    <string name="call_block_intro_title">Wprowadzenie do funkcji</string>
-    <string name="call_block_intro_desc">Ta funkcja pomaga chronić użytkowników poprzez automatyczne blokowanie połączeń z nieznanych numerów, których nie ma w kontaktach, co pozwala uniknąć nękania przez reklamy lub oszustwa.</string>
-    <string name="call_block_intro_highlight">automatyczne blokowanie połączeń z nieznanych numerów</string>
-    <string name="call_block_intro_action">Rozumiem</string>
-    <string name="emergency_contact_required_title">Wymagana konfiguracja kontaktu</string>
-    <string name="emergency_contact_required_desc">Nie skonfigurowano jeszcze listy szybkich kontaktów. Aby ta funkcja działała, wybierz co najmniej jeden kontakt.</string>
-    <string name="emergency_contact_required_highlight">wybierz co najmniej jeden kontakt</string>
-    <string name="emergency_contact_required_action">Skonfiguruj teraz</string>
-    <string name="overlay_permission_title">Wyświetlanie nad innymi aplikacjami</string>
-    <string name="overlay_permission_desc">Aplikacja potrzebuje uprawnienia „Wyświetlanie nad innymi aplikacjami”, aby wyświetlać ekran blokady po otwarciu zablokowanej aplikacji.</string>
-    <string name="overlay_permission_highlight">„Wyświetlanie nad innymi aplikacjami”</string>
-    <string name="clean_cat_file_count">$number_file plików</string>
-    <string name="reorder_apps_title">Zmień kolejność aplikacji</string>
-    <string name="reorder_contacts_title">Zmień kolejność kontaktów</string>
-    <string name="app_list_empty_error">Wybierz co najmniej jedną aplikację</string>
-    <string name="contact_list_empty_error">Wybierz co najmniej jeden kontakt</string>
-    <string name="emergency_call_permission_denied">Do korzystania z tej funkcji wymagane jest uprawnienie do wykonywania połączeń</string>
-    <string name="setting_emergency_advanced">Zaawansowane ustawienia SOS</string>
-    <string name="sos_settings_title">Zaawansowane SOS</string>
-    <string name="sos_master_toggle">Włącz automatyczne połączenie alarmowe</string>
-    <string name="sos_save_changes">Zapisz zmiany</string>
-    <string name="sos_timeout_label">Limit czasu braku aktywności</string>
-    <string name="sos_timeout_value">%1$d godz.</string>
-    <string name="sos_timeout_seconds">%1$d s</string>
-    <string name="sos_exclusion_periods_header">Okresy wykluczenia (Sen/Odpoczynek)</string>
-    <string name="sos_add_exclusion_period">Dodaj okres wykluczenia</string>
-    <string name="sos_add_exclusion_period_desc">Wyłączenie czasu snu lub odpoczynku</string>
-    <string name="sos_exclusion_period_format">%1$02d:%2$02d - %3$02d:%4$02d</string>
-    <string name="sos_delete_exclusion_period">Usuń</string>
-    <string name="sos_select_start_time">Wybierz godzinę rozpoczęcia</string>
-    <string name="sos_select_end_time">Wybierz godzinę zakończenia</string>
 </resources>

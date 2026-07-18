@@ -10,38 +10,13 @@
     <string name="setting_app_list">Налаштування списку додатків</string>
     <string name="setting_default_launcher">Встановити лаунчер за замовчуванням</string>
     <string name="setting_contact_list">Налаштування швидких контактів</string>
-    <string name="setting_clean_files">Очищення сміття</string>
-    <string name="setting_clean_memory">Звільнити пам\'ять</string>
-    <string name="setting_emergency_call">Автоматичний екстрений виклик</string>
-    <string name="setting_app_monitoring">Моніторинг додатків</string>
-    <string name="setting_auto_cleanup_apk">Автовидалення APK</string>
-    <string name="setting_call_block">Блокування невідомих дзвінків</string>
+
     <string name="setting_pocket_mode">У кишені</string>
 
     <!-- Onboarding -->
     <string name="onboarding_title">Ласкаво просимо до Retirement Launcher</string>
     <string name="onboarding_desc">Додаток для спрощення інтерфейсу вашого телефону та захисту пристрою.</string>
     <string name="onboarding_start">Почати</string>
-
-    <!-- Clean Files -->
-    <string name="clean_files_title">Очищення сміття</string>
-    <string name="clean_files_desc">Готовий до сканування пристрою</string>
-    <string name="clean_files_start">Почати очищення</string>
-    <string name="clean_files_running">Сканування та очищення…</string>
-    <string name="clean_files_completed">Очищення завершено!</string>
-    <string name="clean_files_retry">Очистити знову</string>
-
-    <!-- Clean Memory -->
-    <string name="clean_memory_title">Звільнити пам\'ять</string>
-    <string name="clean_memory_stat_used">Використано</string>
-    <string name="clean_memory_stat_free">Вільно</string>
-    <string name="clean_memory_stat_total">Всього</string>
-    <string name="clean_memory_result_sub">Систему оптимізовано</string>
-    <string name="clean_memory_start">Прискорити зараз</string>
-    <string name="clean_memory_running">Оптимізація системи…</string>
-    <string name="clean_memory_optimal">Система знаходиться в оптимальному стані!</string>
-    <string name="clean_memory_retry">Оптимізувати знову</string>
-    <string name="clean_memory_toast">Звільнено $number_ram МБ</string>
 
     <!-- Contacts -->
     <string name="contact_tap_to_call">Подзвонити зараз</string>
@@ -56,13 +31,6 @@
     <string name="back">Назад</string>
     <string name="search">Пошук…</string>
 
-    <!-- Call Permission -->
-    <string name="call_permission_title">Дозвіл на дзвінки</string>
-    <string name="call_permission_desc">Додатку потрібен дозвіл на здійснення дзвінків, щоб автоматично дзвонити родичам у разі потреби.</string>
-
-    <!-- Call Block -->
-    <string name="call_block_title">Дозвіл на блокування дзвінків</string>
-    <string name="call_block_desc">Додатку потрібен дозвіл на управління дзвінками та контактами для автоматичного блокування невідомих номерів.</string>
 
     <!-- Home Status -->
     <string name="home_header_apps">Додатки</string>
@@ -92,80 +60,4 @@
     <string name="pin_error_incorrect">Невірний PIN-код</string>
 
     <string name="done">Готово</string>
-    <string name="emergency_call_title">Екстрений виклик</string>
-    <string name="emergency_call_desc">Якщо телефон не використовується протягом 10 годин, додаток автоматично здійснить екстрений виклик.</string>
-    <string name="emergency_call_enable">Увімкнути функцію</string>
-    <string name="emergency_call_phone_number">Номер екстреного телефону</string>
-    <string name="emergency_call_phone_number_hint">Введіть номер</string>
-    <string name="emergency_call_save_success">Конфігурацію екстренного виклику збережено</string>
-
-    <string name="clean_cat_system_temp">Тимчасові системні файли (.tmp, .log…)</string>
-    <string name="clean_cat_compressed">Невідомі стиснуті файли</string>
-    <string name="clean_cat_no_extension">Документи (.pdf, .doc, .txt…)</string>
-    <string name="clean_cat_apk_cache">Старі APK та кеш</string>
-    <string name="clean_result_title">Результати очищення</string>
-    <string name="clean_result_files_deleted">файлів видалено</string>
-    <string name="clean_result_space_freed">місця звільнено</string>
-    <string name="clean_files_idle_desc">Виявлено $number_file сміттєвих файлів – натисніть, щоб очистити</string>
-    <string name="clean_files_count_unit">сміттєвих файлів</string>
-    <string name="call_permission_highlight">здійснювати дзвінки</string>
-    <string name="call_block_highlight">керувати дзвінками та контактами</string>
-    <string name="setting_header_debug">🐛 Налагодження</string>
-    <string name="setting_debug_block_screen">Перегляд екрана блокування</string>
-    <string name="default_launcher_highlight">Retirement Launcher</string>
-    <string name="file_permission_title">Захист сховища</string>
-    <string name="file_permission_desc">Для роботи функції автоматичного видалення невідомих файлів APK/AAB додатку потрібен доступ до всього сховища. Це допомагає підтримувати ваш пристрій у чистоті та безпеці.</string>
-    <string name="file_permission_highlight">невідомі APK/AAB</string>
-    <string name="usage_stats_permission_title">Моніторинг додатків</string>
-    <string name="usage_stats_permission_desc">Для роботи функції блокування додатків необхідно надати «Доступ до даних про використання». Це допомагає додатку дізнаватися, коли відкривається неавторизований додаток.</string>
-    <string name="usage_stats_permission_highlight">«Доступ до даних про використання»</string>
-    <string name="accessibility_permission_title">Виявлення активності користувача</string>
-    <string name="accessibility_permission_desc">SOS використовує спеціальні можливості лише для виявлення того, коли користувач починає торкатися екрана. Він не читає вміст екрана, не записує текст, не змінює налаштування, не керує телефоном і не передає ці дані. Відмітка часу активності залишається на цьому пристрої і використовується лише для прийняття рішення про те, чи має SOS дзвонити за екстреними контактами.</string>
-    <string name="accessibility_permission_highlight">не читає вміст екрана</string>
-    <string name="user_activity_accessibility_service_label">Виявлення активності користувача SOS</string>
-    <string name="user_activity_accessibility_service_summary">Виявляє реальну активність користувача для перевірок бездіяльності SOS.</string>
-    <string name="user_activity_accessibility_service_desc">Використовується лише функцією автоматичного SOS для виявлення того, чи телефон все ще активно використовується. Служба прослуховує лише системну подію, яка вказує на те, що користувач почав торкатися екрана, а потім зберігає час останньої активності на цьому пристрої. Вона не читає вміст екрана, не збирає введений текст, не перевіряє інші додатки, не змінює налаштування, не виконує жести, не натискає кнопки та не передає ці дані про активність.</string>
-    <string name="app_monitoring_intro_title">Про функцію</string>
-    <string name="app_monitoring_intro_desc">Ця функція допомагає захистити користувачів, дозволяючи запуск лише вибраних додатків. Інші додатки будуть заблоковані, щоб уникнути непередбачених проблем.</string>
-    <string name="app_monitoring_intro_highlight">дозволяючи запуск лише вибраних додатків</string>
-    <string name="app_monitoring_intro_action">Я розумію</string>
-    <string name="emergency_call_intro_title">Про функцію</string>
-    <string name="emergency_call_intro_desc">Для забезпечення безпеки додаток автоматично подзвонить за списком швидких контактів, якщо протягом 10 годин на телефоні не буде виявлено жодної активності користувача.</string>
-    <string name="emergency_call_intro_highlight">автоматично подзвонить за списком швидких контактів</string>
-    <string name="emergency_call_intro_action">Я розумію</string>
-    <string name="file_cleanup_intro_title">Про функцію</string>
-    <string name="file_cleanup_intro_desc">Ця функція допомагає захистити користувачів, автоматично видаляючи невідомі інсталяційні файли (APK), завантажені на пристрій, що запобігає випадковому встановленню шкідливих програм.</string>
-    <string name="file_cleanup_intro_highlight">автоматично видаляючи невідомі інсталяційні файли (APK)</string>
-    <string name="file_cleanup_intro_action">Я розумію</string>
-    <string name="call_block_intro_title">Про функцію</string>
-    <string name="call_block_intro_desc">Ця функція допомагає захистити користувачів, автоматично блокуючи дзвінки з невідомих номерів, яких немає в контактах, що дозволяє уникнути турбот з боку реклами або шахраїв.</string>
-    <string name="call_block_intro_highlight">автоматично блокуючи дзвінки з невідомих номерів</string>
-    <string name="call_block_intro_action">Я розумію</string>
-    <string name="emergency_contact_required_title">Потрібне налаштування контакту</string>
-    <string name="emergency_contact_required_desc">Ви ще не налаштували список швидких контактів. Щоб ця функція працювала, виберіть хоча б один контакт.</string>
-    <string name="emergency_contact_required_highlight">виберіть хоча б один контакт</string>
-    <string name="emergency_contact_required_action">Налаштувати зараз</string>
-    <string name="overlay_permission_title">Відображення поверх інших додатків</string>
-    <string name="overlay_permission_desc">Додатку потрібен дозвіл «Відображення поверх інших додатків», щоб показувати екран блокування при відкритті заблокованого додатка.</string>
-    <string name="overlay_permission_highlight">«Відображення поверх інших додатків»</string>
-    <string name="clean_cat_file_count">$number_file файлів</string>
-    <string name="reorder_apps_title">Змінити порядок додатків</string>
-    <string name="reorder_contacts_title">Змінити порядок контактів</string>
-    <string name="app_list_empty_error">Виберіть хоча б один додаток</string>
-    <string name="contact_list_empty_error">Виберіть хоча б один контакт</string>
-    <string name="emergency_call_permission_denied">Для цієї функції потрібен дозвіл на дзвінки</string>
-    <string name="setting_emergency_advanced">Розширені налаштування SOS</string>
-    <string name="sos_settings_title">Розширений SOS</string>
-    <string name="sos_master_toggle">Увімкнути автоматичний екстрений виклик</string>
-    <string name="sos_save_changes">Зберегти зміни</string>
-    <string name="sos_timeout_label">Тайм-аут бездіяльності</string>
-    <string name="sos_timeout_value">%1$d годин</string>
-    <string name="sos_timeout_seconds">%1$d секунд</string>
-    <string name="sos_exclusion_periods_header">Періоди виключення (Сон/Відпочинок)</string>
-    <string name="sos_add_exclusion_period">Додати період виключення</string>
-    <string name="sos_add_exclusion_period_desc">Виключаючи час сну або відпочинку</string>
-    <string name="sos_exclusion_period_format">%1$02d:%2$02d - %3$02d:%4$02d</string>
-    <string name="sos_delete_exclusion_period">Видалити</string>
-    <string name="sos_select_start_time">Виберіть час початку</string>
-    <string name="sos_select_end_time">Виберіть час закінчення</string>
 </resources>

@@ -10,38 +10,13 @@
     <string name="setting_app_list">ตั้งค่ารายการแอป</string>
     <string name="setting_default_launcher">ตั้งค่าตัวเปิดเริ่มต้น</string>
     <string name="setting_contact_list">ตั้งค่าผู้ติดต่อด่วน</string>
-    <string name="setting_clean_files">ล้างไฟล์ขยะ</string>
-    <string name="setting_clean_memory">เพิ่มหน่วยความจำ</string>
-    <string name="setting_emergency_call">โทรฉุกเฉินอัตโนมัติ</string>
-    <string name="setting_app_monitoring">การตรวจสอบแอป</string>
-    <string name="setting_auto_cleanup_apk">ลบ APK อัตโนมัติ</string>
-    <string name="setting_call_block">บล็อกเบอร์แปลก</string>
+
     <string name="setting_pocket_mode">โหมดพ็อกเก็ต</string>
 
     <!-- Onboarding -->
     <string name="onboarding_title">ยินดีต้อนรับสู่ Retirement Launcher</string>
     <string name="onboarding_desc">แอปเพื่อลดความซับซ้อนของส่วนต่อประสานโทรศัพท์และปกป้องอุปกรณ์ของคุณ</string>
     <string name="onboarding_start">เริ่มต้นใช้งาน</string>
-
-    <!-- Clean Files -->
-    <string name="clean_files_title">ล้างไฟล์ขยะ</string>
-    <string name="clean_files_desc">พร้อมสแกนอุปกรณ์</string>
-    <string name="clean_files_start">เริ่มการล้าง</string>
-    <string name="clean_files_running">กำลังสแกนและล้างข้อมูล…</string>
-    <string name="clean_files_completed">ล้างข้อมูลเสร็จสิ้น!</string>
-    <string name="clean_files_retry">ล้างอีกครั้ง</string>
-
-    <!-- Clean Memory -->
-    <string name="clean_memory_title">เพิ่มหน่วยความจำ</string>
-    <string name="clean_memory_stat_used">ใช้ไป</string>
-    <string name="clean_memory_stat_free">ว่าง</string>
-    <string name="clean_memory_stat_total">ทั้งหมด</string>
-    <string name="clean_memory_result_sub">ระบบได้รับการปรับแต่งแล้ว</string>
-    <string name="clean_memory_start">เร่งความเร็วตอนนี้</string>
-    <string name="clean_memory_running">กำลังปรับแต่งระบบ…</string>
-    <string name="clean_memory_optimal">ระบบอยู่ในสถานะที่เหมาะสมที่สุดแล้ว!</string>
-    <string name="clean_memory_retry">ปรับแต่งอีกครั้ง</string>
-    <string name="clean_memory_toast">เพิ่มพื้นที่แล้ว $number_ram MB</string>
 
     <!-- Contacts -->
     <string name="contact_tap_to_call">โทรทันที</string>
@@ -56,13 +31,6 @@
     <string name="back">กลับ</string>
     <string name="search">ค้นหา…</string>
 
-    <!-- Call Permission -->
-    <string name="call_permission_title">สิทธิ์ในการโทร</string>
-    <string name="call_permission_desc">แอปต้องการสิทธิ์ในการโทรเพื่อโทรหาญาติโดยอัตโนมัติในกรณีฉุกเฉิน</string>
-
-    <!-- Call Block -->
-    <string name="call_block_title">สิทธิ์ในการบล็อกการโทร</string>
-    <string name="call_block_desc">แอปต้องการสิทธิ์ในการจัดการการโทรและผู้ติดต่อเพื่อบล็อกการโทรจากคนแปลกหน้าโดยอัตโนมัติ</string>
 
     <!-- Home Status -->
     <string name="home_header_apps">แอปพลิเคชัน</string>
@@ -92,80 +60,4 @@
     <string name="pin_error_incorrect">PIN ไม่ถูกต้อง</string>
 
     <string name="done">เสร็จสิ้น</string>
-    <string name="emergency_call_title">โทรฉุกเฉิน</string>
-    <string name="emergency_call_desc">หากไม่มีการใช้งานโทรศัพท์เป็นเวลา 10 ชั่วโมง แอปจะทำการโทรฉุกเฉินโดยอัตโนมัติ</string>
-    <string name="emergency_call_enable">เปิดใช้งานฟีเจอร์</string>
-    <string name="emergency_call_phone_number">หมายเลขโทรศัพท์ฉุกเฉิน</string>
-    <string name="emergency_call_phone_number_hint">ป้อนหมายเลขโทรศัพท์</string>
-    <string name="emergency_call_save_success">บันทึกการกำหนดค่าการโทรฉุกเฉินแล้ว</string>
-
-    <string name="clean_cat_system_temp">ไฟล์ชั่วคราวของระบบ (.tmp, .log…)</string>
-    <string name="clean_cat_compressed">ไฟล์บีบอัดที่ไม่รู้จัก</string>
-    <string name="clean_cat_no_extension">เอกสาร (.pdf, .doc, .txt…)</string>
-    <string name="clean_cat_apk_cache">APK เก่าและแคช</string>
-    <string name="clean_result_title">ผลการล้างข้อมูล</string>
-    <string name="clean_result_files_deleted">ไฟล์ถูกลบ</string>
-    <string name="clean_result_space_freed">พื้นที่ว่างที่เพิ่มขึ้น</string>
-    <string name="clean_files_idle_desc">ตรวจพบไฟล์ขยะ $number_file ไฟล์ – แตะเพื่อล้าง</string>
-    <string name="clean_files_count_unit">ไฟล์ขยะ</string>
-    <string name="call_permission_highlight">โทรออก</string>
-    <string name="call_block_highlight">จัดการการโทรและผู้ติดต่อ</string>
-    <string name="setting_header_debug">🐛 ดีบัก</string>
-    <string name="setting_debug_block_screen">ดูหน้าจอที่ถูกบล็อก</string>
-    <string name="default_launcher_highlight">Retirement Launcher</string>
-    <string name="file_permission_title">การป้องกันพื้นที่จัดเก็บข้อมูล</string>
-    <string name="file_permission_desc">เพื่อให้การลบไฟล์ APK/AAB ที่ไม่รู้จักโดยอัตโนมัติทำงานได้ แอปจำเป็นต้องเข้าถึงพื้นที่จัดเก็บข้อมูลทั้งหมด วิธีนี้จะช่วยให้อุปกรณ์ของคุณสะอาดและปลอดภัย</string>
-    <string name="file_permission_highlight">APK/AAB ที่ไม่รู้จัก</string>
-    <string name="usage_stats_permission_title">การตรวจสอบแอป</string>
-    <string name="usage_stats_permission_desc">เพื่อให้ฟีเจอร์การบล็อกแอปทำงานได้ คุณต้องอนุญาต \'การเข้าถึงข้อมูลการใช้งาน\' สิ่งนี้ช่วยให้แอปทราบเมื่อมีการเปิดแอปที่ไม่ได้รับอนุญาต</string>
-    <string name="usage_stats_permission_highlight">\'การเข้าถึงข้อมูลการใช้งาน\'</string>
-    <string name="accessibility_permission_title">การตรวจจับกิจกรรมของผู้ใช้</string>
-    <string name="accessibility_permission_desc">SOS ใช้การเข้าถึง (Accessibility) เพื่อตรวจจับเมื่อผู้ใช้เริ่มสัมผัสหน้าจอเท่านั้น โดยจะไม่ทำการอ่านเนื้อหาบนหน้าจอ, บันทึกข้อความ, เปลี่ยนแปลงการตั้งค่า, ควบคุมโทรศัพท์ หรือแชร์ข้อมูลเหล่านี้ ข้อมูลเวลาของกิจกรรมจะถูกเก็บไว้ในอุปกรณ์นี้เท่านั้น และใช้เพื่อตัดสินใจว่า SOS ควรโทรหาผู้ติดต่อฉุกเฉินหรือไม่</string>
-    <string name="accessibility_permission_highlight">ไม่อ่านเนื้อหาบนหน้าจอ</string>
-    <string name="user_activity_accessibility_service_label">SOS การตรวจจับกิจกรรมของผู้ใช้</string>
-    <string name="user_activity_accessibility_service_summary">ตรวจจับกิจกรรมของผู้ใช้จริงสำหรับการตรวจสอบการไม่ใช้งาน SOS</string>
-    <string name="user_activity_accessibility_service_desc">ใช้โดย Auto SOS เท่านั้นเพื่อตรวจจับว่าโทรศัพท์ยังคงมีการใช้งานอย่างต่อเนื่องหรือไม่ บริการจะรอฟังเหตุการณ์ของระบบที่บ่งบอกว่าผู้ใช้เริ่มสัมผัสหน้าจอ จากนั้นจะบันทึกเวลาของกิจกรรมล่าสุดไว้ในอุปกรณ์นี้ โดยจะไม่ทำการอ่านเนื้อหาบนหน้าจอ, รวบรวมข้อความที่พิมพ์, ตรวจสอบแอปอื่น, เปลี่ยนแปลงการตั้งค่า, ทำท่าทางสัมผัส, คลิกปุ่ม หรือแชร์ข้อมูลกิจกรรมเหล่านี้</string>
-    <string name="app_monitoring_intro_title">แนะนำฟีเจอร์</string>
-    <string name="app_monitoring_intro_desc">ฟีเจอร์นี้ช่วยปกป้องผู้ใช้โดยอนุญาตให้เฉพาะแอปที่เลือกเท่านั้นที่สามารถทำงานได้ แอปอื่นจะถูกบล็อกเพื่อหลีกเลี่ยงปัญหาที่ไม่ได้ตั้งใจ</string>
-    <string name="app_monitoring_intro_highlight">อนุญาตให้เฉพาะแอปที่เลือกเท่านั้นที่สามารถทำงานได้</string>
-    <string name="app_monitoring_intro_action">ฉันเข้าใจแล้ว</string>
-    <string name="emergency_call_intro_title">แนะนำฟีเจอร์</string>
-    <string name="emergency_call_intro_desc">เพื่อความปลอดภัย แอปจะโทรไปยังรายการผู้ติดต่อด่วนโดยอัตโนมัติ หากตรวจไม่พบการโต้ตอบของผู้ใช้บนโทรศัพท์เป็นเวลา 10 ชั่วโมง</string>
-    <string name="emergency_call_intro_highlight">โทรไปยังรายการผู้ติดต่อด่วนโดยอัตโนมัติ</string>
-    <string name="emergency_call_intro_action">ฉันเข้าใจแล้ว</string>
-    <string name="file_cleanup_intro_title">แนะนำฟีเจอร์</string>
-    <string name="file_cleanup_intro_desc">ฟีเจอร์นี้ช่วยปกป้องผู้ใช้โดยการลบไฟล์ติดตั้งที่ไม่รู้จัก (APK) ที่ดาวน์โหลดลงในอุปกรณ์โดยอัตโนมัติ เพื่อหลีกเลี่ยงการติดตั้งมัลแวร์โดยไม่ได้ตั้งใจ</string>
-    <string name="file_cleanup_intro_highlight">การลบไฟล์ติดตั้งที่ไม่รู้จัก (APK) โดยอัตโนมัติ</string>
-    <string name="file_cleanup_intro_action">ฉันเข้าใจแล้ว</string>
-    <string name="call_block_intro_title">แนะนำฟีเจอร์</string>
-    <string name="call_block_intro_desc">ฟีเจอร์นี้ช่วยปกป้องผู้ใช้โดยการบล็อกการโทรจากเบอร์ที่ไม่รู้จักซึ่งไม่มีอยู่ในรายชื่อผู้ติดต่อโดยอัตโนมัติ เพื่อหลีกเลี่ยงการถูกรบกวนจากโฆษณาหรือมิจฉาชีพ</string>
-    <string name="call_block_intro_highlight">การบล็อกการโทรจากเบอร์ที่ไม่รู้จักโดยอัตโนมัติ</string>
-    <string name="call_block_intro_action">ฉันเข้าใจแล้ว</string>
-    <string name="emergency_contact_required_title">จำเป็นต้องตั้งค่าผู้ติดต่อ</string>
-    <string name="emergency_contact_required_desc">คุณยังไม่ได้ตั้งค่ารายการผู้ติดต่อด่วน เพื่อให้ฟีเจอร์นี้ทำงานได้ โปรดเลือกผู้ติดต่ออย่างน้อยหนึ่งราย</string>
-    <string name="emergency_contact_required_highlight">โปรดเลือกผู้ติดต่ออย่างน้อยหนึ่งราย</string>
-    <string name="emergency_contact_required_action">ตั้งค่าตอนนี้</string>
-    <string name="overlay_permission_title">แสดงทับแอปอื่น</string>
-    <string name="overlay_permission_desc">แอปต้องการสิทธิ์ \'แสดงทับแอปอื่น\' เพื่อแสดงหน้าจอล็อกเมื่อมีการเปิดแอปที่ถูกบล็อก</string>
-    <string name="overlay_permission_highlight">\'แสดงทับแอปอื่น\'</string>
-    <string name="clean_cat_file_count">$number_file ไฟล์</string>
-    <string name="reorder_apps_title">จัดลำดับแอปใหม่</string>
-    <string name="reorder_contacts_title">จัดลำดับผู้ติดต่อใหม่</string>
-    <string name="app_list_empty_error">โปรดเลือกอย่างน้อยหนึ่งแอป</string>
-    <string name="contact_list_empty_error">โปรดเลือกอย่างน้อยหนึ่งรายชื่อ</string>
-    <string name="emergency_call_permission_denied">จำเป็นต้องได้รับอนุญาตการโทรสำหรับฟีเจอร์นี้</string>
-    <string name="setting_emergency_advanced">การตั้งค่า SOS ขั้นสูง</string>
-    <string name="sos_settings_title">SOS ขั้นสูง</string>
-    <string name="sos_master_toggle">เปิดใช้งานการโทรฉุกเฉินอัตโนมัติ</string>
-    <string name="sos_save_changes">บันทึกการเปลี่ยนแปลง</string>
-    <string name="sos_timeout_label">หมดเวลาเมื่อไม่ใช้งาน</string>
-    <string name="sos_timeout_value">%1$d ชั่วโมง</string>
-    <string name="sos_timeout_seconds">%1$d วินาที</string>
-    <string name="sos_exclusion_periods_header">ช่วงเวลาที่ยกเว้น (นอนหลับ/พักผ่อน)</string>
-    <string name="sos_add_exclusion_period">เพิ่มช่วงเวลาที่ยกเว้น</string>
-    <string name="sos_add_exclusion_period_desc">ไม่รวมเวลานอนหรือพักผ่อน</string>
-    <string name="sos_exclusion_period_format">%1$02d:%2$02d - %3$02d:%4$02d</string>
-    <string name="sos_delete_exclusion_period">ลบ</string>
-    <string name="sos_select_start_time">เลือกเวลาเริ่ม</string>
-    <string name="sos_select_end_time">เลือกเวลาสิ้นสุด</string>
 </resources>

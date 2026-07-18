@@ -10,38 +10,13 @@
     <string name="setting_app_list">Sediakan Senarai Aplikasi</string>
     <string name="setting_default_launcher">Tetapkan Pelancar Lalai</string>
     <string name="setting_contact_list">Sediakan Kenalan Pantas</string>
-    <string name="setting_clean_files">Bersihkan Fail Sampah</string>
-    <string name="setting_clean_memory">Kosongkan Memori</string>
-    <string name="setting_emergency_call">Panggilan Kecemasan Automatik</string>
-    <string name="setting_app_monitoring">Pemantauan Aplikasi</string>
-    <string name="setting_auto_cleanup_apk">Padam APK Automatik</string>
-    <string name="setting_call_block">Sekat Panggilan Tidak Dikenali</string>
+
     <string name="setting_pocket_mode">Mod Poket</string>
 
     <!-- Onboarding -->
     <string name="onboarding_title">Selamat Datang ke Retirement Launcher</string>
-    <string name="onboarding_desc">Aplikasi untuk memudahkan antara muka telefon anda dan melindungi peranti anda.</string>
+    <string name="onboarding_desc">Aplikasi untuk memudahkan antara muka telefon anda và melindungi peranti anda.</string>
     <string name="onboarding_start">Mulakan</string>
-
-    <!-- Clean Files -->
-    <string name="clean_files_title">Bersihkan Fail Sampah</string>
-    <string name="clean_files_desc">Sedia untuk mengimbas peranti</string>
-    <string name="clean_files_start">Mulakan Pembersihan</string>
-    <string name="clean_files_running">Mengimbas dan membersihkan…</string>
-    <string name="clean_files_completed">Pembersihan selesai!</string>
-    <string name="clean_files_retry">Bersihkan Semula</string>
-
-    <!-- Clean Memory -->
-    <string name="clean_memory_title">Kosongkan Memori</string>
-    <string name="clean_memory_stat_used">Digunakan</string>
-    <string name="clean_memory_stat_free">Kosong</string>
-    <string name="clean_memory_stat_total">Jumlah</string>
-    <string name="clean_memory_result_sub">Sistem dioptimumkan</string>
-    <string name="clean_memory_start">Lajukan Sekarang</string>
-    <string name="clean_memory_running">Mengoptimumkan sistem…</string>
-    <string name="clean_memory_optimal">Sistem dalam keadaan optimum!</string>
-    <string name="clean_memory_retry">Optimumkan Semula</string>
-    <string name="clean_memory_toast">$number_ram MB dikosongkan</string>
 
     <!-- Contacts -->
     <string name="contact_tap_to_call">Panggil Sekarang</string>
@@ -56,13 +31,6 @@
     <string name="back">Kembali</string>
     <string name="search">Cari…</string>
 
-    <!-- Call Permission -->
-    <string name="call_permission_title">Kebenaran Membuat Panggilan</string>
-    <string name="call_permission_desc">Aplikasi memerlukan kebenaran membuat panggilan untuk menghubungi saudara secara automatik semasa kecemasan.</string>
-
-    <!-- Call Block -->
-    <string name="call_block_title">Kebenaran Menyekat Panggilan</string>
-    <string name="call_block_desc">Aplikasi memerlukan kebenaran untuk mengurus panggilan dan kenalan bagi menyekat panggilan daripada orang yang tidak dikenali secara automatik.</string>
 
     <!-- Home Status -->
     <string name="home_header_apps">Aplikasi</string>
@@ -92,80 +60,4 @@
     <string name="pin_error_incorrect">PIN salah</string>
 
     <string name="done">Selesai</string>
-    <string name="emergency_call_title">Panggilan Kecemasan</string>
-    <string name="emergency_call_desc">Jika telefon tidak digunakan selama 10 jam, aplikasi akan membuat panggilan kecemasan secara automatik.</string>
-    <string name="emergency_call_enable">Dayakan ciri</string>
-    <string name="emergency_call_phone_number">Nombor Telefon Kecemasan</string>
-    <string name="emergency_call_phone_number_hint">Masukkan nombor</string>
-    <string name="emergency_call_save_success">Konfigurasi panggilan kecemasan disimpan</string>
-
-    <string name="clean_cat_system_temp">Fail sementara sistem (.tmp, .log…)</string>
-    <string name="clean_cat_compressed">Fail mampat tidak dikenali</string>
-    <string name="clean_cat_no_extension">Dokumen (.pdf, .doc, .txt…)</string>
-    <string name="clean_cat_apk_cache">APK lama &amp; cache</string>
-    <string name="clean_result_title">Keputusan Pembersihan</string>
-    <string name="clean_result_files_deleted">fail dipadam</string>
-    <string name="clean_result_space_freed">ruang dikosongkan</string>
-    <string name="clean_files_idle_desc">$number_file fail sampah dikesan – ketik untuk bersihkan</string>
-    <string name="clean_files_count_unit">fail sampah</string>
-    <string name="call_permission_highlight">membuat panggilan</string>
-    <string name="call_block_highlight">mengurus panggilan dan kenalan</string>
-    <string name="setting_header_debug">🐛 Debug</string>
-    <string name="setting_debug_block_screen">Lihat Skrin Sekatan</string>
-    <string name="default_launcher_highlight">Retirement Launcher</string>
-    <string name="file_permission_title">Perlindungan Storan</string>
-    <string name="file_permission_desc">Untuk pemadaman automatik fail APK/AAB yang tidak dikenali berfungsi, aplikasi memerlukan akses ke semua storan. Ini membantu memastikan peranti anda bersih dan selamat.</string>
-    <string name="file_permission_highlight">APK/AAB tidak dikenali</string>
-    <string name="usage_stats_permission_title">Pemantauan Aplikasi</string>
-    <string name="usage_stats_permission_desc">Untuk ciri penyekatan aplikasi berfungsi, anda perlu memberikan \'Akses data penggunaan\'. Ini membantu aplikasi mengetahui apabila aplikasi yang tidak dibenarkan dibuka.</string>
-    <string name="usage_stats_permission_highlight">\'Akses data penggunaan\'</string>
-    <string name="accessibility_permission_title">Pengesanan Aktiviti Pengguna</string>
-    <string name="accessibility_permission_desc">SOS menggunakan Kebolehcapaian hanya untuk mengesan apabila pengguna mula menyentuh skrin. Ia tidak membaca kandungan skrin, merekod teks, menukar tetapan, mengawal telefon, atau berkongsi data ini. Penanda masa aktiviti kekal pada peranti ini dan hanya digunakan untuk memutuskan sama ada SOS patut memanggil kenalan kecemasan.</string>
-    <string name="accessibility_permission_highlight">tidak membaca kandungan skrin</string>
-    <string name="user_activity_accessibility_service_label">Pengesanan Aktiviti Pengguna SOS</string>
-    <string name="user_activity_accessibility_service_summary">Mengesan aktiviti pengguna sebenar untuk pemeriksaan ketidakaktifan SOS.</string>
-    <string name="user_activity_accessibility_service_desc">Hanya digunakan oleh Auto SOS untuk mengesan sama ada telefon masih digunakan secara aktif. Perkhidmatan hanya mendengar acara sistem yang menunjukkan pengguna telah mula menyentuh skrin, kemudian menyimpan masa aktiviti terkini pada peranti ini. Ia tidak membaca kandungan skrin, mengumpul teks yang ditaip, memeriksa aplikasi lain, menukar tetapan, melakukan gerak isyarat, mengklik butang, atau berkongsi data aktiviti ini.</string>
-    <string name="app_monitoring_intro_title">Pengenalan Ciri</string>
-    <string name="app_monitoring_intro_desc">Ciri ini membantu melindungi pengguna dengan hanya membenarkan aplikasi terpilih untuk dijalankan. Aplikasi lain akan disekat untuk mengelakkan masalah yang tidak diingini.</string>
-    <string name="app_monitoring_intro_highlight">hanya membenarkan aplikasi terpilih</string>
-    <string name="app_monitoring_intro_action">Saya faham</string>
-    <string name="emergency_call_intro_title">Pengenalan Ciri</string>
-    <string name="emergency_call_intro_desc">Untuk memastikan keselamatan, aplikasi akan secara automatik memanggil senarai kenalan pantas jika tiada interaksi pengguna dikesan pada telefon selama 10 jam.</string>
-    <string name="emergency_call_intro_highlight">secara automatik memanggil senarai kenalan pantas</string>
-    <string name="emergency_call_intro_action">Saya faham</string>
-    <string name="file_cleanup_intro_title">Pengenalan Ciri</string>
-    <string name="file_cleanup_intro_desc">Ciri ini membantu melindungi pengguna dengan memadam secara automatik fail pemasangan tidak dikenali (APK) yang dimuat turun ke peranti, mengelakkan pemasangan malware secara tidak sengaja.</string>
-    <string name="file_cleanup_intro_highlight">memadam secara automatik fail pemasangan tidak dikenali (APK)</string>
-    <string name="file_cleanup_intro_action">Saya faham</string>
-    <string name="call_block_intro_title">Pengenalan Ciri</string>
-    <string name="call_block_intro_desc">Ciri ini membantu melindungi pengguna dengan menyekat secara automatik panggilan daripada nombor tidak dikenali yang tiada dalam kenalan, mengelakkan gangguan iklan atau penipuan.</string>
-    <string name="call_block_intro_highlight">menyekat secara automatik panggilan daripada nombor tidak dikenali</string>
-    <string name="call_block_intro_action">Saya faham</string>
-    <string name="emergency_contact_required_title">Tetapan Kenalan Diperlukan</string>
-    <string name="emergency_contact_required_desc">Anda belum menyediakan senarai kenalan pantas anda. Untuk ciri ini berfungsi, sila pilih sekurang-kurangnya satu kenalan.</string>
-    <string name="emergency_contact_required_highlight">pilih sekurang-kurangnya satu kenalan</string>
-    <string name="emergency_contact_required_action">Sediakan Sekarang</string>
-    <string name="overlay_permission_title">Paparkan Di Atas Aplikasi Lain</string>
-    <string name="overlay_permission_desc">Aplikasi memerlukan kebenaran \'Paparkan di atas aplikasi lain\' untuk menunjukkan skrin kunci apabila aplikasi yang disekat dibuka.</string>
-    <string name="overlay_permission_highlight">\'Paparkan di atas aplikasi lain\'</string>
-    <string name="clean_cat_file_count">$number_file fail</string>
-    <string name="reorder_apps_title">Susun Semula Aplikasi</string>
-    <string name="reorder_contacts_title">Susun Semula Kenalan</string>
-    <string name="app_list_empty_error">Sila pilih sekurang-kurangnya satu aplikasi</string>
-    <string name="contact_list_empty_error">Sila pilih sekurang-kurangnya satu kenalan</string>
-    <string name="emergency_call_permission_denied">Kebenaran panggilan diperlukan untuk ciri ini</string>
-    <string name="setting_emergency_advanced">Tetapan SOS Lanjutan</string>
-    <string name="sos_settings_title">SOS Lanjutan</string>
-    <string name="sos_master_toggle">Dayakan Panggilan Kecemasan Automatik</string>
-    <string name="sos_save_changes">Simpan Perubahan</string>
-    <string name="sos_timeout_label">Masa Tamat Ketidakaktifan</string>
-    <string name="sos_timeout_value">%1$d jam</string>
-    <string name="sos_timeout_seconds">%1$d saat</string>
-    <string name="sos_exclusion_periods_header">Tempoh Pengecualian (Tidur/Rehat)</string>
-    <string name="sos_add_exclusion_period">Tambah Tempoh Pengecualian</string>
-    <string name="sos_add_exclusion_period_desc">Mengecualikan waktu tidur atau rehat</string>
-    <string name="sos_exclusion_period_format">%1$02d:%2$02d - %3$02d:%4$02d</string>
-    <string name="sos_delete_exclusion_period">Padam</string>
-    <string name="sos_select_start_time">Pilih Masa Mula</string>
-    <string name="sos_select_end_time">Pilih Masa Tamat</string>
 </resources>

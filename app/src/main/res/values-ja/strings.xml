@@ -10,38 +10,13 @@
     <string name="setting_app_list">アプリリスト設定</string>
     <string name="setting_default_launcher">デフォルトのランチャー設定</string>
     <string name="setting_contact_list">クイック連絡先設定</string>
-    <string name="setting_clean_files">不要なファイルをクリーンアップ</string>
-    <string name="setting_clean_memory">メモリを解放</string>
-    <string name="setting_emergency_call">自動緊急通報</string>
-    <string name="setting_app_monitoring">アプリの監視</string>
-    <string name="setting_auto_cleanup_apk">APKを自動削除</string>
-    <string name="setting_call_block">不明な着信をブロック</string>
+
     <string name="setting_pocket_mode">ポケットモード</string>
 
     <!-- Onboarding -->
     <string name="onboarding_title">Retirement Launcherへようこそ</string>
     <string name="onboarding_desc">スマートフォンのインターフェースを簡素化し、デバイスを保護するアプリです。</string>
     <string name="onboarding_start">使ってみる</string>
-
-    <!-- Clean Files -->
-    <string name="clean_files_title">不要なファイルをクリーンアップ</string>
-    <string name="clean_files_desc">デバイスをスキャンする準備ができました</string>
-    <string name="clean_files_start">クリーンアップ開始</string>
-    <string name="clean_files_running">スキャンとクリーンアップ中…</string>
-    <string name="clean_files_completed">クリーンアップ完了！</string>
-    <string name="clean_files_retry">もう一度クリーンアップ</string>
-
-    <!-- Clean Memory -->
-    <string name="clean_memory_title">メモリを解放</string>
-    <string name="clean_memory_stat_used">使用中</string>
-    <string name="clean_memory_stat_free">空き</string>
-    <string name="clean_memory_stat_total">合計</string>
-    <string name="clean_memory_result_sub">システムを最適化しました</string>
-    <string name="clean_memory_start">今すぐ加速</string>
-    <string name="clean_memory_running">システムを最適化中…</string>
-    <string name="clean_memory_optimal">システムは最適な状態です！</string>
-    <string name="clean_memory_retry">もう一度最適化</string>
-    <string name="clean_memory_toast">$number_ram MB解放しました</string>
 
     <!-- Contacts -->
     <string name="contact_tap_to_call">今すぐ電話</string>
@@ -56,13 +31,6 @@
     <string name="back">戻る</string>
     <string name="search">検索…</string>
 
-    <!-- Call Permission -->
-    <string name="call_permission_title">通話許可</string>
-    <string name="call_permission_desc">緊急時に自動的に親族へ電話をかけるために、このアプリには通話許可が必要です。</string>
-
-    <!-- Call Block -->
-    <string name="call_block_title">着信拒否許可</string>
-    <string name="call_block_desc">知らない人からの電話を自動的にブロックするために、このアプリには通話と連絡先の管理許可が必要です。</string>
 
     <!-- Home Status -->
     <string name="home_header_apps">アプリケーション</string>
@@ -92,75 +60,4 @@
     <string name="pin_error_incorrect">PINが正しくありません</string>
 
     <string name="done">完了</string>
-    <string name="emergency_call_title">緊急通報</string>
-    <string name="emergency_call_desc">スマートフォンが10時間使用されない場合、アプリが自動的に緊急通報を行います。</string>
-    <string name="clean_cat_system_temp">システム一時ファイル (.tmp, .log…)</string>
-    <string name="clean_cat_compressed">未知の圧縮ファイル</string>
-    <string name="clean_cat_no_extension">ドキュメント (.pdf, .doc, .txt…)</string>
-    <string name="clean_cat_apk_cache">古い APK とキャッシュ</string>
-    <string name="clean_result_title">クリーンアップ結果</string>
-    <string name="clean_result_files_deleted">ファイルを削除しました</string>
-    <string name="clean_result_space_freed">空間を解放しました</string>
-    <string name="clean_files_idle_desc">$number_file 個の不要なファイルを検出しました – タップしてクリーンアップ</string>
-    <string name="clean_files_count_unit">不要なファイル</string>
-    <string name="call_permission_highlight">通話</string>
-    <string name="call_block_highlight">通話と連絡先の管理</string>
-    <string name="setting_header_debug">🐛 デバッグ</string>
-    <string name="setting_debug_block_screen">ブロック画面を表示</string>
-    <string name="default_launcher_highlight">Retirement Launcher</string>
-    <string name="file_permission_title">ストレージ保護</string>
-    <string name="file_permission_desc">未知の APK/AAB ファイルを自動的に削除するには、アプリがすべてのストレージにアクセスできる必要があります。これにより、デバイスを清潔で安全に保つことができます。</string>
-    <string name="file_permission_highlight">未知の APK/AAB</string>
-    <string name="usage_stats_permission_title">アプリの監視</string>
-    <string name="usage_stats_permission_desc">アプリのブロック機能を使用するには、「使用状況へのアクセス」を許可する必要があります。これにより、許可されていないアプリがいつ開かれたかをアプリが知ることができます。</string>
-    <string name="usage_stats_permission_highlight">「使用状況へのアクセス」</string>
-    <string name="accessibility_permission_title">ユーザー活動の検出</string>
-    <string name="accessibility_permission_desc">SOS は、ユーザーが画面に触れ始めたことを検出するためにのみユーザー補助を使用します。画面の内容を読み取ったり、テキストを記録したり、設定を変更したり、電話を操作したり、このデータを共有したりすることはありません。活動のタイムスタンプはこのデバイスに残り、SOS が緊急連絡先に電話をかけるべきかどうかを判断するためにのみ使用されます。</string>
-    <string name="accessibility_permission_highlight">画面の内容を読み取りません</string>
-    <string name="user_activity_accessibility_service_label">SOS ユーザー活動の検出</string>
-    <string name="user_activity_accessibility_service_summary">SOS の非アクティブチェックのために実際のユーザー活動を検出します。</string>
-    <string name="user_activity_accessibility_service_desc">携帯電話がまだアクティブに使用されているかどうかを検出するために、自動 SOS によってのみ使用されます。サービスは、ユーザーが画面に触れ始めたことを示すシステムイベントのみをリッスンし、このデバイスに最新の活動時間を保存します。画面の内容を読み取ったり、入力されたテキストを収集したり、他のアプリを検査したり、設定を変更したり、ジェスチャーを実行したり、ボタンをクリックしたり、この活動データを共有したりすることはありません。</string>
-    <string name="app_monitoring_intro_title">機能紹介</string>
-    <string name="app_monitoring_intro_desc">この機能は、選択したアプリのみの実行を許可することでユーザーを保護します。意図しない問題を避けるために、他のアプリはブロックされます。</string>
-    <string name="app_monitoring_intro_highlight">選択したアプリのみの実行を許可</string>
-    <string name="app_monitoring_intro_action">了解しました</string>
-    <string name="emergency_call_intro_title">機能紹介</string>
-    <string name="emergency_call_intro_desc">安全を確保するために、スマートフォンで 10 時間ユーザーの操作が検出されない場合、アプリは自動的にクイック連絡先リストに電話をかけます。</string>
-    <string name="emergency_call_intro_highlight">クイック連絡先リストに自動的に電話をかける</string>
-    <string name="emergency_call_intro_action">了解しました</string>
-    <string name="file_cleanup_intro_title">機能紹介</string>
-    <string name="file_cleanup_intro_desc">この機能は、デバイスにダウンロードされた未知のインストールファイル (APK) を自動的に削除し、マルウェアの誤ったインストールを回避することでユーザーを保護します。</string>
-    <string name="file_cleanup_intro_highlight">未知のインストールファイル (APK) を自動的に削除</string>
-    <string name="file_cleanup_intro_action">了解しました</string>
-    <string name="call_block_intro_title">機能紹介</string>
-    <string name="call_block_intro_desc">この機能は、連絡先に登録されていない未知の番号からの着信を自動的にブロックし、広告や詐欺に悩まされるのを防ぐことでユーザーを保護します。</string>
-    <string name="call_block_intro_highlight">未知の番号からの着信を自動的にブロック</string>
-    <string name="call_block_intro_action">了解しました</string>
-    <string name="emergency_contact_required_title">連絡先の設定が必要</string>
-    <string name="emergency_contact_required_desc">まだクイック連絡先リストが設定されていません。この機能を使用するには、少なくとも 1 つの連絡先を選択してください。</string>
-    <string name="emergency_contact_required_highlight">少なくとも 1 つの連絡先を選択</string>
-    <string name="emergency_contact_required_action">今すぐ設定</string>
-    <string name="overlay_permission_title">他のアプリの上に重ねて表示</string>
-    <string name="overlay_permission_desc">ブロックされたアプリが開かれたときにロック画面を表示するには、アプリに「他のアプリの上に重ねて表示」の許可が必要です。</string>
-    <string name="overlay_permission_highlight">「他のアプリの上に重ねて表示」</string>
-    <string name="clean_cat_file_count">$number_file 個のファイル</string>
-    <string name="reorder_apps_title">アプリの並べ替え</string>
-    <string name="reorder_contacts_title">連絡先の並べ替え</string>
-    <string name="app_list_empty_error">少なくとも 1 つのアプリを選択してください</string>
-    <string name="contact_list_empty_error">少なくとも 1 つの連絡先を選択してください</string>
-    <string name="emergency_call_permission_denied">この機能には通話許可が必要です</string>
-    <string name="setting_emergency_advanced">高度な SOS 設定</string>
-    <string name="sos_settings_title">高度な SOS</string>
-    <string name="sos_master_toggle">自動緊急通報を有効にする</string>
-    <string name="sos_save_changes">変更を保存</string>
-    <string name="sos_timeout_label">非アクティブタイムアウト</string>
-    <string name="sos_timeout_value">%1$d 時間</string>
-    <string name="sos_timeout_seconds">%1$d 秒</string>
-    <string name="sos_exclusion_periods_header">除外期間 (睡眠/休息)</string>
-    <string name="sos_add_exclusion_period">除外期間を追加</string>
-    <string name="sos_add_exclusion_period_desc">睡眠または休息時間を除外</string>
-    <string name="sos_exclusion_period_format">%1$02d:%2$02d - %3$02d:%4$02d</string>
-    <string name="sos_delete_exclusion_period">削除</string>
-    <string name="sos_select_start_time">開始時間を選択</string>
-    <string name="sos_select_end_time">終了時間を選択</string>
 </resources>

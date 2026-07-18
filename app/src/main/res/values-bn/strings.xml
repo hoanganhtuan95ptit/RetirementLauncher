@@ -12,10 +12,7 @@
     <string name="setting_contact_list">দ্রুত যোগাযোগ সেটআপ</string>
     <string name="setting_clean_files">অপ্রয়োজনীয় ফাইল পরিষ্কার করুন</string>
     <string name="setting_clean_memory">মেমরি খালি করুন</string>
-    <string name="setting_emergency_call">স্বয়ংক্রিয় জরুরি কল</string>
-    <string name="setting_app_monitoring">অ্যাপ মনিটরিং</string>
-    <string name="setting_auto_cleanup_apk">APK স্বয়ংক্রিয়ভাবে মুছুন</string>
-    <string name="setting_call_block">অজানা কল ব্লক করুন</string>
+
     <string name="setting_pocket_mode">পকেট মোড</string>
 
     <!-- Onboarding -->
@@ -56,13 +53,7 @@
     <string name="back">ফিরে যান</string>
     <string name="search">অনুসন্ধান…</string>
 
-    <!-- Call Permission -->
-    <string name="call_permission_title">কল করার অনুমতি</string>
-    <string name="call_permission_desc">জরুরি অবস্থায় আত্মীয়দের স্বয়ংক্রিয়ভাবে কল করার জন্য অ্যাপটির কল করার অনুমতি প্রয়োজন।</string>
 
-    <!-- Call Block -->
-    <string name="call_block_title">কল ব্লক করার অনুমতি</string>
-    <string name="call_block_desc">অজানা নম্বর থেকে কল স্বয়ংক্রিয়ভাবে ব্লক করতে অ্যাপটির কল এবং যোগাযোগ ব্যবস্থাপনার অনুমতি প্রয়োজন।</string>
 
     <!-- Home Status -->
     <string name="home_header_apps">অ্যাপ্লিকেশন</string>
@@ -92,80 +83,4 @@
     <string name="pin_error_incorrect">ভুল পিন</string>
 
     <string name="done">সম্পন্ন</string>
-    <string name="emergency_call_title">জরুরি কল</string>
-    <string name="emergency_call_desc">যদি ফোনটি ১০ ঘণ্টা ব্যবহার করা না হয়, তবে অ্যাপটি স্বয়ংক্রিয়ভাবে একটি জরুরি কল করবে।</string>
-    <string name="emergency_call_enable">বৈশিষ্ট্যটি সক্ষম করুন</string>
-    <string name="emergency_call_phone_number">জরুরি ফোন নম্বর</string>
-    <string name="emergency_call_phone_number_hint">নম্বর লিখুন</string>
-    <string name="emergency_call_save_success">জরুরি কল কনফিগারেশন সংরক্ষিত হয়েছে</string>
-
-    <string name="clean_cat_system_temp">সিস্টেম অস্থায়ী ফাইল (.tmp, .log…)</string>
-    <string name="clean_cat_compressed">অজানা সংকুচিত ফাইল</string>
-    <string name="clean_cat_no_extension">নথি (.pdf, .doc, .txt…)</string>
-    <string name="clean_cat_apk_cache">পুরানো APK এবং ক্যাশে</string>
-    <string name="clean_result_title">পরিষ্কারের ফলাফল</string>
-    <string name="clean_result_files_deleted">ফাইল মুছে ফেলা হয়েছে</string>
-    <string name="clean_result_space_freed">জায়গা খালি করা হয়েছে</string>
-    <string name="clean_files_idle_desc">$number_file টি অপ্রয়োজনীয় ফাইল শনাক্ত করা হয়েছে – পরিষ্কার করতে ট্যাপ করুন</string>
-    <string name="clean_files_count_unit">অপ্রয়োজনীয় ফাইল</string>
-    <string name="call_permission_highlight">কল করুন</string>
-    <string name="call_block_highlight">কল এবং যোগাযোগ ব্যবস্থাপনা</string>
-    <string name="setting_header_debug">🐛 ডিবাগ</string>
-    <string name="setting_debug_block_screen">ব্লক স্ক্রিন দেখুন</string>
-    <string name="default_launcher_highlight">Retirement Launcher</string>
-    <string name="file_permission_title">স্টোরেজ সুরক্ষা</string>
-    <string name="file_permission_desc">অজানা APK/AAB ফাইল স্বয়ংক্রিয়ভাবে মুছে ফেলার বৈশিষ্ট্যটি কাজ করার জন্য অ্যাপটির সমস্ত স্টোরেজ অ্যাক্সেস প্রয়োজন। এটি আপনার ডিভাইস পরিষ্কার এবং নিরাপদ রাখতে সাহায্য করে।</string>
-    <string name="file_permission_highlight">অজানা APK/AAB</string>
-    <string name="usage_stats_permission_title">অ্যাপ মনিটরিং</string>
-    <string name="usage_stats_permission_desc">অ্যাপ ব্লক করার বৈশিষ্ট্যটি কাজ করার জন্য আপনাকে \'ব্যবহারের ডেটা অ্যাক্সেস\' মঞ্জুর করতে হবে। এটি অ্যাপটিকে জানতে সাহায্য করে যখন কোনো অননুমোদিত অ্যাপ খোলা হয়।</string>
-    <string name="usage_stats_permission_highlight">\'ব্যবহারের ডেটা অ্যাক্সেস\'</string>
-    <string name="accessibility_permission_title">ব্যবহারকারীর কার্যকলাপ সনাক্তকরণ</string>
-    <string name="accessibility_permission_desc">SOS শুধুমাত্র ব্যবহারকারী কখন স্ক্রিন স্পর্শ করতে শুরু করেন তা সনাক্ত করতে অ্যাক্সেসিবিলিটি ব্যবহার করে। এটি স্ক্রিন কন্টেন্ট পড়ে না, টেক্সট রেকর্ড করে না, সেটিংস পরিবর্তন করে না, ফোন নিয়ন্ত্রণ করে না বা এই ডেটা শেয়ার করে না। কার্যকলাপের টাইমস্ট্যাম্প এই ডিভাইসেই থাকে এবং শুধুমাত্র SOS জরুরি পরিচিতিগুলিতে কল করবে কিনা তা সিদ্ধান্ত নিতে ব্যবহৃত হয়।</string>
-    <string name="accessibility_permission_highlight">স্ক্রিন কন্টেন্ট পড়ে না</string>
-    <string name="user_activity_accessibility_service_label">SOS ব্যবহারকারীর কার্যকলাপ সনাক্তকরণ</string>
-    <string name="user_activity_accessibility_service_summary">SOS নিষ্ক্রিয়তা পরীক্ষার জন্য প্রকৃত ব্যবহারকারীর কার্যকলাপ সনাক্ত করে।</string>
-    <string name="user_activity_accessibility_service_desc">ফোনটি এখনও সক্রিয়ভাবে ব্যবহৃত হচ্ছে কিনা তা সনাক্ত করতে শুধুমাত্র অটো SOS দ্বারা ব্যবহৃত হয়। পরিষেবাটি শুধুমাত্র সিস্টেম ইভেন্ট শোনে যা নির্দেশ করে যে ব্যবহারকারী স্ক্রিন স্পর্শ করতে শুরু করেছেন, তারপরে এই ডিভাইসে সর্বশেষ কার্যকলাপের সময় সংরক্ষণ করে। এটি স্ক্রিন কন্টেন্ট পড়ে না, টাইপ করা টেক্সট সংগ্রহ করে না, অন্য অ্যাপগুলি পরিদর্শন করে না, সেটিংস পরিবর্তন করে না, অঙ্গভঙ্গি করে না, বোতামে ক্লিক করে না বা এই কার্যকলাপের ডেটা শেয়ার করে না।</string>
-    <string name="app_monitoring_intro_title">বৈশিষ্ট্যের পরিচিতি</string>
-    <string name="app_monitoring_intro_desc">এই বৈশিষ্ট্যটি শুধুমাত্র নির্বাচিত অ্যাপগুলিকে চালানোর অনুমতি দিয়ে ব্যবহারকারীদের সুরক্ষিত করতে সাহায্য করে। অনিচ্ছাকৃত সমস্যা এড়াতে অন্যান্য অ্যাপগুলি ব্লক করা হবে।</string>
-    <string name="app_monitoring_intro_highlight">শুধুমাত্র নির্বাচিত অ্যাপগুলিকে চালানোর অনুমতি</string>
-    <string name="app_monitoring_intro_action">আমি বুঝেছি</string>
-    <string name="emergency_call_intro_title">বৈশিষ্ট্যের পরিচিতি</string>
-    <string name="emergency_call_intro_desc">নিরাপত্তা নিশ্চিত করতে, ফোনে ১০ ঘণ্টা কোনো ব্যবহারকারীর মিথস্ক্রিয়া সনাক্ত না হলে অ্যাপটি স্বয়ংক্রিয়ভাবে দ্রুত যোগাযোগ তালিকায় কল করবে।</string>
-    <string name="emergency_call_intro_highlight">স্বয়ংক্রিয়ভাবে দ্রুত যোগাযোগ তালিকায় কল করা</string>
-    <string name="emergency_call_intro_action">আমি বুঝেছি</string>
-    <string name="file_cleanup_intro_title">বৈশিষ্ট্যের পরিচিতি</string>
-    <string name="file_cleanup_intro_desc">এই বৈশিষ্ট্যটি ডিভাইসে ডাউনলোড করা অজানা ইনস্টলেশন ফাইল (APK) স্বয়ংক্রিয়ভাবে মুছে ফেলে ব্যবহারকারীদের সুরক্ষিত করতে সাহায্য করে, যাতে ভুলবশত ম্যালওয়্যার ইনস্টল হওয়া এড়ানো যায়।</string>
-    <string name="file_cleanup_intro_highlight">অজানা ইনস্টলেশন ফাইল (APK) স্বয়ংক্রিয়ভাবে মুছে ফেলা</string>
-    <string name="file_cleanup_intro_action">আমি বুঝেছি</string>
-    <string name="call_block_intro_title">বৈশিষ্ট্যের পরিচিতি</string>
-    <string name="call_block_intro_desc">এই বৈশিষ্ট্যটি পরিচিতিতে নেই এমন অজানা নম্বর থেকে কল স্বয়ংক্রিয়ভাবে ব্লক করে ব্যবহারকারীদের সুরক্ষিত করতে সাহায্য করে, যাতে বিজ্ঞাপন বা জালিয়াতি দ্বারা বিরক্ত হওয়া এড়ানো যায়।</string>
-    <string name="call_block_intro_highlight">অজানা নম্বর থেকে কল স্বয়ংক্রিয়ভাবে ব্লক করা</string>
-    <string name="call_block_intro_action">আমি বুঝেছি</string>
-    <string name="emergency_contact_required_title">যোগাযোগ সেটআপ প্রয়োজন</string>
-    <string name="emergency_contact_required_desc">আপনি এখনও আপনার দ্রুত যোগাযোগ তালিকা সেটআপ করেননি। এই বৈশিষ্ট্যটি কাজ করার জন্য, অনুগ্রহ করে অন্তত একটি যোগাযোগ নির্বাচন করুন।</string>
-    <string name="emergency_contact_required_highlight">অন্তত একটি যোগাযোগ নির্বাচন করুন</string>
-    <string name="emergency_contact_required_action">এখনই সেটআপ করুন</string>
-    <string name="overlay_permission_title">অন্যান্য অ্যাপের উপরে প্রদর্শন</string>
-    <string name="overlay_permission_desc">যখন একটি ব্লক করা অ্যাপ খোলা হয় তখন লক স্ক্রিন দেখানোর জন্য অ্যাপটির \'অন্যান্য অ্যাপের উপরে প্রদর্শন\' অনুমতির প্রয়োজন।</string>
-    <string name="overlay_permission_highlight">\'অন্যান্য অ্যাপের উপরে প্রদর্শন\'</string>
-    <string name="clean_cat_file_count">$number_file টি ফাইল</string>
-    <string name="reorder_apps_title">অ্যাপগুলি পুনর্গঠন করুন</string>
-    <string name="reorder_contacts_title">যোগাযোগগুলি পুনর্গঠন করুন</string>
-    <string name="app_list_empty_error">অনুগ্রহ করে অন্তত একটি অ্যাপ নির্বাচন করুন</string>
-    <string name="contact_list_empty_error">অনুগ্রহ করে অন্তত একটি যোগাযোগ নির্বাচন করুন</string>
-    <string name="emergency_call_permission_denied">এই বৈশিষ্ট্যের জন্য কলের অনুমতি প্রয়োজন</string>
-    <string name="setting_emergency_advanced">উন্নত SOS সেটিংস</string>
-    <string name="sos_settings_title">উন্নত SOS</string>
-    <string name="sos_master_toggle">স্বয়ংক্রিয় জরুরি কল সক্ষম করুন</string>
-    <string name="sos_save_changes">পরিবর্তনগুলি সংরক্ষণ করুন</string>
-    <string name="sos_timeout_label">নিষ্ক্রিয়তা সময় শেষ</string>
-    <string name="sos_timeout_value">%1$d ঘণ্টা</string>
-    <string name="sos_timeout_seconds">%1$d সেকেন্ড</string>
-    <string name="sos_exclusion_periods_header">বর্জিত সময়কাল (ঘুম/বিশ্রাম)</string>
-    <string name="sos_add_exclusion_period">বর্জিত সময়কাল যোগ করুন</string>
-    <string name="sos_add_exclusion_period_desc">ঘুম বা বিশ্রামের সময় বাদ দেওয়া</string>
-    <string name="sos_exclusion_period_format">%1$02d:%2$02d - %3$02d:%4$02d</string>
-    <string name="sos_delete_exclusion_period">মুছে ফেলুন</string>
-    <string name="sos_select_start_time">শুরু করার সময় নির্বাচন করুন</string>
-    <string name="sos_select_end_time">শেষ করার সময় নির্বাচন করুন</string>
 </resources>
