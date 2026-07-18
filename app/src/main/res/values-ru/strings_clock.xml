@@ -1,0 +1,20 @@
+<resources>
+    <string name="setting_header_plugins">Плагины и утилиты</string>
+    <string name="setting_lunar_calendar">Показывать лунный календарь</string>
+    <string name="setting_clock_title">Настройки часов</string>
+    <string name="setting_clock_format_header">Формат времени</string>
+    <string name="setting_clock_12h">12-часовой</string>
+    <string name="setting_clock_12h_example">Пример: 10:30</string>
+    <string name="setting_clock_24h">24-часовой</string>
+    <string name="setting_clock_24h_example">Пример: 22:30</string>
+    <string name="setting_clock_am_pm">Показывать AM/PM</string>
+    <string name="setting_clock_am_pm_desc">Показывать AM и PM при использовании 12-часового формата</string>
+    <string name="setting_clock_solar">Показывать солнечный календарь</string>
+    <string name="setting_clock_solar_desc">Показывать солнечный календарь на экране</string>
+    <string name="setting_clock_lunar">Показывать лунный календарь</string>
+    <string name="setting_clock_lunar_desc">Показывать лунный календарь на экране</string>
+
+    <!-- Calendar -->
+    <string name="lunar_date_format">День %1$d/%2$d лунного календаря</string>
+    <string name="solar_date_format">EEEE, dd.MM.yyyy</string>
+</resources>

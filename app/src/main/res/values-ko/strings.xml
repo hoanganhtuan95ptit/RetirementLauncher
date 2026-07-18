@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <string name="app_name">RetirementLauncher</string>
 
     <!-- Settings -->
@@ -6,62 +6,37 @@
     <string name="setting_header_general">일반 설정</string>
     <string name="setting_header_security">보안 및 보호</string>
     <string name="setting_header_optimization">최적화 및 유틸리티</string>
-    <string name="setting_header_plugins">플러그인 및 유틸리티</string>
-    <string name="setting_lunar_calendar">음력 표시</string>
-    <string name="setting_clock_title">시계 설정</string>
-    <string name="setting_clock_format_header">시간 형식</string>
-    <string name="setting_clock_12h">12시간제</string>
-    <string name="setting_clock_12h_example">예: 10:30</string>
-    <string name="setting_clock_24h">24시간제</string>
-    <string name="setting_clock_24h_example">예: 22:30</string>
-    <string name="setting_clock_am_pm">오전/오후 표시</string>
-    <string name="setting_clock_am_pm_desc">12시간제 사용 시 오전 및 오후 표시</string>
-    <string name="setting_clock_solar">양력 표시</string>
-    <string name="setting_clock_solar_desc">화면에 양력 날짜 표시</string>
-    <string name="setting_clock_lunar">음력 표시</string>
-    <string name="setting_clock_lunar_desc">화면에 음력 날짜 표시</string>
     <string name="setting_pin">PIN 설정</string>
     <string name="setting_app_list">앱 목록 설정</string>
     <string name="setting_default_launcher">기본 런처 설정</string>
-    <string name="setting_contact_list">빠른 연락처 설정</string>
+    <string name="setting_contact_list">단축 번호 설정</string>
     <string name="setting_clean_files">정크 파일 정리</string>
     <string name="setting_clean_memory">메모리 최적화</string>
-    <string name="setting_emergency_call">자동 비상 전화 (빠른 연락처 기준)</string>
+    <string name="setting_emergency_call">자동 긴급 전화</string>
     <string name="setting_app_monitoring">앱 모니터링</string>
     <string name="setting_auto_cleanup_apk">APK 자동 삭제</string>
-    <string name="setting_call_block">모르는 전화 차단</string>
-    <string name="setting_pocket_mode">포켓 모드 (오터치 방지)</string>
+    <string name="setting_call_block">스팸 전화 차단</string>
+    <string name="setting_pocket_mode">포켓 모드</string>
 
     <!-- Onboarding -->
     <string name="onboarding_title">Retirement Launcher에 오신 것을 환영합니다</string>
-    <string name="onboarding_desc">전화 인터페이스를 단순화하고 기기를 보호하는 앱입니다.</string>
+    <string name="onboarding_desc">전화기 인터페이스를 단순화하고 장치를 보호하는 앱입니다.</string>
     <string name="onboarding_start">시작하기</string>
 
     <!-- Clean Files -->
     <string name="clean_files_title">정크 파일 정리</string>
-    <string name="clean_files_desc">기기 스캔 준비 완료</string>
+    <string name="clean_files_desc">장치를 스캔할 준비가 되었습니다</string>
     <string name="clean_files_start">정리 시작</string>
     <string name="clean_files_running">스캔 및 정리 중…</string>
     <string name="clean_files_completed">정리 완료!</string>
     <string name="clean_files_retry">다시 정리</string>
-    <!-- Clean Files – categories -->
-    <string name="clean_cat_system_temp">시스템 임시 파일 (.tmp, .log…)</string>
-    <string name="clean_cat_compressed">알 수 없는 압축 파일</string>
-    <string name="clean_cat_no_extension">문서 (.pdf, .doc, .txt…)</string>
-    <string name="clean_cat_apk_cache">이전 APK 및 캐시</string>
-    <!-- Clean Files – result card -->
-    <string name="clean_result_title">정리 결과</string>
-    <string name="clean_result_files_deleted">개의 파일 삭제됨</string>
-    <string name="clean_result_space_freed">공간 확보됨</string>
-    <string name="clean_files_idle_desc"> $number_file 개의 정크 파일이 감지되었습니다 – 탭하여 정리</string>
-    <string name="clean_files_count_unit">정크 파일</string>
 
     <!-- Clean Memory -->
     <string name="clean_memory_title">메모리 최적화</string>
     <string name="clean_memory_stat_used">사용 중</string>
     <string name="clean_memory_stat_free">여유</string>
     <string name="clean_memory_stat_total">전체</string>
-    <string name="clean_memory_result_sub">시스템 최적화됨</string>
+    <string name="clean_memory_result_sub">시스템이 최적화되었습니다</string>
     <string name="clean_memory_start">지금 가속</string>
     <string name="clean_memory_running">시스템 최적화 중…</string>
     <string name="clean_memory_optimal">시스템이 최적의 상태입니다!</string>
@@ -70,11 +45,11 @@
 
     <!-- Contacts -->
     <string name="contact_tap_to_call">지금 전화</string>
-    <string name="contact_list_title">빠른 연락처 선택</string>
-    <string name="contact_list_saved">연락처 목록 저장됨</string>
+    <string name="contact_list_title">단축 번호 선택</string>
+    <string name="contact_list_saved">연락처 목록이 저장되었습니다</string>
     <string name="contact_permission_denied">이 기능을 사용하려면 연락처 권한이 필요합니다</string>
     <string name="app_list_save_action">설정 저장</string>
-    <string name="app_list_saved">앱 목록 저장됨</string>
+    <string name="app_list_saved">앱 목록이 저장되었습니다</string>
 
     <!-- Common -->
     <string name="save">저장</string>
@@ -83,102 +58,44 @@
 
     <!-- Call Permission -->
     <string name="call_permission_title">전화 걸기 권한</string>
-    <string name="call_permission_desc">비상 시 가족에게 자동으로 전화를 걸기 위해 전화 걸기 권한이 필요합니다.</string>
-    <string name="call_permission_highlight">전화 걸기</string>
+    <string name="call_permission_desc">응급 상황 시 자동으로 지인에게 전화를 걸기 위해 전화 걸기 권한이 필요합니다.</string>
 
     <!-- Call Block -->
     <string name="call_block_title">전화 차단 권한</string>
-    <string name="call_block_desc">모르는 사람의 전화를 자동으로 차단하기 위해 전화 및 연락처 관리 권한이 필요합니다.</string>
-    <string name="call_block_highlight">전화 및 연락처 관리</string>
+    <string name="call_block_desc">모르는 번호의 전화를 자동으로 차단하기 위해 전화 및 연락처 관리 권한이 필요합니다.</string>
+
     <!-- Home Status -->
     <string name="home_header_apps">애플리케이션</string>
-    <string name="home_header_contacts">빠른 연락처</string>
+    <string name="home_header_contacts">단축 번호</string>
 
     <!-- Block -->
     <string name="block_title">앱 차단됨</string>
     <string name="block_desc">이 앱은 허용 목록에 없습니다. 관리자에게 문의하세요.</string>
     <string name="block_go_home">홈 화면으로 이동</string>
 
-    <!-- Debug-only settings (chỉ hiển thị trong debug build) -->
-    <string name="setting_header_debug">🐛 디버그</string>
-    <string name="setting_debug_block_screen">차단 화면 보기</string>
-
     <!-- Permissions & Setup -->
     <string name="default_launcher_setup">지금 설정</string>
     <string name="default_launcher_title">기본 런처 설정</string>
     <string name="default_launcher_desc">Retirement Launcher를 홈 화면으로 사용하려면 시스템 설정에서 기본 앱으로 설정해야 합니다.</string>
-    <string name="default_launcher_highlight">Retirement Launcher</string>
     <string name="permission_grant">권한 허용</string>
     <string name="understood">확인</string>
     <string name="pin_verify_title">PIN 확인</string>
     <string name="pin_verify_desc">이 설정을 변경하려면 PIN을 입력하세요.</string>
     <string name="pin_key_delete_desc">삭제</string>
 
-    <!-- File Permission -->
-    <string name="file_permission_title">저장공간 보호</string>
-    <string name="file_permission_desc">알 수 없는 APK/AAB 파일의 자동 삭제 기능이 작동하려면 모든 파일에 대한 액세스 권한이 필요합니다. 이는 기기를 깨끗하고 안전하게 유지하는 데 도움이 됩니다.</string>
-    <string name="file_permission_highlight">알 수 없는 APK/AAB</string>
-
-    <!-- Usage Stats Permission -->
-    <string name="usage_stats_permission_title">앱 모니터링</string>
-    <string name="usage_stats_permission_desc">앱 차단 기능이 작동하려면 \'사용 정보 접근\' 권한을 허용해야 합니다. 이를 통해 승인되지 않은 앱이 열리는 것을 앱이 감지할 수 있습니다.</string>
-    <string name="usage_stats_permission_highlight">\'사용 정보 접근\'</string>
-
-    <!-- App Monitoring Intro -->
-    <string name="app_monitoring_intro_title">기능 소개</string>
-    <string name="app_monitoring_intro_desc">이 기능은 선택한 앱만 실행되도록 허용하여 사용자를 보호합니다. 다른 앱은 의도하지 않은 문제를 방지하기 위해 차단됩니다.</string>
-    <string name="app_monitoring_intro_highlight">선택한 앱만 허용</string>
-    <string name="app_monitoring_intro_action">이해했습니다</string>
-
-    <!-- Emergency Call Intro -->
-    <string name="emergency_call_intro_title">기능 소개</string>
-    <string name="emergency_call_intro_desc">안전을 위해 10시간 동안 휴대폰 조작이 감지되지 않으면 앱이 자동으로 빠른 연락처 목록으로 전화를 겁니다.</string>
-    <string name="emergency_call_intro_highlight">자동으로 빠른 연락처 목록으로 전화 걸기</string>
-    <string name="emergency_call_intro_action">이해했습니다</string>
-
-    <!-- File Cleanup Intro -->
-    <string name="file_cleanup_intro_title">기능 소개</string>
-    <string name="file_cleanup_intro_desc">이 기능은 기기에 다운로드된 알 수 없는 설치 파일(APK)을 자동으로 삭제하여 사용자를 보호하고, 악성 코드가 실수로 설치되는 것을 방지합니다.</string>
-    <string name="file_cleanup_intro_highlight">알 수 없는 설치 파일(APK) 자동 삭제</string>
-    <string name="file_cleanup_intro_action">이해했습니다</string>
-
-    <!-- Call Block Intro -->
-    <string name="call_block_intro_title">기능 소개</string>
-    <string name="call_block_intro_desc">이 기능은 연락처에 없는 모르는 번호의 전화를 자동으로 차단하여 사용자를 보호하고, 광고나 사기 전화로부터 방해받는 것을 방지합니다.</string>
-    <string name="call_block_intro_highlight">모르는 번호의 전화 자동 차단</string>
-    <string name="call_block_intro_action">이해했습니다</string>
-
-    <!-- Overlay Permission -->
-    <string name="overlay_permission_title">다른 앱 위에 표시</string>
-    <string name="overlay_permission_desc">차단된 앱이 열릴 때 잠금 화면을 표시하려면 \'다른 앱 위에 표시\' 권한이 필요합니다.</string>
-    <string name="overlay_permission_highlight">\'다른 앱 위에 표시\'</string>
     <!-- PIN Setup -->
     <string name="pin_enter_new">새 PIN 입력 (6자리)</string>
     <string name="pin_confirm_new">새 PIN 확인</string>
-    <string name="pin_setup_success">PIN 설정 성공</string>
+    <string name="pin_setup_success">PIN 설정 완료</string>
     <string name="pin_error_length">PIN은 6자리여야 합니다</string>
     <string name="pin_error_confirm_mismatch">확인 PIN이 일치하지 않습니다</string>
-    <string name="pin_error_incorrect">잘못된 PIN입니다</string>
-    <!-- Clean Files -->
-    <string name="clean_cat_file_count" tools:ignore="PluralsCandidate">$number_file 개의 파일</string>
+    <string name="pin_error_incorrect">PIN이 올바르지 않습니다</string>
 
-    <!-- Reorder -->
-    <string name="reorder_apps_title">앱 순서 변경</string>
-    <string name="reorder_contacts_title">연락처 순서 변경</string>
     <string name="done">완료</string>
-    <string name="app_list_empty_error">하나 이상의 앱을 선택하세요</string>
-    <string name="contact_list_empty_error">하나 이상의 연락처를 선택하세요</string>
-
-    <!-- Emergency Call -->
-    <string name="emergency_call_title">비상 전화</string>
-    <string name="emergency_call_desc">휴대폰을 12시간 동안 사용하지 않으면 앱이 자동으로 비상 전화를 겁니다.</string>
+    <string name="emergency_call_title">긴급 전화</string>
+    <string name="emergency_call_desc">전화기를 12시간 동안 사용하지 않으면 앱에서 자동으로 긴급 전화를 겁니다.</string>
     <string name="emergency_call_enable">기능 활성화</string>
-    <string name="emergency_call_phone_number">비상 전화번호</string>
-    <string name="emergency_call_phone_number_hint">전화번호 입력</string>
-    <string name="emergency_call_save_success">비상 전화 설정 저장됨</string>
-    <string name="emergency_call_permission_denied">이 기능을 사용하려면 전화 권한이 필요합니다</string>
-
-    <!-- Calendar -->
-    <string name="lunar_date_format">음력 %1$d/%2$d일</string>
-    <string name="solar_date_format">EEEE, yyyy/MM/dd</string>
+    <string name="emergency_call_phone_number">긴급 전화번호</string>
+    <string name="emergency_call_phone_number_hint">번호 입력</string>
+    <string name="emergency_call_save_success">긴급 전화 설정이 저장되었습니다</string>
 </resources>

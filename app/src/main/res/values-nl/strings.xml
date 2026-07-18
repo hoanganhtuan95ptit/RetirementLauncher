@@ -1,36 +1,22 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <string name="app_name">RetirementLauncher</string>
 
     <!-- Settings -->
     <string name="settings_title">Instellingen</string>
-    <string name="setting_header_general">Algemene instellingen</string>
-    <string name="setting_header_security">Beveiliging &amp; bescherming</string>
-    <string name="setting_header_optimization">Optimalisatie &amp; hulpprogramma\'s</string>
-    <string name="setting_header_plugins">Plug-ins &amp; hulpprogramma\'s</string>
-    <string name="setting_lunar_calendar">Maan-kalender weergeven</string>
-    <string name="setting_clock_title">Klokinstellingen</string>
-    <string name="setting_clock_format_header">Tijdnotatie</string>
-    <string name="setting_clock_12h">12-uurs</string>
-    <string name="setting_clock_12h_example">Voorbeeld: 10:30</string>
-    <string name="setting_clock_24h">24-uurs</string>
-    <string name="setting_clock_24h_example">Voorbeeld: 22:30</string>
-    <string name="setting_clock_am_pm">AM/PM weergeven</string>
-    <string name="setting_clock_am_pm_desc">Toon AM en PM bij gebruik van de 12-uurs notatie</string>
-    <string name="setting_clock_solar">Zonnekalender weergeven</string>
-    <string name="setting_clock_solar_desc">Toon de zonnekalender op het scherm</string>
-    <string name="setting_clock_lunar">Maan-kalender weergeven</string>
-    <string name="setting_clock_lunar_desc">Toon de maan-kalender op het scherm</string>
+    <string name="setting_header_general">Algemene Instellingen</string>
+    <string name="setting_header_security">Beveiliging &amp; Bescherming</string>
+    <string name="setting_header_optimization">Optimalisatie &amp; Hulpprogramma\'s</string>
     <string name="setting_pin">PIN instellen</string>
     <string name="setting_app_list">App-lijst instellen</string>
-    <string name="setting_default_launcher">Standaard launcher instellen</string>
+    <string name="setting_default_launcher">Standaard Launcher instellen</string>
     <string name="setting_contact_list">Snelcontacten instellen</string>
-    <string name="setting_clean_files">Overbodige bestanden opschonen</string>
+    <string name="setting_clean_files">Bestaanden opschonen</string>
     <string name="setting_clean_memory">Geheugen vrijmaken</string>
-    <string name="setting_emergency_call">Automatische noodoproep (via snelcontact)</string>
-    <string name="setting_app_monitoring">App-bewaking</string>
-    <string name="setting_auto_cleanup_apk">APK\'s automatisch verwijderen</string>
+    <string name="setting_emergency_call">Automatische noodoproep</string>
+    <string name="setting_app_monitoring">App-monitoring</string>
+    <string name="setting_auto_cleanup_apk">APK automatisch verwijderen</string>
     <string name="setting_call_block">Onbekende oproepen blokkeren</string>
-    <string name="setting_pocket_mode">Zakmodus (onbedoelde aanrakingen voorkomen)</string>
+    <string name="setting_pocket_mode">Zakmodus</string>
 
     <!-- Onboarding -->
     <string name="onboarding_title">Welkom bij Retirement Launcher</string>
@@ -38,27 +24,16 @@
     <string name="onboarding_start">Aan de slag</string>
 
     <!-- Clean Files -->
-    <string name="clean_files_title">Overbodige bestanden opschonen</string>
-    <string name="clean_files_desc">Gereed om apparaat te scannen</string>
-    <string name="clean_files_start">Opschonen starten</string>
+    <string name="clean_files_title">Bestanden opschonen</string>
+    <string name="clean_files_desc">Klaar om apparaat te scannen</string>
+    <string name="clean_files_start">Start opschonen</string>
     <string name="clean_files_running">Scannen en opschonen…</string>
     <string name="clean_files_completed">Opschonen voltooid!</string>
     <string name="clean_files_retry">Opnieuw opschonen</string>
-    <!-- Clean Files – categories -->
-    <string name="clean_cat_system_temp">Tijdelijke systeembestanden (.tmp, .log…)</string>
-    <string name="clean_cat_compressed">Onbekende gecomprimeerde bestanden</string>
-    <string name="clean_cat_no_extension">Documenten (.pdf, .doc, .txt…)</string>
-    <string name="clean_cat_apk_cache">Oude APK\'s &amp; cache</string>
-    <!-- Clean Files – result card -->
-    <string name="clean_result_title">Opschoonresultaten</string>
-    <string name="clean_result_files_deleted">bestanden verwijderd</string>
-    <string name="clean_result_space_freed">ruimte vrijgemaakt</string>
-    <string name="clean_files_idle_desc"> $number_file overbodige bestanden gedetecteerd – tik om op te schonen</string>
-    <string name="clean_files_count_unit">overbodige bestanden</string>
 
     <!-- Clean Memory -->
     <string name="clean_memory_title">Geheugen vrijmaken</string>
-    <string name="clean_memory_stat_used">Gebruikt</string>
+    <string name="clean_memory_stat_used">In gebruik</string>
     <string name="clean_memory_stat_free">Vrij</string>
     <string name="clean_memory_stat_total">Totaal</string>
     <string name="clean_memory_result_sub">Systeem geoptimaliseerd</string>
@@ -70,9 +45,9 @@
 
     <!-- Contacts -->
     <string name="contact_tap_to_call">Nu bellen</string>
-    <string name="contact_list_title">Snelcontacten selecteren</string>
-    <string name="contact_list_saved">Contactenlijst opgeslagen</string>
-    <string name="contact_permission_denied">Toegang tot contacten is vereist om deze functie te gebruiken</string>
+    <string name="contact_list_title">Selecteer snelcontacten</string>
+    <string name="contact_list_saved">Contactlijst opgeslagen</string>
+    <string name="contact_permission_denied">Contacttoestemming is vereist voor deze functie</string>
     <string name="app_list_save_action">Configuratie opslaan</string>
     <string name="app_list_saved">App-lijst opgeslagen</string>
 
@@ -82,103 +57,45 @@
     <string name="search">Zoeken…</string>
 
     <!-- Call Permission -->
-    <string name="call_permission_title">Toestemming om te bellen</string>
-    <string name="call_permission_desc">De app heeft toestemming nodig om te bellen om in geval van nood automatisch familieleden te kunnen bellen.</string>
-    <string name="call_permission_highlight">bellen</string>
+    <string name="call_permission_title">Toestemming voor bellen</string>
+    <string name="call_permission_desc">De app heeft toestemming nodig om te bellen om automatisch familieleden te bellen in geval van nood.</string>
 
     <!-- Call Block -->
-    <string name="call_block_title">Toestemming om oproepen te blokkeren</string>
-    <string name="call_block_desc">De app heeft toestemming nodig om oproepen en contacten te beheren om automatisch oproepen van vreemden te kunnen blokkeren.</string>
-    <string name="call_block_highlight">oproepen en contacten beheren</string>
+    <string name="call_block_title">Toestemming voor oproepblokkering</string>
+    <string name="call_block_desc">De app heeft toestemming nodig om oproepen en contacten te beheren om automatisch oproepen van vreemden te blokkeren.</string>
+
     <!-- Home Status -->
     <string name="home_header_apps">Applicaties</string>
     <string name="home_header_contacts">Snelcontacten</string>
 
     <!-- Block -->
     <string name="block_title">Applicatie geblokkeerd</string>
-    <string name="block_desc">Deze applicatie staat niet op de lijst met toegestane apps. Neem contact op met de beheerder.</string>
-    <string name="block_go_home">Ga naar het startscherm</string>
-
-    <!-- Debug-only settings (chỉ hiển thị trong debug build) -->
-    <string name="setting_header_debug">🐛 Debug</string>
-    <string name="setting_debug_block_screen">Blokkeerscherm bekijken</string>
+    <string name="block_desc">Deze applicatie staat niet in de toegestane lijst. Neem contact op met de beheerder.</string>
+    <string name="block_go_home">Ga naar startscherm</string>
 
     <!-- Permissions & Setup -->
     <string name="default_launcher_setup">Nu instellen</string>
-    <string name="default_launcher_title">Standaard launcher instellen</string>
-    <string name="default_launcher_desc">Om Retirement Launcher als startscherm te gebruiken, moet u deze als standaard-app instellen in de systeeminstellingen.</string>
-    <string name="default_launcher_highlight">Retirement Launcher</string>
+    <string name="default_launcher_title">Standaard Launcher instellen</string>
+    <string name="default_launcher_desc">Om Retirement Launcher als uw startscherm te gebruiken, moet u deze als standaard-app instellen in de systeeminstellingen.</string>
     <string name="permission_grant">Toestemming verlenen</string>
     <string name="understood">Begrepen</string>
     <string name="pin_verify_title">PIN bevestigen</string>
     <string name="pin_verify_desc">Voer uw PIN in om deze instelling te wijzigen.</string>
-    <string name="pin_key_delete_desc">Wissen</string>
+    <string name="pin_key_delete_desc">Verwijderen</string>
 
-    <!-- File Permission -->
-    <string name="file_permission_title">Opslagbeveiliging</string>
-    <string name="file_permission_desc">Om het automatisch verwijderen van onbekende APK/AAB-bestanden te laten werken, heeft de app toegang tot de gehele opslag nodig. Dit helpt uw apparaat schoon en veilig te houden.</string>
-    <string name="file_permission_highlight">onbekende APK/AAB</string>
-
-    <!-- Usage Stats Permission -->
-    <string name="usage_stats_permission_title">App-bewaking</string>
-    <string name="usage_stats_permission_desc">Om de app-blokkeerfunctie te laten werken, moet u \'Toegang tot gebruiksgegevens\' verlenen. Dit helpt de app te weten wanneer een niet-geautoriseerde app wordt geopend.</string>
-    <string name="usage_stats_permission_highlight">\'Toegang tot gebruiksgegevens\'</string>
-
-    <!-- App Monitoring Intro -->
-    <string name="app_monitoring_intro_title">Introductie van de functie</string>
-    <string name="app_monitoring_intro_desc">Deze functie beschermt gebruikers door alleen geselecteerde apps toe te staan. Andere apps worden geblokkeerd om onbedoelde problemen te voorkomen.</string>
-    <string name="app_monitoring_intro_highlight">alleen geselecteerde apps toestaan</string>
-    <string name="app_monitoring_intro_action">Ik begrijp het</string>
-
-    <!-- Emergency Call Intro -->
-    <string name="emergency_call_intro_title">Introductie van de functie</string>
-    <string name="emergency_call_intro_desc">Om de veiligheid te garanderen, belt de app automatisch de lijst met snelcontacten als er gedurende 10 uur geen gebruikersinteractie op de telefoon wordt gedetecteerd.</string>
-    <string name="emergency_call_intro_highlight">automatisch de lijst met snelcontacten bellen</string>
-    <string name="emergency_call_intro_action">Ik begrijp het</string>
-
-    <!-- File Cleanup Intro -->
-    <string name="file_cleanup_intro_title">Introductie van de functie</string>
-    <string name="file_cleanup_intro_desc">Deze functie beschermt gebruikers door onbekende installatiebestanden (APK) die naar het apparaat zijn gedownload automatisch te verwijderen, om onbedoelde installatie van malware te voorkomen.</string>
-    <string name="file_cleanup_intro_highlight">automatisch onbekende installatiebestanden (APK) verwijderen</string>
-    <string name="file_cleanup_intro_action">Ik begrijp het</string>
-
-    <!-- Call Block Intro -->
-    <string name="call_block_intro_title">Introductie van de functie</string>
-    <string name="call_block_intro_desc">Deze functie beschermt gebruikers door automatisch oproepen van onbekende nummers die niet in de contacten staan te blokkeren, om overlast door advertenties of oplichting te voorkomen.</string>
-    <string name="call_block_intro_highlight">automatisch oproepen van onbekende nummers blokkeren</string>
-    <string name="call_block_intro_action">Ik begrijp het</string>
-
-    <!-- Overlay Permission -->
-    <string name="overlay_permission_title">Weergeven over andere apps</string>
-    <string name="overlay_permission_desc">De app heeft de toestemming \'Weergeven over andere apps\' nodig om het vergrendelscherm te tonen wanneer een geblokkeerde app wordt geopend.</string>
-    <string name="overlay_permission_highlight">\'Weergeven over andere apps\'</string>
     <!-- PIN Setup -->
     <string name="pin_enter_new">Voer nieuwe PIN in (6 cijfers)</string>
     <string name="pin_confirm_new">Bevestig nieuwe PIN</string>
-    <string name="pin_setup_success">PIN instellen geslaagd</string>
-    <string name="pin_error_length">PIN moet 6 cijfers bevatten</string>
+    <string name="pin_setup_success">PIN instellen voltooid</string>
+    <string name="pin_error_length">PIN moet 6 cijfers zijn</string>
     <string name="pin_error_confirm_mismatch">Bevestigings-PIN komt niet overeen</string>
     <string name="pin_error_incorrect">Onjuiste PIN</string>
-    <!-- Clean Files -->
-    <string name="clean_cat_file_count" tools:ignore="PluralsCandidate">$number_file bestanden</string>
 
-    <!-- Reorder -->
-    <string name="reorder_apps_title">Apps rangschikken</string>
-    <string name="reorder_contacts_title">Contacten rangschikken</string>
-    <string name="done">Gereed</string>
-    <string name="app_list_empty_error">Selecteer ten minste één app</string>
-    <string name="contact_list_empty_error">Selecteer ten minste één contact</string>
-
-    <!-- Emergency Call -->
+    <string name="done">Klaar</string>
     <string name="emergency_call_title">Noodoproep</string>
-    <string name="emergency_call_desc">Als de telefoon 12 uur niet wordt gebruikt, zal de app automatisch een noodoproep doen.</string>
+    <string name="emergency_call_desc">Als de telefoon 12 uur niet wordt gebruikt, maakt de app automatisch een noodoproep.</string>
     <string name="emergency_call_enable">Functie inschakelen</string>
     <string name="emergency_call_phone_number">Noodnummer</string>
-    <string name="emergency_call_phone_number_hint">Voer telefoonnummer in</string>
+    <string name="emergency_call_phone_number_hint">Voer nummer in</string>
     <string name="emergency_call_save_success">Configuratie noodoproep opgeslagen</string>
-    <string name="emergency_call_permission_denied">Toestemming om te bellen is vereist voor deze functie</string>
-
-    <!-- Calendar -->
-    <string name="lunar_date_format">Dag %1$d/%2$d Maankalender</string>
-    <string name="solar_date_format">EEEE dd-MM-yyyy</string>
 </resources>

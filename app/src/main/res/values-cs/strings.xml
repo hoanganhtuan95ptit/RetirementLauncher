@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <string name="app_name">RetirementLauncher</string>
 
     <!-- Settings -->
@@ -6,31 +6,17 @@
     <string name="setting_header_general">Obecná nastavení</string>
     <string name="setting_header_security">Zabezpečení a ochrana</string>
     <string name="setting_header_optimization">Optimalizace a nástroje</string>
-    <string name="setting_header_plugins">Pluginy a nástroje</string>
-    <string name="setting_lunar_calendar">Zobrazit lunární kalendář</string>
-    <string name="setting_clock_title">Nastavení hodin</string>
-    <string name="setting_clock_format_header">Formát času</string>
-    <string name="setting_clock_12h">12hodinový</string>
-    <string name="setting_clock_12h_example">Příklad: 10:30</string>
-    <string name="setting_clock_24h">24hodinový</string>
-    <string name="setting_clock_24h_example">Příklad: 22:30</string>
-    <string name="setting_clock_am_pm">Zobrazit AM/PM</string>
-    <string name="setting_clock_am_pm_desc">Zobrazit AM a PM při použití 12hodinového formátu</string>
-    <string name="setting_clock_solar">Zobrazit solární kalendář</string>
-    <string name="setting_clock_solar_desc">Zobrazit solární kalendář na obrazovce</string>
-    <string name="setting_clock_lunar">Zobrazit lunární kalendář</string>
-    <string name="setting_clock_lunar_desc">Zobrazit lunární kalendář na obrazovce</string>
     <string name="setting_pin">Nastavení PIN</string>
     <string name="setting_app_list">Nastavení seznamu aplikací</string>
-    <string name="setting_default_launcher">Nastavení výchozího launcheru</string>
+    <string name="setting_default_launcher">Nastavit výchozí launcher</string>
     <string name="setting_contact_list">Nastavení rychlých kontaktů</string>
     <string name="setting_clean_files">Vyčistit nepotřebné soubory</string>
     <string name="setting_clean_memory">Uvolnit paměť</string>
-    <string name="setting_emergency_call">Automatické tísňové volání (pomocí rychlého kontaktu)</string>
+    <string name="setting_emergency_call">Automatické tísňové volání</string>
     <string name="setting_app_monitoring">Sledování aplikací</string>
     <string name="setting_auto_cleanup_apk">Automatické mazání APK</string>
     <string name="setting_call_block">Blokovat neznámé hovory</string>
-    <string name="setting_pocket_mode">Režim v kapse (zabránění nechtěnému dotyku)</string>
+    <string name="setting_pocket_mode">Režim v kapse</string>
 
     <!-- Onboarding -->
     <string name="onboarding_title">Vítejte v Retirement Launcher</string>
@@ -44,17 +30,6 @@
     <string name="clean_files_running">Skenování a čištění…</string>
     <string name="clean_files_completed">Čištění dokončeno!</string>
     <string name="clean_files_retry">Vyčistit znovu</string>
-    <!-- Clean Files – categories -->
-    <string name="clean_cat_system_temp">Dočasné systémové soubory (.tmp, .log…)</string>
-    <string name="clean_cat_compressed">Neznámé komprimované soubory</string>
-    <string name="clean_cat_no_extension">Dokumenty (.pdf, .doc, .txt…)</string>
-    <string name="clean_cat_apk_cache">Staré APK a mezipaměť</string>
-    <!-- Clean Files – result card -->
-    <string name="clean_result_title">Výsledky čištění</string>
-    <string name="clean_result_files_deleted">souborů smazáno</string>
-    <string name="clean_result_space_freed">místo uvolněno</string>
-    <string name="clean_files_idle_desc"> Zjištěno $number_file nepotřebných souborů – klepnutím vyčistíte</string>
-    <string name="clean_files_count_unit">nepotřebné soubory</string>
 
     <!-- Clean Memory -->
     <string name="clean_memory_title">Uvolnit paměť</string>
@@ -84,12 +59,11 @@
     <!-- Call Permission -->
     <string name="call_permission_title">Oprávnění k volání</string>
     <string name="call_permission_desc">Aplikace potřebuje oprávnění k telefonování, aby mohla v nouzi automaticky volat příbuzným.</string>
-    <string name="call_permission_highlight">provádět hovory</string>
 
     <!-- Call Block -->
     <string name="call_block_title">Oprávnění k blokování hovorů</string>
     <string name="call_block_desc">Aplikace potřebuje oprávnění ke správě hovorů a kontaktů, aby mohla automaticky blokovat hovory od cizích lidí.</string>
-    <string name="call_block_highlight">spravovat hovory a kontakty</string>
+
     <!-- Home Status -->
     <string name="home_header_apps">Aplikace</string>
     <string name="home_header_contacts">Rychlé kontakty</string>
@@ -99,59 +73,16 @@
     <string name="block_desc">Tato aplikace není na seznamu povolených. Kontaktujte prosím administrátora.</string>
     <string name="block_go_home">Přejít na domovskou obrazovku</string>
 
-    <!-- Debug-only settings (chỉ hiển thị trong debug build) -->
-    <string name="setting_header_debug">🐛 Ladění</string>
-    <string name="setting_debug_block_screen">Zobrazit obrazovku blokování</string>
-
     <!-- Permissions & Setup -->
     <string name="default_launcher_setup">Nastavit nyní</string>
     <string name="default_launcher_title">Nastavit výchozí launcher</string>
     <string name="default_launcher_desc">Chcete-li používat Retirement Launcher jako domovskou obrazovku, musíte jej nastavit jako výchozí aplikaci v nastavení systému.</string>
-    <string name="default_launcher_highlight">Retirement Launcher</string>
     <string name="permission_grant">Udělit oprávnění</string>
     <string name="understood">Rozumím</string>
     <string name="pin_verify_title">Potvrdit PIN</string>
     <string name="pin_verify_desc">Zadejte prosím svůj PIN pro změnu tohoto nastavení.</string>
     <string name="pin_key_delete_desc">Smazat</string>
 
-    <!-- File Permission -->
-    <string name="file_permission_title">Ochrana úložiště</string>
-    <string name="file_permission_desc">Aby automatické mazání neznámých souborů APK/AAB fungovalo, potřebuje aplikace přístup k celému úložišti. To pomáhá udržovat vaše zařízení čisté a bezpečné.</string>
-    <string name="file_permission_highlight">neznámé APK/AAB</string>
-
-    <!-- Usage Stats Permission -->
-    <string name="usage_stats_permission_title">Sledování aplikací</string>
-    <string name="usage_stats_permission_desc">Aby funkce blokování aplikací fungovala, musíte udělit „Přístup k údajům o používání“. To pomáhá aplikaci vědět, kdy je otevřena neoprávněná aplikace.</string>
-    <string name="usage_stats_permission_highlight">„Přístup k údajům o používání“</string>
-
-    <!-- App Monitoring Intro -->
-    <string name="app_monitoring_intro_title">Představení funkce</string>
-    <string name="app_monitoring_intro_desc">Tato funkce pomáhá chránit uživatele tím, že umožňuje spouštění pouze vybraných aplikací. Ostatní aplikace budou zablokovány, aby se předešlo nechtěným problémům.</string>
-    <string name="app_monitoring_intro_highlight">povolit pouze vybrané aplikace</string>
-    <string name="app_monitoring_intro_action">Rozumím</string>
-
-    <!-- Emergency Call Intro -->
-    <string name="emergency_call_intro_title">Představení funkce</string>
-    <string name="emergency_call_intro_desc">Pro zajištění bezpečnosti aplikace automaticky zavolá na seznam rychlých kontaktů, pokud na telefonu není po dobu 10 hodin zjištěna žádná interakce uživatele.</string>
-    <string name="emergency_call_intro_highlight">automaticky zavolat na seznam rychlých kontaktů</string>
-    <string name="emergency_call_intro_action">Rozumím</string>
-
-    <!-- File Cleanup Intro -->
-    <string name="file_cleanup_intro_title">Představení funkce</string>
-    <string name="file_cleanup_intro_desc">Tato funkce pomáhá chránit uživatele automatickým mazáním neznámých instalačních souborů (APK) stažených do zařízení, čímž zabraňuje náhodné instalaci malwaru.</string>
-    <string name="file_cleanup_intro_highlight">automatické mazání neznámých instalačních souborů (APK)</string>
-    <string name="file_cleanup_intro_action">Rozumím</string>
-
-    <!-- Call Block Intro -->
-    <string name="call_block_intro_title">Představení funkce</string>
-    <string name="call_block_intro_desc">Tato funkce pomáhá chránit uživatele automatickým blokováním hovorů z neznámých čísel, která nejsou v kontaktech, čímž zabraňuje obtěžování reklamami nebo podvody.</string>
-    <string name="call_block_intro_highlight">automatické blokování hovorů z neznámých čísel</string>
-    <string name="call_block_intro_action">Rozumím</string>
-
-    <!-- Overlay Permission -->
-    <string name="overlay_permission_title">Zobrazit přes ostatní aplikace</string>
-    <string name="overlay_permission_desc">Aplikace potřebuje oprávnění „Zobrazit přes ostatní aplikace“, aby mohla zobrazit uzamčenou obrazovku při otevření zablokované aplikace.</string>
-    <string name="overlay_permission_highlight">„Zobrazit přes ostatní aplikace“</string>
     <!-- PIN Setup -->
     <string name="pin_enter_new">Zadejte nový PIN (6 číslic)</string>
     <string name="pin_confirm_new">Potvrďte nový PIN</string>
@@ -159,26 +90,12 @@
     <string name="pin_error_length">PIN musí mít 6 číslic</string>
     <string name="pin_error_confirm_mismatch">Potvrzovací PIN nesouhlasí</string>
     <string name="pin_error_incorrect">Nesprávný PIN</string>
-    <!-- Clean Files -->
-    <string name="clean_cat_file_count" tools:ignore="PluralsCandidate">$number_file souborů</string>
 
-    <!-- Reorder -->
-    <string name="reorder_apps_title">Změnit pořadí aplikací</string>
-    <string name="reorder_contacts_title">Změnit pořadí kontaktů</string>
     <string name="done">Hotovo</string>
-    <string name="app_list_empty_error">Vyberte prosím alespoň jednu aplikaci</string>
-    <string name="contact_list_empty_error">Vyberte prosím alespoň jeden kontakt</string>
-
-    <!-- Emergency Call -->
     <string name="emergency_call_title">Tísňové volání</string>
     <string name="emergency_call_desc">Pokud není telefon 12 hodin používán, aplikace automaticky provede tísňové volání.</string>
     <string name="emergency_call_enable">Aktivovat funkci</string>
     <string name="emergency_call_phone_number">Tísňové telefonní číslo</string>
-    <string name="emergency_call_phone_number_hint">Zadejte telefonní číslo</string>
+    <string name="emergency_call_phone_number_hint">Zadejte číslo</string>
     <string name="emergency_call_save_success">Konfigurace tísňového volání uložena</string>
-    <string name="emergency_call_permission_denied">Pro tuto funkci je vyžadováno oprávnění k volání</string>
-
-    <!-- Calendar -->
-    <string name="lunar_date_format">Den %1$d/%2$d lunární</string>
-    <string name="solar_date_format">EEEE, dd.MM.yyyy</string>
 </resources>

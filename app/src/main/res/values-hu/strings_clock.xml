@@ -1,0 +1,20 @@
+<resources>
+    <string name="setting_header_plugins">Bővítmények és segédprogramok</string>
+    <string name="setting_lunar_calendar">Holdnaptár megjelenítése</string>
+    <string name="setting_clock_title">Óra beállításai</string>
+    <string name="setting_clock_format_header">Időformátum</string>
+    <string name="setting_clock_12h">12 órás</string>
+    <string name="setting_clock_12h_example">Példa: 10:30</string>
+    <string name="setting_clock_24h">24 órás</string>
+    <string name="setting_clock_24h_example">Példa: 22:30</string>
+    <string name="setting_clock_am_pm">AM/PM megjelenítése</string>
+    <string name="setting_clock_am_pm_desc">AM és PM megjelenítése 12 órás formátum használatakor</string>
+    <string name="setting_clock_solar">Napnaptár megjelenítése</string>
+    <string name="setting_clock_solar_desc">Napnaptár megjelenítése a képernyőn</string>
+    <string name="setting_clock_lunar">Holdnaptár megjelenítése</string>
+    <string name="setting_clock_lunar_desc">Holdnaptár megjelenítése a képernyőn</string>
+
+    <!-- Calendar -->
+    <string name="lunar_date_format">%1$d/%2$d. nap Holdnaptár</string>
+    <string name="solar_date_format">EEEE, yyyy.MM.dd.</string>
+</resources>

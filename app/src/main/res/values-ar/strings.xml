@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <string name="app_name">RetirementLauncher</string>
 
     <!-- Settings -->
@@ -6,31 +6,17 @@
     <string name="setting_header_general">الإعدادات العامة</string>
     <string name="setting_header_security">الأمان والحماية</string>
     <string name="setting_header_optimization">التحسين والأدوات</string>
-    <string name="setting_header_plugins">المكونات الإضافية والأدوات</string>
-    <string name="setting_lunar_calendar">عرض التقويم القمري</string>
-    <string name="setting_clock_title">إعدادات الساعة</string>
-    <string name="setting_clock_format_header">تنسيق الوقت</string>
-    <string name="setting_clock_12h">12 ساعة</string>
-    <string name="setting_clock_12h_example">مثال: 10:30</string>
-    <string name="setting_clock_24h">24 ساعة</string>
-    <string name="setting_clock_24h_example">مثال: 22:30</string>
-    <string name="setting_clock_am_pm">إظهار صباحاً/مساءً</string>
-    <string name="setting_clock_am_pm_desc">إظهار صباحاً ومساءً عند استخدام تنسيق 12 ساعة</string>
-    <string name="setting_clock_solar">عرض التقويم الميلادي</string>
-    <string name="setting_clock_solar_desc">عرض التقويم الميلادي على الشاشة</string>
-    <string name="setting_clock_lunar">عرض التقويم القمري</string>
-    <string name="setting_clock_lunar_desc">عرض التقويم القمري على الشاشة</string>
     <string name="setting_pin">إعداد رمز PIN</string>
     <string name="setting_app_list">إعداد قائمة التطبيقات</string>
-    <string name="setting_default_launcher">إعداد المشغل الافتراضي</string>
+    <string name="setting_default_launcher">تعيين المشغل الافتراضي</string>
     <string name="setting_contact_list">إعداد جهات الاتصال السريعة</string>
     <string name="setting_clean_files">تنظيف الملفات غير المرغوب فيها</string>
     <string name="setting_clean_memory">تحرير الذاكرة</string>
-    <string name="setting_emergency_call">اتصال طوارئ تلقائي (بواسطة جهة اتصال سريعة)</string>
+    <string name="setting_emergency_call">اتصال طوارئ تلقائي</string>
     <string name="setting_app_monitoring">مراقبة التطبيقات</string>
     <string name="setting_auto_cleanup_apk">حذف APK تلقائياً</string>
     <string name="setting_call_block">حظر المكالمات المجهولة</string>
-    <string name="setting_pocket_mode">وضع الجيب (منع اللمس العرضي)</string>
+    <string name="setting_pocket_mode">وضع الجيب</string>
 
     <!-- Onboarding -->
     <string name="onboarding_title">مرحباً بك في Retirement Launcher</string>
@@ -44,17 +30,6 @@
     <string name="clean_files_running">جاري الفحص والتنظيف…</string>
     <string name="clean_files_completed">اكتمل التنظيف!</string>
     <string name="clean_files_retry">تنظيف مرة أخرى</string>
-    <!-- Clean Files – categories -->
-    <string name="clean_cat_system_temp">ملفات النظام المؤقتة (.tmp, .log…)</string>
-    <string name="clean_cat_compressed">ملفات مضغوطة غير معروفة</string>
-    <string name="clean_cat_no_extension">المستندات (.pdf, .doc, .txt…)</string>
-    <string name="clean_cat_apk_cache">ملفات APK القديمة وذاكرة التخزين المؤقت</string>
-    <!-- Clean Files – result card -->
-    <string name="clean_result_title">نتائج التنظيف</string>
-    <string name="clean_result_files_deleted">ملفات تم حذفها</string>
-    <string name="clean_result_space_freed">مساحة تم إخلاؤها</string>
-    <string name="clean_files_idle_desc"> تم اكتشاف $number_file ملف غير مرغوب فيه – انقر للتنظيف</string>
-    <string name="clean_files_count_unit">ملفات غير مرغوب فيها</string>
 
     <!-- Clean Memory -->
     <string name="clean_memory_title">تحرير الذاكرة</string>
@@ -84,74 +59,30 @@
     <!-- Call Permission -->
     <string name="call_permission_title">إذن إجراء المكالمات</string>
     <string name="call_permission_desc">يحتاج التطبيق إلى إذن لإجراء المكالمات للاتصال بالأقارب تلقائياً في حالات الطوارئ.</string>
-    <string name="call_permission_highlight">إجراء المكالمات</string>
 
     <!-- Call Block -->
     <string name="call_block_title">إذن حظر المكالمات</string>
     <string name="call_block_desc">يحتاج التطبيق إلى إذن لإدارة المكالمات وجهات الاتصال لحظر المكالمات من الغرباء تلقائياً.</string>
-    <string name="call_block_highlight">إدارة المكالمات وجهات الاتصال</string>
+
     <!-- Home Status -->
     <string name="home_header_apps">التطبيقات</string>
-    <string name="home_header_contacts">جهات الاتصال السريعة</string>
+    <string name="home_header_contacts">جهات اتصال سريعة</string>
 
     <!-- Block -->
     <string name="block_title">التطبيق محظور</string>
     <string name="block_desc">هذا التطبيق ليس في القائمة المسموح بها. يرجى الاتصال بالمسؤول.</string>
     <string name="block_go_home">الذهاب إلى الشاشة الرئيسية</string>
 
-    <!-- Debug-only settings (chỉ hiển thị trong debug build) -->
-    <string name="setting_header_debug">🐛 تصحيح الأخطاء</string>
-    <string name="setting_debug_block_screen">عرض شاشة الحظر</string>
-
     <!-- Permissions & Setup -->
     <string name="default_launcher_setup">الإعداد الآن</string>
     <string name="default_launcher_title">تعيين المشغل الافتراضي</string>
     <string name="default_launcher_desc">لاستخدام Retirement Launcher كشاشة رئيسية، يجب تعيينه كالتطبيق الافتراضي في إعدادات النظام.</string>
-    <string name="default_launcher_highlight">Retirement Launcher</string>
     <string name="permission_grant">منح الإذن</string>
     <string name="understood">مفهوم</string>
     <string name="pin_verify_title">تأكيد رمز PIN</string>
     <string name="pin_verify_desc">يرجى إدخال رمز PIN لتغيير هذا الإعداد.</string>
     <string name="pin_key_delete_desc">حذف</string>
 
-    <!-- File Permission -->
-    <string name="file_permission_title">حماية التخزين</string>
-    <string name="file_permission_desc">لكي يعمل الحذف التلقائي لملفات APK/AAB غير المعروفة، يحتاج التطبيق إلى الوصول إلى جميع وحدات التخزين. يساعد هذا في الحفاظ على جهازك نظيفاً وآمناً.</string>
-    <string name="file_permission_highlight">APK/AAB غير معروفة</string>
-
-    <!-- Usage Stats Permission -->
-    <string name="usage_stats_permission_title">مراقبة التطبيقات</string>
-    <string name="usage_stats_permission_desc">لكي تعمل ميزة حظر التطبيقات، يجب عليك منح "الوصول إلى بيانات الاستخدام". يساعد هذا التطبيق في معرفة وقت فتح تطبيق غير مصرح به.</string>
-    <string name="usage_stats_permission_highlight">"الوصول إلى بيانات الاستخدام"</string>
-
-    <!-- App Monitoring Intro -->
-    <string name="app_monitoring_intro_title">مقدمة الميزة</string>
-    <string name="app_monitoring_intro_desc">تساعد هذه الميزة في حماية المستخدمين من خلال السماح فقط للتطبيقات المحددة بالعمل. سيتم حظر التطبيقات الأخرى لتجنب المشكلات غير المقصودة.</string>
-    <string name="app_monitoring_intro_highlight">السماح فقط للتطبيقات المحددة</string>
-    <string name="app_monitoring_intro_action">أنا أفهم</string>
-
-    <!-- Emergency Call Intro -->
-    <string name="emergency_call_intro_title">مقدمة الميزة</string>
-    <string name="emergency_call_intro_desc">لضمان السلامة، سيقوم التطبيق تلقائياً بالاتصال بقائمة جهات الاتصال السريعة إذا لم يتم اكتشاف أي تفاعل للمستخدم على الهاتف لمدة 10 ساعات.</string>
-    <string name="emergency_call_intro_highlight">الاتصال تلقائياً بقائمة جهات الاتصال السريعة</string>
-    <string name="emergency_call_intro_action">أنا أفهم</string>
-
-    <!-- File Cleanup Intro -->
-    <string name="file_cleanup_intro_title">مقدمة الميزة</string>
-    <string name="file_cleanup_intro_desc">تساعد هذه الميزة في حماية المستخدمين عن طريق حذف ملفات التثبيت (APK) غير المعروفة التي تم تنزيلها على الجهاز تلقائياً، وتجنب التثبيت العرضي للبرامج الضارة.</string>
-    <string name="file_cleanup_intro_highlight">حذف ملفات التثبيت (APK) غير المعروفة تلقائياً</string>
-    <string name="file_cleanup_intro_action">أنا أفهم</string>
-
-    <!-- Call Block Intro -->
-    <string name="call_block_intro_title">مقدمة الميزة</string>
-    <string name="call_block_intro_desc">تساعد هذه الميزة في حماية المستخدمين من خلال حظر المكالمات الواردة من أرقام غير معروفة وغير موجودة في جهات الاتصال تلقائياً، وتجنب الانزعاج من الإعلانات أو عمليات الاحتيال.</string>
-    <string name="call_block_intro_highlight">حظر المكالمات من أرقام غير معروفة تلقائياً</string>
-    <string name="call_block_intro_action">أنا أفهم</string>
-
-    <!-- Overlay Permission -->
-    <string name="overlay_permission_title">العرض فوق التطبيقات الأخرى</string>
-    <string name="overlay_permission_desc">يحتاج التطبيق إلى إذن "العرض فوق التطبيقات الأخرى" لإظهار شاشة القفل عند فتح تطبيق محظور.</string>
-    <string name="overlay_permission_highlight">"العرض فوق التطبيقات الأخرى"</string>
     <!-- PIN Setup -->
     <string name="pin_enter_new">أدخل رمز PIN جديد (6 أرقام)</string>
     <string name="pin_confirm_new">تأكيد رمز PIN الجديد</string>
@@ -159,26 +90,12 @@
     <string name="pin_error_length">يجب أن يتكون رمز PIN من 6 أرقام</string>
     <string name="pin_error_confirm_mismatch">رمز PIN التأكيدي غير متطابق</string>
     <string name="pin_error_incorrect">رمز PIN غير صحيح</string>
-    <!-- Clean Files -->
-    <string name="clean_cat_file_count" tools:ignore="PluralsCandidate">$number_file ملفات</string>
 
-    <!-- Reorder -->
-    <string name="reorder_apps_title">إعادة ترتيب التطبيقات</string>
-    <string name="reorder_contacts_title">إعادة ترتيب جهات الاتصال</string>
     <string name="done">تم</string>
-    <string name="app_list_empty_error">يرجى اختيار تطبيق واحد على الأقل</string>
-    <string name="contact_list_empty_error">يرجى اختيار جهة اتصال واحدة على الأقل</string>
-
-    <!-- Emergency Call -->
     <string name="emergency_call_title">اتصال الطوارئ</string>
     <string name="emergency_call_desc">إذا لم يتم استخدام الهاتف لمدة 12 ساعة، سيقوم التطبيق بإجراء اتصال طوارئ تلقائياً.</string>
     <string name="emergency_call_enable">تفعيل الميزة</string>
     <string name="emergency_call_phone_number">رقم هاتف الطوارئ</string>
     <string name="emergency_call_phone_number_hint">أدخل رقم الهاتف</string>
     <string name="emergency_call_save_success">تم حفظ تكوين اتصال الطوارئ</string>
-    <string name="emergency_call_permission_denied">مطلوب إذن الاتصال لهذه الميزة</string>
-
-    <!-- Calendar -->
-    <string name="lunar_date_format">اليوم %1$d/%2$d قمري</string>
-    <string name="solar_date_format">EEEE، MM/dd/yyyy</string>
 </resources>

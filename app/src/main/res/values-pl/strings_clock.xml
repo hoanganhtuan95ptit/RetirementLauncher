@@ -1,0 +1,20 @@
+<resources>
+    <string name="setting_header_plugins">Wtyczki i narzędzia</string>
+    <string name="setting_lunar_calendar">Pokaż kalendarz księżycowy</string>
+    <string name="setting_clock_title">Ustawienia zegara</string>
+    <string name="setting_clock_format_header">Format czasu</string>
+    <string name="setting_clock_12h">12-godzinny</string>
+    <string name="setting_clock_12h_example">Przykład: 10:30</string>
+    <string name="setting_clock_24h">24-godzinny</string>
+    <string name="setting_clock_24h_example">Przykład: 22:30</string>
+    <string name="setting_clock_am_pm">Pokaż AM/PM</string>
+    <string name="setting_clock_am_pm_desc">Pokaż AM i PM przy użyciu formatu 12-godzinnego</string>
+    <string name="setting_clock_solar">Pokaż kalendarz słoneczny</string>
+    <string name="setting_clock_solar_desc">Pokaż kalendarz słoneczny na ekranie</string>
+    <string name="setting_clock_lunar">Pokaż kalendarz księżycowy</string>
+    <string name="setting_clock_lunar_desc">Pokaż kalendarz księżycowy na ekranie</string>
+
+    <!-- Calendar -->
+    <string name="lunar_date_format">Dzień %1$d/%2$d księżycowy</string>
+    <string name="solar_date_format">EEEE, dd.MM.yyyy</string>
+</resources>

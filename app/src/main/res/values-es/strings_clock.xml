@@ -1,0 +1,20 @@
+<resources>
+    <string name="setting_header_plugins">Complementos y Utilidades</string>
+    <string name="setting_lunar_calendar">Mostrar calendario lunar</string>
+    <string name="setting_clock_title">Ajustes del reloj</string>
+    <string name="setting_clock_format_header">Formato de hora</string>
+    <string name="setting_clock_12h">12 horas</string>
+    <string name="setting_clock_12h_example">Ejemplo: 10:30</string>
+    <string name="setting_clock_24h">24 horas</string>
+    <string name="setting_clock_24h_example">Ejemplo: 22:30</string>
+    <string name="setting_clock_am_pm">Mostrar AM/PM</string>
+    <string name="setting_clock_am_pm_desc">Mostrar AM y PM cuando se usa el formato de 12 horas</string>
+    <string name="setting_clock_solar">Mostrar calendario solar</string>
+    <string name="setting_clock_solar_desc">Mostrar calendario solar en la pantalla</string>
+    <string name="setting_clock_lunar">Mostrar calendario lunar</string>
+    <string name="setting_clock_lunar_desc">Mostrar calendario lunar en la pantalla</string>
+
+    <!-- Calendar -->
+    <string name="lunar_date_format">Día %1$d/%2$d Lunar</string>
+    <string name="solar_date_format">EEEE, dd/MM/yyyy</string>
+</resources>

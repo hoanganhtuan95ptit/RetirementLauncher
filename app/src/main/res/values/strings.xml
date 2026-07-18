@@ -6,20 +6,6 @@
     <string name="setting_header_general">General Settings</string>
     <string name="setting_header_security">Security &amp; Protection</string>
     <string name="setting_header_optimization">Optimization &amp; Utilities</string>
-    <string name="setting_header_plugins">Plugins &amp; Utilities</string>
-    <string name="setting_lunar_calendar">Display Lunar Calendar</string>
-    <string name="setting_clock_title">Clock Settings</string>
-    <string name="setting_clock_format_header">Clock Format</string>
-    <string name="setting_clock_12h">12-Hour</string>
-    <string name="setting_clock_12h_example">Example: 10:30</string>
-    <string name="setting_clock_24h">24-Hour</string>
-    <string name="setting_clock_24h_example">Example: 22:30</string>
-    <string name="setting_clock_am_pm">Show AM/PM</string>
-    <string name="setting_clock_am_pm_desc">Show AM and PM when using 12-hour format</string>
-    <string name="setting_clock_solar">Display Solar Calendar</string>
-    <string name="setting_clock_solar_desc">Display solar calendar on the screen</string>
-    <string name="setting_clock_lunar">Display Lunar Calendar</string>
-    <string name="setting_clock_lunar_desc">Display lunar calendar on the screen</string>
     <string name="setting_pin">PIN Setup</string>
     <string name="setting_app_list">App List Setup</string>
     <string name="setting_default_launcher">Default Launcher Setup</string>
@@ -177,8 +163,4 @@
     <string name="emergency_call_phone_number_hint">Enter phone number</string>
     <string name="emergency_call_save_success">Emergency call configuration saved</string>
     <string name="emergency_call_permission_denied">Calling permission is required for this feature</string>
-
-    <!-- Calendar -->
-    <string name="lunar_date_format">Day %1$d/%2$d Lunar</string>
-    <string name="solar_date_format">EEEE, MM/dd/yyyy</string>
 </resources>

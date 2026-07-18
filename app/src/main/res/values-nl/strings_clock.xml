@@ -1,0 +1,20 @@
+<resources>
+    <string name="setting_header_plugins">Plug-ins &amp; hulpprogramma\'s</string>
+    <string name="setting_lunar_calendar">Maan-kalender weergeven</string>
+    <string name="setting_clock_title">Klokinstellingen</string>
+    <string name="setting_clock_format_header">Tijdnotatie</string>
+    <string name="setting_clock_12h">12-uurs</string>
+    <string name="setting_clock_12h_example">Voorbeeld: 10:30</string>
+    <string name="setting_clock_24h">24-uurs</string>
+    <string name="setting_clock_24h_example">Voorbeeld: 22:30</string>
+    <string name="setting_clock_am_pm">AM/PM weergeven</string>
+    <string name="setting_clock_am_pm_desc">Toon AM en PM bij gebruik van de 12-uurs notatie</string>
+    <string name="setting_clock_solar">Zonnekalender weergeven</string>
+    <string name="setting_clock_solar_desc">Toon de zonnekalender op het scherm</string>
+    <string name="setting_clock_lunar">Maan-kalender weergeven</string>
+    <string name="setting_clock_lunar_desc">Toon de maan-kalender op het scherm</string>
+
+    <!-- Calendar -->
+    <string name="lunar_date_format">Dag %1$d/%2$d Maankalender</string>
+    <string name="solar_date_format">EEEE dd-MM-yyyy</string>
+</resources>

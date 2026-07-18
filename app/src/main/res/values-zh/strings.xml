@@ -1,41 +1,27 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <string name="app_name">RetirementLauncher</string>
 
     <!-- Settings -->
     <string name="settings_title">设置</string>
     <string name="setting_header_general">常规设置</string>
-    <string name="setting_header_security">安全与防护</string>
+    <string name="setting_header_security">安全与保护</string>
     <string name="setting_header_optimization">优化与工具</string>
-    <string name="setting_header_plugins">插件与工具</string>
-    <string name="setting_lunar_calendar">显示农历</string>
-    <string name="setting_clock_title">时钟设置</string>
-    <string name="setting_clock_format_header">时间格式</string>
-    <string name="setting_clock_12h">12小时制</string>
-    <string name="setting_clock_12h_example">示例：10:30</string>
-    <string name="setting_clock_24h">24小时制</string>
-    <string name="setting_clock_24h_example">示例：22:30</string>
-    <string name="setting_clock_am_pm">显示上午/下午</string>
-    <string name="setting_clock_am_pm_desc">使用12小时制时显示上午和下午</string>
-    <string name="setting_clock_solar">显示公历</string>
-    <string name="setting_clock_solar_desc">在屏幕上显示公历日期</string>
-    <string name="setting_clock_lunar">显示农历</string>
-    <string name="setting_clock_lunar_desc">在屏幕上显示农历日期</string>
     <string name="setting_pin">PIN码设置</string>
     <string name="setting_app_list">应用列表设置</string>
-    <string name="setting_default_launcher">默认桌面设置</string>
+    <string name="setting_default_launcher">设置默认启动器</string>
     <string name="setting_contact_list">快速联系人设置</string>
     <string name="setting_clean_files">清理垃圾文件</string>
     <string name="setting_clean_memory">释放内存</string>
-    <string name="setting_emergency_call">自动紧急呼叫（通过快速联系人）</string>
+    <string name="setting_emergency_call">自动紧急呼叫</string>
     <string name="setting_app_monitoring">应用监控</string>
     <string name="setting_auto_cleanup_apk">自动删除APK</string>
     <string name="setting_call_block">拦截陌生来电</string>
-    <string name="setting_pocket_mode">口袋模式（防止误触）</string>
+    <string name="setting_pocket_mode">口袋模式</string>
 
     <!-- Onboarding -->
     <string name="onboarding_title">欢迎使用 Retirement Launcher</string>
-    <string name="onboarding_desc">一个旨在简化手机界面并保护您设备的应用程序。</string>
-    <string name="onboarding_start">立即开始</string>
+    <string name="onboarding_desc">一个简化手机界面并保护您设备的应用程序。</string>
+    <string name="onboarding_start">开始使用</string>
 
     <!-- Clean Files -->
     <string name="clean_files_title">清理垃圾文件</string>
@@ -44,17 +30,6 @@
     <string name="clean_files_running">正在扫描并清理…</string>
     <string name="clean_files_completed">清理完成！</string>
     <string name="clean_files_retry">再次清理</string>
-    <!-- Clean Files – categories -->
-    <string name="clean_cat_system_temp">系统临时文件 (.tmp, .log…)</string>
-    <string name="clean_cat_compressed">未知压缩文件</string>
-    <string name="clean_cat_no_extension">文档 (.pdf, .doc, .txt…)</string>
-    <string name="clean_cat_apk_cache">旧的APK和缓存</string>
-    <!-- Clean Files – result card -->
-    <string name="clean_result_title">清理结果</string>
-    <string name="clean_result_files_deleted">个文件已删除</string>
-    <string name="clean_result_space_freed">已释放空间</string>
-    <string name="clean_files_idle_desc"> 检测到 $number_file 个垃圾文件 – 点击清理</string>
-    <string name="clean_files_count_unit">个垃圾文件</string>
 
     <!-- Clean Memory -->
     <string name="clean_memory_title">释放内存</string>
@@ -69,7 +44,7 @@
     <string name="clean_memory_toast">已释放 $number_ram MB</string>
 
     <!-- Contacts -->
-    <string name="contact_tap_to_call">立即拨打</string>
+    <string name="contact_tap_to_call">立即呼叫</string>
     <string name="contact_list_title">选择快速联系人</string>
     <string name="contact_list_saved">联系人列表已保存</string>
     <string name="contact_permission_denied">使用此功能需要联系人权限</string>
@@ -83,102 +58,44 @@
 
     <!-- Call Permission -->
     <string name="call_permission_title">拨打电话权限</string>
-    <string name="call_permission_desc">应用需要拨打电话权限，以便在紧急情况下自动呼叫亲属。</string>
-    <string name="call_permission_highlight">拨打电话</string>
+    <string name="call_permission_desc">应用需要拨打电话权限，以便在紧急情况下自动拨打亲友电话。</string>
 
     <!-- Call Block -->
-    <string name="call_block_title">拦截来电权限</string>
-    <string name="call_block_desc">应用需要管理通话和联系人的权限，以便自动拦截陌生人来电。</string>
-    <string name="call_block_highlight">管理通话和联系人</string>
+    <string name="call_block_title">拦截电话权限</string>
+    <string name="call_block_desc">应用需要管理通话和联系人权限，以便自动拦截陌生人来电。</string>
+
     <!-- Home Status -->
     <string name="home_header_apps">应用程序</string>
     <string name="home_header_contacts">快速联系人</string>
 
     <!-- Block -->
-    <string name="block_title">应用已拦截</string>
-    <string name="block_desc">此应用程序不在允许列表中。请联系管理员。</string>
+    <string name="block_title">应用已锁定</string>
+    <string name="block_desc">此应用不在允许列表中。请联系管理员。</string>
     <string name="block_go_home">返回主屏幕</string>
-
-    <!-- Debug-only settings (chỉ hiển thị trong debug build) -->
-    <string name="setting_header_debug">🐛 调试</string>
-    <string name="setting_debug_block_screen">查看拦截界面</string>
 
     <!-- Permissions & Setup -->
     <string name="default_launcher_setup">立即设置</string>
-    <string name="default_launcher_title">设置默认桌面</string>
-    <string name="default_launcher_desc">要将 Retirement Launcher 用作主屏幕，您需要在系统设置中将其设为默认应用。</string>
-    <string name="default_launcher_highlight">Retirement Launcher</string>
+    <string name="default_launcher_title">设置默认启动器</string>
+    <string name="default_launcher_desc">要将 Retirement Launcher 用作主屏幕，您需要在系统设置中将其设置为默认应用。</string>
     <string name="permission_grant">授予权限</string>
     <string name="understood">明白</string>
     <string name="pin_verify_title">确认PIN码</string>
     <string name="pin_verify_desc">请输入您的PIN码以更改此设置。</string>
     <string name="pin_key_delete_desc">删除</string>
 
-    <!-- File Permission -->
-    <string name="file_permission_title">存储保护</string>
-    <string name="file_permission_desc">为了使自动删除未知APK/AAB文件的功能正常工作，应用需要访问所有存储空间。这有助于保持您的设备干净且安全。</string>
-    <string name="file_permission_highlight">未知APK/AAB</string>
-
-    <!-- Usage Stats Permission -->
-    <string name="usage_stats_permission_title">应用监控</string>
-    <string name="usage_stats_permission_desc">为了使应用拦截功能正常工作，您需要授予“使用情况访问权限”。这有助于应用了解何时打开了未经授权的应用。</string>
-    <string name="usage_stats_permission_highlight">“使用情况访问权限”</string>
-
-    <!-- App Monitoring Intro -->
-    <string name="app_monitoring_intro_title">功能介绍</string>
-    <string name="app_monitoring_intro_desc">此功能通过仅允许选定的应用运行来保护用户。其他应用将被拦截，以避免意外问题。</string>
-    <string name="app_monitoring_intro_highlight">仅允许选定的应用</string>
-    <string name="app_monitoring_intro_action">我明白了</string>
-
-    <!-- Emergency Call Intro -->
-    <string name="emergency_call_intro_title">功能介绍</string>
-    <string name="emergency_call_intro_desc">为了确保安全，如果10小时内未检测到用户对手机的操作，应用将自动呼叫快速联系人列表。</string>
-    <string name="emergency_call_intro_highlight">自动呼叫快速联系人列表</string>
-    <string name="emergency_call_intro_action">我明白了</string>
-
-    <!-- File Cleanup Intro -->
-    <string name="file_cleanup_intro_title">功能介绍</string>
-    <string name="file_cleanup_intro_desc">此功能通过自动删除下载到设备的未知安装文件 (APK) 来保护用户，避免意外安装恶意软件。</string>
-    <string name="file_cleanup_intro_highlight">自动删除未知安装文件 (APK)</string>
-    <string name="file_cleanup_intro_action">我明白了</string>
-
-    <!-- Call Block Intro -->
-    <string name="call_block_intro_title">功能介绍</string>
-    <string name="call_block_intro_desc">此功能通过自动拦截不在联系人中的未知号码来电来保护用户，避免受到广告或诈骗电话的骚扰。</string>
-    <string name="call_block_intro_highlight">自动拦截未知号码来电</string>
-    <string name="call_block_intro_action">我明白了</string>
-
-    <!-- Overlay Permission -->
-    <string name="overlay_permission_title">显示在其他应用上层</string>
-    <string name="overlay_permission_desc">应用需要“显示在其他应用上层”权限，以便在打开被拦截的应用时显示锁定屏幕。</string>
-    <string name="overlay_permission_highlight">“显示在其他应用上层”</string>
     <!-- PIN Setup -->
-    <string name="pin_enter_new">输入新PIN码（6位）</string>
+    <string name="pin_enter_new">输入新PIN码（6位数字）</string>
     <string name="pin_confirm_new">确认新PIN码</string>
     <string name="pin_setup_success">PIN码设置成功</string>
-    <string name="pin_error_length">PIN码必须为6位</string>
-    <string name="pin_error_confirm_mismatch">两次输入的PIN码不匹配</string>
+    <string name="pin_error_length">PIN码必须为6位数字</string>
+    <string name="pin_error_confirm_mismatch">确认PIN码不匹配</string>
     <string name="pin_error_incorrect">PIN码错误</string>
-    <!-- Clean Files -->
-    <string name="clean_cat_file_count" tools:ignore="PluralsCandidate">$number_file 个文件</string>
 
-    <!-- Reorder -->
-    <string name="reorder_apps_title">应用排序</string>
-    <string name="reorder_contacts_title">联系人排序</string>
     <string name="done">完成</string>
-    <string name="app_list_empty_error">请至少选择一个应用</string>
-    <string name="contact_list_empty_error">请至少选择一个联系人</string>
-
-    <!-- Emergency Call -->
     <string name="emergency_call_title">紧急呼叫</string>
-    <string name="emergency_call_desc">如果手机12小时未被使用，应用将自动进行紧急呼叫。</string>
+    <string name="emergency_call_desc">如果手机12小时未使用，应用将自动进行紧急呼叫。</string>
     <string name="emergency_call_enable">启用功能</string>
     <string name="emergency_call_phone_number">紧急电话号码</string>
     <string name="emergency_call_phone_number_hint">输入电话号码</string>
     <string name="emergency_call_save_success">紧急呼叫配置已保存</string>
-    <string name="emergency_call_permission_denied">使用此功能需要通话权限</string>
-
-    <!-- Calendar -->
-    <string name="lunar_date_format">农历%1$d月%2$d日</string>
-    <string name="solar_date_format">EEEE, yyyy/MM/dd</string>
 </resources>

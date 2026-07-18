@@ -1,60 +1,35 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <string name="app_name">RetirementLauncher</string>
 
     <!-- Settings -->
     <string name="settings_title">Beállítások</string>
     <string name="setting_header_general">Általános beállítások</string>
     <string name="setting_header_security">Biztonság és védelem</string>
-    <string name="setting_header_optimization">Optimalizálás és segédprogramok</string>
-    <string name="setting_header_plugins">Bővítmények és segédprogramok</string>
-    <string name="setting_lunar_calendar">Holdnaptár megjelenítése</string>
-    <string name="setting_clock_title">Óra beállításai</string>
-    <string name="setting_clock_format_header">Időformátum</string>
-    <string name="setting_clock_12h">12 órás</string>
-    <string name="setting_clock_12h_example">Példa: 10:30</string>
-    <string name="setting_clock_24h">24 órás</string>
-    <string name="setting_clock_24h_example">Példa: 22:30</string>
-    <string name="setting_clock_am_pm">AM/PM megjelenítése</string>
-    <string name="setting_clock_am_pm_desc">AM és PM megjelenítése 12 órás formátum használatakor</string>
-    <string name="setting_clock_solar">Napnaptár megjelenítése</string>
-    <string name="setting_clock_solar_desc">Napnaptár megjelenítése a képernyőn</string>
-    <string name="setting_clock_lunar">Holdnaptár megjelenítése</string>
-    <string name="setting_clock_lunar_desc">Holdnaptár megjelenítése a képernyőn</string>
+    <string name="setting_header_optimization">Optimalizálás és eszközök</string>
     <string name="setting_pin">PIN beállítása</string>
     <string name="setting_app_list">Alkalmazáslista beállítása</string>
     <string name="setting_default_launcher">Alapértelmezett indító beállítása</string>
-    <string name="setting_contact_list">Gyorstárcsázási névjegyek beállítása</string>
-    <string name="setting_clean_files">Szemétfájlok tisztítása</string>
+    <string name="setting_contact_list">Gyors kapcsolatok beállítása</string>
+    <string name="setting_clean_files">Szemétfájlok törlése</string>
     <string name="setting_clean_memory">Memória felszabadítása</string>
-    <string name="setting_emergency_call">Automatikus segélyhívás (gyorstárcsázási névjeggyel)</string>
+    <string name="setting_emergency_call">Automatikus segélyhívás</string>
     <string name="setting_app_monitoring">Alkalmazásfigyelés</string>
     <string name="setting_auto_cleanup_apk">APK automatikus törlése</string>
     <string name="setting_call_block">Ismeretlen hívások blokkolása</string>
-    <string name="setting_pocket_mode">Zseb mód (véletlen érintések megelőzése)</string>
+    <string name="setting_pocket_mode">Zseb mód</string>
 
     <!-- Onboarding -->
     <string name="onboarding_title">Üdvözöljük a Retirement Launcherben</string>
-    <string name="onboarding_desc">Egy alkalmazás a telefon felületének egyszerűsítésére és a készülék védelmére.</string>
+    <string name="onboarding_desc">Egy alkalmazás a telefon kezelőfelületének egyszerűsítésére és a készülék védelmére.</string>
     <string name="onboarding_start">Kezdés</string>
 
     <!-- Clean Files -->
-    <string name="clean_files_title">Szemétfájlok tisztítása</string>
-    <string name="clean_files_desc">Készen áll a készülék szkennelésére</string>
-    <string name="clean_files_start">Tisztítás indítása</string>
-    <string name="clean_files_running">Szkennelés és tisztítás…</string>
-    <string name="clean_files_completed">Tisztítás befejezve!</string>
-    <string name="clean_files_retry">Tisztítás újra</string>
-    <!-- Clean Files – categories -->
-    <string name="clean_cat_system_temp">Ideiglenes rendszerfájlok (.tmp, .log…)</string>
-    <string name="clean_cat_compressed">Ismeretlen tömörített fájlok</string>
-    <string name="clean_cat_no_extension">Dokumentumok (.pdf, .doc, .txt…)</string>
-    <string name="clean_cat_apk_cache">Régi APK-k és gyorsítótár</string>
-    <!-- Clean Files – result card -->
-    <string name="clean_result_title">Tisztítási eredmények</string>
-    <string name="clean_result_files_deleted">fájl törölve</string>
-    <string name="clean_result_space_freed">hely felszabadítva</string>
-    <string name="clean_files_idle_desc"> $number_file szemétfájl észlelve – koppintson a tisztításhoz</string>
-    <string name="clean_files_count_unit">szemétfájl</string>
+    <string name="clean_files_title">Szemétfájlok törlése</string>
+    <string name="clean_files_desc">Készen áll a készülék átvizsgálására</string>
+    <string name="clean_files_start">Törlés indítása</string>
+    <string name="clean_files_running">Átvizsgálás és törlés…</string>
+    <string name="clean_files_completed">Törlés befejezve!</string>
+    <string name="clean_files_retry">Törlés újra</string>
 
     <!-- Clean Memory -->
     <string name="clean_memory_title">Memória felszabadítása</string>
@@ -70,11 +45,11 @@
 
     <!-- Contacts -->
     <string name="contact_tap_to_call">Hívás most</string>
-    <string name="contact_list_title">Gyorstárcsázási névjegyek kiválasztása</string>
-    <string name="contact_list_saved">Névjegyzék mentve</string>
-    <string name="contact_permission_denied">A névjegyekhez való hozzáférés szükséges a funkció használatához</string>
+    <string name="contact_list_title">Gyors kapcsolatok kiválasztása</string>
+    <string name="contact_list_saved">Névjegyzék elmentve</string>
+    <string name="contact_permission_denied">A funkció használatához névjegy-engedély szükséges</string>
     <string name="app_list_save_action">Konfiguráció mentése</string>
-    <string name="app_list_saved">Alkalmazáslista mentve</string>
+    <string name="app_list_saved">Alkalmazáslista elmentve</string>
 
     <!-- Common -->
     <string name="save">Mentés</string>
@@ -83,102 +58,44 @@
 
     <!-- Call Permission -->
     <string name="call_permission_title">Hívásindítási engedély</string>
-    <string name="call_permission_desc">Az alkalmazásnak hívásindítási engedélyre van szüksége ahhoz, hogy vészhelyzetben automatikusan hívhassa a hozzátartozókat.</string>
-    <string name="call_permission_highlight">hívások indítása</string>
+    <string name="call_permission_desc">Az alkalmazásnak hívásindítási engedélyre van szüksége, hogy vészhelyzetben automatikusan hívhassa a hozzátartozókat.</string>
 
     <!-- Call Block -->
     <string name="call_block_title">Hívásblokkolási engedély</string>
-    <string name="call_block_desc">Az alkalmazásnak a hívások és névjegyek kezelésére vonatkozó engedélyre van szüksége az idegenektől érkező hívások automatikus blokkolásához.</string>
-    <string name="call_block_highlight">hívások és névjegyek kezelése</string>
+    <string name="call_block_desc">Az alkalmazásnak hívás- és névjegykezelési engedélyre van szüksége az ismeretlen hívások automatikus blokkolásához.</string>
+
     <!-- Home Status -->
     <string name="home_header_apps">Alkalmazások</string>
-    <string name="home_header_contacts">Gyorstárcsázási névjegyek</string>
+    <string name="home_header_contacts">Gyors kapcsolatok</string>
 
     <!-- Block -->
     <string name="block_title">Alkalmazás blokkolva</string>
-    <string name="block_desc">Ez az alkalmazás nem szerepel az engedélyezett listán. Kérjük, forduljon a rendszergazdához.</string>
-    <string name="block_go_home">Ugrás a kezdőképernyőre</string>
-
-    <!-- Debug-only settings (chỉ hiển thị trong debug build) -->
-    <string name="setting_header_debug">🐛 Hibakeresés</string>
-    <string name="setting_debug_block_screen">Blokkolási képernyő megtekintése</string>
+    <string name="block_desc">Ez az alkalmazás nem szerepel az engedélyezett listán. Forduljon a rendszergazdához.</string>
+    <string name="block_go_home">Vissza a kezdőképernyőre</string>
 
     <!-- Permissions & Setup -->
     <string name="default_launcher_setup">Beállítás most</string>
     <string name="default_launcher_title">Alapértelmezett indító beállítása</string>
     <string name="default_launcher_desc">A Retirement Launcher kezdőképernyőként való használatához alapértelmezett alkalmazásként kell beállítania a rendszerbeállításokban.</string>
-    <string name="default_launcher_highlight">Retirement Launcher</string>
     <string name="permission_grant">Engedély megadása</string>
-    <string name="understood">Megértettem</string>
+    <string name="understood">Értem</string>
     <string name="pin_verify_title">PIN megerősítése</string>
-    <string name="pin_verify_desc">Kérjük, adja meg PIN-kódját a beállítás módosításához.</string>
+    <string name="pin_verify_desc">A beállítás módosításához adja meg a PIN-kódját.</string>
     <string name="pin_key_delete_desc">Törlés</string>
 
-    <!-- File Permission -->
-    <string name="file_permission_title">Tárhelyvédelem</string>
-    <string name="file_permission_desc">Az ismeretlen APK/AAB fájlok automatikus törlésének működéséhez az alkalmazásnak hozzá kell férnie a teljes tárhelyhez. Ez segít tisztán és biztonságban tartani a készüléket.</string>
-    <string name="file_permission_highlight">ismeretlen APK/AAB</string>
-
-    <!-- Usage Stats Permission -->
-    <string name="usage_stats_permission_title">Alkalmazásfigyelés</string>
-    <string name="usage_stats_permission_desc">Az alkalmazásblokkoló funkció működéséhez meg kell adnia a „Használati adatokhoz való hozzáférés” engedélyt. Ez segít az alkalmazásnak felismerni, ha egy nem engedélyezett alkalmazást nyitnak meg.</string>
-    <string name="usage_stats_permission_highlight">„Használati adatokhoz való hozzáférés”</string>
-
-    <!-- App Monitoring Intro -->
-    <string name="app_monitoring_intro_title">Funkció bemutatása</string>
-    <string name="app_monitoring_intro_desc">Ez a funkció védi a felhasználókat azáltal, hogy csak a kiválasztott alkalmazások futtatását teszi lehetővé. A nem kívánt problémák elkerülése érdekében a többi alkalmazás blokkolva lesz.</string>
-    <string name="app_monitoring_intro_highlight">csak a kiválasztott alkalmazások engedélyezése</string>
-    <string name="app_monitoring_intro_action">Értem</string>
-
-    <!-- Emergency Call Intro -->
-    <string name="emergency_call_intro_title">Funkció bemutatása</string>
-    <string name="emergency_call_intro_desc">A biztonság érdekében az alkalmazás automatikusan hívja a gyorstárcsázási névjegyzéket, ha 10 órán keresztül nem észlelhető felhasználói interakció a telefonon.</string>
-    <string name="emergency_call_intro_highlight">automatikusan hívja a gyorstárcsázási névjegyzéket</string>
-    <string name="emergency_call_intro_action">Értem</string>
-
-    <!-- File Cleanup Intro -->
-    <string name="file_cleanup_intro_title">Funkció bemutatása</string>
-    <string name="file_cleanup_intro_desc">Ez a funkció védi a felhasználókat azáltal, hogy automatikusan törli a készülékre letöltött ismeretlen telepítőfájlokat (APK), elkerülve a rosszindulatú programok véletlen telepítését.</string>
-    <string name="file_cleanup_intro_highlight">ismeretlen telepítőfájlok (APK) automatikus törlése</string>
-    <string name="file_cleanup_intro_action">Értem</string>
-
-    <!-- Call Block Intro -->
-    <string name="call_block_intro_title">Funkció bemutatása</string>
-    <string name="call_block_intro_desc">Ez a funkció védi a felhasználókat azáltal, hogy automatikusan blokkolja a névjegyzékben nem szereplő ismeretlen számokról érkező hívásokat, elkerülve a reklámok vagy csalások miatti kellemetlenségeket.</string>
-    <string name="call_block_intro_highlight">ismeretlen számokról érkező hívások automatikus blokkolása</string>
-    <string name="call_block_intro_action">Értem</string>
-
-    <!-- Overlay Permission -->
-    <string name="overlay_permission_title">Megjelenítés más alkalmazások felett</string>
-    <string name="overlay_permission_desc">Az alkalmazásnak a „Megjelenítés más alkalmazások felett” engedélyre van szüksége ahhoz, hogy megjelenítse a lezárási képernyőt egy blokkolt alkalmazás megnyitásakor.</string>
-    <string name="overlay_permission_highlight">„Megjelenítés más alkalmazások felett”</string>
     <!-- PIN Setup -->
-    <string name="pin_enter_new">Adja meg az új PIN-kódot (6 számjegy)</string>
-    <string name="pin_confirm_new">Erősítse meg az új PIN-kódot</string>
+    <string name="pin_enter_new">Új PIN megadása (6 számjegy)</string>
+    <string name="pin_confirm_new">Új PIN megerősítése</string>
     <string name="pin_setup_success">PIN beállítása sikeres</string>
     <string name="pin_error_length">A PIN-kódnak 6 számjegyűnek kell lennie</string>
     <string name="pin_error_confirm_mismatch">A megerősítő PIN nem egyezik</string>
     <string name="pin_error_incorrect">Helytelen PIN</string>
-    <!-- Clean Files -->
-    <string name="clean_cat_file_count" tools:ignore="PluralsCandidate">$number_file fájl</string>
 
-    <!-- Reorder -->
-    <string name="reorder_apps_title">Alkalmazások átrendezése</string>
-    <string name="reorder_contacts_title">Névjegyek átrendezése</string>
     <string name="done">Kész</string>
-    <string name="app_list_empty_error">Kérjük, válasszon ki legalább egy alkalmazást</string>
-    <string name="contact_list_empty_error">Kérjük, válasszon ki legalább egy névjegyet</string>
-
-    <!-- Emergency Call -->
     <string name="emergency_call_title">Segélyhívás</string>
-    <string name="emergency_call_desc">Ha a telefont 12 órán keresztül nem használják, az alkalmazás automatikusan segélyhívást indít.</string>
-    <string name="emergency_call_enable">Funkció engedélyezése</string>
-    <string name="emergency_call_phone_number">Segélyhívó telefonszám</string>
-    <string name="emergency_call_phone_number_hint">Telefonszám megadása</string>
-    <string name="emergency_call_save_success">Segélyhívási konfiguráció mentve</string>
-    <string name="emergency_call_permission_denied">Hívásindítási engedély szükséges ehhez a funkcióhoz</string>
-
-    <!-- Calendar -->
-    <string name="lunar_date_format">%1$d/%2$d. nap Holdnaptár</string>
-    <string name="solar_date_format">EEEE, yyyy.MM.dd.</string>
+    <string name="emergency_call_desc">Ha a telefont 12 órán át nem használják, az alkalmazás automatikusan segélyhívást indít.</string>
+    <string name="emergency_call_enable">Funkció aktiválása</string>
+    <string name="emergency_call_phone_number">Segélyhívó szám</string>
+    <string name="emergency_call_phone_number_hint">Adja meg a számot</string>
+    <string name="emergency_call_save_success">Segélyhívási konfiguráció elmentve</string>
 </resources>
