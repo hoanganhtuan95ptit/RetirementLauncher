@@ -2,8 +2,6 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$/../1CorePrivate" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/../ComponentService" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/../LayoutNode" vcs="Git" />
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
   </component>
 </project>
