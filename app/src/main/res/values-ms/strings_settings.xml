@@ -1,0 +1,20 @@
+<resources>
+    <string name="setting_header_plugins">Plugin &amp; Utiliti</string>
+    <string name="setting_lunar_calendar">Papar Kalendar Lunar</string>
+    <string name="setting_clock_title">Tetapan Jam</string>
+    <string name="setting_clock_format_header">Format Masa</string>
+    <string name="setting_clock_12h">12 Jam</string>
+    <string name="setting_clock_12h_example">Contoh: 10:30</string>
+    <string name="setting_clock_24h">24 Jam</string>
+    <string name="setting_clock_24h_example">Contoh: 22:30</string>
+    <string name="setting_clock_am_pm">Papar AM/PM</string>
+    <string name="setting_clock_am_pm_desc">Papar AM dan PM apabila menggunakan format 12 jam</string>
+    <string name="setting_clock_solar">Papar Kalendar Solar</string>
+    <string name="setting_clock_solar_desc">Papar kalendar solar pada skrin</string>
+    <string name="setting_clock_lunar">Papar Kalendar Lunar</string>
+    <string name="setting_clock_lunar_desc">Papar kalendar lunar pada skrin</string>
+
+    <!-- Calendar -->
+    <string name="lunar_date_format">Hari %1$d/%2$d Lunar</string>
+    <string name="solar_date_format">EEEE, MM/dd/yyyy</string>
+</resources>

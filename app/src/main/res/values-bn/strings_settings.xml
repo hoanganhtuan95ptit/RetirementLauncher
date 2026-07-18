@@ -1,0 +1,20 @@
+<resources>
+    <string name="setting_header_plugins">প্লাগইন ও ইউটিলিটি</string>
+    <string name="setting_lunar_calendar">চন্দ্র ক্যালেন্ডার প্রদর্শন করুন</string>
+    <string name="setting_clock_title">ঘড়ি সেটিংস</string>
+    <string name="setting_clock_format_header">সময় বিন্যাস</string>
+    <string name="setting_clock_12h">১২-ঘণ্টা</string>
+    <string name="setting_clock_12h_example">উদাহরণ: ১০:৩০</string>
+    <string name="setting_clock_24h">২৪-ঘণ্টা</string>
+    <string name="setting_clock_24h_example">উদাহরণ: ২২:৩০</string>
+    <string name="setting_clock_am_pm">AM/PM প্রদর্শন করুন</string>
+    <string name="setting_clock_am_pm_desc">১২-ঘণ্টা বিন্যাস ব্যবহারের সময় AM এবং PM প্রদর্শন করুন</string>
+    <string name="setting_clock_solar">সৌর ক্যালেন্ডার প্রদর্শন করুন</string>
+    <string name="setting_clock_solar_desc">পর্দায় সৌর ক্যালেন্ডার প্রদর্শন করুন</string>
+    <string name="setting_clock_lunar">চন্দ্র ক্যালেন্ডার প্রদর্শন করুন</string>
+    <string name="setting_clock_lunar_desc">পর্দায় চন্দ্র ক্যালেন্ডার প্রদর্শন করুন</string>
+
+    <!-- Calendar -->
+    <string name="lunar_date_format">দিন %1$d/%2$d চন্দ্র</string>
+    <string name="solar_date_format">EEEE, MM/dd/yyyy</string>
+</resources>

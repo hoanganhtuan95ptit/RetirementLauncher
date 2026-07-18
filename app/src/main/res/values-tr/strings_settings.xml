@@ -1,0 +1,20 @@
+<resources>
+    <string name="setting_header_plugins">Eklentiler ve Araçlar</string>
+    <string name="setting_lunar_calendar">Ay Takvimini Göster</string>
+    <string name="setting_clock_title">Saat Ayarları</string>
+    <string name="setting_clock_format_header">Zaman Biçimi</string>
+    <string name="setting_clock_12h">12 Saat</string>
+    <string name="setting_clock_12h_example">Örnek: 10:30</string>
+    <string name="setting_clock_24h">24 Saat</string>
+    <string name="setting_clock_24h_example">Örnek: 22:30</string>
+    <string name="setting_clock_am_pm">ÖÖ/ÖS Göster</string>
+    <string name="setting_clock_am_pm_desc">12 saat biçimini kullanırken ÖÖ ve ÖS göster</string>
+    <string name="setting_clock_solar">Güneş Takvimini Göster</string>
+    <string name="setting_clock_solar_desc">Ekranda güneş takvimini göster</string>
+    <string name="setting_clock_lunar">Ay Takvimini Göster</string>
+    <string name="setting_clock_lunar_desc">Ekranda ay takvimini göster</string>
+
+    <!-- Calendar -->
+    <string name="lunar_date_format">Gün %1$d/%2$d Ay Takvimi</string>
+    <string name="solar_date_format">EEEE, dd.MM.yyyy</string>
+</resources>

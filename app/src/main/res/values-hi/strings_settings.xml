@@ -1,0 +1,20 @@
+<resources>
+    <string name="setting_header_plugins">प्लगइन्स और उपयोगिताएं</string>
+    <string name="setting_lunar_calendar">चंद्र कैलेंडर दिखाएं</string>
+    <string name="setting_clock_title">घड़ी सेटिंग्स</string>
+    <string name="setting_clock_format_header">समय प्रारूप</string>
+    <string name="setting_clock_12h">12-घंटे</string>
+    <string name="setting_clock_12h_example">उदाहरण: 10:30</string>
+    <string name="setting_clock_24h">24-घंटे</string>
+    <string name="setting_clock_24h_example">उदाहरण: 22:30</string>
+    <string name="setting_clock_am_pm">AM/PM दिखाएं</string>
+    <string name="setting_clock_am_pm_desc">12-घंटे प्रारूप का उपयोग करते समय AM और PM दिखाएं</string>
+    <string name="setting_clock_solar">सौर कैलेंडर दिखाएं</string>
+    <string name="setting_clock_solar_desc">स्क्रीन पर सौर कैलेंडर दिखाएं</string>
+    <string name="setting_clock_lunar">चंद्र कैलेंडर दिखाएं</string>
+    <string name="setting_clock_lunar_desc">स्क्रीन पर चंद्र कैलेंडर दिखाएं</string>
+
+    <!-- Calendar -->
+    <string name="lunar_date_format">दिन %1$d/%2$d चंद्र</string>
+    <string name="solar_date_format">EEEE, MM/dd/yyyy</string>
+</resources>
