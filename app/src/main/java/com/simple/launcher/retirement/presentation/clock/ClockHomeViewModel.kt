@@ -1,12 +1,14 @@
 package com.simple.launcher.retirement.presentation.clock
 
 import android.content.res.Resources
+import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.domain.repository.PreferenceRepository
 import com.simple.launcher.retirement.presentation.base.BaseViewModel
 import com.simple.launcher.retirement.presentation.base.GroupViewItem
 import com.simple.launcher.retirement.presentation.clock.adapters.ClockHomeItem
 import com.simple.launcher.retirement.utils.combineState
 import com.simple.launcher.retirement.utils.exts.dp
+import com.simple.launcher.retirement.utils.exts.getString
 import kotlinx.coroutines.flow.StateFlow
 
 class ClockHomeViewModel : BaseViewModel() {
@@ -48,7 +50,9 @@ class ClockHomeViewModel : BaseViewModel() {
             is24h = is24h,
             isAmPm = isAmPm,
             isSolar = isSolar,
-            isLunar = isLunar
+            isLunar = isLunar,
+            solarPattern = resources.getString(R.string.solar_date_format),
+            lunarPattern = resources.getString(R.string.lunar_date_format)
         ).apply {
 
             buildDrawSpec(resources)

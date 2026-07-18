@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">RetirementLauncher</string>
 
     <!-- Settings -->
@@ -6,13 +6,13 @@
     <string name="setting_header_general">Allgemeine Einstellungen</string>
     <string name="setting_header_security">Sicherheit &amp; Schutz</string>
     <string name="setting_header_optimization">Optimierung &amp; Dienstprogramme</string>
-    <string name="setting_header_plugins">Plugins &amp; Dienstprogramme</string>
+    <string name="setting_header_plugins">Plug-ins &amp; Dienstprogramme</string>
     <string name="setting_lunar_calendar">Mondkalender anzeigen</string>
     <string name="setting_clock_title">Uhreinstellungen</string>
     <string name="setting_clock_format_header">Zeitformat</string>
-    <string name="setting_clock_12h">12-Stunden</string>
+    <string name="setting_clock_12h">12-Stunden-Format</string>
     <string name="setting_clock_12h_example">Beispiel: 10:30</string>
-    <string name="setting_clock_24h">24-Stunden</string>
+    <string name="setting_clock_24h">24-Stunden-Format</string>
     <string name="setting_clock_24h_example">Beispiel: 22:30</string>
     <string name="setting_clock_am_pm">AM/PM anzeigen</string>
     <string name="setting_clock_am_pm_desc">AM und PM bei Verwendung des 12-Stunden-Formats anzeigen</string>
@@ -22,28 +22,39 @@
     <string name="setting_clock_lunar_desc">Mondkalender auf dem Bildschirm anzeigen</string>
     <string name="setting_pin">PIN-Einrichtung</string>
     <string name="setting_app_list">App-Listen-Einrichtung</string>
-    <string name="setting_default_launcher">Standard-Launcher festlegen</string>
+    <string name="setting_default_launcher">Standard-Launcher-Einrichtung</string>
     <string name="setting_contact_list">Schnellkontakt-Einrichtung</string>
     <string name="setting_clean_files">Junk-Dateien bereinigen</string>
     <string name="setting_clean_memory">Speicher freigeben</string>
-    <string name="setting_emergency_call">Automatischer Notruf</string>
+    <string name="setting_emergency_call">Automatischer Notruf (über Schnellkontakt)</string>
     <string name="setting_app_monitoring">App-Überwachung</string>
     <string name="setting_auto_cleanup_apk">APK automatisch löschen</string>
     <string name="setting_call_block">Unbekannte Anrufe blockieren</string>
-    <string name="setting_pocket_mode">Taschenmodus</string>
+    <string name="setting_pocket_mode">Taschenmodus (Versehentliche Berührungen verhindern)</string>
 
     <!-- Onboarding -->
-    <string name="onboarding_title">Willkommen bei Retirement Launcher</string>
-    <string name="onboarding_desc">Eine App, um Ihre Benutzeroberfläche zu vereinfachen und Ihr Gerät zu schützen.</string>
-    <string name="onboarding_start">Los geht\'s</string>
+    <string name="onboarding_title">Willkommen beim Retirement Launcher</string>
+    <string name="onboarding_desc">Eine App, um die Benutzeroberfläche Ihres Telefons zu vereinfachen und Ihr Gerät zu schützen.</string>
+    <string name="onboarding_start">Erste Schritte</string>
 
     <!-- Clean Files -->
     <string name="clean_files_title">Junk-Dateien bereinigen</string>
     <string name="clean_files_desc">Bereit zum Scannen des Geräts</string>
-    <string name="clean_files_start">Reinigung starten</string>
-    <string name="clean_files_running">Scannen und Reinigen…</string>
-    <string name="clean_files_completed">Reinigung abgeschlossen!</string>
-    <string name="clean_files_retry">Erneut reinigen</string>
+    <string name="clean_files_start">Bereinigung starten</string>
+    <string name="clean_files_running">Scannen und Bereinigen…</string>
+    <string name="clean_files_completed">Bereinigung abgeschlossen!</string>
+    <string name="clean_files_retry">Erneut bereinigen</string>
+    <!-- Clean Files – categories -->
+    <string name="clean_cat_system_temp">Temporäre Systemdateien (.tmp, .log…)</string>
+    <string name="clean_cat_compressed">Unbekannte komprimierte Dateien</string>
+    <string name="clean_cat_no_extension">Dokumente (.pdf, .doc, .txt…)</string>
+    <string name="clean_cat_apk_cache">Alte APKs &amp; Cache</string>
+    <!-- Clean Files – result card -->
+    <string name="clean_result_title">Reinigungsergebnisse</string>
+    <string name="clean_result_files_deleted">Dateien gelöscht</string>
+    <string name="clean_result_space_freed">Speicherplatz freigegeben</string>
+    <string name="clean_files_idle_desc"> $number_file Junk-Dateien erkannt – zum Bereinigen tippen</string>
+    <string name="clean_files_count_unit">Junk-Dateien</string>
 
     <!-- Clean Memory -->
     <string name="clean_memory_title">Speicher freigeben</string>
@@ -61,55 +72,113 @@
     <string name="contact_tap_to_call">Jetzt anrufen</string>
     <string name="contact_list_title">Schnellkontakte auswählen</string>
     <string name="contact_list_saved">Kontaktliste gespeichert</string>
-    <string name="contact_permission_denied">Kontaktberechtigung ist erforderlich</string>
+    <string name="contact_permission_denied">Die Kontaktberechtigung ist erforderlich, um diese Funktion zu nutzen</string>
     <string name="app_list_save_action">Konfiguration speichern</string>
     <string name="app_list_saved">App-Liste gespeichert</string>
 
     <!-- Common -->
     <string name="save">Speichern</string>
     <string name="back">Zurück</string>
-    <string name="search">Suchen…</string>
+    <string name="search">Suche…</string>
 
     <!-- Call Permission -->
-    <string name="call_permission_title">Anrufberechtigung</string>
-    <string name="call_permission_desc">Die App benötigt die Berechtigung zum Telefonieren, um im Notfall automatisch Angehörige anzurufen.</string>
+    <string name="call_permission_title">Berechtigung für Anrufe</string>
+    <string name="call_permission_desc">Die App benötigt die Berechtigung, Anrufe zu tätigen, um im Notfall automatisch Verwandte anrufen zu können.</string>
+    <string name="call_permission_highlight">Anrufe tätigen</string>
 
     <!-- Call Block -->
-    <string name="call_block_title">Anrufe blockieren Berechtigung</string>
-    <string name="call_block_desc">Die App benötigt Zugriff auf Anrufe und Kontakte, um Anrufe von Unbekannten automatisch zu blockieren.</string>
-
+    <string name="call_block_title">Berechtigung zum Blockieren von Anrufen</string>
+    <string name="call_block_desc">Die App benötigt die Berechtigung zum Verwalten von Anrufen und Kontakten, um Anrufe von Fremden automatisch blockieren zu können.</string>
+    <string name="call_block_highlight">Anrufe und Kontakte verwalten</string>
     <!-- Home Status -->
     <string name="home_header_apps">Anwendungen</string>
     <string name="home_header_contacts">Schnellkontakte</string>
 
     <!-- Block -->
     <string name="block_title">Anwendung blockiert</string>
-    <string name="block_desc">Diese Anwendung befindet sich nicht auf der Liste der erlaubten Anwendungen.</string>
+    <string name="block_desc">Diese Anwendung befindet sich nicht in der Liste der erlaubten Anwendungen. Bitte kontaktieren Sie den Administrator.</string>
     <string name="block_go_home">Zum Startbildschirm</string>
+
+    <!-- Debug-only settings (chỉ hiển thị trong debug build) -->
+    <string name="setting_header_debug">🐛 Debug</string>
+    <string name="setting_debug_block_screen">Blockbildschirm anzeigen</string>
 
     <!-- Permissions & Setup -->
     <string name="default_launcher_setup">Jetzt einrichten</string>
     <string name="default_launcher_title">Standard-Launcher festlegen</string>
     <string name="default_launcher_desc">Um den Retirement Launcher als Startbildschirm zu verwenden, müssen Sie ihn in den Systemeinstellungen als Standard-App festlegen.</string>
+    <string name="default_launcher_highlight">Retirement Launcher</string>
     <string name="permission_grant">Berechtigung erteilen</string>
     <string name="understood">Verstanden</string>
     <string name="pin_verify_title">PIN bestätigen</string>
     <string name="pin_verify_desc">Bitte geben Sie Ihre PIN ein, um diese Einstellung zu ändern.</string>
     <string name="pin_key_delete_desc">Löschen</string>
 
+    <!-- File Permission -->
+    <string name="file_permission_title">Speicherschutz</string>
+    <string name="file_permission_desc">Damit das automatische Löschen unbekannter APK/AAB-Dateien funktioniert, benötigt die App Zugriff auf den gesamten Speicher. Dies hilft, Ihr Gerät sauber und sicher zu halten.</string>
+    <string name="file_permission_highlight">unbekannte APK/AAB</string>
+
+    <!-- Usage Stats Permission -->
+    <string name="usage_stats_permission_title">App-Überwachung</string>
+    <string name="usage_stats_permission_desc">Damit die App-Blockierungsfunktion funktioniert, müssen Sie den „Zugriff auf Nutzungsdaten“ gewähren. Dies hilft der App zu erkennen, wenn eine nicht autorisierte App geöffnet wird.</string>
+    <string name="usage_stats_permission_highlight">„Zugriff auf Nutzungsdaten“</string>
+
+    <!-- App Monitoring Intro -->
+    <string name="app_monitoring_intro_title">Funktionseinführung</string>
+    <string name="app_monitoring_intro_desc">Diese Funktion schützt Benutzer, indem sie nur die Ausführung ausgewählter Apps zulässt. Andere Apps werden blockiert, um unbeabsichtigte Probleme zu vermeiden.</string>
+    <string name="app_monitoring_intro_highlight">nur ausgewählte Apps zulassen</string>
+    <string name="app_monitoring_intro_action">Ich verstehe</string>
+
+    <!-- Emergency Call Intro -->
+    <string name="emergency_call_intro_title">Funktionseinführung</string>
+    <string name="emergency_call_intro_desc">Um die Sicherheit zu gewährleisten, ruft die App automatisch die Schnellkontaktliste an, wenn 10 Stunden lang keine Benutzerinteraktion am Telefon erkannt wird.</string>
+    <string name="emergency_call_intro_highlight">automatisch die Schnellkontaktliste anrufen</string>
+    <string name="emergency_call_intro_action">Ich verstehe</string>
+
+    <!-- File Cleanup Intro -->
+    <string name="file_cleanup_intro_title">Funktionseinführung</string>
+    <string name="file_cleanup_intro_desc">Diese Funktion schützt Benutzer, indem sie automatisch unbekannte Installationsdateien (APK) löscht, die auf das Gerät heruntergeladen wurden, um die versehentliche Installation von Malware zu vermeiden.</string>
+    <string name="file_cleanup_intro_highlight">automatisches Löschen unbekannter Installationsdateien (APK)</string>
+    <string name="file_cleanup_intro_action">Ich verstehe</string>
+
+    <!-- Call Block Intro -->
+    <string name="call_block_intro_title">Funktionseinführung</string>
+    <string name="call_block_intro_desc">Diese Funktion schützt Benutzer, indem sie automatisch Anrufe von unbekannten Nummern blockiert, die nicht in den Kontakten enthalten sind, um Belästigungen durch Werbung oder Betrug zu vermeiden.</string>
+    <string name="call_block_intro_highlight">automatisches Blockieren von Anrufen von unbekannten Nummern</string>
+    <string name="call_block_intro_action">Ich verstehe</string>
+
+    <!-- Overlay Permission -->
+    <string name="overlay_permission_title">Über anderen Apps anzeigen</string>
+    <string name="overlay_permission_desc">Die App benötigt die Berechtigung „Über anderen Apps anzeigen“, um den Sperrbildschirm anzuzeigen, wenn eine blockierte App geöffnet wird.</string>
+    <string name="overlay_permission_highlight">„Über anderen Apps anzeigen“</string>
     <!-- PIN Setup -->
-    <string name="pin_enter_new">Neue PIN eingeben (6 Ziffern)</string>
+    <string name="pin_enter_new">Neue PIN eingeben (6 Stellen)</string>
     <string name="pin_confirm_new">Neue PIN bestätigen</string>
     <string name="pin_setup_success">PIN-Einrichtung erfolgreich</string>
-    <string name="pin_error_length">Die PIN muss 6 Ziffern lang sein</string>
-    <string name="pin_error_confirm_mismatch">Die Bestätigungs-PIN stimmt nicht überein</string>
+    <string name="pin_error_length">Die PIN muss 6 Stellen haben</string>
+    <string name="pin_error_confirm_mismatch">Bestätigungs-PIN stimmt nicht überein</string>
     <string name="pin_error_incorrect">Falsche PIN</string>
+    <!-- Clean Files -->
+    <string name="clean_cat_file_count" tools:ignore="PluralsCandidate">$number_file Dateien</string>
 
+    <!-- Reorder -->
+    <string name="reorder_apps_title">Apps neu ordnen</string>
+    <string name="reorder_contacts_title">Kontakte neu ordnen</string>
     <string name="done">Fertig</string>
+    <string name="app_list_empty_error">Bitte wählen Sie mindestens eine App aus</string>
+    <string name="contact_list_empty_error">Bitte wählen Sie mindestens einen Kontakt aus</string>
+
+    <!-- Emergency Call -->
     <string name="emergency_call_title">Notruf</string>
-    <string name="emergency_call_desc">Wenn das Telefon 12 Stunden lang nicht benutzt wird, setzt die App automatisch einen Notruf ab.</string>
+    <string name="emergency_call_desc">Wenn das Telefon 12 Stunden lang nicht benutzt wird, tätigt die App automatisch einen Notruf.</string>
     <string name="emergency_call_enable">Funktion aktivieren</string>
     <string name="emergency_call_phone_number">Notrufnummer</string>
-    <string name="emergency_call_phone_number_hint">Nummer eingeben</string>
+    <string name="emergency_call_phone_number_hint">Telefonnummer eingeben</string>
     <string name="emergency_call_save_success">Notrufkonfiguration gespeichert</string>
+    <string name="emergency_call_permission_denied">Für diese Funktion ist eine Anrufberechtigung erforderlich</string>
+
+    <!-- Calendar -->
+    <string name="lunar_date_format">Tag %1$d/%2$d Mondkalender</string>
+    <string name="solar_date_format">EEEE, dd.MM.yyyy</string>
 </resources>

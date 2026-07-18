@@ -1,18 +1,18 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">RetirementLauncher</string>
 
     <!-- Settings -->
     <string name="settings_title">Mga Setting</string>
-    <string name="setting_header_general">Mga Pangkalahatang Setting</string>
+    <string name="setting_header_general">Pangkalahatang Mga Setting</string>
     <string name="setting_header_security">Seguridad at Proteksyon</string>
-    <string name="setting_header_optimization">Pag-optimize at Mga Utility</string>
-    <string name="setting_header_plugins">Mga Plugin at Utility</string>
+    <string name="setting_header_optimization">Optimization at Mga Utility</string>
+    <string name="setting_header_plugins">Mga Plugin at Mga Utility</string>
     <string name="setting_lunar_calendar">Ipakita ang Lunar Calendar</string>
     <string name="setting_clock_title">Mga Setting ng Orasan</string>
-    <string name="setting_clock_format_header">Format ng Orasan</string>
+    <string name="setting_clock_format_header">Format ng Oras</string>
     <string name="setting_clock_12h">12-Oras</string>
     <string name="setting_clock_12h_example">Halimbawa: 10:30</string>
-    <string name="setting_clock_24h">24-na-Oras</string>
+    <string name="setting_clock_24h">24-Oras</string>
     <string name="setting_clock_24h_example">Halimbawa: 22:30</string>
     <string name="setting_clock_am_pm">Ipakita ang AM/PM</string>
     <string name="setting_clock_am_pm_desc">Ipakita ang AM at PM kapag gumagamit ng 12-oras na format</string>
@@ -20,30 +20,41 @@
     <string name="setting_clock_solar_desc">Ipakita ang solar calendar sa screen</string>
     <string name="setting_clock_lunar">Ipakita ang Lunar Calendar</string>
     <string name="setting_clock_lunar_desc">Ipakita ang lunar calendar sa screen</string>
-    <string name="setting_pin">Pag-setup ng PIN</string>
-    <string name="setting_app_list">Pag-setup ng Listahan ng App</string>
-    <string name="setting_default_launcher">I-set ang Default na Launcher</string>
-    <string name="setting_contact_list">Pag-setup ng Mabilis na Contact</string>
+    <string name="setting_pin">Setup ng PIN</string>
+    <string name="setting_app_list">Setup ng Listahan ng App</string>
+    <string name="setting_default_launcher">Setup ng Default Launcher</string>
+    <string name="setting_contact_list">Setup ng Quick Contact</string>
     <string name="setting_clean_files">Linisin ang Mga Junk File</string>
     <string name="setting_clean_memory">Magbakante ng Memory</string>
-    <string name="setting_emergency_call">Awtomatikong Tawag sa Emergency</string>
+    <string name="setting_emergency_call">Auto Emergency Call (sa pamamagitan ng mabilis na contact)</string>
     <string name="setting_app_monitoring">Pagsubaybay sa App</string>
-    <string name="setting_auto_cleanup_apk">Awtomatikong Pagbura ng APK</string>
+    <string name="setting_auto_cleanup_apk">Auto Delete ng APK</string>
     <string name="setting_call_block">I-block ang Mga Hindi Kilalang Tawag</string>
-    <string name="setting_pocket_mode">Pocket Mode</string>
+    <string name="setting_pocket_mode">Pocket Mode (Iwasan ang hindi sinasadyang pagpindot)</string>
 
     <!-- Onboarding -->
-    <string name="onboarding_title">Maligayang Pagdating sa Retirement Launcher</string>
-    <string name="onboarding_desc">Isang app upang gawing simple ang interface ng iyong telepono at protektahan ang iyong device.</string>
-    <string name="onboarding_start">Magsimula</string>
+    <string name="onboarding_title">Maligayang pagdating sa Retirement Launcher</string>
+    <string name="onboarding_desc">Isang app para gawing simple ang interface ng iyong telepono at protektahan ang iyong device.</string>
+    <string name="onboarding_start">Magsimula Na</string>
 
     <!-- Clean Files -->
     <string name="clean_files_title">Linisin ang Mga Junk File</string>
     <string name="clean_files_desc">Handa nang i-scan ang device</string>
     <string name="clean_files_start">Simulan ang Paglilinis</string>
-    <string name="clean_files_running">Nagsusuri at naglilinis…</string>
+    <string name="clean_files_running">Nii-scan at nililinis…</string>
     <string name="clean_files_completed">Tapos na ang paglilinis!</string>
-    <string name="clean_files_retry">Linisin Muli</string>
+    <string name="clean_files_retry">Linisin Uli</string>
+    <!-- Clean Files – categories -->
+    <string name="clean_cat_system_temp">Mga temporaryong file ng system (.tmp, .log…)</string>
+    <string name="clean_cat_compressed">Mga hindi kilalang compressed file</string>
+    <string name="clean_cat_no_extension">Mga dokumento (.pdf, .doc, .txt…)</string>
+    <string name="clean_cat_apk_cache">Mga lumang APK at cache</string>
+    <!-- Clean Files – result card -->
+    <string name="clean_result_title">Mga Resulta ng Paglilinis</string>
+    <string name="clean_result_files_deleted">mga file na na-delete</string>
+    <string name="clean_result_space_freed">espasyong nabakante</string>
+    <string name="clean_files_idle_desc"> $number_file na junk file ang nakita – i-tap para linisin</string>
+    <string name="clean_files_count_unit">mga junk file</string>
 
     <!-- Clean Memory -->
     <string name="clean_memory_title">Magbakante ng Memory</string>
@@ -51,19 +62,19 @@
     <string name="clean_memory_stat_free">Libre</string>
     <string name="clean_memory_stat_total">Kabuuan</string>
     <string name="clean_memory_result_sub">Na-optimize na ang system</string>
-    <string name="clean_memory_start">Bilisan Ngayon</string>
+    <string name="clean_memory_start">Bilisan Na</string>
     <string name="clean_memory_running">Ino-optimize ang system…</string>
-    <string name="clean_memory_optimal">Nasa optimal na estado ang system!</string>
-    <string name="clean_memory_retry">I-optimize Muli</string>
-    <string name="clean_memory_toast">$number_ram MB ang nabakante</string>
+    <string name="clean_memory_optimal">Nasa pinakamagandang kalagayan ang system!</string>
+    <string name="clean_memory_retry">I-optimize Uli</string>
+    <string name="clean_memory_toast">Nabakante ang $number_ram MB</string>
 
     <!-- Contacts -->
-    <string name="contact_tap_to_call">Tumawag Ngayon</string>
-    <string name="contact_list_title">Pumili ng Mabilis na Contact</string>
-    <string name="contact_list_saved">Nai-save na ang listahan ng contact</string>
+    <string name="contact_tap_to_call">Tumawag Na</string>
+    <string name="contact_list_title">Pumili ng Quick Contacts</string>
+    <string name="contact_list_saved">Na-save na ang listahan ng contact</string>
     <string name="contact_permission_denied">Kailangan ng pahintulot sa contact para magamit ang feature na ito</string>
     <string name="app_list_save_action">I-save ang Configuration</string>
-    <string name="app_list_saved">Nai-save na ang listahan ng app</string>
+    <string name="app_list_saved">Na-save na ang listahan ng app</string>
 
     <!-- Common -->
     <string name="save">I-save</string>
@@ -71,45 +82,103 @@
     <string name="search">Maghanap…</string>
 
     <!-- Call Permission -->
-    <string name="call_permission_title">Pahintulot sa Pagtawag</string>
-    <string name="call_permission_desc">Kailangan ng app ng pahintulot na tumawag upang awtomatikong matawagan ang mga kamag-anak sakaling may emergency.</string>
+    <string name="call_permission_title">Pahintulot sa Paggawa ng mga Tawag</string>
+    <string name="call_permission_desc">Kailangan ng app ng pahintulot na gumawa ng mga tawag para awtomatikong matawagan ang mga kamag-anak sakaling may emergency.</string>
+    <string name="call_permission_highlight">gumawa ng mga tawag</string>
 
     <!-- Call Block -->
     <string name="call_block_title">Pahintulot sa Pag-block ng Tawag</string>
     <string name="call_block_desc">Kailangan ng app ng pahintulot na pamahalaan ang mga tawag at contact para awtomatikong ma-block ang mga tawag mula sa mga hindi kilala.</string>
-
+    <string name="call_block_highlight">pamahalaan ang mga tawag at contact</string>
     <!-- Home Status -->
     <string name="home_header_apps">Mga Application</string>
-    <string name="home_header_contacts">Mga Mabilis na Contact</string>
+    <string name="home_header_contacts">Quick Contacts</string>
 
     <!-- Block -->
     <string name="block_title">Na-block ang Application</string>
     <string name="block_desc">Ang application na ito ay wala sa listahan ng pinapayagan. Mangyaring makipag-ugnayan sa administrator.</string>
     <string name="block_go_home">Pumunta sa Home Screen</string>
 
+    <!-- Debug-only settings (chỉ hiển thị trong debug build) -->
+    <string name="setting_header_debug">🐛 Debug</string>
+    <string name="setting_debug_block_screen">Tingnan ang Block Screen</string>
+
     <!-- Permissions & Setup -->
-    <string name="default_launcher_setup">I-setup Ngayon</string>
-    <string name="default_launcher_title">I-set ang Default na Launcher</string>
-    <string name="default_launcher_desc">Upang gamitin ang Retirement Launcher bilang iyong home screen, kailangan mong i-set ito bilang default na app sa mga setting ng system.</string>
-    <string name="permission_grant">Ibigay ang Pahintulot</string>
+    <string name="default_launcher_setup">I-setup Na</string>
+    <string name="default_launcher_title">I-set ang Default Launcher</string>
+    <string name="default_launcher_desc">Para magamit ang Retirement Launcher bilang iyong home screen, kailangan mong i-set ito bilang default na app sa mga setting ng system.</string>
+    <string name="default_launcher_highlight">Retirement Launcher</string>
+    <string name="permission_grant">Magbigay ng Pahintulot</string>
     <string name="understood">Naintindihan</string>
     <string name="pin_verify_title">I-confirm ang PIN</string>
-    <string name="pin_verify_desc">Mangyaring ilagay ang iyong PIN upang baguhin ang setting na ito.</string>
-    <string name="pin_key_delete_desc">Burahin</string>
+    <string name="pin_verify_desc">Mangyaring ilagay ang iyong PIN para baguhin ang setting na ito.</string>
+    <string name="pin_key_delete_desc">I-delete</string>
 
+    <!-- File Permission -->
+    <string name="file_permission_title">Proteksyon sa Storage</string>
+    <string name="file_permission_desc">Para gumana ang auto deletion ng mga hindi kilalang APK/AAB file, kailangan ng app ng access sa lahat ng storage. Nakakatulong ito para mapanatiling malinis at ligtas ang iyong device.</string>
+    <string name="file_permission_highlight">hindi kilalang APK/AAB</string>
+
+    <!-- Usage Stats Permission -->
+    <string name="usage_stats_permission_title">Pagsubaybay sa App</string>
+    <string name="usage_stats_permission_desc">Para gumana ang feature sa pag-block ng app, kailangan mong ibigay ang \'Usage Data Access\'. Nakakatulong ito sa app na malaman kung kailan binubuksan ang isang hindi awtorisadong app.</string>
+    <string name="usage_stats_permission_highlight">\'Usage Data Access\'</string>
+
+    <!-- App Monitoring Intro -->
+    <string name="app_monitoring_intro_title">Pagpapakilala sa Feature</string>
+    <string name="app_monitoring_intro_desc">Nakatutulong ang feature na ito na protektahan ang mga user sa pamamagitan ng pagpayag lamang sa mga napiling app na tumakbo. Ang ibang mga app ay iba-block para maiwasan ang mga hindi sinasadyang problema.</string>
+    <string name="app_monitoring_intro_highlight">pagpayag lamang sa mga napiling app</string>
+    <string name="app_monitoring_intro_action">Naiintindihan ko</string>
+
+    <!-- Emergency Call Intro -->
+    <string name="emergency_call_intro_title">Pagpapakilala sa Feature</string>
+    <string name="emergency_call_intro_desc">Para masiguro ang kaligtasan, awtomatikong tatawag ang app sa mabilis na listahan ng contact kung walang detektadong interaksyon ng user sa telepono sa loob ng 10 oras.</string>
+    <string name="emergency_call_intro_highlight">awtomatikong tatawag sa mabilis na listahan ng contact</string>
+    <string name="emergency_call_intro_action">Naiintindihan ko</string>
+
+    <!-- File Cleanup Intro -->
+    <string name="file_cleanup_intro_title">Pagpapakilala sa Feature</string>
+    <string name="file_cleanup_intro_desc">Nakatutulong ang feature na ito na protektahan ang mga user sa pamamagitan ng awtomatikong pag-delete ng mga hindi kilalang installation file (APK) na na-download sa device, iniiwasan ang hindi sinasadyang pag-install ng malware.</string>
+    <string name="file_cleanup_intro_highlight">awtomatikong pag-delete ng mga hindi kilalang installation file (APK)</string>
+    <string name="file_cleanup_intro_action">Naiintindihan ko</string>
+
+    <!-- Call Block Intro -->
+    <string name="call_block_intro_title">Pagpapakilala sa Feature</string>
+    <string name="call_block_intro_desc">Nakatutulong ang feature na ito na protektahan ang mga user sa pamamagitan ng awtomatikong pag-block ng mga tawag mula sa mga hindi kilalang numero na wala sa mga contact, iniiwasan ang pagkakaroon ng abala mula sa mga ad o scam.</string>
+    <string name="call_block_intro_highlight">awtomatikong pag-block ng mga tawag mula sa mga hindi kilalang numero</string>
+    <string name="call_block_intro_action">Naiintindihan ko</string>
+
+    <!-- Overlay Permission -->
+    <string name="overlay_permission_title">I-display sa Ibabaw ng Ibang mga App</string>
+    <string name="overlay_permission_desc">Kailangan ng app ng pahintulot na \'Display over other apps\' para ipakita ang lock screen kapag binuksan ang isang na-block na app.</string>
+    <string name="overlay_permission_highlight">\'Display over other apps\'</string>
     <!-- PIN Setup -->
     <string name="pin_enter_new">Ilagay ang bagong PIN (6 na digit)</string>
     <string name="pin_confirm_new">I-confirm ang bagong PIN</string>
-    <string name="pin_setup_success">Matagumpay ang pag-setup ng PIN</string>
-    <string name="pin_error_length">Ang PIN ay dapat na 6 na digit</string>
-    <string name="pin_error_confirm_mismatch">Hindi tumutugma ang confirmation PIN</string>
+    <string name="pin_setup_success">Matagumpay ang setup ng PIN</string>
+    <string name="pin_error_length">Dapat ay 6 na digit ang PIN</string>
+    <string name="pin_error_confirm_mismatch">Hindi tumutugma ang kumpirmasyon ng PIN</string>
     <string name="pin_error_incorrect">Maling PIN</string>
+    <!-- Clean Files -->
+    <string name="clean_cat_file_count" tools:ignore="PluralsCandidate">$number_file na file</string>
 
-    <string name="done">Tapos na</string>
-    <string name="emergency_call_title">Tawag sa Emergency</string>
-    <string name="emergency_call_desc">Kung hindi ginamit ang telepono sa loob ng 12 oras, awtomatikong tatawag ang app sa emergency.</string>
+    <!-- Reorder -->
+    <string name="reorder_apps_title">I-reorder ang mga App</string>
+    <string name="reorder_contacts_title">I-reorder ang mga Contact</string>
+    <string name="done">Tapos Na</string>
+    <string name="app_list_empty_error">Mangyaring pumili ng kahit isang app</string>
+    <string name="contact_list_empty_error">Mangyaring pumili ng kahit isang contact</string>
+
+    <!-- Emergency Call -->
+    <string name="emergency_call_title">Emergency Call</string>
+    <string name="emergency_call_desc">Kung hindi gagamitin ang telepono sa loob ng 12 oras, awtomatikong gagawa ang app ng emergency call.</string>
     <string name="emergency_call_enable">I-enable ang feature</string>
-    <string name="emergency_call_phone_number">Numero ng Telepono sa Emergency</string>
-    <string name="emergency_call_phone_number_hint">Ilagay ang numero</string>
-    <string name="emergency_call_save_success">Nai-save na ang configuration ng tawag sa emergency</string>
+    <string name="emergency_call_phone_number">Numero ng Telepono para sa Emergency</string>
+    <string name="emergency_call_phone_number_hint">Ilagay ang numero ng telepono</string>
+    <string name="emergency_call_save_success">Na-save na ang configuration ng emergency call</string>
+    <string name="emergency_call_permission_denied">Kailangan ng pahintulot sa pagtawag para sa feature na ito</string>
+
+    <!-- Calendar -->
+    <string name="lunar_date_format">Araw %1$d/%2$d Lunar</string>
+    <string name="solar_date_format">EEEE, MM/dd/yyyy</string>
 </resources>

@@ -177,4 +177,8 @@
     <string name="emergency_call_phone_number_hint">Nhập số điện thoại</string>
     <string name="emergency_call_save_success">Đã lưu cấu hình cuộc gọi khẩn cấp</string>
     <string name="emergency_call_permission_denied">Cần quyền gọi điện để thực hiện tính năng này</string>
+
+    <!-- Calendar -->
+    <string name="lunar_date_format">Ngày %1$d/%2$d âm lịch</string>
+    <string name="solar_date_format">EEEE, dd/MM/yyyy</string>
 </resources>

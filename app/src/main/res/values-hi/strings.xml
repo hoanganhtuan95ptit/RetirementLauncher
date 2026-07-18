@@ -1,60 +1,71 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">RetirementLauncher</string>
 
     <!-- Settings -->
     <string name="settings_title">सेटिंग्स</string>
     <string name="setting_header_general">सामान्य सेटिंग्स</string>
     <string name="setting_header_security">सुरक्षा और संरक्षण</string>
-    <string name="setting_header_optimization">ऑप्टिमाइज़ेशन और यूटिलिटीज</string>
-    <string name="setting_header_plugins">प्लगइन्स और उपयोगिताएँ</string>
+    <string name="setting_header_optimization">अनुकूलन और उपयोगिताएं</string>
+    <string name="setting_header_plugins">प्लगइन्स और उपयोगिताएं</string>
     <string name="setting_lunar_calendar">चंद्र कैलेंडर दिखाएं</string>
     <string name="setting_clock_title">घड़ी सेटिंग्स</string>
-    <string name="setting_clock_format_header">घड़ी का प्रारूप</string>
+    <string name="setting_clock_format_header">समय प्रारूप</string>
     <string name="setting_clock_12h">12-घंटे</string>
     <string name="setting_clock_12h_example">उदाहरण: 10:30</string>
     <string name="setting_clock_24h">24-घंटे</string>
     <string name="setting_clock_24h_example">उदाहरण: 22:30</string>
     <string name="setting_clock_am_pm">AM/PM दिखाएं</string>
-    <string name="setting_clock_am_pm_desc">12-घंटे के प्रारूप का उपयोग करते समय AM और PM दिखाएं</string>
+    <string name="setting_clock_am_pm_desc">12-घंटे प्रारूप का उपयोग करते समय AM और PM दिखाएं</string>
     <string name="setting_clock_solar">सौर कैलेंडर दिखाएं</string>
     <string name="setting_clock_solar_desc">स्क्रीन पर सौर कैलेंडर दिखाएं</string>
     <string name="setting_clock_lunar">चंद्र कैलेंडर दिखाएं</string>
     <string name="setting_clock_lunar_desc">स्क्रीन पर चंद्र कैलेंडर दिखाएं</string>
     <string name="setting_pin">पिन सेटअप</string>
     <string name="setting_app_list">ऐप सूची सेटअप</string>
-    <string name="setting_default_launcher">डिफ़ॉल्ट लॉन्चर सेट करें</string>
+    <string name="setting_default_launcher">डिफ़ॉल्ट लॉन्चर सेटअप</string>
     <string name="setting_contact_list">त्वरित संपर्क सेटअप</string>
-    <string name="setting_clean_files">जंक फाइलें साफ करें</string>
+    <string name="setting_clean_files">जंक फ़ाइलें साफ़ करें</string>
     <string name="setting_clean_memory">मेमोरी खाली करें</string>
-    <string name="setting_emergency_call">ऑटो इमरजेंसी कॉल</string>
-    <string name="setting_app_monitoring">ऐप मॉनिटरिंग</string>
-    <string name="setting_auto_cleanup_apk">APK ऑटो डिलीट</string>
+    <string name="setting_emergency_call">ऑटो आपातकालीन कॉल (त्वरित संपर्क द्वारा)</string>
+    <string name="setting_app_monitoring">ऐप निगरानी</string>
+    <string name="setting_auto_cleanup_apk">APK ऑटो डिलीट करें</string>
     <string name="setting_call_block">अज्ञात कॉल ब्लॉक करें</string>
-    <string name="setting_pocket_mode">पॉकेट मोड</string>
+    <string name="setting_pocket_mode">पॉकेट मोड (गलती से स्पर्श रोकने के लिए)</string>
 
     <!-- Onboarding -->
     <string name="onboarding_title">Retirement Launcher में आपका स्वागत है</string>
-    <string name="onboarding_desc">आपके फोन इंटरफेस को सरल बनाने और आपके डिवाइस की सुरक्षा करने के लिए एक ऐप।</string>
+    <string name="onboarding_desc">आपके फोन इंटरफेस को सरल बनाने और आपके डिवाइस की सुरक्षा के लिए एक ऐप।</string>
     <string name="onboarding_start">शुरू करें</string>
 
     <!-- Clean Files -->
-    <string name="clean_files_title">जंक फाइलें साफ करें</string>
+    <string name="clean_files_title">जंक फ़ाइलें साफ़ करें</string>
     <string name="clean_files_desc">डिवाइस स्कैन करने के लिए तैयार</string>
-    <string name="clean_files_start">सफाई शुरू करें</string>
-    <string name="clean_files_running">स्कैनिंग और सफाई जारी है…</string>
-    <string name="clean_files_completed">सफाई पूरी हुई!</string>
-    <string name="clean_files_retry">फिर से साफ करें</string>
+    <string name="clean_files_start">सफ़ाई शुरू करें</string>
+    <string name="clean_files_running">स्कैनिंग और सफ़ाई जारी है…</string>
+    <string name="clean_files_completed">सफ़ाई पूरी हुई!</string>
+    <string name="clean_files_retry">फिर से साफ़ करें</string>
+    <!-- Clean Files – categories -->
+    <string name="clean_cat_system_temp">सिस्टम अस्थायी फ़ाइलें (.tmp, .log…)</string>
+    <string name="clean_cat_compressed">अज्ञात कंप्रेस फ़ाइलें</string>
+    <string name="clean_cat_no_extension">दस्तावेज़ (.pdf, .doc, .txt…)</string>
+    <string name="clean_cat_apk_cache">पुराने APK और कैश</string>
+    <!-- Clean Files – result card -->
+    <string name="clean_result_title">सफ़ाई के परिणाम</string>
+    <string name="clean_result_files_deleted">फ़ाइलें डिलीट की गईं</string>
+    <string name="clean_result_space_freed">जगह खाली की गई</string>
+    <string name="clean_files_idle_desc"> $number_file जंक फ़ाइलें मिलीं – साफ़ करने के लिए टैप करें</string>
+    <string name="clean_files_count_unit">जंक फ़ाइलें</string>
 
     <!-- Clean Memory -->
     <string name="clean_memory_title">मेमोरी खाली करें</string>
     <string name="clean_memory_stat_used">इस्तेमाल किया गया</string>
     <string name="clean_memory_stat_free">खाली</string>
     <string name="clean_memory_stat_total">कुल</string>
-    <string name="clean_memory_result_sub">सिस्टम ऑप्टिमाइज़ किया गया</string>
-    <string name="clean_memory_start">अभी तेज़ करें</string>
-    <string name="clean_memory_running">सिस्टम ऑप्टिमाइज़ हो रहा है…</string>
+    <string name="clean_memory_result_sub">सिस्टम अनुकूलित किया गया</string>
+    <string name="clean_memory_start">अभी गति बढ़ाएं</string>
+    <string name="clean_memory_running">सिस्टम अनुकूलित किया जा रहा है…</string>
     <string name="clean_memory_optimal">सिस्टम इष्टतम स्थिति में है!</string>
-    <string name="clean_memory_retry">फिर से ऑप्टिमाइज़ करें</string>
+    <string name="clean_memory_retry">फिर से अनुकूलित करें</string>
     <string name="clean_memory_toast">$number_ram MB खाली किया गया</string>
 
     <!-- Contacts -->
@@ -72,31 +83,75 @@
 
     <!-- Call Permission -->
     <string name="call_permission_title">कॉल करने की अनुमति</string>
-    <string name="call_permission_desc">आपात स्थिति में रिश्तेदारों को स्वचालित रूप से कॉल करने के लिए ऐप को कॉल करने की अनुमति की आवश्यकता है।</string>
+    <string name="call_permission_desc">आपातकाल की स्थिति में रिश्तेदारों को स्वचालित रूप से कॉल करने के लिए ऐप को कॉल करने की अनुमति की आवश्यकता है।</string>
+    <string name="call_permission_highlight">कॉल करें</string>
 
     <!-- Call Block -->
     <string name="call_block_title">कॉल ब्लॉक करने की अनुमति</string>
-    <string name="call_block_desc">अज्ञात नंबरों से कॉल को स्वचालित रूप से ब्लॉक करने के लिए ऐप को कॉल और संपर्क प्रबंधन अनुमति की आवश्यकता है।</string>
-
+    <string name="call_block_desc">अजनबियों के कॉल स्वचालित रूप से ब्लॉक करने के लिए ऐप को कॉल और संपर्कों को प्रबंधित करने की अनुमति की आवश्यकता है।</string>
+    <string name="call_block_highlight">कॉल और संपर्क प्रबंधित करें</string>
     <!-- Home Status -->
     <string name="home_header_apps">एप्लिकेशन</string>
     <string name="home_header_contacts">त्वरित संपर्क</string>
 
     <!-- Block -->
     <string name="block_title">ऐप ब्लॉक किया गया</string>
-    <string name="block_desc">यह एप्लिकेशन अनुमत सूची में नहीं है। कृपया व्यवस्थापक से संपर्क करें।</string>
+    <string name="block_desc">यह एप्लिकेशन अनुमति सूची में नहीं है। कृपया व्यवस्थापक से संपर्क करें।</string>
     <string name="block_go_home">होम स्क्रीन पर जाएं</string>
+
+    <!-- Debug-only settings (chỉ hiển thị trong debug build) -->
+    <string name="setting_header_debug">🐛 डिबग</string>
+    <string name="setting_debug_block_screen">ब्लॉक स्क्रीन देखें</string>
 
     <!-- Permissions & Setup -->
     <string name="default_launcher_setup">अभी सेटअप करें</string>
     <string name="default_launcher_title">डिफ़ॉल्ट लॉन्चर सेट करें</string>
     <string name="default_launcher_desc">Retirement Launcher को अपनी होम स्क्रीन के रूप में उपयोग करने के लिए, आपको इसे सिस्टम सेटिंग्स में डिफ़ॉल्ट ऐप के रूप में सेट करना होगा।</string>
+    <string name="default_launcher_highlight">Retirement Launcher</string>
     <string name="permission_grant">अनुमति दें</string>
     <string name="understood">समझ गया</string>
     <string name="pin_verify_title">पिन की पुष्टि करें</string>
     <string name="pin_verify_desc">इस सेटिंग को बदलने के लिए कृपया अपना पिन दर्ज करें।</string>
-    <string name="pin_key_delete_desc">हटाएं</string>
+    <string name="pin_key_delete_desc">डिलीट</string>
 
+    <!-- File Permission -->
+    <string name="file_permission_title">स्टोरेज सुरक्षा</string>
+    <string name="file_permission_desc">अज्ञात APK/AAB फ़ाइलों के स्वचालित विलोपन के काम करने के लिए, ऐप को सभी स्टोरेज तक पहुंच की आवश्यकता है। यह आपके डिवाइस को साफ़ और सुरक्षित रखने में मदद करता है।</string>
+    <string name="file_permission_highlight">अज्ञात APK/AAB</string>
+
+    <!-- Usage Stats Permission -->
+    <string name="usage_stats_permission_title">ऐप निगरानी</string>
+    <string name="usage_stats_permission_desc">ऐप ब्लॉकिंग सुविधा के काम करने के लिए, आपको \'उपयोग डेटा एक्सेस\' प्रदान करने की आवश्यकता है। यह ऐप को यह जानने में मदद करता है कि अनधिकृत ऐप कब खोला गया है।</string>
+    <string name="usage_stats_permission_highlight">\'उपयोग डेटा एक्सेस\'</string>
+
+    <!-- App Monitoring Intro -->
+    <string name="app_monitoring_intro_title">सुविधा परिचय</string>
+    <string name="app_monitoring_intro_desc">यह सुविधा केवल चयनित ऐप्स को चलने की अनुमति देकर उपयोगकर्ताओं की सुरक्षा करने में मदद करती है। अनपेक्षित समस्याओं से बचने के लिए अन्य ऐप्स ब्लॉक कर दिए जाएंगे।</string>
+    <string name="app_monitoring_intro_highlight">केवल चयनित ऐप्स को अनुमति देना</string>
+    <string name="app_monitoring_intro_action">मैं समझता हूँ</string>
+
+    <!-- Emergency Call Intro -->
+    <string name="emergency_call_intro_title">सुविधा परिचय</string>
+    <string name="emergency_call_intro_desc">सुरक्षा सुनिश्चित करने के लिए, यदि फोन पर 10 घंटे तक कोई उपयोगकर्ता गतिविधि नहीं पाई जाती है, तो ऐप स्वचालित रूप से त्वरित संपर्क सूची पर कॉल करेगा।</string>
+    <string name="emergency_call_intro_highlight">स्वचालित रूप से त्वरित संपर्क सूची पर कॉल करना</string>
+    <string name="emergency_call_intro_action">मैं समझता हूँ</string>
+
+    <!-- File Cleanup Intro -->
+    <string name="file_cleanup_intro_title">सुविधा परिचय</string>
+    <string name="file_cleanup_intro_desc">यह सुविधा डिवाइस पर डाउनलोड की गई अज्ञात इंस्टॉलेशन फ़ाइलों (APK) को स्वचालित रूप से हटाकर उपयोगकर्ताओं की सुरक्षा करने में मदद करती है, जिससे मैलवेयर के गलती से इंस्टॉलेशन से बचा जा सकता है।</string>
+    <string name="file_cleanup_intro_highlight">स्वचालित रूप से अज्ञात इंस्टॉलेशन फ़ाइलें (APK) हटाना</string>
+    <string name="file_cleanup_intro_action">मैं समझता हूँ</string>
+
+    <!-- Call Block Intro -->
+    <string name="call_block_intro_title">सुविधा परिचय</string>
+    <string name="call_block_intro_desc">यह सुविधा संपर्कों में नहीं मौजूद अज्ञात नंबरों से आने वाली कॉलों को स्वचालित रूप से ब्लॉक करके उपयोगकर्ताओं की सुरक्षा करने में मदद करती है, जिससे विज्ञापनों या घोटालों से परेशान होने से बचा जा सकता है।</string>
+    <string name="call_block_intro_highlight">स्वचालित रूप से अज्ञात नंबरों से कॉल ब्लॉक करना</string>
+    <string name="call_block_intro_action">मैं समझता हूँ</string>
+
+    <!-- Overlay Permission -->
+    <string name="overlay_permission_title">अन्य ऐप्स के ऊपर प्रदर्शित करें</string>
+    <string name="overlay_permission_desc">ब्लॉक किए गए ऐप के खुलने पर लॉक स्क्रीन दिखाने के लिए ऐप को \'अन्य ऐप्स के ऊपर प्रदर्शित करें\' अनुमति की आवश्यकता है।</string>
+    <string name="overlay_permission_highlight">\'अन्य ऐप्स के ऊपर प्रदर्शित करें\'</string>
     <!-- PIN Setup -->
     <string name="pin_enter_new">नया पिन दर्ज करें (6 अंक)</string>
     <string name="pin_confirm_new">नए पिन की पुष्टि करें</string>
@@ -104,12 +159,26 @@
     <string name="pin_error_length">पिन 6 अंकों का होना चाहिए</string>
     <string name="pin_error_confirm_mismatch">पुष्टि पिन मेल नहीं खाता</string>
     <string name="pin_error_incorrect">गलत पिन</string>
+    <!-- Clean Files -->
+    <string name="clean_cat_file_count" tools:ignore="PluralsCandidate">$number_file फ़ाइलें</string>
 
+    <!-- Reorder -->
+    <string name="reorder_apps_title">ऐप्स पुनर्व्यवस्थित करें</string>
+    <string name="reorder_contacts_title">संपर्क पुनर्व्यवस्थित करें</string>
     <string name="done">हो गया</string>
-    <string name="emergency_call_title">इमरजेंसी कॉल</string>
-    <string name="emergency_call_desc">यदि फोन का उपयोग 12 घंटों तक नहीं किया जाता है, तो ऐप स्वचालित रूप से आपातकालीन कॉल करेगा।</string>
+    <string name="app_list_empty_error">कृपया कम से कम एक ऐप चुनें</string>
+    <string name="contact_list_empty_error">कृपया कम से कम एक संपर्क चुनें</string>
+
+    <!-- Emergency Call -->
+    <string name="emergency_call_title">आपातकालीन कॉल</string>
+    <string name="emergency_call_desc">यदि फोन 12 घंटे तक उपयोग नहीं किया जाता है, तो ऐप स्वचालित रूप से आपातकालीन कॉल करेगा।</string>
     <string name="emergency_call_enable">सुविधा सक्षम करें</string>
-    <string name="emergency_call_phone_number">इमरजेंसी फोन नंबर</string>
-    <string name="emergency_call_phone_number_hint">नंबर दर्ज करें</string>
-    <string name="emergency_call_save_success">इमरजेंसी कॉल कॉन्फ़िगरेशन सहेजा गया</string>
+    <string name="emergency_call_phone_number">आपातकालीन फोन नंबर</string>
+    <string name="emergency_call_phone_number_hint">फोन नंबर दर्ज करें</string>
+    <string name="emergency_call_save_success">आपातकालीन कॉल कॉन्फ़िगरेशन सहेजा गया</string>
+    <string name="emergency_call_permission_denied">इस सुविधा के लिए कॉल करने की अनुमति आवश्यक है</string>
+
+    <!-- Calendar -->
+    <string name="lunar_date_format">दिन %1$d/%2$d चंद्र</string>
+    <string name="solar_date_format">EEEE, MM/dd/yyyy</string>
 </resources>

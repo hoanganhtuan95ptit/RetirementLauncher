@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">RetirementLauncher</string>
 
     <!-- Settings -->
@@ -7,35 +7,35 @@
     <string name="setting_header_security">Keselamatan &amp; Perlindungan</string>
     <string name="setting_header_optimization">Pengoptimuman &amp; Utiliti</string>
     <string name="setting_header_plugins">Plugin &amp; Utiliti</string>
-    <string name="setting_lunar_calendar">Paparkan Kalendar Lunar</string>
+    <string name="setting_lunar_calendar">Papar Kalendar Lunar</string>
     <string name="setting_clock_title">Tetapan Jam</string>
-    <string name="setting_clock_format_header">Format Jam</string>
+    <string name="setting_clock_format_header">Format Masa</string>
     <string name="setting_clock_12h">12 Jam</string>
     <string name="setting_clock_12h_example">Contoh: 10:30</string>
     <string name="setting_clock_24h">24 Jam</string>
     <string name="setting_clock_24h_example">Contoh: 22:30</string>
-    <string name="setting_clock_am_pm">Paparkan AM/PM</string>
-    <string name="setting_clock_am_pm_desc">Paparkan AM dan PM apabila menggunakan format 12 jam</string>
-    <string name="setting_clock_solar">Paparkan Kalendar Solar</string>
-    <string name="setting_clock_solar_desc">Paparkan kalendar solar pada skrin</string>
-    <string name="setting_clock_lunar">Paparkan Kalendar Lunar</string>
-    <string name="setting_clock_lunar_desc">Paparkan kalendar lunar pada skrin</string>
-    <string name="setting_pin">Sediakan PIN</string>
-    <string name="setting_app_list">Sediakan Senarai Aplikasi</string>
-    <string name="setting_default_launcher">Tetapkan Pelancar Lalai</string>
-    <string name="setting_contact_list">Sediakan Kenalan Pantas</string>
+    <string name="setting_clock_am_pm">Papar AM/PM</string>
+    <string name="setting_clock_am_pm_desc">Papar AM dan PM apabila menggunakan format 12 jam</string>
+    <string name="setting_clock_solar">Papar Kalendar Solar</string>
+    <string name="setting_clock_solar_desc">Papar kalendar solar pada skrin</string>
+    <string name="setting_clock_lunar">Papar Kalendar Lunar</string>
+    <string name="setting_clock_lunar_desc">Papar kalendar lunar pada skrin</string>
+    <string name="setting_pin">Tetapan PIN</string>
+    <string name="setting_app_list">Tetapan Senarai Aplikasi</string>
+    <string name="setting_default_launcher">Tetapan Pelancar Lalai</string>
+    <string name="setting_contact_list">Tetapan Hubungan Pantas</string>
     <string name="setting_clean_files">Bersihkan Fail Sampah</string>
     <string name="setting_clean_memory">Kosongkan Memori</string>
-    <string name="setting_emergency_call">Panggilan Kecemasan Automatik</string>
+    <string name="setting_emergency_call">Panggilan Kecemasan Automatik (melalui hubungan pantas)</string>
     <string name="setting_app_monitoring">Pemantauan Aplikasi</string>
     <string name="setting_auto_cleanup_apk">Padam APK Automatik</string>
     <string name="setting_call_block">Sekat Panggilan Tidak Dikenali</string>
-    <string name="setting_pocket_mode">Mod Poket</string>
+    <string name="setting_pocket_mode">Mod Poket (Cegah sentuhan tidak sengaja)</string>
 
     <!-- Onboarding -->
     <string name="onboarding_title">Selamat Datang ke Retirement Launcher</string>
     <string name="onboarding_desc">Aplikasi untuk memudahkan antara muka telefon anda dan melindungi peranti anda.</string>
-    <string name="onboarding_start">Mulakan</string>
+    <string name="onboarding_start">Bermula</string>
 
     <!-- Clean Files -->
     <string name="clean_files_title">Bersihkan Fail Sampah</string>
@@ -43,7 +43,18 @@
     <string name="clean_files_start">Mulakan Pembersihan</string>
     <string name="clean_files_running">Mengimbas dan membersihkan…</string>
     <string name="clean_files_completed">Pembersihan selesai!</string>
-    <string name="clean_files_retry">Bersihkan Semula</string>
+    <string name="clean_files_retry">Bersihkan Lagi</string>
+    <!-- Clean Files – categories -->
+    <string name="clean_cat_system_temp">Fail sementara sistem (.tmp, .log…)</string>
+    <string name="clean_cat_compressed">Fail mampatan tidak dikenali</string>
+    <string name="clean_cat_no_extension">Dokumen (.pdf, .doc, .txt…)</string>
+    <string name="clean_cat_apk_cache">APK lama &amp; cache</string>
+    <!-- Clean Files – result card -->
+    <string name="clean_result_title">Keputusan Pembersihan</string>
+    <string name="clean_result_files_deleted">fail dipadam</string>
+    <string name="clean_result_space_freed">ruang dibebaskan</string>
+    <string name="clean_files_idle_desc"> $number_file fail sampah dikesan – ketik untuk membersihkan</string>
+    <string name="clean_files_count_unit">fail sampah</string>
 
     <!-- Clean Memory -->
     <string name="clean_memory_title">Kosongkan Memori</string>
@@ -53,15 +64,15 @@
     <string name="clean_memory_result_sub">Sistem dioptimumkan</string>
     <string name="clean_memory_start">Lajukan Sekarang</string>
     <string name="clean_memory_running">Mengoptimumkan sistem…</string>
-    <string name="clean_memory_optimal">Sistem dalam keadaan optimum!</string>
-    <string name="clean_memory_retry">Optimumkan Semula</string>
-    <string name="clean_memory_toast">$number_ram MB dikosongkan</string>
+    <string name="clean_memory_optimal">Sistem berada dalam keadaan optimum!</string>
+    <string name="clean_memory_retry">Optimumkan Lagi</string>
+    <string name="clean_memory_toast">$number_ram MB telah dibebaskan</string>
 
     <!-- Contacts -->
-    <string name="contact_tap_to_call">Panggil Sekarang</string>
-    <string name="contact_list_title">Pilih Kenalan Pantas</string>
-    <string name="contact_list_saved">Senarai kenalan disimpan</string>
-    <string name="contact_permission_denied">Kebenaran kenalan diperlukan untuk ciri ini</string>
+    <string name="contact_tap_to_call">Hubungi Sekarang</string>
+    <string name="contact_list_title">Pilih Hubungan Pantas</string>
+    <string name="contact_list_saved">Senarai hubungan disimpan</string>
+    <string name="contact_permission_denied">Kebenaran hubungan diperlukan untuk menggunakan ciri ini</string>
     <string name="app_list_save_action">Simpan Konfigurasi</string>
     <string name="app_list_saved">Senarai aplikasi disimpan</string>
 
@@ -72,44 +83,102 @@
 
     <!-- Call Permission -->
     <string name="call_permission_title">Kebenaran Membuat Panggilan</string>
-    <string name="call_permission_desc">Aplikasi memerlukan kebenaran membuat panggilan untuk menghubungi saudara secara automatik semasa kecemasan.</string>
+    <string name="call_permission_desc">Aplikasi memerlukan kebenaran untuk membuat panggilan bagi menghubungi saudara secara automatik dalam keadaan kecemasan.</string>
+    <string name="call_permission_highlight">membuat panggilan</string>
 
     <!-- Call Block -->
     <string name="call_block_title">Kebenaran Menyekat Panggilan</string>
-    <string name="call_block_desc">Aplikasi memerlukan kebenaran untuk mengurus panggilan dan kenalan bagi menyekat panggilan daripada orang yang tidak dikenali secara automatik.</string>
-
+    <string name="call_block_desc">Aplikasi memerlukan kebenaran untuk mengurus panggilan dan hubungan bagi menyekat panggilan daripada orang yang tidak dikenali secara automatik.</string>
+    <string name="call_block_highlight">mengurus panggilan dan hubungan</string>
     <!-- Home Status -->
     <string name="home_header_apps">Aplikasi</string>
-    <string name="home_header_contacts">Kenalan Pantas</string>
+    <string name="home_header_contacts">Hubungan Pantas</string>
 
     <!-- Block -->
     <string name="block_title">Aplikasi Disekat</string>
     <string name="block_desc">Aplikasi ini tiada dalam senarai yang dibenarkan. Sila hubungi pentadbir.</string>
     <string name="block_go_home">Kembali ke Skrin Utama</string>
 
+    <!-- Debug-only settings (chỉ hiển thị trong debug build) -->
+    <string name="setting_header_debug">🐛 Debug</string>
+    <string name="setting_debug_block_screen">Lihat Skrin Sekat</string>
+
     <!-- Permissions & Setup -->
-    <string name="default_launcher_setup">Sediakan Sekarang</string>
+    <string name="default_launcher_setup">Tetapkan Sekarang</string>
     <string name="default_launcher_title">Tetapkan Pelancar Lalai</string>
     <string name="default_launcher_desc">Untuk menggunakan Retirement Launcher sebagai skrin utama anda, anda perlu menetapkannya sebagai aplikasi lalai dalam tetapan sistem.</string>
+    <string name="default_launcher_highlight">Retirement Launcher</string>
     <string name="permission_grant">Berikan Kebenaran</string>
     <string name="understood">Faham</string>
     <string name="pin_verify_title">Sahkan PIN</string>
     <string name="pin_verify_desc">Sila masukkan PIN anda untuk menukar tetapan ini.</string>
     <string name="pin_key_delete_desc">Padam</string>
 
-    <!-- PIN Setup -->
-    <string name="pin_enter_new">Masukkan PIN baru (6 digit)</string>
-    <string name="pin_confirm_new">Sahkan PIN baru</string>
-    <string name="pin_setup_success">Penyediaan PIN berjaya</string>
-    <string name="pin_error_length">PIN mestilah 6 digit</string>
-    <string name="pin_error_confirm_mismatch">PIN pengesahan tidak sepadan</string>
-    <string name="pin_error_incorrect">PIN salah</string>
+    <!-- File Permission -->
+    <string name="file_permission_title">Perlindungan Storan</string>
+    <string name="file_permission_desc">Untuk pemadaman automatik fail APK/AAB yang tidak dikenali berfungsi, aplikasi memerlukan akses ke semua storan. Ini membantu memastikan peranti anda bersih dan selamat.</string>
+    <string name="file_permission_highlight">APK/AAB yang tidak dikenali</string>
 
+    <!-- Usage Stats Permission -->
+    <string name="usage_stats_permission_title">Pemantauan Aplikasi</string>
+    <string name="usage_stats_permission_desc">Untuk ciri penyekatan aplikasi berfungsi, anda perlu memberikan \'Akses Data Penggunaan\'. Ini membantu aplikasi mengetahui bila aplikasi yang tidak dibenarkan dibuka.</string>
+    <string name="usage_stats_permission_highlight">\'Akses Data Penggunaan\'</string>
+
+    <!-- App Monitoring Intro -->
+    <string name="app_monitoring_intro_title">Pengenalan Ciri</string>
+    <string name="app_monitoring_intro_desc">Ciri ini membantu melindungi pengguna dengan hanya membenarkan aplikasi yang dipilih untuk dijalankan. Aplikasi lain akan disekat untuk mengelakkan masalah yang tidak diingini.</string>
+    <string name="app_monitoring_intro_highlight">hanya membenarkan aplikasi yang dipilih</string>
+    <string name="app_monitoring_intro_action">Saya faham</string>
+
+    <!-- Emergency Call Intro -->
+    <string name="emergency_call_intro_title">Pengenalan Ciri</string>
+    <string name="emergency_call_intro_desc">Untuk memastikan keselamatan, aplikasi akan menghubungi senarai hubungan pantas secara automatik jika tiada interaksi pengguna dikesan pada telefon selama 10 jam.</string>
+    <string name="emergency_call_intro_highlight">menghubungi senarai hubungan pantas secara automatik</string>
+    <string name="emergency_call_intro_action">Saya faham</string>
+
+    <!-- File Cleanup Intro -->
+    <string name="file_cleanup_intro_title">Pengenalan Ciri</string>
+    <string name="file_cleanup_intro_desc">Ciri ini membantu melindungi pengguna dengan memadam fail pemasangan (APK) tidak dikenali yang dimuat turun ke peranti secara automatik, bagi mengelakkan pemasangan perisian hasad secara tidak sengaja.</string>
+    <string name="file_cleanup_intro_highlight">memadam fail pemasangan (APK) tidak dikenali secara automatik</string>
+    <string name="file_cleanup_intro_action">Saya faham</string>
+
+    <!-- Call Block Intro -->
+    <string name="call_block_intro_title">Pengenalan Ciri</string>
+    <string name="call_block_intro_desc">Ciri ini membantu melindungi pengguna dengan menyekat panggilan daripada nombor tidak dikenali yang tiada dalam hubungan secara automatik, bagi mengelakkan gangguan iklan atau penipuan.</string>
+    <string name="call_block_intro_highlight">menyekat panggilan daripada nombor tidak dikenali secara automatik</string>
+    <string name="call_block_intro_action">Saya faham</string>
+
+    <!-- Overlay Permission -->
+    <string name="overlay_permission_title">Papar Di Atas Aplikasi Lain</string>
+    <string name="overlay_permission_desc">Aplikasi memerlukan kebenaran \'Papar di atas aplikasi lain\' untuk memaparkan skrin kunci apabila aplikasi yang disekat dibuka.</string>
+    <string name="overlay_permission_highlight">\'Papar di atas aplikasi lain\'</string>
+    <!-- PIN Setup -->
+    <string name="pin_enter_new">Masukkan PIN baharu (6 digit)</string>
+    <string name="pin_confirm_new">Sahkan PIN baharu</string>
+    <string name="pin_setup_success">Tetapan PIN berjaya</string>
+    <string name="pin_error_length">PIN mestilah 6 digit</string>
+    <string name="pin_error_confirm_mismatch">Sahkan PIN tidak sepadan</string>
+    <string name="pin_error_incorrect">PIN salah</string>
+    <!-- Clean Files -->
+    <string name="clean_cat_file_count" tools:ignore="PluralsCandidate">$number_file fail</string>
+
+    <!-- Reorder -->
+    <string name="reorder_apps_title">Susun Semula Aplikasi</string>
+    <string name="reorder_contacts_title">Susun Semula Hubungan</string>
     <string name="done">Selesai</string>
+    <string name="app_list_empty_error">Sila pilih sekurang-kurangnya satu aplikasi</string>
+    <string name="contact_list_empty_error">Sila pilih sekurang-kurangnya satu hubungan</string>
+
+    <!-- Emergency Call -->
     <string name="emergency_call_title">Panggilan Kecemasan</string>
     <string name="emergency_call_desc">Jika telefon tidak digunakan selama 12 jam, aplikasi akan membuat panggilan kecemasan secara automatik.</string>
     <string name="emergency_call_enable">Dayakan ciri</string>
     <string name="emergency_call_phone_number">Nombor Telefon Kecemasan</string>
-    <string name="emergency_call_phone_number_hint">Masukkan nombor</string>
+    <string name="emergency_call_phone_number_hint">Masukkan nombor telefon</string>
     <string name="emergency_call_save_success">Konfigurasi panggilan kecemasan disimpan</string>
+    <string name="emergency_call_permission_denied">Kebenaran menelefon diperlukan untuk ciri ini</string>
+
+    <!-- Calendar -->
+    <string name="lunar_date_format">Hari %1$d/%2$d Lunar</string>
+    <string name="solar_date_format">EEEE, MM/dd/yyyy</string>
 </resources>

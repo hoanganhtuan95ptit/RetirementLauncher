@@ -14,6 +14,13 @@ import com.simple.ui.precompute.node.Constraints
 import com.simple.ui.precompute.node.EdgeInsets
 import com.simple.ui.precompute.node.LayoutDimension
 import com.simple.ui.precompute.node.LayoutNode
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -37,9 +44,9 @@ data class TimeNode(
 ) : LayoutNode() {
 
     override fun measure(ctx: MeasureContext, c: Constraints, x: Int, y: Int): TimeSpec {
+
         val p = padding
-        val timeStr = buildTimeText()
-        
+
         val paint = TextPaint(Paint.ANTI_ALIAS_FLAG).apply {
             textSize = textSizePx
             color = this@TimeNode.color
@@ -53,25 +60,35 @@ data class TimeNode(
         val maxWidth = layoutWidth.maxForMeasure(c.maxWidth)
         val innerWidth = (maxWidth - p.horizontal).coerceAtLeast(0)
 
-        val layout = buildLayout(timeStr, paint, innerWidth)
-        
-        val usedWidth = (0 until layout.lineCount)
-            .maxOfOrNull { layout.getLineWidth(it) }
-            ?.let { ceil(it.toDouble()).toInt() }
-            ?: 0
+        // Tính chiều cao nhanh bằng FontMetrics (thường clock chỉ có 1 dòng)
+        val metrics = paint.fontMetrics
+        val lineHeight = (metrics.descent - metrics.ascent).toInt()
 
-        val contentW = usedWidth.coerceAtMost(innerWidth) + p.horizontal
-        val contentH = layout.height + p.vertical
-        
+        val contentH = lineHeight + p.vertical
+
+        // Nếu width là WrapContent thì mới cần measure thực tế để lấy độ rộng
+        val usedWidth = if (layoutWidth is LayoutDimension.WrapContent) {
+            val timeStr = buildTimeText()
+            val layout = buildLayout(timeStr, paint, innerWidth)
+            (0 until layout.lineCount)
+                .maxOfOrNull { layout.getLineWidth(it) }
+                ?.let { ceil(it.toDouble()).toInt() }
+                ?: 0
+        } else {
+            0
+        }
+
+        val contentW = (if (layoutWidth is LayoutDimension.WrapContent) usedWidth else 0) + p.horizontal
+
         val w = layoutWidth.resolveSize(contentW, c.maxWidth)
         val h = layoutHeight.resolveSize(contentH, c.maxHeight)
 
-        return TimeSpec(x, y, w, h, p.left, p.top, layout, this, paint, innerWidth)
+        return TimeSpec(x, y, w, h, p.left, p.top, this, paint, innerWidth)
     }
 
     fun buildTimeText(): String {
         return if (isLunar) {
-            LunarCalendar.getLunarDateString(Date())
+            LunarCalendar.getLunarDateString(Date(), pattern)
         } else {
             val formatPattern = if (showAmPm) "$pattern a" else pattern
             SimpleDateFormat(formatPattern, Locale.getDefault()).format(Date())
@@ -110,55 +127,65 @@ class TimeSpec(
     override val height: Int,
     private val contentLeft: Int,
     private val contentTop: Int,
-    initialLayout: StaticLayout,
     override val node: TimeNode,
     private val paint: TextPaint,
     private val innerWidth: Int
 ) : DrawSpec() {
 
-    private var layout: StaticLayout = initialLayout
-    private var attachedView: View? = null
+    private var layout: StaticLayout = node.buildLayout(node.buildTimeText(), paint, innerWidth)
 
-    private val tickerRunnable = object : Runnable {
-        override fun run() {
-            updateTime()
-            val now = System.currentTimeMillis()
-            val nextMinute = (now / 60000 + 1) * 60000
-            attachedView?.postDelayed(this, nextMinute - now)
-        }
-    }
+    private var attachedView: View? = null
+    private var coroutineScope: CoroutineScope? = null
 
     private fun updateTime() {
+
         val timeStr = node.buildTimeText()
-        val newLayout = node.buildLayout(timeStr, paint, innerWidth)
-        
-        if (newLayout.text == layout.text) return
-        
-        layout = newLayout
+        if (timeStr == layout.text.toString()) return
+
+        layout = node.buildLayout(timeStr, paint, innerWidth)
         attachedView?.postInvalidateOnAnimation()
     }
 
     override fun onDrawContent(canvas: Canvas) {
+
         if (contentLeft != 0 || contentTop != 0) {
             canvas.translate(contentLeft.toFloat(), contentTop.toFloat())
         }
+
         layout.draw(canvas)
     }
 
     override fun onAttachedToWindow(view: View) {
+
         attachedView = view
-        updateTime()
-        
-        val now = System.currentTimeMillis()
-        val nextMinute = (now / 60000 + 1) * 60000
-        view.postDelayed(tickerRunnable, nextMinute - now)
+
+        coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
+        coroutineScope?.launch {
+
+            while (isActive) {
+
+                updateTime()
+                delay(1000)
+            }
+        }
     }
 
     override fun onDetachedFromWindow(view: View) {
-        view.removeCallbacks(tickerRunnable)
+
+        coroutineScope?.cancel()
+        coroutineScope = null
         attachedView = null
     }
 
-    override fun withPosition(newLeft: Int, newTop: Int): DrawSpec =
-        TimeSpec(newLeft, newTop, width, height, contentLeft, contentTop, layout, node, paint, innerWidth)
+    override fun withPosition(newLeft: Int, newTop: Int): DrawSpec {
+
+        if (newLeft == left && newTop == top) return this
+
+        return TimeSpec(
+            newLeft, newTop, width, height, contentLeft, contentTop, node, paint, innerWidth
+        ).apply {
+            // Giữ lại layout hiện tại để tránh nháy khi reposition
+            this.layout = this@TimeSpec.layout
+        }
+    }
 }

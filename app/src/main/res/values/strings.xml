@@ -177,4 +177,8 @@
     <string name="emergency_call_phone_number_hint">Enter phone number</string>
     <string name="emergency_call_save_success">Emergency call configuration saved</string>
     <string name="emergency_call_permission_denied">Calling permission is required for this feature</string>
+
+    <!-- Calendar -->
+    <string name="lunar_date_format">Day %1$d/%2$d Lunar</string>
+    <string name="solar_date_format">EEEE, MM/dd/yyyy</string>
 </resources>

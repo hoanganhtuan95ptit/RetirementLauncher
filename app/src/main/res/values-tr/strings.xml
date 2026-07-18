@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">RetirementLauncher</string>
 
     <!-- Settings -->
@@ -9,44 +9,55 @@
     <string name="setting_header_plugins">Eklentiler ve Araçlar</string>
     <string name="setting_lunar_calendar">Ay Takvimini Göster</string>
     <string name="setting_clock_title">Saat Ayarları</string>
-    <string name="setting_clock_format_header">Saat Formatı</string>
+    <string name="setting_clock_format_header">Zaman Biçimi</string>
     <string name="setting_clock_12h">12 Saat</string>
     <string name="setting_clock_12h_example">Örnek: 10:30</string>
     <string name="setting_clock_24h">24 Saat</string>
     <string name="setting_clock_24h_example">Örnek: 22:30</string>
-    <string name="setting_clock_am_pm">AM/PM Göster</string>
-    <string name="setting_clock_am_pm_desc">12 saatlik format kullanıldığında AM ve PM\'yi göster</string>
+    <string name="setting_clock_am_pm">ÖÖ/ÖS Göster</string>
+    <string name="setting_clock_am_pm_desc">12 saat biçimini kullanırken ÖÖ ve ÖS göster</string>
     <string name="setting_clock_solar">Güneş Takvimini Göster</string>
     <string name="setting_clock_solar_desc">Ekranda güneş takvimini göster</string>
     <string name="setting_clock_lunar">Ay Takvimini Göster</string>
     <string name="setting_clock_lunar_desc">Ekranda ay takvimini göster</string>
     <string name="setting_pin">PIN Kurulumu</string>
     <string name="setting_app_list">Uygulama Listesi Kurulumu</string>
-    <string name="setting_default_launcher">Varsayılan Başlatıcıyı Ayarla</string>
-    <string name="setting_contact_list">Hızlı Rehber Kurulumu</string>
+    <string name="setting_default_launcher">Varsayılan Başlatıcı Kurulumu</string>
+    <string name="setting_contact_list">Hızlı Kişi Kurulumu</string>
     <string name="setting_clean_files">Gereksiz Dosyaları Temizle</string>
-    <string name="setting_clean_memory">Hafızayı Boşalt</string>
-    <string name="setting_emergency_call">Otomatik Acil Arama</string>
+    <string name="setting_clean_memory">Belleği Boşalt</string>
+    <string name="setting_emergency_call">Otomatik Acil Durum Araması (hızlı kişiyle)</string>
     <string name="setting_app_monitoring">Uygulama İzleme</string>
-    <string name="setting_auto_cleanup_apk">APK Otomatik Sil</string>
+    <string name="setting_auto_cleanup_apk">APK\'ları Otomatik Sil</string>
     <string name="setting_call_block">Bilinmeyen Aramaları Engelle</string>
-    <string name="setting_pocket_mode">Cep Modu</string>
+    <string name="setting_pocket_mode">Cep Modu (Yanlışlıkla dokunmayı önle)</string>
 
     <!-- Onboarding -->
     <string name="onboarding_title">Retirement Launcher\'a Hoş Geldiniz</string>
     <string name="onboarding_desc">Telefon arayüzünüzü basitleştirmek ve cihazınızı korumak için bir uygulama.</string>
-    <string name="onboarding_start">Başla</string>
+    <string name="onboarding_start">Başlayın</string>
 
     <!-- Clean Files -->
     <string name="clean_files_title">Gereksiz Dosyaları Temizle</string>
     <string name="clean_files_desc">Cihaz taranmaya hazır</string>
     <string name="clean_files_start">Temizliği Başlat</string>
-    <string name="clean_files_running">Tarama ve temizleme devam ediyor…</string>
+    <string name="clean_files_running">Taranıyor ve temizleniyor…</string>
     <string name="clean_files_completed">Temizlik tamamlandı!</string>
     <string name="clean_files_retry">Tekrar Temizle</string>
+    <!-- Clean Files – categories -->
+    <string name="clean_cat_system_temp">Sistem geçici dosyaları (.tmp, .log…)</string>
+    <string name="clean_cat_compressed">Bilinmeyen sıkıştırılmış dosyalar</string>
+    <string name="clean_cat_no_extension">Belgeler (.pdf, .doc, .txt…)</string>
+    <string name="clean_cat_apk_cache">Eski APK\'lar ve önbellek</string>
+    <!-- Clean Files – result card -->
+    <string name="clean_result_title">Temizlik Sonuçları</string>
+    <string name="clean_result_files_deleted">dosya silindi</string>
+    <string name="clean_result_space_freed">alan boşaltıldı</string>
+    <string name="clean_files_idle_desc"> $number_file gereksiz dosya tespit edildi – temizlemek için dokunun</string>
+    <string name="clean_files_count_unit">gereksiz dosya</string>
 
     <!-- Clean Memory -->
-    <string name="clean_memory_title">Hafızayı Boşalt</string>
+    <string name="clean_memory_title">Belleği Boşalt</string>
     <string name="clean_memory_stat_used">Kullanılan</string>
     <string name="clean_memory_stat_free">Boş</string>
     <string name="clean_memory_stat_total">Toplam</string>
@@ -55,13 +66,13 @@
     <string name="clean_memory_running">Sistem optimize ediliyor…</string>
     <string name="clean_memory_optimal">Sistem en iyi durumda!</string>
     <string name="clean_memory_retry">Tekrar Optimize Et</string>
-    <string name="clean_memory_toast">$number_ram MB alan boşaltıldı</string>
+    <string name="clean_memory_toast">$number_ram MB boşaltıldı</string>
 
     <!-- Contacts -->
     <string name="contact_tap_to_call">Şimdi Ara</string>
-    <string name="contact_list_title">Hızlı Rehber Seç</string>
-    <string name="contact_list_saved">Rehber listesi kaydedildi</string>
-    <string name="contact_permission_denied">Bu özelliği kullanmak için rehber izni gereklidir</string>
+    <string name="contact_list_title">Hızlı Kişileri Seç</string>
+    <string name="contact_list_saved">Kişi listesi kaydedildi</string>
+    <string name="contact_permission_denied">Bu özelliği kullanmak için kişi izni gereklidir</string>
     <string name="app_list_save_action">Yapılandırmayı Kaydet</string>
     <string name="app_list_saved">Uygulama listesi kaydedildi</string>
 
@@ -71,45 +82,103 @@
     <string name="search">Ara…</string>
 
     <!-- Call Permission -->
-    <string name="call_permission_title">Arama İzni</string>
-    <string name="call_permission_desc">Uygulamanın acil durumlarda yakınlarınızı otomatik olarak arayabilmesi için arama yapma iznine ihtiyacı vardır.</string>
+    <string name="call_permission_title">Arama Yapma İzni</string>
+    <string name="call_permission_desc">Uygulamanın, acil durumlarda akrabaları otomatik olarak arayabilmesi için arama yapma iznine ihtiyacı vardır.</string>
+    <string name="call_permission_highlight">arama yapma</string>
 
     <!-- Call Block -->
-    <string name="call_block_title">Arama Engelleme İzni</string>
-    <string name="call_block_desc">Uygulamanın bilinmeyen aramaları otomatik engellemesi için arama ve rehber yönetimi iznine ihtiyacı vardır.</string>
-
+    <string name="call_block_title">Aramaları Engelleme İzni</string>
+    <string name="call_block_desc">Uygulamanın, yabancılardan gelen aramaları otomatik olarak engelleyebilmesi için aramaları ve kişileri yönetme iznine ihtiyacı vardır.</string>
+    <string name="call_block_highlight">aramaları ve kişileri yönetme</string>
     <!-- Home Status -->
     <string name="home_header_apps">Uygulamalar</string>
-    <string name="home_header_contacts">Hızlı Rehber</string>
+    <string name="home_header_contacts">Hızlı Kişiler</string>
 
     <!-- Block -->
     <string name="block_title">Uygulama Engellendi</string>
     <string name="block_desc">Bu uygulama izin verilenler listesinde değil. Lütfen yöneticiyle iletişime geçin.</string>
     <string name="block_go_home">Ana Ekrana Git</string>
 
+    <!-- Debug-only settings (chỉ hiển thị trong debug build) -->
+    <string name="setting_header_debug">🐛 Hata Ayıklama</string>
+    <string name="setting_debug_block_screen">Engelleme Ekranını Görüntüle</string>
+
     <!-- Permissions & Setup -->
     <string name="default_launcher_setup">Şimdi Kur</string>
     <string name="default_launcher_title">Varsayılan Başlatıcıyı Ayarla</string>
-    <string name="default_launcher_desc">Retirement Launcher\'ı ana ekranınız olarak kullanmak için sistem ayarlarından varsayılan uygulama olarak ayarlamanız gerekir.</string>
+    <string name="default_launcher_desc">Retirement Launcher\'ı ana ekranınız olarak kullanmak için, sistem ayarlarından onu varsayılan uygulama olarak ayarlamanız gerekir.</string>
+    <string name="default_launcher_highlight">Retirement Launcher</string>
     <string name="permission_grant">İzin Ver</string>
     <string name="understood">Anladım</string>
     <string name="pin_verify_title">PIN Onayla</string>
     <string name="pin_verify_desc">Bu ayarı değiştirmek için lütfen PIN kodunuzu girin.</string>
     <string name="pin_key_delete_desc">Sil</string>
 
+    <!-- File Permission -->
+    <string name="file_permission_title">Depolama Koruması</string>
+    <string name="file_permission_desc">Bilinmeyen APK/AAB dosyalarının otomatik olarak silinmesinin çalışması için uygulamanın tüm depolama alanına erişmesi gerekir. Bu, cihazınızın temiz ve güvenli kalmasına yardımcı olur.</string>
+    <string name="file_permission_highlight">bilinmeyen APK/AAB</string>
+
+    <!-- Usage Stats Permission -->
+    <string name="usage_stats_permission_title">Uygulama İzleme</string>
+    <string name="usage_stats_permission_desc">Uygulama engelleme özelliğinin çalışması için \'Kullanım Verilerine Erişim\' izni vermeniz gerekir. Bu, uygulamanın yetkisiz bir uygulama açıldığında bunu bilmesine yardımcı olur.</string>
+    <string name="usage_stats_permission_highlight">\'Kullanım Verilerine Erişim\'</string>
+
+    <!-- App Monitoring Intro -->
+    <string name="app_monitoring_intro_title">Özellik Tanıtımı</string>
+    <string name="app_monitoring_intro_desc">Bu özellik, yalnızca seçilen uygulamaların çalışmasına izin vererek kullanıcıları korumaya yardımcı olur. İstenmeyen sorunları önlemek için diğer uygulamalar engellenecektir.</string>
+    <string name="app_monitoring_intro_highlight">yalnızca seçilen uygulamalara izin verme</string>
+    <string name="app_monitoring_intro_action">Anlıyorum</string>
+
+    <!-- Emergency Call Intro -->
+    <string name="emergency_call_intro_title">Özellik Tanıtımı</string>
+    <string name="emergency_call_intro_desc">Güvenliği sağlamak için uygulama, telefonda 10 saat boyunca herhangi bir kullanıcı etkileşimi tespit edilmezse hızlı kişi listesini otomatik olarak arayacaktır.</string>
+    <string name="emergency_call_intro_highlight">hızlı kişi listesini otomatik olarak arama</string>
+    <string name="emergency_call_intro_action">Anlıyorum</string>
+
+    <!-- File Cleanup Intro -->
+    <string name="file_cleanup_intro_title">Özellik Tanıtımı</string>
+    <string name="file_cleanup_intro_desc">Bu özellik, cihaza indirilen bilinmeyen kurulum dosyalarını (APK) otomatik olarak silerek kullanıcıları korumaya yardımcı olur ve kötü amaçlı yazılımların yanlışlıkla yüklenmesini önler.</string>
+    <string name="file_cleanup_intro_highlight">bilinmeyen kurulum dosyalarını (APK) otomatik olarak silme</string>
+    <string name="file_cleanup_intro_action">Anlıyorum</string>
+
+    <!-- Call Block Intro -->
+    <string name="call_block_intro_title">Özellik Tanıtımı</string>
+    <string name="call_block_intro_desc">Bu özellik, kişilerde bulunmayan bilinmeyen numaralardan gelen aramaları otomatik olarak engelleyerek kullanıcıları korumaya yardımcı olur, reklamlar veya dolandırıcılıklar tarafından rahatsız edilmeyi önler.</string>
+    <string name="call_block_intro_highlight">bilinmeyen numaralardan gelen aramaları otomatik olarak engelleme</string>
+    <string name="call_block_intro_action">Anlıyorum</string>
+
+    <!-- Overlay Permission -->
+    <string name="overlay_permission_title">Diğer Uygulamaların Üzerinde Görüntüle</string>
+    <string name="overlay_permission_desc">Engellenen bir uygulama açıldığında kilit ekranını göstermek için uygulamanın \'Diğer uygulamaların üzerinde görüntüle\' iznine ihtiyacı vardır.</string>
+    <string name="overlay_permission_highlight">\'Diğer uygulamaların üzerinde görüntüle\'</string>
     <!-- PIN Setup -->
     <string name="pin_enter_new">Yeni PIN girin (6 haneli)</string>
     <string name="pin_confirm_new">Yeni PIN\'i onaylayın</string>
     <string name="pin_setup_success">PIN kurulumu başarılı</string>
     <string name="pin_error_length">PIN 6 haneli olmalıdır</string>
-    <string name="pin_error_confirm_mismatch">PIN onayı eşleşmiyor</string>
-    <string name="pin_error_incorrect">Hatalı PIN</string>
+    <string name="pin_error_confirm_mismatch">Onay PIN\'i eşleşmiyor</string>
+    <string name="pin_error_incorrect">Yanlış PIN</string>
+    <!-- Clean Files -->
+    <string name="clean_cat_file_count" tools:ignore="PluralsCandidate">$number_file dosya</string>
 
-    <string name="done">Tamam</string>
-    <string name="emergency_call_title">Acil Arama</string>
-    <string name="emergency_call_desc">Telefon 12 saat boyunca kullanılmazsa, uygulama otomatik olarak acil arama yapacaktır.</string>
+    <!-- Reorder -->
+    <string name="reorder_apps_title">Uygulamaları Yeniden Sırala</string>
+    <string name="reorder_contacts_title">Kişileri Yeniden Sırala</string>
+    <string name="done">Bitti</string>
+    <string name="app_list_empty_error">Lütfen en az bir uygulama seçin</string>
+    <string name="contact_list_empty_error">Lütfen en az bir kişi seçin</string>
+
+    <!-- Emergency Call -->
+    <string name="emergency_call_title">Acil Durum Araması</string>
+    <string name="emergency_call_desc">Telefon 12 saat boyunca kullanılmazsa uygulama otomatik olarak bir acil durum araması yapacaktır.</string>
     <string name="emergency_call_enable">Özelliği etkinleştir</string>
-    <string name="emergency_call_phone_number">Acil Durum Numarası</string>
-    <string name="emergency_call_phone_number_hint">Numara girin</string>
-    <string name="emergency_call_save_success">Acil arama yapılandırması kaydedildi</string>
+    <string name="emergency_call_phone_number">Acil Durum Telefon Numarası</string>
+    <string name="emergency_call_phone_number_hint">Telefon numarasını girin</string>
+    <string name="emergency_call_save_success">Acil durum araması yapılandırması kaydedildi</string>
+    <string name="emergency_call_permission_denied">Bu özellik için arama izni gereklidir</string>
+
+    <!-- Calendar -->
+    <string name="lunar_date_format">Gün %1$d/%2$d Ay Takvimi</string>
+    <string name="solar_date_format">EEEE, dd.MM.yyyy</string>
 </resources>

@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">RetirementLauncher</string>
 
     <!-- Settings -->
@@ -26,11 +26,11 @@
     <string name="setting_contact_list">クイック連絡先設定</string>
     <string name="setting_clean_files">不要なファイルをクリーンアップ</string>
     <string name="setting_clean_memory">メモリを解放</string>
-    <string name="setting_emergency_call">自動緊急通報</string>
+    <string name="setting_emergency_call">自動緊急通報（クイック連絡先による）</string>
     <string name="setting_app_monitoring">アプリの監視</string>
     <string name="setting_auto_cleanup_apk">APKを自動削除</string>
     <string name="setting_call_block">不明な着信をブロック</string>
-    <string name="setting_pocket_mode">ポケットモード</string>
+    <string name="setting_pocket_mode">ポケットモード（誤タッチ防止）</string>
 
     <!-- Onboarding -->
     <string name="onboarding_title">Retirement Launcherへようこそ</string>
@@ -44,6 +44,17 @@
     <string name="clean_files_running">スキャンとクリーンアップ中…</string>
     <string name="clean_files_completed">クリーンアップ完了！</string>
     <string name="clean_files_retry">もう一度クリーンアップ</string>
+    <!-- Clean Files – categories -->
+    <string name="clean_cat_system_temp">システム一時ファイル (.tmp, .log…)</string>
+    <string name="clean_cat_compressed">不明な圧縮ファイル</string>
+    <string name="clean_cat_no_extension">ドキュメント (.pdf, .doc, .txt…)</string>
+    <string name="clean_cat_apk_cache">古いAPKとキャッシュ</string>
+    <!-- Clean Files – result card -->
+    <string name="clean_result_title">クリーンアップ結果</string>
+    <string name="clean_result_files_deleted">個のファイルを削除しました</string>
+    <string name="clean_result_space_freed">空き容量を確保しました</string>
+    <string name="clean_files_idle_desc"> $number_file 個の不要なファイルが検出されました – タップしてクリーンアップ</string>
+    <string name="clean_files_count_unit">不要なファイル</string>
 
     <!-- Clean Memory -->
     <string name="clean_memory_title">メモリを解放</string>
@@ -73,11 +84,12 @@
     <!-- Call Permission -->
     <string name="call_permission_title">通話許可</string>
     <string name="call_permission_desc">緊急時に自動的に親族へ電話をかけるために、このアプリには通話許可が必要です。</string>
+    <string name="call_permission_highlight">通話を行う</string>
 
     <!-- Call Block -->
     <string name="call_block_title">着信拒否許可</string>
     <string name="call_block_desc">知らない人からの電話を自動的にブロックするために、このアプリには通話と連絡先の管理許可が必要です。</string>
-
+    <string name="call_block_highlight">通話と連絡先の管理</string>
     <!-- Home Status -->
     <string name="home_header_apps">アプリケーション</string>
     <string name="home_header_contacts">クイック連絡先</string>
@@ -87,16 +99,59 @@
     <string name="block_desc">このアプリは許可リストに含まれていません。管理者に連絡してください。</string>
     <string name="block_go_home">ホーム画面に戻る</string>
 
+    <!-- Debug-only settings (chỉ hiển thị trong debug build) -->
+    <string name="setting_header_debug">🐛 デバッグ</string>
+    <string name="setting_debug_block_screen">ブロック画面を表示</string>
+
     <!-- Permissions & Setup -->
     <string name="default_launcher_setup">今すぐ設定</string>
     <string name="default_launcher_title">デフォルトのランチャーに設定</string>
     <string name="default_launcher_desc">Retirement Launcherをホーム画面として使用するには、システム設定でデフォルトのアプリに設定する必要があります。</string>
+    <string name="default_launcher_highlight">Retirement Launcher</string>
     <string name="permission_grant">許可を与える</string>
     <string name="understood">了解</string>
     <string name="pin_verify_title">PINの確認</string>
     <string name="pin_verify_desc">設定を変更するにはPINを入力してください。</string>
     <string name="pin_key_delete_desc">削除</string>
 
+    <!-- File Permission -->
+    <string name="file_permission_title">ストレージ保護</string>
+    <string name="file_permission_desc">不明なAPK/AABファイルの自動削除を機能させるには、アプリがすべてのストレージにアクセスできる必要があります。これにより、デバイスをクリーンで安全に保つことができます。</string>
+    <string name="file_permission_highlight">不明なAPK/AAB</string>
+
+    <!-- Usage Stats Permission -->
+    <string name="usage_stats_permission_title">アプリの監視</string>
+    <string name="usage_stats_permission_desc">アプリブロック機能を動作させるには、「使用状況へのアクセス」を許可する必要があります。これにより、許可されていないアプリがいつ開かれたかをアプリが把握できるようになります。</string>
+    <string name="usage_stats_permission_highlight">「使用状況へのアクセス」</string>
+
+    <!-- App Monitoring Intro -->
+    <string name="app_monitoring_intro_title">機能紹介</string>
+    <string name="app_monitoring_intro_desc">この機能は、選択したアプリのみの実行を許可することでユーザーを保護します。意図しない問題を防ぐため、他のアプリはブロックされます。</string>
+    <string name="app_monitoring_intro_highlight">選択したアプリのみを許可</string>
+    <string name="app_monitoring_intro_action">了解しました</string>
+
+    <!-- Emergency Call Intro -->
+    <string name="emergency_call_intro_title">機能紹介</string>
+    <string name="emergency_call_intro_desc">安全を確保するため、10時間以上電話の操作が検出されない場合、アプリはクイック連絡先リストに自動的に電話をかけます。</string>
+    <string name="emergency_call_intro_highlight">クイック連絡先リストに自動的に電話をかける</string>
+    <string name="emergency_call_intro_action">了解しました</string>
+
+    <!-- File Cleanup Intro -->
+    <string name="file_cleanup_intro_title">機能紹介</string>
+    <string name="file_cleanup_intro_desc">この機能は、デバイスにダウンロードされた不明なインストールファイル（APK）を自動的に削除することでユーザーを保護し、マルウェアの誤ったインストールを防ぎます。</string>
+    <string name="file_cleanup_intro_highlight">不明なインストールファイル（APK）を自動的に削除</string>
+    <string name="file_cleanup_intro_action">了解しました</string>
+
+    <!-- Call Block Intro -->
+    <string name="call_block_intro_title">機能紹介</string>
+    <string name="call_block_intro_desc">この機能は、連絡先にない不明な番号からの電話を自動的にブロックすることでユーザーを保護し、広告や詐欺に悩まされるのを防ぎます。</string>
+    <string name="call_block_intro_highlight">不明な番号からの電話を自動的にブロック</string>
+    <string name="call_block_intro_action">了解しました</string>
+
+    <!-- Overlay Permission -->
+    <string name="overlay_permission_title">他のアプリの上に重ねて表示</string>
+    <string name="overlay_permission_desc">ブロックされたアプリが開かれたときにロック画面を表示するには、アプリに「他のアプリの上に重ねて表示」の許可が必要です。</string>
+    <string name="overlay_permission_highlight">「他のアプリの上に重ねて表示」</string>
     <!-- PIN Setup -->
     <string name="pin_enter_new">新しいPINを入力（6桁）</string>
     <string name="pin_confirm_new">新しいPINを確認</string>
@@ -104,12 +159,26 @@
     <string name="pin_error_length">PINは6桁である必要があります</string>
     <string name="pin_error_confirm_mismatch">確認用PINが一致しません</string>
     <string name="pin_error_incorrect">PINが正しくありません</string>
+    <!-- Clean Files -->
+    <string name="clean_cat_file_count" tools:ignore="PluralsCandidate">$number_file 個のファイル</string>
 
+    <!-- Reorder -->
+    <string name="reorder_apps_title">アプリの並べ替え</string>
+    <string name="reorder_contacts_title">連絡先の並べ替え</string>
     <string name="done">完了</string>
+    <string name="app_list_empty_error">少なくとも1つのアプリを選択してください</string>
+    <string name="contact_list_empty_error">少なくとも1つの連絡先を選択してください</string>
+
+    <!-- Emergency Call -->
     <string name="emergency_call_title">緊急通報</string>
     <string name="emergency_call_desc">スマートフォンが12時間使用されない場合、アプリが自動的に緊急通報を行います。</string>
     <string name="emergency_call_enable">機能を有効にする</string>
     <string name="emergency_call_phone_number">緊急連絡先番号</string>
     <string name="emergency_call_phone_number_hint">番号を入力</string>
     <string name="emergency_call_save_success">緊急通報の設定を保存しました</string>
+    <string name="emergency_call_permission_denied">この機能には通話許可が必要です</string>
+
+    <!-- Calendar -->
+    <string name="lunar_date_format">旧暦 %1$d/%2$d日</string>
+    <string name="solar_date_format">EEEE, yyyy/MM/dd</string>
 </resources>

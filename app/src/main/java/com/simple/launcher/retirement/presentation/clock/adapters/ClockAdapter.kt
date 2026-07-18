@@ -1,12 +1,14 @@
 package com.simple.launcher.retirement.presentation.clock.adapters
 
 import android.graphics.Color
+import android.util.Log
 import com.simple.adapter.Adapter
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.presentation.base.adapters.PrecomputedAdapter
 import com.simple.launcher.retirement.presentation.base.adapters.PrecomputedViewItem
 import com.simple.launcher.retirement.presentation.home.adapter.HomeItem
 import com.simple.launcher.retirement.utils.exts.dp
+import com.simple.launcher.retirement.utils.exts.getString
 import com.simple.launcher.retirement.utils.exts.sp
 import com.simple.ui.precompute.LayoutEngine
 import com.simple.ui.precompute.image.BigImage
@@ -25,7 +27,9 @@ data class ClockHomeItem(
     val is24h: Boolean = false,
     val isAmPm: Boolean = false,
     val isSolar: Boolean = true,
-    val isLunar: Boolean = false
+    val isLunar: Boolean = false,
+    val solarPattern: String = "",
+    val lunarPattern: String = ""
 ) : PrecomputedViewItem(), HomeItem {
 
     override val spanSize: Int = HomeItem.TOTAL_COLUMNS
@@ -33,13 +37,13 @@ data class ClockHomeItem(
     override fun buildDrawSpec(resources: Map<String, Any>) {
 
         spec = LayoutEngine.measure(
-            node = createClockCardNode(),
+            node = createClockCardNode(resources),
             constraints = Constraints(maxWidth = screenWidth),
             id = "clock"
         )
     }
 
-    private fun createClockCardNode(): ConstraintNode = ConstraintNode(
+    private fun createClockCardNode(resources: Map<String, Any>): ConstraintNode = ConstraintNode(
         children = listOf(
             ConstraintChild(
                 id = "background",
@@ -70,10 +74,24 @@ data class ClockHomeItem(
                         )
                         if (isSolar) {
                             add(
-                                TimeNode(
-                                    pattern = "EEEE, MMM/dd/yyyy",
-                                    textSizePx = 18.sp(),
-                                    color = Color.parseColor("#666666")
+                                LinearNode(
+                                    orientation = Orientation.HORIZONTAL,
+                                    padding = EdgeInsets(top = 8.dp().toInt()),
+                                    children = listOf(
+                                        ImageNode(
+                                            source = BigImage(R.drawable.ic_sun),
+                                            layoutWidth = LayoutDimension.Fixed(20.dp().toInt()),
+                                            layoutHeight = LayoutDimension.Fixed(20.dp().toInt()),
+                                            padding = EdgeInsets(right = 8.dp().toInt())
+                                        ),
+                                        TimeNode(
+                                            pattern = solarPattern,
+                                            textSizePx = 18.sp(),
+                                            color = Color.parseColor("#58C27D"),
+                                            isBold = true,
+                                            layoutWidth = LayoutDimension.MatchParent,
+                                        )
+                                    )
                                 )
                             )
                         }
@@ -90,11 +108,12 @@ data class ClockHomeItem(
                                             padding = EdgeInsets(right = 8.dp().toInt())
                                         ),
                                         TimeNode(
-                                            pattern = "",
+                                            pattern = lunarPattern,
                                             isLunar = true,
                                             textSizePx = 20.sp(),
                                             color = Color.parseColor("#6C63FF"),
-                                            isBold = true
+                                            isBold = true,
+                                            layoutWidth = LayoutDimension.MatchParent,
                                         )
                                     )
                                 )
@@ -120,7 +139,9 @@ data class ClockHomeItem(
         is24h to "is24h",
         isAmPm to "isAmPm",
         isSolar to "isSolar",
-        isLunar to "isLunar"
+        isLunar to "isLunar",
+        solarPattern to "solarPattern",
+        lunarPattern to "lunarPattern"
     )
 }
 

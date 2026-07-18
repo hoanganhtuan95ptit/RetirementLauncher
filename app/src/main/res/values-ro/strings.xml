@@ -1,69 +1,80 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">RetirementLauncher</string>
 
     <!-- Settings -->
     <string name="settings_title">Setări</string>
     <string name="setting_header_general">Setări Generale</string>
     <string name="setting_header_security">Securitate și Protecție</string>
-    <string name="setting_header_optimization">Optimizare și Utilități</string>
-    <string name="setting_header_plugins">Plugin-uri și utilitare</string>
-    <string name="setting_lunar_calendar">Afișează calendarul lunar</string>
-    <string name="setting_clock_title">Setări ceas</string>
-    <string name="setting_clock_format_header">Format oră</string>
+    <string name="setting_header_optimization">Optimizare și Utilitare</string>
+    <string name="setting_header_plugins">Module și Utilitare</string>
+    <string name="setting_lunar_calendar">Afișează Calendarul Lunar</string>
+    <string name="setting_clock_title">Setări Ceas</string>
+    <string name="setting_clock_format_header">Format Oră</string>
     <string name="setting_clock_12h">12 ore</string>
     <string name="setting_clock_12h_example">Exemplu: 10:30</string>
     <string name="setting_clock_24h">24 ore</string>
     <string name="setting_clock_24h_example">Exemplu: 22:30</string>
     <string name="setting_clock_am_pm">Afișează AM/PM</string>
     <string name="setting_clock_am_pm_desc">Afișează AM și PM când se utilizează formatul de 12 ore</string>
-    <string name="setting_clock_solar">Afișează calendarul solar</string>
+    <string name="setting_clock_solar">Afișează Calendarul Solar</string>
     <string name="setting_clock_solar_desc">Afișează calendarul solar pe ecran</string>
-    <string name="setting_clock_lunar">Afișează calendarul lunar</string>
+    <string name="setting_clock_lunar">Afișează Calendarul Lunar</string>
     <string name="setting_clock_lunar_desc">Afișează calendarul lunar pe ecran</string>
     <string name="setting_pin">Configurare PIN</string>
     <string name="setting_app_list">Configurare Listă Aplicații</string>
-    <string name="setting_default_launcher">Setare Launcher Implicit</string>
+    <string name="setting_default_launcher">Configurare Launcher Implicit</string>
     <string name="setting_contact_list">Configurare Contacte Rapide</string>
     <string name="setting_clean_files">Curățare Fișiere Inutile</string>
     <string name="setting_clean_memory">Eliberare Memorie</string>
-    <string name="setting_emergency_call">Apel de Urgență Automat</string>
+    <string name="setting_emergency_call">Apel de Urgență Automat (prin contact rapid)</string>
     <string name="setting_app_monitoring">Monitorizare Aplicații</string>
     <string name="setting_auto_cleanup_apk">Ștergere Automată APK</string>
     <string name="setting_call_block">Blocare Apeluri Necunoscute</string>
-    <string name="setting_pocket_mode">Mod Buzunar</string>
+    <string name="setting_pocket_mode">Mod Buzunar (Prevenire atingere accidentală)</string>
 
     <!-- Onboarding -->
-    <string name="onboarding_title">Bine ați venit la Retirement Launcher</string>
-    <string name="onboarding_desc">O aplicație pentru simplificarea interfeței telefonului și protejarea dispozitivului.</string>
-    <string name="onboarding_start">Începe</string>
+    <string name="onboarding_title">Bun venit la Retirement Launcher</string>
+    <string name="onboarding_desc">O aplicație pentru a simplifica interfața telefonului și a vă proteja dispozitivul.</string>
+    <string name="onboarding_start">Să începem</string>
 
     <!-- Clean Files -->
     <string name="clean_files_title">Curățare Fișiere Inutile</string>
     <string name="clean_files_desc">Gata pentru scanarea dispozitivului</string>
     <string name="clean_files_start">Începe Curățarea</string>
-    <string name="clean_files_running">Se scanează și se curăță…</string>
+    <string name="clean_files_running">Scanare și curățare…</string>
     <string name="clean_files_completed">Curățare finalizată!</string>
     <string name="clean_files_retry">Curăță din nou</string>
+    <!-- Clean Files – categories -->
+    <string name="clean_cat_system_temp">Fișiere temporare de sistem (.tmp, .log…)</string>
+    <string name="clean_cat_compressed">Fișiere comprimate necunoscute</string>
+    <string name="clean_cat_no_extension">Documente (.pdf, .doc, .txt…)</string>
+    <string name="clean_cat_apk_cache">APK-uri vechi și cache</string>
+    <!-- Clean Files – result card -->
+    <string name="clean_result_title">Rezultate Curățare</string>
+    <string name="clean_result_files_deleted">fișiere șterse</string>
+    <string name="clean_result_space_freed">spațiu eliberat</string>
+    <string name="clean_files_idle_desc"> $number_file fișiere inutile detectate – atingeți pentru a curăța</string>
+    <string name="clean_files_count_unit">fișiere inutile</string>
 
     <!-- Clean Memory -->
     <string name="clean_memory_title">Eliberare Memorie</string>
-    <string name="clean_memory_stat_used">Folosit</string>
+    <string name="clean_memory_stat_used">Utilizat</string>
     <string name="clean_memory_stat_free">Liber</string>
     <string name="clean_memory_stat_total">Total</string>
     <string name="clean_memory_result_sub">Sistem optimizat</string>
     <string name="clean_memory_start">Accelerează acum</string>
-    <string name="clean_memory_running">Se optimizează sistemul…</string>
+    <string name="clean_memory_running">Optimizarea sistemului…</string>
     <string name="clean_memory_optimal">Sistemul este în stare optimă!</string>
     <string name="clean_memory_retry">Optimizează din nou</string>
     <string name="clean_memory_toast">S-au eliberat $number_ram MB</string>
 
     <!-- Contacts -->
     <string name="contact_tap_to_call">Sună acum</string>
-    <string name="contact_list_title">Selectați contactele rapide</string>
-    <string name="contact_list_saved">Listă contacte salvată</string>
-    <string name="contact_permission_denied">Permisiunea pentru contacte este necesară pentru această funcție</string>
-    <string name="app_list_save_action">Salvează configurația</string>
-    <string name="app_list_saved">Listă aplicații salvată</string>
+    <string name="contact_list_title">Selectează Contacte Rapide</string>
+    <string name="contact_list_saved">Lista de contacte a fost salvată</string>
+    <string name="contact_permission_denied">Permisiunea pentru contacte este necesară pentru a utiliza această funcție</string>
+    <string name="app_list_save_action">Salvează Configurația</string>
+    <string name="app_list_saved">Lista de aplicații a fost salvată</string>
 
     <!-- Common -->
     <string name="save">Salvează</string>
@@ -71,45 +82,103 @@
     <string name="search">Caută…</string>
 
     <!-- Call Permission -->
-    <string name="call_permission_title">Permisiune pentru apeluri</string>
+    <string name="call_permission_title">Permisiune de a efectua apeluri</string>
     <string name="call_permission_desc">Aplicația are nevoie de permisiunea de a efectua apeluri pentru a suna automat rudele în caz de urgență.</string>
+    <string name="call_permission_highlight">efectuează apeluri</string>
 
     <!-- Call Block -->
-    <string name="call_block_title">Permisiune pentru blocarea apelurilor</string>
+    <string name="call_block_title">Permisiune de blocare apeluri</string>
     <string name="call_block_desc">Aplicația are nevoie de permisiunea de a gestiona apelurile și contactele pentru a bloca automat apelurile de la străini.</string>
-
+    <string name="call_block_highlight">gestionează apelurile și contactele</string>
     <!-- Home Status -->
     <string name="home_header_apps">Aplicații</string>
-    <string name="home_header_contacts">Contacte rapide</string>
+    <string name="home_header_contacts">Contacte Rapide</string>
 
     <!-- Block -->
     <string name="block_title">Aplicație blocată</string>
-    <string name="block_desc">Această aplicație nu se află în lista permisă. Vă rugăm să contactați administratorul.</string>
-    <string name="block_go_home">Mergi la ecranul principal</string>
+    <string name="block_desc">Această aplicație nu se află în lista celor permise. Vă rugăm să contactați administratorul.</string>
+    <string name="block_go_home">Mergi la Ecranul Principal</string>
+
+    <!-- Debug-only settings (chỉ hiển thị trong debug build) -->
+    <string name="setting_header_debug">🐛 Depanare</string>
+    <string name="setting_debug_block_screen">Vezi Ecranul de Blocare</string>
 
     <!-- Permissions & Setup -->
     <string name="default_launcher_setup">Configurează acum</string>
-    <string name="default_launcher_title">Setare Launcher Implicit</string>
-    <string name="default_launcher_desc">Pentru a folosi Retirement Launcher ca ecran principal, trebuie să îl setați ca aplicație implicită în setările sistemului.</string>
+    <string name="default_launcher_title">Setează Launcher-ul Implicit</string>
+    <string name="default_launcher_desc">Pentru a utiliza Retirement Launcher ca ecran principal, trebuie să îl setați ca aplicație implicită în setările sistemului.</string>
+    <string name="default_launcher_highlight">Retirement Launcher</string>
     <string name="permission_grant">Acordă permisiunea</string>
     <string name="understood">Am înțeles</string>
-    <string name="pin_verify_title">Confirmă PIN</string>
+    <string name="pin_verify_title">Confirmă PIN-ul</string>
     <string name="pin_verify_desc">Vă rugăm să introduceți PIN-ul pentru a modifica această setare.</string>
     <string name="pin_key_delete_desc">Șterge</string>
 
+    <!-- File Permission -->
+    <string name="file_permission_title">Protecție Stocare</string>
+    <string name="file_permission_desc">Pentru ca ștergerea automată a fișierelor APK/AAB necunoscute să funcționeze, aplicația are nevoie de acces la tot spațiul de stocare. Acest lucru ajută la menținerea dispozitivului curat și în siguranță.</string>
+    <string name="file_permission_highlight">APK/AAB necunoscute</string>
+
+    <!-- Usage Stats Permission -->
+    <string name="usage_stats_permission_title">Monitorizare Aplicații</string>
+    <string name="usage_stats_permission_desc">Pentru ca funcția de blocare a aplicațiilor să funcționeze, trebuie să acordați „Acces la datele de utilizare”. Acest lucru ajută aplicația să știe când este deschisă o aplicație neautorizată.</string>
+    <string name="usage_stats_permission_highlight">„Acces la datele de utilizare”</string>
+
+    <!-- App Monitoring Intro -->
+    <string name="app_monitoring_intro_title">Introducere Funcție</string>
+    <string name="app_monitoring_intro_desc">Această funcție ajută la protejarea utilizatorilor permitând rularea doar a aplicațiilor selectate. Alte aplicații vor fi blocate pentru a evita probleme neintenționate.</string>
+    <string name="app_monitoring_intro_highlight">permite doar aplicațiile selectate</string>
+    <string name="app_monitoring_intro_action">Am înțeles</string>
+
+    <!-- Emergency Call Intro -->
+    <string name="emergency_call_intro_title">Introducere Funcție</string>
+    <string name="emergency_call_intro_desc">Pentru a asigura siguranța, aplicația va apela automat lista de contacte rapide dacă nu este detectată nicio interacțiune a utilizatorului pe telefon timp de 10 ore.</string>
+    <string name="emergency_call_intro_highlight">va apela automat lista de contacte rapide</string>
+    <string name="emergency_call_intro_action">Am înțeles</string>
+
+    <!-- File Cleanup Intro -->
+    <string name="file_cleanup_intro_title">Introducere Funcție</string>
+    <string name="file_cleanup_intro_desc">Această funcție ajută la protejarea utilizatorilor prin ștergerea automată a fișierelor de instalare (APK) necunoscute descărcate pe dispozitiv, evitând instalarea accidentală de malware.</string>
+    <string name="file_cleanup_intro_highlight">ștergerea automată a fișierelor de instalare (APK) necunoscute</string>
+    <string name="file_cleanup_intro_action">Am înțeles</string>
+
+    <!-- Call Block Intro -->
+    <string name="call_block_intro_title">Introducere Funcție</string>
+    <string name="call_block_intro_desc">Această funcție ajută la protejarea utilizatorilor prin blocarea automată a apelurilor de la numere necunoscute care nu se află în contacte, evitând deranjul cauzat de reclame sau înșelătorii.</string>
+    <string name="call_block_intro_highlight">blocarea automată a apelurilor de la numere necunoscute</string>
+    <string name="call_block_intro_action">Am înțeles</string>
+
+    <!-- Overlay Permission -->
+    <string name="overlay_permission_title">Afișare peste alte aplicații</string>
+    <string name="overlay_permission_desc">Aplicația are nevoie de permisiunea „Afișare peste alte aplicații” pentru a afișa ecranul de blocare atunci când este deschisă o aplicație blocată.</string>
+    <string name="overlay_permission_highlight">„Afișare peste alte aplicații”</string>
     <!-- PIN Setup -->
-    <string name="pin_enter_new">Introduceți noul PIN (6 cifre)</string>
-    <string name="pin_confirm_new">Confirmați noul PIN</string>
+    <string name="pin_enter_new">Introduceți PIN-ul nou (6 cifre)</string>
+    <string name="pin_confirm_new">Confirmați PIN-ul nou</string>
     <string name="pin_setup_success">Configurare PIN reușită</string>
     <string name="pin_error_length">PIN-ul trebuie să aibă 6 cifre</string>
     <string name="pin_error_confirm_mismatch">PIN-ul de confirmare nu se potrivește</string>
     <string name="pin_error_incorrect">PIN incorect</string>
+    <!-- Clean Files -->
+    <string name="clean_cat_file_count" tools:ignore="PluralsCandidate">$number_file fișiere</string>
 
+    <!-- Reorder -->
+    <string name="reorder_apps_title">Reordonare Aplicații</string>
+    <string name="reorder_contacts_title">Reordonare Contacte</string>
     <string name="done">Gata</string>
-    <string name="emergency_call_title">Apel de urgență</string>
+    <string name="app_list_empty_error">Vă rugăm să selectați cel puțin o aplicație</string>
+    <string name="contact_list_empty_error">Vă rugăm să selectați cel puțin un contact</string>
+
+    <!-- Emergency Call -->
+    <string name="emergency_call_title">Apel de Urgență</string>
     <string name="emergency_call_desc">Dacă telefonul nu este folosit timp de 12 ore, aplicația va efectua automat un apel de urgență.</string>
     <string name="emergency_call_enable">Activează funcția</string>
-    <string name="emergency_call_phone_number">Număr de telefon de urgență</string>
-    <string name="emergency_call_phone_number_hint">Introduceți numărul</string>
-    <string name="emergency_call_save_success">Configurație apel de urgență salvată</string>
+    <string name="emergency_call_phone_number">Număr de Telefon de Urgență</string>
+    <string name="emergency_call_phone_number_hint">Introduceți numărul de telefon</string>
+    <string name="emergency_call_save_success">Configurația apelului de urgență a fost salvată</string>
+    <string name="emergency_call_permission_denied">Permisiunea de a suna este necesară pentru această funcție</string>
+
+    <!-- Calendar -->
+    <string name="lunar_date_format">Ziua %1$d/%2$d Lunară</string>
+    <string name="solar_date_format">EEEE, dd.MM.yyyy</string>
 </resources>

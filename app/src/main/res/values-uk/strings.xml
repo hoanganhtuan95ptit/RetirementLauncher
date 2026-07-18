@@ -1,13 +1,13 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">RetirementLauncher</string>
 
     <!-- Settings -->
     <string name="settings_title">Налаштування</string>
     <string name="setting_header_general">Загальні налаштування</string>
     <string name="setting_header_security">Безпека та захист</string>
-    <string name="setting_header_optimization">Оптимізація та інструменти</string>
+    <string name="setting_header_optimization">Оптимізація та утиліти</string>
     <string name="setting_header_plugins">Плагіни та утиліти</string>
-    <string name="setting_lunar_calendar">Показати місячний календар</string>
+    <string name="setting_lunar_calendar">Показувати місячний календар</string>
     <string name="setting_clock_title">Налаштування годинника</string>
     <string name="setting_clock_format_header">Формат часу</string>
     <string name="setting_clock_12h">12-годинний</string>
@@ -16,54 +16,65 @@
     <string name="setting_clock_24h_example">Приклад: 22:30</string>
     <string name="setting_clock_am_pm">Показувати AM/PM</string>
     <string name="setting_clock_am_pm_desc">Показувати AM та PM при використанні 12-годинного формату</string>
-    <string name="setting_clock_solar">Показати сонячний календар</string>
-    <string name="setting_clock_solar_desc">Відображати сонячний календар на екрані</string>
-    <string name="setting_clock_lunar">Показати місячний календар</string>
-    <string name="setting_clock_lunar_desc">Відображати місячний календар на екрані</string>
+    <string name="setting_clock_solar">Показувати сонячний календар</string>
+    <string name="setting_clock_solar_desc">Показувати сонячний календар на екрані</string>
+    <string name="setting_clock_lunar">Показувати місячний календар</string>
+    <string name="setting_clock_lunar_desc">Показувати місячний календар на екрані</string>
     <string name="setting_pin">Налаштування PIN-коду</string>
-    <string name="setting_app_list">Налаштування списку додатків</string>
-    <string name="setting_default_launcher">Встановити лаунчер за замовчуванням</string>
+    <string name="setting_app_list">Налаштування списку програм</string>
+    <string name="setting_default_launcher">Налаштування лаунчера за замовчуванням</string>
     <string name="setting_contact_list">Налаштування швидких контактів</string>
-    <string name="setting_clean_files">Очищення сміття</string>
+    <string name="setting_clean_files">Очищення непотрібних файлів</string>
     <string name="setting_clean_memory">Звільнити пам\'ять</string>
-    <string name="setting_emergency_call">Автоматичний екстрений виклик</string>
-    <string name="setting_app_monitoring">Моніторинг додатків</string>
+    <string name="setting_emergency_call">Автоматичний екстрений виклик (за швидким контактом)</string>
+    <string name="setting_app_monitoring">Моніторинг програм</string>
     <string name="setting_auto_cleanup_apk">Автовидалення APK</string>
     <string name="setting_call_block">Блокування невідомих дзвінків</string>
-    <string name="setting_pocket_mode">У кишені</string>
+    <string name="setting_pocket_mode">Режим «У кишені» (захист від випадкових натискань)</string>
 
     <!-- Onboarding -->
     <string name="onboarding_title">Ласкаво просимо до Retirement Launcher</string>
-    <string name="onboarding_desc">Додаток для спрощення інтерфейсу вашого телефону та захисту пристрою.</string>
+    <string name="onboarding_desc">Програма для спрощення інтерфейсу телефону та захисту вашого пристрою.</string>
     <string name="onboarding_start">Почати</string>
 
     <!-- Clean Files -->
-    <string name="clean_files_title">Очищення сміття</string>
-    <string name="clean_files_desc">Готовий до сканування пристрою</string>
+    <string name="clean_files_title">Очищення непотрібних файлів</string>
+    <string name="clean_files_desc">Готовність до сканування пристрою</string>
     <string name="clean_files_start">Почати очищення</string>
     <string name="clean_files_running">Сканування та очищення…</string>
     <string name="clean_files_completed">Очищення завершено!</string>
     <string name="clean_files_retry">Очистити знову</string>
+    <!-- Clean Files – categories -->
+    <string name="clean_cat_system_temp">Тимчасові системні файли (.tmp, .log…)</string>
+    <string name="clean_cat_compressed">Невідомі стиснені файли</string>
+    <string name="clean_cat_no_extension">Документи (.pdf, .doc, .txt…)</string>
+    <string name="clean_cat_apk_cache">Старі APK та кеш</string>
+    <!-- Clean Files – result card -->
+    <string name="clean_result_title">Результати очищення</string>
+    <string name="clean_result_files_deleted">файлів видалено</string>
+    <string name="clean_result_space_freed">місця звільнено</string>
+    <string name="clean_files_idle_desc"> Виявлено $number_file непотрібних файлів – натисніть для очищення</string>
+    <string name="clean_files_count_unit">непотрібних файлів</string>
 
     <!-- Clean Memory -->
     <string name="clean_memory_title">Звільнити пам\'ять</string>
     <string name="clean_memory_stat_used">Використано</string>
     <string name="clean_memory_stat_free">Вільно</string>
     <string name="clean_memory_stat_total">Всього</string>
-    <string name="clean_memory_result_sub">Систему оптимізовано</string>
+    <string name="clean_memory_result_sub">Система оптимізована</string>
     <string name="clean_memory_start">Прискорити зараз</string>
     <string name="clean_memory_running">Оптимізація системи…</string>
-    <string name="clean_memory_optimal">Система знаходиться в оптимальному стані!</string>
+    <string name="clean_memory_optimal">Система в оптимальному стані!</string>
     <string name="clean_memory_retry">Оптимізувати знову</string>
     <string name="clean_memory_toast">Звільнено $number_ram МБ</string>
 
     <!-- Contacts -->
-    <string name="contact_tap_to_call">Подзвонити зараз</string>
+    <string name="contact_tap_to_call">Зателефонувати зараз</string>
     <string name="contact_list_title">Вибрати швидкі контакти</string>
     <string name="contact_list_saved">Список контактів збережено</string>
     <string name="contact_permission_denied">Для використання цієї функції потрібен дозвіл на доступ до контактів</string>
     <string name="app_list_save_action">Зберегти конфігурацію</string>
-    <string name="app_list_saved">Список додатків збережено</string>
+    <string name="app_list_saved">Список програм збережено</string>
 
     <!-- Common -->
     <string name="save">Зберегти</string>
@@ -72,44 +83,102 @@
 
     <!-- Call Permission -->
     <string name="call_permission_title">Дозвіл на дзвінки</string>
-    <string name="call_permission_desc">Додатку потрібен дозвіл на здійснення дзвінків, щоб автоматично дзвонити родичам у разі потреби.</string>
+    <string name="call_permission_desc">Програмі потрібен дозвіл на здійснення дзвінків, щоб автоматично викликати родичів у екстрених ситуаціях.</string>
+    <string name="call_permission_highlight">здійснювати дзвінки</string>
 
     <!-- Call Block -->
     <string name="call_block_title">Дозвіл на блокування дзвінків</string>
-    <string name="call_block_desc">Додатку потрібен дозвіл на управління дзвінками та контактами для автоматичного блокування невідомих номерів.</string>
-
+    <string name="call_block_desc">Програмі потрібен дозвіл на управління дзвінками та контактами, щоб автоматично блокувати дзвінки від незнайомців.</string>
+    <string name="call_block_highlight">керувати дзвінками та контактами</string>
     <!-- Home Status -->
-    <string name="home_header_apps">Додатки</string>
+    <string name="home_header_apps">Програми</string>
     <string name="home_header_contacts">Швидкі контакти</string>
 
     <!-- Block -->
-    <string name="block_title">Додаток заблоковано</string>
-    <string name="block_desc">Цього додатка немає у списку дозволених. Будь ласка, зв\'яжіться з адміністратором.</string>
+    <string name="block_title">Програму заблоковано</string>
+    <string name="block_desc">Цієї програми немає в списку дозволених. Будь ласка, зверніться до адміністратора.</string>
     <string name="block_go_home">На головний екран</string>
+
+    <!-- Debug-only settings (chỉ hiển thị trong debug build) -->
+    <string name="setting_header_debug">🐛 Налагождення</string>
+    <string name="setting_debug_block_screen">Перегляд екрана блокування</string>
 
     <!-- Permissions & Setup -->
     <string name="default_launcher_setup">Налаштувати зараз</string>
-    <string name="default_launcher_title">Встановити лаунчер за замовчуванням</string>
-    <string name="default_launcher_desc">Щоб використовувати Retirement Launcher як головний екран, вам потрібно встановити його як додаток за замовчуванням у системних налаштуваннях.</string>
+    <string name="default_launcher_title">Вибрати лаунчер за замовчуванням</string>
+    <string name="default_launcher_desc">Щоб використовувати Retirement Launcher як домашній екран, його потрібно встановити як програму за замовчуванням у налаштуваннях системи.</string>
+    <string name="default_launcher_highlight">Retirement Launcher</string>
     <string name="permission_grant">Надати дозвіл</string>
     <string name="understood">Зрозуміло</string>
     <string name="pin_verify_title">Підтвердження PIN-коду</string>
-    <string name="pin_verify_desc">Будь ласка, введіть свій PIN-код, щоб змінити це налаштування.</string>
+    <string name="pin_verify_desc">Будь ласка, введіть PIN-код, щоб змінити це налаштування.</string>
     <string name="pin_key_delete_desc">Видалити</string>
 
+    <!-- File Permission -->
+    <string name="file_permission_title">Захист сховища</string>
+    <string name="file_permission_desc">Для роботи функції автоматичного видалення невідомих файлів APK/AAB програмі потрібен доступ до всього сховища. Це допомагає підтримувати ваш пристрій чистим та безпечним.</string>
+    <string name="file_permission_highlight">невідомих APK/AAB</string>
+
+    <!-- Usage Stats Permission -->
+    <string name="usage_stats_permission_title">Моніторинг програм</string>
+    <string name="usage_stats_permission_desc">Для роботи функції блокування програм необхідно надати «Доступ до даних про використання». Це допомагає програмі знати, коли відкривається неавторизована програма.</string>
+    <string name="usage_stats_permission_highlight">«Доступ до даних про використання»</string>
+
+    <!-- App Monitoring Intro -->
+    <string name="app_monitoring_intro_title">Про функцію</string>
+    <string name="app_monitoring_intro_desc">Ця функція захищає користувачів, дозволяючи запуск лише вибраних програм. Інші програми будуть блокуватися, щоб уникнути ненавмисних проблем.</string>
+    <string name="app_monitoring_intro_highlight">дозволяючи запуск лише вибраних програм</string>
+    <string name="app_monitoring_intro_action">Я розумію</string>
+
+    <!-- Emergency Call Intro -->
+    <string name="emergency_call_intro_title">Про функцію</string>
+    <string name="emergency_call_intro_desc">Для забезпечення безпеки програма автоматично зателефонує за списком швидких контактів, якщо протягом 10 годин на телефоні не буде виявлено жодної активності користувача.</string>
+    <string name="emergency_call_intro_highlight">автоматично зателефонує за списком швидких контактів</string>
+    <string name="emergency_call_intro_action">Я розумію</string>
+
+    <!-- File Cleanup Intro -->
+    <string name="file_cleanup_intro_title">Про функцію</string>
+    <string name="file_cleanup_intro_desc">Ця функція захищає користувачів, автоматично видаляючи невідомі інсталяційні файли (APK), завантажені на пристрій, що запобігає випадковому встановленню шкідливого ПЗ.</string>
+    <string name="file_cleanup_intro_highlight">автоматично видаляючи невідомі інсталяційні файли (APK)</string>
+    <string name="file_cleanup_intro_action">Я розумію</string>
+
+    <!-- Call Block Intro -->
+    <string name="call_block_intro_title">Про функцію</string>
+    <string name="call_block_intro_desc">Ця функція захищає користувачів, автоматично блокуючи дзвінки з невідомих номерів, яких немає в контактах, допомагаючи уникнути реклами та шахраїв.</string>
+    <string name="call_block_intro_highlight">автоматично блокуючи дзвінки з невідомих номерів</string>
+    <string name="call_block_intro_action">Я розумію</string>
+
+    <!-- Overlay Permission -->
+    <string name="overlay_permission_title">Відображення поверх інших програм</string>
+    <string name="overlay_permission_desc">Програмі потрібен дозвіл «Відображення поверх інших програм», щоб показувати екран блокування при відкритті заблокованої програми.</string>
+    <string name="overlay_permission_highlight">«Відображення поверх інших програм»</string>
     <!-- PIN Setup -->
     <string name="pin_enter_new">Введіть новий PIN-код (6 цифр)</string>
-    <string name="pin_confirm_new">Підтвердіть новий PIN-код</string>
-    <string name="pin_setup_success">PIN-код успішно встановлено</string>
+    <string name="pin_confirm_new">Підтвердьте новий PIN-код</string>
+    <string name="pin_setup_success">PIN-код успішно налаштовано</string>
     <string name="pin_error_length">PIN-код має складатися з 6 цифр</string>
-    <string name="pin_error_confirm_mismatch">PIN-коди не збігаються</string>
-    <string name="pin_error_incorrect">Невірний PIN-код</string>
+    <string name="pin_error_confirm_mismatch">Підтверджуючий PIN-код не збігається</string>
+    <string name="pin_error_incorrect">Неправильний PIN-код</string>
+    <!-- Clean Files -->
+    <string name="clean_cat_file_count" tools:ignore="PluralsCandidate">$number_file файлів</string>
 
+    <!-- Reorder -->
+    <string name="reorder_apps_title">Змінити порядок програм</string>
+    <string name="reorder_contacts_title">Змінити порядок контактів</string>
     <string name="done">Готово</string>
+    <string name="app_list_empty_error">Будь ласка, виберіть хоча б одну програму</string>
+    <string name="contact_list_empty_error">Будь ласка, виберіть хоча б один контакт</string>
+
+    <!-- Emergency Call -->
     <string name="emergency_call_title">Екстрений виклик</string>
-    <string name="emergency_call_desc">Якщо телефон не використовується протягом 12 годин, додаток автоматично здійснить екстрений виклик.</string>
+    <string name="emergency_call_desc">Якщо телефон не використовується протягом 12 годин, програма автоматично здійснить екстрений виклик.</string>
     <string name="emergency_call_enable">Увімкнути функцію</string>
-    <string name="emergency_call_phone_number">Номер екстреного телефону</string>
-    <string name="emergency_call_phone_number_hint">Введіть номер</string>
+    <string name="emergency_call_phone_number">Номер екстреного виклику</string>
+    <string name="emergency_call_phone_number_hint">Введіть номер телефону</string>
     <string name="emergency_call_save_success">Конфігурацію екстренного виклику збережено</string>
+    <string name="emergency_call_permission_denied">Для цієї функції потрібен дозвіл на дзвінки</string>
+
+    <!-- Calendar -->
+    <string name="lunar_date_format">День %1$d/%2$d місячного календаря</string>
+    <string name="solar_date_format">EEEE, dd.MM.yyyy</string>
 </resources>

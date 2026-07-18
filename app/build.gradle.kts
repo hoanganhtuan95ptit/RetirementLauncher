@@ -12,6 +12,7 @@ plugins {
     alias(libs.plugins.firebase.perf)
 }
 
+val isRelease = project.gradle.startParameter.taskNames.any { it.contains("release", ignoreCase = true) }
 val localProperties = loadLocalProperties()
 applyExternalConfig(localProperties)
 
@@ -36,10 +37,23 @@ android {
         applicationId = "com.simple.launcher.retirement"
         minSdk = 24
         targetSdk = 37
-        
-        val gitVersionCode = getGitVersionCode()
-        val gitVersionName = "1.${SimpleDateFormat("yy.MM").format(Date())}.${getGitHash()}"
-        
+
+        val gitVersionCode = if (isRelease) {
+
+            getGitVersionCode()
+        } else {
+
+            1
+        }
+
+        val gitVersionName = if (isRelease) {
+
+            "1.${SimpleDateFormat("yy.MM").format(Date())}.${getGitVersionCode()}"
+        } else {
+
+            "debug"
+        }
+
         versionCode = gitVersionCode
         versionName = gitVersionName
 
@@ -54,13 +68,13 @@ android {
 
             isMinifyEnabled = true
             isShrinkResources = true
-            
+
             val keystore = signingConfigs.findByName("keystore")
             if (keystore?.storeFile != null) {
 
                 signingConfig = keystore
             }
-            
+
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
@@ -169,10 +183,10 @@ fun runGitCommand(command: List<String>, defaultValue: Any): Any {
 fun processCommandOutput(process: Process, defaultValue: Any): Any {
 
     if (process.exitValue() != 0) return defaultValue
-    
+
     val output = process.inputStream.bufferedReader().readText().trim()
     if (output.isEmpty()) return defaultValue
-    
+
     return if (defaultValue is Int) output.toInt() else output
 }
 

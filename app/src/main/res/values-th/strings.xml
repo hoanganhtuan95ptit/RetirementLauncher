@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">RetirementLauncher</string>
 
     <!-- Settings -->
@@ -22,46 +22,57 @@
     <string name="setting_clock_lunar_desc">แสดงปฏิทินจันทรคติบนหน้าจอ</string>
     <string name="setting_pin">ตั้งค่า PIN</string>
     <string name="setting_app_list">ตั้งค่ารายการแอป</string>
-    <string name="setting_default_launcher">ตั้งค่าตัวเปิดเริ่มต้น</string>
+    <string name="setting_default_launcher">ตั้งค่าลอนเชอร์เริ่มต้น</string>
     <string name="setting_contact_list">ตั้งค่าผู้ติดต่อด่วน</string>
     <string name="setting_clean_files">ล้างไฟล์ขยะ</string>
-    <string name="setting_clean_memory">เพิ่มหน่วยความจำ</string>
-    <string name="setting_emergency_call">โทรฉุกเฉินอัตโนมัติ</string>
+    <string name="setting_clean_memory">เพิ่มพื้นที่หน่วยความจำ</string>
+    <string name="setting_emergency_call">โทรฉุกเฉินอัตโนมัติ (โดยผู้ติดต่อด่วน)</string>
     <string name="setting_app_monitoring">การตรวจสอบแอป</string>
     <string name="setting_auto_cleanup_apk">ลบ APK อัตโนมัติ</string>
-    <string name="setting_call_block">บล็อกเบอร์แปลก</string>
-    <string name="setting_pocket_mode">โหมดพ็อกเก็ต</string>
+    <string name="setting_call_block">บล็อกสายโทรเข้าที่ไม่รู้จัก</string>
+    <string name="setting_pocket_mode">โหมดพ็อกเก็ต (ป้องกันการสัมผัสโดยไม่ได้ตั้งใจ)</string>
 
     <!-- Onboarding -->
     <string name="onboarding_title">ยินดีต้อนรับสู่ Retirement Launcher</string>
-    <string name="onboarding_desc">แอปเพื่อลดความซับซ้อนของส่วนต่อประสานโทรศัพท์และปกป้องอุปกรณ์ของคุณ</string>
+    <string name="onboarding_desc">แอปที่ช่วยให้ส่วนติดต่อผู้ใช้ของโทรศัพท์ของคุณง่ายขึ้นและปกป้องอุปกรณ์ของคุณ</string>
     <string name="onboarding_start">เริ่มต้นใช้งาน</string>
 
     <!-- Clean Files -->
     <string name="clean_files_title">ล้างไฟล์ขยะ</string>
     <string name="clean_files_desc">พร้อมสแกนอุปกรณ์</string>
     <string name="clean_files_start">เริ่มการล้าง</string>
-    <string name="clean_files_running">กำลังสแกนและล้างข้อมูล…</string>
-    <string name="clean_files_completed">ล้างข้อมูลเสร็จสิ้น!</string>
+    <string name="clean_files_running">กำลังสแกนและล้าง…</string>
+    <string name="clean_files_completed">การล้างเสร็จสมบูรณ์!</string>
     <string name="clean_files_retry">ล้างอีกครั้ง</string>
+    <!-- Clean Files – categories -->
+    <string name="clean_cat_system_temp">ไฟล์ชั่วคราวของระบบ (.tmp, .log…)</string>
+    <string name="clean_cat_compressed">ไฟล์บีบอัดที่ไม่รู้จัก</string>
+    <string name="clean_cat_no_extension">เอกสาร (.pdf, .doc, .txt…)</string>
+    <string name="clean_cat_apk_cache">ไฟล์ APK เก่าและแคช</string>
+    <!-- Clean Files – result card -->
+    <string name="clean_result_title">ผลการล้าง</string>
+    <string name="clean_result_files_deleted">ไฟล์ที่ถูกลบ</string>
+    <string name="clean_result_space_freed">พื้นที่ที่เพิ่มขึ้น</string>
+    <string name="clean_files_idle_desc"> ตรวจพบไฟล์ขยะ $number_file ไฟล์ – แตะเพื่อล้าง</string>
+    <string name="clean_files_count_unit">ไฟล์ขยะ</string>
 
     <!-- Clean Memory -->
-    <string name="clean_memory_title">เพิ่มหน่วยความจำ</string>
+    <string name="clean_memory_title">เพิ่มพื้นที่หน่วยความจำ</string>
     <string name="clean_memory_stat_used">ใช้ไป</string>
     <string name="clean_memory_stat_free">ว่าง</string>
     <string name="clean_memory_stat_total">ทั้งหมด</string>
-    <string name="clean_memory_result_sub">ระบบได้รับการปรับแต่งแล้ว</string>
-    <string name="clean_memory_start">เร่งความเร็วตอนนี้</string>
-    <string name="clean_memory_running">กำลังปรับแต่งระบบ…</string>
-    <string name="clean_memory_optimal">ระบบอยู่ในสถานะที่เหมาะสมที่สุดแล้ว!</string>
-    <string name="clean_memory_retry">ปรับแต่งอีกครั้ง</string>
-    <string name="clean_memory_toast">เพิ่มพื้นที่แล้ว $number_ram MB</string>
+    <string name="clean_memory_result_sub">ปรับปรุงระบบแล้ว</string>
+    <string name="clean_memory_start">เร่งความเร็วทันที</string>
+    <string name="clean_memory_running">กำลังปรับปรุงระบบ…</string>
+    <string name="clean_memory_optimal">ระบบอยู่ในสถานะที่เหมาะสมที่สุด!</string>
+    <string name="clean_memory_retry">ปรับปรุงอีกครั้ง</string>
+    <string name="clean_memory_toast">เพิ่มพื้นที่ได้ $number_ram MB</string>
 
     <!-- Contacts -->
     <string name="contact_tap_to_call">โทรทันที</string>
     <string name="contact_list_title">เลือกผู้ติดต่อด่วน</string>
     <string name="contact_list_saved">บันทึกรายการผู้ติดต่อแล้ว</string>
-    <string name="contact_permission_denied">จำเป็นต้องได้รับอนุญาตเข้าถึงผู้ติดต่อเพื่อใช้ฟีเจอร์นี้</string>
+    <string name="contact_permission_denied">ต้องได้รับอนุญาตเข้าถึงผู้ติดต่อเพื่อใช้ฟีเจอร์นี้</string>
     <string name="app_list_save_action">บันทึกการกำหนดค่า</string>
     <string name="app_list_saved">บันทึกรายการแอปแล้ว</string>
 
@@ -72,44 +83,102 @@
 
     <!-- Call Permission -->
     <string name="call_permission_title">สิทธิ์ในการโทร</string>
-    <string name="call_permission_desc">แอปต้องการสิทธิ์ในการโทรเพื่อโทรหาญาติโดยอัตโนมัติในกรณีฉุกเฉิน</string>
+    <string name="call_permission_desc">แอปต้องการสิทธิ์ในการโทรออกเพื่อโทรหาญาติโดยอัตโนมัติในกรณีฉุกเฉิน</string>
+    <string name="call_permission_highlight">โทรออก</string>
 
     <!-- Call Block -->
-    <string name="call_block_title">สิทธิ์ในการบล็อกการโทร</string>
-    <string name="call_block_desc">แอปต้องการสิทธิ์ในการจัดการการโทรและผู้ติดต่อเพื่อบล็อกการโทรจากคนแปลกหน้าโดยอัตโนมัติ</string>
-
+    <string name="call_block_title">สิทธิ์ในการบล็อกสายโทรเข้า</string>
+    <string name="call_block_desc">แอปต้องการสิทธิ์ในการจัดการการโทรและผู้ติดต่อเพื่อบล็อกสายจากคนแปลกหน้าโดยอัตโนมัติ</string>
+    <string name="call_block_highlight">จัดการการโทรและผู้ติดต่อ</string>
     <!-- Home Status -->
     <string name="home_header_apps">แอปพลิเคชัน</string>
     <string name="home_header_contacts">ผู้ติดต่อด่วน</string>
 
     <!-- Block -->
     <string name="block_title">แอปถูกบล็อก</string>
-    <string name="block_desc">แอปพลิเคชันนี้ไม่ได้อยู่ในรายการที่อนุญาต โปรดติดต่อผู้ดูแลระบบ</string>
-    <string name="block_go_home">กลับไปที่หน้าหลัก</string>
+    <string name="block_desc">แอปพลิเคชันนี้ไม่อยู่ในรายการที่อนุญาต โปรดติดต่อผู้ดูแลระบบ</string>
+    <string name="block_go_home">ไปที่หน้าจอหลัก</string>
+
+    <!-- Debug-only settings (chỉ hiển thị trong debug build) -->
+    <string name="setting_header_debug">🐛 ดีบัก</string>
+    <string name="setting_debug_block_screen">ดูหน้าจอที่ถูกบล็อก</string>
 
     <!-- Permissions & Setup -->
-    <string name="default_launcher_setup">ตั้งค่าตอนนี้</string>
-    <string name="default_launcher_title">ตั้งค่าตัวเปิดเริ่มต้น</string>
-    <string name="default_launcher_desc">หากต้องการใช้ Retirement Launcher เป็นหน้าหลัก คุณต้องตั้งค่าให้เป็นแอปเริ่มต้นในการตั้งค่าระบบ</string>
+    <string name="default_launcher_setup">ตั้งค่าทันที</string>
+    <string name="default_launcher_title">ตั้งค่าลอนเชอร์เริ่มต้น</string>
+    <string name="default_launcher_desc">หากต้องการใช้ Retirement Launcher เป็นหน้าจอหลัก คุณต้องตั้งค่าให้เป็นแอปเริ่มต้นในการตั้งค่าระบบ</string>
+    <string name="default_launcher_highlight">Retirement Launcher</string>
     <string name="permission_grant">ให้สิทธิ์</string>
     <string name="understood">เข้าใจแล้ว</string>
     <string name="pin_verify_title">ยืนยัน PIN</string>
     <string name="pin_verify_desc">โปรดป้อน PIN ของคุณเพื่อเปลี่ยนการตั้งค่านี้</string>
     <string name="pin_key_delete_desc">ลบ</string>
 
+    <!-- File Permission -->
+    <string name="file_permission_title">การป้องกันพื้นที่เก็บข้อมูล</string>
+    <string name="file_permission_desc">เพื่อให้การลบไฟล์ APK/AAB ที่ไม่รู้จักทำงานได้โดยอัตโนมัติ แอปจำเป็นต้องเข้าถึงพื้นที่เก็บข้อมูลทั้งหมด ซึ่งจะช่วยให้อุปกรณ์ของคุณสะอาดและปลอดภัย</string>
+    <string name="file_permission_highlight">APK/AAB ที่ไม่รู้จัก</string>
+
+    <!-- Usage Stats Permission -->
+    <string name="usage_stats_permission_title">การตรวจสอบแอป</string>
+    <string name="usage_stats_permission_desc">เพื่อให้ฟีเจอร์การบล็อกแอปทำงานได้ คุณต้องให้สิทธิ์ \'การเข้าถึงข้อมูลการใช้งาน\' สิ่งนี้ช่วยให้แอปทราบเมื่อมีการเปิดแอปที่ไม่ได้รับอนุญาต</string>
+    <string name="usage_stats_permission_highlight">\'การเข้าถึงข้อมูลการใช้งาน\'</string>
+
+    <!-- App Monitoring Intro -->
+    <string name="app_monitoring_intro_title">แนะนำฟีเจอร์</string>
+    <string name="app_monitoring_intro_desc">ฟีเจอร์นี้ช่วยปกป้องผู้ใช้โดยอนุญาตให้เฉพาะแอปที่เลือกเท่านั้นที่ทำงานได้ แอปอื่นๆ จะถูกบล็อกเพื่อหลีกเลี่ยงปัญหาที่ไม่ได้ตั้งใจ</string>
+    <string name="app_monitoring_intro_highlight">อนุญาตเฉพาะแอปที่เลือกเท่านั้น</string>
+    <string name="app_monitoring_intro_action">ฉันเข้าใจแล้ว</string>
+
+    <!-- Emergency Call Intro -->
+    <string name="emergency_call_intro_title">แนะนำฟีเจอร์</string>
+    <string name="emergency_call_intro_desc">เพื่อความปลอดภัย แอปจะโทรหาผู้ติดต่อด่วนโดยอัตโนมัติหากตรวจไม่พบการโต้ตอบของผู้ใช้บนโทรศัพท์เป็นเวลา 10 ชั่วโมง</string>
+    <string name="emergency_call_intro_highlight">โทรหาผู้ติดต่อด่วนโดยอัตโนมัติ</string>
+    <string name="emergency_call_intro_action">ฉันเข้าใจแล้ว</string>
+
+    <!-- File Cleanup Intro -->
+    <string name="file_cleanup_intro_title">แนะนำฟีเจอร์</string>
+    <string name="file_cleanup_intro_desc">ฟีเจอร์นี้ช่วยปกป้องผู้ใช้โดยการลบไฟล์ติดตั้งที่ไม่รู้จัก (APK) ที่ดาวน์โหลดลงในอุปกรณ์โดยอัตโนมัติ เพื่อหลีกเลี่ยงการติดตั้งมัลแวร์โดยไม่ได้ตั้งใจ</string>
+    <string name="file_cleanup_intro_highlight">การลบไฟล์ติดตั้งที่ไม่รู้จัก (APK) โดยอัตโนมัติ</string>
+    <string name="file_cleanup_intro_action">ฉันเข้าใจแล้ว</string>
+
+    <!-- Call Block Intro -->
+    <string name="call_block_intro_title">แนะนำฟีเจอร์</string>
+    <string name="call_block_intro_desc">ฟีเจอร์นี้ช่วยปกป้องผู้ใช้โดยการบล็อกสายโทรเข้าจากเบอร์ที่ไม่รู้จักซึ่งไม่ได้อยู่ในรายชื่อผู้ติดต่อโดยอัตโนมัติ เพื่อหลีกเลี่ยงการถูกรบกวนจากโฆษณาหรือการหลอกลวง</string>
+    <string name="call_block_intro_highlight">การบล็อกสายจากเบอร์ที่ไม่รู้จักโดยอัตโนมัติ</string>
+    <string name="call_block_intro_action">ฉันเข้าใจแล้ว</string>
+
+    <!-- Overlay Permission -->
+    <string name="overlay_permission_title">แสดงทับแอปอื่น</string>
+    <string name="overlay_permission_desc">แอปต้องการสิทธิ์ \'แสดงทับแอปอื่น\' เพื่อแสดงหน้าจอล็อกเมื่อมีการเปิดแอปที่ถูกบล็อก</string>
+    <string name="overlay_permission_highlight">\'แสดงทับแอปอื่น\'</string>
     <!-- PIN Setup -->
     <string name="pin_enter_new">ป้อน PIN ใหม่ (6 หลัก)</string>
     <string name="pin_confirm_new">ยืนยัน PIN ใหม่</string>
     <string name="pin_setup_success">ตั้งค่า PIN สำเร็จ</string>
     <string name="pin_error_length">PIN ต้องมี 6 หลัก</string>
-    <string name="pin_error_confirm_mismatch">PIN ยืนยันไม่ตรงกัน</string>
+    <string name="pin_error_confirm_mismatch">PIN ที่ยืนยันไม่ตรงกัน</string>
     <string name="pin_error_incorrect">PIN ไม่ถูกต้อง</string>
+    <!-- Clean Files -->
+    <string name="clean_cat_file_count" tools:ignore="PluralsCandidate">$number_file ไฟล์</string>
 
+    <!-- Reorder -->
+    <string name="reorder_apps_title">จัดลำดับแอปใหม่</string>
+    <string name="reorder_contacts_title">จัดลำดับผู้ติดต่อใหม่</string>
     <string name="done">เสร็จสิ้น</string>
+    <string name="app_list_empty_error">โปรดเลือกอย่างน้อยหนึ่งแอป</string>
+    <string name="contact_list_empty_error">โปรดเลือกอย่างน้อยหนึ่งผู้ติดต่อ</string>
+
+    <!-- Emergency Call -->
     <string name="emergency_call_title">โทรฉุกเฉิน</string>
-    <string name="emergency_call_desc">หากไม่มีการใช้งานโทรศัพท์เป็นเวลา 12 ชั่วโมง แอปจะทำการโทรฉุกเฉินโดยอัตโนมัติ</string>
+    <string name="emergency_call_desc">หากไม่ได้ใช้โทรศัพท์เป็นเวลา 12 ชั่วโมง แอปจะทำการโทรฉุกเฉินโดยอัตโนมัติ</string>
     <string name="emergency_call_enable">เปิดใช้งานฟีเจอร์</string>
-    <string name="emergency_call_phone_number">หมายเลขโทรศัพท์ฉุกเฉิน</string>
-    <string name="emergency_call_phone_number_hint">ป้อนหมายเลขโทรศัพท์</string>
+    <string name="emergency_call_phone_number">เบอร์โทรฉุกเฉิน</string>
+    <string name="emergency_call_phone_number_hint">ป้อนเบอร์โทรศัพท์</string>
     <string name="emergency_call_save_success">บันทึกการกำหนดค่าการโทรฉุกเฉินแล้ว</string>
+    <string name="emergency_call_permission_denied">ต้องได้รับอนุญาตในการโทรสำหรับฟีเจอร์นี้</string>
+
+    <!-- Calendar -->
+    <string name="lunar_date_format">วันที่ %1$d/%2$d จันทรคติ</string>
+    <string name="solar_date_format">EEEE ที่ dd/MM/yyyy</string>
 </resources>
