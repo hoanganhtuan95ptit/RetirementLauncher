@@ -10,38 +10,13 @@
     <string name="setting_app_list">应用列表设置</string>
     <string name="setting_default_launcher">设置默认启动器</string>
     <string name="setting_contact_list">快速联系人设置</string>
-    <string name="setting_clean_files">清理垃圾文件</string>
-    <string name="setting_clean_memory">释放内存</string>
-    <string name="setting_emergency_call">自动紧急呼叫</string>
-    <string name="setting_app_monitoring">应用监控</string>
-    <string name="setting_auto_cleanup_apk">自动删除APK</string>
-    <string name="setting_call_block">拦截陌生来电</string>
+
     <string name="setting_pocket_mode">口袋模式</string>
 
     <!-- Onboarding -->
     <string name="onboarding_title">欢迎使用 Retirement Launcher</string>
     <string name="onboarding_desc">一个简化手机界面并保护您设备的应用程序。</string>
     <string name="onboarding_start">开始使用</string>
-
-    <!-- Clean Files -->
-    <string name="clean_files_title">清理垃圾文件</string>
-    <string name="clean_files_desc">准备扫描设备</string>
-    <string name="clean_files_start">开始清理</string>
-    <string name="clean_files_running">正在扫描并清理…</string>
-    <string name="clean_files_completed">清理完成！</string>
-    <string name="clean_files_retry">再次清理</string>
-
-    <!-- Clean Memory -->
-    <string name="clean_memory_title">释放内存</string>
-    <string name="clean_memory_stat_used">已用</string>
-    <string name="clean_memory_stat_free">可用</string>
-    <string name="clean_memory_stat_total">总计</string>
-    <string name="clean_memory_result_sub">系统已优化</string>
-    <string name="clean_memory_start">立即加速</string>
-    <string name="clean_memory_running">正在优化系统…</string>
-    <string name="clean_memory_optimal">系统处于最佳状态！</string>
-    <string name="clean_memory_retry">再次优化</string>
-    <string name="clean_memory_toast">已释放 $number_ram MB</string>
 
     <!-- Contacts -->
     <string name="contact_tap_to_call">立即呼叫</string>
@@ -56,13 +31,6 @@
     <string name="back">返回</string>
     <string name="search">搜索…</string>
 
-    <!-- Call Permission -->
-    <string name="call_permission_title">拨打电话权限</string>
-    <string name="call_permission_desc">应用需要拨打电话权限，以便在紧急情况下自动拨打亲友电话。</string>
-
-    <!-- Call Block -->
-    <string name="call_block_title">拦截电话权限</string>
-    <string name="call_block_desc">应用需要管理通话和联系人权限，以便自动拦截陌生人来电。</string>
 
     <!-- Home Status -->
     <string name="home_header_apps">应用程序</string>
@@ -92,10 +60,4 @@
     <string name="pin_error_incorrect">PIN码错误</string>
 
     <string name="done">完成</string>
-    <string name="emergency_call_title">紧急呼叫</string>
-    <string name="emergency_call_desc">如果手机12小时未使用，应用将自动进行紧急呼叫。</string>
-    <string name="emergency_call_enable">启用功能</string>
-    <string name="emergency_call_phone_number">紧急电话号码</string>
-    <string name="emergency_call_phone_number_hint">输入电话号码</string>
-    <string name="emergency_call_save_success">紧急呼叫配置已保存</string>
 </resources>

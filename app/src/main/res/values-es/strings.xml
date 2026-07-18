@@ -12,10 +12,7 @@
     <string name="setting_contact_list">Configuración de Contactos Rápidos</string>
     <string name="setting_clean_files">Limpiar Archivos Basura</string>
     <string name="setting_clean_memory">Liberar Memoria</string>
-    <string name="setting_emergency_call">Llamada de Emergencia Automática</string>
-    <string name="setting_app_monitoring">Monitoreo de Aplicaciones</string>
-    <string name="setting_auto_cleanup_apk">Eliminar APK Automáticamente</string>
-    <string name="setting_call_block">Bloquear Llamadas Desconocidas</string>
+
     <string name="setting_pocket_mode">Modo Bolsillo</string>
 
     <!-- Onboarding -->
@@ -30,17 +27,7 @@
     <string name="clean_files_running">Escaneando y limpiando…</string>
     <string name="clean_files_completed">¡Limpieza completada!</string>
     <string name="clean_files_retry">Limpiar de Nuevo</string>
-    <!-- Clean Files – categories -->
-    <string name="clean_cat_system_temp">Archivos temporales del sistema</string>
-    <string name="clean_cat_compressed">Archivos comprimidos desconocidos</string>
-    <string name="clean_cat_no_extension">Documentos (.pdf, .doc, .txt…)</string>
-    <string name="clean_cat_apk_cache">APKs antiguos y caché</string>
-    <!-- Clean Files – result card -->
-    <string name="clean_result_title">Resultados de la Limpieza</string>
-    <string name="clean_result_files_deleted">archivos eliminados</string>
-    <string name="clean_result_space_freed">espacio liberado</string>
-    <string name="clean_files_idle_desc">Se detectaron $number_file archivos basura – toque para limpiar</string>
-    <string name="clean_files_count_unit">archivos basura</string>
+
 
     <!-- Clean Memory -->
     <string name="clean_memory_title">Liberar Memoria</string>
@@ -67,15 +54,7 @@
     <string name="back">Atrás</string>
     <string name="search">Buscar…</string>
 
-    <!-- Call Permission -->
-    <string name="call_permission_title">Permiso para realizar llamadas</string>
-    <string name="call_permission_desc">La aplicación necesita permiso para realizar llamadas y llamar automáticamente a familiares en caso de emergencia.</string>
-    <string name="call_permission_highlight">realizar llamadas</string>
 
-    <!-- Call Block -->
-    <string name="call_block_title">Permiso para bloquear llamadas</string>
-    <string name="call_block_desc">La aplicación necesita permiso para gestionar llamadas y contactos para bloquear automáticamente llamadas de desconocidos.</string>
-    <string name="call_block_highlight">gestionar llamadas y contactos</string>
     <!-- Home Status -->
     <string name="home_header_apps">Aplicaciones</string>
     <string name="home_header_contacts">Contactos Rápidos</string>
@@ -105,10 +84,4 @@
     <string name="pin_error_incorrect">PIN incorrecto</string>
 
     <string name="done">Hecho</string>
-    <string name="emergency_call_title">Llamada de Emergencia</string>
-    <string name="emergency_call_desc">Si el teléfono no se usa durante 12 horas, la aplicación realizará automáticamente una llamada de emergencia.</string>
-    <string name="emergency_call_enable">Activar función</string>
-    <string name="emergency_call_phone_number">Número de Teléfono de Emergencia</string>
-    <string name="emergency_call_phone_number_hint">Introducir número</string>
-    <string name="emergency_call_save_success">Configuración de llamada de emergencia guardada</string>
 </resources>

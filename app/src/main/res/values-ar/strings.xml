@@ -12,10 +12,7 @@
     <string name="setting_contact_list">إعداد جهات الاتصال السريعة</string>
     <string name="setting_clean_files">تنظيف الملفات غير المرغوب فيها</string>
     <string name="setting_clean_memory">تحرير الذاكرة</string>
-    <string name="setting_emergency_call">اتصال طوارئ تلقائي</string>
-    <string name="setting_app_monitoring">مراقبة التطبيقات</string>
-    <string name="setting_auto_cleanup_apk">حذف APK تلقائياً</string>
-    <string name="setting_call_block">حظر المكالمات المجهولة</string>
+
     <string name="setting_pocket_mode">وضع الجيب</string>
 
     <!-- Onboarding -->
@@ -56,13 +53,7 @@
     <string name="back">رجوع</string>
     <string name="search">بحث…</string>
 
-    <!-- Call Permission -->
-    <string name="call_permission_title">إذن إجراء المكالمات</string>
-    <string name="call_permission_desc">يحتاج التطبيق إلى إذن لإجراء المكالمات للاتصال بالأقارب تلقائياً في حالات الطوارئ.</string>
 
-    <!-- Call Block -->
-    <string name="call_block_title">إذن حظر المكالمات</string>
-    <string name="call_block_desc">يحتاج التطبيق إلى إذن لإدارة المكالمات وجهات الاتصال لحظر المكالمات من الغرباء تلقائياً.</string>
 
     <!-- Home Status -->
     <string name="home_header_apps">التطبيقات</string>
@@ -92,10 +83,4 @@
     <string name="pin_error_incorrect">رمز PIN غير صحيح</string>
 
     <string name="done">تم</string>
-    <string name="emergency_call_title">اتصال الطوارئ</string>
-    <string name="emergency_call_desc">إذا لم يتم استخدام الهاتف لمدة 12 ساعة، سيقوم التطبيق بإجراء اتصال طوارئ تلقائياً.</string>
-    <string name="emergency_call_enable">تفعيل الميزة</string>
-    <string name="emergency_call_phone_number">رقم هاتف الطوارئ</string>
-    <string name="emergency_call_phone_number_hint">أدخل رقم الهاتف</string>
-    <string name="emergency_call_save_success">تم حفظ تكوين اتصال الطوارئ</string>
 </resources>

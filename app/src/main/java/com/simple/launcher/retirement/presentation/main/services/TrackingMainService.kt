@@ -10,6 +10,5 @@ class TrackingMainService : ActivityCreatedService {
 
     override fun setup(fragmentActivity: FragmentActivity) {
 
-        Log.d("tuanha", "setup: ")
     }
 }

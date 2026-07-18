@@ -10,49 +10,13 @@
     <string name="setting_app_list">App List Setup</string>
     <string name="setting_default_launcher">Default Launcher Setup</string>
     <string name="setting_contact_list">Quick Contact Setup</string>
-    <string name="setting_clean_files">Clean Junk Files</string>
-    <string name="setting_clean_memory">Free Up Memory</string>
-    <string name="setting_emergency_call">Auto Emergency Call (by quick contact)</string>
-    <string name="setting_app_monitoring">App Monitoring</string>
-    <string name="setting_auto_cleanup_apk">Auto Delete APK</string>
-    <string name="setting_call_block">Block Unknown Calls</string>
+
     <string name="setting_pocket_mode">Pocket Mode (Prevent accidental touch)</string>
 
     <!-- Onboarding -->
     <string name="onboarding_title">Welcome to Retirement Launcher</string>
     <string name="onboarding_desc">An app to simplify your phone interface and protect your device.</string>
     <string name="onboarding_start">Get Started</string>
-
-    <!-- Clean Files -->
-    <string name="clean_files_title">Clean Junk Files</string>
-    <string name="clean_files_desc">Ready to scan device</string>
-    <string name="clean_files_start">Start Cleaning</string>
-    <string name="clean_files_running">Scanning and cleaning…</string>
-    <string name="clean_files_completed">Cleaning completed!</string>
-    <string name="clean_files_retry">Clean Again</string>
-    <!-- Clean Files – categories -->
-    <string name="clean_cat_system_temp">System temporary files (.tmp, .log…)</string>
-    <string name="clean_cat_compressed">Unknown compressed files</string>
-    <string name="clean_cat_no_extension">Documents (.pdf, .doc, .txt…)</string>
-    <string name="clean_cat_apk_cache">Old APKs &amp; cache</string>
-    <!-- Clean Files – result card -->
-    <string name="clean_result_title">Cleaning Results</string>
-    <string name="clean_result_files_deleted">files deleted</string>
-    <string name="clean_result_space_freed">space freed</string>
-    <string name="clean_files_idle_desc"> $number_file junk files detected – tap to clean</string>
-    <string name="clean_files_count_unit">junk files</string>
-
-    <!-- Clean Memory -->
-    <string name="clean_memory_title">Free Up Memory</string>
-    <string name="clean_memory_stat_used">Used</string>
-    <string name="clean_memory_stat_free">Free</string>
-    <string name="clean_memory_stat_total">Total</string>
-    <string name="clean_memory_result_sub">System optimized</string>
-    <string name="clean_memory_start">Speed Up Now</string>
-    <string name="clean_memory_running">Optimizing system…</string>
-    <string name="clean_memory_optimal">System is in optimal state!</string>
-    <string name="clean_memory_retry">Optimize Again</string>
-    <string name="clean_memory_toast">Freed $number_ram MB</string>
 
     <!-- Contacts -->
     <string name="contact_tap_to_call">Call Now</string>
@@ -67,15 +31,7 @@
     <string name="back">Back</string>
     <string name="search">Search…</string>
 
-    <!-- Call Permission -->
-    <string name="call_permission_title">Make Calls Permission</string>
-    <string name="call_permission_desc">The app needs permission to make calls to automatically call relatives in case of emergency.</string>
-    <string name="call_permission_highlight">make calls</string>
 
-    <!-- Call Block -->
-    <string name="call_block_title">Block Calls Permission</string>
-    <string name="call_block_desc">The app needs permission to manage calls and contacts to automatically block calls from strangers.</string>
-    <string name="call_block_highlight">manage calls and contacts</string>
     <!-- Home Status -->
     <string name="home_header_apps">Applications</string>
     <string name="home_header_contacts">Quick Contacts</string>
@@ -84,10 +40,6 @@
     <string name="block_title">Application Blocked</string>
     <string name="block_desc">This application is not in the allowed list. Please contact the administrator.</string>
     <string name="block_go_home">Go to Home Screen</string>
-
-    <!-- Debug-only settings (chỉ hiển thị trong debug build) -->
-    <string name="setting_header_debug">🐛 Debug</string>
-    <string name="setting_debug_block_screen">View Block Screen</string>
 
     <!-- Permissions & Setup -->
     <string name="default_launcher_setup">Setup Now</string>
@@ -100,44 +52,6 @@
     <string name="pin_verify_desc">Please enter your PIN to change this setting.</string>
     <string name="pin_key_delete_desc">Delete</string>
 
-    <!-- File Permission -->
-    <string name="file_permission_title">Storage Protection</string>
-    <string name="file_permission_desc">For the automatic deletion of unknown APK/AAB files to work, the app needs access to all storage. This helps keep your device clean and safe.</string>
-    <string name="file_permission_highlight">unknown APK/AAB</string>
-
-    <!-- Usage Stats Permission -->
-    <string name="usage_stats_permission_title">App Monitoring</string>
-    <string name="usage_stats_permission_desc">For the app blocking feature to work, you need to grant \'Usage Data Access\'. This helps the app know when an unauthorized app is opened.</string>
-    <string name="usage_stats_permission_highlight">\'Usage Data Access\'</string>
-
-    <!-- App Monitoring Intro -->
-    <string name="app_monitoring_intro_title">Feature Introduction</string>
-    <string name="app_monitoring_intro_desc">This feature helps protect users by only allowing selected apps to run. Other apps will be blocked to avoid unintended issues.</string>
-    <string name="app_monitoring_intro_highlight">only allowing selected apps</string>
-    <string name="app_monitoring_intro_action">I understand</string>
-
-    <!-- Emergency Call Intro -->
-    <string name="emergency_call_intro_title">Feature Introduction</string>
-    <string name="emergency_call_intro_desc">To ensure safety, the app will automatically call the quick contact list if no user interaction is detected on the phone for 10 hours.</string>
-    <string name="emergency_call_intro_highlight">automatically call the quick contact list</string>
-    <string name="emergency_call_intro_action">I understand</string>
-
-    <!-- File Cleanup Intro -->
-    <string name="file_cleanup_intro_title">Feature Introduction</string>
-    <string name="file_cleanup_intro_desc">This feature helps protect users by automatically deleting unknown installation files (APK) downloaded to the device, avoiding accidental installation of malware.</string>
-    <string name="file_cleanup_intro_highlight">automatically deleting unknown installation files (APK)</string>
-    <string name="file_cleanup_intro_action">I understand</string>
-
-    <!-- Call Block Intro -->
-    <string name="call_block_intro_title">Feature Introduction</string>
-    <string name="call_block_intro_desc">This feature helps protect users by automatically blocking calls from unknown numbers not in the contacts, avoiding being bothered by ads or scams.</string>
-    <string name="call_block_intro_highlight">automatically blocking calls from unknown numbers</string>
-    <string name="call_block_intro_action">I understand</string>
-
-    <!-- Overlay Permission -->
-    <string name="overlay_permission_title">Display Over Other Apps</string>
-    <string name="overlay_permission_desc">The app needs \'Display over other apps\' permission to show the lock screen when a blocked app is opened.</string>
-    <string name="overlay_permission_highlight">\'Display over other apps\'</string>
     <!-- PIN Setup -->
     <string name="pin_enter_new">Enter new PIN (6 digits)</string>
     <string name="pin_confirm_new">Confirm new PIN</string>
@@ -145,22 +59,6 @@
     <string name="pin_error_length">PIN must be 6 digits</string>
     <string name="pin_error_confirm_mismatch">Confirmation PIN does not match</string>
     <string name="pin_error_incorrect">Incorrect PIN</string>
-    <!-- Clean Files -->
-    <string name="clean_cat_file_count" tools:ignore="PluralsCandidate">$number_file files</string>
 
-    <!-- Reorder -->
-    <string name="reorder_apps_title">Reorder Apps</string>
-    <string name="reorder_contacts_title">Reorder Contacts</string>
     <string name="done">Done</string>
-    <string name="app_list_empty_error">Please select at least one app</string>
-    <string name="contact_list_empty_error">Please select at least one contact</string>
-
-    <!-- Emergency Call -->
-    <string name="emergency_call_title">Emergency Call</string>
-    <string name="emergency_call_desc">If the phone is not used for 12 hours, the app will automatically perform an emergency call.</string>
-    <string name="emergency_call_enable">Enable feature</string>
-    <string name="emergency_call_phone_number">Emergency Phone Number</string>
-    <string name="emergency_call_phone_number_hint">Enter phone number</string>
-    <string name="emergency_call_save_success">Emergency call configuration saved</string>
-    <string name="emergency_call_permission_denied">Calling permission is required for this feature</string>
 </resources>

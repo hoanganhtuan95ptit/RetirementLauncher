@@ -3,6 +3,7 @@ package com.simple.launcher.retirement.utils.permission
 import android.Manifest
 import android.app.AppOpsManager
 import android.app.role.RoleManager
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -10,11 +11,14 @@ import android.os.Build
 import android.os.Environment
 import android.os.Process
 import android.provider.Settings
+import android.util.Log
 import androidx.core.content.ContextCompat
 import com.simple.deeplink.sendDeeplink
 import com.simple.launcher.retirement.MainApplication
 import com.simple.launcher.retirement.domain.repository.PreferenceRepository
 import com.simple.launcher.retirement.presentation.DeepLinks
+import com.simple.launcher.retirement.presentation.emergency.UserActivityAccessibilityService
+import com.simple.launcher.retirement.presentation.sendDeeplinkWithBackStack
 import com.simple.launcher.retirement.utils.AppEvent
 import com.simple.launcher.retirement.utils.AppEventBus
 import kotlinx.coroutines.delay
@@ -92,6 +96,19 @@ object PermissionManager {
         return ContextCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED
     }
 
+    fun hasUserActivityAccessibilityPermission(): Boolean {
+
+        val expectedComponent = ComponentName(context, UserActivityAccessibilityService::class.java)
+        val enabledServices = Settings.Secure.getString(
+            context.contentResolver,
+            Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES
+        ) ?: return false
+
+        return enabledServices
+            .split(ACCESSIBILITY_SERVICE_SEPARATOR)
+            .mapNotNull(ComponentName::unflattenFromString)
+            .any { it == expectedComponent }
+    }
 
     /**
      * Gửi deeplink mở bottom sheet và chờ event kết quả từ AppEventBus.
@@ -100,10 +117,16 @@ object PermissionManager {
      * để không bao giờ bỏ lỡ event nếu bottom sheet trả kết quả quá nhanh.
      * Nếu gửi deeplink trước rồi mới subscribe, coroutine có thể treo vĩnh viễn ở first().
      */
-    private suspend inline fun <reified T : AppEvent> awaitEventAfterDeeplink(deeplink: String): T {
+    private suspend inline fun <reified T : AppEvent> awaitEventAfterDeeplink(
+        deeplink: String,
+        extras: Map<String, Any?> = emptyMap()
+    ): T {
 
         return AppEventBus.events
-            .onSubscription { sendDeeplink(deeplink) }
+            .onSubscription {
+                if (extras.isEmpty()) sendDeeplink(deeplink)
+                else sendDeeplink(deeplink, extras = extras)
+            }
             .filterIsInstance<T>()
             .first()
     }
@@ -158,14 +181,57 @@ object PermissionManager {
      */
     suspend fun requireDefaultLauncher(): Boolean {
 
-        if (isDefaultLauncher()) return true
-        return awaitPermissionResult(DeepLinks.PERMISSION_DEFAULT_LAUNCHER)
+        if (isDefaultLauncher()){
+            PreferenceRepository.instance.setPendingDefaultLauncher(false)
+            return true
+        }
+
+        PreferenceRepository.instance.setPendingDefaultLauncher(true)
+        val result = awaitPermissionResult(DeepLinks.PERMISSION_DEFAULT_LAUNCHER)
+
+        if (result) {
+            PreferenceRepository.instance.setPendingDefaultLauncher(false)
+        }
+
+        return result
     }
 
     suspend fun requireCallPermission(): Boolean {
 
         if (hasCallPermission()) return true
         return awaitPermissionResult(DeepLinks.PERMISSION_CALL)
+    }
+
+    suspend fun requireUserActivityAccessibilityPermission(): Boolean {
+
+        if (hasUserActivityAccessibilityPermission()) return true
+        return awaitPermissionResult(DeepLinks.PERMISSION_USER_ACTIVITY_ACCESSIBILITY)
+    }
+
+    /**
+     * Yêu cầu thiết lập liên hệ khẩn cấp nếu chưa có.
+     * @return true nếu đã có liên hệ hoặc vừa thiết lập xong, false nếu chưa có hoặc user huỷ.
+     */
+    suspend fun requireEmergencyContact(): Boolean {
+
+        val contacts = com.simple.launcher.retirement.domain.repository.ContactRepository.instance.getSelectedContacts()
+        if (contacts.isNotEmpty()) return true
+
+        val bsResult = awaitEventAfterDeeplink<AppEvent.EmergencyContactRequiredResult>(DeepLinks.EMERGENCY_CONTACT_REQUIRED)
+        if (bsResult is AppEvent.EmergencyContactRequiredAccept) {
+
+            val setupResult = awaitEventAfterDeeplink<AppEvent.ContactSetupResult>(
+                DeepLinks.CONTACT_LIST,
+                DeepLinks.withBackStack(DeepLinks.Extras.IS_FLOW_SETUP to true)
+            )
+
+            val a =  setupResult is AppEvent.ContactSetupAccept &&
+                    com.simple.launcher.retirement.domain.repository.ContactRepository.instance.getSelectedContacts().isNotEmpty()
+
+            return a
+        }
+
+        return false
     }
 
     /**
@@ -185,13 +251,11 @@ object PermissionManager {
      * @return true nếu xác thực/thiết lập thành công, false nếu user huỷ.
      */
     suspend fun requirePinPermissions(): Boolean {
-//        if (hasPinPermission()) {
-//            sendDeeplink(DeepLinks.PIN_VERIFY)
-//        } else {
-//            sendDeeplink(DeepLinks.PIN_SETUP)
-//        }
-//        return AppEventBus.events.filterIsInstance<AppEvent.PinResult>().first() !is AppEvent.PinCancel
-        return true
+
+        val deeplink = if (hasPinPermission()) DeepLinks.PIN_VERIFY else DeepLinks.PIN_SETUP
+        val result = awaitEventAfterDeeplink<AppEvent.PinResult>(deeplink)
+
+        return result !is AppEvent.PinCancel
     }
 
     /**
@@ -277,4 +341,6 @@ object PermissionManager {
             false
         }
     }
+
+    private const val ACCESSIBILITY_SERVICE_SEPARATOR = ":"
 }

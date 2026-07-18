@@ -10,38 +10,13 @@
     <string name="setting_app_list">Sediakan Senarai Aplikasi</string>
     <string name="setting_default_launcher">Tetapkan Pelancar Lalai</string>
     <string name="setting_contact_list">Sediakan Kenalan Pantas</string>
-    <string name="setting_clean_files">Bersihkan Fail Sampah</string>
-    <string name="setting_clean_memory">Kosongkan Memori</string>
-    <string name="setting_emergency_call">Panggilan Kecemasan Automatik</string>
-    <string name="setting_app_monitoring">Pemantauan Aplikasi</string>
-    <string name="setting_auto_cleanup_apk">Padam APK Automatik</string>
-    <string name="setting_call_block">Sekat Panggilan Tidak Dikenali</string>
+
     <string name="setting_pocket_mode">Mod Poket</string>
 
     <!-- Onboarding -->
     <string name="onboarding_title">Selamat Datang ke Retirement Launcher</string>
-    <string name="onboarding_desc">Aplikasi untuk memudahkan antara muka telefon anda dan melindungi peranti anda.</string>
+    <string name="onboarding_desc">Aplikasi untuk memudahkan antara muka telefon anda và melindungi peranti anda.</string>
     <string name="onboarding_start">Mulakan</string>
-
-    <!-- Clean Files -->
-    <string name="clean_files_title">Bersihkan Fail Sampah</string>
-    <string name="clean_files_desc">Sedia untuk mengimbas peranti</string>
-    <string name="clean_files_start">Mulakan Pembersihan</string>
-    <string name="clean_files_running">Mengimbas dan membersihkan…</string>
-    <string name="clean_files_completed">Pembersihan selesai!</string>
-    <string name="clean_files_retry">Bersihkan Semula</string>
-
-    <!-- Clean Memory -->
-    <string name="clean_memory_title">Kosongkan Memori</string>
-    <string name="clean_memory_stat_used">Digunakan</string>
-    <string name="clean_memory_stat_free">Kosong</string>
-    <string name="clean_memory_stat_total">Jumlah</string>
-    <string name="clean_memory_result_sub">Sistem dioptimumkan</string>
-    <string name="clean_memory_start">Lajukan Sekarang</string>
-    <string name="clean_memory_running">Mengoptimumkan sistem…</string>
-    <string name="clean_memory_optimal">Sistem dalam keadaan optimum!</string>
-    <string name="clean_memory_retry">Optimumkan Semula</string>
-    <string name="clean_memory_toast">$number_ram MB dikosongkan</string>
 
     <!-- Contacts -->
     <string name="contact_tap_to_call">Panggil Sekarang</string>
@@ -56,13 +31,6 @@
     <string name="back">Kembali</string>
     <string name="search">Cari…</string>
 
-    <!-- Call Permission -->
-    <string name="call_permission_title">Kebenaran Membuat Panggilan</string>
-    <string name="call_permission_desc">Aplikasi memerlukan kebenaran membuat panggilan untuk menghubungi saudara secara automatik semasa kecemasan.</string>
-
-    <!-- Call Block -->
-    <string name="call_block_title">Kebenaran Menyekat Panggilan</string>
-    <string name="call_block_desc">Aplikasi memerlukan kebenaran untuk mengurus panggilan dan kenalan bagi menyekat panggilan daripada orang yang tidak dikenali secara automatik.</string>
 
     <!-- Home Status -->
     <string name="home_header_apps">Aplikasi</string>
@@ -92,10 +60,4 @@
     <string name="pin_error_incorrect">PIN salah</string>
 
     <string name="done">Selesai</string>
-    <string name="emergency_call_title">Panggilan Kecemasan</string>
-    <string name="emergency_call_desc">Jika telefon tidak digunakan selama 12 jam, aplikasi akan membuat panggilan kecemasan secara automatik.</string>
-    <string name="emergency_call_enable">Dayakan ciri</string>
-    <string name="emergency_call_phone_number">Nombor Telefon Kecemasan</string>
-    <string name="emergency_call_phone_number_hint">Masukkan nombor</string>
-    <string name="emergency_call_save_success">Konfigurasi panggilan kecemasan disimpan</string>
 </resources>

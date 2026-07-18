@@ -32,6 +32,8 @@ data class SettingItem(
     val isSwitch: Boolean = false,
     var isChecked: Boolean = false,
 
+    val isEnabled: Boolean = true,
+
     val background: Background = Background(),
 ) : ViewItem, SpanSizeLookupViewItem {
 
@@ -47,6 +49,8 @@ data class SettingItem(
 
         isSwitch to "isSwitch",
         isChecked to "isChecked",
+
+        isEnabled to "isEnabled",
 
         background to "background"
     )
@@ -65,6 +69,7 @@ data class SettingItem(
         const val ID_TOGGLE_POCKET_MODE = 10
         const val ID_EMERGENCY_CALL_TOGGLE = 11
         const val ID_LUNAR_CALENDAR_TOGGLE = 12
+        const val ID_EMERGENCY_ADVANCED = 13
 
         // ── Slot orders (dùng cho _itemMap trong SettingsViewModel) ──────────
         const val ORDER_TOGGLE_BLOCK = 22.0
@@ -97,6 +102,7 @@ class SettingsAdapter : ViewItemAdapter<SettingItem, ItemSettingBinding>() {
         viewHolder.binding.vClick.setOnSafeClickListener {
 
             val item = viewHolder.getItem<SettingItem>() ?: return@setOnSafeClickListener
+            if (!item.isEnabled) return@setOnSafeClickListener
             AppEventBus.post(AppEvent.SettingClicked(item))
         }
 
@@ -128,6 +134,10 @@ class SettingsAdapter : ViewItemAdapter<SettingItem, ItemSettingBinding>() {
 
         if (payloads.isEmpty() || payloads.contains("background")) {
             binding.content.setBackground(item.background)
+        }
+
+        if (payloads.isEmpty() || payloads.contains("isEnabled")) {
+            binding.root.alpha = if (item.isEnabled) 1f else 0.5f
         }
     }
 

@@ -10,38 +10,13 @@
     <string name="setting_app_list">Konfiguracja listy aplikacji</string>
     <string name="setting_default_launcher">Ustaw domyślny launcher</string>
     <string name="setting_contact_list">Konfiguracja szybkich kontaktów</string>
-    <string name="setting_clean_files">Oczyszczanie plików śmieci</string>
-    <string name="setting_clean_memory">Zwalnianie pamięci</string>
-    <string name="setting_emergency_call">Automatyczne połączenie alarmowe</string>
-    <string name="setting_app_monitoring">Monitorowanie aplikacji</string>
-    <string name="setting_auto_cleanup_apk">Automatyczne usuwanie APK</string>
-    <string name="setting_call_block">Blokowanie nieznanych połączeń</string>
+
     <string name="setting_pocket_mode">Tryb kieszonkowy</string>
 
     <!-- Onboarding -->
     <string name="onboarding_title">Witaj w Retirement Launcher</string>
     <string name="onboarding_desc">Aplikacja upraszczająca interfejs telefonu i chroniąca Twoje urządzenie.</string>
     <string name="onboarding_start">Rozpocznij</string>
-
-    <!-- Clean Files -->
-    <string name="clean_files_title">Oczyszczanie plików śmieci</string>
-    <string name="clean_files_desc">Gotowy do skanowania urządzenia</string>
-    <string name="clean_files_start">Rozpocznij oczyszczanie</string>
-    <string name="clean_files_running">Skanowanie i oczyszczanie…</string>
-    <string name="clean_files_completed">Oczyszczanie zakończone!</string>
-    <string name="clean_files_retry">Oczyść ponownie</string>
-
-    <!-- Clean Memory -->
-    <string name="clean_memory_title">Zwalnianie pamięci</string>
-    <string name="clean_memory_stat_used">Używane</string>
-    <string name="clean_memory_stat_free">Wolne</string>
-    <string name="clean_memory_stat_total">Łącznie</string>
-    <string name="clean_memory_result_sub">System został zoptymalizowany</string>
-    <string name="clean_memory_start">Przyspiesz teraz</string>
-    <string name="clean_memory_running">Optymalizacja systemu…</string>
-    <string name="clean_memory_optimal">System jest w optymalnym stanie!</string>
-    <string name="clean_memory_retry">Optymalizuj ponownie</string>
-    <string name="clean_memory_toast">Zwolniono $number_ram MB</string>
 
     <!-- Contacts -->
     <string name="contact_tap_to_call">Zadzwoń teraz</string>
@@ -56,13 +31,6 @@
     <string name="back">Wstecz</string>
     <string name="search">Szukaj…</string>
 
-    <!-- Call Permission -->
-    <string name="call_permission_title">Uprawnienie do wykonywania połączeń</string>
-    <string name="call_permission_desc">Aplikacja potrzebuje uprawnień do wykonywania połączeń, aby automatycznie dzwonić do bliskich w nagłych wypadkach.</string>
-
-    <!-- Call Block -->
-    <string name="call_block_title">Uprawnienie do blokowania połączeń</string>
-    <string name="call_block_desc">Aplikacja potrzebuje uprawnień do zarządzania połączeniami i kontaktami, aby automatycznie blokować połączenia od nieznajomych.</string>
 
     <!-- Home Status -->
     <string name="home_header_apps">Aplikacje</string>
@@ -92,10 +60,4 @@
     <string name="pin_error_incorrect">Nieprawidłowy PIN</string>
 
     <string name="done">Gotowe</string>
-    <string name="emergency_call_title">Połączenie alarmowe</string>
-    <string name="emergency_call_desc">Jeśli telefon nie będzie używany przez 12 godzin, aplikacja automatycznie wykona połączenie alarmowe.</string>
-    <string name="emergency_call_enable">Włącz funkcję</string>
-    <string name="emergency_call_phone_number">Numer alarmowy</string>
-    <string name="emergency_call_phone_number_hint">Wprowadź numer</string>
-    <string name="emergency_call_save_success">Konfiguracja połączenia alarmowego zapisana</string>
 </resources>

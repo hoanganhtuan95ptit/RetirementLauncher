@@ -2,6 +2,7 @@ package com.simple.launcher.retirement.domain.repository
 
 import com.simple.launcher.retirement.MainApplication
 import com.simple.launcher.retirement.data.repository.PreferenceRepositoryImpl
+import com.simple.launcher.retirement.domain.model.ExclusionPeriod
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -57,6 +58,18 @@ interface PreferenceRepository {
     fun setEmergencyPhoneNumber(number: String)
     fun getLastEmergencyIndex(): Int
     fun setLastEmergencyIndex(index: Int)
+
+    fun getEmergencyTimeout(): Long
+    fun setEmergencyTimeout(timeout: Long)
+
+    fun getExclusionPeriods(): List<ExclusionPeriod>
+    fun setExclusionPeriods(periods: List<ExclusionPeriod>)
+
+    fun getPendingEmergencyConfig(): com.simple.launcher.retirement.domain.model.SOSConfig?
+    fun setPendingEmergencyConfig(config: com.simple.launcher.retirement.domain.model.SOSConfig?)
+
+    fun isPendingDefaultLauncher(): Boolean
+    fun setPendingDefaultLauncher(pending: Boolean)
 
     // User Activity
     fun getLastUserActivity(): Long

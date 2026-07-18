@@ -10,38 +10,13 @@
     <string name="setting_app_list">Configurare Listă Aplicații</string>
     <string name="setting_default_launcher">Setare Launcher Implicit</string>
     <string name="setting_contact_list">Configurare Contacte Rapide</string>
-    <string name="setting_clean_files">Curățare Fișiere Inutile</string>
-    <string name="setting_clean_memory">Eliberare Memorie</string>
-    <string name="setting_emergency_call">Apel de Urgență Automat</string>
-    <string name="setting_app_monitoring">Monitorizare Aplicații</string>
-    <string name="setting_auto_cleanup_apk">Ștergere Automată APK</string>
-    <string name="setting_call_block">Blocare Apeluri Necunoscute</string>
+
     <string name="setting_pocket_mode">Mod Buzunar</string>
 
     <!-- Onboarding -->
     <string name="onboarding_title">Bine ați venit la Retirement Launcher</string>
     <string name="onboarding_desc">O aplicație pentru simplificarea interfeței telefonului și protejarea dispozitivului.</string>
     <string name="onboarding_start">Începe</string>
-
-    <!-- Clean Files -->
-    <string name="clean_files_title">Curățare Fișiere Inutile</string>
-    <string name="clean_files_desc">Gata pentru scanarea dispozitivului</string>
-    <string name="clean_files_start">Începe Curățarea</string>
-    <string name="clean_files_running">Se scanează și se curăță…</string>
-    <string name="clean_files_completed">Curățare finalizată!</string>
-    <string name="clean_files_retry">Curăță din nou</string>
-
-    <!-- Clean Memory -->
-    <string name="clean_memory_title">Eliberare Memorie</string>
-    <string name="clean_memory_stat_used">Folosit</string>
-    <string name="clean_memory_stat_free">Liber</string>
-    <string name="clean_memory_stat_total">Total</string>
-    <string name="clean_memory_result_sub">Sistem optimizat</string>
-    <string name="clean_memory_start">Accelerează acum</string>
-    <string name="clean_memory_running">Se optimizează sistemul…</string>
-    <string name="clean_memory_optimal">Sistemul este în stare optimă!</string>
-    <string name="clean_memory_retry">Optimizează din nou</string>
-    <string name="clean_memory_toast">S-au eliberat $number_ram MB</string>
 
     <!-- Contacts -->
     <string name="contact_tap_to_call">Sună acum</string>
@@ -56,13 +31,6 @@
     <string name="back">Înapoi</string>
     <string name="search">Caută…</string>
 
-    <!-- Call Permission -->
-    <string name="call_permission_title">Permisiune pentru apeluri</string>
-    <string name="call_permission_desc">Aplicația are nevoie de permisiunea de a efectua apeluri pentru a suna automat rudele în caz de urgență.</string>
-
-    <!-- Call Block -->
-    <string name="call_block_title">Permisiune pentru blocarea apelurilor</string>
-    <string name="call_block_desc">Aplicația are nevoie de permisiunea de a gestiona apelurile și contactele pentru a bloca automat apelurile de la străini.</string>
 
     <!-- Home Status -->
     <string name="home_header_apps">Aplicații</string>
@@ -80,7 +48,7 @@
     <string name="permission_grant">Acordă permisiunea</string>
     <string name="understood">Am înțeles</string>
     <string name="pin_verify_title">Confirmă PIN</string>
-    <string name="pin_verify_desc">Vă rugăm să introduceți PIN-ul pentru a modifica această setare.</string>
+    <string name="pin_verify_desc">Vvă rugăm să introduceți PIN-ul pentru a modifica această setare.</string>
     <string name="pin_key_delete_desc">Șterge</string>
 
     <!-- PIN Setup -->
@@ -92,10 +60,4 @@
     <string name="pin_error_incorrect">PIN incorect</string>
 
     <string name="done">Gata</string>
-    <string name="emergency_call_title">Apel de urgență</string>
-    <string name="emergency_call_desc">Dacă telefonul nu este folosit timp de 12 ore, aplicația va efectua automat un apel de urgență.</string>
-    <string name="emergency_call_enable">Activează funcția</string>
-    <string name="emergency_call_phone_number">Număr de telefon de urgență</string>
-    <string name="emergency_call_phone_number_hint">Introduceți numărul</string>
-    <string name="emergency_call_save_success">Configurație apel de urgență salvată</string>
 </resources>

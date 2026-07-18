@@ -12,10 +12,7 @@
     <string name="setting_contact_list">দ্রুত যোগাযোগ সেটআপ</string>
     <string name="setting_clean_files">অপ্রয়োজনীয় ফাইল পরিষ্কার করুন</string>
     <string name="setting_clean_memory">মেমরি খালি করুন</string>
-    <string name="setting_emergency_call">স্বয়ংক্রিয় জরুরি কল</string>
-    <string name="setting_app_monitoring">অ্যাপ মনিটরিং</string>
-    <string name="setting_auto_cleanup_apk">APK স্বয়ংক্রিয়ভাবে মুছুন</string>
-    <string name="setting_call_block">অজানা কল ব্লক করুন</string>
+
     <string name="setting_pocket_mode">পকেট মোড</string>
 
     <!-- Onboarding -->
@@ -56,13 +53,7 @@
     <string name="back">ফিরে যান</string>
     <string name="search">অনুসন্ধান…</string>
 
-    <!-- Call Permission -->
-    <string name="call_permission_title">কল করার অনুমতি</string>
-    <string name="call_permission_desc">জরুরি অবস্থায় আত্মীয়দের স্বয়ংক্রিয়ভাবে কল করার জন্য অ্যাপটির কল করার অনুমতি প্রয়োজন।</string>
 
-    <!-- Call Block -->
-    <string name="call_block_title">কল ব্লক করার অনুমতি</string>
-    <string name="call_block_desc">অজানা নম্বর থেকে কল স্বয়ংক্রিয়ভাবে ব্লক করতে অ্যাপটির কল এবং যোগাযোগ ব্যবস্থাপনার অনুমতি প্রয়োজন।</string>
 
     <!-- Home Status -->
     <string name="home_header_apps">অ্যাপ্লিকেশন</string>
@@ -92,10 +83,4 @@
     <string name="pin_error_incorrect">ভুল পিন</string>
 
     <string name="done">সম্পন্ন</string>
-    <string name="emergency_call_title">জরুরি কল</string>
-    <string name="emergency_call_desc">যদি ফোনটি ১২ ঘণ্টা ব্যবহার করা না হয়, তবে অ্যাপটি স্বয়ংক্রিয়ভাবে একটি জরুরি কল করবে।</string>
-    <string name="emergency_call_enable">বৈশিষ্ট্যটি সক্ষম করুন</string>
-    <string name="emergency_call_phone_number">জরুরি ফোন নম্বর</string>
-    <string name="emergency_call_phone_number_hint">নম্বর লিখুন</string>
-    <string name="emergency_call_save_success">জরুরি কল কনফিগারেশন সংরক্ষিত হয়েছে</string>
 </resources>

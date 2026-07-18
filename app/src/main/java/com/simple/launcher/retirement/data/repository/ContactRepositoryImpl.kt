@@ -71,8 +71,8 @@ class ContactRepositoryImpl(private val context: Context) : ContactRepository {
         cachedContacts?.let { cached ->
             // Vẫn trả về debug list nếu cache rỗng ở debug build
             if (cached.isNotEmpty()) return cached
-            val isDebug = (context.applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE) != 0
-            if (isDebug) return debugContacts()
+//            val isDebug = (context.applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE) != 0
+//            if (isDebug) return debugContacts()
             return cached
         }
 
@@ -90,8 +90,8 @@ class ContactRepositoryImpl(private val context: Context) : ContactRepository {
 
         cachedContacts = contacts
 
-        val isDebug = (context.applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE) != 0
-        if (contacts.isEmpty() && isDebug) return debugContacts()
+//        val isDebug = (context.applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE) != 0
+//        if (contacts.isEmpty() && isDebug) return debugContacts()
         return contacts
     }
 

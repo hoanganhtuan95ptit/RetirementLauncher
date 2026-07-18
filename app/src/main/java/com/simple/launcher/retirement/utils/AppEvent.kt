@@ -1,6 +1,7 @@
 package com.simple.launcher.retirement.utils
 
 import com.simple.launcher.retirement.domain.model.SelectableAppEntity
+import com.simple.launcher.retirement.domain.model.SOSConfig
 import com.simple.launcher.retirement.domain.model.SelectableContactEntity
 import com.simple.launcher.retirement.presentation.settings.adapters.SettingItem
 
@@ -25,7 +26,7 @@ sealed class AppEvent {
     object PermissionCancel : PermissionResult()
 
 
-    sealed class PinResult: AppEvent()
+    sealed class PinResult : AppEvent()
     object PinCancel : PinResult()
     object PinSetupSuccess : PinResult()
     object PinVerifySuccess : PinResult()
@@ -38,6 +39,14 @@ sealed class AppEvent {
     sealed class EmergencyCallIntroResult : AppEvent()
     object EmergencyCallIntroAccept : EmergencyCallIntroResult()
     object EmergencyCallIntroCancel : EmergencyCallIntroResult()
+
+    sealed class EmergencyContactRequiredResult : AppEvent()
+    object EmergencyContactRequiredAccept : EmergencyContactRequiredResult()
+    object EmergencyContactRequiredCancel : EmergencyContactRequiredResult()
+
+    sealed class ContactSetupResult : AppEvent()
+    object ContactSetupAccept : ContactSetupResult()
+    object ContactSetupCancel : ContactSetupResult()
 
     sealed class FileCleanupIntroResult : AppEvent()
     object FileCleanupIntroAccept : FileCleanupIntroResult()
@@ -55,6 +64,17 @@ sealed class AppEvent {
 
     // ── Nhấn / toggle item trong Settings ───────────────────────────────────
     data class SettingClicked(val item: SettingItem) : AppEvent()
+
+    data class SOSItemClicked(val id: Int) : AppEvent()
+
+    data class SOSTimeoutSelected(val timeoutMillis: Long) : AppEvent()
+
+    data class SOSUpdate(
+        val config: SOSConfig
+    ) : AppEvent()
+
+    object SOSUpdateSuccess : AppEvent()
+    object SOSUpdateCancel : AppEvent()
 
     // ── Performance ─────────────────────────────────────────────────────────
     data class FpsUpdated(val screenName: String, val fps: Int) : AppEvent()

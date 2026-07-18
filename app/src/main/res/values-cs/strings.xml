@@ -12,10 +12,7 @@
     <string name="setting_contact_list">Nastavení rychlých kontaktů</string>
     <string name="setting_clean_files">Vyčistit nepotřebné soubory</string>
     <string name="setting_clean_memory">Uvolnit paměť</string>
-    <string name="setting_emergency_call">Automatické tísňové volání</string>
-    <string name="setting_app_monitoring">Sledování aplikací</string>
-    <string name="setting_auto_cleanup_apk">Automatické mazání APK</string>
-    <string name="setting_call_block">Blokovat neznámé hovory</string>
+
     <string name="setting_pocket_mode">Režim v kapse</string>
 
     <!-- Onboarding -->
@@ -56,13 +53,7 @@
     <string name="back">Zpět</string>
     <string name="search">Hledat…</string>
 
-    <!-- Call Permission -->
-    <string name="call_permission_title">Oprávnění k volání</string>
-    <string name="call_permission_desc">Aplikace potřebuje oprávnění k telefonování, aby mohla v nouzi automaticky volat příbuzným.</string>
 
-    <!-- Call Block -->
-    <string name="call_block_title">Oprávnění k blokování hovorů</string>
-    <string name="call_block_desc">Aplikace potřebuje oprávnění ke správě hovorů a kontaktů, aby mohla automaticky blokovat hovory od cizích lidí.</string>
 
     <!-- Home Status -->
     <string name="home_header_apps">Aplikace</string>
@@ -92,10 +83,4 @@
     <string name="pin_error_incorrect">Nesprávný PIN</string>
 
     <string name="done">Hotovo</string>
-    <string name="emergency_call_title">Tísňové volání</string>
-    <string name="emergency_call_desc">Pokud není telefon 12 hodin používán, aplikace automaticky provede tísňové volání.</string>
-    <string name="emergency_call_enable">Aktivovat funkci</string>
-    <string name="emergency_call_phone_number">Tísňové telefonní číslo</string>
-    <string name="emergency_call_phone_number_hint">Zadejte číslo</string>
-    <string name="emergency_call_save_success">Konfigurace tísňového volání uložena</string>
 </resources>

@@ -12,10 +12,7 @@
     <string name="setting_contact_list">Schnellkontakt-Einrichtung</string>
     <string name="setting_clean_files">Junk-Dateien bereinigen</string>
     <string name="setting_clean_memory">Speicher freigeben</string>
-    <string name="setting_emergency_call">Automatischer Notruf</string>
-    <string name="setting_app_monitoring">App-Überwachung</string>
-    <string name="setting_auto_cleanup_apk">APK automatisch löschen</string>
-    <string name="setting_call_block">Unbekannte Anrufe blockieren</string>
+
     <string name="setting_pocket_mode">Taschenmodus</string>
 
     <!-- Onboarding -->
@@ -56,13 +53,7 @@
     <string name="back">Zurück</string>
     <string name="search">Suchen…</string>
 
-    <!-- Call Permission -->
-    <string name="call_permission_title">Anrufberechtigung</string>
-    <string name="call_permission_desc">Die App benötigt die Berechtigung zum Telefonieren, um im Notfall automatisch Angehörige anzurufen.</string>
 
-    <!-- Call Block -->
-    <string name="call_block_title">Anrufe blockieren Berechtigung</string>
-    <string name="call_block_desc">Die App benötigt Zugriff auf Anrufe und Kontakte, um Anrufe von Unbekannten automatisch zu blockieren.</string>
 
     <!-- Home Status -->
     <string name="home_header_apps">Anwendungen</string>
@@ -92,10 +83,4 @@
     <string name="pin_error_incorrect">Falsche PIN</string>
 
     <string name="done">Fertig</string>
-    <string name="emergency_call_title">Notruf</string>
-    <string name="emergency_call_desc">Wenn das Telefon 12 Stunden lang nicht benutzt wird, setzt die App automatisch einen Notruf ab.</string>
-    <string name="emergency_call_enable">Funktion aktivieren</string>
-    <string name="emergency_call_phone_number">Notrufnummer</string>
-    <string name="emergency_call_phone_number_hint">Nummer eingeben</string>
-    <string name="emergency_call_save_success">Notrufkonfiguration gespeichert</string>
 </resources>

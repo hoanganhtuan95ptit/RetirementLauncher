@@ -10,38 +10,13 @@
     <string name="setting_app_list">Настройка списка приложений</string>
     <string name="setting_default_launcher">Установить лаунчер по умолчанию</string>
     <string name="setting_contact_list">Настройка быстрых контактов</string>
-    <string name="setting_clean_files">Очистка мусора</string>
-    <string name="setting_clean_memory">Освободить память</string>
-    <string name="setting_emergency_call">Автоматический экстренный вызов</string>
-    <string name="setting_app_monitoring">Мониторинг приложений</string>
-    <string name="setting_auto_cleanup_apk">Автоудаление APK</string>
-    <string name="setting_call_block">Блокировка неизвестных звонков</string>
+
     <string name="setting_pocket_mode">В кармане</string>
 
     <!-- Onboarding -->
     <string name="onboarding_title">Добро пожаловать в Retirement Launcher</string>
     <string name="onboarding_desc">Приложение для упрощения интерфейса вашего телефона и защиты устройства.</string>
     <string name="onboarding_start">Начать</string>
-
-    <!-- Clean Files -->
-    <string name="clean_files_title">Очистка мусора</string>
-    <string name="clean_files_desc">Готов к сканированию устройства</string>
-    <string name="clean_files_start">Начать очистку</string>
-    <string name="clean_files_running">Сканирование и очистка…</string>
-    <string name="clean_files_completed">Очистка завершена!</string>
-    <string name="clean_files_retry">Очистить снова</string>
-
-    <!-- Clean Memory -->
-    <string name="clean_memory_title">Освободить память</string>
-    <string name="clean_memory_stat_used">Использовано</string>
-    <string name="clean_memory_stat_free">Свободно</string>
-    <string name="clean_memory_stat_total">Всего</string>
-    <string name="clean_memory_result_sub">Система оптимизирована</string>
-    <string name="clean_memory_start">Ускорить сейчас</string>
-    <string name="clean_memory_running">Оптимизация системы…</string>
-    <string name="clean_memory_optimal">Система находится в оптимальном состоянии!</string>
-    <string name="clean_memory_retry">Оптимизировать снова</string>
-    <string name="clean_memory_toast">Освобождено $number_ram МБ</string>
 
     <!-- Contacts -->
     <string name="contact_tap_to_call">Позвонить сейчас</string>
@@ -56,13 +31,6 @@
     <string name="back">Назад</string>
     <string name="search">Поиск…</string>
 
-    <!-- Call Permission -->
-    <string name="call_permission_title">Разрешение на звонки</string>
-    <string name="call_permission_desc">Приложению требуется разрешение на совершение звонков, чтобы автоматически звонить родственникам в случае необходимости.</string>
-
-    <!-- Call Block -->
-    <string name="call_block_title">Разрешение на блокировку звонков</string>
-    <string name="call_block_desc">Приложению требуется разрешение на управление звонками и контактами для автоматической блокировки неизвестных номеров.</string>
 
     <!-- Home Status -->
     <string name="home_header_apps">Приложения</string>
@@ -92,10 +60,4 @@
     <string name="pin_error_incorrect">Неверный PIN-код</string>
 
     <string name="done">Готово</string>
-    <string name="emergency_call_title">Экстренный вызов</string>
-    <string name="emergency_call_desc">Если телефон не используется в течение 12 часов, приложение автоматически совершит экстренный вызов.</string>
-    <string name="emergency_call_enable">Включить функцию</string>
-    <string name="emergency_call_phone_number">Номер экстренного телефона</string>
-    <string name="emergency_call_phone_number_hint">Введите номер</string>
-    <string name="emergency_call_save_success">Конфигурация экстренного вызова сохранена</string>
 </resources>

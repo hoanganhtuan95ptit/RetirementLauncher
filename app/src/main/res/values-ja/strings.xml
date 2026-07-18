@@ -10,38 +10,13 @@
     <string name="setting_app_list">アプリリスト設定</string>
     <string name="setting_default_launcher">デフォルトのランチャー設定</string>
     <string name="setting_contact_list">クイック連絡先設定</string>
-    <string name="setting_clean_files">不要なファイルをクリーンアップ</string>
-    <string name="setting_clean_memory">メモリを解放</string>
-    <string name="setting_emergency_call">自動緊急通報</string>
-    <string name="setting_app_monitoring">アプリの監視</string>
-    <string name="setting_auto_cleanup_apk">APKを自動削除</string>
-    <string name="setting_call_block">不明な着信をブロック</string>
+
     <string name="setting_pocket_mode">ポケットモード</string>
 
     <!-- Onboarding -->
     <string name="onboarding_title">Retirement Launcherへようこそ</string>
     <string name="onboarding_desc">スマートフォンのインターフェースを簡素化し、デバイスを保護するアプリです。</string>
     <string name="onboarding_start">使ってみる</string>
-
-    <!-- Clean Files -->
-    <string name="clean_files_title">不要なファイルをクリーンアップ</string>
-    <string name="clean_files_desc">デバイスをスキャンする準備ができました</string>
-    <string name="clean_files_start">クリーンアップ開始</string>
-    <string name="clean_files_running">スキャンとクリーンアップ中…</string>
-    <string name="clean_files_completed">クリーンアップ完了！</string>
-    <string name="clean_files_retry">もう一度クリーンアップ</string>
-
-    <!-- Clean Memory -->
-    <string name="clean_memory_title">メモリを解放</string>
-    <string name="clean_memory_stat_used">使用中</string>
-    <string name="clean_memory_stat_free">空き</string>
-    <string name="clean_memory_stat_total">合計</string>
-    <string name="clean_memory_result_sub">システムを最適化しました</string>
-    <string name="clean_memory_start">今すぐ加速</string>
-    <string name="clean_memory_running">システムを最適化中…</string>
-    <string name="clean_memory_optimal">システムは最適な状態です！</string>
-    <string name="clean_memory_retry">もう一度最適化</string>
-    <string name="clean_memory_toast">$number_ram MB解放しました</string>
 
     <!-- Contacts -->
     <string name="contact_tap_to_call">今すぐ電話</string>
@@ -56,13 +31,6 @@
     <string name="back">戻る</string>
     <string name="search">検索…</string>
 
-    <!-- Call Permission -->
-    <string name="call_permission_title">通話許可</string>
-    <string name="call_permission_desc">緊急時に自動的に親族へ電話をかけるために、このアプリには通話許可が必要です。</string>
-
-    <!-- Call Block -->
-    <string name="call_block_title">着信拒否許可</string>
-    <string name="call_block_desc">知らない人からの電話を自動的にブロックするために、このアプリには通話と連絡先の管理許可が必要です。</string>
 
     <!-- Home Status -->
     <string name="home_header_apps">アプリケーション</string>
@@ -92,10 +60,4 @@
     <string name="pin_error_incorrect">PINが正しくありません</string>
 
     <string name="done">完了</string>
-    <string name="emergency_call_title">緊急通報</string>
-    <string name="emergency_call_desc">スマートフォンが12時間使用されない場合、アプリが自動的に緊急通報を行います。</string>
-    <string name="emergency_call_enable">機能を有効にする</string>
-    <string name="emergency_call_phone_number">緊急連絡先番号</string>
-    <string name="emergency_call_phone_number_hint">番号を入力</string>
-    <string name="emergency_call_save_success">緊急通報の設定を保存しました</string>
 </resources>

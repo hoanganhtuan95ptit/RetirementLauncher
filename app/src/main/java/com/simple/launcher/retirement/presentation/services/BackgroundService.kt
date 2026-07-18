@@ -37,14 +37,12 @@ class BackgroundService : Service() {
 
         super.onCreate()
         startAsForegroundService()
-        Log.d("tuanha", "onCreate: ")
         attachWorkers()
         observeWorkerStates()
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
-        Log.d("tuanha", "onStartCommand: ")
         startAsForegroundService()
         return START_STICKY
     }
@@ -60,7 +58,6 @@ class BackgroundService : Service() {
 
     private fun attachWorkers() {
 
-        Log.d("tuanha", "attachWorkers: ")
         workers.forEach { it.attach(serviceScope) }
     }
 
@@ -117,7 +114,6 @@ class BackgroundService : Service() {
 
         fun start(context: Context) {
 
-            Log.d("tuanha", "start: ")
             val intent = Intent(context, BackgroundService::class.java)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
