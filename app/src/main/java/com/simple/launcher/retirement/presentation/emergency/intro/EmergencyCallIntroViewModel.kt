@@ -25,6 +25,7 @@ class EmergencyCallIntroViewModel : BaseViewModel() {
         flow1 = resources,
         initialValue = BigText("")
     ) { resources ->
+
         val color = resources.textColorPrimary
         value = resources.getString(R.string.emergency_call_intro_title)
             .with(BigForegroundColor(color), BigBold)
@@ -40,7 +41,11 @@ class EmergencyCallIntroViewModel : BaseViewModel() {
 
         value = resources.getString(R.string.emergency_call_intro_desc)
             .with(BigForegroundColor(color))
-            .withFirst(resources.getString(R.string.emergency_call_intro_highlight), BigBold, BigForegroundColor(highlightColor))
+            .withFirst(
+                resources.getString(R.string.emergency_call_intro_highlight),
+                BigBold,
+                BigForegroundColor(highlightColor)
+            )
             .build()
     }
 

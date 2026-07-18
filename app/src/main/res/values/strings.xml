@@ -110,6 +110,14 @@
     <string name="usage_stats_permission_desc">For the app blocking feature to work, you need to grant \'Usage Data Access\'. This helps the app know when an unauthorized app is opened.</string>
     <string name="usage_stats_permission_highlight">\'Usage Data Access\'</string>
 
+    <!-- Accessibility Permission -->
+    <string name="accessibility_permission_title">User Activity Detection</string>
+    <string name="accessibility_permission_desc">SOS uses Accessibility only to detect when the user starts touching the screen. It does not read screen content, record text, change settings, control the phone, or share this data. The activity timestamp stays on this device and is used only to decide whether SOS should call emergency contacts.</string>
+    <string name="accessibility_permission_highlight">does not read screen content</string>
+    <string name="user_activity_accessibility_service_label">SOS User Activity Detection</string>
+    <string name="user_activity_accessibility_service_summary">Detects real user activity for SOS inactivity checks.</string>
+    <string name="user_activity_accessibility_service_desc">Used only by Auto SOS to detect whether the phone is still being actively used. The service listens only for the system event that indicates the user has started touching the screen, then saves the latest activity time on this device. It does not read screen content, collect typed text, inspect other apps, change settings, perform gestures, click buttons, or share this activity data.</string>
+
     <!-- App Monitoring Intro -->
     <string name="app_monitoring_intro_title">Feature Introduction</string>
     <string name="app_monitoring_intro_desc">This feature helps protect users by only allowing selected apps to run. Other apps will be blocked to avoid unintended issues.</string>
@@ -163,7 +171,7 @@
 
     <!-- Emergency Call -->
     <string name="emergency_call_title">Emergency Call</string>
-    <string name="emergency_call_desc">If the phone is not used for 12 hours, the app will automatically perform an emergency call.</string>
+    <string name="emergency_call_desc">If the phone is not used for 10 hours, the app will automatically perform an emergency call.</string>
     <string name="emergency_call_enable">Enable feature</string>
     <string name="emergency_call_phone_number">Emergency Phone Number</string>
     <string name="emergency_call_phone_number_hint">Enter phone number</string>
@@ -177,6 +185,7 @@
     <string name="sos_save_changes">Save Changes</string>
     <string name="sos_timeout_label">Inactivity Timeout</string>
     <string name="sos_timeout_value">%1$d hours</string>
+    <string name="sos_timeout_seconds">%1$d seconds</string>
     <string name="sos_exclusion_periods_header">Exclusion Periods (Sleep/Rest)</string>
     <string name="sos_add_exclusion_period">Add Exclusion Period</string>
     <string name="sos_add_exclusion_period_desc">Excluding sleep or rest time</string>

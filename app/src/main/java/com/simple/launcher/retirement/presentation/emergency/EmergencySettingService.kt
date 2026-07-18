@@ -6,8 +6,11 @@ import androidx.lifecycle.lifecycleScope
 import com.simple.auto.register.AutoRegister
 import com.simple.component.service.ActivityCreatedService
 import com.simple.component.service.launchCollect
+import com.simple.launcher.retirement.domain.model.SOSConfig
 import com.simple.launcher.retirement.domain.repository.PreferenceRepository
+import com.simple.launcher.retirement.presentation.DeepLinks
 import com.simple.launcher.retirement.presentation.main.MainActivity
+import com.simple.launcher.retirement.presentation.sendDeeplinkWithBackStack
 import com.simple.launcher.retirement.presentation.settings.SettingsFragment
 import com.simple.launcher.retirement.presentation.settings.adapters.SettingItem
 import com.simple.launcher.retirement.presentation.settings.services.protect.ProtectSettingService
@@ -26,6 +29,7 @@ class EmergencyService : ActivityCreatedService {
 
             val pending = PreferenceRepository.instance.getPendingEmergencyConfig()
             if (pending != null) {
+
                 setEmergencyCallEnabled(pending)
             }
         }
@@ -34,24 +38,25 @@ class EmergencyService : ActivityCreatedService {
 
             PreferenceRepository.instance.setPendingEmergencyConfig(event.config)
             if (!setEmergencyCallEnabled(event.config)) {
+
                 AppEventBus.post(AppEvent.SOSUpdateCancel)
             }
         }
     }
 
     private suspend fun setEmergencyCallEnabled(
-        config: com.simple.launcher.retirement.domain.model.SOSConfig
+        config: SOSConfig
     ): Boolean {
 
         try {
 
             if (!checkPermissions(config)) {
+
                 return false
             }
 
             PreferenceRepository.instance.setEmergencyTimeout(config.timeout)
             PreferenceRepository.instance.setExclusionPeriods(config.exclusionPeriods)
-
             PreferenceRepository.instance.setEmergencyCallEnabled(config.isEnabled)
             AppEventBus.post(AppEvent.SOSUpdateSuccess)
             return true
@@ -61,17 +66,18 @@ class EmergencyService : ActivityCreatedService {
         }
     }
 
-    private suspend fun checkPermissions(config: com.simple.launcher.retirement.domain.model.SOSConfig): Boolean {
+    private suspend fun checkPermissions(config: SOSConfig): Boolean {
 
-        if (config.isEnabled) {
+        if (!config.isEnabled) {
 
-            return PermissionManager.requireEmergencyCallIntro() &&
-                    PermissionManager.requireCallPermission() &&
-                    PermissionManager.requireEmergencyContact() &&
-                    PermissionManager.requireDefaultLauncher()
+            return PermissionManager.requirePinPermissions()
         }
 
-        return PermissionManager.requirePinPermissions()
+        return PermissionManager.requireEmergencyCallIntro() &&
+            PermissionManager.requireCallPermission() &&
+            PermissionManager.requireUserActivityAccessibilityPermission() &&
+            PermissionManager.requireEmergencyContact() &&
+            PermissionManager.requireDefaultLauncher()
     }
 }
 
@@ -81,11 +87,12 @@ class EmergencySettingService : ProtectSettingService() {
     private lateinit var viewModel: EmergencySettingViewModel
 
     override fun setup(settingsFragment: SettingsFragment) {
+
         super.setup(settingsFragment)
 
         viewModel = settingsFragment.viewModels<EmergencySettingViewModel>().value
 
-        viewModel.viewItemList.launchCollect(settingsFragment) {
+        viewModel.viewItemList.launchCollect(settingsFragment.viewLifecycleOwner) {
 
             protectSettingViewModel.updateItem(it)
         }
@@ -95,15 +102,21 @@ class EmergencySettingService : ProtectSettingService() {
             if (it) (settingsFragment.activity as? MainActivity)?.startBackgroundService()
         }
 
-        AppEventBus.events.filterIsInstance<AppEvent.SettingClicked>().launchCollect(settingsFragment.viewLifecycleOwner) { event ->
+        AppEventBus.events
+            .filterIsInstance<AppEvent.SettingClicked>()
+            .launchCollect(settingsFragment.viewLifecycleOwner) { event ->
 
-            val item = event.item
-
-            if (item.id != SettingItem.ID_EMERGENCY_CALL_TOGGLE) {
-                return@launchCollect
+                handleSettingClick(event.item)
             }
+    }
 
-            com.simple.launcher.retirement.presentation.sendDeeplinkWithBackStack(com.simple.launcher.retirement.presentation.DeepLinks.SOS_SETTINGS)
+    private fun handleSettingClick(item: SettingItem) {
+
+        if (item.id != SettingItem.ID_EMERGENCY_CALL_TOGGLE) {
+
+            return
         }
+
+        sendDeeplinkWithBackStack(DeepLinks.SOS_SETTINGS)
     }
 }

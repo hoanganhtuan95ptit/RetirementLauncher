@@ -1,6 +1,5 @@
 package com.simple.launcher.retirement.presentation.emergency
 
-import com.simple.adapter.ViewItem
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.domain.repository.PreferenceRepository
 import com.simple.launcher.retirement.presentation.base.BaseViewModel
@@ -20,22 +19,18 @@ class EmergencySettingViewModel : BaseViewModel() {
         null
     ) { resources, isEnabled ->
 
-        val list = arrayListOf<ViewItem>()
-
-        settingItem(
-            id = SettingItem.ID_EMERGENCY_CALL_TOGGLE,
-            icon = R.drawable.ic_sos_black_24dp,
-            title = R.string.setting_emergency_call,
-
-            isSwitch = true,
-            isChecked = isEnabled,
-
-            resources = resources
-        ).let {
-
-            list.add(it)
-        }
-
-        value = GroupViewItem(order = 1.2, list = list)
+        value = GroupViewItem(
+            order = 1.2,
+            list = listOf(
+                settingItem(
+                    id = SettingItem.ID_EMERGENCY_CALL_TOGGLE,
+                    icon = R.drawable.ic_sos_black_24dp,
+                    title = R.string.setting_emergency_call,
+                    isSwitch = true,
+                    isChecked = isEnabled,
+                    resources = resources
+                )
+            )
+        )
     }
 }

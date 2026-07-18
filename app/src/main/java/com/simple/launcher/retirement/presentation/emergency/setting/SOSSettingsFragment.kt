@@ -17,7 +17,6 @@ import com.simple.deeplink.DeeplinkHandler
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.databinding.FragmentSosSettingsBinding
 import com.simple.launcher.retirement.domain.model.ExclusionPeriod
-import com.simple.launcher.retirement.domain.model.SOSConfig
 import com.simple.launcher.retirement.presentation.DeepLinks
 import com.simple.launcher.retirement.presentation.base.BaseFragment
 import com.simple.launcher.retirement.presentation.settings.adapters.SettingItem
@@ -33,6 +32,7 @@ import com.simple.ui.precompute.text.setText
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.onSubscription
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
 import java.util.UUID
@@ -89,15 +89,10 @@ class SOSSettingsFragment : BaseFragment<FragmentSosSettingsBinding>() {
 
             viewLifecycleOwner.lifecycleScope.launch {
 
-                val config = SOSConfig(
-                    timeout = viewModel.timeout.value,
-                    isEnabled = viewModel.isFeatureEnabledDraft.value,
-                    exclusionPeriods = viewModel.exclusionPeriods.value
-                )
-
-                AppEventBus.post(AppEvent.SOSUpdate(config))
+                val config = viewModel.save()
 
                 val result = AppEventBus.events
+                    .onSubscription { AppEventBus.post(AppEvent.SOSUpdate(config)) }
                     .filter { it is AppEvent.SOSUpdateSuccess || it is AppEvent.SOSUpdateCancel }
                     .first()
 
@@ -117,6 +112,7 @@ class SOSSettingsFragment : BaseFragment<FragmentSosSettingsBinding>() {
         observeViewItemList()
         observeSaveAction()
         observeItemClicks()
+        observeTimeoutSelection()
     }
 
     private fun observeToolbar() {
@@ -165,10 +161,22 @@ class SOSSettingsFragment : BaseFragment<FragmentSosSettingsBinding>() {
 
     private fun observeItemClicks() {
 
-        AppEventBus.events.filterIsInstance<AppEvent.SOSItemClicked>().observe(this@SOSSettingsFragment) { event ->
+        AppEventBus.events
+            .filterIsInstance<AppEvent.SOSItemClicked>()
+            .observe(this@SOSSettingsFragment) { event ->
 
-            handleItemClick(event.id)
-        }
+                handleItemClick(event.id)
+            }
+    }
+
+    private fun observeTimeoutSelection() {
+
+        AppEventBus.events
+            .filterIsInstance<AppEvent.SOSTimeoutSelected>()
+            .observe(this@SOSSettingsFragment) { event ->
+
+                viewModel.updateTimeout(event.timeoutMillis)
+            }
     }
 
     private fun handleItemClick(id: Int) {
@@ -184,26 +192,25 @@ class SOSSettingsFragment : BaseFragment<FragmentSosSettingsBinding>() {
 
     private fun handlePeriodItemClick(id: Int) {
 
-        if (id >= SOSSettingsViewModel.ID_PERIOD_ITEM_BASE) {
+        if (id < SOSSettingsViewModel.ID_PERIOD_ITEM_BASE) {
 
-            val index = id - SOSSettingsViewModel.ID_PERIOD_ITEM_BASE
-            val periodId = viewModel.exclusionPeriods.value.getOrNull(index)?.id
-
-            if (periodId != null) {
-
-                viewModel.removeExclusionPeriod(periodId)
-            }
+            return
         }
+
+        val index = id - SOSSettingsViewModel.ID_PERIOD_ITEM_BASE
+        val periodId = viewModel.exclusionPeriods.value.getOrNull(index)?.id ?: return
+
+        viewModel.removeExclusionPeriod(periodId)
     }
 
     private fun showTimeoutDialog() {
 
-        val currentHours = (viewModel.timeout.value / (60 * 60 * 1000L)).toInt()
+        val currentTimeoutMillis = viewModel.timeout.value
 
-        SOSTimeoutBottomSheet(currentHours) { hours ->
-
-            viewModel.updateTimeout(hours)
-        }.show(parentFragmentManager, "SOSTimeoutBottomSheet")
+        SOSTimeoutBottomSheet(currentTimeoutMillis).show(
+            parentFragmentManager,
+            SOSTimeoutBottomSheet.TAG
+        )
     }
 
     private fun showAddTimePeriod() {

@@ -1,6 +1,7 @@
 package com.simple.launcher.retirement.utils
 
 import com.simple.launcher.retirement.domain.model.SelectableAppEntity
+import com.simple.launcher.retirement.domain.model.SOSConfig
 import com.simple.launcher.retirement.domain.model.SelectableContactEntity
 import com.simple.launcher.retirement.presentation.settings.adapters.SettingItem
 
@@ -25,7 +26,7 @@ sealed class AppEvent {
     object PermissionCancel : PermissionResult()
 
 
-    sealed class PinResult: AppEvent()
+    sealed class PinResult : AppEvent()
     object PinCancel : PinResult()
     object PinSetupSuccess : PinResult()
     object PinVerifySuccess : PinResult()
@@ -66,8 +67,10 @@ sealed class AppEvent {
 
     data class SOSItemClicked(val id: Int) : AppEvent()
 
+    data class SOSTimeoutSelected(val timeoutMillis: Long) : AppEvent()
+
     data class SOSUpdate(
-        val config: com.simple.launcher.retirement.domain.model.SOSConfig
+        val config: SOSConfig
     ) : AppEvent()
 
     object SOSUpdateSuccess : AppEvent()

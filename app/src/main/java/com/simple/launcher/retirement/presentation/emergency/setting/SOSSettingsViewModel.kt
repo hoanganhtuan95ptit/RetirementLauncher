@@ -1,6 +1,7 @@
 package com.simple.launcher.retirement.presentation.emergency.setting
 
 import com.simple.adapter.ViewItem
+import com.simple.launcher.retirement.BuildConfig
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.domain.model.ExclusionPeriod
 import com.simple.launcher.retirement.domain.model.SOSConfig
@@ -28,6 +29,7 @@ import com.simple.launcher.retirement.utils.text.withStyleBodyLarge
 import com.simple.launcher.retirement.utils.text.withStyleBodyMedium
 import com.simple.launcher.retirement.utils.text.withStyleTitleLarge
 import com.simple.ui.precompute.image.BigImage
+import com.simple.ui.precompute.text.BigText
 import com.simple.ui.precompute.text.build
 import com.simple.ui.precompute.text.span.BigForegroundColor
 import com.simple.ui.precompute.text.with
@@ -79,18 +81,30 @@ class SOSSettingsViewModel : BaseViewModel() {
         emptyList()
     ) { resources, isEnabledDraft, timeout, periods ->
 
-        val list = mutableListOf<ViewItem>()
+        value = buildViewItems(resources, isEnabledDraft, timeout, periods)
+    }
 
-        // SOS Header
-        list += SOSHeaderViewItem(
-            title = resources.getString(R.string.sos_master_toggle)
-                .withStyleTitleLarge()
-                .with(BigForegroundColor(resources.textColorPrimary))
-                .build(),
-            desc = resources.getString(R.string.emergency_call_intro_desc)
-                .withStyleBodyMedium()
-                .with(BigForegroundColor(resources.textColorPrimary))
-                .build(),
+    private fun buildViewItems(
+        resources: Map<String, Any>,
+        isEnabledDraft: Boolean,
+        timeout: Long,
+        periods: List<ExclusionPeriod>
+    ): List<ViewItem> {
+
+        return listOf(
+            buildHeader(resources, isEnabledDraft),
+            buildTimeoutHeader(resources, isEnabledDraft),
+            buildTimeoutCard(resources, timeout, isEnabledDraft),
+            buildExclusionHeader(resources, isEnabledDraft)
+        ) + buildPeriodCards(resources, periods, isEnabledDraft) +
+            buildAddPeriodCard(resources, isEnabledDraft)
+    }
+
+    private fun buildHeader(resources: Map<String, Any>, isEnabledDraft: Boolean): ViewItem {
+
+        return SOSHeaderViewItem(
+            title = resources.getString(R.string.sos_master_toggle).asTitleText(resources),
+            desc = resources.getString(R.string.emergency_call_intro_desc).asPrimaryBodyMediumText(resources),
             icon = BigImage(R.drawable.ic_sos_black_24dp),
             iconBackground = Background.Builder()
                 .backgroundColor(resources.colorSecondaryContainer)
@@ -98,70 +112,101 @@ class SOSSettingsViewModel : BaseViewModel() {
                 .build(),
             isEnabled = isEnabledDraft
         )
+    }
 
-        // Timeout Section
-        list += SOSSectionHeaderViewItem(
-            title = resources.getString(R.string.sos_timeout_label)
-                .withStyleTitleLarge()
-                .with(BigForegroundColor(resources.textColorPrimary))
-                .build(),
+    private fun buildTimeoutHeader(resources: Map<String, Any>, isEnabledDraft: Boolean): ViewItem {
+
+        return SOSSectionHeaderViewItem(
+            title = resources.getString(R.string.sos_timeout_label).asTitleText(resources),
             icon = BigImage(R.drawable.ic_clock),
             isEnabled = isEnabledDraft
         )
+    }
 
-        val hours = (timeout / (60 * 60 * 1000L)).toInt()
-        list += SOSCardViewItem(
+    private fun buildTimeoutCard(
+        resources: Map<String, Any>,
+        timeout: Long,
+        isEnabledDraft: Boolean
+    ): ViewItem {
+
+        return SOSCardViewItem(
             id = ID_TIMEOUT,
-            title = resources.getString(R.string.sos_timeout_value).format(hours)
-                .withStyleBodyLarge()
-                .with(BigForegroundColor(resources.textColorPrimary))
-                .build(),
+            title = buildTimeoutTitle(resources, timeout).asBodyText(resources),
             icon = BigImage(R.drawable.ic_clock),
             isEnabled = isEnabledDraft
         )
+    }
 
-        // Exclusion Periods Section
-        list += SOSSectionHeaderViewItem(
-            title = resources.getString(R.string.sos_exclusion_periods_header)
-                .withStyleTitleLarge()
-                .with(BigForegroundColor(resources.textColorPrimary))
-                .build(),
+    private fun buildExclusionHeader(resources: Map<String, Any>, isEnabledDraft: Boolean): ViewItem {
+
+        return SOSSectionHeaderViewItem(
+            title = resources.getString(R.string.sos_exclusion_periods_header).asTitleText(resources),
             icon = BigImage(R.drawable.ic_bed),
             isEnabled = isEnabledDraft
         )
+    }
 
-        periods.forEachIndexed { index, period ->
+    private fun buildPeriodCards(
+        resources: Map<String, Any>,
+        periods: List<ExclusionPeriod>,
+        isEnabledDraft: Boolean
+    ): List<ViewItem> {
 
-            val timeText = resources.getString(R.string.sos_exclusion_period_format)
-                .format(period.startHour, period.startMinute, period.endHour, period.endMinute)
+        return periods.mapIndexed { index, period ->
 
-            list += SOSCardViewItem(
+            SOSCardViewItem(
                 id = ID_PERIOD_ITEM_BASE + index,
-                title = timeText
-                    .withStyleBodyLarge()
-                    .with(BigForegroundColor(resources.textColorPrimary))
-                    .build(),
+                title = period.formatPeriod(resources).asBodyText(resources),
                 icon = BigImage(R.drawable.ic_bed),
                 endIcon = BigImage(R.drawable.ic_clear),
                 isEnabled = isEnabledDraft
             )
         }
+    }
 
-        list += SOSCardViewItem(
+    private fun buildAddPeriodCard(resources: Map<String, Any>, isEnabledDraft: Boolean): ViewItem {
+
+        return SOSCardViewItem(
             id = ID_ADD_PERIOD,
-            title = resources.getString(R.string.sos_add_exclusion_period)
-                .withStyleBodyLarge()
-                .with(BigForegroundColor(resources.textColorPrimary))
-                .build(),
-            desc = resources.getString(R.string.sos_add_exclusion_period_desc)
-                .withStyleBodyMedium()
-                .with(BigForegroundColor(resources.textColorSecondary))
-                .build(),
+            title = resources.getString(R.string.sos_add_exclusion_period).asBodyText(resources),
+            desc = resources.getString(R.string.sos_add_exclusion_period_desc).asSecondaryBodyText(resources),
             icon = BigImage(R.drawable.ic_add),
             isEnabled = isEnabledDraft
         )
+    }
 
-        value = list
+    private fun ExclusionPeriod.formatPeriod(resources: Map<String, Any>): String {
+
+        return resources.getString(R.string.sos_exclusion_period_format)
+            .format(startHour, startMinute, endHour, endMinute)
+    }
+
+    private fun String.asTitleText(resources: Map<String, Any>): BigText {
+
+        return withStyleTitleLarge()
+            .with(BigForegroundColor(resources.textColorPrimary))
+            .build()
+    }
+
+    private fun String.asBodyText(resources: Map<String, Any>): BigText {
+
+        return withStyleBodyLarge()
+            .with(BigForegroundColor(resources.textColorPrimary))
+            .build()
+    }
+
+    private fun String.asPrimaryBodyMediumText(resources: Map<String, Any>): BigText {
+
+        return withStyleBodyMedium()
+            .with(BigForegroundColor(resources.textColorPrimary))
+            .build()
+    }
+
+    private fun String.asSecondaryBodyText(resources: Map<String, Any>): BigText {
+
+        return withStyleBodyMedium()
+            .with(BigForegroundColor(resources.textColorSecondary))
+            .build()
     }
 
     fun toggleFeatureDraft() {
@@ -169,9 +214,21 @@ class SOSSettingsViewModel : BaseViewModel() {
         isFeatureEnabledDraft.value = !isFeatureEnabledDraft.value
     }
 
-    fun updateTimeout(hours: Int) {
+    fun updateTimeout(timeoutMillis: Long) {
 
-        timeout.value = hours * 60 * 60 * 1000L
+        timeout.value = timeoutMillis
+    }
+
+    private fun buildTimeoutTitle(resources: Map<String, Any>, timeoutMillis: Long): String {
+
+        if (BuildConfig.DEBUG && timeoutMillis < HOUR_MILLIS) {
+
+            val seconds = (timeoutMillis / SECOND_MILLIS).toInt()
+            return resources.getString(R.string.sos_timeout_seconds).format(seconds)
+        }
+
+        val hours = (timeoutMillis / HOUR_MILLIS).toInt()
+        return resources.getString(R.string.sos_timeout_value).format(hours)
     }
 
     fun addExclusionPeriod(period: ExclusionPeriod) {
@@ -198,5 +255,8 @@ class SOSSettingsViewModel : BaseViewModel() {
         const val ID_TIMEOUT = 200
         const val ID_ADD_PERIOD = 201
         const val ID_PERIOD_ITEM_BASE = 1000
+
+        private const val SECOND_MILLIS = 1000L
+        private const val HOUR_MILLIS = 60 * 60 * 1000L
     }
 }

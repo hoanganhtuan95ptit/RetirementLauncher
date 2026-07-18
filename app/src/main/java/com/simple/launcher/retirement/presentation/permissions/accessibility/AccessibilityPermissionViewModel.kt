@@ -1,4 +1,4 @@
-package com.simple.launcher.retirement.presentation.emergency.permissions
+package com.simple.launcher.retirement.presentation.permissions.accessibility
 
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.presentation.base.ActionState
@@ -19,47 +19,43 @@ import com.simple.ui.precompute.text.with
 import com.simple.ui.precompute.text.withFirst
 import kotlinx.coroutines.flow.StateFlow
 
-class EmergencyContactRequiredViewModel : BaseViewModel() {
+class AccessibilityPermissionViewModel : BaseViewModel() {
 
     val title: StateFlow<BigText> = combineState(
-        flow1 = resources,
-        initialValue = BigText("")
+        resources,
+        BigText("")
     ) { resources ->
 
         val color = resources.textColorPrimary
-        value = resources.getString(R.string.emergency_contact_required_title)
+        value = resources.getString(R.string.accessibility_permission_title)
             .with(BigForegroundColor(color), BigBold)
             .build()
     }
 
     val description: StateFlow<BigText> = combineState(
-        flow1 = resources,
-        initialValue = BigText("")
+        resources,
+        BigText("")
     ) { resources ->
 
         val color = resources.textColorSecondary
         val highlightColor = resources.colorAccent
 
-        value = resources.getString(R.string.emergency_contact_required_desc)
+        value = resources.getString(R.string.accessibility_permission_desc)
             .with(BigForegroundColor(color))
-            .withFirst(
-                resources.getString(R.string.emergency_contact_required_highlight),
-                BigBold,
-                BigForegroundColor(highlightColor)
-            )
+            .withFirst(resources.getString(R.string.accessibility_permission_highlight), BigBold, BigForegroundColor(highlightColor))
             .build()
     }
 
     val action: StateFlow<ActionState> = combineState(
-        flow1 = resources,
-        initialValue = ActionState.empty()
+        resources,
+        ActionState.empty()
     ) { resources ->
 
         val color = resources.colorOnPrimary
         val backgroundColor = resources.colorPrimary
 
         value = buildActionState(
-            text = resources.getString(R.string.emergency_contact_required_action),
+            text = resources.getString(R.string.permission_grant),
             textColor = color,
             backgroundColor = backgroundColor
         )

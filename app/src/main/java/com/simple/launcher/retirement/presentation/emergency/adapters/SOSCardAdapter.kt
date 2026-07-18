@@ -19,7 +19,6 @@ import com.simple.ui.precompute.image.setImage
 import com.simple.ui.precompute.text.BigText
 import com.simple.ui.precompute.text.setText
 
-
 data class SOSCardViewItem(
     val id: Int,
     val title: BigText,
@@ -28,8 +27,11 @@ data class SOSCardViewItem(
     val endIcon: BigImage = BigImage(R.drawable.ic_chevron_right),
     val isEnabled: Boolean = true
 ) : ViewItem, SpanSizeLookupViewItem {
+
     override fun getSpanSize(): Int = 2
+
     override fun areItemsTheSame(): List<Any> = listOf(id)
+
     override fun getContentsCompare(): List<Pair<Any, String>> = listOf(
         title to "title",
         (desc ?: "") to "desc",
@@ -41,27 +43,48 @@ data class SOSCardViewItem(
 
 @Adapter
 class SOSCardAdapter : ViewItemAdapter<SOSCardViewItem, ItemSosCardBinding>() {
+
     override val viewItemClass: Class<SOSCardViewItem> = SOSCardViewItem::class.java
-    override fun createViewBinding(layoutInflater: LayoutInflater, parent: ViewGroup, viewType: Int): ItemSosCardBinding {
+
+    override fun createViewBinding(
+        layoutInflater: LayoutInflater,
+        parent: ViewGroup,
+        viewType: Int
+    ): ItemSosCardBinding {
+
         return ItemSosCardBinding.inflate(layoutInflater, parent, false)
     }
 
     override fun createViewHolder(parent: ViewGroup, viewType: Int): BaseBindingViewHolder<ItemSosCardBinding> {
+
         val viewHolder = super.createViewHolder(parent, viewType)
+
         viewHolder.binding.root.setOnSafeClickListener {
+
             val item = viewHolder.getItem<SOSCardViewItem>() ?: return@setOnSafeClickListener
-            if (!item.isEnabled) return@setOnSafeClickListener
+            if (!item.isEnabled) {
+
+                return@setOnSafeClickListener
+            }
 
             AppEventBus.post(AppEvent.SOSItemClicked(item.id))
         }
+
         return viewHolder
     }
 
-    override fun onBindViewHolder(binding: ItemSosCardBinding, viewType: Int, position: Int, item: SOSCardViewItem, payloads: List<String>) {
+    override fun onBindViewHolder(
+        binding: ItemSosCardBinding,
+        viewType: Int,
+        position: Int,
+        item: SOSCardViewItem,
+        payloads: List<String>
+    ) {
 
         val alpha = if (item.isEnabled) 1f else 0.5f
 
         if (payloads.isEmpty() || payloads.contains("isEnabled")) {
+
             binding.ivChevron.alpha = alpha
             binding.ivCardIcon.alpha = alpha
             binding.tvCardDesc.alpha = alpha
@@ -69,18 +92,22 @@ class SOSCardAdapter : ViewItemAdapter<SOSCardViewItem, ItemSosCardBinding>() {
         }
 
         if (payloads.isEmpty() || payloads.contains("title")) {
+
             binding.tvCardTitle.setText(item.title)
         }
 
         if (payloads.isEmpty() || payloads.contains("icon")) {
+
             binding.ivCardIcon.setImage(item.icon)
         }
 
         if (payloads.isEmpty() || payloads.contains("endIcon")) {
+
             binding.ivChevron.setImage(item.endIcon)
         }
 
         if (payloads.isEmpty() || payloads.contains("desc")) {
+
             binding.tvCardDesc.isVisible = item.desc != null
             binding.tvCardDesc.setText(item.desc)
         }

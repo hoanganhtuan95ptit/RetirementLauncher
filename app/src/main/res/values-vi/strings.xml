@@ -110,6 +110,14 @@
     <string name="usage_stats_permission_desc">Để tính năng chặn ứng dụng hoạt động, bạn cần cấp quyền \'Truy cập dữ liệu sử dụng\'. Điều này giúp ứng dụng biết khi nào một ứng dụng không được phép được mở.</string>
     <string name="usage_stats_permission_highlight">\'Truy cập dữ liệu sử dụng\'</string>
 
+    <!-- Accessibility Permission -->
+    <string name="accessibility_permission_title">Nhận biết người dùng đang thao tác</string>
+    <string name="accessibility_permission_desc">SOS chỉ dùng Accessibility để nhận biết khi người dùng bắt đầu chạm vào màn hình. Ứng dụng không đọc nội dung màn hình, không ghi lại văn bản, không đổi cài đặt, không điều khiển điện thoại và không chia sẻ dữ liệu này. Dấu thời gian thao tác chỉ lưu trên thiết bị này và chỉ dùng để quyết định có cần gọi SOS hay không.</string>
+    <string name="accessibility_permission_highlight">không đọc nội dung màn hình</string>
+    <string name="user_activity_accessibility_service_label">Nhận biết thao tác cho SOS</string>
+    <string name="user_activity_accessibility_service_summary">Nhận biết thao tác thật để kiểm tra không tương tác cho SOS.</string>
+    <string name="user_activity_accessibility_service_desc">Chỉ dùng cho SOS tự động để biết điện thoại còn đang được sử dụng hay không. Dịch vụ chỉ lắng nghe sự kiện hệ thống báo rằng người dùng bắt đầu chạm vào màn hình, rồi lưu thời điểm hoạt động gần nhất trên thiết bị này. Ứng dụng không đọc nội dung màn hình, không thu thập văn bản đã nhập, không kiểm tra ứng dụng khác, không đổi cài đặt, không thực hiện cử chỉ, không bấm nút thay người dùng và không chia sẻ dữ liệu hoạt động này.</string>
+
     <!-- App Monitoring Intro -->
     <string name="app_monitoring_intro_title">Giới thiệu tính năng</string>
     <string name="app_monitoring_intro_desc">Tính năng này giúp bảo vệ người dùng bằng cách chỉ cho phép các ứng dụng đã được chọn hoạt động. Các ứng dụng khác sẽ bị chặn để tránh sự cố không mong muốn.</string>
@@ -163,7 +171,7 @@
 
     <!-- Emergency Call -->
     <string name="emergency_call_title">Cuộc gọi khẩn cấp</string>
-    <string name="emergency_call_desc">Nếu không sử dụng điện thoại sau 12 tiếng, ứng dụng sẽ tự động thực hiện cuộc gọi khẩn cấp.</string>
+    <string name="emergency_call_desc">Nếu không sử dụng điện thoại sau 10 tiếng, ứng dụng sẽ tự động thực hiện cuộc gọi khẩn cấp.</string>
     <string name="emergency_call_enable">Kích hoạt tính năng</string>
     <string name="emergency_call_phone_number">Số điện thoại khẩn cấp</string>
     <string name="emergency_call_phone_number_hint">Nhập số điện thoại</string>
@@ -177,6 +185,7 @@
     <string name="sos_save_changes">Lưu thay đổi</string>
     <string name="sos_timeout_label">Thời gian chờ không tương tác</string>
     <string name="sos_timeout_value">%1$d giờ</string>
+    <string name="sos_timeout_seconds">%1$d giây</string>
     <string name="sos_exclusion_periods_header">Khung giờ loại trừ (Ngủ/Nghỉ)</string>
     <string name="sos_add_exclusion_period">Thêm khung giờ loại trừ</string>
     <string name="sos_add_exclusion_period_desc">Không tính thời gian ngủ hoặc nghỉ</string>

@@ -3,6 +3,7 @@ package com.simple.launcher.retirement.utils.permission
 import android.Manifest
 import android.app.AppOpsManager
 import android.app.role.RoleManager
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -16,6 +17,7 @@ import com.simple.deeplink.sendDeeplink
 import com.simple.launcher.retirement.MainApplication
 import com.simple.launcher.retirement.domain.repository.PreferenceRepository
 import com.simple.launcher.retirement.presentation.DeepLinks
+import com.simple.launcher.retirement.presentation.emergency.UserActivityAccessibilityService
 import com.simple.launcher.retirement.presentation.sendDeeplinkWithBackStack
 import com.simple.launcher.retirement.utils.AppEvent
 import com.simple.launcher.retirement.utils.AppEventBus
@@ -94,6 +96,19 @@ object PermissionManager {
         return ContextCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED
     }
 
+    fun hasUserActivityAccessibilityPermission(): Boolean {
+
+        val expectedComponent = ComponentName(context, UserActivityAccessibilityService::class.java)
+        val enabledServices = Settings.Secure.getString(
+            context.contentResolver,
+            Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES
+        ) ?: return false
+
+        return enabledServices
+            .split(ACCESSIBILITY_SERVICE_SEPARATOR)
+            .mapNotNull(ComponentName::unflattenFromString)
+            .any { it == expectedComponent }
+    }
 
     /**
      * Gửi deeplink mở bottom sheet và chờ event kết quả từ AppEventBus.
@@ -185,6 +200,12 @@ object PermissionManager {
 
         if (hasCallPermission()) return true
         return awaitPermissionResult(DeepLinks.PERMISSION_CALL)
+    }
+
+    suspend fun requireUserActivityAccessibilityPermission(): Boolean {
+
+        if (hasUserActivityAccessibilityPermission()) return true
+        return awaitPermissionResult(DeepLinks.PERMISSION_USER_ACTIVITY_ACCESSIBILITY)
     }
 
     /**
@@ -320,4 +341,6 @@ object PermissionManager {
             false
         }
     }
+
+    private const val ACCESSIBILITY_SERVICE_SEPARATOR = ":"
 }

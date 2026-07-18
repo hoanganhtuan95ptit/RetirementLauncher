@@ -97,7 +97,10 @@ class EmergencyContactRequiredDeeplinkHandler : DeeplinkHandler {
         sharedElement: Map<String, View>?
     ): Boolean {
 
-        EmergencyContactRequiredBottomSheet().show(fragmentActivity.supportFragmentManager, EmergencyContactRequiredBottomSheet.TAG)
+        EmergencyContactRequiredBottomSheet().show(
+            fragmentActivity.supportFragmentManager,
+            EmergencyContactRequiredBottomSheet.TAG
+        )
         return true
     }
 }

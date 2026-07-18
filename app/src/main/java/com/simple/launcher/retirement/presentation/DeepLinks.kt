@@ -42,6 +42,7 @@ object DeepLinks {
     const val PERMISSION_USAGE_STATS    = "app://UsageStatsPermission"
     const val PERMISSION_CALL_BLOCK     = "app://CallBlockPermission"
     const val PERMISSION_DEFAULT_LAUNCHER = "app://DefaultLauncher"
+    const val PERMISSION_USER_ACTIVITY_ACCESSIBILITY = "app://UserActivityAccessibilityPermission"
 
     // ─── Extras keys ──────────────────────────────────────────────────────────
 

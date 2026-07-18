@@ -1,10 +1,13 @@
-package com.simple.launcher.retirement.presentation.emergency.intro
+package com.simple.launcher.retirement.presentation.permissions.accessibility
 
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
 import com.simple.deeplink.Deeplink
@@ -17,19 +20,27 @@ import com.simple.launcher.retirement.utils.AppEventBus
 import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.exts.asObjectOrNull
 import com.simple.launcher.retirement.utils.lifecycle.observe
+import com.simple.launcher.retirement.utils.permission.PermissionManager
 import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
 import com.simple.ui.precompute.text.setText
 
-class EmergencyCallIntroBottomSheet : BaseBottomSheetDialogFragment<BottomSheetUsageStatsPermissionBinding, EmergencyCallIntroViewModel>() {
+class AccessibilityPermissionBottomSheet : BaseBottomSheetDialogFragment<BottomSheetUsageStatsPermissionBinding, AccessibilityPermissionViewModel>() {
 
-    override val viewModel: EmergencyCallIntroViewModel by viewModels()
+    override val viewModel: AccessibilityPermissionViewModel by viewModels()
 
-    private var isAccepted = false
+    private var permissionGranted = false
 
-    override fun inflateBinding(
-        inflater: LayoutInflater,
-        container: ViewGroup?
-    ): BottomSheetUsageStatsPermissionBinding {
+    private val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+
+        if (PermissionManager.hasUserActivityAccessibilityPermission()) {
+
+            permissionGranted = true
+            AppEventBus.post(AppEvent.PermissionAccept)
+            dismiss()
+        }
+    }
+
+    override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?): BottomSheetUsageStatsPermissionBinding {
 
         return BottomSheetUsageStatsPermissionBinding.inflate(inflater, container, false)
     }
@@ -39,12 +50,9 @@ class EmergencyCallIntroBottomSheet : BaseBottomSheetDialogFragment<BottomSheetU
         super.setupViews(view, savedInstanceState)
 
         val binding = binding ?: return
-
         binding.btnGrant.root.setOnSafeClickListener {
 
-            isAccepted = true
-            AppEventBus.post(AppEvent.EmergencyCallIntroAccept)
-            dismiss()
+            requestAccessibilityPermission()
         }
     }
 
@@ -75,32 +83,31 @@ class EmergencyCallIntroBottomSheet : BaseBottomSheetDialogFragment<BottomSheetU
     override fun onDismiss(dialog: DialogInterface) {
 
         super.onDismiss(dialog)
+        if (!permissionGranted) {
 
-        if (!isAccepted) {
-
-            AppEventBus.post(AppEvent.EmergencyCallIntroCancel)
+            AppEventBus.post(AppEvent.PermissionCancel)
         }
+    }
+
+    private fun requestAccessibilityPermission() {
+
+        startForResult.launch(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
     }
 
     companion object {
 
-        const val TAG = "EmergencyCallIntroBottomSheet"
+        const val TAG = "AccessibilityPermissionBottomSheet"
     }
 }
 
 @Deeplink
-class EmergencyCallIntroDeeplinkHandler : DeeplinkHandler {
+class AccessibilityPermissionDeeplinkHandler : DeeplinkHandler {
 
-    override val deeplink: String = DeepLinks.EMERGENCY_CALL_INTRO
+    override val deeplink: String = DeepLinks.PERMISSION_USER_ACTIVITY_ACCESSIBILITY
 
-    override suspend fun navigate(
-        fragmentActivity: FragmentActivity,
-        deeplink: String,
-        extras: Map<String, Any?>?,
-        sharedElement: Map<String, View>?
-    ): Boolean {
+    override suspend fun navigate(fragmentActivity: FragmentActivity, deeplink: String, extras: Map<String, Any?>?, sharedElement: Map<String, View>?): Boolean {
 
-        EmergencyCallIntroBottomSheet().show(fragmentActivity.supportFragmentManager, EmergencyCallIntroBottomSheet.TAG)
+        AccessibilityPermissionBottomSheet().show(fragmentActivity.supportFragmentManager, AccessibilityPermissionBottomSheet.TAG)
 
         return true
     }
