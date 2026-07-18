@@ -83,4 +83,11 @@
     <string name="pin_error_incorrect">ভুল পিন</string>
 
     <string name="done">সম্পন্ন</string>
-    <string name="default_launcher_highlight">Retirement Launcher</string>\n</resources>
+    <string name="default_launcher_highlight">Retirement Launcher</string>    <string name="setting_app_monitoring">অ্যাপ পর্যবেক্ষণ</string>
+    <string name="setting_call_block">কল ব্লকিং</string>
+    <string name="setting_auto_cleanup_apk">ডাউনলোড করা APK স্বয়ংক্রিয়ভাবে পরিষ্কার করুন</string>
+    <string name="call_permission_title">কল করার অনুমতি</string>
+    <string name="call_permission_desc">লঞ্চার থেকে কল করার জন্য প্রয়োজন।</string>
+    <string name="call_block_title">কল ব্লক করার অনুমতি</string>
+    <string name="call_block_desc">অবাঞ্ছিত কল ব্লক করার জন্য প্রয়োজন।</string>
+</resources>

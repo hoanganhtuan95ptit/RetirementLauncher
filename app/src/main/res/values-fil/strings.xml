@@ -60,4 +60,32 @@
     <string name="pin_error_incorrect">Maling PIN</string>
 
     <string name="done">Tapos na</string>
-    <string name="default_launcher_highlight">Retirement Launcher</string>\n</resources>
+    <string name="default_launcher_highlight">Retirement Launcher</string>    <string name="setting_app_monitoring">Monitoring ng App</string>
+    <string name="setting_call_block">Pag-block ng Tawag</string>
+    <string name="setting_auto_cleanup_apk">Auto Cleanup ng mga Na-download na APK</string>
+    <string name="setting_clean_files">Linisin ang mga Junk File</string>
+    <string name="setting_clean_memory">Linisin ang Memory</string>
+
+    <string name="clean_files_title">Linisin ang mga File</string>
+    <string name="clean_files_start">Simulan ang Paglilinis</string>
+    <string name="clean_files_running">Naglilinis…</string>
+    <string name="clean_files_retry">Subukan muli</string>
+    <string name="clean_files_desc">Linisin ang mga junk file para magkaroon ng bakante sa storage.</string>
+    <string name="clean_files_completed">Tapos na ang paglilinis.</string>
+
+    <string name="clean_memory_title">Linisin ang Memory</string>
+    <string name="clean_memory_start">Simulan ang Pag-optimize</string>
+    <string name="clean_memory_running">Nag-o-optimize…</string>
+    <string name="clean_memory_retry">Subukan muli</string>
+    <string name="clean_memory_stat_used">Ginamit</string>
+    <string name="clean_memory_stat_free">Bakante</string>
+    <string name="clean_memory_stat_total">Kabuuan</string>
+    <string name="clean_memory_result_sub">Na-optimize na ang memory para sa mas mahusay na performance.</string>
+    <string name="clean_memory_optimal">Ang iyong device ay nasa pinakamagandang kondisyon.</string>
+    <string name="clean_memory_toast">Nalinisan ang $number_ram MB ng RAM.</string>
+
+    <string name="call_permission_title">Pahintulot sa Tawag</string>
+    <string name="call_permission_desc">Kailangan para makagawa ng mga tawag mula sa launcher.</string>
+    <string name="call_block_title">Pahintulot sa Pag-block ng Tawag</string>
+    <string name="call_block_desc">Kailangan para ma-block ang mga hindi gustong tawag.</string>
+</resources>

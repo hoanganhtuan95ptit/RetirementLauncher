@@ -60,4 +60,32 @@
     <string name="pin_error_incorrect">PINが正しくありません</string>
 
     <string name="done">完了</string>
-    <string name="default_launcher_highlight">Retirement Launcher</string>\n</resources>
+    <string name="default_launcher_highlight">Retirement Launcher</string>    <string name="setting_app_monitoring">アプリの監視</string>
+    <string name="setting_call_block">着信拒否</string>
+    <string name="setting_auto_cleanup_apk">ダウンロード済みAPKの自動クリーンアップ</string>
+    <string name="setting_clean_files">ジャンクファイルのクリーンアップ</string>
+    <string name="setting_clean_memory">メモリのクリーンアップ</string>
+
+    <string name="clean_files_title">ファイルのクリーンアップ</string>
+    <string name="clean_files_start">クリーンアップ開始</string>
+    <string name="clean_files_running">クリーンアップ中…</string>
+    <string name="clean_files_retry">再試行</string>
+    <string name="clean_files_desc">ジャンクファイルを削除して空き容量を増やします。</string>
+    <string name="clean_files_completed">クリーンアップが完了しました。</string>
+
+    <string name="clean_memory_title">メモリのクリーンアップ</string>
+    <string name="clean_memory_start">最適化の開始</string>
+    <string name="clean_memory_running">最適化中…</string>
+    <string name="clean_memory_retry">再試行</string>
+    <string name="clean_memory_stat_used">使用中</string>
+    <string name="clean_memory_stat_free">空き</string>
+    <string name="clean_memory_stat_total">合計</string>
+    <string name="clean_memory_result_sub">パフォーマンス向上のためにメモリが最適化されました。</string>
+    <string name="clean_memory_optimal">デバイスは最適な状態です。</string>
+    <string name="clean_memory_toast">$number_ram MBのRAMを解放しました。</string>
+
+    <string name="call_permission_title">通話の許可</string>
+    <string name="call_permission_desc">ランチャーから電話をかけるために必要です。</string>
+    <string name="call_block_title">着信拒否の許可</string>
+    <string name="call_block_desc">迷惑電話をブロックするために必要です。</string>
+</resources>

@@ -60,4 +60,32 @@
     <string name="pin_error_incorrect">Helytelen PIN</string>
 
     <string name="done">Kész</string>
-    <string name="default_launcher_highlight">Retirement Launcher</string>\n</resources>
+    <string name="default_launcher_highlight">Retirement Launcher</string>    <string name="setting_app_monitoring">Alkalmazásfigyelés</string>
+    <string name="setting_call_block">Hívásblokkolás</string>
+    <string name="setting_auto_cleanup_apk">Letöltött APK-k automatikus törlése</string>
+    <string name="setting_clean_files">Szemétfájlok törlése</string>
+    <string name="setting_clean_memory">Memória tisztítása</string>
+
+    <string name="clean_files_title">Fájlok tisztítása</string>
+    <string name="clean_files_start">Tisztítás indítása</string>
+    <string name="clean_files_running">Tisztítás…</string>
+    <string name="clean_files_retry">Újra</string>
+    <string name="clean_files_desc">Törölje a szemétfájlokat a hely felszabadításához.</string>
+    <string name="clean_files_completed">Tisztítás befejezve.</string>
+
+    <string name="clean_memory_title">Memória tisztítása</string>
+    <string name="clean_memory_start">Optimalizálás indítása</string>
+    <string name="clean_memory_running">Optimalizálás…</string>
+    <string name="clean_memory_retry">Újra</string>
+    <string name="clean_memory_stat_used">Használt</string>
+    <string name="clean_memory_stat_free">Szabad</string>
+    <string name="clean_memory_stat_total">Összesen</string>
+    <string name="clean_memory_result_sub">A memória optimalizálva lett a jobb teljesítmény érdekében.</string>
+    <string name="clean_memory_optimal">A készülék optimális állapotban van.</string>
+    <string name="clean_memory_toast">$number_ram MB RAM felszabadítva.</string>
+
+    <string name="call_permission_title">Hívási engedély</string>
+    <string name="call_permission_desc">Szükséges a hívások indításához a launcher-ből.</string>
+    <string name="call_block_title">Hívásblokkolási engedély</string>
+    <string name="call_block_desc">Szükséges a nem kívánt hívások blokkolásához.</string>
+</resources>

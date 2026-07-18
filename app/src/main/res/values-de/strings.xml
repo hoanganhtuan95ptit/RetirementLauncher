@@ -83,4 +83,11 @@
     <string name="pin_error_incorrect">Falsche PIN</string>
 
     <string name="done">Fertig</string>
-    <string name="default_launcher_highlight">Retirement Launcher</string>\n</resources>
+    <string name="default_launcher_highlight">Retirement Launcher</string>    <string name="setting_app_monitoring">App-Überwachung</string>
+    <string name="setting_call_block">Anrufsperre</string>
+    <string name="setting_auto_cleanup_apk">Heruntergeladene APKs automatisch bereinigen</string>
+    <string name="call_permission_title">Anrufberechtigung</string>
+    <string name="call_permission_desc">Erforderlich, um Anrufe über den Launcher zu tätigen.</string>
+    <string name="call_block_title">Anrufsperre-Berechtigung</string>
+    <string name="call_block_desc">Erforderlich, um unerwünschte Anrufe zu blockieren.</string>
+</resources>

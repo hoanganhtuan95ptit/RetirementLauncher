@@ -60,4 +60,32 @@
     <string name="pin_error_incorrect">PIN ไม่ถูกต้อง</string>
 
     <string name="done">เสร็จสิ้น</string>
-    <string name="default_launcher_highlight">Retirement Launcher</string>\n</resources>
+    <string name="default_launcher_highlight">Retirement Launcher</string>    <string name="setting_app_monitoring">การตรวจสอบแอป</string>
+    <string name="setting_call_block">การบล็อกสายโทรเข้า</string>
+    <string name="setting_auto_cleanup_apk">ล้างไฟล์ APK ที่ดาวน์โหลดโดยอัตโนมัติ</string>
+    <string name="setting_clean_files">ล้างไฟล์ขยะ</string>
+    <string name="setting_clean_memory">ล้างหน่วยความจำ</string>
+
+    <string name="clean_files_title">ล้างไฟล์</string>
+    <string name="clean_files_start">เริ่มการล้าง</string>
+    <string name="clean_files_running">กำลังล้าง…</string>
+    <string name="clean_files_retry">ลองใหม่</string>
+    <string name="clean_files_desc">ล้างไฟล์ขยะเพื่อเพิ่มพื้นที่ว่าง</string>
+    <string name="clean_files_completed">การล้างเสร็จสิ้น</string>
+
+    <string name="clean_memory_title">ล้างหน่วยความจำ</string>
+    <string name="clean_memory_start">เริ่มการเพิ่มประสิทธิภาพ</string>
+    <string name="clean_memory_running">กำลังเพิ่มประสิทธิภาพ…</string>
+    <string name="clean_memory_retry">ลองใหม่</string>
+    <string name="clean_memory_stat_used">ใช้ไป</string>
+    <string name="clean_memory_stat_free">ว่าง</string>
+    <string name="clean_memory_stat_total">ทั้งหมด</string>
+    <string name="clean_memory_result_sub">เพิ่มประสิทธิภาพหน่วยความจำเพื่อการทำงานที่ดีขึ้นแล้ว</string>
+    <string name="clean_memory_optimal">อุปกรณ์ของคุณอยู่ในสภาพที่เหมาะสมที่สุด</string>
+    <string name="clean_memory_toast">ล้างหน่วยความจำ RAM ไป $number_ram MB</string>
+
+    <string name="call_permission_title">สิทธิ์การโทร</string>
+    <string name="call_permission_desc">จำเป็นสำหรับการโทรออกด้วยตัวเปิดใช้งาน</string>
+    <string name="call_block_title">สิทธิ์การบล็อกสาย</string>
+    <string name="call_block_desc">จำเป็นสำหรับการบล็อกสายที่ไม่ต้องการ</string>
+</resources>

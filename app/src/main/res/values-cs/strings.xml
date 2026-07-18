@@ -83,4 +83,11 @@
     <string name="pin_error_incorrect">Nesprávný PIN</string>
 
     <string name="done">Hotovo</string>
-    <string name="default_launcher_highlight">Retirement Launcher</string>\n</resources>
+    <string name="default_launcher_highlight">Retirement Launcher</string>    <string name="setting_app_monitoring">Sledování aplikací</string>
+    <string name="setting_call_block">Blokování hovorů</string>
+    <string name="setting_auto_cleanup_apk">Automaticky čistit stažené soubory APK</string>
+    <string name="call_permission_title">Oprávnění k hovorům</string>
+    <string name="call_permission_desc">Vyžadováno pro volání z launcheru.</string>
+    <string name="call_block_title">Oprávnění k blokování hovorů</string>
+    <string name="call_block_desc">Vyžadováno pro blokování nechtěných hovorů.</string>
+</resources>

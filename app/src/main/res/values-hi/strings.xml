@@ -60,4 +60,32 @@
     <string name="pin_error_incorrect">गलत पिन</string>
 
     <string name="done">हो गया</string>
-    <string name="default_launcher_highlight">Retirement Launcher</string>\n</resources>
+    <string name="default_launcher_highlight">Retirement Launcher</string>    <string name="setting_app_monitoring">ऐप निगरानी</string>
+    <string name="setting_call_block">कॉल ब्लॉकिंग</string>
+    <string name="setting_auto_cleanup_apk">डाउनलोड किए गए APK को ऑटो क्लीन करें</string>
+    <string name="setting_clean_files">जंक फाइलें साफ करें</string>
+    <string name="setting_clean_memory">मेमोरी साफ करें</string>
+
+    <string name="clean_files_title">फाइलें साफ करें</string>
+    <string name="clean_files_start">सफाई शुरू करें</string>
+    <string name="clean_files_running">सफाई हो रही है…</string>
+    <string name="clean_files_retry">पुनः प्रयास करें</string>
+    <string name="clean_files_desc">जगह खाली करने के लिए जंक फाइलें साफ करें।</string>
+    <string name="clean_files_completed">सफाई पूरी हुई।</string>
+
+    <string name="clean_memory_title">मेमोरी साफ करें</string>
+    <string name="clean_memory_start">अनुकूलन शुरू करें</string>
+    <string name="clean_memory_running">अनुकूलन हो रहा है…</string>
+    <string name="clean_memory_retry">पुनः प्रयास करें</string>
+    <string name="clean_memory_stat_used">उपयोग किया गया</string>
+    <string name="clean_memory_stat_free">खाली</string>
+    <string name="clean_memory_stat_total">कुल</string>
+    <string name="clean_memory_result_sub">बेहतर प्रदर्शन के लिए मेमोरी को अनुकूलित किया गया है।</string>
+    <string name="clean_memory_optimal">आपका डिवाइस इष्टतम स्थिति में है।</string>
+    <string name="clean_memory_toast">$number_ram MB रैम साफ की गई।</string>
+
+    <string name="call_permission_title">कॉल अनुमति</string>
+    <string name="call_permission_desc">लॉन्चर से कॉल करने के लिए आवश्यक है।</string>
+    <string name="call_block_title">कॉल ब्लॉक अनुमति</string>
+    <string name="call_block_desc">अवांछित कॉल को ब्लॉक करने के लिए आवश्यक है।</string>
+</resources>

@@ -60,4 +60,32 @@
     <string name="pin_error_incorrect">PIN salah</string>
 
     <string name="done">Selesai</string>
-    <string name="default_launcher_highlight">Retirement Launcher</string>\n</resources>
+    <string name="default_launcher_highlight">Retirement Launcher</string>    <string name="setting_app_monitoring">Pemantauan Aplikasi</string>
+    <string name="setting_call_block">Menyekat Panggilan</string>
+    <string name="setting_auto_cleanup_apk">Pembersihan Automatik APK yang Dimuat Turun</string>
+    <string name="setting_clean_files">Bersihkan Fail Sarap</string>
+    <string name="setting_clean_memory">Bersihkan Memori</string>
+
+    <string name="clean_files_title">Bersihkan Fail</string>
+    <string name="clean_files_start">Mula Membersihkan</string>
+    <string name="clean_files_running">Membersihkan…</string>
+    <string name="clean_files_retry">Cuba Lagi</string>
+    <string name="clean_files_desc">Bersihkan fail sarap untuk mengosongkan ruang.</string>
+    <string name="clean_files_completed">Pembersihan selesai.</string>
+
+    <string name="clean_memory_title">Bersihkan Memori</string>
+    <string name="clean_memory_start">Mula Pengoptimuman</string>
+    <string name="clean_memory_running">Mengoptimumkan…</string>
+    <string name="clean_memory_retry">Cuba Lagi</string>
+    <string name="clean_memory_stat_used">Digunakan</string>
+    <string name="clean_memory_stat_free">Kosong</string>
+    <string name="clean_memory_stat_total">Jumlah</string>
+    <string name="clean_memory_result_sub">Memori telah dioptimumkan untuk prestasi yang lebih baik.</string>
+    <string name="clean_memory_optimal">Peranti anda dalam keadaan optimum.</string>
+    <string name="clean_memory_toast">Membersihkan $number_ram MB RAM.</string>
+
+    <string name="call_permission_title">Kebenaran Panggilan</string>
+    <string name="call_permission_desc">Diperlukan untuk membuat panggilan daripada pelancar.</string>
+    <string name="call_block_title">Kebenaran Menyekat Panggilan</string>
+    <string name="call_block_desc">Diperlukan untuk menyekat panggilan yang tidak diingini.</string>
+</resources>

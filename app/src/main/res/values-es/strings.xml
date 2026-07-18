@@ -84,4 +84,11 @@
     <string name="pin_error_incorrect">PIN incorrecto</string>
 
     <string name="done">Hecho</string>
+    <string name="setting_app_monitoring">Monitoreo de Aplicaciones</string>
+    <string name="setting_call_block">Bloqueo de Llamadas</string>
+    <string name="setting_auto_cleanup_apk">Limpieza automática de APK descargados</string>
+    <string name="call_permission_title">Permiso de Llamada</string>
+    <string name="call_permission_desc">Requerido para hacer llamadas desde el lanzador.</string>
+    <string name="call_block_title">Permiso de Bloqueo de Llamadas</string>
+    <string name="call_block_desc">Requerido para bloquear llamadas no deseadas.</string>
 </resources>

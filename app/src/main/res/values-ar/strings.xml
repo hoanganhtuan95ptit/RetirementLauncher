@@ -83,4 +83,11 @@
     <string name="pin_error_incorrect">رمز PIN غير صحيح</string>
 
     <string name="done">تم</string>
-    <string name="default_launcher_highlight">Retirement Launcher</string>\n</resources>
+    <string name="default_launcher_highlight">Retirement Launcher</string>    <string name="setting_app_monitoring">مراقبة التطبيقات</string>
+    <string name="setting_call_block">حظر المكالمات</string>
+    <string name="setting_auto_cleanup_apk">التنظيف التلقائي لملفات APK المحملة</string>
+    <string name="call_permission_title">إذن المكالمات</string>
+    <string name="call_permission_desc">مطلوب لإجراء المكالمات من المشغل.</string>
+    <string name="call_block_title">إذن حظر المكالمات</string>
+    <string name="call_block_desc">مطلوب لحظر المكالمات غير المرغوب فيها.</string>
+</resources>

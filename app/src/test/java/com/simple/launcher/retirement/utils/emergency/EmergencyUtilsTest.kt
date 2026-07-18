@@ -1,7 +1,7 @@
 package com.simple.launcher.retirement.utils.emergency
 
 import com.simple.launcher.retirement.domain.model.ExclusionPeriod
-import com.simple.launcher.retirement.presentation.emergency.EmergencyUtils
+import com.simple.launcher.retirement.presentation.emergency.utils.EmergencyUtils
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
