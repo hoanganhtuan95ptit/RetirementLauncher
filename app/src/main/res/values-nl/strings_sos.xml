@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources>\n    <string name="setting_emergency_call">Automatische noodoproep (SOS)</string>
     <string name="emergency_call_desc">Als de telefoon 10 uur niet wordt gebruikt, maakt de app automatisch een noodoproep.</string>
     <string name="clean_cat_system_temp">Tijdelijke systeembestanden (.tmp, .log…)</string>
     <string name="clean_cat_compressed">Onbekende gecomprimeerde bestanden</string>
@@ -14,7 +14,6 @@
     <string name="call_block_highlight">oproepen und contacten beheren</string>
     <string name="setting_header_debug">🐛 Debug</string>
     <string name="setting_debug_block_screen">Blokkeerscherm bekijken</string>
-    <string name="default_launcher_highlight">Retirement Launcher</string>
     <string name="file_permission_title">Opslagbeveiliging</string>
     <string name="file_permission_desc">Om de automatische verwijdering van onbekende APK/AAB-bestanden te laten werken, heeft de app toegang tot alle opslagruimte nodig. Dit helpt om uw apparaat schoon en veilig te houden.</string>
     <string name="file_permission_highlight">onbekende APK/AAB</string>

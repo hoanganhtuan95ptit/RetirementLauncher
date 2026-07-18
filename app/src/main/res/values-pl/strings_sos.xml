@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources>\n    <string name="setting_emergency_call">Automatyczne połączenie alarmowe (SOS)</string>
     <string name="emergency_call_desc">Jeśli telefon nie będzie używany przez 10 godzin, aplikacja automatycznie wykona połączenie alarmowe.</string>
     <string name="clean_cat_system_temp">Systemowe pliki tymczasowe (.tmp, .log…)</string>
     <string name="clean_cat_compressed">Nieznane pliki skompresowane</string>
@@ -14,7 +14,6 @@
     <string name="call_block_highlight">zarządzanie połączeniami i kontaktami</string>
     <string name="setting_header_debug">🐛 Debug</string>
     <string name="setting_debug_block_screen">Wyświetl ekran blokady</string>
-    <string name="default_launcher_highlight">Retirement Launcher</string>
     <string name="file_permission_title">Ochrona pamięci</string>
     <string name="file_permission_desc">Aby automatyczne usuwanie nieznanych plików APK/AAB działało, aplikacja potrzebuje dostępu do całej pamięci. Pomaga to utrzymać urządzenie w czystości i bezpieczeństwie.</string>
     <string name="file_permission_highlight">nieznane APK/AAB</string>

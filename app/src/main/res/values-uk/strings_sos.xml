@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources>\n    <string name="setting_emergency_call">Автоматичний екстрений виклик (SOS)</string>
     <string name="emergency_call_desc">Якщо телефон не використовується протягом 10 годин, додаток автоматично здійснить екстрений виклик.</string>
     <string name="clean_cat_system_temp">Тимчасові системні файли (.tmp, .log…)</string>
     <string name="clean_cat_compressed">Невідомі стиснуті файли</string>
@@ -14,7 +14,6 @@
     <string name="call_block_highlight">керувати дзвінками та контактами</string>
     <string name="setting_header_debug">🐛 Налагодження</string>
     <string name="setting_debug_block_screen">Перегляд екрана блокування</string>
-    <string name="default_launcher_highlight">Retirement Launcher</string>
     <string name="file_permission_title">Захист сховища</string>
     <string name="file_permission_desc">Для роботи функції автоматичного видалення невідомих файлів APK/AAB додатку потрібен доступ до всього сховища. Це допомагає підтримувати ваш пристрій у чистоті та безпеці.</string>
     <string name="file_permission_highlight">невідомі APK/AAB</string>

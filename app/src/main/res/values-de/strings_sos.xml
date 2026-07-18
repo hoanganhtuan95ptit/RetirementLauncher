@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources>\n    <string name="setting_emergency_call">Automatischer Notruf (SOS)</string>
     <string name="emergency_call_desc">Wenn das Telefon 10 Stunden lang nicht benutzt wird, setzt die App automatisch einen Notruf ab.</string>
     <string name="call_permission_highlight">Anrufe tätigen</string>
     <string name="call_block_highlight">Anrufe und Kontakte verwalten</string>
     <string name="setting_header_debug">🐛 Debug</string>
     <string name="setting_debug_block_screen">Sperrbildschirm anzeigen</string>
-    <string name="default_launcher_highlight">Retirement Launcher</string>
     <string name="file_permission_title">Speicher-Schutz</string>
     <string name="file_permission_desc">Damit die automatische Löschung unbekannter APK/AAB-Dateien funktioniert, benötigt die App Zugriff auf den gesamten Speicher. Dies hilft, Ihr Gerät sauber und sicher zu halten.</string>
     <string name="file_permission_highlight">unbekannte APK/AAB</string>

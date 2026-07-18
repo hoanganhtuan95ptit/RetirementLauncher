@@ -15,7 +15,6 @@
     <string name="call_block_highlight">إدارة المكالمات وجهات الاتصال</string>
     <string name="setting_header_debug">🐛 تصحيح الأخطاء</string>
     <string name="setting_debug_block_screen">عرض شاشة الحظر</string>
-    <string name="default_launcher_highlight">Retirement Launcher</string>
     <string name="file_permission_title">حماية التخزين</string>
     <string name="file_permission_desc">لكي تعمل ميزة الحذف التلقائي لملفات APK/AAB المجهولة، يحتاج التطبيق إلى الوصول إلى جميع وحدات التخزين. يساعد هذا في الحفاظ على جهازك نظيفاً وآمناً.</string>
     <string name="file_permission_highlight">APK/AAB مجهولة</string>

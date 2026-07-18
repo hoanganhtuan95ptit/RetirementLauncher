@@ -15,7 +15,6 @@
     <string name="call_block_highlight">quản lý cuộc gọi và danh bạ</string>
     <string name="setting_header_debug">🐛 Debug</string>
     <string name="setting_debug_block_screen">Xem màn hình chặn</string>
-    <string name="default_launcher_highlight">Retirement Launcher</string>
     <string name="file_permission_title">Bảo vệ bộ nhớ</string>
     <string name="file_permission_desc">Để tính năng tự động xóa các file APK/AAB lạ hoạt động, ứng dụng cần quyền truy cập tất cả bộ nhớ. Điều này giúp thiết bị của bạn luôn sạch sẽ và an toàn.</string>
     <string name="file_permission_highlight">APK/AAB lạ</string>

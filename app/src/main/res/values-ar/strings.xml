@@ -83,4 +83,4 @@
     <string name="pin_error_incorrect">رمز PIN غير صحيح</string>
 
     <string name="done">تم</string>
-</resources>
+    <string name="default_launcher_highlight">Retirement Launcher</string>\n</resources>

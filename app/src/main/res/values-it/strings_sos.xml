@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources>\n    <string name="setting_emergency_call">Chiamata di emergenza automatica (SOS)</string>
     <string name="emergency_call_desc">Se il telefono non viene usato per 10 ore, l\'app effettuerà automaticamente una chiamata di emergenza.</string>
     <string name="emergency_call_enable">Attiva funzione</string>
     <string name="emergency_call_phone_number">Numero di Telefono di Emergenza</string>
@@ -19,7 +19,6 @@
     <string name="call_block_highlight">gestire chiamate e contatti</string>
     <string name="setting_header_debug">🐛 Debug</string>
     <string name="setting_debug_block_screen">Visualizza Schermata di Blocco</string>
-    <string name="default_launcher_highlight">Retirement Launcher</string>
     <string name="file_permission_title">Protezione Archiviazione</string>
     <string name="file_permission_desc">Affinché l\'eliminazione automatica di file APK/AAB sconosciuti funzioni, l\'app deve avere accesso a tutto l\'archivio. Questo aiuta a mantenere il tuo dispositivo pulito e sicuro.</string>
     <string name="file_permission_highlight">APK/AAB sconosciuti</string>

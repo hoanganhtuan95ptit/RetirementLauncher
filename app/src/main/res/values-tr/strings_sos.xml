@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources>\n    <string name="setting_emergency_call">Otomatik Acil Arama (SOS)</string>
     <string name="emergency_call_desc">Telefon 10 saat boyunca kullanılmazsa, uygulama otomatik olarak acil arama yapacaktır.</string>
     <string name="clean_cat_system_temp">Sistem geçici dosyaları (.tmp, .log…)</string>
     <string name="clean_cat_compressed">Bilinmeyen sıkıştırılmış dosyalar</string>
@@ -14,7 +14,6 @@
     <string name="call_block_highlight">aramaları ve rehberi yönet</string>
     <string name="setting_header_debug">🐛 Hata Ayıklama</string>
     <string name="setting_debug_block_screen">Engelleme Ekranını Görüntüle</string>
-    <string name="default_launcher_highlight">Retirement Launcher</string>
     <string name="file_permission_title">Depolama Koruması</string>
     <string name="file_permission_desc">Bilinmeyen APK/AAB dosyalarının otomatik silinmesinin çalışması için uygulamanın tüm depolama alanına erişimi olması gerekir. Bu, cihazınızın temiz ve güvenli kalmasına yardımcı olur.</string>
     <string name="file_permission_highlight">bilinmeyen APK/AAB</string>

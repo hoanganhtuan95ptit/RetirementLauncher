@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources>\n    <string name="setting_emergency_call">Apel de urgență automat (SOS)</string>
     <string name="emergency_call_desc">Dacă telefonul nu este folosit timp de 10 ore, aplicația va efectua automat un apel de urgență.</string>
     <string name="clean_cat_system_temp">Fișiere temporare de sistem (.tmp, .log…)</string>
     <string name="clean_cat_compressed">Fișiere arhivate necunoscute</string>
@@ -14,7 +14,6 @@
     <string name="call_block_highlight">gestionați apelurile și contactele</string>
     <string name="setting_header_debug">🐛 Debug</string>
     <string name="setting_debug_block_screen">Vizualizare ecran de blocare</string>
-    <string name="default_launcher_highlight">Retirement Launcher</string>
     <string name="file_permission_title">Protecție stocare</string>
     <string name="file_permission_desc">Pentru ca ștergerea automată a fișierelor APK/AAB necunoscute să funcționeze, aplicația are nevoie de acces la tot spațiul de stocare. Acest lucru ajută la menținerea dispozitivului curat și sigur.</string>
     <string name="file_permission_highlight">APK/AAB necunoscute</string>
