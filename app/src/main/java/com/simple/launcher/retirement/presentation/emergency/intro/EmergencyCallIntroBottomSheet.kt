@@ -1,4 +1,4 @@
-package com.simple.launcher.retirement.presentation.emergency
+package com.simple.launcher.retirement.presentation.emergency.intro
 
 import android.content.DialogInterface
 import android.os.Bundle
@@ -20,84 +20,62 @@ import com.simple.launcher.retirement.utils.lifecycle.observe
 import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
 import com.simple.ui.precompute.text.setText
 
-class EmergencyContactRequiredBottomSheet : BaseBottomSheetDialogFragment<BottomSheetUsageStatsPermissionBinding, EmergencyContactRequiredViewModel>() {
+class EmergencyCallIntroBottomSheet : BaseBottomSheetDialogFragment<BottomSheetUsageStatsPermissionBinding, EmergencyCallIntroViewModel>() {
 
-    override val viewModel: EmergencyContactRequiredViewModel by viewModels()
+    override val viewModel: EmergencyCallIntroViewModel by viewModels()
 
     private var isAccepted = false
 
     override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?): BottomSheetUsageStatsPermissionBinding {
-
         return BottomSheetUsageStatsPermissionBinding.inflate(inflater, container, false)
     }
 
     override fun setupViews(view: View, savedInstanceState: Bundle?) {
-
         super.setupViews(view, savedInstanceState)
 
-        val binding = binding ?: return
-
-        binding.btnGrant.root.setOnSafeClickListener {
-
+        binding?.btnGrant?.root?.setOnSafeClickListener {
             isAccepted = true
-            AppEventBus.post(AppEvent.EmergencyContactRequiredAccept)
+            AppEventBus.post(AppEvent.EmergencyCallIntroAccept)
             dismiss()
         }
     }
 
     override fun observeData() {
-
         super.observeData()
 
         viewModel.title.observe(this) { title ->
-
-            val binding = binding ?: return@observe
-            binding.tvTitle.setText(title)
+            binding?.tvTitle?.setText(title)
         }
-
         viewModel.description.observe(this) { description ->
-
-            val binding = binding ?: return@observe
-            binding.tvDescription.setText(description)
+            binding?.tvDescription?.setText(description)
         }
-
         viewModel.action.observe(this) { state ->
-
-            val binding = binding ?: return@observe
-            binding.btnGrant.tvAction.setText(state.text)
-            binding.btnGrant.tvAction.parent.asObjectOrNull<View>()?.setBackground(state.background)
+            binding?.btnGrant?.tvAction?.setText(state.text)
+            binding?.btnGrant?.tvAction?.parent?.asObjectOrNull<View>()?.setBackground(state.background)
         }
     }
 
     override fun onDismiss(dialog: DialogInterface) {
-
         super.onDismiss(dialog)
-
         if (!isAccepted) {
-
-            AppEventBus.post(AppEvent.EmergencyContactRequiredCancel)
+            AppEventBus.post(AppEvent.EmergencyCallIntroCancel)
         }
     }
 
     companion object {
-
-        const val TAG = "EmergencyContactRequiredBottomSheet"
+        const val TAG = "EmergencyCallIntroBottomSheet"
     }
 }
 
 @Deeplink
-class EmergencyContactRequiredDeeplinkHandler : DeeplinkHandler {
+class EmergencyCallIntroDeeplinkHandler : DeeplinkHandler {
 
-    override val deeplink: String = DeepLinks.EMERGENCY_CONTACT_REQUIRED
+    override val deeplink: String = DeepLinks.EMERGENCY_CALL_INTRO
 
-    override suspend fun navigate(
-        fragmentActivity: FragmentActivity,
-        deeplink: String,
-        extras: Map<String, Any?>?,
-        sharedElement: Map<String, View>?
-    ): Boolean {
+    override suspend fun navigate(fragmentActivity: FragmentActivity, deeplink: String, extras: Map<String, Any?>?, sharedElement: Map<String, View>?): Boolean {
 
-        EmergencyContactRequiredBottomSheet().show(fragmentActivity.supportFragmentManager, EmergencyContactRequiredBottomSheet.TAG)
+        EmergencyCallIntroBottomSheet().show(fragmentActivity.supportFragmentManager, EmergencyCallIntroBottomSheet.TAG)
+
         return true
     }
 }

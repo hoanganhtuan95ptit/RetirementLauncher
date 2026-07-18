@@ -64,6 +64,15 @@ sealed class AppEvent {
     // ── Nhấn / toggle item trong Settings ───────────────────────────────────
     data class SettingClicked(val item: SettingItem) : AppEvent()
 
+    data class SOSItemClicked(val id: Int) : AppEvent()
+
+    data class SOSUpdate(
+        val config: com.simple.launcher.retirement.domain.model.SOSConfig
+    ) : AppEvent()
+
+    object SOSUpdateSuccess : AppEvent()
+    object SOSUpdateCancel : AppEvent()
+
     // ── Performance ─────────────────────────────────────────────────────────
     data class FpsUpdated(val screenName: String, val fps: Int) : AppEvent()
 }

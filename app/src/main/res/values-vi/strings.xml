@@ -12,7 +12,7 @@
     <string name="setting_contact_list">Thiết lập liên hệ nhanh</string>
     <string name="setting_clean_files">Dọn dẹp file lạ</string>
     <string name="setting_clean_memory">Giải phóng bộ nhớ</string>
-    <string name="setting_emergency_call">Bật cuộc gọi khẩn cấp tự động (theo liên hệ nhanh)</string>
+    <string name="setting_emergency_call">Cuộc gọi khẩn cấp (SOS)</string>
     <string name="setting_app_monitoring">Giám sát ứng dụng</string>
     <string name="setting_auto_cleanup_apk">Tự động xóa APK</string>
     <string name="setting_call_block">Chặn cuộc gọi lạ</string>
@@ -169,4 +169,19 @@
     <string name="emergency_call_phone_number_hint">Nhập số điện thoại</string>
     <string name="emergency_call_save_success">Đã lưu cấu hình cuộc gọi khẩn cấp</string>
     <string name="emergency_call_permission_denied">Cần quyền gọi điện để thực hiện tính năng này</string>
+
+    <!-- Advanced SOS -->
+    <string name="setting_emergency_advanced">Cài đặt SOS nâng cao</string>
+    <string name="sos_settings_title">SOS nâng cao</string>
+    <string name="sos_master_toggle">Kích hoạt SOS tự động</string>
+    <string name="sos_save_changes">Lưu thay đổi</string>
+    <string name="sos_timeout_label">Thời gian chờ không tương tác</string>
+    <string name="sos_timeout_value">%1$d giờ</string>
+    <string name="sos_exclusion_periods_header">Khung giờ loại trừ (Ngủ/Nghỉ)</string>
+    <string name="sos_add_exclusion_period">Thêm khung giờ loại trừ</string>
+    <string name="sos_add_exclusion_period_desc">Không tính thời gian ngủ hoặc nghỉ</string>
+    <string name="sos_exclusion_period_format">%1$02d:%2$02d - %3$02d:%4$02d</string>
+    <string name="sos_delete_exclusion_period">Xóa</string>
+    <string name="sos_select_start_time">Chọn thời gian bắt đầu</string>
+    <string name="sos_select_end_time">Chọn thời gian kết thúc</string>
 </resources>

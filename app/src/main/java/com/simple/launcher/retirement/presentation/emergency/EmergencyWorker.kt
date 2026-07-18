@@ -17,6 +17,7 @@ import androidx.core.content.ContextCompat
 import com.simple.launcher.retirement.BuildConfig
 import com.simple.launcher.retirement.domain.repository.ContactRepository
 import com.simple.launcher.retirement.domain.repository.PreferenceRepository
+import com.simple.launcher.retirement.presentation.emergency.utils.EmergencyUtils
 import com.simple.launcher.retirement.presentation.services.worker.BackgroundWorker
 import kotlinx.coroutines.flow.Flow
 
@@ -80,22 +81,39 @@ class EmergencyWorker(context: Context) : BackgroundWorker(context) {
 
         val lastActivity = repository.getLastUserActivity()
         val currentTime = System.currentTimeMillis()
+        val elapsed = currentTime - lastActivity
 
-        // Có tương tác mới thì reset vòng quay contact để lần cảnh báo sau bắt đầu lại từ đầu.
-        if (currentTime - lastActivity <= INACTIVITY_TIMEOUT_MILLIS) {
+        // Trường hợp có tương tác mới thì reset vòng quay contact để lần cảnh báo sau bắt đầu lại từ đầu.
+        if (elapsed <= CHECK_INTERVAL_MILLIS) {
 
-            logDebug("Có tương tác mới thì reset vòng quay contact để lần cảnh báo sau bắt đầu lại từ đầu.")
             resetEmergencyState()
+            return
+        }
+
+        // Quy tắc 2: Giới hạn cứng (Hard limit) 24 giờ
+        if (elapsed >= ABSOLUTE_HARD_LIMIT_MILLIS) {
+
+            logDebug("Hard limit reached (24h), triggering emergency")
+            tryCallNextContact(currentTime)
+            return
+        }
+
+        // Quy tắc 1: Thời gian hoạt động (Active timeout) tùy chỉnh
+        val timeoutMillis = repository.getEmergencyTimeout()
+        val activeElapsed = EmergencyUtils.calculateActiveTime(lastActivity, currentTime, repository.getExclusionPeriods())
+
+        if (activeElapsed >= timeoutMillis) {
+
+            logDebug("Active timeout reached (${activeElapsed / 1000 / 60} min active), triggering emergency")
+            tryCallNextContact(currentTime)
             return
         }
 
         if (currentTime - lastCallTime < CALL_COOLDOWN_MILLIS) {
 
-            logDebug("checkInactivity")
+            logDebug("Đang trong thời gian chờ giữa các cuộc gọi (cooldown)")
             return
         }
-
-        tryCallNextContact(currentTime)
     }
 
     private fun tryCallNextContact(currentTime: Long) {
@@ -236,7 +254,7 @@ class EmergencyWorker(context: Context) : BackgroundWorker(context) {
     companion object {
 
         private const val TAG = "EmergencyCallWorker"
-        private val INACTIVITY_TIMEOUT_MILLIS = if (BuildConfig.DEBUG) 10 * 60 * 1000L else 10 * 60 * 60 * 1000L
+        private val ABSOLUTE_HARD_LIMIT_MILLIS = 12 * 60 * 60 * 1000L
         private val CALL_COOLDOWN_MILLIS = if (BuildConfig.DEBUG) 1 * 60 * 1000L else 10 * 60 * 1000L
         private val CHECK_INTERVAL_MILLIS = if (BuildConfig.DEBUG) 30 * 1000L else 30 * 60 * 1000L
         private const val AUTO_CALL_SCREEN_EVENT_IGNORE_WINDOW_MILLIS = 60 * 1000L

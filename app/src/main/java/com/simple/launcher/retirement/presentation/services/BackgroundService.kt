@@ -43,7 +43,6 @@ class BackgroundService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
-        Log.d("tuanha", "onStartCommand: ")
         startAsForegroundService()
         return START_STICKY
     }

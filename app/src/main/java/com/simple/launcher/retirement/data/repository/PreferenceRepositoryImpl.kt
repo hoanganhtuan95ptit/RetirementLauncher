@@ -2,6 +2,9 @@ package com.simple.launcher.retirement.data.repository
 
 import android.content.Context
 import androidx.core.content.edit
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import com.simple.launcher.retirement.domain.model.ExclusionPeriod
 import com.simple.launcher.retirement.domain.repository.PreferenceRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -10,9 +13,10 @@ import kotlinx.coroutines.flow.asStateFlow
 class PreferenceRepositoryImpl(context: Context) : PreferenceRepository {
 
     private val sharedPrefs = context.getSharedPreferences("launcher_prefs", Context.MODE_PRIVATE)
+    private val gson = Gson()
 
     private var isPendingDefaultLauncherRam: Boolean = false
-    private var pendingEmergencyCallEnabledRam: Boolean? = null
+    private var pendingEmergencyConfigRam: com.simple.launcher.retirement.domain.model.SOSConfig? = null
 
     companion object {
 
@@ -30,6 +34,10 @@ class PreferenceRepositoryImpl(context: Context) : PreferenceRepository {
         private const val KEY_EMERGENCY_PHONE_NUMBER = "emergency_phone_number"
         private const val KEY_LAST_USER_ACTIVITY = "last_user_activity"
         private const val KEY_LAST_EMERGENCY_INDEX = "last_emergency_index"
+        private const val KEY_EMERGENCY_TIMEOUT = "emergency_timeout"
+        private const val KEY_EXCLUSION_PERIODS = "exclusion_periods"
+
+        private const val DEFAULT_EMERGENCY_TIMEOUT = 10 * 60 * 60 * 1000L // 10h
     }
 
     private val _appBlockEnabled = MutableStateFlow(isAppBlockEnabled())
@@ -169,11 +177,36 @@ class PreferenceRepositoryImpl(context: Context) : PreferenceRepository {
         sharedPrefs.edit { putInt(KEY_LAST_EMERGENCY_INDEX, index) }
     }
 
-    override fun getPendingEmergencyCallEnabled(): Boolean? = pendingEmergencyCallEnabledRam
+    override fun getEmergencyTimeout(): Long =
+        sharedPrefs.getLong(KEY_EMERGENCY_TIMEOUT, DEFAULT_EMERGENCY_TIMEOUT)
 
-    override fun setPendingEmergencyCallEnabled(enabled: Boolean?) {
+    override fun setEmergencyTimeout(timeout: Long) {
 
-        pendingEmergencyCallEnabledRam = enabled
+        sharedPrefs.edit { putLong(KEY_EMERGENCY_TIMEOUT, timeout) }
+    }
+
+    override fun getExclusionPeriods(): List<ExclusionPeriod> {
+
+        val json = sharedPrefs.getString(KEY_EXCLUSION_PERIODS, null) ?: return emptyList()
+        return try {
+            val type = object : TypeToken<List<ExclusionPeriod>>() {}.type
+            gson.fromJson(json, type)
+        } catch (e: Exception) {
+            emptyList()
+        }
+    }
+
+    override fun setExclusionPeriods(periods: List<ExclusionPeriod>) {
+
+        val json = gson.toJson(periods)
+        sharedPrefs.edit { putString(KEY_EXCLUSION_PERIODS, json) }
+    }
+
+    override fun getPendingEmergencyConfig(): com.simple.launcher.retirement.domain.model.SOSConfig? = pendingEmergencyConfigRam
+
+    override fun setPendingEmergencyConfig(config: com.simple.launcher.retirement.domain.model.SOSConfig?) {
+
+        pendingEmergencyConfigRam = config
     }
 
     override fun isPendingDefaultLauncher(): Boolean = isPendingDefaultLauncherRam

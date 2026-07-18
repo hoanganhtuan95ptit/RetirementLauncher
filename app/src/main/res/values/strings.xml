@@ -12,7 +12,7 @@
     <string name="setting_contact_list">Quick Contact Setup</string>
     <string name="setting_clean_files">Clean Junk Files</string>
     <string name="setting_clean_memory">Free Up Memory</string>
-    <string name="setting_emergency_call">Auto Emergency Call (by quick contact)</string>
+    <string name="setting_emergency_call">Auto Emergency Call (SOS)</string>
     <string name="setting_app_monitoring">App Monitoring</string>
     <string name="setting_auto_cleanup_apk">Auto Delete APK</string>
     <string name="setting_call_block">Block Unknown Calls</string>
@@ -169,4 +169,19 @@
     <string name="emergency_call_phone_number_hint">Enter phone number</string>
     <string name="emergency_call_save_success">Emergency call configuration saved</string>
     <string name="emergency_call_permission_denied">Calling permission is required for this feature</string>
+
+    <!-- Advanced SOS -->
+    <string name="setting_emergency_advanced">Advanced SOS Settings</string>
+    <string name="sos_settings_title">Advanced SOS</string>
+    <string name="sos_master_toggle">Enable Auto Emergency Call</string>
+    <string name="sos_save_changes">Save Changes</string>
+    <string name="sos_timeout_label">Inactivity Timeout</string>
+    <string name="sos_timeout_value">%1$d hours</string>
+    <string name="sos_exclusion_periods_header">Exclusion Periods (Sleep/Rest)</string>
+    <string name="sos_add_exclusion_period">Add Exclusion Period</string>
+    <string name="sos_add_exclusion_period_desc">Excluding sleep or rest time</string>
+    <string name="sos_exclusion_period_format">%1$02d:%2$02d - %3$02d:%4$02d</string>
+    <string name="sos_delete_exclusion_period">Delete</string>
+    <string name="sos_select_start_time">Select Start Time</string>
+    <string name="sos_select_end_time">Select End Time</string>
 </resources>

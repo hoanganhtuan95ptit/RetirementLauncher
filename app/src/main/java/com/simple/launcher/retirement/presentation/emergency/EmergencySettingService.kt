@@ -1,10 +1,10 @@
 package com.simple.launcher.retirement.presentation.emergency
 
-import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.simple.auto.register.AutoRegister
-import com.simple.component.service.FragmentCreatedService
+import com.simple.component.service.ActivityCreatedService
 import com.simple.component.service.launchCollect
 import com.simple.launcher.retirement.domain.repository.PreferenceRepository
 import com.simple.launcher.retirement.presentation.main.MainActivity
@@ -17,67 +17,61 @@ import com.simple.launcher.retirement.utils.permission.PermissionManager
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.launch
 
-@AutoRegister(apis = [SettingsFragment::class])
-class EmergencyService : FragmentCreatedService {
+@AutoRegister(apis = [ActivityCreatedService::class])
+class EmergencyService : ActivityCreatedService {
 
+    override fun setup(fragmentActivity: FragmentActivity) {
 
-    override fun setup(fragment: Fragment) {
+        fragmentActivity.lifecycleScope.launch {
 
-        fragment.lifecycleScope.launch {
-
-            val pending = PreferenceRepository.instance.getPendingEmergencyCallEnabled()
+            val pending = PreferenceRepository.instance.getPendingEmergencyConfig()
             if (pending != null) {
                 setEmergencyCallEnabled(pending)
             }
         }
 
-        AppEventBus.events.filterIsInstance<AppEvent.SettingClicked>().launchCollect(fragment) { event ->
+        AppEventBus.events.filterIsInstance<AppEvent.SOSUpdate>().launchCollect(fragmentActivity) { event ->
 
-            val item = event.item
-            val isTurningOn = !item.isChecked
-
-            if (item.id != SettingItem.ID_EMERGENCY_CALL_TOGGLE) {
-                return@launchCollect
+            PreferenceRepository.instance.setPendingEmergencyConfig(event.config)
+            if (!setEmergencyCallEnabled(event.config)) {
+                AppEventBus.post(AppEvent.SOSUpdateCancel)
             }
-
-            PreferenceRepository.instance.setPendingEmergencyCallEnabled(isTurningOn)
-
-            setEmergencyCallEnabled(isTurningOn)
         }
     }
 
-    private suspend fun setEmergencyCallEnabled(isTurningOn: Boolean) {
+    private suspend fun setEmergencyCallEnabled(
+        config: com.simple.launcher.retirement.domain.model.SOSConfig
+    ): Boolean {
 
         try {
 
-            if (isTurningOn) {
-
-                if (!PermissionManager.requireEmergencyCallIntro()) {
-                    return
-                }
-
-                if (!PermissionManager.requireCallPermission()) {
-                    return
-                }
-
-                if (!PermissionManager.requireEmergencyContact()) {
-                    return
-                }
-
-                if (!PermissionManager.requireDefaultLauncher()) {
-                    return
-                }
+            if (!checkPermissions(config)) {
+                return false
             }
 
-            if (!isTurningOn && !PermissionManager.requirePinPermissions()) {
-                return
-            }
+            PreferenceRepository.instance.setEmergencyTimeout(config.timeout)
+            PreferenceRepository.instance.setExclusionPeriods(config.exclusionPeriods)
 
-            PreferenceRepository.instance.setEmergencyCallEnabled(isTurningOn)
+            PreferenceRepository.instance.setEmergencyCallEnabled(config.isEnabled)
+            AppEventBus.post(AppEvent.SOSUpdateSuccess)
+            return true
         } finally {
 
-            PreferenceRepository.instance.setPendingEmergencyCallEnabled(null)
+            PreferenceRepository.instance.setPendingEmergencyConfig(null)
         }
+    }
+
+    private suspend fun checkPermissions(config: com.simple.launcher.retirement.domain.model.SOSConfig): Boolean {
+
+        if (config.isEnabled) {
+
+            return PermissionManager.requireEmergencyCallIntro() &&
+                    PermissionManager.requireCallPermission() &&
+                    PermissionManager.requireEmergencyContact() &&
+                    PermissionManager.requireDefaultLauncher()
+        }
+
+        return PermissionManager.requirePinPermissions()
     }
 }
 
@@ -99,6 +93,17 @@ class EmergencySettingService : ProtectSettingService() {
         viewModel.emergencyCallEnabledFlow.launchCollect(settingsFragment.viewLifecycleOwner) {
 
             if (it) (settingsFragment.activity as? MainActivity)?.startBackgroundService()
+        }
+
+        AppEventBus.events.filterIsInstance<AppEvent.SettingClicked>().launchCollect(settingsFragment.viewLifecycleOwner) { event ->
+
+            val item = event.item
+
+            if (item.id != SettingItem.ID_EMERGENCY_CALL_TOGGLE) {
+                return@launchCollect
+            }
+
+            com.simple.launcher.retirement.presentation.sendDeeplinkWithBackStack(com.simple.launcher.retirement.presentation.DeepLinks.SOS_SETTINGS)
         }
     }
 }

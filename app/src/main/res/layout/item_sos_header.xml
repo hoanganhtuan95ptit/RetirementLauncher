@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="4dp"
+    android:layout_marginVertical="8dp"
+    android:background="@drawable/bg_sos_card"
+    android:padding="20dp">
+
+    <View
+        android:id="@+id/iv_icon_bg"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@drawable/bg_sos_circle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_icon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_icon_bg"
+        app:layout_constraintEnd_toEndOf="@id/iv_icon_bg"
+        app:layout_constraintStart_toStartOf="@id/iv_icon_bg"
+        app:layout_constraintTop_toTopOf="@id/iv_icon_bg" />
+
+    <TextView
+        android:id="@+id/tv_icon_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SOS"
+        android:textColor="@color/sos_green"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/iv_icon_bg"
+        app:layout_constraintEnd_toEndOf="@id/iv_icon_bg"
+        app:layout_constraintStart_toStartOf="@id/iv_icon_bg"
+        app:layout_constraintTop_toTopOf="@id/iv_icon_bg" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/sos_master_toggle"
+        android:textColor="@color/memory_text_primary"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@id/sw_sos"
+        app:layout_constraintStart_toEndOf="@id/iv_icon_bg"
+        app:layout_constraintTop_toTopOf="@id/iv_icon_bg" />
+
+    <TextView
+        android:id="@+id/tv_desc"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="@string/emergency_call_intro_desc"
+        android:textColor="@color/sos_gray_text"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@id/sw_sos"
+        app:layout_constraintStart_toStartOf="@id/tv_title"
+        app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/sw_sos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/iv_icon_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/iv_icon_bg" />
+
+    <View
+        android:id="@+id/v_click_toggle"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

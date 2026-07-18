@@ -217,7 +217,6 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
                 )
             )
         }
-        Log.d("tuanha", "getInstalledApps: ${Thread.currentThread().name}")
         return apps.sortedBy { it.label.lowercase() }
     }
 

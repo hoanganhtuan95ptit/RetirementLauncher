@@ -1,4 +1,4 @@
-package com.simple.launcher.retirement.presentation.emergency
+package com.simple.launcher.retirement.presentation.emergency.permissions
 
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.presentation.base.ActionState
@@ -19,14 +19,15 @@ import com.simple.ui.precompute.text.with
 import com.simple.ui.precompute.text.withFirst
 import kotlinx.coroutines.flow.StateFlow
 
-class EmergencyCallIntroViewModel : BaseViewModel() {
+class EmergencyContactRequiredViewModel : BaseViewModel() {
 
     val title: StateFlow<BigText> = combineState(
         flow1 = resources,
         initialValue = BigText("")
     ) { resources ->
+
         val color = resources.textColorPrimary
-        value = resources.getString(R.string.emergency_call_intro_title)
+        value = resources.getString(R.string.emergency_contact_required_title)
             .with(BigForegroundColor(color), BigBold)
             .build()
     }
@@ -35,12 +36,13 @@ class EmergencyCallIntroViewModel : BaseViewModel() {
         flow1 = resources,
         initialValue = BigText("")
     ) { resources ->
+
         val color = resources.textColorSecondary
         val highlightColor = resources.colorAccent
 
-        value = resources.getString(R.string.emergency_call_intro_desc)
+        value = resources.getString(R.string.emergency_contact_required_desc)
             .with(BigForegroundColor(color))
-            .withFirst(resources.getString(R.string.emergency_call_intro_highlight), BigBold, BigForegroundColor(highlightColor))
+            .withFirst(resources.getString(R.string.emergency_contact_required_highlight), BigBold, BigForegroundColor(highlightColor))
             .build()
     }
 
@@ -53,7 +55,7 @@ class EmergencyCallIntroViewModel : BaseViewModel() {
         val backgroundColor = resources.colorPrimary
 
         value = buildActionState(
-            text = resources.getString(R.string.emergency_call_intro_action),
+            text = resources.getString(R.string.emergency_contact_required_action),
             textColor = color,
             backgroundColor = backgroundColor
         )

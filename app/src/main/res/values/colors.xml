@@ -26,4 +26,11 @@
     <color name="memory_text_primary">#1A1A2E</color>
     <color name="memory_result_bg">#E1F5EE</color>
     <color name="memory_result_border">#9FE1CB</color>
+
+    <!-- SOS Redesign -->
+    <color name="sos_green">#2E7D32</color>
+    <color name="sos_green_light">#E8F5E9</color>
+    <color name="sos_gray_text">#757575</color>
+    <color name="sos_card_bg">#FFFFFF</color>
+    <color name="sos_bg">#F5F5F5</color>
 </resources>

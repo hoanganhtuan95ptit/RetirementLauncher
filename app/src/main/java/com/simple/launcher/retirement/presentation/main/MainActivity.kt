@@ -26,10 +26,6 @@ var a = true
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 
-    init {
-        Log.d("tuanha", "init: $this")
-    }
-
     override fun inflateBinding(inflater: LayoutInflater) = ActivityMainBinding.inflate(inflater)
 
     override fun setupViews(savedInstanceState: Bundle?) {

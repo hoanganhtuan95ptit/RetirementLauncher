@@ -27,6 +27,7 @@ object DeepLinks {
     const val PIN_SETUP     = "app://pin_setup"
     const val PIN_VERIFY    = "app://pin_verify"
     const val EMERGENCY_CALL = "app://emergency_call"
+    const val SOS_SETTINGS = "app://sos_settings"
     const val APP_MONITORING_INTRO = "app://app_monitoring_intro"
     const val EMERGENCY_CALL_INTRO = "app://emergency_call_intro"
     const val EMERGENCY_CONTACT_REQUIRED = "app://emergency_contact_required"
