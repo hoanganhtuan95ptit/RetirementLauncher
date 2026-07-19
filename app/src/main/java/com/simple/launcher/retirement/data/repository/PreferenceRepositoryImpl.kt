@@ -18,6 +18,9 @@ class PreferenceRepositoryImpl(context: Context) : PreferenceRepository {
 
     private var isPendingDefaultLauncherRam: Boolean = false
     private var pendingEmergencyConfigRam: com.simple.launcher.retirement.domain.model.SOSConfig? = null
+    private var pendingAppBlockEnabledRam: Boolean? = null
+    private var pendingFileCleanupEnabledRam: Boolean? = null
+    private var pendingCallBlockEnabledRam: Boolean? = null
 
     companion object {
 
@@ -98,6 +101,13 @@ class PreferenceRepositoryImpl(context: Context) : PreferenceRepository {
         sharedPrefs.edit { putBoolean(KEY_APP_BLOCK_FIRST_TIME, firstTime) }
     }
 
+    override fun getPendingAppBlockEnabled(): Boolean? = pendingAppBlockEnabledRam
+
+    override fun setPendingAppBlockEnabled(enabled: Boolean?) {
+
+        pendingAppBlockEnabledRam = enabled
+    }
+
     // File Cleanup
     override fun isFileCleanupEnabled(): Boolean =
         sharedPrefs.getBoolean(KEY_FILE_CLEANUP_ENABLED, false)
@@ -118,6 +128,13 @@ class PreferenceRepositoryImpl(context: Context) : PreferenceRepository {
         sharedPrefs.edit { putBoolean(KEY_FILE_CLEANUP_FIRST_TIME, firstTime) }
     }
 
+    override fun getPendingFileCleanupEnabled(): Boolean? = pendingFileCleanupEnabledRam
+
+    override fun setPendingFileCleanupEnabled(enabled: Boolean?) {
+
+        pendingFileCleanupEnabledRam = enabled
+    }
+
     // Call Block
     override fun isCallBlockEnabled(): Boolean =
         sharedPrefs.getBoolean(KEY_CALL_BLOCK_ENABLED, false)
@@ -136,6 +153,13 @@ class PreferenceRepositoryImpl(context: Context) : PreferenceRepository {
     override fun setCallBlockFirstTime(firstTime: Boolean) {
 
         sharedPrefs.edit { putBoolean(KEY_CALL_BLOCK_FIRST_TIME, firstTime) }
+    }
+
+    override fun getPendingCallBlockEnabled(): Boolean? = pendingCallBlockEnabledRam
+
+    override fun setPendingCallBlockEnabled(enabled: Boolean?) {
+
+        pendingCallBlockEnabledRam = enabled
     }
 
     // Pocket Mode

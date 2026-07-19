@@ -13,6 +13,31 @@
 
     <string name="setting_pocket_mode">Chống chạm nhầm (túi quần)</string>
 
+    <string name="setting_app_monitoring">Giám sát ứng dụng</string>
+    <string name="setting_auto_cleanup_apk">Tự động xóa APK</string>
+    <string name="setting_call_block">Chặn cuộc gọi</string>
+    <string name="setting_clean_files">Dọn dẹp tập tin</string>
+    <string name="setting_clean_memory">Dọn dẹp bộ nhớ</string>
+    <string name="clean_files_title">Dọn dẹp tập tin</string>
+    <string name="clean_files_start">Bắt đầu</string>
+    <string name="clean_files_running">Đang dọn dẹp...</string>
+    <string name="clean_files_retry">Thử lại</string>
+    <string name="clean_files_desc">Quét và dọn dẹp tập tin rác</string>
+    <string name="clean_files_completed">Hoàn tất</string>
+    <string name="clean_memory_title">Dọn dẹp bộ nhớ</string>
+    <string name="clean_memory_start">Bắt đầu</string>
+    <string name="clean_memory_running">Đang dọn dẹp...</string>
+    <string name="clean_memory_retry">Thử lại</string>
+    <string name="clean_memory_stat_used">Đã dùng</string>
+    <string name="clean_memory_stat_free">Trống</string>
+    <string name="clean_memory_stat_total">Tổng</string>
+    <string name="clean_memory_result_sub">Bộ nhớ đã được dọn dẹp</string>
+    <string name="clean_memory_optimal">Tối ưu</string>
+    <string name="clean_memory_toast">Bộ nhớ đã được dọn dẹp</string>
+    <string name="call_block_title">Chặn cuộc gọi</string>
+    <string name="call_block_desc">Chặn cuộc gọi từ số lạ</string>
+
+
     <!-- Onboarding -->
     <string name="onboarding_title">Chào mừng bạn đến với Retirement Launcher</string>
     <string name="onboarding_desc">Ứng dụng giúp đơn giản hóa giao diện điện thoại và bảo vệ an toàn cho thiết bị của bạn.</string>
@@ -60,6 +85,8 @@
     <string name="pin_error_confirm_mismatch">Mã PIN xác nhận không khớp</string>
     <string name="pin_error_incorrect">Mã PIN không chính xác</string>
 
+    <string name="call_permission_title">Quyền gọi điện</string>
+    <string name="call_permission_desc">Cho phép ứng dụng thực hiện cuộc gọi khẩn cấp</string>
     <string name="done">Hoàn tất</string>
 
     <!-- Optimization & Settings -->

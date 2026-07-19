@@ -20,13 +20,17 @@ import com.simple.launcher.retirement.utils.lifecycle.observe
 import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
 import com.simple.ui.precompute.text.setText
 
-class EmergencyContactRequiredBottomSheet : BaseBottomSheetDialogFragment<BottomSheetUsageStatsPermissionBinding, EmergencyContactRequiredViewModel>() {
+class EmergencyContactRequiredBottomSheet :
+    BaseBottomSheetDialogFragment<BottomSheetUsageStatsPermissionBinding, EmergencyContactRequiredViewModel>() {
 
     override val viewModel: EmergencyContactRequiredViewModel by viewModels()
 
-    private var isAccepted = false
+    private var hasUserAccepted = false
 
-    override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?): BottomSheetUsageStatsPermissionBinding {
+    override fun inflateBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): BottomSheetUsageStatsPermissionBinding {
 
         return BottomSheetUsageStatsPermissionBinding.inflate(inflater, container, false)
     }
@@ -39,7 +43,7 @@ class EmergencyContactRequiredBottomSheet : BaseBottomSheetDialogFragment<Bottom
 
         binding.btnGrant.root.setOnSafeClickListener {
 
-            isAccepted = true
+            hasUserAccepted = true
             AppEventBus.post(AppEvent.EmergencyContactRequiredAccept)
             dismiss()
         }
@@ -49,17 +53,30 @@ class EmergencyContactRequiredBottomSheet : BaseBottomSheetDialogFragment<Bottom
 
         super.observeData()
 
+        observeRequiredContactTitle()
+        observeRequiredContactDescription()
+        observeRequiredContactAction()
+    }
+
+    private fun observeRequiredContactTitle() {
+
         viewModel.title.observe(this) { title ->
 
             val binding = binding ?: return@observe
             binding.tvTitle.setText(title)
         }
+    }
+
+    private fun observeRequiredContactDescription() {
 
         viewModel.description.observe(this) { description ->
 
             val binding = binding ?: return@observe
             binding.tvDescription.setText(description)
         }
+    }
+
+    private fun observeRequiredContactAction() {
 
         viewModel.action.observe(this) { state ->
 
@@ -73,8 +90,9 @@ class EmergencyContactRequiredBottomSheet : BaseBottomSheetDialogFragment<Bottom
 
         super.onDismiss(dialog)
 
-        if (!isAccepted) {
+        if (!hasUserAccepted) {
 
+            // Người dùng đóng sheet mà chưa xác nhận thì PermissionManager cần nhận kết quả cancel.
             AppEventBus.post(AppEvent.EmergencyContactRequiredCancel)
         }
     }

@@ -14,6 +14,14 @@ import kotlinx.coroutines.flow.StateFlow
 
 class CommonSettingViewModel : BaseViewModel() {
 
+    init {
+
+        if (PermissionManager.isDefaultLauncher()) {
+
+            PreferenceRepository.instance.setPendingDefaultLauncher(false)
+        }
+    }
+
     val viewItemList: StateFlow<GroupViewItem?> = combineState(
         resources,
         PreferenceRepository.instance.hasPinFlow(),

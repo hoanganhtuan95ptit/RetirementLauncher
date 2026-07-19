@@ -28,6 +28,8 @@ interface PreferenceRepository {
     fun setAppBlockEnabled(enabled: Boolean)
     fun isAppBlockFirstTime(): Boolean
     fun setAppBlockFirstTime(firstTime: Boolean)
+    fun getPendingAppBlockEnabled(): Boolean?
+    fun setPendingAppBlockEnabled(enabled: Boolean?)
 
     // File Cleanup
     fun isFileCleanupEnabled(): Boolean
@@ -35,6 +37,8 @@ interface PreferenceRepository {
     fun setFileCleanupEnabled(enabled: Boolean)
     fun isFileCleanupFirstTime(): Boolean
     fun setFileCleanupFirstTime(firstTime: Boolean)
+    fun getPendingFileCleanupEnabled(): Boolean?
+    fun setPendingFileCleanupEnabled(enabled: Boolean?)
 
     // Call Block
     fun isCallBlockEnabled(): Boolean
@@ -42,6 +46,8 @@ interface PreferenceRepository {
     fun setCallBlockEnabled(enabled: Boolean)
     fun isCallBlockFirstTime(): Boolean
     fun setCallBlockFirstTime(firstTime: Boolean)
+    fun getPendingCallBlockEnabled(): Boolean?
+    fun setPendingCallBlockEnabled(enabled: Boolean?)
 
     // Pocket Mode
     fun isPocketModeEnabled(): Boolean

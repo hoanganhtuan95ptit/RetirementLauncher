@@ -152,6 +152,13 @@ class ReorderFragment : BaseFragment<FragmentAppListBinding>() {
             return
         }
 
+        if (isFlowSetup && type == ReorderType.APPS) {
+
+            AppEventBus.post(AppEvent.AppSetupAccept)
+            requireActivity().supportFragmentManager.popBackStack(DeepLinks.APP_LIST, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+            return
+        }
+
         // Xin quyền tuần tự — nếu bất kỳ quyền nào bị từ chối thì dừng
         if (type == ReorderType.APPS) {
             if (!PermissionManager.requireFilePermission()) return

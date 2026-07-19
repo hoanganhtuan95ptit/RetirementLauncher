@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlin.coroutines.CoroutineContext
 
-val handler = CoroutineExceptionHandler { _: CoroutineContext, throwable: Throwable ->
+val coroutineExceptionHandler = CoroutineExceptionHandler { _: CoroutineContext, throwable: Throwable ->
     // todo log error
 }
 
@@ -25,7 +25,7 @@ val handler = CoroutineExceptionHandler { _: CoroutineContext, throwable: Throwa
 fun <T1, R> ViewModel.combineState(
     flow1: Flow<T1>,
     initialValue: R,
-    context: CoroutineContext = handler + Dispatchers.IO,
+    context: CoroutineContext = coroutineExceptionHandler + Dispatchers.IO,
     transform: suspend MutableStateFlow<R>.(T1) -> Unit
 ): StateFlow<R> {
     val state = MutableStateFlow(initialValue)
@@ -44,7 +44,7 @@ fun <T1, T2, R> ViewModel.combineState(
     flow1: Flow<T1>,
     flow2: Flow<T2>,
     initialValue: R,
-    context: CoroutineContext = handler + Dispatchers.IO,
+    context: CoroutineContext = coroutineExceptionHandler + Dispatchers.IO,
     transform: suspend MutableStateFlow<R>.(T1, T2) -> Unit
 ): StateFlow<R> {
     val state = MutableStateFlow(initialValue)
@@ -67,7 +67,7 @@ fun <T1, T2, T3, R> ViewModel.combineState(
     flow2: Flow<T2>,
     flow3: Flow<T3>,
     initialValue: R,
-    context: CoroutineContext = handler + Dispatchers.IO,
+    context: CoroutineContext = coroutineExceptionHandler + Dispatchers.IO,
     transform: suspend MutableStateFlow<R>.(T1, T2, T3) -> Unit
 ): StateFlow<R> {
     val state = MutableStateFlow(initialValue)
@@ -91,7 +91,7 @@ fun <T1, T2, T3, T4, R> ViewModel.combineState(
     flow3: Flow<T3>,
     flow4: Flow<T4>,
     initialValue: R,
-    context: CoroutineContext = handler + Dispatchers.IO,
+    context: CoroutineContext = coroutineExceptionHandler + Dispatchers.IO,
     transform: suspend MutableStateFlow<R>.(T1, T2, T3, T4) -> Unit
 ): StateFlow<R> {
     val state = MutableStateFlow(initialValue)
@@ -115,7 +115,7 @@ fun <T1, T2, T3, T4, T5, R> ViewModel.combineState(
     flow4: Flow<T4>,
     flow5: Flow<T5>,
     initialValue: R,
-    context: CoroutineContext = handler + Dispatchers.IO,
+    context: CoroutineContext = coroutineExceptionHandler + Dispatchers.IO,
     transform: suspend MutableStateFlow<R>.(T1, T2, T3, T4, T5) -> Unit
 ): StateFlow<R> {
     val state = MutableStateFlow(initialValue)
@@ -142,7 +142,7 @@ fun <T1, T2, T3, T4, T5, T6, R> ViewModel.combineState(
     flow5: Flow<T5>,
     flow6: Flow<T6>,
     initialValue: R,
-    context: CoroutineContext = handler + Dispatchers.IO,
+    context: CoroutineContext = coroutineExceptionHandler + Dispatchers.IO,
     transform: suspend MutableStateFlow<R>.(T1, T2, T3, T4, T5, T6) -> Unit
 ): StateFlow<R> {
     val state = MutableStateFlow(initialValue)
@@ -174,7 +174,7 @@ fun <T1, T2, T3, T4, T5, T6, T7, R> ViewModel.combineState(
     flow6: Flow<T6>,
     flow7: Flow<T7>,
     initialValue: R,
-    context: CoroutineContext = handler + Dispatchers.IO,
+    context: CoroutineContext = coroutineExceptionHandler + Dispatchers.IO,
     transform: suspend MutableStateFlow<R>.(T1, T2, T3, T4, T5, T6, T7) -> Unit
 ): StateFlow<R> {
     val state = MutableStateFlow(initialValue)
@@ -208,7 +208,7 @@ fun <T1, T2, T3, T4, T5, T6, T7, T8, R> ViewModel.combineState(
     flow7: Flow<T7>,
     flow8: Flow<T8>,
     initialValue: R,
-    context: CoroutineContext = handler + Dispatchers.IO,
+    context: CoroutineContext = coroutineExceptionHandler + Dispatchers.IO,
     transform: suspend MutableStateFlow<R>.(T1, T2, T3, T4, T5, T6, T7, T8) -> Unit
 ): StateFlow<R> {
     val state = MutableStateFlow(initialValue)
@@ -243,7 +243,7 @@ fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, R> ViewModel.combineState(
     flow8: Flow<T8>,
     flow9: Flow<T9>,
     initialValue: R,
-    context: CoroutineContext = handler + Dispatchers.IO,
+    context: CoroutineContext = coroutineExceptionHandler + Dispatchers.IO,
     transform: suspend MutableStateFlow<R>.(T1, T2, T3, T4, T5, T6, T7, T8, T9) -> Unit
 ): StateFlow<R> {
     val state = MutableStateFlow(initialValue)

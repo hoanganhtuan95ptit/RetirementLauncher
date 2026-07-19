@@ -9,7 +9,7 @@ object EmergencyUtils {
      * Tính toán tổng thời gian "hoạt động" (nằm ngoài các khung giờ loại trừ)
      * giữa hai mốc thời gian.
      */
-    fun calculateActiveTime(
+    fun calculateActiveElapsedMillis(
         startTime: Long,
         endTime: Long,
         exclusionPeriods: List<ExclusionPeriod>
@@ -28,6 +28,8 @@ object EmergencyUtils {
             calendar.timeInMillis = current
             val minutesFromMidnight = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE)
 
+            // Mỗi bước đại diện cho 1 phút;
+            // phút nằm trong exclusion period sẽ không cộng vào timeout SOS.
             val isExcluded = exclusionPeriods.any { it.contains(minutesFromMidnight) }
             if (!isExcluded) {
 

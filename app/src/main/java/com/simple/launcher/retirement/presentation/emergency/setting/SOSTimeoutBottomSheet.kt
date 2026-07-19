@@ -33,7 +33,7 @@ class SOSTimeoutBottomSheet(
 
     override val viewModel: BaseViewModel by viewModels()
 
-    private val timeoutSelection = TimeoutSelection(currentTimeoutMillis)
+    private val selectedTimeoutState = SelectedTimeoutState(currentTimeoutMillis)
 
     override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?): BottomSheetSosTimeoutBinding {
 
@@ -46,15 +46,15 @@ class SOSTimeoutBottomSheet(
 
         val binding = binding ?: return
 
-        setupRecyclerView(binding)
-        setupActionButtons(binding)
+        setupTimeoutOptionGrid(binding)
+        setupConfirmAction(binding)
     }
 
-    private fun setupRecyclerView(binding: BottomSheetSosTimeoutBinding) {
+    private fun setupTimeoutOptionGrid(binding: BottomSheetSosTimeoutBinding) {
 
         val resources = viewModel.resources.value
-        val timeoutOptions = buildTimeoutOptions()
-        val adapter = TimeoutAdapter(timeoutSelection, resources)
+        val timeoutOptions = buildSelectableTimeoutOptions()
+        val adapter = TimeoutAdapter(selectedTimeoutState, resources)
 
         binding.rvTimeout.apply {
 
@@ -66,7 +66,7 @@ class SOSTimeoutBottomSheet(
         adapter.submitList(timeoutOptions)
     }
 
-    private fun setupActionButtons(binding: BottomSheetSosTimeoutBinding) {
+    private fun setupConfirmAction(binding: BottomSheetSosTimeoutBinding) {
 
         val resources = viewModel.resources.value
 
@@ -82,13 +82,14 @@ class SOSTimeoutBottomSheet(
 
         binding.btnChange.root.setOnSafeClickListener {
 
-            AppEventBus.post(AppEvent.SOSTimeoutSelected(timeoutSelection.value))
+            AppEventBus.post(AppEvent.SOSTimeoutSelected(selectedTimeoutState.value))
             dismiss()
         }
     }
 
-    private fun buildTimeoutOptions(): List<TimeoutOption> {
+    private fun buildSelectableTimeoutOptions(): List<TimeoutOption> {
 
+        // DEBUG có thêm mốc vài giây để test SOS nhanh, production chỉ dùng mốc theo giờ.
         val debugOptions = if (BuildConfig.DEBUG) {
 
             listOf(5, 10, 15).map { seconds ->
@@ -117,7 +118,7 @@ class SOSTimeoutBottomSheet(
     }
 
     private class TimeoutAdapter(
-        private val timeoutSelection: TimeoutSelection,
+        private val selectedTimeoutState: SelectedTimeoutState,
         private val resources: Map<String, Any>
     ) : RecyclerView.Adapter<TimeoutAdapter.ViewHolder>() {
 
@@ -143,10 +144,10 @@ class SOSTimeoutBottomSheet(
 
             binding.tvTimeout.setOnClickListener {
 
-                selectTimeout(item, position)
+                selectTimeoutOption(item, position)
             }
 
-            val isSelected = item.valueMillis == timeoutSelection.value
+            val isSelected = item.valueMillis == selectedTimeoutState.value
 
             val bgColor = if (isSelected) resources.colorPrimary else android.graphics.Color.TRANSPARENT
             val textColor = if (isSelected) resources.colorOnPrimary else resources.textColorPrimary
@@ -165,16 +166,16 @@ class SOSTimeoutBottomSheet(
 
         override fun getItemCount(): Int = items.size
 
-        private fun selectTimeout(item: TimeoutOption, position: Int) {
+        private fun selectTimeoutOption(item: TimeoutOption, position: Int) {
 
-            val oldSelected = timeoutSelection.value
-            timeoutSelection.value = item.valueMillis
+            val previousTimeout = selectedTimeoutState.value
+            selectedTimeoutState.value = item.valueMillis
 
-            notifySelectedItemChanged(oldSelected)
+            refreshPreviouslySelectedOption(previousTimeout)
             notifyItemChanged(position)
         }
 
-        private fun notifySelectedItemChanged(selectedTimeoutMillis: Long) {
+        private fun refreshPreviouslySelectedOption(selectedTimeoutMillis: Long) {
 
             val selectedIndex = items.indexOfFirst { it.valueMillis == selectedTimeoutMillis }
             if (selectedIndex >= 0) {
@@ -192,13 +193,21 @@ class SOSTimeoutBottomSheet(
         val labelValue: Int
     )
 
-    private data class TimeoutSelection(
+    private data class SelectedTimeoutState(
         var value: Long
     )
 
-    private class GridSpacingItemDecoration(private val spanCount: Int, private val spacing: Int) : RecyclerView.ItemDecoration() {
+    private class GridSpacingItemDecoration(
+        private val spanCount: Int,
+        private val spacing: Int
+    ) : RecyclerView.ItemDecoration() {
 
-        override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
+        override fun getItemOffsets(
+            outRect: Rect,
+            view: View,
+            parent: RecyclerView,
+            state: RecyclerView.State
+        ) {
 
             val position = parent.getChildAdapterPosition(view)
             val column = position % spanCount

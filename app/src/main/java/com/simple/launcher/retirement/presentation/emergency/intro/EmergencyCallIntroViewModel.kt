@@ -36,9 +36,12 @@ class EmergencyCallIntroViewModel : BaseViewModel() {
         flow1 = resources,
         initialValue = BigText("")
     ) { resources ->
+
         val color = resources.textColorSecondary
         val highlightColor = resources.colorAccent
 
+        // Nhấn mạnh phần mô tả quan trọng để người dùng hiểu quyền
+        // và hành vi gọi khẩn cấp.
         value = resources.getString(R.string.emergency_call_intro_desc)
             .with(BigForegroundColor(color))
             .withFirst(

@@ -15,6 +15,7 @@
     <string name="call_block_highlight">manage calls and contacts</string>
     <string name="setting_header_debug">🐛 Debug</string>
     <string name="setting_debug_block_screen">View Block Screen</string>
+
     <string name="file_permission_title">Storage Protection</string>
     <string name="file_permission_desc">For the automatic deletion of unknown APK/AAB files to work, the app needs access to all storage. This helps keep your device clean and safe.</string>
     <string name="file_permission_highlight">unknown APK/AAB</string>
@@ -47,6 +48,10 @@
     <string name="emergency_contact_required_desc">You haven\'t set up your quick contact list yet. For this feature to work, please select at least one contact.</string>
     <string name="emergency_contact_required_highlight">select at least one contact</string>
     <string name="emergency_contact_required_action">Set Up Now</string>
+    <string name="app_list_required_title">App List Setup Required</string>
+    <string name="app_list_required_desc">You haven\'t set up the allowed app list yet. For this feature to work, please select at least one app.</string>
+    <string name="app_list_required_highlight">select at least one app</string>
+    <string name="app_list_required_action">Set Up Now</string>
     <string name="overlay_permission_title">Display Over Other Apps</string>
     <string name="overlay_permission_desc">The app needs \'Display over other apps\' permission to show the lock screen when a blocked app is opened.</string>
     <string name="overlay_permission_highlight">\'Display over other apps\'</string>

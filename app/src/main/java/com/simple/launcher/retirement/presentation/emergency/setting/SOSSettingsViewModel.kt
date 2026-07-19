@@ -1,11 +1,13 @@
 package com.simple.launcher.retirement.presentation.emergency.setting
 
+import androidx.lifecycle.viewModelScope
 import com.simple.adapter.ViewItem
 import com.simple.launcher.retirement.BuildConfig
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.domain.model.ExclusionPeriod
 import com.simple.launcher.retirement.domain.model.SOSConfig
 import com.simple.launcher.retirement.domain.repository.PreferenceRepository
+import com.simple.launcher.retirement.domain.usecase.SetEmergencyCallEnabledUseCase
 import com.simple.launcher.retirement.presentation.base.ActionState
 import com.simple.launcher.retirement.presentation.base.BaseViewModel
 import com.simple.launcher.retirement.presentation.base.ToolbarState
@@ -15,8 +17,8 @@ import com.simple.launcher.retirement.presentation.base.buildToolbarTitle
 import com.simple.launcher.retirement.presentation.emergency.adapters.SOSCardViewItem
 import com.simple.launcher.retirement.presentation.emergency.adapters.SOSHeaderViewItem
 import com.simple.launcher.retirement.presentation.emergency.adapters.SOSSectionHeaderViewItem
-import com.simple.launcher.retirement.utils.combineState
 import com.simple.launcher.retirement.utils.background.Background
+import com.simple.launcher.retirement.utils.combineState
 import com.simple.launcher.retirement.utils.exts.colorOnPrimary
 import com.simple.launcher.retirement.utils.exts.colorOutline
 import com.simple.launcher.retirement.utils.exts.colorPrimary
@@ -33,16 +35,23 @@ import com.simple.ui.precompute.text.BigText
 import com.simple.ui.precompute.text.build
 import com.simple.ui.precompute.text.span.BigForegroundColor
 import com.simple.ui.precompute.text.with
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 
 class SOSSettingsViewModel : BaseViewModel() {
 
-    val timeout = MutableStateFlow(PreferenceRepository.instance.getEmergencyTimeout())
+    private val preferenceRepository = PreferenceRepository.instance
+    private val setEmergencyCallEnabledUseCase = SetEmergencyCallEnabledUseCase.instance
 
-    val exclusionPeriods = MutableStateFlow(PreferenceRepository.instance.getExclusionPeriods())
+    val saveResultFlow = MutableSharedFlow<Boolean>(extraBufferCapacity = 1)
 
-    val isFeatureEnabledDraft = MutableStateFlow(PreferenceRepository.instance.isEmergencyCallEnabled())
+    val timeout = MutableStateFlow(preferenceRepository.getEmergencyTimeout())
+
+    val exclusionPeriods = MutableStateFlow(preferenceRepository.getExclusionPeriods())
+
+    val isFeatureEnabledDraft = MutableStateFlow(preferenceRepository.isEmergencyCallEnabled())
 
     val toolbar: StateFlow<ToolbarState> = combineState(
         flow1 = resources,
@@ -81,26 +90,28 @@ class SOSSettingsViewModel : BaseViewModel() {
         emptyList()
     ) { resources, isEnabledDraft, timeout, periods ->
 
-        value = buildViewItems(resources, isEnabledDraft, timeout, periods)
+        value = buildSosSettingItems(resources, isEnabledDraft, timeout, periods)
     }
 
-    private fun buildViewItems(
+    private fun buildSosSettingItems(
         resources: Map<String, Any>,
         isEnabledDraft: Boolean,
         timeout: Long,
         periods: List<ExclusionPeriod>
     ): List<ViewItem> {
 
+        // Các item luôn hiển thị đủ để người dùng xem cấu hình,
+        // nhưng sẽ mờ/khóa khi master toggle đang tắt.
         return listOf(
-            buildHeader(resources, isEnabledDraft),
-            buildTimeoutHeader(resources, isEnabledDraft),
-            buildTimeoutCard(resources, timeout, isEnabledDraft),
-            buildExclusionHeader(resources, isEnabledDraft)
-        ) + buildPeriodCards(resources, periods, isEnabledDraft) +
-            buildAddPeriodCard(resources, isEnabledDraft)
+            buildMasterToggleItem(resources, isEnabledDraft),
+            buildTimeoutSectionHeaderItem(resources, isEnabledDraft),
+            buildTimeoutSelectorItem(resources, timeout, isEnabledDraft),
+            buildExclusionSectionHeaderItem(resources, isEnabledDraft)
+        ) + buildExclusionPeriodItems(resources, periods, isEnabledDraft) +
+            buildAddExclusionPeriodItem(resources, isEnabledDraft)
     }
 
-    private fun buildHeader(resources: Map<String, Any>, isEnabledDraft: Boolean): ViewItem {
+    private fun buildMasterToggleItem(resources: Map<String, Any>, isEnabledDraft: Boolean): ViewItem {
 
         return SOSHeaderViewItem(
             title = resources.getString(R.string.sos_master_toggle).asTitleText(resources),
@@ -114,7 +125,7 @@ class SOSSettingsViewModel : BaseViewModel() {
         )
     }
 
-    private fun buildTimeoutHeader(resources: Map<String, Any>, isEnabledDraft: Boolean): ViewItem {
+    private fun buildTimeoutSectionHeaderItem(resources: Map<String, Any>, isEnabledDraft: Boolean): ViewItem {
 
         return SOSSectionHeaderViewItem(
             title = resources.getString(R.string.sos_timeout_label).asTitleText(resources),
@@ -123,7 +134,7 @@ class SOSSettingsViewModel : BaseViewModel() {
         )
     }
 
-    private fun buildTimeoutCard(
+    private fun buildTimeoutSelectorItem(
         resources: Map<String, Any>,
         timeout: Long,
         isEnabledDraft: Boolean
@@ -131,13 +142,13 @@ class SOSSettingsViewModel : BaseViewModel() {
 
         return SOSCardViewItem(
             id = ID_TIMEOUT,
-            title = buildTimeoutTitle(resources, timeout).asBodyText(resources),
+            title = buildTimeoutLabel(resources, timeout).asBodyText(resources),
             icon = BigImage(R.drawable.ic_clock),
             isEnabled = isEnabledDraft
         )
     }
 
-    private fun buildExclusionHeader(resources: Map<String, Any>, isEnabledDraft: Boolean): ViewItem {
+    private fun buildExclusionSectionHeaderItem(resources: Map<String, Any>, isEnabledDraft: Boolean): ViewItem {
 
         return SOSSectionHeaderViewItem(
             title = resources.getString(R.string.sos_exclusion_periods_header).asTitleText(resources),
@@ -146,7 +157,7 @@ class SOSSettingsViewModel : BaseViewModel() {
         )
     }
 
-    private fun buildPeriodCards(
+    private fun buildExclusionPeriodItems(
         resources: Map<String, Any>,
         periods: List<ExclusionPeriod>,
         isEnabledDraft: Boolean
@@ -156,7 +167,7 @@ class SOSSettingsViewModel : BaseViewModel() {
 
             SOSCardViewItem(
                 id = ID_PERIOD_ITEM_BASE + index,
-                title = period.formatPeriod(resources).asBodyText(resources),
+                title = period.formatAsTimeRange(resources).asBodyText(resources),
                 icon = BigImage(R.drawable.ic_bed),
                 endIcon = BigImage(R.drawable.ic_clear),
                 isEnabled = isEnabledDraft
@@ -164,7 +175,7 @@ class SOSSettingsViewModel : BaseViewModel() {
         }
     }
 
-    private fun buildAddPeriodCard(resources: Map<String, Any>, isEnabledDraft: Boolean): ViewItem {
+    private fun buildAddExclusionPeriodItem(resources: Map<String, Any>, isEnabledDraft: Boolean): ViewItem {
 
         return SOSCardViewItem(
             id = ID_ADD_PERIOD,
@@ -175,7 +186,7 @@ class SOSSettingsViewModel : BaseViewModel() {
         )
     }
 
-    private fun ExclusionPeriod.formatPeriod(resources: Map<String, Any>): String {
+    private fun ExclusionPeriod.formatAsTimeRange(resources: Map<String, Any>): String {
 
         return resources.getString(R.string.sos_exclusion_period_format)
             .format(startHour, startMinute, endHour, endMinute)
@@ -209,17 +220,17 @@ class SOSSettingsViewModel : BaseViewModel() {
             .build()
     }
 
-    fun toggleFeatureDraft() {
+    fun toggleEmergencyFeatureDraft() {
 
         isFeatureEnabledDraft.value = !isFeatureEnabledDraft.value
     }
 
-    fun updateTimeout(timeoutMillis: Long) {
+    fun updateTimeoutDraft(timeoutMillis: Long) {
 
         timeout.value = timeoutMillis
     }
 
-    private fun buildTimeoutTitle(resources: Map<String, Any>, timeoutMillis: Long): String {
+    private fun buildTimeoutLabel(resources: Map<String, Any>, timeoutMillis: Long): String {
 
         if (BuildConfig.DEBUG && timeoutMillis < HOUR_MILLIS) {
 
@@ -231,17 +242,32 @@ class SOSSettingsViewModel : BaseViewModel() {
         return resources.getString(R.string.sos_timeout_value).format(hours)
     }
 
-    fun addExclusionPeriod(period: ExclusionPeriod) {
+    fun addExclusionPeriodDraft(period: ExclusionPeriod) {
 
         exclusionPeriods.value += period
     }
 
-    fun removeExclusionPeriod(id: String) {
+    fun removeExclusionPeriodDraft(id: String) {
 
         exclusionPeriods.value = exclusionPeriods.value.filter { it.id != id }
     }
 
-    fun save(): SOSConfig {
+    fun saveEmergencyConfig() {
+
+        val config = buildDraftConfig()
+
+        // Lưu trước khi xin quyền để nếu Activity/ViewModel bị hủy khi đổi default launcher,
+        // Activity mới vẫn có thể apply tiếp cấu hình đang dở.
+        preferenceRepository.setPendingEmergencyConfig(config)
+
+        viewModelScope.launch {
+
+            // SharedFlow không replay để màn mở lại không nhận lại kết quả cũ.
+            saveResultFlow.emit(setEmergencyCallEnabledUseCase(config))
+        }
+    }
+
+    private fun buildDraftConfig(): SOSConfig {
 
         return SOSConfig(
             isEnabled = isFeatureEnabledDraft.value,

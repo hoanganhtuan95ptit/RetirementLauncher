@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
@@ -35,6 +36,10 @@ class AppListFragment : BaseFragment<FragmentAppListBinding>() {
         AppListViewModelFactory(GetSelectableAppsUseCase.instance, SaveSelectedAppsUseCase.instance)
     }
 
+    private val isFlowSetup: Boolean by lazy {
+        arguments?.getBoolean(DeepLinks.Extras.IS_FLOW_SETUP) ?: false
+    }
+
     override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentAppListBinding {
         return FragmentAppListBinding.inflate(inflater, container, false)
     }
@@ -45,8 +50,18 @@ class AppListFragment : BaseFragment<FragmentAppListBinding>() {
         val binding = binding ?: return
 
         binding.toolbar.ivLeft.setOnSafeClickListener {
+            if (isFlowSetup) AppEventBus.post(AppEvent.AppSetupCancel)
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+
+                if (isFlowSetup) AppEventBus.post(AppEvent.AppSetupCancel)
+                isEnabled = false
+                requireActivity().onBackPressedDispatcher.onBackPressed()
+            }
+        })
 
         binding.layoutSearch.etSearch.doAfterTextChanged {
             val text = it?.toString() ?: ""
@@ -127,7 +142,10 @@ class AppListFragment : BaseFragment<FragmentAppListBinding>() {
         // 2. Thêm những app mới được chọn vào cuối
         orderedIds.addAll(currentSelected.filter { it !in savedIds })
 
-        sendReorderAppsDeeplink(orderedIds)
+        sendReorderAppsDeeplink(
+            orderedIds,
+            mapOf(DeepLinks.Extras.IS_FLOW_SETUP to isFlowSetup)
+        )
     }
 }
 
@@ -141,11 +159,16 @@ class AppListDeeplinkHandler : DeeplinkHandler {
         extras: Map<String, Any?>?,
         sharedElement: Map<String, View>?
     ): Boolean {
+        val fragment = AppListFragment().apply {
+            arguments = Bundle().apply {
+                putBoolean(DeepLinks.Extras.IS_FLOW_SETUP, extras?.get(DeepLinks.Extras.IS_FLOW_SETUP) as? Boolean ?: false)
+            }
+        }
         val transaction = fragmentActivity.supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, AppListFragment())
+            .replace(R.id.fragment_container, fragment)
         
         if (extras?.get("addToBackStack") == true) {
-            transaction.addToBackStack(null)
+            transaction.addToBackStack(DeepLinks.APP_LIST)
         }
         
         transaction.commit()

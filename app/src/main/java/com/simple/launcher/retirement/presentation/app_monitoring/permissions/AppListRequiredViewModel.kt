@@ -1,4 +1,4 @@
-package com.simple.launcher.retirement.presentation.emergency.permissions
+package com.simple.launcher.retirement.presentation.app_monitoring
 
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.presentation.base.ActionState
@@ -19,7 +19,7 @@ import com.simple.ui.precompute.text.with
 import com.simple.ui.precompute.text.withFirst
 import kotlinx.coroutines.flow.StateFlow
 
-class EmergencyContactRequiredViewModel : BaseViewModel() {
+class AppListRequiredViewModel : BaseViewModel() {
 
     val title: StateFlow<BigText> = combineState(
         flow1 = resources,
@@ -27,7 +27,7 @@ class EmergencyContactRequiredViewModel : BaseViewModel() {
     ) { resources ->
 
         val color = resources.textColorPrimary
-        value = resources.getString(R.string.emergency_contact_required_title)
+        value = resources.getString(R.string.app_list_required_title)
             .with(BigForegroundColor(color), BigBold)
             .build()
     }
@@ -40,12 +40,10 @@ class EmergencyContactRequiredViewModel : BaseViewModel() {
         val color = resources.textColorSecondary
         val highlightColor = resources.colorAccent
 
-        // Highlight tên hành động chọn liên hệ để người dùng biết
-        // cần cấu hình trước khi bật SOS.
-        value = resources.getString(R.string.emergency_contact_required_desc)
+        value = resources.getString(R.string.app_list_required_desc)
             .with(BigForegroundColor(color))
             .withFirst(
-                resources.getString(R.string.emergency_contact_required_highlight),
+                resources.getString(R.string.app_list_required_highlight),
                 BigBold,
                 BigForegroundColor(highlightColor)
             )
@@ -57,13 +55,10 @@ class EmergencyContactRequiredViewModel : BaseViewModel() {
         initialValue = ActionState.empty()
     ) { resources ->
 
-        val color = resources.colorOnPrimary
-        val backgroundColor = resources.colorPrimary
-
         value = buildActionState(
-            text = resources.getString(R.string.emergency_contact_required_action),
-            textColor = color,
-            backgroundColor = backgroundColor
+            text = resources.getString(R.string.app_list_required_action),
+            textColor = resources.colorOnPrimary,
+            backgroundColor = resources.colorPrimary
         )
     }
 }

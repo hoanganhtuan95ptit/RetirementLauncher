@@ -1,4 +1,4 @@
-package com.simple.launcher.retirement.presentation.emergency.intro
+package com.simple.launcher.retirement.presentation.app_monitoring
 
 import android.content.DialogInterface
 import android.os.Bundle
@@ -20,10 +20,10 @@ import com.simple.launcher.retirement.utils.lifecycle.observe
 import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
 import com.simple.ui.precompute.text.setText
 
-class EmergencyCallIntroBottomSheet :
-    BaseBottomSheetDialogFragment<BottomSheetUsageStatsPermissionBinding, EmergencyCallIntroViewModel>() {
+class AppListRequiredBottomSheet :
+    BaseBottomSheetDialogFragment<BottomSheetUsageStatsPermissionBinding, AppListRequiredViewModel>() {
 
-    override val viewModel: EmergencyCallIntroViewModel by viewModels()
+    override val viewModel: AppListRequiredViewModel by viewModels()
 
     private var hasUserAccepted = false
 
@@ -44,7 +44,7 @@ class EmergencyCallIntroBottomSheet :
         binding.btnGrant.root.setOnSafeClickListener {
 
             hasUserAccepted = true
-            AppEventBus.post(AppEvent.EmergencyCallIntroAccept)
+            AppEventBus.post(AppEvent.AppListRequiredAccept)
             dismiss()
         }
     }
@@ -53,12 +53,12 @@ class EmergencyCallIntroBottomSheet :
 
         super.observeData()
 
-        observeIntroTitle()
-        observeIntroDescription()
-        observeIntroAction()
+        observeRequiredAppListTitle()
+        observeRequiredAppListDescription()
+        observeRequiredAppListAction()
     }
 
-    private fun observeIntroTitle() {
+    private fun observeRequiredAppListTitle() {
 
         viewModel.title.observe(this) { title ->
 
@@ -67,7 +67,7 @@ class EmergencyCallIntroBottomSheet :
         }
     }
 
-    private fun observeIntroDescription() {
+    private fun observeRequiredAppListDescription() {
 
         viewModel.description.observe(this) { description ->
 
@@ -76,7 +76,7 @@ class EmergencyCallIntroBottomSheet :
         }
     }
 
-    private fun observeIntroAction() {
+    private fun observeRequiredAppListAction() {
 
         viewModel.action.observe(this) { state ->
 
@@ -92,21 +92,20 @@ class EmergencyCallIntroBottomSheet :
 
         if (!hasUserAccepted) {
 
-            // PermissionManager đang chờ event kết quả, nên mọi đường dismiss đều phải trả cancel.
-            AppEventBus.post(AppEvent.EmergencyCallIntroCancel)
+            AppEventBus.post(AppEvent.AppListRequiredCancel)
         }
     }
 
     companion object {
 
-        const val TAG = "EmergencyCallIntroBottomSheet"
+        const val TAG = "AppListRequiredBottomSheet"
     }
 }
 
 @Deeplink
-class EmergencyCallIntroDeeplinkHandler : DeeplinkHandler {
+class AppListRequiredDeeplinkHandler : DeeplinkHandler {
 
-    override val deeplink: String = DeepLinks.EMERGENCY_CALL_INTRO
+    override val deeplink: String = DeepLinks.APP_LIST_REQUIRED
 
     override suspend fun navigate(
         fragmentActivity: FragmentActivity,
@@ -115,11 +114,10 @@ class EmergencyCallIntroDeeplinkHandler : DeeplinkHandler {
         sharedElement: Map<String, View>?
     ): Boolean {
 
-        EmergencyCallIntroBottomSheet().show(
+        AppListRequiredBottomSheet().show(
             fragmentActivity.supportFragmentManager,
-            EmergencyCallIntroBottomSheet.TAG
+            AppListRequiredBottomSheet.TAG
         )
-
         return true
     }
 }

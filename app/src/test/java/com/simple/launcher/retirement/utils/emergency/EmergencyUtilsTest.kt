@@ -32,25 +32,25 @@ class EmergencyUtilsTest {
     }
 
     @Test
-    fun `calculateActiveTime - không có khung giờ loại trừ`() {
+    fun `calculateActiveElapsedMillis - không có khung giờ loại trừ`() {
 
         val start = createTime(10, 0)
         val end = createTime(12, 0)
-        val result = EmergencyUtils.calculateActiveTime(start, end, emptyList())
+        val result = EmergencyUtils.calculateActiveElapsedMillis(start, end, emptyList())
 
         // 12h - 10h = 2h = 7,200,000 ms
         assertEquals(2 * 60 * 60 * 1000L, result)
     }
 
     @Test
-    fun `calculateActiveTime - có khung giờ loại trừ đơn lẻ`() {
+    fun `calculateActiveElapsedMillis - có khung giờ loại trừ đơn lẻ`() {
 
         val start = createTime(20, 0) // 8 PM
         val end = createTime(23, 0)   // 11 PM
         // Loại trừ: 22:00 - 07:00 (giờ ngủ)
         val periods = listOf(ExclusionPeriod("1", 22, 0, 7, 0))
 
-        val result = EmergencyUtils.calculateActiveTime(start, end, periods)
+        val result = EmergencyUtils.calculateActiveElapsedMillis(start, end, periods)
 
         // 20:00 -> 22:00: Hoạt động (2 tiếng)
         // 22:00 -> 23:00: Bị loại trừ
@@ -59,18 +59,19 @@ class EmergencyUtilsTest {
     }
 
     @Test
-    fun `calculateActiveTime - vượt qua khung giờ loại trừ đêm`() {
+    fun `calculateActiveElapsedMillis - vượt qua khung giờ loại trừ đêm`() {
 
         val start = createTime(20, 0)   // Ngày 1, 8 PM
         val end = createTime(8, 0, 1)   // Ngày 2, 8 AM
         // Loại trừ: 22:00 - 07:00
         val periods = listOf(ExclusionPeriod("1", 22, 0, 7, 0))
 
-        val result = EmergencyUtils.calculateActiveTime(start, end, periods)
+        val result = EmergencyUtils.calculateActiveElapsedMillis(start, end, periods)
 
         // Ngày 1: 20:00 -> 22:00 (2 tiếng hoạt động)
         // Đêm: 22:00 -> 07:00 sáng mai (Bị loại trừ)
-        // Ngày 2: 07:01 -> 08:00 (60 phút hoạt động - Lưu ý: 07:00 vẫn bị coi là excluded do logic contains inclusive)
+        // Ngày 2: 07:01 -> 08:00
+        // (60 phút hoạt động - 07:00 vẫn bị coi là excluded do logic contains inclusive)
         // Lưu ý: Thuật toán chạy step 1 phút, t=420 (07:00) isExcluded=true, t=421 isExcluded=false.
         // Vậy 07:00 -> 07:01 là phút thứ 541 bị loại trừ.
         // Hoạt động thực tế: [20:00, 22:00) và [07:01, 08:00)
@@ -79,7 +80,7 @@ class EmergencyUtilsTest {
     }
 
     @Test
-    fun `calculateActiveTime - tuong tac cuoi trong gio loai tru`() {
+    fun `calculateActiveElapsedMillis - tuong tac cuoi trong gio loai tru`() {
 
         // Khung giờ loại trừ: 22:00 - 07:00
         val periods = listOf(ExclusionPeriod("1", 22, 0, 7, 0))
@@ -89,7 +90,7 @@ class EmergencyUtilsTest {
         // Hiện tại: 08:00 sáng mai
         val end = createTime(8, 0, 1)
 
-        val result = EmergencyUtils.calculateActiveTime(start, end, periods)
+        val result = EmergencyUtils.calculateActiveElapsedMillis(start, end, periods)
 
         // Phân tích:
         // 23:00 -> 07:00: Bị loại trừ (0 phút)
@@ -99,7 +100,7 @@ class EmergencyUtilsTest {
     }
 
     @Test
-    fun `calculateActiveTime - tuong tac truoc gio loai tru`() {
+    fun `calculateActiveElapsedMillis - tuong tac truoc gio loai tru`() {
 
         // Khung giờ loại trừ: 22:00 - 07:00
         val periods = listOf(ExclusionPeriod("1", 22, 0, 7, 0))
@@ -109,7 +110,7 @@ class EmergencyUtilsTest {
         // Hiện tại: 08:00 sáng mai
         val end = createTime(8, 0, 1)
 
-        val result = EmergencyUtils.calculateActiveTime(start, end, periods)
+        val result = EmergencyUtils.calculateActiveElapsedMillis(start, end, periods)
 
         // Phân tích:
         // 21:00 -> 22:00: Hoạt động (60 phút)
@@ -120,7 +121,7 @@ class EmergencyUtilsTest {
     }
 
     @Test
-    fun `calculateActiveTime - nhiều khung giờ loại trừ`() {
+    fun `calculateActiveElapsedMillis - nhiều khung giờ loại trừ`() {
 
         val start = createTime(10, 0)
         val end = createTime(15, 0)
@@ -131,7 +132,7 @@ class EmergencyUtilsTest {
             ExclusionPeriod("2", 14, 0, 14, 30)
         )
 
-        val result = EmergencyUtils.calculateActiveTime(start, end, periods)
+        val result = EmergencyUtils.calculateActiveElapsedMillis(start, end, periods)
 
         // 10:00 -> 12:00 (120p)
         // 12:00 -> 13:01 (Bị loại trừ - 61p)

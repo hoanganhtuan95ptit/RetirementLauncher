@@ -1,16 +1,20 @@
 package com.simple.launcher.retirement.presentation.call_block
 
 import android.os.Build
+import androidx.activity.viewModels
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.simple.auto.register.AutoRegister
+import com.simple.component.service.ActivityCreatedService
 import com.simple.component.service.launchCollect
-import com.simple.launcher.retirement.domain.repository.PreferenceRepository
+import com.simple.launcher.retirement.presentation.installer_cleanup.InstallerCleanupSettingViewModel
+import com.simple.launcher.retirement.presentation.main.MainActivity
 import com.simple.launcher.retirement.presentation.settings.SettingsFragment
 import com.simple.launcher.retirement.presentation.settings.adapters.SettingItem
 import com.simple.launcher.retirement.presentation.settings.services.protect.ProtectSettingService
 import com.simple.launcher.retirement.utils.AppEvent
 import com.simple.launcher.retirement.utils.AppEventBus
-import com.simple.launcher.retirement.utils.permission.PermissionManager
 import kotlinx.coroutines.flow.filterIsInstance
 
 @AutoRegister(apis = [SettingsFragment::class])
@@ -26,34 +30,35 @@ class CallBlockSettingService : ProtectSettingService() {
 
         viewModel = settingsFragment.viewModels<CallBlockSettingViewModel>().value
 
+        observeCallBlockSettingItem(settingsFragment)
+        observeCallBlockSettingClick(settingsFragment)
+    }
+
+    private fun observeCallBlockSettingItem(settingsFragment: SettingsFragment) {
+
         viewModel.viewItemList.launchCollect(settingsFragment) {
 
             protectSettingViewModel.updateItem(it)
         }
+    }
 
+    private fun observeCallBlockSettingClick(settingsFragment: SettingsFragment) {
 
-        AppEventBus.events.filterIsInstance<AppEvent.SettingClicked>().launchCollect(settingsFragment.viewLifecycleOwner) { event ->
+        AppEventBus.events
+            .filterIsInstance<AppEvent.SettingClicked>()
+            .launchCollect(settingsFragment.viewLifecycleOwner) { event ->
 
-            val item = event.item
-            val isTurningOn = !item.isChecked
-
-            if (item.id != SettingItem.ID_TOGGLE_CALL_BLOCK) {
-                return@launchCollect
+                setCallBlockEnabledIfToggle(event.item)
             }
+    }
 
-            if (isTurningOn && !PermissionManager.requireCallBlockIntro()) {
-                return@launchCollect
-            }
+    private fun setCallBlockEnabledIfToggle(item: SettingItem) {
 
-            if (isTurningOn && !PermissionManager.requireCallBlockPermissions()) {
-                return@launchCollect
-            }
+        if (item.id != SettingItem.ID_TOGGLE_CALL_BLOCK) {
 
-            if (!isTurningOn && !PermissionManager.requirePinPermissions()) {
-                return@launchCollect
-            }
-
-            PreferenceRepository.instance.setCallBlockEnabled(isTurningOn)
+            return
         }
+
+        viewModel.setCallBlockEnabled(!item.isChecked)
     }
 }
