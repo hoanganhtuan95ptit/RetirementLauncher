@@ -36,9 +36,17 @@ import kotlinx.coroutines.launch
 class ReorderFragment : BaseFragment<FragmentAppListBinding>() {
 
     companion object {
-        fun newInstance(type: ReorderType, ids: List<String>, isFlowSetup: Boolean = false): ReorderFragment {
+
+        fun newInstance(
+            type: ReorderType,
+            ids: List<String>,
+            isFlowSetup: Boolean = false
+        ): ReorderFragment {
+
             return ReorderFragment().apply {
+
                 arguments = Bundle().apply {
+
                     putSerializable("type", type)
                     putStringArrayList("ids", ArrayList(ids))
                     putBoolean(DeepLinks.Extras.IS_FLOW_SETUP, isFlowSetup)
@@ -64,15 +72,18 @@ class ReorderFragment : BaseFragment<FragmentAppListBinding>() {
     }
 
     override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentAppListBinding {
+
         return FragmentAppListBinding.inflate(inflater, container, false)
     }
 
     override fun setupViews(view: View, savedInstanceState: Bundle?) {
+
         super.setupViews(view, savedInstanceState)
 
         val binding = binding ?: return
 
         binding.toolbar.ivLeft.setOnSafeClickListener {
+
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
@@ -80,26 +91,33 @@ class ReorderFragment : BaseFragment<FragmentAppListBinding>() {
         binding.layoutSearch.root.visibility = View.GONE
 
         binding.rvAppList.layoutManager = LinearLayoutManager(requireContext())
-        
-        val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
-            ItemTouchHelper.UP or ItemTouchHelper.DOWN, 0
-        ) {
-            override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder
-            ): Boolean {
-                val fromPos = viewHolder.bindingAdapterPosition
-                val toPos = target.bindingAdapterPosition
-                viewModel.moveItem(fromPos, toPos)
-                return true
-            }
 
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {}
-        })
+        val itemTouchHelper = ItemTouchHelper(
+            object : ItemTouchHelper.SimpleCallback(
+                ItemTouchHelper.UP or ItemTouchHelper.DOWN,
+                0
+            ) {
+
+                override fun onMove(
+                    recyclerView: RecyclerView,
+                    viewHolder: RecyclerView.ViewHolder,
+                    target: RecyclerView.ViewHolder
+                ): Boolean {
+
+                    val fromPos = viewHolder.bindingAdapterPosition
+                    val toPos = target.bindingAdapterPosition
+                    viewModel.moveItem(fromPos, toPos)
+                    return true
+                }
+
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                }
+            }
+        )
         itemTouchHelper.attachToRecyclerView(binding.rvAppList)
 
         binding.btnSave.root.setOnSafeClickListener {
+
             lifecycleScope.launch { checkPermissionsAndSave() }
         }
 
@@ -107,100 +125,91 @@ class ReorderFragment : BaseFragment<FragmentAppListBinding>() {
     }
 
     override fun observeData() {
+
         super.observeData()
         viewModel.background.observe(this) { background ->
+
             val binding = binding ?: return@observe
             binding.root.setBackground(background)
         }
 
         viewModel.toolbar.observe(this) { state ->
+
             val binding = binding ?: return@observe
             binding.toolbar.tvTitle.setText(state.title)
             val backIcon = state.backIcon
             if (backIcon != null) {
+
                 binding.toolbar.ivLeft.visibility = View.VISIBLE
                 binding.toolbar.ivLeft.setImage(backIcon)
             } else {
+
                 binding.toolbar.ivLeft.visibility = View.GONE
             }
         }
 
         viewModel.doneAction.observe(this) { state ->
+
             val binding = binding ?: return@observe
             binding.btnSave.tvAction.setText(state.text)
             binding.btnSave.tvAction.parent.asObjectOrNull<View>()?.setBackground(state.background)
         }
 
         viewModel.items.attachAdapter().observe(this) { (items, adapters) ->
+
             val binding = binding ?: return@observe
             binding.rvAppList.submitListAndAwait(items, adapters, false)
         }
     }
 
     private suspend fun checkPermissionsAndSave() {
+
         // Lưu thứ tự trước khi xin quyền
         if (type == ReorderType.CONTACTS) {
+
             ContactRepository.instance.saveSelectedContacts(viewModel.getFinalContacts())
         } else {
+
             AppRepository.instance.saveSelectedPackages(viewModel.getFinalIds())
         }
 
         if (isFlowSetup && type == ReorderType.CONTACTS) {
 
             AppEventBus.post(AppEvent.ContactSetupAccept)
-            requireActivity().supportFragmentManager.popBackStack(DeepLinks.CONTACT_LIST, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+            requireActivity().supportFragmentManager.popBackStack(
+                DeepLinks.CONTACT_LIST,
+                FragmentManager.POP_BACK_STACK_INCLUSIVE
+            )
             return
         }
 
         if (isFlowSetup && type == ReorderType.APPS) {
 
             AppEventBus.post(AppEvent.AppSetupAccept)
-            requireActivity().supportFragmentManager.popBackStack(DeepLinks.APP_LIST, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+            requireActivity().supportFragmentManager.popBackStack(
+                DeepLinks.APP_LIST,
+                FragmentManager.POP_BACK_STACK_INCLUSIVE
+            )
             return
         }
 
-        // Xin quyền tuần tự — nếu bất kỳ quyền nào bị từ chối thì dừng
-        if (type == ReorderType.APPS) {
-            if (!PermissionManager.requireFilePermission()) return
-            if (!PermissionManager.requireUsageStatsPermission()) return
-            if (!PermissionManager.requireOverlayPermission()) return
-        }
         if (!PermissionManager.requireDefaultLauncher()) return
 
         onSaveSuccess()
     }
 
     private fun onSaveSuccess() {
-        // Kích hoạt tự động xóa APK và giám sát ứng dụng sau khi thiết lập xong
-        activateAutoFeatures()
 
         val messageRes = if (type == ReorderType.APPS) R.string.app_list_saved else R.string.contact_list_saved
         android.widget.Toast.makeText(context, messageRes, android.widget.Toast.LENGTH_SHORT).show()
 
         requireActivity().onBackPressedDispatcher.onBackPressed()
     }
-
-    /**
-     * Tự động bật cấu hình xóa APK và giám sát ứng dụng khi thiết lập
-     * danh sách app hoặc liên hệ nhanh hoàn tất.
-     * Việc start/stop service thực tế do AppMonitoringSettingService
-     * và InstallerCleanupSettingService xử lý qua Flow.
-     */
-    private fun activateAutoFeatures() {
-        val repository = PreferenceRepository.instance
-
-        if (!repository.isFileCleanupEnabled()) {
-            repository.setFileCleanupEnabled(true)
-        }
-
-        if (!repository.isAppBlockEnabled()) {
-            repository.setAppBlockEnabled(true)
-        }
-    }
 }
 
 @Deeplink
 class ReorderDeeplinkHandler : DeeplinkHandler {
+
     override val deeplink: String = DeepLinks.REORDER
 
     override suspend fun navigate(
@@ -209,20 +218,24 @@ class ReorderDeeplinkHandler : DeeplinkHandler {
         extras: Map<String, Any?>?,
         sharedElement: Map<String, View>?
     ): Boolean {
+
         val type = when (extras?.get("type") as? String) {
+
             "contacts" -> ReorderType.CONTACTS
             else -> ReorderType.APPS
         }
+
         val ids = extras?.get("ids") as? List<String> ?: emptyList()
         val isFlowSetup = extras?.get(DeepLinks.Extras.IS_FLOW_SETUP) as? Boolean ?: false
-        
+
         val transaction = fragmentActivity.supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, ReorderFragment.newInstance(type, ids, isFlowSetup))
-        
+
         if (extras?.get("addToBackStack") == true) {
+
             transaction.addToBackStack(null)
         }
-        
+
         transaction.commit()
         return true
     }

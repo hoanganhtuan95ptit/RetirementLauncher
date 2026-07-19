@@ -21,7 +21,7 @@ data class SelectableContactItem(
     val name: BigText,
     val photo: BigImage,
     val isSelected: Boolean,
-    val entity: SelectableContactEntity  // chỉ dùng cho onclick
+    val entity: SelectableContactEntity // chỉ dùng cho onclick
 ) : ViewItem {
 
     override fun areItemsTheSame(): List<Any> = listOf(entity.contact.id)
@@ -40,29 +40,53 @@ class ContactListAdapter : ViewItemAdapter<SelectableContactItem, ItemSelectable
         SelectableContactItem::class.java
     }
 
-    override fun createViewBinding(layoutInflater: LayoutInflater, parent: ViewGroup, viewType: Int): ItemSelectableAppBinding {
+    override fun createViewBinding(
+        layoutInflater: LayoutInflater,
+        parent: ViewGroup,
+        viewType: Int
+    ): ItemSelectableAppBinding {
+
         return ItemSelectableAppBinding.inflate(layoutInflater, parent, false)
     }
 
-    override fun createViewHolder(parent: ViewGroup, viewType: Int): BaseBindingViewHolder<ItemSelectableAppBinding> {
+    override fun createViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): BaseBindingViewHolder<ItemSelectableAppBinding> {
+
         val viewHolder = super.createViewHolder(parent, viewType)
         viewHolder.itemView.setOnSafeClickListener {
+
             val item = viewHolder.getItem<SelectableContactItem>() ?: return@setOnSafeClickListener
             AppEventBus.post(AppEvent.ContactSelected(item.entity))
         }
+
         return viewHolder
     }
 
-    override fun onBindViewHolder(binding: ItemSelectableAppBinding, viewType: Int, position: Int, item: SelectableContactItem, payloads: List<String>) {
+    override fun onBindViewHolder(
+        binding: ItemSelectableAppBinding,
+        viewType: Int,
+        position: Int,
+        item: SelectableContactItem,
+        payloads: List<String>
+    ) {
+
         super.onBindViewHolder(binding, viewType, position, item, payloads)
         with(binding) {
+
             if (payloads.isEmpty() || payloads.contains("name")) {
+
                 tvLabel.setText(item.name)
             }
+
             if (payloads.isEmpty() || payloads.contains("photo")) {
+
                 ivIcon.setImage(item.photo)
             }
+
             if (payloads.isEmpty() || payloads.contains("isSelected")) {
+
                 cbSelected.isChecked = item.isSelected
             }
         }

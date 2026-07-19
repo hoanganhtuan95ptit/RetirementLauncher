@@ -2,6 +2,7 @@ package com.simple.launcher.retirement.presentation.emergency
 
 import androidx.lifecycle.viewModelScope
 import com.simple.launcher.retirement.R
+import com.simple.launcher.retirement.domain.repository.PermissionRepository
 import com.simple.launcher.retirement.domain.repository.PreferenceRepository
 import com.simple.launcher.retirement.domain.usecase.SetEmergencyCallEnabledUseCase
 import com.simple.launcher.retirement.presentation.base.BaseViewModel
@@ -12,15 +13,22 @@ import com.simple.launcher.retirement.utils.combineState
 import com.simple.launcher.retirement.utils.coroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 class EmergencySettingViewModel : BaseViewModel() {
 
     private val preferenceRepository = PreferenceRepository.instance
 
+    private val permissionRepository = PermissionRepository.instance
+
     private val setEmergencyCallEnabledUseCase = SetEmergencyCallEnabledUseCase.instance
 
     val emergencyCallEnabledFlow = preferenceRepository.emergencyCallEnabledFlow()
+        .map { isEnabled ->
+
+            isEnabled && hasEmergencyCallPermissions()
+        }
 
     val viewItemList: StateFlow<GroupViewItem?> = combineState(
         resources,
@@ -56,5 +64,12 @@ class EmergencySettingViewModel : BaseViewModel() {
                 )
             )
         )
+    }
+
+    private fun hasEmergencyCallPermissions(): Boolean {
+
+        return permissionRepository.hasCallPermission() &&
+                permissionRepository.hasUserActivityAccessibilityPermission() &&
+                permissionRepository.isDefaultLauncher()
     }
 }

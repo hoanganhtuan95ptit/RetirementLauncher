@@ -3,6 +3,7 @@ package com.simple.launcher.retirement.presentation.app_monitoring
 import androidx.lifecycle.viewModelScope
 import com.simple.adapter.ViewItem
 import com.simple.launcher.retirement.R
+import com.simple.launcher.retirement.domain.repository.PermissionRepository
 import com.simple.launcher.retirement.domain.repository.PreferenceRepository
 import com.simple.launcher.retirement.domain.usecase.SetAppMonitoringEnabledUseCase
 import com.simple.launcher.retirement.presentation.base.BaseViewModel
@@ -13,15 +14,22 @@ import com.simple.launcher.retirement.utils.combineState
 import com.simple.launcher.retirement.utils.coroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 class AppMonitoringSettingViewModel : BaseViewModel() {
 
     private val preferenceRepository = PreferenceRepository.instance
 
+    private val permissionRepository = PermissionRepository.instance
+
     private val setAppMonitoringEnabledUseCase = SetAppMonitoringEnabledUseCase.instance
 
     val appBlockEnabledFlow = preferenceRepository.appBlockEnabledFlow()
+        .map { isEnabled ->
+
+            isEnabled && hasAppBlockPermissions()
+        }
 
     val viewItemList: StateFlow<GroupViewItem?> = combineState(
         resources,
@@ -57,9 +65,18 @@ class AppMonitoringSettingViewModel : BaseViewModel() {
         }
     }
 
-    fun setAppBlockEnabled(isEnabled: Boolean) = viewModelScope.launch(coroutineExceptionHandler + Dispatchers.Default) {
+    fun setAppBlockEnabled(isEnabled: Boolean) = viewModelScope.launch(
+        coroutineExceptionHandler + Dispatchers.Default
+    ) {
 
         preferenceRepository.setPendingAppBlockEnabled(isEnabled)
         setAppMonitoringEnabledUseCase(isEnabled)
+    }
+
+    private fun hasAppBlockPermissions(): Boolean {
+
+        return permissionRepository.hasUsageStatsPermission() &&
+                permissionRepository.hasOverlayPermission() &&
+                permissionRepository.isDefaultLauncher()
     }
 }

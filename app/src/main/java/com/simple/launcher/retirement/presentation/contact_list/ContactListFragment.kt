@@ -41,9 +41,12 @@ class ContactListFragment : BaseFragment<FragmentAppListBinding>() {
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
+
         if (isGranted) {
+
             viewModel.loadContacts(requireContext())
         } else {
+
             Toast.makeText(context, R.string.contact_permission_denied, Toast.LENGTH_SHORT).show()
         }
     }
@@ -53,38 +56,49 @@ class ContactListFragment : BaseFragment<FragmentAppListBinding>() {
     }
 
     override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentAppListBinding {
+
         return FragmentAppListBinding.inflate(inflater, container, false)
     }
 
     override fun setupViews(view: View, savedInstanceState: Bundle?) {
+
         super.setupViews(view, savedInstanceState)
 
         val binding = binding ?: return
 
         binding.toolbar.ivLeft.setOnSafeClickListener {
+
             if (isFlowSetup) AppEventBus.post(AppEvent.ContactSetupCancel)
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                if (isFlowSetup) AppEventBus.post(AppEvent.ContactSetupCancel)
-                isEnabled = false
-                requireActivity().onBackPressedDispatcher.onBackPressed()
-            }
-        })
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
 
-        binding.layoutSearch.etSearch.doAfterTextChanged {
-            val text = it?.toString() ?: ""
+                override fun handleOnBackPressed() {
+
+                    if (isFlowSetup) AppEventBus.post(AppEvent.ContactSetupCancel)
+                    isEnabled = false
+                    requireActivity().onBackPressedDispatcher.onBackPressed()
+                }
+            }
+        )
+
+        binding.layoutSearch.etSearch.doAfterTextChanged { editable ->
+
+            val text = editable?.toString() ?: ""
             viewModel.search(text)
             binding.layoutSearch.ivClear.visibility = if (text.isEmpty()) View.GONE else View.VISIBLE
         }
 
         binding.layoutSearch.ivClear.setOnSafeClickListener {
+
             binding.layoutSearch.etSearch.text = null
         }
 
         binding.btnSave.root.setOnSafeClickListener {
+
             navigateToReorder()
         }
 
@@ -92,25 +106,31 @@ class ContactListFragment : BaseFragment<FragmentAppListBinding>() {
     }
 
     override fun observeData() {
+
         super.observeData()
         viewModel.background.observe(this) { background ->
+
             val binding = binding ?: return@observe
             binding.root.setBackground(background)
         }
 
         viewModel.toolbar.observe(this) { state ->
+
             val binding = binding ?: return@observe
             binding.toolbar.tvTitle.setText(state.title)
             val backIcon = state.backIcon
             if (backIcon != null) {
+
                 binding.toolbar.ivLeft.visibility = View.VISIBLE
                 binding.toolbar.ivLeft.setImage(backIcon)
             } else {
+
                 binding.toolbar.ivLeft.visibility = View.GONE
             }
         }
 
         viewModel.searchState.observe(this) { state ->
+
             val binding = binding ?: return@observe
             binding.layoutSearch.root.setBackground(state.background)
             binding.layoutSearch.etSearch.hint = state.hint
@@ -120,28 +140,33 @@ class ContactListFragment : BaseFragment<FragmentAppListBinding>() {
         }
 
         viewModel.saveAction.observe(this) { state ->
+
             val binding = binding ?: return@observe
             binding.btnSave.tvAction.setText(state.text)
             binding.btnSave.tvAction.parent.asObjectOrNull<View>()?.setBackground(state.background)
         }
 
         viewModel.items.attachAdapter().observe(this) { (items, adapters) ->
+
             val binding = binding ?: return@observe
             binding.rvAppList.submitListAndAwait(items, adapters, true)
             binding.rvAppList.scrollToPosition(0)
         }
 
         AppEventBus.events.filterIsInstance<AppEvent.ContactSelected>().observe(this) { event ->
+
             viewModel.updateItem(event.entity)
         }
     }
 
     private fun navigateToReorder() {
+
         val binding = binding ?: return
         binding.layoutSearch.etSearch.setText("")
 
         val currentSelected = viewModel.getAllSelectedIds()
         if (currentSelected.isEmpty()) {
+
             Toast.makeText(context, R.string.contact_list_empty_error, Toast.LENGTH_SHORT).show()
             return
         }
@@ -158,9 +183,12 @@ class ContactListFragment : BaseFragment<FragmentAppListBinding>() {
     }
 
     private fun checkPermissionAndLoad() {
+
         if (!PermissionManager.hasContactPermission()) {
+
             requestPermissionLauncher.launch(Manifest.permission.READ_CONTACTS)
         } else {
+
             viewModel.loadContacts(requireContext())
         }
     }
@@ -168,6 +196,7 @@ class ContactListFragment : BaseFragment<FragmentAppListBinding>() {
 
 @Deeplink
 class ContactListDeeplinkHandler : DeeplinkHandler {
+
     override val deeplink: String = DeepLinks.CONTACT_LIST
 
     override suspend fun navigate(
@@ -176,18 +205,26 @@ class ContactListDeeplinkHandler : DeeplinkHandler {
         extras: Map<String, Any?>?,
         sharedElement: Map<String, View>?
     ): Boolean {
+
         val fragment = ContactListFragment().apply {
+
             arguments = Bundle().apply {
-                putBoolean(DeepLinks.Extras.IS_FLOW_SETUP, extras?.get(DeepLinks.Extras.IS_FLOW_SETUP) as? Boolean ?: false)
+
+                putBoolean(
+                    DeepLinks.Extras.IS_FLOW_SETUP,
+                    extras?.get(DeepLinks.Extras.IS_FLOW_SETUP) as? Boolean ?: false
+                )
             }
         }
+
         val transaction = fragmentActivity.supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, fragment)
-        
+
         if (extras?.get("addToBackStack") == true) {
+
             transaction.addToBackStack(DeepLinks.CONTACT_LIST)
         }
-        
+
         transaction.commit()
         return true
     }

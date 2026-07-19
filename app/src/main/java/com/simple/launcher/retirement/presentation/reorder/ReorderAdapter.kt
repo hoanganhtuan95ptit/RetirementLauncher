@@ -15,13 +15,26 @@ class ReorderAdapter : ViewItemAdapter<ReorderItem, ItemReorderBinding>() {
         ReorderItem::class.java
     }
 
-    override fun createViewBinding(layoutInflater: LayoutInflater, parent: ViewGroup, viewType: Int): ItemReorderBinding {
+    override fun createViewBinding(
+        layoutInflater: LayoutInflater,
+        parent: ViewGroup,
+        viewType: Int
+    ): ItemReorderBinding {
+
         return ItemReorderBinding.inflate(layoutInflater, parent, false)
     }
 
-    override fun onBindViewHolder(binding: ItemReorderBinding, viewType: Int, position: Int, item: ReorderItem, payloads: List<String>) {
+    override fun onBindViewHolder(
+        binding: ItemReorderBinding,
+        viewType: Int,
+        position: Int,
+        item: ReorderItem,
+        payloads: List<String>
+    ) {
+
         super.onBindViewHolder(binding, viewType, position, item, payloads)
         with(binding) {
+
             tvLabel.setText(item.label)
             ivIcon.setImage(item.icon)
         }

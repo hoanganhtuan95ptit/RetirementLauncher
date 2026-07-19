@@ -41,39 +41,49 @@ class AppListFragment : BaseFragment<FragmentAppListBinding>() {
     }
 
     override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentAppListBinding {
+
         return FragmentAppListBinding.inflate(inflater, container, false)
     }
 
     override fun setupViews(view: View, savedInstanceState: Bundle?) {
+
         super.setupViews(view, savedInstanceState)
 
         val binding = binding ?: return
 
         binding.toolbar.ivLeft.setOnSafeClickListener {
+
             if (isFlowSetup) AppEventBus.post(AppEvent.AppSetupCancel)
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
 
-                if (isFlowSetup) AppEventBus.post(AppEvent.AppSetupCancel)
-                isEnabled = false
-                requireActivity().onBackPressedDispatcher.onBackPressed()
+                override fun handleOnBackPressed() {
+
+                    if (isFlowSetup) AppEventBus.post(AppEvent.AppSetupCancel)
+                    isEnabled = false
+                    requireActivity().onBackPressedDispatcher.onBackPressed()
+                }
             }
-        })
+        )
 
-        binding.layoutSearch.etSearch.doAfterTextChanged {
-            val text = it?.toString() ?: ""
+        binding.layoutSearch.etSearch.doAfterTextChanged { editable ->
+
+            val text = editable?.toString() ?: ""
             viewModel.search(text)
             binding.layoutSearch.ivClear.visibility = if (text.isEmpty()) View.GONE else View.VISIBLE
         }
 
         binding.layoutSearch.ivClear.setOnSafeClickListener {
+
             binding.layoutSearch.etSearch.text = null
         }
 
         binding.btnSave.root.setOnSafeClickListener {
+
             navigateToReorder()
         }
 
@@ -81,25 +91,31 @@ class AppListFragment : BaseFragment<FragmentAppListBinding>() {
     }
 
     override fun observeData() {
+
         super.observeData()
         viewModel.background.observe(this) { background ->
+
             val binding = binding ?: return@observe
             binding.root.setBackground(background)
         }
 
         viewModel.toolbar.observe(this) { state ->
+
             val binding = binding ?: return@observe
             binding.toolbar.tvTitle.setText(state.title)
             val backIcon = state.backIcon
             if (backIcon != null) {
+
                 binding.toolbar.ivLeft.visibility = View.VISIBLE
                 binding.toolbar.ivLeft.setImage(backIcon)
             } else {
+
                 binding.toolbar.ivLeft.visibility = View.GONE
             }
         }
 
         viewModel.searchState.observe(this) { state ->
+
             val binding = binding ?: return@observe
             binding.layoutSearch.root.setBackground(state.background)
             binding.layoutSearch.etSearch.hint = state.hint
@@ -109,27 +125,32 @@ class AppListFragment : BaseFragment<FragmentAppListBinding>() {
         }
 
         viewModel.saveAction.observe(this) { state ->
+
             val binding = binding ?: return@observe
             binding.btnSave.tvAction.setText(state.text)
             binding.btnSave.tvAction.parent.asObjectOrNull<View>()?.setBackground(state.background)
         }
 
         viewModel.items.attachAdapter().observe(this) { (items, adapters) ->
+
             val binding = binding ?: return@observe
             binding.rvAppList.submitListAndAwait(items, adapters, true)
         }
 
         AppEventBus.events.filterIsInstance<AppEvent.AppSelected>().observe(this) { event ->
+
             viewModel.updateItem(event.entity)
         }
     }
 
     private fun navigateToReorder() {
+
         val binding = binding ?: return
         binding.layoutSearch.etSearch.setText("")
 
         val currentSelected = viewModel.getAllSelectedIds()
         if (currentSelected.isEmpty()) {
+
             Toast.makeText(context, R.string.app_list_empty_error, Toast.LENGTH_SHORT).show()
             return
         }
@@ -151,6 +172,7 @@ class AppListFragment : BaseFragment<FragmentAppListBinding>() {
 
 @Deeplink
 class AppListDeeplinkHandler : DeeplinkHandler {
+
     override val deeplink: String = DeepLinks.APP_LIST
 
     override suspend fun navigate(
@@ -159,18 +181,26 @@ class AppListDeeplinkHandler : DeeplinkHandler {
         extras: Map<String, Any?>?,
         sharedElement: Map<String, View>?
     ): Boolean {
+
         val fragment = AppListFragment().apply {
+
             arguments = Bundle().apply {
-                putBoolean(DeepLinks.Extras.IS_FLOW_SETUP, extras?.get(DeepLinks.Extras.IS_FLOW_SETUP) as? Boolean ?: false)
+
+                putBoolean(
+                    DeepLinks.Extras.IS_FLOW_SETUP,
+                    extras?.get(DeepLinks.Extras.IS_FLOW_SETUP) as? Boolean ?: false
+                )
             }
         }
+
         val transaction = fragmentActivity.supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, fragment)
-        
+
         if (extras?.get("addToBackStack") == true) {
+
             transaction.addToBackStack(DeepLinks.APP_LIST)
         }
-        
+
         transaction.commit()
         return true
     }

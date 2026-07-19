@@ -29,7 +29,11 @@ import com.simple.ui.precompute.text.with
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
-enum class ReorderType { APPS, CONTACTS }
+enum class ReorderType {
+
+    APPS,
+    CONTACTS
+}
 
 class ReorderViewModel(
     val type: ReorderType,
@@ -42,8 +46,16 @@ class ReorderViewModel(
         flow1 = resources,
         initialValue = ToolbarState.empty()
     ) { resources ->
+
         val color = resources.textColorPrimary
-        val titleRes = if (type == ReorderType.APPS) R.string.reorder_apps_title else R.string.reorder_contacts_title
+        val titleRes = if (type == ReorderType.APPS) {
+
+            R.string.reorder_apps_title
+        } else {
+
+            R.string.reorder_contacts_title
+        }
+
         value = ToolbarState(
             title = buildToolbarTitle(resources.getString(titleRes), color),
             backIcon = buildBackIcon(color)
@@ -69,10 +81,13 @@ class ReorderViewModel(
     val items: StateFlow<List<ReorderItem>> = _items
 
     fun loadItems(context: Context) {
+
         if (type == ReorderType.APPS) {
+
             val allApps = appRepository.getInstalledApps()
             val selectedApps = initialIds.mapNotNull { pkg -> allApps.find { it.packageName == pkg } }
             _items.value = selectedApps.map { app ->
+
                 ReorderItem(
                     id = app.packageName,
                     label = app.label
@@ -83,15 +98,20 @@ class ReorderViewModel(
                 )
             }
         } else {
+
             val allContacts = contactRepository.getAllContacts(context)
             val orderedContacts = initialIds.mapNotNull { id -> allContacts.find { it.id == id } }
-            
+
             _items.value = orderedContacts.map { contact ->
+
                 val photo = if (contact.photoUri != null) {
+
                     BigImage(contact.photoUri)
                 } else {
+
                     BigImage(R.drawable.ic_home_contact_24dp)
                 }
+
                 ReorderItem(
                     id = contact.id,
                     label = contact.name
@@ -106,6 +126,7 @@ class ReorderViewModel(
     }
 
     fun moveItem(from: Int, to: Int) {
+
         val list = _items.value.toMutableList()
         val item = list.removeAt(from)
         list.add(to, item)
@@ -123,7 +144,9 @@ data class ReorderItem(
     val icon: BigImage,
     val data: Any? = null
 ) : ViewItem {
+
     override fun areItemsTheSame(): List<Any> = listOf(id)
+
     override fun getContentsCompare(): List<Pair<Any, String>> = listOf(
         label to "label",
         icon to "icon"
@@ -136,7 +159,9 @@ class ReorderViewModelFactory(
     private val appRepository: AppRepository,
     private val contactRepository: ContactRepository
 ) : ViewModelProvider.Factory {
+
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
+
         return ReorderViewModel(type, initialIds, appRepository, contactRepository) as T
     }
 }

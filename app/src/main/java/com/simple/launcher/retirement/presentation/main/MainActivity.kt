@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import androidx.activity.OnBackPressedCallback
-import androidx.core.view.doOnLayout
 import androidx.lifecycle.lifecycleScope
 import com.simple.deeplink.sendDeeplink
 import com.simple.launcher.retirement.R
@@ -33,13 +32,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         Log.d(TAG, "setupViews | a=$a | savedInstanceState=${savedInstanceState != null} | action=${intent.action} | categories=${intent.categories}")
         a = false
 
-        val repository = PreferenceRepository.instance
-
         preloadResourceStores()
-
-        if (shouldStartBackgroundService(repository)) {
-            startBackgroundService()
-        }
 
         navigateInitialScreen()
 
@@ -57,44 +50,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         }
     }
 
-    private fun shouldStartBackgroundService(repository: PreferenceRepository): Boolean {
-
-        val hasFilePermission = PermissionManager.hasFilePermission()
-        val isFileCleanupEnabled = repository.isFileCleanupEnabled()
-        val hasUsageStatsPermission = PermissionManager.hasUsageStatsPermission()
-        val hasOverlayPermission = PermissionManager.hasOverlayPermission()
-        val isAppBlockEnabled = repository.isAppBlockEnabled()
-        val isEmergencyCallEnabled = repository.isEmergencyCallEnabled()
-
-        Log.d(
-            TAG,
-            "BackgroundService | hasFilePermission=$hasFilePermission | " +
-                    "isFileCleanupEnabled=$isFileCleanupEnabled | " +
-                    "hasUsageStatsPermission=$hasUsageStatsPermission | " +
-                    "hasOverlayPermission=$hasOverlayPermission | " +
-                    "isAppBlockEnabled=$isAppBlockEnabled | " +
-                    "isEmergencyCallEnabled=$isEmergencyCallEnabled"
-        )
-
-        val canRunFileCleanup = hasFilePermission && isFileCleanupEnabled
-        val canRunAppBlock = hasUsageStatsPermission && hasOverlayPermission && isAppBlockEnabled
-
-        return canRunFileCleanup || canRunAppBlock || isEmergencyCallEnabled
-    }
-
     private fun navigateInitialScreen() {
 
         val deeplink = resolveInitialDeeplink(PreferenceRepository.instance)
         Log.d(TAG, "navigate | deeplink=$deeplink")
 
-        val binding = binding ?: return
-
-        // Đợi root layout xong để fragment transaction không đụng race condition lúc onCreate.
-        binding.root.doOnLayout {
-            lifecycleScope.launch {
-                sendDeeplink(deeplink)
-            }
-        }
+        sendDeeplink(deeplink)
     }
 
     private fun resolveInitialDeeplink(repository: PreferenceRepository): String {
@@ -158,28 +119,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
+
         navigateInitialScreen()
     }
 
     fun startBackgroundService() {
         BackgroundService.start(this)
-    }
-
-    override fun onResume() {
-
-        super.onResume()
-
-        logCurrentFragmentOnResume()
-        val repository = PreferenceRepository.instance
-        if (shouldStartBackgroundService(repository)) {
-            startBackgroundService()
-        }
-    }
-
-    private fun logCurrentFragmentOnResume() {
-
-        val currentFragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
-        Log.d(TAG, "onResume | currentFragment=${currentFragment?.javaClass?.simpleName}")
     }
 
     companion object {

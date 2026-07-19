@@ -93,16 +93,18 @@ class AppListViewModel(
         value = apps
             .filter { query.isBlank() || it.app.label.contains(query, ignoreCase = true) }
             .map { entity ->
-            SelectableAppItem(
-                label = entity.app.label.toBig(),
-                icon = BigImage(entity.app.icon),
-                isSelected = entity.app.packageName in selectedIds,
-                entity = entity
-            )
-        }
+
+                SelectableAppItem(
+                    label = entity.app.label.toBig(),
+                    icon = BigImage(entity.app.icon),
+                    isSelected = entity.app.packageName in selectedIds,
+                    entity = entity
+                )
+            }
     }
 
     fun search(text: String) {
+
         _query.value = text
     }
 

@@ -93,6 +93,7 @@ class ContactListViewModel(
         flow3 = _selectedIds,
         initialValue = emptyList()
     ) { contacts, query, selectedIds ->
+
         val filtered = if (query.isBlank()) {
 
             contacts.map { it to 0 }
@@ -145,6 +146,7 @@ class ContactListViewModel(
         viewModelScope.launch {
 
             val result = withContext(Dispatchers.IO) {
+
                 repository.getAllContacts(context)
             }
             _contacts.value = result
@@ -174,7 +176,9 @@ class ContactListViewModel(
     fun getAllSelectedIds(): Set<String> = _selectedIds.value
 }
 
-class ContactListViewModelFactory(private val repository: ContactRepository) : ViewModelProvider.Factory {
+class ContactListViewModelFactory(
+    private val repository: ContactRepository
+) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
 
