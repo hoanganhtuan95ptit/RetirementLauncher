@@ -18,6 +18,7 @@ class PreferenceRepositoryImpl(context: Context) : PreferenceRepository {
     private var isPendingDefaultLauncherRam: Boolean = false
     private var pendingEmergencyConfigRam: com.simple.launcher.retirement.domain.model.SOSConfig? = null
     private var pendingAppBlockEnabledRam: Boolean? = null
+    private var pendingFileCleanupEnabledRam: Boolean? = null
     private var pendingCallBlockEnabledRam: Boolean? = null
 
     companion object {
@@ -116,6 +117,13 @@ class PreferenceRepositoryImpl(context: Context) : PreferenceRepository {
     override fun setFileCleanupFirstTime(firstTime: Boolean) {
 
         sharedPrefs.edit { putBoolean(KEY_FILE_CLEANUP_FIRST_TIME, firstTime) }
+    }
+
+    override fun getPendingFileCleanupEnabled(): Boolean? = pendingFileCleanupEnabledRam
+
+    override fun setPendingFileCleanupEnabled(enabled: Boolean?) {
+
+        pendingFileCleanupEnabledRam = enabled
     }
 
     // Call Block

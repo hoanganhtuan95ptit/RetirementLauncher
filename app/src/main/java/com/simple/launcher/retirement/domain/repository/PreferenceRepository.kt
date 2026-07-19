@@ -36,6 +36,8 @@ interface PreferenceRepository {
     fun setFileCleanupEnabled(enabled: Boolean)
     fun isFileCleanupFirstTime(): Boolean
     fun setFileCleanupFirstTime(firstTime: Boolean)
+    fun getPendingFileCleanupEnabled(): Boolean?
+    fun setPendingFileCleanupEnabled(enabled: Boolean?)
 
     // Call Block
     fun isCallBlockEnabled(): Boolean

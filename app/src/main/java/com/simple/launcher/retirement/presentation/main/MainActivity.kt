@@ -102,9 +102,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         val isOnboardingCompleted = repository.isOnboardingCompleted()
         val isHomeIntent = intent.hasCategory(Intent.CATEGORY_HOME)
 
+        val isDefaultLauncher = PermissionManager.isDefaultLauncher()
+        if (isDefaultLauncher) {
+            repository.setPendingDefaultLauncher(false)
+        }
+
         return when {
             !isOnboardingCompleted -> DeepLinks.ONBOARDING
-            isHomeIntent && repository.isPendingDefaultLauncher() -> DeepLinks.SETTINGS
+            isHomeIntent && repository.isPendingDefaultLauncher() && !isDefaultLauncher -> DeepLinks.SETTINGS
             isHomeIntent -> DeepLinks.HOME
             else -> DeepLinks.SETTINGS
         }.also { deeplink ->

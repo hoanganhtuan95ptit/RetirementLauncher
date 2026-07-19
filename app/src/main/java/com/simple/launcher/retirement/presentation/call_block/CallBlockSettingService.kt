@@ -1,9 +1,15 @@
 package com.simple.launcher.retirement.presentation.call_block
 
 import android.os.Build
+import androidx.activity.viewModels
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.simple.auto.register.AutoRegister
+import com.simple.component.service.ActivityCreatedService
 import com.simple.component.service.launchCollect
+import com.simple.launcher.retirement.presentation.installer_cleanup.InstallerCleanupSettingViewModel
+import com.simple.launcher.retirement.presentation.main.MainActivity
 import com.simple.launcher.retirement.presentation.settings.SettingsFragment
 import com.simple.launcher.retirement.presentation.settings.adapters.SettingItem
 import com.simple.launcher.retirement.presentation.settings.services.protect.ProtectSettingService
