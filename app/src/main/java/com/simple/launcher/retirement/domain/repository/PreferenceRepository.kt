@@ -43,6 +43,8 @@ interface PreferenceRepository {
     fun setCallBlockEnabled(enabled: Boolean)
     fun isCallBlockFirstTime(): Boolean
     fun setCallBlockFirstTime(firstTime: Boolean)
+    fun getPendingCallBlockEnabled(): Boolean?
+    fun setPendingCallBlockEnabled(enabled: Boolean?)
 
     // Pocket Mode
     fun isPocketModeEnabled(): Boolean

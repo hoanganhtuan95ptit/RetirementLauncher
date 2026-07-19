@@ -18,6 +18,7 @@ class PreferenceRepositoryImpl(context: Context) : PreferenceRepository {
     private var isPendingDefaultLauncherRam: Boolean = false
     private var pendingEmergencyConfigRam: com.simple.launcher.retirement.domain.model.SOSConfig? = null
     private var pendingAppBlockEnabledRam: Boolean? = null
+    private var pendingCallBlockEnabledRam: Boolean? = null
 
     companion object {
 
@@ -135,6 +136,13 @@ class PreferenceRepositoryImpl(context: Context) : PreferenceRepository {
     override fun setCallBlockFirstTime(firstTime: Boolean) {
 
         sharedPrefs.edit { putBoolean(KEY_CALL_BLOCK_FIRST_TIME, firstTime) }
+    }
+
+    override fun getPendingCallBlockEnabled(): Boolean? = pendingCallBlockEnabledRam
+
+    override fun setPendingCallBlockEnabled(enabled: Boolean?) {
+
+        pendingCallBlockEnabledRam = enabled
     }
 
     // Pocket Mode
