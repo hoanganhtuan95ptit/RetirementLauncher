@@ -13,6 +13,31 @@
 
     <string name="setting_pocket_mode">Pocket Mode (Prevent accidental touch)</string>
 
+    <string name="setting_app_monitoring">App Monitoring</string>
+    <string name="setting_auto_cleanup_apk">Auto Delete APK</string>
+    <string name="setting_call_block">Call Block</string>
+    <string name="setting_clean_files">Clean Files</string>
+    <string name="setting_clean_memory">Clean Memory</string>
+    <string name="clean_files_title">Clean Files</string>
+    <string name="clean_files_start">Start</string>
+    <string name="clean_files_running">Cleaning...</string>
+    <string name="clean_files_retry">Retry</string>
+    <string name="clean_files_desc">Scan and clean junk files</string>
+    <string name="clean_files_completed">Completed</string>
+    <string name="clean_memory_title">Clean Memory</string>
+    <string name="clean_memory_start">Start</string>
+    <string name="clean_memory_running">Cleaning...</string>
+    <string name="clean_memory_retry">Retry</string>
+    <string name="clean_memory_stat_used">Used</string>
+    <string name="clean_memory_stat_free">Free</string>
+    <string name="clean_memory_stat_total">Total</string>
+    <string name="clean_memory_result_sub">Memory cleaned</string>
+    <string name="clean_memory_optimal">Optimal</string>
+    <string name="clean_memory_toast">Memory cleaned</string>
+    <string name="call_block_title">Call Block</string>
+    <string name="call_block_desc">Block calls from unknown numbers</string>
+
+
     <!-- Onboarding -->
     <string name="onboarding_title">Welcome to Retirement Launcher</string>
     <string name="onboarding_desc">An app to simplify your phone interface and protect your device.</string>
@@ -60,5 +85,8 @@
     <string name="pin_error_confirm_mismatch">Confirmation PIN does not match</string>
     <string name="pin_error_incorrect">Incorrect PIN</string>
 
+    <string name="call_permission_title">Call Permission</string>
+    <string name="call_permission_desc">Allow app to make emergency calls</string>
     <string name="done">Done</string>
+
 </resources>
