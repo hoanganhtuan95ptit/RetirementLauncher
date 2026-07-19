@@ -74,6 +74,7 @@ class SOSHeaderAdapter : ViewItemAdapter<SOSHeaderViewItem, ItemSosHeaderBinding
 
         super.onViewItemClick(item)
 
+        // Header là master toggle, dùng chung id với setting emergency ở màn Protect.
         AppEventBus.post(AppEvent.SOSItemClicked(SettingItem.ID_EMERGENCY_CALL_TOGGLE))
     }
 

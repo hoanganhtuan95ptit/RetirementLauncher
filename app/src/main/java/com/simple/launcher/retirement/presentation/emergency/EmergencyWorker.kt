@@ -46,10 +46,10 @@ class EmergencyWorker(context: Context) : BackgroundWorker(context) {
             }
 
             // Poll dinh ky thay vi dung alarm vi worker nay chi can chay khi background service dang bat.
-            checkInactivity()
+            checkEmergencyTriggerConditions()
             if (isStarted) {
 
-                val nextInterval = resolveNextCheckInterval()
+                val nextInterval = resolveNextPollingInterval()
                 logDebug { "Scheduling next inactivity check in ${nextInterval / 1000}s" to null }
                 handler.postDelayed(this, nextInterval)
             }
@@ -71,15 +71,15 @@ class EmergencyWorker(context: Context) : BackgroundWorker(context) {
         logDebug { "onStop" to null }
         isStarted = false
         handler.removeCallbacks(checkRunnable)
-        resetEmergencyState()
+        resetSosCallingState()
     }
 
-    private fun checkInactivity() {
+    private fun checkEmergencyTriggerConditions() {
 
         if (!repository.isEmergencyCallEnabled()) {
 
             logDebug { "Emergency call disabled while checking, resetting state" to null }
-            resetEmergencyState()
+            resetSosCallingState()
             return
         }
 
@@ -89,7 +89,7 @@ class EmergencyWorker(context: Context) : BackgroundWorker(context) {
 
         logDebug {
 
-            "checkInactivity: elapsed=${elapsed / 1000}s, " +
+            "checkEmergencyTriggerConditions: elapsed=${elapsed / 1000}s, " +
                     "lastActivity=$lastActivity, " +
                     "sessionActive=$isSosSessionActive, " +
                     "sessionStartedAt=$sosSessionStartedAt, " +
@@ -103,10 +103,10 @@ class EmergencyWorker(context: Context) : BackgroundWorker(context) {
             return
         }
 
-        if (shouldResetSosSession(lastActivity, elapsed)) {
+        if (shouldStopSosSessionAfterUserActivity(lastActivity, elapsed)) {
 
             logDebug { "Resetting SOS state because recent user activity was detected" to null }
-            resetEmergencyState()
+            resetSosCallingState()
             return
         }
 
@@ -114,13 +114,17 @@ class EmergencyWorker(context: Context) : BackgroundWorker(context) {
         if (elapsed >= ABSOLUTE_HARD_LIMIT_MILLIS) {
 
             logDebug { "Hard limit reached, triggering emergency" to null }
-            startOrContinueSosSession(currentTime)
+            startOrContinueSosCallingSession(currentTime)
             return
         }
 
         // Active timeout chi tinh cac khoang nam ngoai exclusion period do nguoi dung cau hinh.
         val timeoutMillis = repository.getEmergencyTimeout()
-        val activeElapsed = EmergencyUtils.calculateActiveTime(lastActivity, currentTime, repository.getExclusionPeriods())
+        val activeElapsed = EmergencyUtils.calculateActiveElapsedMillis(
+            lastActivity,
+            currentTime,
+            repository.getExclusionPeriods()
+        )
         logDebug {
 
             "Active time check: activeElapsed=${activeElapsed / 1000}s, " +
@@ -130,13 +134,17 @@ class EmergencyWorker(context: Context) : BackgroundWorker(context) {
 
         if (activeElapsed >= timeoutMillis) {
 
-            logDebug { "Active timeout reached (${activeElapsed / 1000 / 60} min active), triggering emergency" to null }
-            startOrContinueSosSession(currentTime)
+            logDebug {
+
+                "Active timeout reached (${activeElapsed / 1000 / 60} min active), " +
+                    "triggering emergency" to null
+            }
+            startOrContinueSosCallingSession(currentTime)
             return
         }
     }
 
-    private fun startOrContinueSosSession(currentTime: Long) {
+    private fun startOrContinueSosCallingSession(currentTime: Long) {
 
         if (!isSosSessionActive) {
 
@@ -145,15 +153,15 @@ class EmergencyWorker(context: Context) : BackgroundWorker(context) {
             sosSessionStartedAt = currentTime
             sosCallAttemptCount = 0
             repository.setLastEmergencyIndex(NO_CONTACT_INDEX)
-            tryCallNextContact()
+            callNextEmergencyContactIfPossible()
             return
         }
 
         logDebug { "Continuing SOS session" to null }
-        tryCallNextContact()
+        callNextEmergencyContactIfPossible()
     }
 
-    private fun shouldResetSosSession(lastActivity: Long, elapsed: Long): Boolean {
+    private fun shouldStopSosSessionAfterUserActivity(lastActivity: Long, elapsed: Long): Boolean {
 
         // Neu Accessibility ghi nhan tuong tac sau khi SOS bat dau, dung session va quay ve chu ky binh thuong.
         if (isSosSessionActive && lastActivity > sosSessionStartedAt) {
@@ -165,26 +173,26 @@ class EmergencyWorker(context: Context) : BackgroundWorker(context) {
         return !isSosSessionActive && elapsed <= CHECK_INTERVAL_MILLIS
     }
 
-    private fun tryCallNextContact() {
+    private fun callNextEmergencyContactIfPossible() {
 
         val contacts = contactRepository.getSelectedContacts()
         logDebug {
 
-            "tryCallNextContact: contactCount=${contacts.size}, " +
+            "callNextEmergencyContactIfPossible: contactCount=${contacts.size}, " +
                     "attemptCount=$sosCallAttemptCount, " +
                     "lastEmergencyIndex=${repository.getLastEmergencyIndex()}" to null
         }
         if (contacts.isEmpty()) {
 
             logDebug { "No selected emergency contacts" to null }
-            finishSosSession()
+            finishSosCallingSession()
             return
         }
 
         if (sosCallAttemptCount >= contacts.size) {
 
             logDebug { "All selected emergency contacts were attempted" to null }
-            finishSosSession()
+            finishSosCallingSession()
             return
         }
 
@@ -200,8 +208,8 @@ class EmergencyWorker(context: Context) : BackgroundWorker(context) {
             logDebug {
 
                 "Trying emergency contact index=$nextIndex, " +
-                        "attempt=$sosCallAttemptCount/${contacts.size}, " +
-                        "phone=${maskPhoneNumber(phoneNumber)}" to null
+                    "attempt=$sosCallAttemptCount/${contacts.size}, " +
+                    "phone=${maskPhoneNumberForLog(phoneNumber)}" to null
             }
 
             if (phoneNumber.isNullOrEmpty()) {
@@ -210,7 +218,7 @@ class EmergencyWorker(context: Context) : BackgroundWorker(context) {
                 continue
             }
 
-            if (!makeEmergencyCall(phoneNumber)) {
+            if (!placeEmergencyCall(phoneNumber)) {
 
                 logDebug { "Failed to call contact at index=$nextIndex, trying next contact" to null }
                 continue
@@ -220,7 +228,7 @@ class EmergencyWorker(context: Context) : BackgroundWorker(context) {
         }
 
         logDebug { "Unable to place emergency call to any selected contact" to null }
-        finishSosSession()
+        finishSosCallingSession()
     }
 
     private fun resolveNextContactIndex(contactCount: Int): Int {
@@ -230,7 +238,7 @@ class EmergencyWorker(context: Context) : BackgroundWorker(context) {
         return if (nextIndex >= contactCount) 0 else nextIndex
     }
 
-    private fun makeEmergencyCall(phoneNumber: String): Boolean {
+    private fun placeEmergencyCall(phoneNumber: String): Boolean {
 
         if (telephonyManager.simState != TelephonyManager.SIM_STATE_READY) {
 
@@ -248,7 +256,11 @@ class EmergencyWorker(context: Context) : BackgroundWorker(context) {
 
             val uri = Uri.fromParts("tel", phoneNumber, null)
             telecomManager.placeCall(uri, null)
-            logDebug { "placeCall is currently disabled in code for ${maskPhoneNumber(phoneNumber)} uri=$uri" to null }
+            logDebug {
+
+                "placeCall is currently disabled in code for " +
+                    "${maskPhoneNumberForLog(phoneNumber)} uri=$uri" to null
+            }
             true
         } catch (securityException: SecurityException) {
 
@@ -269,12 +281,12 @@ class EmergencyWorker(context: Context) : BackgroundWorker(context) {
         ) == PackageManager.PERMISSION_GRANTED
     }
 
-    private fun resetEmergencyState() {
+    private fun resetSosCallingState() {
 
         // Sau khi nguoi dung hoat dong lai, lan canh bao tiep theo se bat dau tu contact dau tien.
         logDebug {
 
-            "resetEmergencyState: sessionActive=$isSosSessionActive, " +
+            "resetSosCallingState: sessionActive=$isSosSessionActive, " +
                     "attemptCount=$sosCallAttemptCount, " +
                     "lastEmergencyIndex=${repository.getLastEmergencyIndex()}" to null
         }
@@ -284,11 +296,11 @@ class EmergencyWorker(context: Context) : BackgroundWorker(context) {
         repository.setLastEmergencyIndex(NO_CONTACT_INDEX)
     }
 
-    private fun finishSosSession() {
+    private fun finishSosCallingSession() {
 
         logDebug {
 
-            "finishSosSession: attemptCount=$sosCallAttemptCount, " +
+            "finishSosCallingSession: attemptCount=$sosCallAttemptCount, " +
                     "lastEmergencyIndex=${repository.getLastEmergencyIndex()}" to null
         }
         isSosSessionActive = false
@@ -297,12 +309,12 @@ class EmergencyWorker(context: Context) : BackgroundWorker(context) {
         repository.setLastEmergencyIndex(NO_CONTACT_INDEX)
     }
 
-    private fun resolveNextCheckInterval(): Long {
+    private fun resolveNextPollingInterval(): Long {
 
         return if (isSosSessionActive) SOS_CHECK_INTERVAL_MILLIS else CHECK_INTERVAL_MILLIS
     }
 
-    private fun maskPhoneNumber(phoneNumber: String?): String {
+    private fun maskPhoneNumberForLog(phoneNumber: String?): String {
 
         if (phoneNumber.isNullOrEmpty()) return "empty"
         val suffix = phoneNumber.takeLast(PHONE_MASK_SUFFIX_LENGTH)

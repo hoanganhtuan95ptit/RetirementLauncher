@@ -51,12 +51,12 @@ class SOSSectionHeaderAdapter : ViewItemAdapter<SOSSectionHeaderViewItem, ItemSo
         payloads: List<String>
     ) {
 
-        val alpha = if (item.isEnabled) 1f else 0.5f
+        val enabledAlpha = if (item.isEnabled) 1f else 0.5f
 
         if (payloads.isEmpty() || payloads.contains("isEnabled")) {
 
-            binding.tvSectionTitle.alpha = alpha
-            binding.ivSectionIcon.alpha = alpha
+            binding.tvSectionTitle.alpha = enabledAlpha
+            binding.ivSectionIcon.alpha = enabledAlpha
         }
 
         if (payloads.isEmpty() || payloads.contains("title")) {

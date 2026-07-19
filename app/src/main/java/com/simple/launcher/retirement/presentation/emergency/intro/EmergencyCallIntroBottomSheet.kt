@@ -20,11 +20,12 @@ import com.simple.launcher.retirement.utils.lifecycle.observe
 import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
 import com.simple.ui.precompute.text.setText
 
-class EmergencyCallIntroBottomSheet : BaseBottomSheetDialogFragment<BottomSheetUsageStatsPermissionBinding, EmergencyCallIntroViewModel>() {
+class EmergencyCallIntroBottomSheet :
+    BaseBottomSheetDialogFragment<BottomSheetUsageStatsPermissionBinding, EmergencyCallIntroViewModel>() {
 
     override val viewModel: EmergencyCallIntroViewModel by viewModels()
 
-    private var isAccepted = false
+    private var hasUserAccepted = false
 
     override fun inflateBinding(
         inflater: LayoutInflater,
@@ -42,7 +43,7 @@ class EmergencyCallIntroBottomSheet : BaseBottomSheetDialogFragment<BottomSheetU
 
         binding.btnGrant.root.setOnSafeClickListener {
 
-            isAccepted = true
+            hasUserAccepted = true
             AppEventBus.post(AppEvent.EmergencyCallIntroAccept)
             dismiss()
         }
@@ -52,17 +53,30 @@ class EmergencyCallIntroBottomSheet : BaseBottomSheetDialogFragment<BottomSheetU
 
         super.observeData()
 
+        observeIntroTitle()
+        observeIntroDescription()
+        observeIntroAction()
+    }
+
+    private fun observeIntroTitle() {
+
         viewModel.title.observe(this) { title ->
 
             val binding = binding ?: return@observe
             binding.tvTitle.setText(title)
         }
+    }
+
+    private fun observeIntroDescription() {
 
         viewModel.description.observe(this) { description ->
 
             val binding = binding ?: return@observe
             binding.tvDescription.setText(description)
         }
+    }
+
+    private fun observeIntroAction() {
 
         viewModel.action.observe(this) { state ->
 
@@ -76,8 +90,9 @@ class EmergencyCallIntroBottomSheet : BaseBottomSheetDialogFragment<BottomSheetU
 
         super.onDismiss(dialog)
 
-        if (!isAccepted) {
+        if (!hasUserAccepted) {
 
+            // PermissionManager đang chờ event kết quả, nên mọi đường dismiss đều phải trả cancel.
             AppEventBus.post(AppEvent.EmergencyCallIntroCancel)
         }
     }
@@ -100,7 +115,10 @@ class EmergencyCallIntroDeeplinkHandler : DeeplinkHandler {
         sharedElement: Map<String, View>?
     ): Boolean {
 
-        EmergencyCallIntroBottomSheet().show(fragmentActivity.supportFragmentManager, EmergencyCallIntroBottomSheet.TAG)
+        EmergencyCallIntroBottomSheet().show(
+            fragmentActivity.supportFragmentManager,
+            EmergencyCallIntroBottomSheet.TAG
+        )
 
         return true
     }

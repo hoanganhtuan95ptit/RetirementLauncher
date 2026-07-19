@@ -21,9 +21,9 @@ class UserActivityAccessibilityService : AccessibilityService() {
 
         val resolvedEvent = event ?: return
         if (!repository.isEmergencyCallEnabled()) return
-        if (!isUserInteractionEvent(resolvedEvent.eventType)) return
+        if (!isRealUserInteractionEvent(resolvedEvent.eventType)) return
 
-        recordUserActivity(resolvedEvent.eventType)
+        recordRealUserActivity(resolvedEvent.eventType)
     }
 
     override fun onInterrupt() {
@@ -43,12 +43,12 @@ class UserActivityAccessibilityService : AccessibilityService() {
         super.onDestroy()
     }
 
-    private fun isUserInteractionEvent(eventType: Int): Boolean {
+    private fun isRealUserInteractionEvent(eventType: Int): Boolean {
 
         return eventType in USER_INTERACTION_EVENTS
     }
 
-    private fun recordUserActivity(eventType: Int) {
+    private fun recordRealUserActivity(eventType: Int) {
 
         val currentTime = System.currentTimeMillis()
         if (currentTime - lastRecordedTime < RECORD_THROTTLE_MILLIS) {
@@ -58,13 +58,15 @@ class UserActivityAccessibilityService : AccessibilityService() {
 
         lastRecordedTime = currentTime
         repository.setLastUserActivity(currentTime)
+        // Chỉ lưu timestamp, không đọc text/view content
+        // để giữ đúng phạm vi riêng tư của accessibility service.
         logDebug(
-            "Real user activity detected from accessibility event=${eventTypeName(eventType)}, " +
+            "Real user activity detected from accessibility event=${resolveEventTypeName(eventType)}, " +
                 "timestamp=$currentTime"
         )
     }
 
-    private fun eventTypeName(eventType: Int): String {
+    private fun resolveEventTypeName(eventType: Int): String {
 
         return when (eventType) {
 

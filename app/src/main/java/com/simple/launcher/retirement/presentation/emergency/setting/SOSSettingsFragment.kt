@@ -29,10 +29,7 @@ import com.simple.launcher.retirement.utils.lifecycle.observe
 import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
 import com.simple.ui.precompute.image.setImage
 import com.simple.ui.precompute.text.setText
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterIsInstance
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.onSubscription
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
 import java.util.UUID
@@ -53,12 +50,12 @@ class SOSSettingsFragment : BaseFragment<FragmentSosSettingsBinding>() {
 
         val binding = binding ?: return
 
-        setupToolbar(binding)
-        setupRecyclerView(binding)
-        setupSaveButton(binding)
+        setupBackNavigation(binding)
+        setupSettingsGrid(binding)
+        setupSaveConfigButton(binding)
     }
 
-    private fun setupToolbar(binding: FragmentSosSettingsBinding) {
+    private fun setupBackNavigation(binding: FragmentSosSettingsBinding) {
 
         binding.toolbar.ivLeft.setOnSafeClickListener {
 
@@ -66,7 +63,7 @@ class SOSSettingsFragment : BaseFragment<FragmentSosSettingsBinding>() {
         }
     }
 
-    private fun setupRecyclerView(binding: FragmentSosSettingsBinding) {
+    private fun setupSettingsGrid(binding: FragmentSosSettingsBinding) {
 
         binding.rvSettings.apply {
 
@@ -76,31 +73,20 @@ class SOSSettingsFragment : BaseFragment<FragmentSosSettingsBinding>() {
 
                     override fun getSpanSize(position: Int): Int {
 
-                        return (viewModel.viewItemList.value.getOrNull(position) as? SpanSizeLookupViewItem)?.getSpanSize() ?: 2
+                        val viewItem = viewModel.viewItemList.value.getOrNull(position)
+
+                        return (viewItem as? SpanSizeLookupViewItem)?.getSpanSize() ?: 2
                     }
                 }
             }
         }
     }
 
-    private fun setupSaveButton(binding: FragmentSosSettingsBinding) {
+    private fun setupSaveConfigButton(binding: FragmentSosSettingsBinding) {
 
         binding.btnSave.root.setOnSafeClickListener {
 
-            viewLifecycleOwner.lifecycleScope.launch {
-
-                val config = viewModel.save()
-
-                val result = AppEventBus.events
-                    .onSubscription { AppEventBus.post(AppEvent.SOSUpdate(config)) }
-                    .filter { it is AppEvent.SOSUpdateSuccess || it is AppEvent.SOSUpdateCancel }
-                    .first()
-
-                if (result is AppEvent.SOSUpdateSuccess) {
-
-                    parentFragmentManager.popBackStack()
-                }
-            }
+            viewModel.saveEmergencyConfig()
         }
     }
 
@@ -109,10 +95,11 @@ class SOSSettingsFragment : BaseFragment<FragmentSosSettingsBinding>() {
         super.observeData()
 
         observeToolbar()
-        observeViewItemList()
-        observeSaveAction()
-        observeItemClicks()
-        observeTimeoutSelection()
+        observeSettingItems()
+        observeSaveButtonState()
+        observeSaveResult()
+        observeSosItemClickEvents()
+        observeTimeoutSelectedEvents()
     }
 
     private fun observeToolbar() {
@@ -136,7 +123,7 @@ class SOSSettingsFragment : BaseFragment<FragmentSosSettingsBinding>() {
         }
     }
 
-    private fun observeViewItemList() {
+    private fun observeSettingItems() {
 
         viewModel.viewItemList.attachAdapter().observe(this@SOSSettingsFragment) { (items, adapters) ->
 
@@ -146,7 +133,7 @@ class SOSSettingsFragment : BaseFragment<FragmentSosSettingsBinding>() {
         }
     }
 
-    private fun observeSaveAction() {
+    private fun observeSaveButtonState() {
 
         viewModel.saveAction.observe(this@SOSSettingsFragment) { state ->
 
@@ -159,38 +146,49 @@ class SOSSettingsFragment : BaseFragment<FragmentSosSettingsBinding>() {
         }
     }
 
-    private fun observeItemClicks() {
+    private fun observeSaveResult() {
+
+        viewModel.saveResultFlow.observe(this@SOSSettingsFragment) { isSuccess ->
+
+            if (isSuccess) {
+
+                parentFragmentManager.popBackStack()
+            }
+        }
+    }
+
+    private fun observeSosItemClickEvents() {
 
         AppEventBus.events
             .filterIsInstance<AppEvent.SOSItemClicked>()
             .observe(this@SOSSettingsFragment) { event ->
 
-                handleItemClick(event.id)
+                handleSosSettingItemClick(event.id)
             }
     }
 
-    private fun observeTimeoutSelection() {
+    private fun observeTimeoutSelectedEvents() {
 
         AppEventBus.events
             .filterIsInstance<AppEvent.SOSTimeoutSelected>()
             .observe(this@SOSSettingsFragment) { event ->
 
-                viewModel.updateTimeout(event.timeoutMillis)
+                viewModel.updateTimeoutDraft(event.timeoutMillis)
             }
     }
 
-    private fun handleItemClick(id: Int) {
+    private fun handleSosSettingItemClick(id: Int) {
 
         when (id) {
 
-            SettingItem.ID_EMERGENCY_CALL_TOGGLE -> viewModel.toggleFeatureDraft()
-            SOSSettingsViewModel.ID_TIMEOUT -> showTimeoutDialog()
-            SOSSettingsViewModel.ID_ADD_PERIOD -> showAddTimePeriod()
-            else -> handlePeriodItemClick(id)
+            SettingItem.ID_EMERGENCY_CALL_TOGGLE -> viewModel.toggleEmergencyFeatureDraft()
+            SOSSettingsViewModel.ID_TIMEOUT -> showTimeoutSelectionSheet()
+            SOSSettingsViewModel.ID_ADD_PERIOD -> showAddExclusionPeriodPicker()
+            else -> removeExclusionPeriodByItemId(id)
         }
     }
 
-    private fun handlePeriodItemClick(id: Int) {
+    private fun removeExclusionPeriodByItemId(id: Int) {
 
         if (id < SOSSettingsViewModel.ID_PERIOD_ITEM_BASE) {
 
@@ -200,10 +198,10 @@ class SOSSettingsFragment : BaseFragment<FragmentSosSettingsBinding>() {
         val index = id - SOSSettingsViewModel.ID_PERIOD_ITEM_BASE
         val periodId = viewModel.exclusionPeriods.value.getOrNull(index)?.id ?: return
 
-        viewModel.removeExclusionPeriod(periodId)
+        viewModel.removeExclusionPeriodDraft(periodId)
     }
 
-    private fun showTimeoutDialog() {
+    private fun showTimeoutSelectionSheet() {
 
         val currentTimeoutMillis = viewModel.timeout.value
 
@@ -213,12 +211,13 @@ class SOSSettingsFragment : BaseFragment<FragmentSosSettingsBinding>() {
         )
     }
 
-    private fun showAddTimePeriod() {
+    private fun showAddExclusionPeriodPicker() {
 
         viewLifecycleOwner.lifecycleScope.launch {
 
-            val startTime = pickTime(R.string.sos_select_start_time, 22, 0) ?: return@launch
-            val endTime = pickTime(R.string.sos_select_end_time, 7, 0) ?: return@launch
+            // Chọn hai mốc liên tiếp để tạo khung giờ không tính vào timeout SOS.
+            val startTime = pickClockTime(R.string.sos_select_start_time, 22, 0) ?: return@launch
+            val endTime = pickClockTime(R.string.sos_select_end_time, 7, 0) ?: return@launch
 
             val period = ExclusionPeriod(
                 id = UUID.randomUUID().toString(),
@@ -228,16 +227,26 @@ class SOSSettingsFragment : BaseFragment<FragmentSosSettingsBinding>() {
                 endMinute = endTime.second
             )
 
-            viewModel.addExclusionPeriod(period)
+            viewModel.addExclusionPeriodDraft(period)
         }
     }
 
-    private suspend fun pickTime(titleRes: Int, hour: Int, minute: Int): Pair<Int, Int>? = suspendCancellableCoroutine { cont ->
+    private suspend fun pickClockTime(
+        titleRes: Int,
+        hour: Int,
+        minute: Int
+    ): Pair<Int, Int>? = suspendCancellableCoroutine { cont ->
 
-        val dialog = TimePickerDialog(requireContext(), { _, selectedHour, selectedMinute ->
+        val dialog = TimePickerDialog(
+            requireContext(),
+            { _, selectedHour, selectedMinute ->
 
-            cont.resume(selectedHour to selectedMinute)
-        }, hour, minute, true).apply {
+                cont.resume(selectedHour to selectedMinute)
+            },
+            hour,
+            minute,
+            true
+        ).apply {
 
             setTitle(titleRes)
             setOnCancelListener { cont.resume(null) }

@@ -55,22 +55,10 @@ class SOSCardAdapter : ViewItemAdapter<SOSCardViewItem, ItemSosCardBinding>() {
         return ItemSosCardBinding.inflate(layoutInflater, parent, false)
     }
 
-    override fun createViewHolder(parent: ViewGroup, viewType: Int): BaseBindingViewHolder<ItemSosCardBinding> {
+    override fun onViewItemClick(item: SOSCardViewItem) {
+        super.onViewItemClick(item)
 
-        val viewHolder = super.createViewHolder(parent, viewType)
-
-        viewHolder.binding.root.setOnSafeClickListener {
-
-            val item = viewHolder.getItem<SOSCardViewItem>() ?: return@setOnSafeClickListener
-            if (!item.isEnabled) {
-
-                return@setOnSafeClickListener
-            }
-
-            AppEventBus.post(AppEvent.SOSItemClicked(item.id))
-        }
-
-        return viewHolder
+        AppEventBus.post(AppEvent.SOSItemClicked(item.id))
     }
 
     override fun onBindViewHolder(
@@ -81,14 +69,14 @@ class SOSCardAdapter : ViewItemAdapter<SOSCardViewItem, ItemSosCardBinding>() {
         payloads: List<String>
     ) {
 
-        val alpha = if (item.isEnabled) 1f else 0.5f
+        val enabledAlpha = if (item.isEnabled) 1f else 0.5f
 
         if (payloads.isEmpty() || payloads.contains("isEnabled")) {
 
-            binding.ivChevron.alpha = alpha
-            binding.ivCardIcon.alpha = alpha
-            binding.tvCardDesc.alpha = alpha
-            binding.tvCardTitle.alpha = alpha
+            binding.ivChevron.alpha = enabledAlpha
+            binding.ivCardIcon.alpha = enabledAlpha
+            binding.tvCardDesc.alpha = enabledAlpha
+            binding.tvCardTitle.alpha = enabledAlpha
         }
 
         if (payloads.isEmpty() || payloads.contains("title")) {

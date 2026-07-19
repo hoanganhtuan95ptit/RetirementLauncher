@@ -40,6 +40,8 @@ class EmergencyContactRequiredViewModel : BaseViewModel() {
         val color = resources.textColorSecondary
         val highlightColor = resources.colorAccent
 
+        // Highlight tên hành động chọn liên hệ để người dùng biết
+        // cần cấu hình trước khi bật SOS.
         value = resources.getString(R.string.emergency_contact_required_desc)
             .with(BigForegroundColor(color))
             .withFirst(

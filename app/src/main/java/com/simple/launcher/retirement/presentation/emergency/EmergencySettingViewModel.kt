@@ -1,17 +1,26 @@
 package com.simple.launcher.retirement.presentation.emergency
 
+import androidx.lifecycle.viewModelScope
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.domain.repository.PreferenceRepository
+import com.simple.launcher.retirement.domain.usecase.SetEmergencyCallEnabledUseCase
 import com.simple.launcher.retirement.presentation.base.BaseViewModel
 import com.simple.launcher.retirement.presentation.base.GroupViewItem
 import com.simple.launcher.retirement.presentation.settings.adapters.SettingItem
 import com.simple.launcher.retirement.presentation.settings.services.settingItem
 import com.simple.launcher.retirement.utils.combineState
+import com.simple.launcher.retirement.utils.coroutineExceptionHandler
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 
 class EmergencySettingViewModel : BaseViewModel() {
 
-    val emergencyCallEnabledFlow = PreferenceRepository.instance.emergencyCallEnabledFlow()
+    private val preferenceRepository = PreferenceRepository.instance
+
+    private val setEmergencyCallEnabledUseCase = SetEmergencyCallEnabledUseCase.instance
+
+    val emergencyCallEnabledFlow = preferenceRepository.emergencyCallEnabledFlow()
 
     val viewItemList: StateFlow<GroupViewItem?> = combineState(
         resources,
@@ -19,7 +28,22 @@ class EmergencySettingViewModel : BaseViewModel() {
         null
     ) { resources, isEnabled ->
 
-        value = GroupViewItem(
+        value = buildEmergencySettingGroup(resources, isEnabled)
+    }
+
+    init {
+
+        viewModelScope.launch(coroutineExceptionHandler + Dispatchers.Default) {
+
+            val pendingConfig = preferenceRepository.getPendingEmergencyConfig() ?: return@launch
+            setEmergencyCallEnabledUseCase(pendingConfig)
+        }
+    }
+
+    private fun buildEmergencySettingGroup(resources: Map<String, Any>, isEnabled: Boolean): GroupViewItem {
+
+        // Nhóm này được bơm vào tab Protect của Settings, cùng pattern với các setting service khác.
+        return GroupViewItem(
             order = 1.2,
             list = listOf(
                 settingItem(
