@@ -44,9 +44,17 @@ sealed class AppEvent {
     object EmergencyContactRequiredAccept : EmergencyContactRequiredResult()
     object EmergencyContactRequiredCancel : EmergencyContactRequiredResult()
 
+    sealed class AppListRequiredResult : AppEvent()
+    object AppListRequiredAccept : AppListRequiredResult()
+    object AppListRequiredCancel : AppListRequiredResult()
+
     sealed class ContactSetupResult : AppEvent()
     object ContactSetupAccept : ContactSetupResult()
     object ContactSetupCancel : ContactSetupResult()
+
+    sealed class AppSetupResult : AppEvent()
+    object AppSetupAccept : AppSetupResult()
+    object AppSetupCancel : AppSetupResult()
 
     sealed class FileCleanupIntroResult : AppEvent()
     object FileCleanupIntroAccept : FileCleanupIntroResult()

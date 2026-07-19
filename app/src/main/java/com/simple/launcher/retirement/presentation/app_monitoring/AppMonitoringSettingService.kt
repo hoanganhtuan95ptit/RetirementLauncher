@@ -1,17 +1,32 @@
 package com.simple.launcher.retirement.presentation.app_monitoring
 
-import androidx.fragment.app.viewModels
+import androidx.activity.viewModels
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.activityViewModels
 import com.simple.auto.register.AutoRegister
+import com.simple.component.service.ActivityCreatedService
 import com.simple.component.service.launchCollect
-import com.simple.launcher.retirement.domain.repository.PreferenceRepository
 import com.simple.launcher.retirement.presentation.main.MainActivity
 import com.simple.launcher.retirement.presentation.settings.SettingsFragment
 import com.simple.launcher.retirement.presentation.settings.adapters.SettingItem
 import com.simple.launcher.retirement.presentation.settings.services.protect.ProtectSettingService
 import com.simple.launcher.retirement.utils.AppEvent
 import com.simple.launcher.retirement.utils.AppEventBus
-import com.simple.launcher.retirement.utils.permission.PermissionManager
 import kotlinx.coroutines.flow.filterIsInstance
+
+@AutoRegister(apis = [ActivityCreatedService::class])
+class AppMonitoringService : ActivityCreatedService {
+
+    override fun setup(fragmentActivity: FragmentActivity) {
+
+        val viewModel = fragmentActivity.viewModels<AppMonitoringSettingViewModel>().value
+
+        viewModel.appBlockEnabledFlow.launchCollect(fragmentActivity) {
+
+            if (it) (fragmentActivity as? MainActivity)?.startBackgroundService()
+        }
+    }
+}
 
 @AutoRegister(apis = [SettingsFragment::class])
 class AppMonitoringSettingService : ProtectSettingService() {
@@ -21,40 +36,37 @@ class AppMonitoringSettingService : ProtectSettingService() {
     override fun setup(settingsFragment: SettingsFragment) {
         super.setup(settingsFragment)
 
-        viewModel = settingsFragment.viewModels<AppMonitoringSettingViewModel>().value
+        viewModel = settingsFragment.activityViewModels<AppMonitoringSettingViewModel>().value
+
+        observeAppMonitoringSettingItem(settingsFragment)
+        observeAppMonitoringSettingClick(settingsFragment)
+    }
+
+    private fun observeAppMonitoringSettingItem(settingsFragment: SettingsFragment) {
 
         viewModel.viewItemList.launchCollect(settingsFragment) {
 
             protectSettingViewModel.updateItem(it)
         }
+    }
 
-        viewModel.appBlockEnabledFlow.launchCollect(settingsFragment.viewLifecycleOwner) {
+    private fun observeAppMonitoringSettingClick(settingsFragment: SettingsFragment) {
 
-            if (it) (settingsFragment.activity as? MainActivity)?.startBackgroundService()
+        AppEventBus.events
+            .filterIsInstance<AppEvent.SettingClicked>()
+            .launchCollect(settingsFragment.viewLifecycleOwner) { event ->
+
+                setAppBlockEnabledIfToggle(event.item)
+            }
+    }
+
+    private fun setAppBlockEnabledIfToggle(item: SettingItem) {
+
+        if (item.id != SettingItem.ID_TOGGLE_BLOCK) {
+
+            return
         }
 
-        AppEventBus.events.filterIsInstance<AppEvent.SettingClicked>().launchCollect(settingsFragment.viewLifecycleOwner) { event ->
-
-            val item = event.item
-            val isTurningOn = !item.isChecked
-
-            if (item.id != SettingItem.ID_TOGGLE_BLOCK) {
-                return@launchCollect
-            }
-
-            if (isTurningOn && !PermissionManager.requireAppMonitoringIntro()) {
-                return@launchCollect
-            }
-
-            if (isTurningOn && !PermissionManager.requireUsageStatsPermission()) {
-                return@launchCollect
-            }
-
-            if (!isTurningOn && !PermissionManager.requirePinPermissions()) {
-                return@launchCollect
-            }
-
-            PreferenceRepository.instance.setAppBlockEnabled(isTurningOn)
-        }
+        viewModel.setAppBlockEnabled(!item.isChecked)
     }
 }

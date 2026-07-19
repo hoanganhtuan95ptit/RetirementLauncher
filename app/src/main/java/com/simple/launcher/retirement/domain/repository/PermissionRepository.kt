@@ -23,6 +23,7 @@ interface PermissionRepository {
     suspend fun requireCallPermission(): Boolean
     suspend fun requireUserActivityAccessibilityPermission(): Boolean
     suspend fun requireEmergencyContact(): Boolean
+    suspend fun requireAppList(): Boolean
     suspend fun requireCallBlockPermissions(): Boolean
     suspend fun requirePinPermissions(): Boolean
     suspend fun requireAppMonitoringIntro(): Boolean

@@ -31,6 +31,7 @@ object DeepLinks {
     const val APP_MONITORING_INTRO = "app://app_monitoring_intro"
     const val EMERGENCY_CALL_INTRO = "app://emergency_call_intro"
     const val EMERGENCY_CONTACT_REQUIRED = "app://emergency_contact_required"
+    const val APP_LIST_REQUIRED = "app://app_list_required"
     const val FILE_CLEANUP_INTRO = "app://file_cleanup_intro"
     const val CALL_BLOCK_INTRO = "app://call_block_intro"
 

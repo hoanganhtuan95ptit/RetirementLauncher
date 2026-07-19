@@ -27,6 +27,8 @@ interface PreferenceRepository {
     fun setAppBlockEnabled(enabled: Boolean)
     fun isAppBlockFirstTime(): Boolean
     fun setAppBlockFirstTime(firstTime: Boolean)
+    fun getPendingAppBlockEnabled(): Boolean?
+    fun setPendingAppBlockEnabled(enabled: Boolean?)
 
     // File Cleanup
     fun isFileCleanupEnabled(): Boolean

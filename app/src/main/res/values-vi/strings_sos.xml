@@ -48,6 +48,10 @@
     <string name="emergency_contact_required_desc">Bạn chưa thiết lập danh sách liên hệ nhanh. Để tính năng này hoạt động, vui lòng chọn ít nhất một liên hệ.</string>
     <string name="emergency_contact_required_highlight">chọn ít nhất một liên hệ</string>
     <string name="emergency_contact_required_action">Thiết lập ngay</string>
+    <string name="app_list_required_title">Cần thiết lập ứng dụng</string>
+    <string name="app_list_required_desc">Bạn chưa thiết lập danh sách ứng dụng được phép. Để tính năng này hoạt động, vui lòng chọn ít nhất một ứng dụng.</string>
+    <string name="app_list_required_highlight">chọn ít nhất một ứng dụng</string>
+    <string name="app_list_required_action">Thiết lập ngay</string>
     <string name="overlay_permission_title">Hiển thị trên ứng dụng khác</string>
     <string name="overlay_permission_desc">Ứng dụng cần quyền \'Hiển thị trên các ứng dụng khác\' để có thể hiển thị màn hình khóa khi một ứng dụng bị chặn được mở.</string>
     <string name="overlay_permission_highlight">\'Hiển thị trên các ứng dụng khác\'</string>

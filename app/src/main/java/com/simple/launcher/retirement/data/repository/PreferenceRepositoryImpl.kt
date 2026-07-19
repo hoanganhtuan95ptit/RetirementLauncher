@@ -17,6 +17,7 @@ class PreferenceRepositoryImpl(context: Context) : PreferenceRepository {
 
     private var isPendingDefaultLauncherRam: Boolean = false
     private var pendingEmergencyConfigRam: com.simple.launcher.retirement.domain.model.SOSConfig? = null
+    private var pendingAppBlockEnabledRam: Boolean? = null
 
     companion object {
 
@@ -87,6 +88,13 @@ class PreferenceRepositoryImpl(context: Context) : PreferenceRepository {
     override fun setAppBlockFirstTime(firstTime: Boolean) {
 
         sharedPrefs.edit { putBoolean(KEY_APP_BLOCK_FIRST_TIME, firstTime) }
+    }
+
+    override fun getPendingAppBlockEnabled(): Boolean? = pendingAppBlockEnabledRam
+
+    override fun setPendingAppBlockEnabled(enabled: Boolean?) {
+
+        pendingAppBlockEnabledRam = enabled
     }
 
     // File Cleanup
