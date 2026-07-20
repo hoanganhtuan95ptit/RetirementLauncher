@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>\n    <string name="setting_emergency_call">Apel de urgență automat (SOS)</string>
-    <string name="emergency_call_desc">Dacă telefonul nu este folosit timp de 10 ore, aplicația va efectua automat un apel de urgență.</string>
+    <string name="emergency_call_desc">Dacă telefonul nu este folosit, aplicația va efectua automat un apel de urgență.</string>
     <string name="clean_cat_system_temp">Fișiere temporare de sistem (.tmp, .log…)</string>
     <string name="clean_cat_compressed">Fișiere arhivate necunoscute</string>
     <string name="clean_cat_no_extension">Documente (.pdf, .doc, .txt…)</string>
@@ -21,8 +21,8 @@
     <string name="usage_stats_permission_desc">Pentru ca funcția de blocare a aplicațiilor să funcționeze, trebuie să acordați „Acces la datele de utilizare”. Acest lucru ajută aplicația să știe când este deschisă o aplicație neautorizată.</string>
     <string name="usage_stats_permission_highlight">„Acces la datele de utilizare”</string>
     <string name="accessibility_permission_title">Detectarea activității utilizatorului</string>
-    <string name="accessibility_permission_desc">SOS utilizează Accesibilitatea numai pentru a detectea când utilizatorul începe să atingă ecranul. Nu citește conținutul ecranului, nu înregistrează text, nu modifică setările, nu controlează telefonul și nu partajează aceste date. Marcajul temporal al activității rămâne pe acest dispozitiv și este utilizat numai pentru a decide dacă SOS ar trebui să apeleze contactele de urgență.</string>
-    <string name="accessibility_permission_highlight">nu citește conținutul ecranului</string>
+    <string name="accessibility_permission_desc">SOS utilizează Serviciul de Accesibilitate pentru a înregistra ultima interacțiune cu telefonul, permițând apeluri de urgență prompte dacă sunt detectate semne anormale. Ne angajăm să respectăm confidențialitatea absolută: aplicația nu citește conținutul ecranului, nu înregistrează text și nu intervine în setările personale. Toate datele de activitate sunt stocate în siguranță pe dispozitivul dvs. și sunt utilizate exclusiv în scopuri de salvare în caz de urgență.</string>
+    <string name="accessibility_permission_highlight">nu citește conținutul ecranului, nu înregistrează text și nu intervine în setările personale</string>
     <string name="user_activity_accessibility_service_label">Detectarea activității utilizatorului SOS</string>
     <string name="user_activity_accessibility_service_summary">Detectează activitatea reală a utilizatorului pentru verificările de inactivitate SOS.</string>
     <string name="user_activity_accessibility_service_desc">Utilizat numai de Auto SOS pentru a detecta dacă telefonul este încă utilizat activ. Serviciul ascultă numai evenimentul de sistem care indică faptul că utilizatorul a început să atingă ecranul, apoi salvează ultima oră de activitate pe acest dispozitiv. Nu citește conținutul ecranului, nu colectează textul tastat, nu inspectează alte aplicații, nu modifică setări, nu efectuează gesturi, nu face clic pe butoane și nu partajează aceste date de activitate.</string>
@@ -31,7 +31,7 @@
     <string name="app_monitoring_intro_highlight">permiterea rulării doar a aplicațiilor selectate</string>
     <string name="app_monitoring_intro_action">Înțeleg</string>
     <string name="emergency_call_intro_title">Introducere funcție</string>
-    <string name="emergency_call_intro_desc">Pentru a asigura siguranța, aplicația va apela automat lista de contacte rapide dacă nu se detectează nicio interacțiune a utilizatorului pe telefon timp de 10 ore.</string>
+    <string name="emergency_call_intro_desc">Pentru a asigura siguranța, aplicația va apela automat lista de contacte rapide dacă nu se detectează nicio interacțiune a utilizatorului pe telefon.</string>
     <string name="emergency_call_intro_highlight">va apela automat lista de contacte rapide</string>
     <string name="emergency_call_intro_action">Înțeleg</string>
     <string name="file_cleanup_intro_title">Introducere funcție</string>
@@ -62,9 +62,10 @@
     <string name="sos_timeout_label">Timp de așteptare inactivitate</string>
     <string name="sos_timeout_value">%1$d ore</string>
     <string name="sos_timeout_seconds">%1$d secunde</string>
+    <string name="sos_timeout_desc">Dacă nu utilizați telefonul în această perioadă, se va efectua automat un apel de urgență.</string>
     <string name="sos_exclusion_periods_header">Perioade de excludere (Somn/Odihnă)</string>
     <string name="sos_add_exclusion_period">Adaugă perioadă de excludere</string>
-    <string name="sos_add_exclusion_period_desc">Excluzând timpul de somn sau odihnă</string>
+    <string name="sos_add_exclusion_period_desc">Acest timp (de ex., timpul de somn) nu va fi luat în calcul pentru timpul de așteptare al inactivității.</string>
     <string name="sos_exclusion_period_format">%1$02d:%2$02d - %3$02d:%4$02d</string>
     <string name="sos_delete_exclusion_period">Șterge</string>
     <string name="sos_select_start_time">Selectați ora de început</string>

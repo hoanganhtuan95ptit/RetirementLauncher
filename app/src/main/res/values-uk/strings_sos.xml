@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>\n    <string name="setting_emergency_call">Автоматичний екстрений виклик (SOS)</string>
-    <string name="emergency_call_desc">Якщо телефон не використовується протягом 10 годин, додаток автоматично здійснить екстрений виклик.</string>
+    <string name="emergency_call_desc">Якщо телефон не використовується, додаток автоматично здійснить екстрений виклик.</string>
     <string name="clean_cat_system_temp">Тимчасові системні файли (.tmp, .log…)</string>
     <string name="clean_cat_compressed">Невідомі стиснуті файли</string>
     <string name="clean_cat_no_extension">Документи (.pdf, .doc, .txt…)</string>
@@ -21,8 +21,8 @@
     <string name="usage_stats_permission_desc">Для роботи функції блокування додатків необхідно надати «Доступ до даних про використання». Це допомагає додатку дізнаватися, коли відкривається неавторизований додаток.</string>
     <string name="usage_stats_permission_highlight">«Доступ до даних про використання»</string>
     <string name="accessibility_permission_title">Виявлення активності користувача</string>
-    <string name="accessibility_permission_desc">SOS використовує спеціальні можливості лише для виявлення того, коли користувач починає торкатися екрана. Він не читає вміст екрана, не записує текст, не змінює налаштування, не керує телефоном і не передає ці дані. Відмітка часу активності залишається на цьому пристрої і використовується лише для прийняття рішення про те, чи має SOS дзвонити за екстреними контактами.</string>
-    <string name="accessibility_permission_highlight">не читає вміст екрана</string>
+    <string name="accessibility_permission_desc">SOS використовує Службу спеціальних можливостей для запису вашої останньої взаємодії з телефоном, що дає змогу оперативно здійснювати виклики служби порятунку при виявленні аномальних ознак. Ми прагнемо до абсолютної конфіденційності: додаток не читає вміст екрана, не записує текст і не втручається в особисті налаштування. Усі дані про діяльність надійно зберігаються на вашому пристрої та використовуються виключно з метою екстреного порятунку.</string>
+    <string name="accessibility_permission_highlight">додаток не читає вміст екрана, не записує текст і не втручається в особисті налаштування</string>
     <string name="user_activity_accessibility_service_label">Виявлення активності користувача SOS</string>
     <string name="user_activity_accessibility_service_summary">Виявляє реальну активність користувача для перевірок бездіяльності SOS.</string>
     <string name="user_activity_accessibility_service_desc">Використовується лише функцією автоматичного SOS для виявлення того, чи телефон все ще активно використовується. Служба прослуховує лише системну подію, яка вказує на те, що користувач почав торкатися екрана, а потім зберігає час останньої активності на цьому пристрої. Вона не читає вміст екрана, не збирає введений текст, не перевіряє інші додатки, не змінює налаштування, не виконує жести, не натискає кнопки та не передає ці дані про активність.</string>
@@ -31,7 +31,7 @@
     <string name="app_monitoring_intro_highlight">дозволяючи запуск лише вибраних додатків</string>
     <string name="app_monitoring_intro_action">Я розумію</string>
     <string name="emergency_call_intro_title">Про функцію</string>
-    <string name="emergency_call_intro_desc">Для забезпечення безпеки додаток автоматично подзвонить за списком швидких контактів, якщо протягом 10 годин на телефоні не буде виявлено жодної активності користувача.</string>
+    <string name="emergency_call_intro_desc">Для забезпечення безпеки додаток автоматично подзвонить за списком швидких контактів, якщо на телефоні не буде виявлено жодної активності користувача.</string>
     <string name="emergency_call_intro_highlight">автоматично подзвонить за списком швидких контактів</string>
     <string name="emergency_call_intro_action">Я розумію</string>
     <string name="file_cleanup_intro_title">Про функцію</string>
@@ -62,9 +62,10 @@
     <string name="sos_timeout_label">Тайм-аут бездіяльності</string>
     <string name="sos_timeout_value">%1$d годин</string>
     <string name="sos_timeout_seconds">%1$d секунд</string>
+    <string name="sos_timeout_desc">Якщо ви не користуватиметеся телефоном протягом цього періоду, буде автоматично здійснено екстрений виклик.</string>
     <string name="sos_exclusion_periods_header">Періоди виключення (Сон/Відпочинок)</string>
     <string name="sos_add_exclusion_period">Додати період виключення</string>
-    <string name="sos_add_exclusion_period_desc">Виключаючи час сну або відпочинку</string>
+    <string name="sos_add_exclusion_period_desc">Цей час (наприклад, час сну) не буде враховуватися в часі очікування бездіяльності.</string>
     <string name="sos_exclusion_period_format">%1$02d:%2$02d - %3$02d:%4$02d</string>
     <string name="sos_delete_exclusion_period">Видалити</string>
     <string name="sos_select_start_time">Виберіть час початку</string>

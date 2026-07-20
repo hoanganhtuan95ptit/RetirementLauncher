@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>\n    <string name="setting_emergency_call">Automatischer Notruf (SOS)</string>
-    <string name="emergency_call_desc">Wenn das Telefon 10 Stunden lang nicht benutzt wird, setzt die App automatisch einen Notruf ab.</string>
+    <string name="emergency_call_desc">Wenn das Telefon nicht benutzt wird, setzt die App automatisch einen Notruf ab.</string>
     <string name="call_permission_highlight">Anrufe tätigen</string>
     <string name="call_block_highlight">Anrufe und Kontakte verwalten</string>
     <string name="setting_header_debug">🐛 Debug</string>
@@ -12,8 +12,8 @@
     <string name="usage_stats_permission_desc">Damit die App-Sperrfunktion funktioniert, müssen Sie den „Zugriff auf Nutzungsdaten“ gewähren. Dies hilft der App zu erkennen, wenn eine nicht autorisierte App geöffnet wird.</string>
     <string name="usage_stats_permission_highlight">„Zugriff auf Nutzungsdaten“</string>
     <string name="accessibility_permission_title">Erkennung von Benutzeraktivitäten</string>
-    <string name="accessibility_permission_desc">SOS verwendet die Barrierefreiheit nur, um zu erkennen, wenn der Benutzer beginnt, den Bildschirm zu berühren. Es liest keine Bildschirminhalte, zeichnet keinen Text auf, ändert keine Einstellungen, steuert das Telefon nicht und gibt diese Daten nicht weiter. Der Zeitstempel der Aktivität verbleibt auf diesem Gerät und wird nur verwendet, um zu entscheiden, ob SOS Notfallkontakte anrufen soll.</string>
-    <string name="accessibility_permission_highlight">liest keine Bildschirminhalte</string>
+    <string name="accessibility_permission_desc">SOS nutzt den Barrierefreiheitsdienst, um Ihre letzte Interaktion mit dem Telefon zu erfassen, sodass bei ungewöhnlichen Anzeichen umgehend Rettungsrufe getätigt werden können. Wir verpflichten uns zu absoluter Privatsphäre: Die App liest keine Bildschirminhalte, zeichnet keinen Text auf und greift nicht in persönliche Einstellungen ein. Alle Aktivitätsdaten werden sicher auf diesem Gerät gespeichert und ausschließlich für Notfallrettungszwecke verwendet.</string>
+    <string name="accessibility_permission_highlight">liest keine Bildschirminhalte, zeichnet keinen Text auf und greift nicht in persönliche Einstellungen ein</string>
     <string name="user_activity_accessibility_service_label">SOS Benutzeraktivitäts-Erkennung</string>
     <string name="user_activity_accessibility_service_summary">Erkennt echte Benutzeraktivitäten für SOS-Inaktivitätsprüfungen.</string>
     <string name="user_activity_accessibility_service_desc">Wird nur von Auto SOS verwendet, um zu erkennen, ob das Telefon noch aktiv genutzt wird. Der Dienst hört nur auf das Systemereignis, das anzeigt, dass der Benutzer begonnen hat, den Bildschirm zu berühren, und speichert dann die letzte Aktivitätszeit auf diesem Gerät. Er liest keine Bildschirminhalte, sammelt keinen eingegebenen Text, inspiziert keine anderen Apps, ändert keine Einstellungen, führt keine Gesten aus, klickt keine Schaltflächen und gibt diese Aktivitätsdaten nicht weiter.</string>
@@ -22,7 +22,7 @@
     <string name="app_monitoring_intro_highlight">nur die Ausführung ausgewählter Apps zulässt</string>
     <string name="app_monitoring_intro_action">Ich verstehe</string>
     <string name="emergency_call_intro_title">Funktions-Einführung</string>
-    <string name="emergency_call_intro_desc">Um die Sicherheit zu gewährleisten, ruft die App automatisch die Schnellkontaktliste an, wenn 10 Stunden lang keine Benutzerinteraktion auf dem Telefon erkannt wird.</string>
+    <string name="emergency_call_intro_desc">Um die Sicherheit zu gewährleisten, ruft die App automatisch die Schnellkontaktliste an, wenn keine Benutzerinteraktion auf dem Telefon erkannt wird.</string>
     <string name="emergency_call_intro_highlight">ruft automatisch die Schnellkontaktliste an</string>
     <string name="emergency_call_intro_action">Ich verstehe</string>
     <string name="file_cleanup_intro_title">Funktions-Einführung</string>
@@ -53,9 +53,10 @@
     <string name="sos_timeout_label">Inaktivitäts-Timeout</string>
     <string name="sos_timeout_value">%1$d Stunden</string>
     <string name="sos_timeout_seconds">%1$d Sekunden</string>
+    <string name="sos_timeout_desc">Wenn Sie das Telefon während dieses Zeitraums nicht benutzen, wird automatisch ein Notruf abgesetzt.</string>
     <string name="sos_exclusion_periods_header">Ausschlusszeiträume (Schlaf/Ruhe)</string>
     <string name="sos_add_exclusion_period">Ausschlusszeitraum hinzufügen</string>
-    <string name="sos_add_exclusion_period_desc">Schlaf- oder Ruhezeit ausschließen</string>
+    <string name="sos_add_exclusion_period_desc">Diese Zeit (z. B. Schlafzeit) wird nicht auf die Inaktivitätswartezeit angerechnet.</string>
     <string name="sos_exclusion_period_format">%1$02d:%2$02d - %3$02d:%4$02d</string>
     <string name="emergency_call_save_success">Notrufkonfiguration gespeichert</string>
     <string name="clean_cat_system_temp">Temporäre Systemdateien (.tmp, .log…)</string>

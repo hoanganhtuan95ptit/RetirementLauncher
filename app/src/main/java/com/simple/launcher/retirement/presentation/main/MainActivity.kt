@@ -35,7 +35,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     private fun navigateInitialScreen() {
 
         val deeplink = resolveInitialDeeplink(PreferenceRepository.instance)
-        Log.d(TAG, "navigate | deeplink=$deeplink")
 
         sendDeeplink(deeplink)
     }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>\n    <string name="setting_emergency_call">การโทรฉุกเฉินอัตโนมัติ (SOS)</string>
-    <string name="emergency_call_desc">หากไม่มีการใช้งานโทรศัพท์เป็นเวลา 10 ชั่วโมง แอปจะทำการโทรฉุกเฉินโดยอัตโนมัติ</string>
+    <string name="emergency_call_desc">หากไม่มีการใช้งานโทรศัพท์ แอปจะทำการโทรฉุกเฉินโดยอัตโนมัติ</string>
     <string name="clean_cat_system_temp">ไฟล์ชั่วคราวของระบบ (.tmp, .log…)</string>
     <string name="clean_cat_compressed">ไฟล์บีบอัดที่ไม่รู้จัก</string>
     <string name="clean_cat_no_extension">เอกสาร (.pdf, .doc, .txt…)</string>
@@ -21,8 +21,8 @@
     <string name="usage_stats_permission_desc">เพื่อให้ฟีเจอร์การบล็อกแอปทำงานได้ คุณต้องอนุญาต \'การเข้าถึงข้อมูลการใช้งาน\' สิ่งนี้ช่วยให้แอปทราบเมื่อมีการเปิดแอปที่ไม่ได้รับอนุญาต</string>
     <string name="usage_stats_permission_highlight">\'การเข้าถึงข้อมูลการใช้งาน\'</string>
     <string name="accessibility_permission_title">การตรวจจับกิจกรรมของผู้ใช้</string>
-    <string name="accessibility_permission_desc">SOS ใช้การเข้าถึง (Accessibility) เพื่อตรวจจับเมื่อผู้ใช้เริ่มสัมผัสหน้าจอเท่านั้น โดยจะไม่ทำการอ่านเนื้อหาบนหน้าจอ, บันทึกข้อความ, เปลี่ยนแปลงการตั้งค่า, ควบคุมโทรศัพท์ หรือแชร์ข้อมูลเหล่านี้ ข้อมูลเวลาของกิจกรรมจะถูกเก็บไว้ในอุปกรณ์นี้เท่านั้น และใช้เพื่อตัดสินใจว่า SOS ควรโทรหาผู้ติดต่อฉุกเฉินหรือไม่</string>
-    <string name="accessibility_permission_highlight">ไม่อ่านเนื้อหาบนหน้าจอ</string>
+    <string name="accessibility_permission_desc">SOS ใช้บริการการเข้าถึง (Accessibility Service) เพื่อบันทึกการโต้ตอบล่าสุดของคุณกับโทรศัพท์ ซึ่งจะช่วยให้สามารถโทรช่วยเหลือได้ทันท่วงทีหากตรวจพบสัญญาณที่ผิดปกติ เรามุ่งมั่นที่จะรักษาความเป็นส่วนตัวอย่างสมบูรณ์: แอปจะไม่ทำการอ่านเนื้อหาบนหน้าจอ บันทึกข้อความ หรือแทรกแซงการตั้งค่าส่วนบุคคล ข้อมูลกิจกรรมทั้งหมดจะถูกจัดเก็บไว้อย่างปลอดภัยบนอุปกรณ์ของคุณและใช้เพื่อวัตถุประสงค์ในการช่วยเหลือฉุกเฉินเท่านั้น</string>
+    <string name="accessibility_permission_highlight">จะไม่ทำการอ่านเนื้อหาบนหน้าจอ บันทึกข้อความ หรือแทรกแซงการตั้งค่าส่วนบุคคล</string>
     <string name="user_activity_accessibility_service_label">SOS การตรวจจับกิจกรรมของผู้ใช้</string>
     <string name="user_activity_accessibility_service_summary">ตรวจจับกิจกรรมของผู้ใช้จริงสำหรับการตรวจสอบการไม่ใช้งาน SOS</string>
     <string name="user_activity_accessibility_service_desc">ใช้โดย Auto SOS เท่านั้นเพื่อตรวจจับว่าโทรศัพท์ยังคงมีการใช้งานอย่างต่อเนื่องหรือไม่ บริการจะรอฟังเหตุการณ์ของระบบที่บ่งบอกว่าผู้ใช้เริ่มสัมผัสหน้าจอ จากนั้นจะบันทึกเวลาของกิจกรรมล่าสุดไว้ในอุปกรณ์นี้ โดยจะไม่ทำการอ่านเนื้อหาบนหน้าจอ, รวบรวมข้อความที่พิมพ์, ตรวจสอบแอปอื่น, เปลี่ยนแปลงการตั้งค่า, ทำท่าทางสัมผัส, คลิกปุ่ม หรือแชร์ข้อมูลกิจกรรมเหล่านี้</string>
@@ -31,7 +31,7 @@
     <string name="app_monitoring_intro_highlight">อนุญาตให้เฉพาะแอปที่เลือกเท่านั้นที่สามารถทำงานได้</string>
     <string name="app_monitoring_intro_action">ฉันเข้าใจแล้ว</string>
     <string name="emergency_call_intro_title">แนะนำฟีเจอร์</string>
-    <string name="emergency_call_intro_desc">เพื่อความปลอดภัย แอปจะโทรไปยังรายการผู้ติดต่อด่วนโดยอัตโนมัติ หากตรวจไม่พบการโต้ตอบของผู้ใช้บนโทรศัพท์เป็นเวลา 10 ชั่วโมง</string>
+    <string name="emergency_call_intro_desc">เพื่อความปลอดภัย แอปจะโทรไปยังรายการผู้ติดต่อด่วนโดยอัตโนมัติ หากตรวจไม่พบการโต้ตอบของผู้ใช้บนโทรศัพท์</string>
     <string name="emergency_call_intro_highlight">โทรไปยังรายการผู้ติดต่อด่วนโดยอัตโนมัติ</string>
     <string name="emergency_call_intro_action">ฉันเข้าใจแล้ว</string>
     <string name="file_cleanup_intro_title">แนะนำฟีเจอร์</string>
@@ -62,9 +62,10 @@
     <string name="sos_timeout_label">หมดเวลาเมื่อไม่ใช้งาน</string>
     <string name="sos_timeout_value">%1$d ชั่วโมง</string>
     <string name="sos_timeout_seconds">%1$d วินาที</string>
+    <string name="sos_timeout_desc">หากคุณไม่ใช้โทรศัพท์ในช่วงเวลานี้ ระบบจะโทรฉุกเฉินโดยอัตโนมัติ</string>
     <string name="sos_exclusion_periods_header">ช่วงเวลาที่ยกเว้น (นอนหลับ/พักผ่อน)</string>
     <string name="sos_add_exclusion_period">เพิ่มช่วงเวลาที่ยกเว้น</string>
-    <string name="sos_add_exclusion_period_desc">ไม่รวมเวลานอนหรือพักผ่อน</string>
+    <string name="sos_add_exclusion_period_desc">เวลานี้ (เช่น เวลานอน) จะไม่ถูกนับรวมในเวลารอการไม่ใช้งาน</string>
     <string name="sos_exclusion_period_format">%1$02d:%2$02d - %3$02d:%4$02d</string>
     <string name="sos_delete_exclusion_period">ลบ</string>
     <string name="sos_select_start_time">เลือกเวลาเริ่ม</string>

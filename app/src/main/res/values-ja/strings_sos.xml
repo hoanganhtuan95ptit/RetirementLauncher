@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>\n    <string name="setting_emergency_call">自動緊急通報 (SOS)</string>
-    <string name="emergency_call_desc">スマートフォンが10時間使用されない場合、アプリが自動的に緊急通報を行います。</string>
+    <string name="emergency_call_desc">スマートフォンが使用されない場合、アプリが自動的に緊急通報を行います。</string>
     <string name="clean_cat_system_temp">システム一時ファイル (.tmp, .log…)</string>
     <string name="clean_cat_compressed">未知の圧縮ファイル</string>
     <string name="clean_cat_no_extension">ドキュメント (.pdf, .doc, .txt…)</string>
@@ -21,8 +21,8 @@
     <string name="usage_stats_permission_desc">アプリのブロック機能を使用するには、「使用状況へのアクセス」を許可する必要があります。これにより、許可されていないアプリがいつ開かれたかをアプリが知ることができます。</string>
     <string name="usage_stats_permission_highlight">「使用状況へのアクセス」</string>
     <string name="accessibility_permission_title">ユーザー活動の検出</string>
-    <string name="accessibility_permission_desc">SOS は、ユーザーが画面に触れ始めたことを検出するためにのみユーザー補助を使用します。画面の内容を読み取ったり、テキストを記録したり、設定を変更したり、電話を操作したり、このデータを共有したりすることはありません。活動のタイムスタンプはこのデバイスに残り、SOS が緊急連絡先に電話をかけるべきかどうかを判断するためにのみ使用されます。</string>
-    <string name="accessibility_permission_highlight">画面の内容を読み取りません</string>
+    <string name="accessibility_permission_desc">SOS はユーザー補助サービスを使用して、スマートフォンとの最後の操作を記録し、異常な兆候が検出された場合に迅速な救助要請を行うことができます。私たちはプライバシーの保護を最優先しています。アプリが画面の内容を読み取ったり、テキストを記録したり、個人設定を変更したりすることはありません。すべての活動データはデバイス内に安全に保存され、緊急救助の目的のみに使用されます。</string>
+    <string name="accessibility_permission_highlight">画面の内容を読み取ったり、テキストを記録したり、個人設定を変更したりすることはありません</string>
     <string name="user_activity_accessibility_service_label">SOS ユーザー活動の検出</string>
     <string name="user_activity_accessibility_service_summary">SOS の非アクティブチェックのために実際のユーザー活動を検出します。</string>
     <string name="user_activity_accessibility_service_desc">携帯電話がまだアクティブに使用されているかどうかを検出するために、自動 SOS によってのみ使用されます。サービスは、ユーザーが画面に触れ始めたことを示すシステムイベントのみをリッスンし、このデバイスに最新の活動時間を保存します。画面の内容を読み取ったり、入力されたテキストを収集したり、他のアプリを検査したり、設定を変更したり、ジェスチャーを実行したり、ボタンをクリックしたり、この活動データを共有したりすることはありません。</string>
@@ -31,7 +31,7 @@
     <string name="app_monitoring_intro_highlight">選択したアプリのみの実行を許可</string>
     <string name="app_monitoring_intro_action">了解しました</string>
     <string name="emergency_call_intro_title">機能紹介</string>
-    <string name="emergency_call_intro_desc">安全を確保するために、スマートフォンで 10 時間ユーザーの操作が検出されない場合、アプリは自動的にクイック連絡先リストに電話をかけます。</string>
+    <string name="emergency_call_intro_desc">安全を確保するために、スマートフォンでユーザーの操作が検出されない場合、アプリは自動的にクイック連絡先リストに電話をかけます。</string>
     <string name="emergency_call_intro_highlight">クイック連絡先リストに自動的に電話をかける</string>
     <string name="emergency_call_intro_action">了解しました</string>
     <string name="file_cleanup_intro_title">機能紹介</string>
@@ -62,9 +62,10 @@
     <string name="sos_timeout_label">非アクティブタイムアウト</string>
     <string name="sos_timeout_value">%1$d 時間</string>
     <string name="sos_timeout_seconds">%1$d 秒</string>
+    <string name="sos_timeout_desc">この期間中に電話を使用しない場合、自動的に緊急通報が行われます。</string>
     <string name="sos_exclusion_periods_header">除外期間 (睡眠/休息)</string>
     <string name="sos_add_exclusion_period">除外期間を追加</string>
-    <string name="sos_add_exclusion_period_desc">睡眠または休息時間を除外</string>
+    <string name="sos_add_exclusion_period_desc">この時間（睡眠時間など）は、非アクティブ待機時間にはカウントされません。</string>
     <string name="sos_exclusion_period_format">%1$02d:%2$02d - %3$02d:%4$02d</string>
     <string name="sos_delete_exclusion_period">削除</string>
     <string name="sos_select_start_time">開始時間を選択</string>

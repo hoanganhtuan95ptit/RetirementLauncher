@@ -25,6 +25,8 @@ data class ActionState(
     val image: BigImage = emptyImage(),
     val imageShow: Boolean = false,
 
+    val isEnabled: Boolean = true,
+
     val background: Background? = emptyBackground()
 ) {
     companion object {
@@ -50,9 +52,11 @@ fun buildActionState(
     strokeWidth: Int = 0,
     strokeColor: Int = Color.TRANSPARENT,
     strokeDashGap: Int = 0,
-    strokeDashWidth: Int = 0
+    strokeDashWidth: Int = 0,
+    isEnabled: Boolean = true
 ): ActionState = ActionState(
     text = text.with(BigForegroundColor(textColor), BigTextSize(textSize.toPx()), BigBold).build(),
+    isEnabled = isEnabled,
     background = Background.Builder()
         .backgroundColor(backgroundColor)
         .cornerRadius(cornerRadius)

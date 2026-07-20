@@ -1,5 +1,6 @@
 package com.simple.launcher.retirement.presentation.app_monitoring
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.simple.adapter.ViewItem
 import com.simple.launcher.retirement.R
@@ -13,23 +14,22 @@ import com.simple.launcher.retirement.presentation.settings.services.settingItem
 import com.simple.launcher.retirement.utils.combineState
 import com.simple.launcher.retirement.utils.coroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 class AppMonitoringSettingViewModel : BaseViewModel() {
 
-    private val preferenceRepository = PreferenceRepository.instance
+    val refresh = MutableStateFlow<Long>(0)
 
-    private val permissionRepository = PermissionRepository.instance
+    val appBlockEnabledFlow = combineState(
+        refresh,
+        PreferenceRepository.instance.appBlockEnabledFlow(),
+        false
+    ) { _, isEnabled ->
 
-    private val setAppMonitoringEnabledUseCase = SetAppMonitoringEnabledUseCase.instance
-
-    val appBlockEnabledFlow = preferenceRepository.appBlockEnabledFlow()
-        .map { isEnabled ->
-
-            isEnabled && hasAppBlockPermissions()
-        }
+        value = isEnabled && hasAppBlockPermissions()
+    }
 
     val viewItemList: StateFlow<GroupViewItem?> = combineState(
         resources,
@@ -60,23 +60,26 @@ class AppMonitoringSettingViewModel : BaseViewModel() {
 
         viewModelScope.launch(coroutineExceptionHandler + Dispatchers.Default) {
 
-            val pendingEnabled = preferenceRepository.getPendingAppBlockEnabled() ?: return@launch
-            setAppMonitoringEnabledUseCase(pendingEnabled)
+            val pendingEnabled = PreferenceRepository.instance.getPendingAppBlockEnabled() ?: return@launch
+            SetAppMonitoringEnabledUseCase.instance(pendingEnabled)
         }
     }
 
-    fun setAppBlockEnabled(isEnabled: Boolean) = viewModelScope.launch(
-        coroutineExceptionHandler + Dispatchers.Default
-    ) {
+    fun refreshStatus() {
 
-        preferenceRepository.setPendingAppBlockEnabled(isEnabled)
-        setAppMonitoringEnabledUseCase(isEnabled)
+        refresh.value = System.currentTimeMillis()
+    }
+
+    fun setAppBlockEnabled(isEnabled: Boolean) = viewModelScope.launch(coroutineExceptionHandler + Dispatchers.Default) {
+
+        PreferenceRepository.instance.setPendingAppBlockEnabled(isEnabled)
+        SetAppMonitoringEnabledUseCase.instance(isEnabled)
     }
 
     private fun hasAppBlockPermissions(): Boolean {
 
-        return permissionRepository.hasUsageStatsPermission() &&
-                permissionRepository.hasOverlayPermission() &&
-                permissionRepository.isDefaultLauncher()
+        return PermissionRepository.instance.hasUsageStatsPermission() &&
+                PermissionRepository.instance.hasOverlayPermission() &&
+                PermissionRepository.instance.isDefaultLauncher()
     }
 }

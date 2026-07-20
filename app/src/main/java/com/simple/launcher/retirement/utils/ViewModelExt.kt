@@ -1,5 +1,6 @@
 package com.simple.launcher.retirement.utils
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -18,6 +19,7 @@ import kotlin.coroutines.CoroutineContext
 
 val coroutineExceptionHandler = CoroutineExceptionHandler { _: CoroutineContext, throwable: Throwable ->
     // todo log error
+    Log.d("tuanha", "coroutineExceptionHandler: ", throwable)
 }
 
 

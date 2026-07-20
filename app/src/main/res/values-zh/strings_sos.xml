@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>\n    <string name="setting_emergency_call">自动紧急呼叫 (SOS)</string>
-    <string name="emergency_call_desc">如果手机10小时未使用，应用将自动进行紧急呼叫。</string>
+    <string name="emergency_call_desc">如果手机未使用，应用将自动进行紧急呼叫。</string>
     <string name="clean_cat_system_temp">系统临时文件 (.tmp, .log…)</string>
     <string name="clean_cat_compressed">未知压缩文件</string>
     <string name="clean_cat_no_extension">文档 (.pdf, .doc, .txt…)</string>
@@ -21,8 +21,8 @@
     <string name="usage_stats_permission_desc">为了使应用拦截功能正常工作，您需要授予“使用情况数据访问”权限。这有助于应用识别何时打开了未经授权的应用。</string>
     <string name="usage_stats_permission_highlight">“使用情况数据访问”</string>
     <string name="accessibility_permission_title">用户活动检测</string>
-    <string name="accessibility_permission_desc">SOS 仅使用无障碍功能来检测用户何时开始触摸屏幕。它不会读取屏幕内容、记录文本、更改设置、控制手机或共享这些数据Rex。活动时间戳保存在此设备上，仅用于判断 SOS 是否应呼叫紧急联系人。</string>
-    <string name="accessibility_permission_highlight">不会读取屏幕内容</string>
+    <string name="accessibility_permission_desc">SOS 使用无障碍服务来记录您与手机的最后一次交互，从而在检测到异常迹象时及时进行救援呼叫。我们承诺绝对保护隐私：应用不会读取屏幕内容、记录文本或干预个人设置。所有活动数据仅安全地存储在本地设备上，且仅用于紧急救援目的。</string>
+    <string name="accessibility_permission_highlight">不会读取屏幕内容、记录文本或干预个人设置</string>
     <string name="user_activity_accessibility_service_label">SOS 用户活动检测</string>
     <string name="user_activity_accessibility_service_summary">检测真实的 SOS 用户活动，用于闲置检查。</string>
     <string name="user_activity_accessibility_service_desc">仅供自动 SOS 用于检测手机是否仍处于活跃使用状态。该服务仅监听指示用户已开始触摸屏幕的系统事件，然后在此设备上保存最新的活动时间。它不会读取屏幕内容、收集键入的文本、检查其他应用、更改设置、执行手势、点击按钮或共享此活动数据。</string>
@@ -31,7 +31,7 @@
     <string name="app_monitoring_intro_highlight">仅允许运行选定的应用</string>
     <string name="app_monitoring_intro_action">我明白了</string>
     <string name="emergency_call_intro_title">功能介绍</string>
-    <string name="emergency_call_intro_desc">为了确保安全，如果手机 10 小时内没有检测到用户交互，应用将自动呼叫快速联系人列表。</string>
+    <string name="emergency_call_intro_desc">为了确保安全，如果手机没有检测到用户交互，应用将自动呼叫快速联系人列表。</string>
     <string name="emergency_call_intro_highlight">自动呼叫快速联系人列表</string>
     <string name="emergency_call_intro_action">我明白了</string>
     <string name="file_cleanup_intro_title">功能介绍</string>
@@ -62,9 +62,10 @@
     <string name="sos_timeout_label">闲置超时</string>
     <string name="sos_timeout_value">%1$d 小时</string>
     <string name="sos_timeout_seconds">%1$d 秒</string>
+    <string name="sos_timeout_desc">如果您在此期间不使用手机，系统将自动拨打紧急电话。</string>
     <string name="sos_exclusion_periods_header">排除时段（睡眠/休息）</string>
     <string name="sos_add_exclusion_period">添加排除时段</string>
-    <string name="sos_add_exclusion_period_desc">排除睡眠或休息时间</string>
+    <string name="sos_add_exclusion_period_desc">此时间（例如睡眠时间）将不计入闲置等待时间。</string>
     <string name="sos_exclusion_period_format">%1$02d:%2$02d - %3$02d:%4$02d</string>
     <string name="sos_delete_exclusion_period">删除</string>
     <string name="sos_select_start_time">选择开始时间</string>

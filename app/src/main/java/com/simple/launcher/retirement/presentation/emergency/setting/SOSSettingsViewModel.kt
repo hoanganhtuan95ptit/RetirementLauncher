@@ -76,9 +76,6 @@ class SOSSettingsViewModel : BaseViewModel() {
             backgroundColor = resources.colorPrimary,
             strokeWidth = 1.dp().toInt(),
             strokeColor = resources.colorOutline
-        ).copy(
-            image = BigImage(R.drawable.ic_save),
-            imageShow = true
         )
     }
 
@@ -143,6 +140,7 @@ class SOSSettingsViewModel : BaseViewModel() {
         return SOSCardViewItem(
             id = ID_TIMEOUT,
             title = buildTimeoutLabel(resources, timeout).asBodyText(resources),
+            desc = resources.getString(R.string.sos_timeout_desc).asSecondaryBodyText(resources),
             icon = BigImage(R.drawable.ic_clock),
             isEnabled = isEnabledDraft
         )

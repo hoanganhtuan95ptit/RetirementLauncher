@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>\n    <string name="setting_emergency_call">Panggilan Darurat Otomatis (SOS)</string>
-    <string name="emergency_call_desc">Jika ponsel tidak digunakan selama 10 jam, aplikasi akan melakukan panggilan darurat secara otomatis.</string>
+    <string name="emergency_call_desc">Jika ponsel tidak digunakan, aplikasi akan melakukan panggilan darurat secara otomatis.</string>
     <string name="clean_cat_system_temp">File sementara sistem (.tmp, .log…)</string>
     <string name="clean_cat_compressed">File terkompresi tidak dikenal</string>
     <string name="clean_cat_no_extension">Dokumen (.pdf, .doc, .txt…)</string>
@@ -21,8 +21,8 @@
     <string name="usage_stats_permission_desc">Agar fitur pemblokiran aplikasi dapat berfungsi, Anda perlu memberikan \'Akses data penggunaan\'. Ini membantu aplikasi mengetahui kapan aplikasi yang tidak sah dibuka.</string>
     <string name="usage_stats_permission_highlight">\'Akses data penggunaan\'</string>
     <string name="accessibility_permission_title">Deteksi Aktivitas Pengguna</string>
-    <string name="accessibility_permission_desc">SOS menggunakan Aksesibilitas hanya untuk mendeteksi kapan pengguna mulai menyentuh layar. Ia tidak membaca konten layar, merekam teks, mengubah pengaturan, mengontrol ponsel, atau membagikan data ini. Stempel waktu aktivitas tetap ada di perangkat ini dan hanya digunakan untuk memutuskan apakah SOS harus memanggil kontak darurat.</string>
-    <string name="accessibility_permission_highlight">tidak membaca konten layar</string>
+    <string name="accessibility_permission_desc">SOS menggunakan Layanan Aksesibilitas untuk mencatat interaksi terakhir Anda dengan ponsel, sehingga memungkinkan panggilan penyelamatan segera jika tanda-tanda tidak normal terdeteksi. Kami berkomitmen pada privasi mutlak: aplikasi tidak membaca konten layar, merekam teks, atau mencampuri pengaturan pribadi. Semua data aktivitas disimpan dengan aman di perangkat Anda dan digunakan semata-mata untuk tujuan penyelamatan darurat.</string>
+    <string name="accessibility_permission_highlight">tidak membaca konten layar, merekam teks, atau mencampuri pengaturan pribadi</string>
     <string name="user_activity_accessibility_service_label">Deteksi Aktivitas Pengguna SOS</string>
     <string name="user_activity_accessibility_service_summary">Mendeteksi aktivitas pengguna nyata untuk pemeriksaan inaktivitas SOS.</string>
     <string name="user_activity_accessibility_service_desc">Hanya digunakan oleh Auto SOS untuk mendeteksi apakah ponsel masih digunakan secara aktif. Layanan hanya mendengarkan peristiwa sistem yang menunjukkan bahwa pengguna telah mulai menyentuh layar, lalu menyimpan waktu aktivitas terbaru di perangkat ini. Ia tidak membaca konten layar, mengumpulkan teks yang diketik, memeriksa aplikasi lain, mengubah pengaturan, melakukan gerakan, mengeklik tombol, atau membagikan data aktivitas ini.</string>
@@ -31,7 +31,7 @@
     <string name="app_monitoring_intro_highlight">hanya mengizinkan aplikasi terpilih</string>
     <string name="app_monitoring_intro_action">Saya mengerti</string>
     <string name="emergency_call_intro_title">Pengenalan Fitur</string>
-    <string name="emergency_call_intro_desc">Untuk memastikan keamanan, aplikasi akan secara otomatis memanggil daftar kontak cepat jika tidak ada interaksi pengguna yang terdeteksi di ponsel selama 10 jam.</string>
+    <string name="emergency_call_intro_desc">Untuk memastikan keamanan, aplikasi akan secara otomatis memanggil daftar kontak cepat jika tidak ada interaksi pengguna yang terdeteksi di ponsel.</string>
     <string name="emergency_call_intro_highlight">secara otomatis memanggil daftar kontak cepat</string>
     <string name="emergency_call_intro_action">Saya mengerti</string>
     <string name="file_cleanup_intro_title">Pengenalan Fitur</string>
@@ -62,9 +62,10 @@
     <string name="sos_timeout_label">Batas Waktu Inaktivitas</string>
     <string name="sos_timeout_value">%1$d jam</string>
     <string name="sos_timeout_seconds">%1$d detik</string>
+    <string name="sos_timeout_desc">Jika Anda tidak menggunakan ponsel selama periode ini, panggilan darurat akan dilakukan secara otomatis.</string>
     <string name="sos_exclusion_periods_header">Periode Pengecualian (Tidur/Istirahat)</string>
     <string name="sos_add_exclusion_period">Tambah Periode Pengecualian</string>
-    <string name="sos_add_exclusion_period_desc">Mengecualikan waktu tidur atau istirahat</string>
+    <string name="sos_add_exclusion_period_desc">Waktu ini (misalnya, waktu tidur) tidak akan dihitung dalam waktu tunggu ketidakaktifan.</string>
     <string name="sos_exclusion_period_format">%1$02d:%2$02d - %3$02d:%4$02d</string>
     <string name="sos_delete_exclusion_period">Hapus</string>
     <string name="sos_select_start_time">Pilih Waktu Mulai</string>

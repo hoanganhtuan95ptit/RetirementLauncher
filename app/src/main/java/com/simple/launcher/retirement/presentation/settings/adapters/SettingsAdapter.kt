@@ -133,7 +133,7 @@ class SettingsAdapter : ViewItemAdapter<SettingItem, ItemSettingBinding>() {
         }
 
         if (payloads.isEmpty() || payloads.contains("background")) {
-            binding.content.setBackground(item.background)
+            binding.vBackground.setBackground(item.background)
         }
 
         if (payloads.isEmpty() || payloads.contains("isEnabled")) {

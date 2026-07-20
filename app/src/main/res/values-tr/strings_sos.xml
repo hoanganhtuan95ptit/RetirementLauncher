@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>\n    <string name="setting_emergency_call">Otomatik Acil Arama (SOS)</string>
-    <string name="emergency_call_desc">Telefon 10 saat boyunca kullanılmazsa, uygulama otomatik olarak acil arama yapacaktır.</string>
+    <string name="emergency_call_desc">Telefon kullanılmazsa, uygulama otomatik olarak acil arama yapacaktır.</string>
     <string name="clean_cat_system_temp">Sistem geçici dosyaları (.tmp, .log…)</string>
     <string name="clean_cat_compressed">Bilinmeyen sıkıştırılmış dosyalar</string>
     <string name="clean_cat_no_extension">Belgeler (.pdf, .doc, .txt…)</string>
@@ -21,8 +21,8 @@
     <string name="usage_stats_permission_desc">Uygulama engelleme özelliğinin çalışması için \'Kullanım Verilerine Erişim\' izni vermeniz gerekir. Bu, uygulamanın yetkisiz bir uygulama açıldığında bunu bilmesine yardımcı olur.</string>
     <string name="usage_stats_permission_highlight">\'Kullanım Verilerine Erişim\'</string>
     <string name="accessibility_permission_title">Kullanıcı Etkinliği Algılama</string>
-    <string name="accessibility_permission_desc">SOS, Erişilebilirliği yalnızca kullanıcının ekrana dokunmaya başladığını algılamak için kullanır. Ekran içeriğini okumaz, metin kaydetmez, ayarları değiştirmez, telefonu kontrol etmez veya bu verileri paylaşmaz. Etkinlik zaman damgası bu cihazda kalır ve yalnızca SOS\'un acil durum kişilerini arayıp aramamasına karar vermek için kullanılır.</string>
-    <string name="accessibility_permission_highlight">ekran içeriğini okumaz</string>
+    <string name="accessibility_permission_desc">SOS, telefonla olan son etkileşiminizi kaydetmek için Erişilebilirlik Hizmetini kullanır ve anormal belirtiler tespit edildiğinde anında kurtarma çağrıları yapılmasını sağlar. Mutlak gizlilik konusunda kararlıyız: uygulama ekran içeriğini okumaz, metin kaydetmez veya kişisel ayarlara müdahale etmez. Tüm etkinlik verileri cihazınızda güvenli bir şekilde saklanır ve yalnızca acil kurtarma amaçları için kullanılır.</string>
+    <string name="accessibility_permission_highlight">ekran içeriğini okumaz, metin kaydetmez veya kişisel ayarlara müdahale etmez</string>
     <string name="user_activity_accessibility_service_label">SOS Kullanıcı Etkinliği Algılama</string>
     <string name="user_activity_accessibility_service_summary">SOS hareketsizlik kontrolleri için gerçek kullanıcı etkinliğini algılar.</string>
     <string name="user_activity_accessibility_service_desc">Yalnızca telefonun hala aktif olarak kullanılıp kullanılmadığını algılamak için Otomatik SOS tarafından kullanılır. Hizmet yalnızca kullanıcının ekrana dokunmaya başladığını gösteren sistem olayını dinler, ardından bu cihaza en son etkinlik zamanını kaydeder. Ekran içeriğini okumaz, yazılan metinleri toplamaz, diğer uygulamaları incelemez, ayarları değiştirmez, hareketler yapmaz, düğmelere tıklamaz veya bu etkinlik verilerini paylaşmaz.</string>
@@ -31,7 +31,7 @@
     <string name="app_monitoring_intro_highlight">yalnızca seçilen uygulamaların çalışmasına izin vererek</string>
     <string name="app_monitoring_intro_action">Anladım</string>
     <string name="emergency_call_intro_title">Özellik Tanıtımı</string>
-    <string name="emergency_call_intro_desc">Güvenliği sağlamak için uygulama, telefonda 10 saat boyunca kullanıcı etkileşimi algılanmazsa otomatik olarak hızlı rehber listesini arayacaktır.</string>
+    <string name="emergency_call_intro_desc">Güvenliği sağlamak için uygulama, telefonda kullanıcı etkileşimi algılanmazsa otomatik olarak hızlı rehber listesini arayacaktır.</string>
     <string name="emergency_call_intro_highlight">otomatik olarak hızlı rehber listesini arayacaktır</string>
     <string name="emergency_call_intro_action">Anladım</string>
     <string name="file_cleanup_intro_title">Özellik Tanıtımı</string>
@@ -62,9 +62,10 @@
     <string name="sos_timeout_label">Hareketsizlik Zaman Aşımı</string>
     <string name="sos_timeout_value">%1$d saat</string>
     <string name="sos_timeout_seconds">%1$d saniye</string>
+    <string name="sos_timeout_desc">Bu süre zarfında telefonu kullanmazsanız otomatik olarak acil arama yapılacaktır.</string>
     <string name="sos_exclusion_periods_header">Hariç Tutma Dönemleri (Uyku/Dinlenme)</string>
     <string name="sos_add_exclusion_period">Hariç Tutma Dönemi Ekle</string>
-    <string name="sos_add_exclusion_period_desc">Uyku veya dinlenme zamanını hariç tutma</string>
+    <string name="sos_add_exclusion_period_desc">Bu süre (örneğin uyku süresi) hareketsizlik bekleme süresine dahil edilmeyecektir.</string>
     <string name="sos_exclusion_period_format">%1$02d:%2$02d - %3$02d:%4$02d</string>
     <string name="sos_delete_exclusion_period">Sil</string>
     <string name="sos_select_start_time">Başlangıç Zamanını Seç</string>

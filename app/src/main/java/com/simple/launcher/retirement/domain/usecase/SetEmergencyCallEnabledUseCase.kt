@@ -45,10 +45,9 @@ class SetEmergencyCallEnabledUseCase(
             return permissionRepository.requirePinPermissions()
         }
 
-        return permissionRepository.requireEmergencyCallIntro() &&
+        return permissionRepository.requireEmergencyContact() &&
                 permissionRepository.requireCallPermission() &&
                 permissionRepository.requireUserActivityAccessibilityPermission() &&
-                permissionRepository.requireEmergencyContact() &&
                 permissionRepository.requireDefaultLauncher()
     }
 

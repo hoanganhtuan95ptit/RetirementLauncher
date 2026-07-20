@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>\n    <string name="setting_emergency_call">Automatyczne połączenie alarmowe (SOS)</string>
-    <string name="emergency_call_desc">Jeśli telefon nie będzie używany przez 10 godzin, aplikacja automatycznie wykona połączenie alarmowe.</string>
+    <string name="emergency_call_desc">Jeśli telefon nie będzie używany, aplikacja automatycznie wykona połączenie alarmowe.</string>
     <string name="clean_cat_system_temp">Systemowe pliki tymczasowe (.tmp, .log…)</string>
     <string name="clean_cat_compressed">Nieznane pliki skompresowane</string>
     <string name="clean_cat_no_extension">Dokumenty (.pdf, .doc, .txt…)</string>
@@ -21,8 +21,8 @@
     <string name="usage_stats_permission_desc">Aby funkcja blokowania aplikacji działała, musisz przyznać „Dostęp do danych o użyciu”. Pomaga to aplikacji dowiedzieć się, kiedy otwierana jest nieautoryzowana aplikacja.</string>
     <string name="usage_stats_permission_highlight">„Dostęp do danych o użyciu”</string>
     <string name="accessibility_permission_title">Wykrywanie aktywności użytkownika</string>
-    <string name="accessibility_permission_desc">SOS korzysta z Ułatwień dostępu wyłącznie w celu wykrycia, kiedy użytkownik zaczyna dotykać ekranu. Nie czyta zawartości ekranu, nie rejestruje tekstu, nie zmienia ustawień, nie steruje telefonem ani nie udostępnia tych danych. Sygnatura czasowa aktywności pozostaje na tym urządzeniu i jest używana wyłącznie do podjęcia decyzji, czy SOS powinien zadzwonić do kontaktów alarmowych.</string>
-    <string name="accessibility_permission_highlight">nie czyta zawartości ekranu</string>
+    <string name="accessibility_permission_desc">SOS korzysta z Usługi ułatwień dostępu w celu rejestrowania Twojej ostatniej interakcji z telefonem, co umożliwia natychmiastowe wezwanie pomocy w przypadku wykrycia nietypowych sygnałów. Zobowiązujemy się do pełnej prywatności: aplikacja nie czyta zawartości ekranu, nie rejestruje tekstu ani nie ingeruje w ustawienia osobiste. Wszystkie dane dotyczące aktywności są bezpiecznie przechowywane na urządzeniu i wykorzystywane wyłącznie do celów ratownictwa medycznego.</string>
+    <string name="accessibility_permission_highlight">nie czyta zawartości ekranu, nie rejestruje tekstu ani nie ingeruje w ustawienia osobiste</string>
     <string name="user_activity_accessibility_service_label">Wykrywanie aktywności użytkownika SOS</string>
     <string name="user_activity_accessibility_service_summary">Wykrywa rzeczywistą aktywność użytkownika na potrzeby kontroli braku aktywności SOS.</string>
     <string name="user_activity_accessibility_service_desc">Używane wyłącznie przez Auto SOS do wykrywania, czy telefon jest nadal aktywnie używany. Usługa nasłuchuje wyłącznie zdarzenia systemowego wskazującego, że użytkownik zaczął dotykać ekranu, a następnie zapisuje czas ostatniej aktywności na tym urządzeniu. Nie czyta zawartości ekranu, nie gromadzi wpisywanego tekstu, nie sprawdza innych aplikacji, nie zmienia ustawień, nie wykonuje gestów, nie klika przycisków ani nie udostępnia tych danych o aktywności.</string>
@@ -31,7 +31,7 @@
     <string name="app_monitoring_intro_highlight">zezwalając na uruchamianie wyłącznie wybranych aplikacji</string>
     <string name="app_monitoring_intro_action">Rozumiem</string>
     <string name="emergency_call_intro_title">Wprowadzenie do funkcji</string>
-    <string name="emergency_call_intro_desc">Aby zapewnić bezpieczeństwo, aplikacja automatycznie zadzwoni do listy szybkich kontaktów, jeśli przez 10 godzin nie zostanie wykryta żadna interakcja użytkownika z telefonem.</string>
+    <string name="emergency_call_intro_desc">Aby zapewnić bezpieczeństwo, aplikacja automatycznie zadzwoni do listy szybkich kontaktów, jeśli nie zostanie wykryta żadna interakcja użytkownika z telefonem.</string>
     <string name="emergency_call_intro_highlight">automatycznie zadzwoni do listy szybkich kontaktów</string>
     <string name="emergency_call_intro_action">Rozumiem</string>
     <string name="file_cleanup_intro_title">Wprowadzenie do funkcji</string>
@@ -62,9 +62,10 @@
     <string name="sos_timeout_label">Limit czasu braku aktywności</string>
     <string name="sos_timeout_value">%1$d godz.</string>
     <string name="sos_timeout_seconds">%1$d s</string>
+    <string name="sos_timeout_desc">Jeśli nie będziesz używać telefonu przez ten czas, automatycznie zostanie wykonane połączenie alarmowe.</string>
     <string name="sos_exclusion_periods_header">Okresy wykluczenia (Sen/Odpoczynek)</string>
     <string name="sos_add_exclusion_period">Dodaj okres wykluczenia</string>
-    <string name="sos_add_exclusion_period_desc">Wyłączenie czasu snu lub odpoczynku</string>
+    <string name="sos_add_exclusion_period_desc">Ten czas (np. czas snu) nie będzie wliczany do czasu oczekiwania na brak aktywności.</string>
     <string name="sos_exclusion_period_format">%1$02d:%2$02d - %3$02d:%4$02d</string>
     <string name="sos_delete_exclusion_period">Usuń</string>
     <string name="sos_select_start_time">Wybierz godzinę rozpoczęcia</string>

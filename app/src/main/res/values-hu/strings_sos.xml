@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>\n    <string name="setting_emergency_call">Automatikus segélyhívás (SOS)</string>
-    <string name="emergency_call_desc">Ha a telefont 10 órán át nem használják, az alkalmazás automatikusan segélyhívást indít.</string>
+    <string name="emergency_call_desc">Ha a telefont nem használják, az alkalmazás automatikusan segélyhívást indít.</string>
     <string name="clean_cat_system_temp">Rendszer ideiglenes fájlok (.tmp, .log…)</string>
     <string name="clean_cat_compressed">Ismeretlen tömörített fájlok</string>
     <string name="clean_cat_no_extension">Dokumentumok (.pdf, .doc, .txt…)</string>
@@ -21,8 +21,8 @@
     <string name="usage_stats_permission_desc">Az alkalmazásblokkoló funkció működéséhez engedélyeznie kell a „Használati adatokhoz való hozzáférést”. Ez segít az alkalmazásnak felismerni, ha egy nem engedélyezett alkalmazást nyitnak meg.</string>
     <string name="usage_stats_permission_highlight">„Használati adatokhoz való hozzáférés”</string>
     <string name="accessibility_permission_title">Felhasználói tevékenység észlelése</string>
-    <string name="accessibility_permission_desc">Az SOS a Kisegítő lehetőségeket csak annak észlelésére használja, hogy a felhasználó mikor kezdi megérinteni a képernyőt. Nem olvassa a képernyő tartalmát, nem rögzít szöveget, nem módosítja a beállításokat, nem vezérli a telefont, és nem osztja meg ezeket az adatokat. A tevékenység időbélyege ezen az eszközön marad, és csak annak eldöntésére szolgál, hogy az SOS-nek hívnia kell-e a segélyhívó kapcsolatokat.</string>
-    <string name="accessibility_permission_highlight">nem olvassa a képernyő tartalmát</string>
+    <string name="accessibility_permission_desc">Az SOS a Kisegítő lehetőségek szolgáltatást használja a telefonnal való utolsó interakció rögzítésére, lehetővé téve a gyors segélyhívásokat szokatlan jelek észlelése esetén. Elkötelezettek vagyunk a teljes körű adatvédelem mellett: az alkalmazás nem olvassa a képernyő tartalmát, nem rögzít szöveget, és nem avatkozik be a személyes beállításokba. Minden tevékenységi adatot biztonságosan tárolunk az eszközön, és kizárólag vészhelyzeti mentési célokra használjuk fel.</string>
+    <string name="accessibility_permission_highlight">nem olvassa a képernyő tartalmát, nem rögzít szöveget, és nem avatkozik be a személyes beállításokba</string>
     <string name="user_activity_accessibility_service_label">SOS Felhasználói tevékenység észlelése</string>
     <string name="user_activity_accessibility_service_summary">Valódi felhasználói tevékenységet észlel az SOS inaktivitási ellenőrzéseihez.</string>
     <string name="user_activity_accessibility_service_desc">Csak az Auto SOS használja annak észlelésére, hogy a telefont még mindig aktívan használják-e. A szolgáltatás csak azt a rendszereseményt figyeli, amely azt jelzi, hogy a felhasználó elkezdte megérinteni a képernyőt, majd elmenti a legutóbbi tevékenység idejét ezen az eszközön. Nem olvassa a képernyő tartalmát, nem gyűjt beírt szöveget, nem vizsgál más alkalmazásokat, nem módosítja a beállításokat, nem hajt végre gesztusokat, nem kattint gombokra, és nem osztja meg ezeket a tevékenységi adatokat.</string>
@@ -31,7 +31,7 @@
     <string name="app_monitoring_intro_highlight">csak a kiválasztott alkalmazások futtatását teszi lehetővé</string>
     <string name="app_monitoring_intro_action">Értem</string>
     <string name="emergency_call_intro_title">Funkció bemutatása</string>
-    <string name="emergency_call_intro_desc">A biztonság garantálása érdekében az alkalmazás automatikusan hívja a gyors kapcsolatok listáját, ha 10 órán keresztül nem észlelhető felhasználói interakció a telefonon.</string>
+    <string name="emergency_call_intro_desc">A biztonság garantálása érdekében az alkalmazás automatikusan hívja a gyors kapcsolatok listáját, ha nem észlelhető felhasználói interakció a telefonon.</string>
     <string name="emergency_call_intro_highlight">automatikusan hívja a gyors kapcsolatok listáját</string>
     <string name="emergency_call_intro_action">Értem</string>
     <string name="file_cleanup_intro_title">Funkció bemutatása</string>
@@ -62,9 +62,10 @@
     <string name="sos_timeout_label">Inaktivitási időtúllépés</string>
     <string name="sos_timeout_value">%1$d óra</string>
     <string name="sos_timeout_seconds">%1$d másodperc</string>
+    <string name="sos_timeout_desc">Ha ebben az időszakban nem használja a telefont, automatikusan segélyhívást indítunk.</string>
     <string name="sos_exclusion_periods_header">Kizárási időszakok (Alvás/Pihenés)</string>
     <string name="sos_add_exclusion_period">Kizárási időszak hozzáadása</string>
-    <string name="sos_add_exclusion_period_desc">Alvási vagy pihenőidő kizárása</string>
+    <string name="sos_add_exclusion_period_desc">Ez az idő (pl. alvásidő) nem számít bele az inaktivitási várakozási időbe.</string>
     <string name="sos_exclusion_period_format">%1$02d:%2$02d - %3$02d:%4$02d</string>
     <string name="sos_delete_exclusion_period">Törlés</string>
     <string name="sos_select_start_time">Kezdési idő kiválasztása</string>

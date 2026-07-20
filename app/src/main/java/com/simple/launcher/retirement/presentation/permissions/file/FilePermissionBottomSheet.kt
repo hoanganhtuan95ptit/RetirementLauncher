@@ -61,8 +61,21 @@ class FilePermissionBottomSheet : BaseBottomSheetDialogFragment<BottomSheetFileP
 
         val binding = binding ?: return
 
+        binding.cbUnderstand.visibility = View.VISIBLE
+        binding.btnDecline.root.visibility = View.VISIBLE
+
+        binding.cbUnderstand.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.isAgreed.value = isChecked
+        }
+
         binding.btnGrant.root.setOnSafeClickListener {
-            requestFilePermission()
+            if (viewModel.isAgreed.value) {
+                requestFilePermission()
+            }
+        }
+
+        binding.btnDecline.root.setOnSafeClickListener {
+            dismiss()
         }
     }
 
@@ -79,10 +92,22 @@ class FilePermissionBottomSheet : BaseBottomSheetDialogFragment<BottomSheetFileP
             binding.tvMessage.setText(it)
         }
 
+        viewModel.checkboxText.observe(this) { text ->
+            val binding = binding ?: return@observe
+            binding.cbUnderstand.setText(text)
+        }
+
         viewModel.action.observe(this) { state ->
             val binding = binding ?: return@observe
             binding.btnGrant.tvAction.setText(state.text)
             binding.btnGrant.tvAction.parent.asObjectOrNull<View>()?.setBackground(state.background)
+            binding.btnGrant.root.isEnabled = state.isEnabled
+        }
+
+        viewModel.declineAction.observe(this) { state ->
+            val binding = binding ?: return@observe
+            binding.btnDecline.tvAction.setText(state.text)
+            binding.btnDecline.tvAction.parent.asObjectOrNull<View>()?.setBackground(state.background)
         }
     }
 

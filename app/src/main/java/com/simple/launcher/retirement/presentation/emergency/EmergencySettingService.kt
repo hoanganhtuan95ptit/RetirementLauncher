@@ -14,6 +14,7 @@ import com.simple.launcher.retirement.presentation.settings.adapters.SettingItem
 import com.simple.launcher.retirement.presentation.settings.services.protect.ProtectSettingService
 import com.simple.launcher.retirement.utils.AppEvent
 import com.simple.launcher.retirement.utils.AppEventBus
+import com.simple.launcher.retirement.utils.permission.PermissionManager
 import kotlinx.coroutines.flow.filterIsInstance
 
 @AutoRegister(apis = [ActivityCreatedService::class])
@@ -36,13 +37,14 @@ class EmergencyService : ActivityCreatedService {
 @AutoRegister(apis = [SettingsFragment::class])
 class EmergencySettingService : ProtectSettingService() {
 
-    private lateinit var emergencySettingViewModel: EmergencySettingViewModel
+    private lateinit var viewModel: EmergencySettingViewModel
 
     override fun setup(settingsFragment: SettingsFragment) {
 
         super.setup(settingsFragment)
 
-        emergencySettingViewModel = settingsFragment.activityViewModels<EmergencySettingViewModel>().value
+        viewModel = settingsFragment.activityViewModels<EmergencySettingViewModel>().value
+        viewModel.refreshStatus()
 
         observeEmergencySettingItem(settingsFragment)
         observeEmergencySettingClick(settingsFragment)
@@ -50,7 +52,7 @@ class EmergencySettingService : ProtectSettingService() {
 
     private fun observeEmergencySettingItem(settingsFragment: SettingsFragment) {
 
-        emergencySettingViewModel.viewItemList.launchCollect(settingsFragment.viewLifecycleOwner) {
+        viewModel.viewItemList.launchCollect(settingsFragment.viewLifecycleOwner) {
 
             protectSettingViewModel.updateItem(it)
         }
@@ -58,15 +60,13 @@ class EmergencySettingService : ProtectSettingService() {
 
     private fun observeEmergencySettingClick(settingsFragment: SettingsFragment) {
 
-        AppEventBus.events
-            .filterIsInstance<AppEvent.SettingClicked>()
-            .launchCollect(settingsFragment.viewLifecycleOwner) { event ->
+        AppEventBus.events.filterIsInstance<AppEvent.SettingClicked>().launchCollect(settingsFragment.viewLifecycleOwner) { event ->
 
-                openSosSettingsIfEmergencyToggle(event.item)
-            }
+            openSosSettingsIfEmergencyToggle(event.item)
+        }
     }
 
-    private fun openSosSettingsIfEmergencyToggle(item: SettingItem) {
+    private suspend fun openSosSettingsIfEmergencyToggle(item: SettingItem) {
 
         if (item.id != SettingItem.ID_EMERGENCY_CALL_TOGGLE) {
 
@@ -74,6 +74,9 @@ class EmergencySettingService : ProtectSettingService() {
         }
 
         // Item emergency trên màn Protect chỉ là lối vào màn cấu hình SOS chi tiết.
-        sendDeeplinkWithBackStack(DeepLinks.SOS_SETTINGS)
+        if (PermissionManager.requireEmergencyCallIntro()) {
+
+            sendDeeplinkWithBackStack(DeepLinks.SOS_SETTINGS)
+        }
     }
 }

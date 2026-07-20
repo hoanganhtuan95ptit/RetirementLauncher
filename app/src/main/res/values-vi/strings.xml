@@ -48,6 +48,8 @@
     <string name="default_launcher_desc">Để sử dụng Retirement Launcher làm màn hình chính, bạn cần thiết lập nó làm ứng dụng mặc định trong cài đặt hệ thống.</string>
     <string name="default_launcher_highlight">Retirement Launcher</string>
     <string name="permission_grant">Cấp quyền ngay</string>
+    <string name="permission_decline">Từ chối</string>
+    <string name="permission_checkbox_understand">Tôi đã đọc và hiểu rõ sự cần thiết của quyền này đối với tính năng</string>
     <string name="understood">Đã hiểu</string>
     <string name="pin_verify_title">Xác nhận mã PIN</string>
     <string name="pin_verify_desc">Vui lòng nhập mã PIN để thay đổi thiết lập này.</string>

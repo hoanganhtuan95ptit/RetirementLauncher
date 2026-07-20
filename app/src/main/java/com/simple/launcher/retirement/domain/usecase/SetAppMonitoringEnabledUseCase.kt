@@ -1,5 +1,6 @@
 package com.simple.launcher.retirement.domain.usecase
 
+import android.util.Log
 import com.simple.launcher.retirement.domain.repository.PermissionRepository
 import com.simple.launcher.retirement.domain.repository.PreferenceRepository
 import kotlinx.coroutines.CancellationException
@@ -20,6 +21,7 @@ class SetAppMonitoringEnabledUseCase(
                 return false
             }
 
+            Log.d("tuanha", "invoke: setAppBlockEnabled isEnabled:$isEnabled")
             preferenceRepository.setAppBlockEnabled(isEnabled)
             shouldClearPending = true
             return true
@@ -28,6 +30,7 @@ class SetAppMonitoringEnabledUseCase(
             throw cancellationException
         } finally {
 
+            Log.d("tuanha", "invoke: ")
             if (shouldClearPending) {
 
                 preferenceRepository.setPendingAppBlockEnabled(null)
@@ -43,8 +46,9 @@ class SetAppMonitoringEnabledUseCase(
         }
 
         return permissionRepository.requireAppMonitoringIntro() &&
-                permissionRepository.requireUsageStatsPermission() &&
                 permissionRepository.requireAppList() &&
+                permissionRepository.requireOverlayPermission() &&
+                permissionRepository.requireUsageStatsPermission() &&
                 permissionRepository.requireDefaultLauncher()
     }
 

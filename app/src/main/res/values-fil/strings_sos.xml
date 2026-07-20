@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>\n    <string name="setting_emergency_call">Awtomatikong Tawag sa Emergency (SOS)</string>
-    <string name="emergency_call_desc">Kung hindi ginamit ang telepono sa loob ng 10 oras, awtomatikong tatawag ang app sa emergency.</string>
+    <string name="emergency_call_desc">Kung hindi ginamit ang telepono, awtomatikong tatawag ang app sa emergency.</string>
     <string name="clean_cat_system_temp">Mga pansamantalang file ng system (.tmp, .log…)</string>
     <string name="clean_cat_compressed">Hindi kilalang mga compressed file</string>
     <string name="clean_cat_no_extension">Mga dokumento (.pdf, .doc, .txt…)</string>
@@ -21,8 +21,8 @@
     <string name="usage_stats_permission_desc">Para gumana ang feature na pag-block ng app, kailangan mong ibigay ang \'Access sa Data ng Paggamit\'. Nakakatulong ito sa app na malaman kung kailan binubuksan ang isang hindi awtorisadong app.</string>
     <string name="usage_stats_permission_highlight">\'Access sa Data ng Paggamit\'</string>
     <string name="accessibility_permission_title">Pag-detect ng Aktibidad ng User</string>
-    <string name="accessibility_permission_desc">Ginagamit ng SOS ang Accessibility para lang ma-detect kung kailan nagsisimulang humawak ang user sa screen. Hindi nito binabasa ang nilalaman ng screen, nagre-record ng text, nagbabago ng mga setting, kumokontrol sa telepono, o nagbabahagi ng data na ito. Ang timestamp ng aktibidad ay nananatili sa device na ito at ginagamit lamang upang magpasya kung dapat tumawag ang SOS sa mga emergency contact.</string>
-    <string name="accessibility_permission_highlight">hindi nito binabasa ang nilalaman ng screen</string>
+    <string name="accessibility_permission_desc">Ginagamit ng SOS ang Accessibility Service para i-record ang huli mong pakikipag-ugnayan sa telepono, na nagbibigay-daan sa mabilis na mga rescue call kung may matukoy na hindi pangkaraniwang senyales. Nakatuon kami sa ganap na privacy: hindi binabasa ng app ang nilalaman ng screen, hindi nagre-record ng text, o nakikialam sa mga personal na setting. Ang lahat ng data ng aktibidad ay secure na nakatago sa iyong device at ginagamit lamang para sa mga layunin ng emergency rescue.</string>
+    <string name="accessibility_permission_highlight">hindi binabasa ang nilalaman ng screen, hindi nagre-record ng text, o nakikialam sa mga personal na setting</string>
     <string name="user_activity_accessibility_service_label">SOS Pag-detect ng Aktibidad ng User</string>
     <string name="user_activity_accessibility_service_summary">Nagde-detect ng totoong aktibidad ng user para sa mga SOS inactivity check.</string>
     <string name="user_activity_accessibility_service_desc">Ginagamit lamang ng Auto SOS upang ma-detect kung aktibo pa ring ginagamit ang telepono. Nakikinig lamang ang serbisyo para sa kaganapan ng system na nagpapahiwatig na nagsimulang humawak ang user sa screen, pagkatapos ay i-save ang pinakabagong oras ng aktibidad sa device na ito. Hindi nito binabasa ang nilalaman ng screen, kinokolekta ang tina-type na teksto, sinusuri ang iba pang mga app, binabago ang mga setting, nagsasagawa ng mga galaw, nag-click ng mga button, o nagbabahagi ng data ng aktibidad na ito.</string>
@@ -31,7 +31,7 @@
     <string name="app_monitoring_intro_highlight">pagpapahintulot sa mga piling app na tumakbo</string>
     <string name="app_monitoring_intro_action">Naintindihan ko</string>
     <string name="emergency_call_intro_title">Panimula sa Feature</string>
-    <string name="emergency_call_intro_desc">Upang matiyak ang kaligtasan, awtomatikong tatawag ang app sa mabilis na listahan ng contact kung walang interaction ng user na nakita sa telepono sa loob ng 10 oras.</string>
+    <string name="emergency_call_intro_desc">Upang matiyak ang kaligtasan, awtomatikong tatawag ang app sa mabilis na listahan ng contact kung walang interaction ng user na nakita sa telepono.</string>
     <string name="emergency_call_intro_highlight">awtomatikong tatawag sa mabilis na listahan ng contact</string>
     <string name="emergency_call_intro_action">Naintindihan ko</string>
     <string name="file_cleanup_intro_title">Panimula sa Feature</string>
@@ -62,9 +62,10 @@
     <string name="sos_timeout_label">Inactivity Timeout</string>
     <string name="sos_timeout_value">%1$d oras</string>
     <string name="sos_timeout_seconds">%1$d segundo</string>
+    <string name="sos_timeout_desc">Kung hindi mo gagamitin ang telepono sa panahong ito, awtomatikong tatawag sa emergency.</string>
     <string name="sos_exclusion_periods_header">Mga Panahon ng Exclusion (Tulog/Pahinga)</string>
     <string name="sos_add_exclusion_period">Magdagdag ng Panahon ng Exclusion</string>
-    <string name="sos_add_exclusion_period_desc">Hindi kasama ang oras ng tulog o pahinga</string>
+    <string name="sos_add_exclusion_period_desc">Ang oras na ito (hal., oras ng pagtulog) ay hindi bibilangin sa oras ng paghihintay sa kawalan ng aktibidad.</string>
     <string name="sos_exclusion_period_format">%1$02d:%2$02d - %3$02d:%4$02d</string>
     <string name="sos_delete_exclusion_period">Burahin</string>
     <string name="sos_select_start_time">Pumili ng Oras ng Pagsisimula</string>

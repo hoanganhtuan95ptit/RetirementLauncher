@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="setting_emergency_call">اتصال طوارئ تلقائي (SOS)</string>
-    <string name="emergency_call_desc">إذا لم يتم استخدام الهاتف لمدة 10 ساعات، سيقوم التطبيق بإجراء اتصال طوارئ تلقائياً.</string>
+    <string name="emergency_call_desc">إذا لم يتم استخدام الهاتف، سيقوم التطبيق بإجراء اتصال طوارئ تلقائياً.</string>
     <string name="clean_cat_system_temp">ملفات النظام المؤقتة (.tmp, .log…)</string>
     <string name="clean_cat_compressed">ملفات مضغوطة مجهولة</string>
     <string name="clean_cat_no_extension">المستندات (.pdf, .doc, .txt…)</string>
@@ -22,8 +22,8 @@
     <string name="usage_stats_permission_desc">لكي تعمل ميزة حظر التطبيقات، يجب منح "الوصول إلى بيانات الاستخدام". يساعد هذا التطبيق في معرفة وقت فتح تطبيق غير مصرح به.</string>
     <string name="usage_stats_permission_highlight">"الوصول إلى بيانات الاستخدام"</string>
     <string name="accessibility_permission_title">الكشف عن نشاط المستخدم</string>
-    <string name="accessibility_permission_desc">يستخدم SOS إمكانية الوصول فقط لاكتشاف متى يبدأ المستخدم في لمس الشاشة. لا يقرأ محتوى الشاشة، ولا يسجل النصوص، ولا يغير الإعدادات، ولا يتحكم في الهاتف، ولا يشارك هذه البيانات. يبقى الطابع الزمني للنشاط على هذا الجهاز ويستخدم فقط لتقرير ما إذا كان يجب على SOS الاتصال بجهات اتصال الطوارئ.</string>
-    <string name="accessibility_permission_highlight">لا يقرأ محتوى الشاشة</string>
+    <string name="accessibility_permission_desc">يستخدم SOS خدمة إمكانية الوصول لتسجيل آخر تفاعل لك مع الهاتف، مما يتيح إجراء مكالمات إنقاذ فورية إذا تم اكتشاف علامات غير طبيعية. نحن ملتزمون بالخصوصية المطلقة: لا يقرأ التطبيق محتوى الشاشة، ولا يسجل النصوص، ولا يتدخل في الإعدادات الشخصية. يتم تخزين جميع بيانات النشاط بشكل آمن على جهازك وتستخدم فقط لأغراض الإنقاذ في حالات الطوارئ.</string>
+    <string name="accessibility_permission_highlight">لا يقرأ محتوى الشاشة، ولا يسجل النصوص، ولا يتدخل في الإعدادات الشخصية</string>
     <string name="user_activity_accessibility_service_label">الكشف عن نشاط المستخدم لـ SOS</string>
     <string name="user_activity_accessibility_service_summary">يكتشف نشاط المستخدم الحقيقي لعمليات التحقق من عدم النشاط لـ SOS.</string>
     <string name="user_activity_accessibility_service_desc">يستخدم فقط بواسطة Auto SOS لاكتشاف ما إذا كان الهاتف لا يزال قيد الاستخدام بنشاط. تستمع الخدمة فقط لحدث النظام الذي يشير إلى أن المستخدم بدأ في لمس الشاشة، ثم تحفظ آخر وقت للنشاط على هذا الجهاز. لا تقرأ محتوى الشاشة، ولا تجمع النصوص المكتوبة، ولا تفحص التطبيقات الأخرى، ولا تغير الإعدادات، ولا تؤدي إيماءات، ولا تنقر على الأزرار، ولا تشارك بيانات النشاط هذه.</string>
@@ -32,7 +32,7 @@
     <string name="app_monitoring_intro_highlight">السماح فقط للتطبيقات المختارة</string>
     <string name="app_monitoring_intro_action">أنا أفهم</string>
     <string name="emergency_call_intro_title">مقدمة عن الميزة</string>
-    <string name="emergency_call_intro_desc">لضمان السلامة، سيقوم التطبيق بالاتصال تلقائياً بقائمة جهات الاتصال السريعة إذا لم يتم اكتشاف أي تفاعل من المستخدم على الهاتف لمدة 10 ساعات.</string>
+    <string name="emergency_call_intro_desc">لضمان السلامة، سيقوم التطبيق بالاتصال تلقائياً بقائمة جهات الاتصال السريعة إذا لم يتم اكتشاف أي تفاعل من المستخدم على الهاتف.</string>
     <string name="emergency_call_intro_highlight">الاتصال تلقائياً بقائمة جهات الاتصال السريعة</string>
     <string name="emergency_call_intro_action">أنا أفهم</string>
     <string name="file_cleanup_intro_title">مقدمة عن الميزة</string>
@@ -63,9 +63,10 @@
     <string name="sos_timeout_label">مهلة عدم النشاط</string>
     <string name="sos_timeout_value">%1$d ساعات</string>
     <string name="sos_timeout_seconds">%1$d ثانية</string>
+    <string name="sos_timeout_desc">إذا لم تستخدم الهاتف لهذه الفترة، سيتم إجراء مكالمة طوارئ تلقائياً.</string>
     <string name="sos_exclusion_periods_header">فترات الاستبعاد (النوم/الراحة)</string>
     <string name="sos_add_exclusion_period">إضافة فترة استبعاد</string>
-    <string name="sos_add_exclusion_period_desc">استبعاد وقت النوم أو الراحة</string>
+    <string name="sos_add_exclusion_period_desc">لن يتم احتساب هذا الوقت (مثلاً وقت النوم) ضمن وقت انتظار عدم النشاط.</string>
     <string name="sos_exclusion_period_format">%1$02d:%2$02d - %3$02d:%4$02d</string>
     <string name="sos_delete_exclusion_period">حذف</string>
     <string name="sos_select_start_time">اختر وقت البدء</string>

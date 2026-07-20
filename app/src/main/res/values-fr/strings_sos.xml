@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>\n    <string name="setting_emergency_call">Appel d\'urgence automatique (SOS)</string>
-    <string name="emergency_call_desc">Si le téléphone n\'est pas utilisé pendant 10 heures, l\'application passera automatiquement un appel d\'urgence.</string>
+    <string name="emergency_call_desc">Si le téléphone n\'est pas utilisé, l\'application passera automatiquement un appel d\'urgence.</string>
     <string name="call_permission_highlight">passer des appels</string>
     <string name="call_block_highlight">gérer les appels et les contacts</string>
     <string name="setting_header_debug">🐛 Débogage</string>
@@ -12,8 +12,8 @@
     <string name="usage_stats_permission_desc">Pour que la fonction de blocage d\'applications fonctionne, vous devez accorder l\'accès aux données d\'utilisation. Cela aide l\'application à savoir quand une application non autorisée est ouverte.</string>
     <string name="usage_stats_permission_highlight">l\'accès aux données d\'utilisation</string>
     <string name="accessibility_permission_title">Détection de l\'activité de l\'utilisateur</string>
-    <string name="accessibility_permission_desc">SOS utilise l\'Accessibilité uniquement pour détecter quand l\'utilisateur commence à toucher l\'écran. Il ne lit pas le contenu de l\'écran, n\'enregistre pas de texte, ne modifie pas les paramètres, ne contrôle pas le téléphone et ne partage pas ces données. L\'horodatage de l\'activité reste sur cet appareil et n\'est utilisé que pour décider si SOS doit appeler les contacts d\'urgence.</string>
-    <string name="accessibility_permission_highlight">ne lit pas le contenu de l\'écran</string>
+    <string name="accessibility_permission_desc">SOS utilise le Service d\'accessibilité pour enregistrer votre dernière interaction avec le téléphone, permettant ainsi des appels de secours rapides si des signes anormaux sont détectés. Nous nous engageons à une confidentialité absolue : l\'application ne lit pas le contenu de l\'écran, n\'enregistre pas de texte et n\'intervient pas dans les paramètres personnels. Toutes les données d\'activité sont stockées en toute sécurité sur cet appareil et utilisées uniquement à des fins de secours d\'urgence.</string>
+    <string name="accessibility_permission_highlight">ne lit pas le contenu de l\'écran, n\'enregistre pas de texte et n\'intervient pas dans les paramètres personnels</string>
     <string name="user_activity_accessibility_service_label">Détection d\'activité utilisateur SOS</string>
     <string name="user_activity_accessibility_service_summary">Détecte l\'activité réelle de l\'utilisateur pour les vérifications d\'inactivité SOS.</string>
     <string name="user_activity_accessibility_service_desc">Utilisé uniquement par l\'Auto SOS pour détecter si le téléphone est toujours activement utilisé. Le service écoute uniquement l\'événement système indiquant que l\'utilisateur a commencé à toucher l\'écran, puis enregistre la dernière heure d\'activité sur cet appareil. Il ne lit pas le contenu de l\'écran, ne collecte pas le texte saisi, n\'inspecte pas les autres applications, ne modifie pas les paramètres, n\'effectue pas de gestes, ne clique pas sur les boutons et ne partage pas ces données d\'activité.</string>
@@ -22,7 +22,7 @@
     <string name="app_monitoring_intro_highlight">n\'autorisant que l\'exécution des applications sélectionnées</string>
     <string name="app_monitoring_intro_action">Je comprends</string>
     <string name="emergency_call_intro_title">Présentation de la fonctionnalité</string>
-    <string name="emergency_call_intro_desc">Pour assurer la sécurité, l\'application appellera automatiquement la liste de contacts rapides si aucune interaction de l\'utilisateur n\'est détectée sur le téléphone pendant 10 heures.</string>
+    <string name="emergency_call_intro_desc">Pour assurer la sécurité, l\'application appellera automatiquement la liste de contacts rapides si aucune interaction de l\'utilisateur n\'est détectée sur le téléphone.</string>
     <string name="emergency_call_intro_highlight">appellera automatiquement la liste de contacts rapides</string>
     <string name="emergency_call_intro_action">Je comprends</string>
     <string name="file_cleanup_intro_title">Présentation de la fonctionnalité</string>
@@ -53,9 +53,10 @@
     <string name="sos_timeout_label">Délai d\'inactivité</string>
     <string name="sos_timeout_value">%1$d heures</string>
     <string name="sos_timeout_seconds">%1$d secondes</string>
+    <string name="sos_timeout_desc">Si vous n\'utilisez pas le téléphone pendant cette période, un appel d\'urgence sera automatiquement passé.</string>
     <string name="sos_exclusion_periods_header">Périodes d\'exclusion (Sommeil/Repos)</string>
     <string name="sos_add_exclusion_period">Ajouter une période d\'exclusion</string>
-    <string name="sos_add_exclusion_period_desc">Exclusion du temps de sommeil ou de repos</string>
+    <string name="sos_add_exclusion_period_desc">Ce temps (ex: temps de sommeil) ne sera pas comptabilisé dans le temps d\'attente d\'inactivité.</string>
     <string name="sos_exclusion_period_format">%1$02d:%2$02d - %3$02d:%4$02d</string>
     <string name="emergency_call_save_success">Configuration d\'appel d\'urgence enregistrée</string>
     <string name="clean_cat_system_temp">Fichiers temporaires du système (.tmp, .log…)</string>

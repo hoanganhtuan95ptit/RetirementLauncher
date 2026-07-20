@@ -12,23 +12,23 @@ import com.simple.launcher.retirement.presentation.settings.services.settingItem
 import com.simple.launcher.retirement.utils.combineState
 import com.simple.launcher.retirement.utils.coroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 class EmergencySettingViewModel : BaseViewModel() {
 
-    private val preferenceRepository = PreferenceRepository.instance
+    val refresh = MutableStateFlow<Long>(0)
 
-    private val permissionRepository = PermissionRepository.instance
+    val emergencyCallEnabledFlow: SharedFlow<Boolean> = combineState(
+        refresh,
+        PreferenceRepository.instance.emergencyCallEnabledFlow(),
+        false
+    ) { _, isEnabled ->
 
-    private val setEmergencyCallEnabledUseCase = SetEmergencyCallEnabledUseCase.instance
-
-    val emergencyCallEnabledFlow = preferenceRepository.emergencyCallEnabledFlow()
-        .map { isEnabled ->
-
-            isEnabled && hasEmergencyCallPermissions()
-        }
+        value = isEnabled && hasEmergencyCallPermissions()
+    }
 
     val viewItemList: StateFlow<GroupViewItem?> = combineState(
         resources,
@@ -43,33 +43,37 @@ class EmergencySettingViewModel : BaseViewModel() {
 
         viewModelScope.launch(coroutineExceptionHandler + Dispatchers.Default) {
 
-            val pendingConfig = preferenceRepository.getPendingEmergencyConfig() ?: return@launch
-            setEmergencyCallEnabledUseCase(pendingConfig)
+            val pendingConfig = PreferenceRepository.instance.getPendingEmergencyConfig() ?: return@launch
+            SetEmergencyCallEnabledUseCase.instance(pendingConfig)
         }
+    }
+
+    fun refreshStatus() {
+        refresh.value = System.currentTimeMillis()
     }
 
     private fun buildEmergencySettingGroup(resources: Map<String, Any>, isEnabled: Boolean): GroupViewItem {
 
+        val settingViewItem = settingItem(
+            id = SettingItem.ID_EMERGENCY_CALL_TOGGLE,
+            icon = R.drawable.ic_sos_black_24dp,
+            title = R.string.setting_emergency_call,
+            isSwitch = true,
+            isChecked = isEnabled,
+            resources = resources
+        )
+
         // Nhóm này được bơm vào tab Protect của Settings, cùng pattern với các setting service khác.
         return GroupViewItem(
             order = 1.2,
-            list = listOf(
-                settingItem(
-                    id = SettingItem.ID_EMERGENCY_CALL_TOGGLE,
-                    icon = R.drawable.ic_sos_black_24dp,
-                    title = R.string.setting_emergency_call,
-                    isSwitch = true,
-                    isChecked = isEnabled,
-                    resources = resources
-                )
-            )
+            list = listOf(settingViewItem)
         )
     }
 
     private fun hasEmergencyCallPermissions(): Boolean {
 
-        return permissionRepository.hasCallPermission() &&
-                permissionRepository.hasUserActivityAccessibilityPermission() &&
-                permissionRepository.isDefaultLauncher()
+        return PermissionRepository.instance.hasCallPermission() &&
+                PermissionRepository.instance.hasUserActivityAccessibilityPermission() &&
+                PermissionRepository.instance.isDefaultLauncher()
     }
 }
