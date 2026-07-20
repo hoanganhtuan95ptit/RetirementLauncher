@@ -69,4 +69,8 @@
     <string name="sos_delete_exclusion_period">Verwijderen</string>
     <string name="sos_select_start_time">Selecteer starttijd</string>
     <string name="sos_select_end_time">Selecteer eindtijd</string>
+    <string name="emergency_call_enable">Functie inschakelen</string>
+    <string name="emergency_call_phone_number">Noodtelefoonnummer</string>
+    <string name="emergency_call_phone_number_hint">Voer telefoonnummer in</string>
+    <string name="emergency_call_save_success">Noodoproepconfiguratie opgeslagen</string>
 </resources>

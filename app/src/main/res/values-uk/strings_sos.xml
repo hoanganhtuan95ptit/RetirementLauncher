@@ -69,4 +69,8 @@
     <string name="sos_delete_exclusion_period">Видалити</string>
     <string name="sos_select_start_time">Виберіть час початку</string>
     <string name="sos_select_end_time">Виберіть час закінчення</string>
+    <string name="emergency_call_enable">Увімкнути функцію</string>
+    <string name="emergency_call_phone_number">Номер телефону для екстреного зв’язку</string>
+    <string name="emergency_call_phone_number_hint">Введіть номер телефону</string>
+    <string name="emergency_call_save_success">Налаштування екстреного виклику збережено</string>
 </resources>

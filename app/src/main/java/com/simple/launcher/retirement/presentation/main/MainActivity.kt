@@ -15,11 +15,6 @@ import com.simple.launcher.retirement.presentation.base.BaseActivity
 import com.simple.launcher.retirement.presentation.home.HomeFragment
 import com.simple.launcher.retirement.presentation.services.BackgroundService
 import com.simple.launcher.retirement.utils.permission.PermissionManager
-import com.simple.launcher.retirement.utils.string.StringResStore
-import com.simple.launcher.retirement.utils.theme.ThemeColorStore
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 var a = true
 
@@ -32,22 +27,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         Log.d(TAG, "setupViews | a=$a | savedInstanceState=${savedInstanceState != null} | action=${intent.action} | categories=${intent.categories}")
         a = false
 
-        preloadResourceStores()
-
         navigateInitialScreen()
 
         registerBackPressedHandler()
-    }
-
-    private fun preloadResourceStores() {
-
-        // Tải store trên IO thread để launcher vào màn hình chính sớm hơn.
-        lifecycleScope.launch {
-            withContext(Dispatchers.IO) {
-                StringResStore.load(this@MainActivity)
-                ThemeColorStore.load(this@MainActivity)
-            }
-        }
     }
 
     private fun navigateInitialScreen() {

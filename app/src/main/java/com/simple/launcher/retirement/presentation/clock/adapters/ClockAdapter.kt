@@ -67,7 +67,7 @@ data class ClockHomeItem(
                             TimeNode(
                                 pattern = if (is24h) "HH:mm" else "hh:mm",
                                 showAmPm = !is24h && isAmPm,
-                                textSizePx = 48.sp(),
+                                textSizePx = 60.sp(),
                                 color = Color.BLACK,
                                 isBold = true
                             )

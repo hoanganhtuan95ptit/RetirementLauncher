@@ -69,4 +69,8 @@
     <string name="sos_delete_exclusion_period">삭제</string>
     <string name="sos_select_start_time">시작 시간 선택</string>
     <string name="sos_select_end_time">종료 시간 선택</string>
+    <string name="emergency_call_enable">기능 켜기</string>
+    <string name="emergency_call_phone_number">긴급 전화번호</string>
+    <string name="emergency_call_phone_number_hint">전화번호 입력</string>
+    <string name="emergency_call_save_success">긴급 통화 설정이 저장되었습니다</string>
 </resources>

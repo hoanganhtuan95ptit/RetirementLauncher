@@ -88,4 +88,10 @@
     <string name="call_permission_desc">Wymagane do wykonywania połączeń z launchera.</string>
     <string name="call_block_title">Uprawnienie do blokowania połączeń</string>
     <string name="call_block_desc">Wymagane do blokowania niechcianych połączeń.</string>
+
+    <!-- Additional localized strings -->
+    <string name="app_list_required_title">Wybierz dozwolone aplikacje</string>
+    <string name="app_list_required_desc">Wybierz aplikacje, które użytkownik może otworzyć przed włączeniem Monitorowania aplikacji.</string>
+    <string name="app_list_required_highlight">Wybierz aplikacje</string>
+    <string name="app_list_required_action">Wybierz aplikacje</string>
 </resources>

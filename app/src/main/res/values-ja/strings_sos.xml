@@ -69,4 +69,8 @@
     <string name="sos_delete_exclusion_period">削除</string>
     <string name="sos_select_start_time">開始時間を選択</string>
     <string name="sos_select_end_time">終了時間を選択</string>
+    <string name="emergency_call_enable">機能を有効にする</string>
+    <string name="emergency_call_phone_number">緊急電話番号</string>
+    <string name="emergency_call_phone_number_hint">電話番号を入力</string>
+    <string name="emergency_call_save_success">緊急通話設定を保存しました</string>
 </resources>

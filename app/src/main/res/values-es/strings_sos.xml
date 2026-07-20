@@ -58,4 +58,8 @@
     <string name="sos_delete_exclusion_period">Eliminar</string>
     <string name="sos_select_start_time">Seleccionar Hora de Inicio</string>
     <string name="sos_select_end_time">Seleccionar Hora de Fin</string>
+    <string name="emergency_call_enable">Activar función</string>
+    <string name="emergency_call_phone_number">Número de teléfono de emergencia</string>
+    <string name="emergency_call_phone_number_hint">Introduce el número de teléfono</string>
+    <string name="emergency_call_save_success">Configuración de llamada de emergencia guardada</string>
 </resources>

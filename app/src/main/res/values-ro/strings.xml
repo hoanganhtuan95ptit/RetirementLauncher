@@ -88,4 +88,10 @@
     <string name="call_permission_desc">Necesară pentru a efectua apeluri din launcher.</string>
     <string name="call_block_title">Permisiune Blocare Apeluri</string>
     <string name="call_block_desc">Necesară pentru a bloca apelurile nedorite.</string>
+
+    <!-- Additional localized strings -->
+    <string name="app_list_required_title">Selectați aplicațiile permise</string>
+    <string name="app_list_required_desc">Alegeți aplicațiile pe care utilizatorul le poate deschide înainte de activarea Monitorizării aplicațiilor.</string>
+    <string name="app_list_required_highlight">Alegeți aplicațiile</string>
+    <string name="app_list_required_action">Selectați aplicații</string>
 </resources>

@@ -88,4 +88,10 @@
     <string name="call_permission_desc">ランチャーから電話をかけるために必要です。</string>
     <string name="call_block_title">着信拒否の許可</string>
     <string name="call_block_desc">迷惑電話をブロックするために必要です。</string>
+
+    <!-- Additional localized strings -->
+    <string name="app_list_required_title">許可するアプリを選択</string>
+    <string name="app_list_required_desc">アプリ監視を有効にする前に、ユーザーが開けるアプリを選択してください。</string>
+    <string name="app_list_required_highlight">アプリを選択</string>
+    <string name="app_list_required_action">アプリを選択</string>
 </resources>

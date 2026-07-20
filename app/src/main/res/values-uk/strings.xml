@@ -88,4 +88,10 @@
     <string name="call_permission_desc">Потрібен для здійснення дзвінків із лаунчера.</string>
     <string name="call_block_title">Дозвіл на блокування викликів</string>
     <string name="call_block_desc">Потрібен для блокування небажаних дзвінків.</string>
+
+    <!-- Additional localized strings -->
+    <string name="app_list_required_title">Виберіть дозволені програми</string>
+    <string name="app_list_required_desc">Виберіть програми, які користувач може відкривати, перш ніж увімкнути моніторинг програм.</string>
+    <string name="app_list_required_highlight">Виберіть програми</string>
+    <string name="app_list_required_action">Вибрати програми</string>
 </resources>

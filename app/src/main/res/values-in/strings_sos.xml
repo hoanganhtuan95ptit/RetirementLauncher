@@ -69,4 +69,8 @@
     <string name="sos_delete_exclusion_period">Hapus</string>
     <string name="sos_select_start_time">Pilih Waktu Mulai</string>
     <string name="sos_select_end_time">Pilih Waktu Selesai</string>
+    <string name="emergency_call_enable">Aktifkan fitur</string>
+    <string name="emergency_call_phone_number">Nomor telepon darurat</string>
+    <string name="emergency_call_phone_number_hint">Masukkan nomor telepon</string>
+    <string name="emergency_call_save_success">Konfigurasi panggilan darurat disimpan</string>
 </resources>

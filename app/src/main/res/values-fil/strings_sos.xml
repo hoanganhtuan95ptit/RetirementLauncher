@@ -69,4 +69,8 @@
     <string name="sos_delete_exclusion_period">Burahin</string>
     <string name="sos_select_start_time">Pumili ng Oras ng Pagsisimula</string>
     <string name="sos_select_end_time">Pumili ng Oras ng Pagtatapos</string>
+    <string name="emergency_call_enable">I-enable ang feature</string>
+    <string name="emergency_call_phone_number">Emergency phone number</string>
+    <string name="emergency_call_phone_number_hint">Ilagay ang phone number</string>
+    <string name="emergency_call_save_success">Na-save ang emergency call configuration</string>
 </resources>

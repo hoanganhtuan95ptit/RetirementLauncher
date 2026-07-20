@@ -1,8 +1,8 @@
 package com.simple.launcher.retirement.presentation.base.adapters
 
 import com.simple.adapter.Adapter
+import com.simple.launcher.retirement.presentation.base.services.width
 import com.simple.launcher.retirement.utils.exts.SpanSizeLookupViewItem
-import com.simple.launcher.retirement.utils.size.width
 import com.simple.ui.precompute.LayoutEngine
 import com.simple.ui.precompute.node.Constraints
 import com.simple.ui.precompute.node.LayoutDimension.Companion.toLayoutDimension

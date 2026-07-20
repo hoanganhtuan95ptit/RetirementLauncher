@@ -91,4 +91,10 @@
     <string name="call_permission_desc">Requerido para hacer llamadas desde el lanzador.</string>
     <string name="call_block_title">Permiso de Bloqueo de Llamadas</string>
     <string name="call_block_desc">Requerido para bloquear llamadas no deseadas.</string>
+
+    <!-- Additional localized strings -->
+    <string name="app_list_required_title">Selecciona apps permitidas</string>
+    <string name="app_list_required_desc">Elige las apps que el usuario puede abrir antes de activar la supervisión de aplicaciones.</string>
+    <string name="app_list_required_highlight">Elige las apps</string>
+    <string name="app_list_required_action">Seleccionar apps</string>
 </resources>

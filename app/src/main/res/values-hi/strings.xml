@@ -88,4 +88,10 @@
     <string name="call_permission_desc">लॉन्चर से कॉल करने के लिए आवश्यक है।</string>
     <string name="call_block_title">कॉल ब्लॉक अनुमति</string>
     <string name="call_block_desc">अवांछित कॉल को ब्लॉक करने के लिए आवश्यक है।</string>
+
+    <!-- Additional localized strings -->
+    <string name="app_list_required_title">अनुमत ऐप्स चुनें</string>
+    <string name="app_list_required_desc">ऐप निगरानी चालू करने से पहले वे ऐप्स चुनें जिन्हें उपयोगकर्ता खोल सकता है।</string>
+    <string name="app_list_required_highlight">ऐप्स चुनें</string>
+    <string name="app_list_required_action">ऐप्स चुनें</string>
 </resources>

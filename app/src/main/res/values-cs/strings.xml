@@ -90,4 +90,10 @@
     <string name="call_permission_desc">Vyžadováno pro volání z launcheru.</string>
     <string name="call_block_title">Oprávnění k blokování hovorů</string>
     <string name="call_block_desc">Vyžadováno pro blokování nechtěných hovorů.</string>
+
+    <!-- Additional localized strings -->
+    <string name="app_list_required_title">Vyberte povolené aplikace</string>
+    <string name="app_list_required_desc">Před zapnutím sledování aplikací vyberte aplikace, které může uživatel otevřít.</string>
+    <string name="app_list_required_highlight">vyberte aplikace</string>
+    <string name="app_list_required_action">Vybrat aplikace</string>
 </resources>

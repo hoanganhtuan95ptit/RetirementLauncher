@@ -88,4 +88,10 @@
     <string name="call_permission_desc">Requis pour passer des appels depuis le lanceur.</string>
     <string name="call_block_title">Autorisation de blocage d\'appels</string>
     <string name="call_block_desc">Requis pour bloquer les appels indésirables.</string>
+
+    <!-- Additional localized strings -->
+    <string name="app_list_required_title">Sélectionner les applications autorisées</string>
+    <string name="app_list_required_desc">Choisissez les applications que l’utilisateur peut ouvrir avant d’activer la surveillance des applications.</string>
+    <string name="app_list_required_highlight">Choisissez les applications</string>
+    <string name="app_list_required_action">Sélectionner des applications</string>
 </resources>

@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="setting_emergency_call">Auto Emergency Call (SOS)</string>
+    <string name="emergency_call_enable">Enable feature</string>
+    <string name="emergency_call_phone_number">Emergency phone number</string>
+    <string name="emergency_call_phone_number_hint">Enter phone number</string>
+    <string name="emergency_call_save_success">Emergency call configuration saved</string>
 
     <string name="clean_cat_system_temp">System temporary files (.tmp, .log…)</string>
     <string name="clean_cat_compressed">Unknown compressed files</string>

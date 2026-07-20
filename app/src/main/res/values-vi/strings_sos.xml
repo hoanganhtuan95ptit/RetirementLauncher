@@ -76,4 +76,8 @@
     <string name="sos_delete_exclusion_period">Xóa</string>
     <string name="sos_select_start_time">Chọn Giờ Bắt đầu</string>
     <string name="sos_select_end_time">Chọn Giờ Kết thúc</string>
+    <string name="emergency_call_enable">Bật tính năng</string>
+    <string name="emergency_call_phone_number">Số điện thoại khẩn cấp</string>
+    <string name="emergency_call_phone_number_hint">Nhập số điện thoại</string>
+    <string name="emergency_call_save_success">Đã lưu cấu hình cuộc gọi khẩn cấp</string>
 </resources>

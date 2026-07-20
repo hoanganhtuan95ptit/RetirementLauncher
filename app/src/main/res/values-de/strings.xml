@@ -90,4 +90,10 @@
     <string name="call_permission_desc">Erforderlich, um Anrufe über den Launcher zu tätigen.</string>
     <string name="call_block_title">Anrufsperre-Berechtigung</string>
     <string name="call_block_desc">Erforderlich, um unerwünschte Anrufe zu blockieren.</string>
+
+    <!-- Additional localized strings -->
+    <string name="app_list_required_title">Erlaubte Apps auswählen</string>
+    <string name="app_list_required_desc">Wählen Sie Apps aus, die der Nutzer öffnen darf, bevor Sie die App-Überwachung aktivieren.</string>
+    <string name="app_list_required_highlight">Wählen Sie Apps aus</string>
+    <string name="app_list_required_action">Apps auswählen</string>
 </resources>

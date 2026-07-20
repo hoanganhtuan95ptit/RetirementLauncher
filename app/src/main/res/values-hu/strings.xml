@@ -88,4 +88,10 @@
     <string name="call_permission_desc">Szükséges a hívások indításához a launcher-ből.</string>
     <string name="call_block_title">Hívásblokkolási engedély</string>
     <string name="call_block_desc">Szükséges a nem kívánt hívások blokkolásához.</string>
+
+    <!-- Additional localized strings -->
+    <string name="app_list_required_title">Engedélyezett alkalmazások kiválasztása</string>
+    <string name="app_list_required_desc">Válassza ki, mely alkalmazásokat nyithatja meg a felhasználó az Alkalmazásfigyelés bekapcsolása előtt.</string>
+    <string name="app_list_required_highlight">Válassza ki</string>
+    <string name="app_list_required_action">Alkalmazások kiválasztása</string>
 </resources>

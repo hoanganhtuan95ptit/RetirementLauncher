@@ -88,4 +88,10 @@
     <string name="call_permission_desc">Требуется для совершения звонков из лаунчера.</string>
     <string name="call_block_title">Разрешение на блокировку вызовов</string>
     <string name="call_block_desc">Требуется для блокировки нежелательных звонков.</string>
+
+    <!-- Additional localized strings -->
+    <string name="app_list_required_title">Выберите разрешенные приложения</string>
+    <string name="app_list_required_desc">Выберите приложения, которые пользователь сможет открывать, перед включением мониторинга приложений.</string>
+    <string name="app_list_required_highlight">Выберите приложения</string>
+    <string name="app_list_required_action">Выбрать приложения</string>
 </resources>

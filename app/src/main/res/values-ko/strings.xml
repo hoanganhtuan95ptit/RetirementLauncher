@@ -88,4 +88,10 @@
     <string name="call_permission_desc">런처에서 전화를 걸기 위해 필요합니다.</string>
     <string name="call_block_title">전화 차단 권한</string>
     <string name="call_block_desc">원치 않는 전화를 차단하기 위해 필요합니다.</string>
+
+    <!-- Additional localized strings -->
+    <string name="app_list_required_title">허용할 앱 선택</string>
+    <string name="app_list_required_desc">앱 모니터링을 켜기 전에 사용자가 열 수 있는 앱을 선택하세요.</string>
+    <string name="app_list_required_highlight">앱을 선택</string>
+    <string name="app_list_required_action">앱 선택</string>
 </resources>

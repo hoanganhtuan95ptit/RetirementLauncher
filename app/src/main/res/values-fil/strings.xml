@@ -88,4 +88,10 @@
     <string name="call_permission_desc">Kailangan para makagawa ng mga tawag mula sa launcher.</string>
     <string name="call_block_title">Pahintulot sa Pag-block ng Tawag</string>
     <string name="call_block_desc">Kailangan para ma-block ang mga hindi gustong tawag.</string>
+
+    <!-- Additional localized strings -->
+    <string name="app_list_required_title">Piliin ang pinapayagang apps</string>
+    <string name="app_list_required_desc">Piliin ang apps na maaaring buksan ng user bago i-enable ang Pagsubaybay ng App.</string>
+    <string name="app_list_required_highlight">Piliin ang apps</string>
+    <string name="app_list_required_action">Pumili ng apps</string>
 </resources>

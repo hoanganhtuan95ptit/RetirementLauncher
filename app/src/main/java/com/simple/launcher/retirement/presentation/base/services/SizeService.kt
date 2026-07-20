@@ -1,4 +1,4 @@
-package com.simple.launcher.retirement.utils.size
+package com.simple.launcher.retirement.presentation.base.services
 
 import android.util.Log
 import androidx.fragment.app.FragmentActivity

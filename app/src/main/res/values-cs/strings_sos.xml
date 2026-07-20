@@ -69,4 +69,8 @@
     <string name="sos_delete_exclusion_period">Smazat</string>
     <string name="sos_select_start_time">Vybrat čas začátku</string>
     <string name="sos_select_end_time">Vybrat čas konce</string>
+    <string name="emergency_call_enable">Zapnout funkci</string>
+    <string name="emergency_call_phone_number">Nouzové telefonní číslo</string>
+    <string name="emergency_call_phone_number_hint">Zadejte telefonní číslo</string>
+    <string name="emergency_call_save_success">Nastavení nouzového volání uloženo</string>
 </resources>

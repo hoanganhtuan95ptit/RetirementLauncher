@@ -6,9 +6,9 @@ import com.simple.launcher.retirement.utils.background.Background
 import com.simple.launcher.retirement.utils.combineState
 import com.simple.launcher.retirement.utils.exts.colorBackground
 import com.simple.launcher.retirement.utils.exts.textColorSecondary
-import com.simple.launcher.retirement.utils.size.sizeMapFlow
-import com.simple.launcher.retirement.utils.string.StringResStore
-import com.simple.launcher.retirement.utils.theme.ThemeColorStore
+import com.simple.launcher.retirement.presentation.base.services.colorMapFlow
+import com.simple.launcher.retirement.presentation.base.services.sizeMapFlow
+import com.simple.launcher.retirement.presentation.base.services.stringMapFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
@@ -18,9 +18,9 @@ open class BaseViewModel : ViewModel() {
 
     val sizes = sizeMapFlow
 
-    val themes = ThemeColorStore.colorMapFlow
+    val themes = colorMapFlow
 
-    val strings = StringResStore.stringMapFlow
+    val strings = stringMapFlow
 
     val resources: StateFlow<Map<String, Any>> = combineState(
         sizes,

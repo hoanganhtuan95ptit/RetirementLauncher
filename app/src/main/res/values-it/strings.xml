@@ -88,4 +88,10 @@
     <string name="call_permission_desc">Richiesto per effettuare chiamate dal launcher.</string>
     <string name="call_block_title">Permesso Blocco Chiamate</string>
     <string name="call_block_desc">Richiesto per bloccare le chiamate indesiderate.</string>
+
+    <!-- Additional localized strings -->
+    <string name="app_list_required_title">Seleziona app consentite</string>
+    <string name="app_list_required_desc">Scegli le app che l’utente può aprire prima di attivare il Monitoraggio app.</string>
+    <string name="app_list_required_highlight">Scegli le app</string>
+    <string name="app_list_required_action">Seleziona app</string>
 </resources>

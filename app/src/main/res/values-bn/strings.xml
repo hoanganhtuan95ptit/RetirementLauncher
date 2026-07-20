@@ -90,4 +90,10 @@
     <string name="call_permission_desc">লঞ্চার থেকে কল করার জন্য প্রয়োজন।</string>
     <string name="call_block_title">কল ব্লক করার অনুমতি</string>
     <string name="call_block_desc">অবাঞ্ছিত কল ব্লক করার জন্য প্রয়োজন।</string>
+
+    <!-- Additional localized strings -->
+    <string name="app_list_required_title">অনুমোদিত অ্যাপ নির্বাচন করুন</string>
+    <string name="app_list_required_desc">অ্যাপ মনিটরিং চালু করার আগে ব্যবহারকারী যে অ্যাপ খুলতে পারবেন তা বেছে নিন।</string>
+    <string name="app_list_required_highlight">অ্যাপ বেছে নিন</string>
+    <string name="app_list_required_action">অ্যাপ নির্বাচন করুন</string>
 </resources>

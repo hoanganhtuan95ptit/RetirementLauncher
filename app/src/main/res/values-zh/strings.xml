@@ -88,4 +88,10 @@
     <string name="call_permission_desc">从启动器拨打电话所需。</string>
     <string name="call_block_title">通话拦截权限</string>
     <string name="call_block_desc">拦截骚扰电话所需。</string>
+
+    <!-- Additional localized strings -->
+    <string name="app_list_required_title">选择允许的应用</string>
+    <string name="app_list_required_desc">启用应用监控前，请选择用户可以打开的应用。</string>
+    <string name="app_list_required_highlight">选择用户可以打开的应用</string>
+    <string name="app_list_required_action">选择应用</string>
 </resources>

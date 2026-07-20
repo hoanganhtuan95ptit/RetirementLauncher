@@ -1,19 +1,12 @@
 package com.simple.launcher.retirement.utils.exts
 
-import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import androidx.core.graphics.ColorUtils
 import com.simple.launcher.retirement.R
-import com.simple.launcher.retirement.utils.theme.ThemeColorStore
+import com.simple.launcher.retirement.presentation.base.services.getColor
 
 fun Int.withAlpha(alpha: Float): Int {
     return ColorUtils.setAlphaComponent(this, (alpha * 255).toInt().coerceIn(0, 255))
-}
-
-private fun Map<String, Any>.getColor(@AttrRes attrId: Int, @ColorInt defaultColor: Int = android.graphics.Color.BLACK): Int {
-    return ThemeColorStore.idAndNameMap[attrId]?.let {
-        ThemeColorStore.colorMapFlow.value[it]
-    } ?: defaultColor
 }
 
 val Map<String, Any>.colorPrimary: Int @ColorInt get() = getColor(android.R.attr.colorPrimary)

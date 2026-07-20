@@ -88,4 +88,10 @@
     <string name="call_permission_desc">Vereist om te bellen vanuit de launcher.</string>
     <string name="call_block_title">Toestemming voor oproepblokkering</string>
     <string name="call_block_desc">Vereist om ongewenste oproepen te blokkeren.</string>
+
+    <!-- Additional localized strings -->
+    <string name="app_list_required_title">Toegestane apps selecteren</string>
+    <string name="app_list_required_desc">Kies de apps die de gebruiker mag openen voordat Appbewaking wordt ingeschakeld.</string>
+    <string name="app_list_required_highlight">Kies de apps</string>
+    <string name="app_list_required_action">Apps selecteren</string>
 </resources>

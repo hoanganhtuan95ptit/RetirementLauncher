@@ -88,4 +88,10 @@
     <string name="call_permission_desc">Diperlukan untuk membuat panggilan daripada pelancar.</string>
     <string name="call_block_title">Kebenaran Menyekat Panggilan</string>
     <string name="call_block_desc">Diperlukan untuk menyekat panggilan yang tidak diingini.</string>
+
+    <!-- Additional localized strings -->
+    <string name="app_list_required_title">Pilih aplikasi dibenarkan</string>
+    <string name="app_list_required_desc">Pilih aplikasi yang boleh dibuka oleh pengguna sebelum menghidupkan Pemantauan Aplikasi.</string>
+    <string name="app_list_required_highlight">Pilih aplikasi</string>
+    <string name="app_list_required_action">Pilih aplikasi</string>
 </resources>

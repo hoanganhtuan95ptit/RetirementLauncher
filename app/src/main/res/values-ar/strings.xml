@@ -90,4 +90,10 @@
     <string name="call_permission_desc">مطلوب لإجراء المكالمات من المشغل.</string>
     <string name="call_block_title">إذن حظر المكالمات</string>
     <string name="call_block_desc">مطلوب لحظر المكالمات غير المرغوب فيها.</string>
+
+    <!-- Additional localized strings -->
+    <string name="app_list_required_title">اختر التطبيقات المسموح بها</string>
+    <string name="app_list_required_desc">اختر التطبيقات التي يمكن للمستخدم فتحها قبل تفعيل مراقبة التطبيقات.</string>
+    <string name="app_list_required_highlight">اختر التطبيقات</string>
+    <string name="app_list_required_action">اختيار التطبيقات</string>
 </resources>

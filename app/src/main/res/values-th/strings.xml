@@ -88,4 +88,10 @@
     <string name="call_permission_desc">จำเป็นสำหรับการโทรออกด้วยตัวเปิดใช้งาน</string>
     <string name="call_block_title">สิทธิ์การบล็อกสาย</string>
     <string name="call_block_desc">จำเป็นสำหรับการบล็อกสายที่ไม่ต้องการ</string>
+
+    <!-- Additional localized strings -->
+    <string name="app_list_required_title">เลือกแอปที่อนุญาต</string>
+    <string name="app_list_required_desc">เลือกแอปที่ผู้ใช้สามารถเปิดได้ก่อนเปิดการตรวจสอบแอป</string>
+    <string name="app_list_required_highlight">เลือกแอป</string>
+    <string name="app_list_required_action">เลือกแอป</string>
 </resources>

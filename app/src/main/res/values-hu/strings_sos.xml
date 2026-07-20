@@ -69,4 +69,8 @@
     <string name="sos_delete_exclusion_period">Törlés</string>
     <string name="sos_select_start_time">Kezdési idő kiválasztása</string>
     <string name="sos_select_end_time">Befejezési idő kiválasztása</string>
+    <string name="emergency_call_enable">Funkció bekapcsolása</string>
+    <string name="emergency_call_phone_number">Vészhelyzeti telefonszám</string>
+    <string name="emergency_call_phone_number_hint">Adja meg a telefonszámot</string>
+    <string name="emergency_call_save_success">Vészhelyzeti hívás beállítása mentve</string>
 </resources>
