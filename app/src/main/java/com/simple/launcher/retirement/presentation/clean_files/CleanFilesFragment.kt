@@ -27,7 +27,7 @@ import com.simple.ui.precompute.image.setImage
 import com.simple.ui.precompute.text.setText
 import kotlinx.coroutines.delay
 
-class CleanFilesFragment : BaseFragment<FragmentCleanFilesBinding>() {
+/*class CleanFilesFragment : BaseFragment<FragmentCleanFilesBinding>() {
 
     private val viewModel: CleanFilesViewModel by viewModels()
 
@@ -158,8 +158,9 @@ class CleanFilesFragment : BaseFragment<FragmentCleanFilesBinding>() {
         binding.ivResultSpace.setImage(resultViewData.resultSpaceImage)
         binding.frameResultSpace.setBackground(resultViewData.resultSpaceBackground)
     }
-}
+}*/
 
+/*
 @Deeplink
 class CleanFilesDeeplinkHandler : DeeplinkHandler {
 
@@ -178,3 +179,4 @@ class CleanFilesDeeplinkHandler : DeeplinkHandler {
         return true
     }
 }
+*/

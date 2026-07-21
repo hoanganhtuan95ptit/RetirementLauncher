@@ -10,8 +10,8 @@
     <string name="setting_app_list">অ্যাপ তালিকা সেটআপ</string>
     <string name="setting_default_launcher">ডিফল্ট লঞ্চার সেট করুন</string>
     <string name="setting_contact_list">দ্রুত যোগাযোগ সেটআপ</string>
-    <string name="setting_clean_files">অপ্রয়োজনীয় ফাইল পরিষ্কার করুন</string>
-    <string name="setting_clean_memory">মেমরি খালি করুন</string>
+    <!-- <string name="setting_clean_files">অপ্রয়োজনীয় ফাইল পরিষ্কার করুন</string> -->
+    <!-- <string name="setting_clean_memory">মেমরি খালি করুন</string> -->
 
     <string name="setting_pocket_mode">পকেট মোড</string>
 
@@ -20,15 +20,16 @@
     <string name="onboarding_desc">আপনার ফোন ইন্টারফেস সহজ করতে এবং আপনার ডিভাইস সুরক্ষিত করতে একটি অ্যাপ।</string>
     <string name="onboarding_start">শুরু করুন</string>
 
-    <!-- Clean Files -->
+    <!-- Clean Files
     <string name="clean_files_title">অপ্রয়োজনীয় ফাইল পরিষ্কার করুন</string>
     <string name="clean_files_desc">ডিভাইস স্ক্যান করার জন্য প্রস্তুত</string>
     <string name="clean_files_start">পরিষ্কার শুরু করুন</string>
     <string name="clean_files_running">স্ক্যান এবং পরিষ্কার হচ্ছে…</string>
     <string name="clean_files_completed">পরিষ্কার সম্পন্ন হয়েছে!</string>
     <string name="clean_files_retry">আবার পরিষ্কার করুন</string>
+    -->
 
-    <!-- Clean Memory -->
+    <!-- Clean Memory
     <string name="clean_memory_title">মেমরি খালি করুন</string>
     <string name="clean_memory_stat_used">ব্যবহৃত</string>
     <string name="clean_memory_stat_free">খালি</string>
@@ -39,6 +40,7 @@
     <string name="clean_memory_optimal">সিস্টেম সর্বোত্তম অবস্থায় আছে!</string>
     <string name="clean_memory_retry">আবার অপ্টিমাইজ করুন</string>
     <string name="clean_memory_toast">$number_ram MB খালি করা হয়েছে</string>
+    -->
 
     <!-- Contacts -->
     <string name="contact_tap_to_call">এখনই কল করুন</string>

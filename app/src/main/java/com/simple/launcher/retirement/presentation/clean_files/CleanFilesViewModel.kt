@@ -46,9 +46,9 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class CleanFilesViewModel : BaseViewModel() {
+/*class CleanFilesViewModel : BaseViewModel() {
 
-    /** Số file lạ hiện có trên máy — cập nhật real-time qua Flow */
+    *//** Số file lạ hiện có trên máy — cập nhật real-time qua Flow *//*
     val strangeFileCount: StateFlow<Int> = FileRepository.instance.countStrangeFilesFlow()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000L), 0)
 
@@ -380,4 +380,4 @@ class CleanFilesViewModel : BaseViewModel() {
             )
         )
     }
-}
+}*/

@@ -49,7 +49,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class CleanMemoryViewModel : BaseViewModel() {
+/*class CleanMemoryViewModel : BaseViewModel() {
 
     var storageWhenStart: StorageInfo? = null
 
@@ -278,10 +278,10 @@ class CleanMemoryViewModel : BaseViewModel() {
         val totalBackground: Background = emptyBackground(),
     )
 
-    data class ResultViewData(
+    data class ResultViewData(â
         val show: Boolean = false,
 
-        val text: BigText = emptyText(),
+        val text: BigText = emptyText(),âd
         val image: BigImage = emptyImage(),
 
         val background: Background = emptyBackground()
@@ -292,4 +292,4 @@ class CleanMemoryViewModel : BaseViewModel() {
         val ramViewData: RamViewData = RamViewData(),
         val resultViewData: ResultViewData = ResultViewData()
     )
-}
+}*/

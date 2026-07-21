@@ -63,16 +63,19 @@
     <string name="default_launcher_highlight">Retirement Launcher</string>    <string name="setting_app_monitoring">Uygulama İzleme</string>
     <string name="setting_call_block">Çağrı Engelleme</string>
     <string name="setting_auto_cleanup_apk">İndirilen APK\'ları Otomatik Temizle</string>
-    <string name="setting_clean_files">Gereksiz Dosyaları Temizle</string>
-    <string name="setting_clean_memory">Belleği Temizle</string>
+    <!-- <string name="setting_clean_files">Gereksiz Dosyaları Temizle</string> -->
+    <!-- <string name="setting_clean_memory">Belleği Temizle</string> -->
 
+    <!-- Clean Files
     <string name="clean_files_title">Dosyaları Temizle</string>
     <string name="clean_files_start">Temizliği Başlat</string>
     <string name="clean_files_running">Temizleniyor…</string>
     <string name="clean_files_retry">Tekrar Dene</string>
     <string name="clean_files_desc">Yer açmak için gereksiz dosyaları temizleyin.</string>
     <string name="clean_files_completed">Temizlik tamamlandı.</string>
+    -->
 
+    <!-- Clean Memory
     <string name="clean_memory_title">Belleği Temizle</string>
     <string name="clean_memory_start">Optimizasyonu Başlat</string>
     <string name="clean_memory_running">Optimize ediliyor…</string>
@@ -83,6 +86,7 @@
     <string name="clean_memory_result_sub">Bellek daha iyi performans için optimize edildi.</string>
     <string name="clean_memory_optimal">Cihazınız en iyi durumda.</string>
     <string name="clean_memory_toast">$number_ram MB RAM temizlendi.</string>
+    -->
 
     <string name="call_permission_title">Arama İzni</string>
     <string name="call_permission_desc">Başlatıcıdan arama yapmak için gereklidir.</string>

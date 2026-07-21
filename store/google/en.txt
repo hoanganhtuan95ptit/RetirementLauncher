@@ -1,0 +1,49 @@
+# Retirement Launcher – Simple, Safe, and Friendly Android Launcher for Seniors 👴📱🛡️
+
+Retirement Launcher is an easy-to-use Android launcher designed specifically for seniors, older adults, parents, and grandparents who want a minimalist, clean, and secure phone experience. The app transforms complex Android devices into a simplified home screen with large icons, intuitive navigation, and daily safety protection features.
+
+Unlike standard launchers cluttered with overwhelming features, Retirement Launcher focuses on simplicity, accessibility, and security. Everything is crafted to be easier to see, simpler to understand, and much safer for elderly users.
+
+Whether you are setting up a phone for yourself or your loved ones, Retirement Launcher helps create a secure mobile environment, minimizing accidental taps and confusing operations.
+
+━━━━━━━━━━━━━━
+🌟 KEY FEATURES
+━━━━━━━━━━━━━━
+
+🏠 Simple Home Screen
+* Clean and minimalist interface with extra-large icons.
+* Intuitive navigation that reduces visual clutter and minimizes accidental taps.
+* Easy-to-read layout optimized specifically for seniors.
+
+📲 Customizable App Display
+* Choose only essential apps to appear on the home screen.
+* Hide unnecessary or confusing applications to create a distraction-free environment.
+
+☎️ Quick Dial & Easy Contact
+* Add important contacts (family, caregivers) directly to the home screen.
+* One-touch calling makes communication incredibly simple for elderly users.
+
+🛡️ Smart Safety & Protection
+* Automatically block calls from unknown numbers to avoid spam and scams.
+* Prevent unauthorized opening of unfamiliar apps to keep users safe.
+
+🆘 Emergency Rescue Support (SOS)
+* Automatically performs emergency calls if abnormal inactivity is detected for a long period.
+* **IMPORTANT NOTE:** The SOS feature utilizes the AccessibilityService API to monitor user touch interactions on the screen. This allows the app to detect whether the phone is being actively used, ensuring timely rescue calls in case of emergencies. We are committed to privacy: NO screen content is read, NO personal data is collected, and NO information is shared externally.
+
+👴 Accessibility-Focused Design
+* Large buttons, clear text, and high contrast.
+* Perfect for parents, grandparents, and users with mild visual impairment.
+
+━━━━━━━━━━━━━━
+💡 WHY CHOOSE RETIREMENT LAUNCHER?
+━━━━━━━━━━━━━━
+
+✅ The simplest Android launcher for seniors.
+✅ Large icons and clear visuals for easy operation.
+✅ Smart safety tools to prevent scams and unwanted interruptions.
+✅ One-touch access to family and essential apps.
+✅ Integrated secure SOS rescue tool.
+✅ Lightweight and smooth performance on all devices.
+
+Retirement Launcher is more than just a launcher. It is a seamless combination of a minimalist interface and robust safety tools, making smartphones more accessible and safer than ever for everyone.

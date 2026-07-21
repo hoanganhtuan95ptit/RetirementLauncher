@@ -63,16 +63,19 @@
     <string name="default_launcher_highlight">Retirement Launcher</string>    <string name="setting_app_monitoring">Monitoramento de Apps</string>
     <string name="setting_call_block">Bloqueio de Chamadas</string>
     <string name="setting_auto_cleanup_apk">Limpeza Automática de APKs Baixados</string>
-    <string name="setting_clean_files">Limpar Arquivos Inúteis</string>
-    <string name="setting_clean_memory">Limpar Memória</string>
+    <!-- <string name="setting_clean_files">Limpar Arquivos Inúteis</string> -->
+    <!-- <string name="setting_clean_memory">Limpar Memória</string> -->
 
+    <!-- Clean Files
     <string name="clean_files_title">Limpar Arquivos</string>
     <string name="clean_files_start">Iniciar Limpeza</string>
     <string name="clean_files_running">Limpando…</string>
     <string name="clean_files_retry">Tentar novamente</string>
     <string name="clean_files_desc">Limpe os arquivos inúteis para liberar espaço.</string>
     <string name="clean_files_completed">Limpeza concluída.</string>
+    -->
 
+    <!-- Clean Memory
     <string name="clean_memory_title">Limpar Memória</string>
     <string name="clean_memory_start">Iniciar Otimização</string>
     <string name="clean_memory_running">Otimizando…</string>
@@ -83,6 +86,7 @@
     <string name="clean_memory_result_sub">A memória foi otimizada para um melhor desempenho.</string>
     <string name="clean_memory_optimal">O seu dispositivo está em condições ideais.</string>
     <string name="clean_memory_toast">Foram limpos $number_ram MB de RAM.</string>
+    -->
 
     <string name="call_permission_title">Permissão de Chamada</string>
     <string name="call_permission_desc">Necessária para realizar chamadas a partir do inicializador.</string>

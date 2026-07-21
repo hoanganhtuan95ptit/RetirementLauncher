@@ -2,6 +2,7 @@
 <resources>
     <string name="setting_emergency_call">Cuộc gọi khẩn cấp tự động (SOS)</string>
 
+    <!--
     <string name="clean_cat_system_temp">File tạm hệ thống (.tmp, .log…)</string>
     <string name="clean_cat_compressed">File nén không rõ nguồn</string>
     <string name="clean_cat_no_extension">Tài liệu (.pdf, .doc, .txt…)</string>
@@ -11,6 +12,8 @@
     <string name="clean_result_space_freed">đã giải phóng</string>
     <string name="clean_files_idle_desc">Phát hiện $number_file tệp lạ – nhấn để dọn dẹp</string>
     <string name="clean_files_count_unit">file lạ</string>
+    -->
+
     <string name="call_permission_highlight">thực hiện cuộc gọi</string>
     <string name="call_block_highlight">quản lý cuộc gọi và danh bạ</string>
     <string name="setting_header_debug">🐛 Debug</string>
@@ -22,12 +25,12 @@
     <string name="usage_stats_permission_title">Giám sát ứng dụng</string>
     <string name="usage_stats_permission_desc">Để tính năng chặn ứng dụng hoạt động, bạn cần cấp quyền \'Truy cập dữ liệu sử dụng\'. Điều này giúp ứng dụng biết khi nào một ứng dụng không được phép được mở.</string>
     <string name="usage_stats_permission_highlight">\'Truy cập dữ liệu sử dụng\'</string>
-    <string name="accessibility_permission_title">Phát hiện hoạt động người dùng</string>
-    <string name="accessibility_permission_desc">SOS sử dụng Dịch vụ Hỗ trợ để ghi nhận thời điểm bạn tương tác cuối cùng với điện thoại, từ đó kịp thời thực hiện cuộc gọi cứu hộ nếu phát hiện dấu hiệu bất thường. Chúng tôi cam kết bảo mật tuyệt đối: ứng dụng không đọc nội dung màn hình, không ghi lại văn bản hay can thiệp vào cài đặt cá nhân. Mọi dữ liệu hoạt động chỉ được lưu trữ an toàn ngay trên máy và chỉ dùng cho mục đích cứu trợ khẩn cấp.</string>
-    <string name="accessibility_permission_highlight">không đọc nội dung màn hình, không ghi lại văn bản hay can thiệp vào cài đặt</string>
+    <string name="accessibility_permission_title">Phát hiện hoạt động cho SOS</string>
+    <string name="accessibility_permission_desc">Tính năng Cuộc gọi khẩn cấp tự động (SOS) yêu cầu Dịch vụ Hỗ trợ để nhận biết bạn có đang sử dụng điện thoại hay không. Bằng cách chỉ ghi lại thời điểm tương tác chạm cuối cùng, ứng dụng có thể xác định các khoảng thời gian không hoạt động bất thường và tự động thực hiện cuộc gọi cứu hộ tới danh sách liên hệ khẩn cấp.\n\nChúng tôi cam kết bảo mật tuyệt đối:\n• KHÔNG đọc hoặc thu thập nội dung màn hình.\n• KHÔNG ghi lại văn bản đã nhập hay mật khẩu.\n• KHÔNG kiểm tra các ứng dụng khác hoặc thay đổi cài đặt hệ thống.\n• KHÔNG thực hiện cử chỉ hay tự động nhấn nút.\nMọi dữ liệu dấu thời gian hoạt động chỉ được lưu trữ an toàn trên thiết bị này và chỉ dùng cho mục đích cứu trợ khẩn cấp.</string>
+    <string name="accessibility_permission_highlight">KHÔNG đọc nội dung màn hình, KHÔNG ghi lại văn bản hay can thiệp vào cài đặt</string>
     <string name="user_activity_accessibility_service_label">SOS Phát hiện hoạt động người dùng</string>
-    <string name="user_activity_accessibility_service_summary">Phát hiện hoạt động thực của người dùng cho các kiểm tra không hoạt động của SOS.</string>
-    <string name="user_activity_accessibility_service_desc">Chỉ được sử dụng bởi Auto SOS để phát hiện xem điện thoại có còn được sử dụng tích cực hay không. Dịch vụ chỉ lắng nghe sự kiện hệ thống cho biết người dùng đã bắt đầu chạm vào màn hình, sau đó lưu thời gian hoạt động mới nhất trên thiết bị này. Nó không đọc nội dung màn hình, không thu thập văn bản đã nhập, không kiểm tra các ứng dụng khác, không thay đổi cài đặt, không thực hiện cử chỉ, không nhấp vào nút hoặc chia sẻ dữ liệu hoạt động này.</string>
+    <string name="user_activity_accessibility_service_summary">Phát hiện tương tác chạm để xác định trạng thái bất động cho cuộc gọi SOS.</string>
+    <string name="user_activity_accessibility_service_desc">Dịch vụ này được sử dụng độc quyền bởi tính năng Cuộc gọi khẩn cấp tự động (SOS) để giám sát xem điện thoại có đang được sử dụng hay không. Nó chỉ lắng nghe các sự kiện tương tác chạm để cập nhật dấu thời gian \"hoạt động lần cuối\" trên thiết bị. Điều này cho phép ứng dụng phát hiện tình trạng không hoạt động bất thường. Dịch vụ KHÔNG đọc nội dung màn hình, KHÔNG thu thập văn bản, KHÔNG theo dõi ứng dụng khác, KHÔNG thực hiện cử chỉ và KHÔNG chia sẻ bất kỳ dữ liệu nào ra bên ngoài thiết bị.</string>
     <string name="app_monitoring_intro_title">Giới thiệu tính năng</string>
     <string name="app_monitoring_intro_desc">Tính năng này giúp bảo vệ người dùng bằng cách chỉ cho phép các ứng dụng đã được chọn hoạt động. Các ứng dụng khác sẽ bị chặn để tránh sự cố không mong muốn.</string>
     <string name="app_monitoring_intro_highlight">chỉ cho phép các ứng dụng đã được chọn</string>

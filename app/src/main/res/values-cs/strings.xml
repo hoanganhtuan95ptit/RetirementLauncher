@@ -10,8 +10,8 @@
     <string name="setting_app_list">Nastavení seznamu aplikací</string>
     <string name="setting_default_launcher">Nastavit výchozí launcher</string>
     <string name="setting_contact_list">Nastavení rychlých kontaktů</string>
-    <string name="setting_clean_files">Vyčistit nepotřebné soubory</string>
-    <string name="setting_clean_memory">Uvolnit paměť</string>
+    <!-- <string name="setting_clean_files">Vyčistit nepotřebné soubory</string> -->
+    <!-- <string name="setting_clean_memory">Uvolnit paměť</string> -->
 
     <string name="setting_pocket_mode">Režim v kapse</string>
 
@@ -20,15 +20,16 @@
     <string name="onboarding_desc">Aplikace pro zjednodušení rozhraní telefonu a ochranu vašeho zařízení.</string>
     <string name="onboarding_start">Začít</string>
 
-    <!-- Clean Files -->
+    <!-- Clean Files
     <string name="clean_files_title">Vyčistit nepotřebné soubory</string>
     <string name="clean_files_desc">Připraveno ke skenování zařízení</string>
     <string name="clean_files_start">Spustit čištění</string>
     <string name="clean_files_running">Skenování a čištění…</string>
     <string name="clean_files_completed">Čištění dokončeno!</string>
     <string name="clean_files_retry">Vyčistit znovu</string>
+    -->
 
-    <!-- Clean Memory -->
+    <!-- Clean Memory
     <string name="clean_memory_title">Uvolnit paměť</string>
     <string name="clean_memory_stat_used">Použito</string>
     <string name="clean_memory_stat_free">Volno</string>
@@ -39,6 +40,7 @@
     <string name="clean_memory_optimal">Systém je v optimálním stavu!</string>
     <string name="clean_memory_retry">Optimalizovat znovu</string>
     <string name="clean_memory_toast">Uvolněno $number_ram MB</string>
+    -->
 
     <!-- Contacts -->
     <string name="contact_tap_to_call">Volat nyní</string>

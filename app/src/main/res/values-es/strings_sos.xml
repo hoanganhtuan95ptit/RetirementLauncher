@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>\n    <string name="setting_emergency_call">Llamada de emergencia automática (SOS)</string>\n    <string name="clean_cat_system_temp">Archivos temporales del sistema (.tmp, .log…)</string>\n    <string name="clean_cat_compressed">Archivos comprimidos desconocidos</string>\n    <string name="clean_cat_no_extension">Documentos (.pdf, .doc, .txt…)</string>\n    <string name="clean_cat_apk_cache">APKs antiguos y caché</string>\n    <string name="clean_result_title">Resultados de limpieza</string>\n    <string name="clean_result_files_deleted">archivos eliminados</string>\n    <string name="clean_result_space_freed">espacio liberado</string>\n    <string name="clean_files_idle_desc"> $number_file archivos basura detectados – toca para limpiar</string>\n    <string name="clean_files_count_unit">archivos basura</string>\n    <string name="call_permission_highlight">hacer llamadas</string>\n    <string name="call_block_highlight">gestionar llamadas y contactos</string>
+<resources>\n    <string name="setting_emergency_call">Llamada de emergencia automática (SOS)</string>\n    <!-- <string name="clean_cat_system_temp">Archivos temporales del sistema (.tmp, .log…)</string> -->
+    <!-- <string name="clean_cat_compressed">Archivos comprimidos desconocidos</string> -->
+    <!-- <string name="clean_cat_no_extension">Documentos (.pdf, .doc, .txt…)</string> -->
+    <!-- <string name="clean_cat_apk_cache">APKs antiguos y caché</string> -->
+    <!-- <string name="clean_result_title">Resultados de limpieza</string> -->
+    <!-- <string name="clean_result_files_deleted">archivos eliminados</string> -->
+    <!-- <string name="clean_result_space_freed">espacio liberado</string> -->
+    <!-- <string name="clean_files_idle_desc"> $number_file archivos basura detectados – toca para limpiar</string> -->
+    <!-- <string name="clean_files_count_unit">archivos basura</string> -->\n    <string name="call_permission_highlight">hacer llamadas</string>\n    <string name="call_block_highlight">gestionar llamadas y contactos</string>
     <string name="emergency_call_desc">Si el teléfono no se usa, la aplicación realizará automáticamente una llamada de emergencia.</string>
     <string name="setting_header_debug">🐛 Depuración</string>
     <string name="setting_debug_block_screen">Ver Pantalla de Bloqueo</string>
@@ -9,12 +17,12 @@
     <string name="usage_stats_permission_title">Monitoreo de Aplicaciones</string>
     <string name="usage_stats_permission_desc">Para que la función de bloqueo de aplicaciones funcione, debe otorgar \'Acceso a datos de uso\'. Esto ayuda a la aplicación a saber cuándo se abre una aplicación no autorizada.</string>
     <string name="usage_stats_permission_highlight">\'Acceso a datos de uso\'</string>
-    <string name="accessibility_permission_title">Detección de Actividad del Usuario</string>
-    <string name="accessibility_permission_desc">SOS utiliza el Servicio de Accesibilidad para registrar su última interacción con el teléfono, lo que permite realizar llamadas de rescate rápidas si se detectan signos anormales. Estamos comprometidos con la privacidad absoluta: la aplicación no lee el contenido de la pantalla, no registra texto ni interfiere con los ajustes personales. Todos los datos de actividad se almacenan de forma segura en este dispositivo y se utilizan únicamente para fines de rescate de emergencia.</string>
-    <string name="accessibility_permission_highlight">no lee el contenido de la pantalla, no registra texto ni interfiere con los ajustes personales</string>
-    <string name="user_activity_accessibility_service_label">Detección de Actividad de Usuario SOS</string>
-    <string name="user_activity_accessibility_service_summary">Detecta la actividad real del usuario para las comprobaciones de inactividad de SOS.</string>
-    <string name="user_activity_accessibility_service_desc">Utilizado solo por SOS Automático para detectar si el teléfono sigue siendo utilizado activamente. El servicio escucha solo el evento del sistema que indica que el usuario ha comenzado a tocar la pantalla, luego guarda la última hora de actividad en este dispositivo. No lee el contenido de la pantalla, ni recopila texto escrito, ni inspecciona otras aplicaciones, ni cambia ajustes, ni realiza gestos, ni pulsa botones, ni comparte estos datos de actividad.</string>
+    <string name="accessibility_permission_title">User Activity Detection for SOS</string>
+    <string name="accessibility_permission_desc">The Auto Emergency Call (SOS) feature requires the Accessibility Service to detect if you are still using your phone. By recording only the time of your last touch interaction, the app can identify periods of abnormal inactivity and automatically trigger rescue calls to your emergency contacts. \n\nWe are committed to absolute privacy: \n• DOES NOT read or collect screen content.\n• DOES NOT record typed text or passwords.\n• DOES NOT inspect other apps or change system settings.\n• DOES NOT perform gestures or click buttons.\nAll activity timestamp data is stored securely on this device and used solely for emergency rescue purposes.</string>
+    <string name="accessibility_permission_highlight">DOES NOT read or collect screen content, record typed text, or interfere with personal settings</string>
+    <string name="user_activity_accessibility_service_label">SOS User Activity Detection</string>
+    <string name="user_activity_accessibility_service_summary">Detects touch interactions to identify inactivity for Auto SOS calls.</string>
+    <string name="user_activity_accessibility_service_desc">This service is used exclusively by the Auto Emergency Call (SOS) feature to monitor whether the phone is being actively used. It listens only for touch interaction events to update a \"last active\" timestamp on the device. This allows the app to detect abnormal inactivity. The service DOES NOT read screen content, DOES NOT collect text, DOES NOT track other apps, DOES NOT perform gestures, and DOES NOT share any data outside the device.</string>
     <string name="app_monitoring_intro_title">Introducción a la Función</string>
     <string name="app_monitoring_intro_desc">Esta función ayuda a proteger a los usuarios permitiendo que solo se ejecuten las aplicaciones seleccionadas. Otras aplicaciones serán bloqueadas para evitar problemas no deseados.</string>
     <string name="app_monitoring_intro_highlight">permitiendo que solo se ejecuten las aplicaciones seleccionadas</string>

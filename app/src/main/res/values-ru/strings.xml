@@ -63,16 +63,19 @@
     <string name="default_launcher_highlight">Retirement Launcher</string>    <string name="setting_app_monitoring">Мониторинг приложений</string>
     <string name="setting_call_block">Блокировка вызовов</string>
     <string name="setting_auto_cleanup_apk">Автоочистка загруженных APK</string>
-    <string name="setting_clean_files">Очистка ненужных файлов</string>
-    <string name="setting_clean_memory">Очистка памяти</string>
+    <!-- <string name="setting_clean_files">Очистка ненужных файлов</string> -->
+    <!-- <string name="setting_clean_memory">Очистка памяти</string> -->
 
+    <!-- Clean Files
     <string name="clean_files_title">Очистка файлов</string>
     <string name="clean_files_start">Начать очистку</string>
     <string name="clean_files_running">Очистка…</string>
     <string name="clean_files_retry">Повторить</string>
     <string name="clean_files_desc">Удалите ненужные файлы, чтобы освободить место.</string>
     <string name="clean_files_completed">Очистка завершена.</string>
+    -->
 
+    <!-- Clean Memory
     <string name="clean_memory_title">Очистка памяти</string>
     <string name="clean_memory_start">Начать оптимизацию</string>
     <string name="clean_memory_running">Оптимизация…</string>
@@ -83,6 +86,7 @@
     <string name="clean_memory_result_sub">Память оптимизирована для лучшей производительности.</string>
     <string name="clean_memory_optimal">Ваше устройство в оптимальном состоянии.</string>
     <string name="clean_memory_toast">Очищено $number_ram МБ оперативной памяти.</string>
+    -->
 
     <string name="call_permission_title">Разрешение на вызовы</string>
     <string name="call_permission_desc">Требуется для совершения звонков из лаунчера.</string>

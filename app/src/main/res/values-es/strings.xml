@@ -10,8 +10,8 @@
     <string name="setting_app_list">Configuración de Lista de Apps</string>
     <string name="setting_default_launcher">Configurar Lanzador Predeterminado</string>
     <string name="setting_contact_list">Configuración de Contactos Rápidos</string>
-    <string name="setting_clean_files">Limpiar Archivos Basura</string>
-    <string name="setting_clean_memory">Liberar Memoria</string>
+    <!-- <string name="setting_clean_files">Limpiar Archivos Basura</string> -->
+    <!-- <string name="setting_clean_memory">Liberar Memoria</string> -->
 
     <string name="setting_pocket_mode">Modo Bolsillo</string>
 
@@ -20,16 +20,16 @@
     <string name="onboarding_desc">Una aplicación para simplificar la interfaz de su teléfono y proteger su dispositivo.</string>
     <string name="onboarding_start">Empezar</string>
 
-    <!-- Clean Files -->
+    <!-- Clean Files
     <string name="clean_files_title">Limpiar Archivos Basura</string>
     <string name="clean_files_desc">Listo para escanear el dispositivo</string>
     <string name="clean_files_start">Empezar Limpieza</string>
     <string name="clean_files_running">Escaneando y limpiando…</string>
     <string name="clean_files_completed">¡Limpieza completada!</string>
     <string name="clean_files_retry">Limpiar de Nuevo</string>
+    -->
 
-
-    <!-- Clean Memory -->
+    <!-- Clean Memory
     <string name="clean_memory_title">Liberar Memoria</string>
     <string name="clean_memory_stat_used">Usado</string>
     <string name="clean_memory_stat_free">Libre</string>
@@ -40,6 +40,7 @@
     <string name="clean_memory_optimal">¡El sistema está en estado óptimo!</string>
     <string name="clean_memory_retry">Optimizar de Nuevo</string>
     <string name="clean_memory_toast">Se liberaron $number_ram MB</string>
+    -->
 
     <!-- Contacts -->
     <string name="contact_tap_to_call">Llamar Ahora</string>

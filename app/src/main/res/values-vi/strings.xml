@@ -69,18 +69,22 @@
     <string name="setting_app_monitoring">Giám sát ứng dụng</string>
     <string name="setting_call_block">Chặn cuộc gọi</string>
     <string name="setting_auto_cleanup_apk">Tự động xoá APK đã tải về</string>
+    <!--
     <string name="setting_clean_files">Dọn dẹp tệp tin rác</string>
     <string name="setting_clean_memory">Giải phóng bộ nhớ</string>
+    -->
 
-    <!-- File Cleaner -->
+
+    <!-- File Cleaner
     <string name="clean_files_title">Dọn dẹp tệp tin</string>
     <string name="clean_files_start">Bắt đầu dọn dẹp</string>
     <string name="clean_files_running">Đang dọn dẹp…</string>
     <string name="clean_files_retry">Thử lại</string>
     <string name="clean_files_desc">Dọn dẹp các tệp tin rác để giải phóng dung lượng.</string>
     <string name="clean_files_completed">Đã dọn dẹp xong.</string>
+    -->
 
-    <!-- Memory Cleaner -->
+    <!-- Memory Cleaner
     <string name="clean_memory_title">Giải phóng bộ nhớ</string>
     <string name="clean_memory_start">Bắt đầu tối ưu</string>
     <string name="clean_memory_running">Đang tối ưu…</string>
@@ -91,6 +95,8 @@
     <string name="clean_memory_result_sub">Bộ nhớ đã được tối ưu để máy chạy nhanh hơn.</string>
     <string name="clean_memory_optimal">Thiết bị của bạn đang ở trạng thái tối ưu.</string>
     <string name="clean_memory_toast">Đã giải phóng $number_ram MB RAM.</string>
+    -->
+
 
     <!-- Permissions -->
     <string name="call_permission_title">Quyền gọi điện</string>

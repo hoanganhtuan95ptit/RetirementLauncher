@@ -25,7 +25,7 @@ import com.simple.ui.precompute.image.setImage
 import com.simple.ui.precompute.text.setText
 import kotlinx.coroutines.delay
 
-class CleanMemoryFragment : BaseFragment<FragmentCleanMemoryBinding>() {
+/*class CleanMemoryFragment : BaseFragment<FragmentCleanMemoryBinding>() {
 
     private val viewModel: CleanMemoryViewModel by viewModels()
 
@@ -134,8 +134,9 @@ class CleanMemoryFragment : BaseFragment<FragmentCleanMemoryBinding>() {
         binding.tvResult.parent.asObjectOrNull<View>()?.isVisible = resultViewData.show
         binding.tvResult.parent.asObjectOrNull<View>()?.setBackground(resultViewData.background)
     }
-}
+}*/
 
+/*
 @Deeplink
 class CleanMemoryDeeplinkHandler : DeeplinkHandler {
 
@@ -154,3 +155,4 @@ class CleanMemoryDeeplinkHandler : DeeplinkHandler {
         return true
     }
 }
+*/

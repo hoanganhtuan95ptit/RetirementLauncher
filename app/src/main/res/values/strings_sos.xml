@@ -6,6 +6,7 @@
     <string name="emergency_call_phone_number_hint">Enter phone number</string>
     <string name="emergency_call_save_success">Emergency call configuration saved</string>
 
+    <!--
     <string name="clean_cat_system_temp">System temporary files (.tmp, .log…)</string>
     <string name="clean_cat_compressed">Unknown compressed files</string>
     <string name="clean_cat_no_extension">Documents (.pdf, .doc, .txt…)</string>
@@ -15,6 +16,8 @@
     <string name="clean_result_space_freed">space freed</string>
     <string name="clean_files_idle_desc"> $number_file junk files detected – tap to clean</string>
     <string name="clean_files_count_unit">junk files</string>
+    -->
+
     <string name="call_permission_highlight">make calls</string>
     <string name="call_block_highlight">manage calls and contacts</string>
     <string name="setting_header_debug">🐛 Debug</string>
@@ -26,12 +29,12 @@
     <string name="usage_stats_permission_title">App Monitoring</string>
     <string name="usage_stats_permission_desc">For the app blocking feature to work, you need to grant \'Usage Data Access\'. This helps the app know when an unauthorized app is opened.</string>
     <string name="usage_stats_permission_highlight">\'Usage Data Access\'</string>
-    <string name="accessibility_permission_title">User Activity Detection</string>
-    <string name="accessibility_permission_desc">SOS uses the Accessibility Service to record your last interaction with the phone, enabling prompt rescue calls if abnormal signs are detected. We are committed to absolute privacy: the app does not read screen content, record text, or interfere with personal settings. All activity data is stored securely on your device and used solely for emergency rescue purposes.</string>
-    <string name="accessibility_permission_highlight">does not read screen content, record text, or interfere with personal settings</string>
+    <string name="accessibility_permission_title">User Activity Detection for SOS</string>
+    <string name="accessibility_permission_desc">The Auto Emergency Call (SOS) feature requires the Accessibility Service to detect if you are still using your phone. By recording only the time of your last touch interaction, the app can identify periods of abnormal inactivity and automatically trigger rescue calls to your emergency contacts. \n\nWe are committed to absolute privacy: \n• DOES NOT read or collect screen content.\n• DOES NOT record typed text or passwords.\n• DOES NOT inspect other apps or change system settings.\n• DOES NOT perform gestures or click buttons.\nAll activity timestamp data is stored securely on this device and used solely for emergency rescue purposes.</string>
+    <string name="accessibility_permission_highlight">DOES NOT read or collect screen content, record typed text, or interfere with personal settings</string>
     <string name="user_activity_accessibility_service_label">SOS User Activity Detection</string>
-    <string name="user_activity_accessibility_service_summary">Detects real user activity for SOS inactivity checks.</string>
-    <string name="user_activity_accessibility_service_desc">Used only by Auto SOS to detect whether the phone is still being actively used. The service listens only for the system event that indicates the user has started touching the screen, then saves the latest activity time on this device. It does not read screen content, collect typed text, inspect other apps, change settings, perform gestures, click buttons, or share this activity data.</string>
+    <string name="user_activity_accessibility_service_summary">Detects touch interactions to identify inactivity for Auto SOS calls.</string>
+    <string name="user_activity_accessibility_service_desc">This service is used exclusively by the Auto Emergency Call (SOS) feature to monitor whether the phone is being actively used. It listens only for touch interaction events to update a \"last active\" timestamp on the device. This allows the app to detect abnormal inactivity. The service DOES NOT read screen content, DOES NOT collect text, DOES NOT track other apps, DOES NOT perform gestures, and DOES NOT share any data outside the device.</string>
     <string name="app_monitoring_intro_title">Feature Introduction</string>
     <string name="app_monitoring_intro_desc">This feature helps protect users by only allowing selected apps to run. Other apps will be blocked to avoid unintended issues.</string>
     <string name="app_monitoring_intro_highlight">only allowing selected apps</string>

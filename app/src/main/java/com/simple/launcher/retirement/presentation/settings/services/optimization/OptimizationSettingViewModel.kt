@@ -27,6 +27,7 @@ class OptimizationSettingViewModel : BaseViewModel() {
                 )
             )
 
+            /*
             add(
                 settingItem(
                     id = SettingItem.ID_CLEAN_FILES,
@@ -44,6 +45,7 @@ class OptimizationSettingViewModel : BaseViewModel() {
                     resources = resources
                 )
             )
+            */
         }
 
         return GroupViewItem(order = 2, list = items)
