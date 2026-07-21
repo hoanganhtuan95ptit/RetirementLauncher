@@ -36,6 +36,6 @@ class InstallerCleanupSettingViewModel : BaseViewModel() {
             list.add(it)
         }
 
-        value = GroupViewItem(order = 1.3, list = list)
+//        value = GroupViewItem(order = 1.3, list = list)
     }
 }

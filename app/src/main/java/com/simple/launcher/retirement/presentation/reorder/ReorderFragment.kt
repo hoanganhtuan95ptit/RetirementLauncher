@@ -139,7 +139,7 @@ class ReorderFragment : BaseFragment<FragmentAppListBinding>() {
 
         // Xin quyền tuần tự — nếu bất kỳ quyền nào bị từ chối thì dừng
         if (type == ReorderType.APPS) {
-            if (!PermissionManager.requireFilePermission()) return
+//            if (!PermissionManager.requireFilePermission()) return
             if (!PermissionManager.requireUsageStatsPermission()) return
             if (!PermissionManager.requireOverlayPermission()) return
         }
@@ -168,7 +168,7 @@ class ReorderFragment : BaseFragment<FragmentAppListBinding>() {
         val repository = PreferenceRepository.instance
 
         if (!repository.isFileCleanupEnabled()) {
-            repository.setFileCleanupEnabled(true)
+//            repository.setFileCleanupEnabled(true)
         }
 
         if (!repository.isAppBlockEnabled()) {

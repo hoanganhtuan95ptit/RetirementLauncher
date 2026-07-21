@@ -31,7 +31,7 @@ class InstallerCleanupSettingService : ProtectSettingService() {
 
         viewModel.fileCleanupEnabledFlow.launchCollect(settingsFragment.viewLifecycleOwner) {
 
-            if (it) (settingsFragment.activity as? MainActivity)?.startBackgroundService()
+//            if (it) (settingsFragment.activity as? MainActivity)?.startBackgroundService()
         }
 
         AppEventBus.events.filterIsInstance<AppEvent.SettingClicked>().launchCollect(settingsFragment.viewLifecycleOwner) { event ->
