@@ -37,6 +37,8 @@ class InstallerCleanupSettingViewModel : BaseViewModel() {
         null
     ) { resources, isEnabled ->
 
+        // Tạm thời ẩn tính năng này bằng cách không thêm vào danh sách hiển thị
+        /*
         val list = arrayListOf<ViewItem>()
 
         settingItem(
@@ -54,6 +56,8 @@ class InstallerCleanupSettingViewModel : BaseViewModel() {
         }
 
         value = GroupViewItem(order = 1.3, list = list)
+        */
+        value = null
     }
 
     init {
