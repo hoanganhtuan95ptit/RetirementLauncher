@@ -2,9 +2,6 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="21">
-      <module name="AutoRegister.auto-register-processor" target="11" />
-      <module name="AutoRegister.auto-register-processor.main" target="11" />
-      <module name="AutoRegister.auto-register-processor.test" target="11" />
       <module name="RetirementLauncher.adapter" target="21" />
       <module name="RetirementLauncher.auto-register" target="21" />
       <module name="RetirementLauncher.component-service" target="21" />

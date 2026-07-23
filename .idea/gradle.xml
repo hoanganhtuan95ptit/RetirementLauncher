@@ -15,6 +15,18 @@
                   <project path="$PROJECT_DIR$/../Adapter/app" />
                 </projects>
               </build>
+              <build path="$PROJECT_DIR$/../AutoRegister" name="AutoRegister">
+                <projects>
+                  <project path="$PROJECT_DIR$/../AutoRegister" />
+                  <project path="$PROJECT_DIR$/../AutoRegister/app" />
+                  <project path="$PROJECT_DIR$/../AutoRegister/auto-register" />
+                  <project path="$PROJECT_DIR$/../AutoRegister/auto-register-dynamic-feature" />
+                  <project path="$PROJECT_DIR$/../AutoRegister/auto-register-processor" />
+                  <project path="$PROJECT_DIR$/../AutoRegister/samples" />
+                  <project path="$PROJECT_DIR$/../AutoRegister/samples/feature_dynamic" />
+                  <project path="$PROJECT_DIR$/../AutoRegister/samples/feature_library" />
+                </projects>
+              </build>
               <build path="$PROJECT_DIR$/../ComponentService" name="ComponentService">
                 <projects>
                   <project path="$PROJECT_DIR$/../ComponentService" />
@@ -49,6 +61,14 @@
             <option value="$PROJECT_DIR$/../Adapter/adapter" />
             <option value="$PROJECT_DIR$/../Adapter/adapter-processor" />
             <option value="$PROJECT_DIR$/../Adapter/app" />
+            <option value="$PROJECT_DIR$/../AutoRegister" />
+            <option value="$PROJECT_DIR$/../AutoRegister/app" />
+            <option value="$PROJECT_DIR$/../AutoRegister/auto-register" />
+            <option value="$PROJECT_DIR$/../AutoRegister/auto-register-dynamic-feature" />
+            <option value="$PROJECT_DIR$/../AutoRegister/auto-register-processor" />
+            <option value="$PROJECT_DIR$/../AutoRegister/samples" />
+            <option value="$PROJECT_DIR$/../AutoRegister/samples/feature_dynamic" />
+            <option value="$PROJECT_DIR$/../AutoRegister/samples/feature_library" />
             <option value="$PROJECT_DIR$/../ComponentService" />
             <option value="$PROJECT_DIR$/../ComponentService/app" />
             <option value="$PROJECT_DIR$/../ComponentService/component-service" />
