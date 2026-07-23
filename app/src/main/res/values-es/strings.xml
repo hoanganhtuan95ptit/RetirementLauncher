@@ -10,11 +10,7 @@
     <string name="setting_app_list">Configuración de Lista de Apps</string>
     <string name="setting_default_launcher">Configurar Lanzador Predeterminado</string>
     <string name="setting_contact_list">Configuración de Contactos Rápidos</string>
-    <string name="setting_protection_feature">Función de protección</string>
-    <string name="setting_protection_feature_desc">Proteja el dispositivo y elimine archivos de instalación desconocidos para personas mayores</string>
     <!-- <string name="setting_clean_files">Limpiar Archivos Basura</string> -->
-    <!-- <string name="setting_clean_memory">Liberar Memoria</string> -->
-
     <string name="setting_pocket_mode">Modo Bolsillo</string>
 
     <!-- Onboarding -->
@@ -32,16 +28,7 @@
     -->
 
     <!-- Clean Memory
-    <string name="clean_memory_title">Liberar Memoria</string>
-    <string name="clean_memory_stat_used">Usado</string>
-    <string name="clean_memory_stat_free">Libre</string>
-    <string name="clean_memory_stat_total">Total</string>
-    <string name="clean_memory_result_sub">Sistema optimizado</string>
-    <string name="clean_memory_start">Acelerar Ahora</string>
-    <string name="clean_memory_running">Optimizando sistema…</string>
-    <string name="clean_memory_optimal">¡El sistema está en estado óptimo!</string>
-    <string name="clean_memory_retry">Optimizar de Nuevo</string>
-    <string name="clean_memory_toast">Se liberaron $number_ram MB</string>
+
     -->
 
     <!-- Contacts -->
@@ -89,7 +76,6 @@
     <string name="done">Hecho</string>
     <string name="setting_app_monitoring">Monitoreo de Aplicaciones</string>
     <string name="setting_call_block">Bloqueo de Llamadas</string>
-    <string name="setting_auto_cleanup_apk">Limpieza automática de APK descargados</string>
     <string name="call_permission_title">Permiso de Llamada</string>
     <string name="call_permission_desc">Requerido para hacer llamadas desde el lanzador.</string>
     <string name="call_block_title">Permiso de Bloqueo de Llamadas</string>

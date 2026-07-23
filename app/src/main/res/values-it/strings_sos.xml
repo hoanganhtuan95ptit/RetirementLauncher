@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>\n    <string name="setting_emergency_call">Chiamata di emergenza automatica (SOS)</string>
+<resources>
+    <string name="setting_emergency_call">Chiamata di emergenza automatica (SOS)</string>
     <string name="emergency_call_desc">Se il telefono non viene usato, l\'app effettuerà automaticamente una chiamata di emergenza.</string>
     <string name="emergency_call_enable">Attiva funzione</string>
     <string name="emergency_call_phone_number">Numero di Telefono di Emergenza</string>
@@ -19,9 +20,6 @@
     <string name="call_block_highlight">gestire chiamate e contatti</string>
     <string name="setting_header_debug">🐛 Debug</string>
     <string name="setting_debug_block_screen">Visualizza Schermata di Blocco</string>
-    <string name="file_permission_title">Protezione Archiviazione</string>
-    <string name="file_permission_desc">Affinché l\'eliminazione automatica di file APK/AAB sconosciuti funzioni, l\'app deve avere accesso a tutto l\'archivio. Questo aiuta a mantenere il tuo dispositivo pulito e sicuro.</string>
-    <string name="file_permission_highlight">APK/AAB sconosciuti</string>
     <string name="usage_stats_permission_title">Monitoraggio Applicazioni</string>
     <string name="usage_stats_permission_desc">Affinché la funzione di blocco delle app funzioni, è necessario concedere l\'\'Accesso ai dati di utilizzo\'. Questo aiuta l\'app a sapere quando viene aperta un\'app non autorizzata.</string>
     <string name="usage_stats_permission_highlight">\'Accesso ai dati di utilizzo\'</string>
@@ -39,14 +37,6 @@
     <string name="emergency_call_intro_desc">Per garantire la sicurezza, l\'app chiamerà automaticamente l\'elenco dei contatti rapidi se non viene rilevata alcuna interazione dell\'utente sul telefono.</string>
     <string name="emergency_call_intro_highlight">chiamerà automaticamente l\'elenco dei contatti rapidi</string>
     <string name="emergency_call_intro_action">Ho capito</string>
-    <string name="file_cleanup_intro_title">Presentazione Funzionalità</string>
-    <string name="file_cleanup_intro_desc">Questa funzione aiuta a proteggere gli utenti eliminando automaticamente i file di installazione sconosciuti (APK) scaricati sul dispositivo, evitando l\'installazione di applicazioni non riconosciute.</string>
-    <string name="file_cleanup_intro_highlight">eliminando automaticamente i file di installazione sconosciuti (APK)</string>
-    <string name="file_cleanup_intro_action">Ho capito</string>
-    <string name="call_block_intro_title">Presentazione Funzionalità</string>
-    <string name="call_block_intro_desc">Questa funzionalità aiuta a proteggere gli utenti bloccando automaticamente le chiamate da numeri sconosciuti non presenti nei contatti, evitando fastidi da pubblicità o truffe.</string>
-    <string name="call_block_intro_highlight">bloccando automaticamente le chiamate da numeri sconosciuti</string>
-    <string name="call_block_intro_action">Ho capito</string>
     <string name="emergency_contact_required_title">Configurazione Contatto Richiesta</string>
     <string name="emergency_contact_required_desc">Non hai ancora configurato il tuo elenco di contatti rapidi. Affinché questa funzione sia attiva, seleziona almeno un contatto.</string>
     <string name="emergency_contact_required_highlight">seleziona almeno un contatto</string>

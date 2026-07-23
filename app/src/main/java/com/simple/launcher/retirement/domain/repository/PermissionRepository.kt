@@ -4,7 +4,6 @@ import com.simple.launcher.retirement.data.repository.PermissionRepositoryImpl
 
 interface PermissionRepository {
 
-    fun hasFilePermission(): Boolean
     fun hasUsageStatsPermission(): Boolean
     fun hasOverlayPermission(): Boolean
     fun hasCallBlockPermissions(): Boolean
@@ -17,7 +16,6 @@ interface PermissionRepository {
     fun hasUserActivityAccessibilityPermission(): Boolean
 
     suspend fun requireUsageStatsPermission(): Boolean
-    suspend fun requireFilePermission(): Boolean
     suspend fun requireOverlayPermission(): Boolean
     suspend fun requireDefaultLauncher(): Boolean
     suspend fun requireCallPermission(): Boolean
@@ -28,7 +26,6 @@ interface PermissionRepository {
     suspend fun requirePinPermissions(): Boolean
     suspend fun requireAppMonitoringIntro(): Boolean
     suspend fun requireEmergencyCallIntro(): Boolean
-    suspend fun requireFileCleanupIntro(): Boolean
     suspend fun requireCallBlockIntro(): Boolean
 
     companion object {

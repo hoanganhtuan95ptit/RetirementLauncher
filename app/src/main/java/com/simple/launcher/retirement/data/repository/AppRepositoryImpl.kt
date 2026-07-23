@@ -59,7 +59,7 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
             "com.android.vpndialogs",
             "com.android.htmlviewer",
             "com.android.certinstaller",
-            "com.android.packageinstaller",
+//            "com.android.packageinstaller",
             "com.android.intentresolver",          // System share sheet / intent chooser
             "com.android.backupconfirm",
             "com.android.managedprovisioning",

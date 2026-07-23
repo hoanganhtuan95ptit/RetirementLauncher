@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>\n    <string name="setting_emergency_call">Автоматический экстренный вызов (SOS)</string>
+<resources>
+    <string name="setting_emergency_call">Автоматический экстренный вызов (SOS)</string>
     <string name="emergency_call_desc">Если телефон не используется, приложение автоматически совершит экстренный вызов.</string>
     <!-- <string name="clean_cat_system_temp">Временные системные файлы (.tmp, .log…)</string> -->
     <!-- <string name="clean_cat_compressed">Неизвестные сжатые файлы</string> -->
@@ -14,9 +15,6 @@
     <string name="call_block_highlight">управлять звонками и контактами</string>
     <string name="setting_header_debug">🐛 Отладка</string>
     <string name="setting_debug_block_screen">Просмотр экрана блокировки</string>
-    <string name="file_permission_title">Защита хранилища</string>
-    <string name="file_permission_desc">Для работы функции автоматического удаления неизвестных файлов APK/AAB приложению требуется доступ ко всему хранилищу. Это помогает поддерживать ваше устройство в чистоте и безопасности.</string>
-    <string name="file_permission_highlight">неизвестные APK/AAB</string>
     <string name="usage_stats_permission_title">Мониторинг приложений</string>
     <string name="usage_stats_permission_desc">Для работы функции блокировки приложений необходимо предоставить «Доступ к данным об использовании». Это помогает приложению узнавать, когда открывается неавторизованное приложение.</string>
     <string name="usage_stats_permission_highlight">«Доступ к данным об использовании»</string>
@@ -34,14 +32,6 @@
     <string name="emergency_call_intro_desc">Для обеспечения безопасности приложение автоматически позвонит по списку быстрых контактов, если на телефоне не будет обнаружено никакой активности пользователя.</string>
     <string name="emergency_call_intro_highlight">автоматически позвонит по списку быстрых контактов</string>
     <string name="emergency_call_intro_action">Я понимаю</string>
-    <string name="file_cleanup_intro_title">О функции</string>
-    <string name="file_cleanup_intro_desc">Эта функция помогает защитить пользователей, автоматически удаляя неизвестные установочные файлы (APK), загруженные на устройство, что предотвращает установку неопознанных приложений.</string>
-    <string name="file_cleanup_intro_highlight">автоматически удаляя неизвестные установочные файлы (APK)</string>
-    <string name="file_cleanup_intro_action">Я понимаю</string>
-    <string name="call_block_intro_title">О функции</string>
-    <string name="call_block_intro_desc">Эта функция помогает защитить пользователей, автоматически блокируя звонки с неизвестных номеров, которых нет в контактах, что позволяет избежать беспокойства со стороны рекламы или мошенников.</string>
-    <string name="call_block_intro_highlight">автоматически блокируя звонки с неизвестных номеров</string>
-    <string name="call_block_intro_action">Я понимаю</string>
     <string name="emergency_contact_required_title">Требуется настройка контакта</string>
     <string name="emergency_contact_required_desc">Вы еще не настроили список быстрых контактов. Чтобы эта функция работала, выберите хотя бы один контакт.</string>
     <string name="emergency_contact_required_highlight">выберите хотя бы один контакт</string>

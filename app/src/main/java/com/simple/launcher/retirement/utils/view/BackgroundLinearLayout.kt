@@ -7,11 +7,11 @@ import android.widget.LinearLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.lifecycle.findViewTreeViewModelStoreOwner
-import com.simple.component.service.launchCollect
 import com.simple.launcher.retirement.presentation.base.BaseViewModel
 import com.simple.launcher.retirement.utils.background.Background
 import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.combineState
+import com.simple.launcher.retirement.utils.lifecycle.observe
 import com.simple.launcher.retirement.utils.size.DP
 import kotlinx.coroutines.flow.StateFlow
 
@@ -26,7 +26,7 @@ class BackgroundLinearLayout(context: Context, attrs: AttributeSet?) : LinearLay
 
         val lifecycleOwner = findViewTreeLifecycleOwner() ?: return
 
-        viewModel.background2.launchCollect(lifecycleOwner) {
+        viewModel.background2.observe(lifecycleOwner) {
             setBackground(it)
         }
     }

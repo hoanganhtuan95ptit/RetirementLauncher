@@ -10,8 +10,6 @@
     <string name="setting_app_list">Thiết lập danh sách app</string>
     <string name="setting_default_launcher">Thiết lập launcher mặc định</string>
     <string name="setting_contact_list">Thiết lập liên hệ nhanh</string>
-    <string name="setting_protection_feature">Tính năng bảo vệ</string>
-    <string name="setting_protection_feature_desc">Bảo vệ thiết bị &amp; Tự động xóa các file cài đặt lạ cho người cao tuổi</string>
 
     <string name="setting_pocket_mode">Chống chạm nhầm (túi quần)</string>
 
@@ -70,10 +68,9 @@
     <!-- Optimization & Settings -->
     <string name="setting_app_monitoring">Giám sát ứng dụng</string>
     <string name="setting_call_block">Chặn cuộc gọi</string>
-    <string name="setting_auto_cleanup_apk">Tự động xoá APK đã tải về</string>
     <!--
     <string name="setting_clean_files">Dọn dẹp tệp tin rác</string>
-    <string name="setting_clean_memory">Giải phóng bộ nhớ</string>
+
     -->
 
 
@@ -87,16 +84,7 @@
     -->
 
     <!-- Memory Cleaner
-    <string name="clean_memory_title">Giải phóng bộ nhớ</string>
-    <string name="clean_memory_start">Bắt đầu tối ưu</string>
-    <string name="clean_memory_running">Đang tối ưu…</string>
-    <string name="clean_memory_retry">Thử lại</string>
-    <string name="clean_memory_stat_used">Đã dùng</string>
-    <string name="clean_memory_stat_free">Còn trống</string>
-    <string name="clean_memory_stat_total">Tổng cộng</string>
-    <string name="clean_memory_result_sub">Bộ nhớ đã được tối ưu để máy chạy nhanh hơn.</string>
-    <string name="clean_memory_optimal">Thiết bị của bạn đang ở trạng thái tối ưu.</string>
-    <string name="clean_memory_toast">Đã giải phóng $number_ram MB RAM.</string>
+
     -->
 
 

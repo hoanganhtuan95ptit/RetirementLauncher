@@ -116,9 +116,6 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
             SettingItem.ID_APP_LIST -> sendDeeplinkWithBackStack(DeepLinks.APP_LIST)
             SettingItem.ID_CONTACT_LIST -> sendDeeplinkWithBackStack(DeepLinks.CONTACT_LIST)
             SettingItem.ID_DEFAULT_LAUNCHER -> requireDefaultLauncher()
-//            SettingItem.ID_CLEAN_FILES -> sendDeeplinkWithBackStack(DeepLinks.CLEAN_FILES)
-//            SettingItem.ID_CLEAN_MEMORY -> sendDeeplinkWithBackStack(DeepLinks.CLEAN_MEMORY)
-//            SettingItem.ID_DEBUG_BLOCK_SCREEN -> openDebugBlockScreen()
         }
     }
 

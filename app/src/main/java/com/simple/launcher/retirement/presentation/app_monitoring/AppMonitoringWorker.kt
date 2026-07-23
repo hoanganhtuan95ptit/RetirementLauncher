@@ -154,8 +154,8 @@ class AppMonitoringWorker(context: Context) : BackgroundWorker(context) {
             "com.huawei.android.launcher",
             "com.android.permissioncontroller",
             "com.google.android.permissioncontroller",
-            "com.android.packageinstaller",
-            "com.google.android.packageinstaller"
+//            "com.android.packageinstaller",
+//            "com.google.android.packageinstaller"
         )
     }
 }

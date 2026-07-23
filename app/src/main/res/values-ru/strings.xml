@@ -10,8 +10,6 @@
     <string name="setting_app_list">Настройка списка приложений</string>
     <string name="setting_default_launcher">Установить лаунчер по умолчанию</string>
     <string name="setting_contact_list">Настройка быстрых контактов</string>
-    <string name="setting_protection_feature">Функция защиты</string>
-    <string name="setting_protection_feature_desc">Защита устройства и автоудаление неизвестных установочных файлов для пожилых людей</string>
 
     <string name="setting_pocket_mode">В кармане</string>
 
@@ -64,10 +62,7 @@
     <string name="done">Готово</string>
     <string name="default_launcher_highlight">Retirement Launcher</string>    <string name="setting_app_monitoring">Мониторинг приложений</string>
     <string name="setting_call_block">Блокировка вызовов</string>
-    <string name="setting_auto_cleanup_apk">Автоочистка загруженных APK</string>
     <!-- <string name="setting_clean_files">Очистка ненужных файлов</string> -->
-    <!-- <string name="setting_clean_memory">Очистка памяти</string> -->
-
     <!-- Clean Files
     <string name="clean_files_title">Очистка файлов</string>
     <string name="clean_files_start">Начать очистку</string>
@@ -78,16 +73,7 @@
     -->
 
     <!-- Clean Memory
-    <string name="clean_memory_title">Очистка памяти</string>
-    <string name="clean_memory_start">Начать оптимизацию</string>
-    <string name="clean_memory_running">Оптимизация…</string>
-    <string name="clean_memory_retry">Повторить</string>
-    <string name="clean_memory_stat_used">Использовано</string>
-    <string name="clean_memory_stat_free">Свободно</string>
-    <string name="clean_memory_stat_total">Всего</string>
-    <string name="clean_memory_result_sub">Память оптимизирована для лучшей производительности.</string>
-    <string name="clean_memory_optimal">Ваше устройство в оптимальном состоянии.</string>
-    <string name="clean_memory_toast">Очищено $number_ram МБ оперативной памяти.</string>
+
     -->
 
     <string name="call_permission_title">Разрешение на вызовы</string>

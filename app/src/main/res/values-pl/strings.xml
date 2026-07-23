@@ -10,8 +10,6 @@
     <string name="setting_app_list">Konfiguracja listy aplikacji</string>
     <string name="setting_default_launcher">Ustaw domyślny launcher</string>
     <string name="setting_contact_list">Konfiguracja szybkich kontaktów</string>
-    <string name="setting_protection_feature">Funkcja ochrony</string>
-    <string name="setting_protection_feature_desc">Chroń urządzenie i automatycznie usuwaj nieznane pliki instalacyjne dla osób starszych</string>
 
     <string name="setting_pocket_mode">Tryb kieszonkowy</string>
 
@@ -64,10 +62,7 @@
     <string name="done">Gotowe</string>
     <string name="default_launcher_highlight">Retirement Launcher</string>    <string name="setting_app_monitoring">Monitorowanie aplikacji</string>
     <string name="setting_call_block">Blokowanie połączeń</string>
-    <string name="setting_auto_cleanup_apk">Automatyczne czyszczenie pobranych plików APK</string>
     <!-- <string name="setting_clean_files">Czyść zbędne pliki</string> -->
-    <!-- <string name="setting_clean_memory">Czyść pamięć</string> -->
-
     <!-- Clean Files
     <string name="clean_files_title">Czyść pliki</string>
     <string name="clean_files_start">Rozpocznij czyszczenie</string>
@@ -78,16 +73,7 @@
     -->
 
     <!-- Clean Memory
-    <string name="clean_memory_title">Czyść pamięć</string>
-    <string name="clean_memory_start">Rozpocznij optymalizację</string>
-    <string name="clean_memory_running">Optymalizacja…</string>
-    <string name="clean_memory_retry">Ponów</string>
-    <string name="clean_memory_stat_used">Użyte</string>
-    <string name="clean_memory_stat_free">Wolne</string>
-    <string name="clean_memory_stat_total">Łącznie</string>
-    <string name="clean_memory_result_sub">Pamięć została zoptymalizowana dla lepszej wydajności.</string>
-    <string name="clean_memory_optimal">Twoje urządzenie jest w optymalnym stanie.</string>
-    <string name="clean_memory_toast">Wyczyszczono $number_ram MB pamięci RAM.</string>
+
     -->
 
     <string name="call_permission_title">Uprawnienie do połączeń</string>

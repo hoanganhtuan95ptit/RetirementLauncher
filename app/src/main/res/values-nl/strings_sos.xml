@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>\n    <string name="setting_emergency_call">Automatische noodoproep (SOS)</string>
+<resources>
+    <string name="setting_emergency_call">Automatische noodoproep (SOS)</string>
     <string name="emergency_call_desc">Als de telefoon niet wordt gebruikt, maakt de app automatisch een noodoproep.</string>
     <!-- <string name="clean_cat_system_temp">Tijdelijke systeembestanden (.tmp, .log…)</string> -->
     <!-- <string name="clean_cat_compressed">Onbekende gecomprimeerde bestanden</string> -->
@@ -14,9 +15,6 @@
     <string name="call_block_highlight">oproepen und contacten beheren</string>
     <string name="setting_header_debug">🐛 Debug</string>
     <string name="setting_debug_block_screen">Blokkeerscherm bekijken</string>
-    <string name="file_permission_title">Opslagbeveiliging</string>
-    <string name="file_permission_desc">Om de automatische verwijdering van onbekende APK/AAB-bestanden te laten werken, heeft de app toegang tot alle opslagruimte nodig. Dit helpt om uw apparaat schoon en veilig te houden.</string>
-    <string name="file_permission_highlight">onbekende APK/AAB</string>
     <string name="usage_stats_permission_title">App-monitoring</string>
     <string name="usage_stats_permission_desc">Om de app-blokkeerfunctie te laten werken, moet u \'Toegang tot gebruiksgegevens\' verlenen. Dit helpt de app te weten wanneer een niet-geautoriseerde app wordt geopend.</string>
     <string name="usage_stats_permission_highlight">\'Toegang tot gebruiksgegevens\'</string>
@@ -34,14 +32,6 @@
     <string name="emergency_call_intro_desc">Om de veiligheid te garanderen, belt de app automatisch de snelcontactlijst als er geen gebruikersinteractie op de telefoon wordt gedetecteerd.</string>
     <string name="emergency_call_intro_highlight">belt automatisch de snelcontactlijst</string>
     <string name="emergency_call_intro_action">Ik begrijp het</string>
-    <string name="file_cleanup_intro_title">Introductie functie</string>
-    <string name="file_cleanup_intro_desc">Deze functie helugt gebruikers te beschermen door automatisch onbekende installatiebestanden (APK) te verwijderen die naar het apparaat zijn gedownload, waardoor de installatie van niet-herkende toepassingen wordt voorkomen.</string>
-    <string name="file_cleanup_intro_highlight">automatisch onbekende installatiebestanden (APK) te verwijderen</string>
-    <string name="file_cleanup_intro_action">Ik begrijp het</string>
-    <string name="call_block_intro_title">Introductie functie</string>
-    <string name="call_block_intro_desc">Deze functie helpt gebruikers te beschermen door automatisch oproepen te blokkeren van onbekende nummers die niet in de contacten staan, waardoor overlast door advertenties of oplichting wordt voorkomen.</string>
-    <string name="call_block_intro_highlight">automatisch oproepen te blokkeren van onbekende nummers</string>
-    <string name="call_block_intro_action">Ik begrijp het</string>
     <string name="emergency_contact_required_title">Contact instellen vereist</string>
     <string name="emergency_contact_required_desc">U heeft uw snelcontactlijst nog niet ingesteld. Om deze functie te laten werken, selecteert u ten minste één contact.</string>
     <string name="emergency_contact_required_highlight">selecteert u ten minste één contact</string>

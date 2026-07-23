@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>\n    <string name="setting_emergency_call">Llamada de emergencia automática (SOS)</string>\n    <!-- <string name="clean_cat_system_temp">Archivos temporales del sistema (.tmp, .log…)</string> -->
+<resources>
+    <string name="setting_emergency_call">Llamada de emergencia automática (SOS)</string>
+    <!-- <string name="clean_cat_system_temp">Archivos temporales del sistema (.tmp, .log…)</string> -->
     <!-- <string name="clean_cat_compressed">Archivos comprimidos desconocidos</string> -->
     <!-- <string name="clean_cat_no_extension">Documentos (.pdf, .doc, .txt…)</string> -->
     <!-- <string name="clean_cat_apk_cache">APKs antiguos y caché</string> -->
@@ -7,13 +9,12 @@
     <!-- <string name="clean_result_files_deleted">archivos eliminados</string> -->
     <!-- <string name="clean_result_space_freed">espacio liberado</string> -->
     <!-- <string name="clean_files_idle_desc"> $number_file archivos basura detectados – toca para limpiar</string> -->
-    <!-- <string name="clean_files_count_unit">archivos basura</string> -->\n    <string name="call_permission_highlight">hacer llamadas</string>\n    <string name="call_block_highlight">gestionar llamadas y contactos</string>
+    <!-- <string name="clean_files_count_unit">archivos basura</string> -->
+    <string name="call_permission_highlight">hacer llamadas</string>
+    <string name="call_block_highlight">gestionar llamadas y contactos</string>
     <string name="emergency_call_desc">Si el teléfono no se usa, la aplicación realizará automáticamente una llamada de emergencia.</string>
     <string name="setting_header_debug">🐛 Depuración</string>
     <string name="setting_debug_block_screen">Ver Pantalla de Bloqueo</string>
-    <string name="file_permission_title">Protección de Almacenamiento</string>
-    <string name="file_permission_desc">Para que la eliminación automática de archivos APK/AAB desconocidos funcione, la aplicación necesita acceso a todo el almacenamiento. Esto ayuda a mantener su dispositivo limpio y seguro.</string>
-    <string name="file_permission_highlight">APK/AAB desconocidos</string>
     <string name="usage_stats_permission_title">Monitoreo de Aplicaciones</string>
     <string name="usage_stats_permission_desc">Para que la función de bloqueo de aplicaciones funcione, debe otorgar \'Acceso a datos de uso\'. Esto ayuda a la aplicación a saber cuándo se abre una aplicación no autorizada.</string>
     <string name="usage_stats_permission_highlight">\'Acceso a datos de uso\'</string>
@@ -31,10 +32,6 @@
     <string name="emergency_call_intro_desc">Para garantizar la seguridad, la aplicación llamará automáticamente a la lista de contactos rápidos si no se detecta interacción del usuario en el teléfono.</string>
     <string name="emergency_call_intro_highlight">llamará automáticamente a la lista de contactos rápidos</string>
     <string name="emergency_call_intro_action">Lo entiendo</string>
-    <string name="file_cleanup_intro_title">Introducción a la Función</string>
-    <string name="file_cleanup_intro_desc">Esta función ayuda a proteger a los usuarios eliminando automáticamente archivos de instalación desconocidos (APK) descargados en el dispositivo, evitando la instalación de aplicaciones no reconocidas.</string>
-    <string name="file_cleanup_intro_highlight">eliminando automáticamente los archivos de instalación desconocidos (APK)</string>
-    <string name="file_cleanup_intro_action">Lo entiendo</string>
     <string name="call_block_intro_title">Introducción a la Función</string>
     <string name="call_block_intro_desc">Esta función ayuda a proteger a los usuarios bloqueando automáticamente las llamadas de números desconocidos que no están en los contactos, evitando molestias de publicidad o estafas.</string>
     <string name="call_block_intro_highlight">bloqueando automáticamente las llamadas de números desconocidos</string>

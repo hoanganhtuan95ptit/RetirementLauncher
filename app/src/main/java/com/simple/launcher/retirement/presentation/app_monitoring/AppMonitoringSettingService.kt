@@ -5,13 +5,13 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.activityViewModels
 import com.simple.auto.register.AutoRegister
 import com.simple.component.service.ActivityCreatedService
-import com.simple.component.service.launchCollect
 import com.simple.launcher.retirement.presentation.main.MainActivity
 import com.simple.launcher.retirement.presentation.settings.SettingsFragment
 import com.simple.launcher.retirement.presentation.settings.adapters.SettingItem
 import com.simple.launcher.retirement.presentation.settings.services.protect.ProtectSettingService
 import com.simple.launcher.retirement.utils.AppEvent
 import com.simple.launcher.retirement.utils.AppEventBus
+import com.simple.launcher.retirement.utils.lifecycle.observe
 import kotlinx.coroutines.flow.filterIsInstance
 
 @AutoRegister(apis = [ActivityCreatedService::class])
@@ -21,7 +21,7 @@ class AppMonitoringService : ActivityCreatedService {
 
         val viewModel = fragmentActivity.viewModels<AppMonitoringSettingViewModel>().value
 
-        viewModel.appBlockEnabledFlow.launchCollect(fragmentActivity) {
+        viewModel.appBlockEnabledFlow.observe(fragmentActivity) {
 
             if (it) (fragmentActivity as? MainActivity)?.startBackgroundService()
         }
@@ -45,7 +45,7 @@ class AppMonitoringSettingService : ProtectSettingService() {
 
     private fun observeAppMonitoringSettingItem(settingsFragment: SettingsFragment) {
 
-        viewModel.viewItemList.launchCollect(settingsFragment) {
+        viewModel.viewItemList.observe(settingsFragment) {
 
             protectSettingViewModel.updateItem(it)
         }
@@ -55,7 +55,7 @@ class AppMonitoringSettingService : ProtectSettingService() {
 
         AppEventBus.events
             .filterIsInstance<AppEvent.SettingClicked>()
-            .launchCollect(settingsFragment.viewLifecycleOwner) { event ->
+            .observe(settingsFragment.viewLifecycleOwner) { event ->
 
                 setAppBlockEnabledIfToggle(event.item)
             }

@@ -10,11 +10,7 @@
     <string name="setting_app_list">Nastavení seznamu aplikací</string>
     <string name="setting_default_launcher">Nastavit výchozí launcher</string>
     <string name="setting_contact_list">Nastavení rychlých kontaktů</string>
-    <string name="setting_protection_feature">Funkce ochrany</string>
-    <string name="setting_protection_feature_desc">Chraňte zařízení a automaticky mazejte neznámé instalační soubory pro seniory</string>
     <!-- <string name="setting_clean_files">Vyčistit nepotřebné soubory</string> -->
-    <!-- <string name="setting_clean_memory">Uvolnit paměť</string> -->
-
     <string name="setting_pocket_mode">Režim v kapse</string>
 
     <!-- Onboarding -->
@@ -32,16 +28,7 @@
     -->
 
     <!-- Clean Memory
-    <string name="clean_memory_title">Uvolnit paměť</string>
-    <string name="clean_memory_stat_used">Použito</string>
-    <string name="clean_memory_stat_free">Volno</string>
-    <string name="clean_memory_stat_total">Celkem</string>
-    <string name="clean_memory_result_sub">Systém byl optimalizován</string>
-    <string name="clean_memory_start">Zrychlit nyní</string>
-    <string name="clean_memory_running">Optimalizace systému…</string>
-    <string name="clean_memory_optimal">Systém je v optimálním stavu!</string>
-    <string name="clean_memory_retry">Optimalizovat znovu</string>
-    <string name="clean_memory_toast">Uvolněno $number_ram MB</string>
+
     -->
 
     <!-- Contacts -->
@@ -89,7 +76,6 @@
     <string name="done">Hotovo</string>
     <string name="default_launcher_highlight">Retirement Launcher</string>    <string name="setting_app_monitoring">Sledování aplikací</string>
     <string name="setting_call_block">Blokování hovorů</string>
-    <string name="setting_auto_cleanup_apk">Automaticky čistit stažené soubory APK</string>
     <string name="call_permission_title">Oprávnění k hovorům</string>
     <string name="call_permission_desc">Vyžadováno pro volání z launcheru.</string>
     <string name="call_block_title">Oprávnění k blokování hovorů</string>

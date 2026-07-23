@@ -15,11 +15,8 @@
     <string name="call_block_highlight">কল এবং যোগাযোগ ব্যবস্থাপনা</string>
     <string name="setting_header_debug">🐛 ডিবাগ</string>
     <string name="setting_debug_block_screen">ব্লক স্ক্রিন দেখুন</string>
-    <string name="file_permission_title">স্টোরেজ সুরক্ষা</string>
-    <string name="file_permission_desc">অজানা APK/AAB ফাইল স্বয়ংক্রিয়ভাবে মুছে ফেলার বৈশিষ্ট্যটি কাজ করার জন্য অ্যাপটির সমস্ত স্টোরেজ অ্যাক্সেস প্রয়োজন। এটি আপনার ডিভাইস পরিষ্কার এবং নিরাপদ রাখতে সাহায্য করে।</string>
-    <string name="file_permission_highlight">অজানা APK/AAB</string>
     <string name="usage_stats_permission_title">অ্যাপ মনিটরিং</string>
-    <string name="usage_stats_permission_desc">অ্যাপ ব্লক করার বৈশিষ্ট্যটি কাজ করার জন্য আপনাকে \'ব্যবহারের ডেটা অ্যাক্সেস\' মঞ্জুর করতে হবে। এটি অ্যাপটিকে জানতে সাহায্য করে যখন কোনো অননุมোদিত অ্যাপ খোলা হয়।</string>
+    <string name="usage_stats_permission_desc">অ্যাপ ব্লক করার বৈশিষ্ট্যটি কাজ করার জন্য আপনাকে \'ব্যবহারের ডেটা অ্যাক্সেস\' মঞ্জুর করতে হবে। এটি অ্যাপটিকে জানতে সাহায্য করে যখন কোনো অননুমোদিত অ্যাপ খোলা হয়।</string>
     <string name="usage_stats_permission_highlight">\'ব্যবহারের ডেটা অ্যাক্সেস\'</string>
     <string name="accessibility_permission_title">User Activity Detection for SOS</string>
     <string name="accessibility_permission_desc">The Auto Emergency Call (SOS) feature requires the Accessibility Service to detect if you are still using your phone. By recording only the time of your last touch interaction, the app can identify periods of abnormal inactivity and automatically trigger rescue calls to your emergency contacts. \n\nWe are committed to absolute privacy: \n• DOES NOT read or collect screen content.\n• DOES NOT record typed text or passwords.\n• DOES NOT inspect other apps or change system settings.\n• DOES NOT perform gestures or click buttons.\nAll activity timestamp data is stored securely on this device and used solely for emergency rescue purposes.</string>
@@ -32,13 +29,9 @@
     <string name="app_monitoring_intro_highlight">শুধুমাত্র নির্বাচিত অ্যাপগুলিকে চালানোর অনুমতি</string>
     <string name="app_monitoring_intro_action">আমি বুঝেছি</string>
     <string name="emergency_call_intro_title">বৈশিষ্ট্যের পরিচিতি</string>
-    <string name="emergency_call_intro_desc">নিরাপত্তা सुनिश्चित করতে, ফোনে কোনো ব্যবহারকারীর মিথস্ক্রিয়া সনাক্ত না হলে অ্যাপটি স্বয়ংক্রিয়ভাবে দ্রুত যোগাযোগ তালিকায় কল করবে।</string>
+    <string name="emergency_call_intro_desc">নিরাপত্তা सुनिश्चित করতে, ফোনে কোনো ব্যবহারকারীর মিথস্মিলন সনাক্ত না হলে অ্যাপটি স্বয়ংক্রিয়ভাবে দ্রুত যোগাযোগ তালিকায় কল করবে।</string>
     <string name="emergency_call_intro_highlight">স্বয়ংক্রিয়ভাবে দ্রুত যোগাযোগ তালিকায় কল করা</string>
     <string name="emergency_call_intro_action">আমি বুঝেছি</string>
-    <string name="file_cleanup_intro_title">বৈশিষ্ট্যের পরিচিতি</string>
-    <string name="file_cleanup_intro_desc">এই বৈশিষ্ট্যটি ডিভাইসে ডাউনলোড করা অজানা ইনস্টলেশন ফাইল (APK) স্বয়ংক্রিয়ভাবে মুছে ফেলার মাধ্যমে ব্যবহারকারীদের সুরক্ষিত করতে সহায়তা করে, যা অপরিচিত অ্যাপ্লিকেশন ইনস্টলেশন এড়ায়।</string>
-    <string name="file_cleanup_intro_highlight">অজানা ইনস্টলেশন ফাইল (APK) স্বয়ংক্রিয়ভাবে মুছে ফেলা</string>
-    <string name="file_cleanup_intro_action">আমি বুঝেছি</string>
     <string name="call_block_intro_title">বৈশিষ্ট্যের পরিচিতি</string>
     <string name="call_block_intro_desc">এই বৈশিষ্ট্যটি পরিচিতিতে নেই এমন অজানা নম্বর থেকে কল স্বয়ংক্রিয়ভাবে ব্লক করে ব্যবহারকারীদের সুরক্ষিত করতে সাহায্য করে, যাতে বিজ্ঞাপন বা জালিয়াতি দ্বারা বিরক্ত হওয়া এড়ানো যায়।</string>
     <string name="call_block_intro_highlight">অজানা নম্বর থেকে কল স্বয়ংক্রিয়ভাবে ব্লক করা</string>

@@ -14,9 +14,7 @@
     <string name="call_block_highlight">hívások és névjegyek kezelése</string>
     <string name="setting_header_debug">🐛 Debug</string>
     <string name="setting_debug_block_screen">Blokkolási képernyő megtekintése</string>
-    <string name="file_permission_title">Tárhelyvédelem</string>
-    <string name="file_permission_desc">Az ismeretlen APK/AAB fájlok automatikus törlésének működéséhez az alkalmazásnak hozzá kell férnie a teljes tárhelyhez. Ez segít tisztán és biztonságban tartani a készüléket.</string>
-    <string name="file_permission_highlight">ismeretlen APK/AAB</string>
+
     <string name="usage_stats_permission_title">Alkalmazásfigyelés</string>
     <string name="usage_stats_permission_desc">Az alkalmazásblokkoló funkció működéséhez engedélyeznie kell a „Használati adatokhoz való hozzáférést”. Ez segít az alkalmazásnak felismerni, ha egy nem engedélyezett alkalmazást nyitnak meg.</string>
     <string name="usage_stats_permission_highlight">„Használati adatokhoz való hozzáférés”</string>
@@ -34,10 +32,7 @@
     <string name="emergency_call_intro_desc">A biztonság garantálása érdekében az alkalmazás automatikusan hívja a gyors kapcsolatok listáját, ha nem észlelhető felhasználói interakció a telefonon.</string>
     <string name="emergency_call_intro_highlight">automatikusan hívja a gyors kapcsolatok listáját</string>
     <string name="emergency_call_intro_action">Értem</string>
-    <string name="file_cleanup_intro_title">Funkció bemutatása</string>
-    <string name="file_cleanup_intro_desc">Ez a funkció segít megvédeni a felhasználókat az eszközre letöltött ismeretlen telepítőfájlok (APK) automatikus törlésével, elkerülve az ismeretlen alkalmazások telepítését.</string>
-    <string name="file_cleanup_intro_highlight">automatikusan törli az ismeretlen telepítőfájlokat (APK)</string>
-    <string name="file_cleanup_intro_action">Értem</string>
+
     <string name="call_block_intro_title">Funkció bemutatása</string>
     <string name="call_block_intro_desc">Ez a funkció segít megvédeni a felhasználókat azáltal, hogy automatikusan blokkolja a névjegyzékben nem szereplő ismeretlen számokról érkező hívásokat, elkerülve a reklámok vagy csalások okozta kellemetlenségeket.</string>
     <string name="call_block_intro_highlight">automatikusan blokkolja az ismeretlen számokról érkező hívásokat</string>

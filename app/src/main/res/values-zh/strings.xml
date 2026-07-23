@@ -10,8 +10,6 @@
     <string name="setting_app_list">应用列表设置</string>
     <string name="setting_default_launcher">设置默认启动器</string>
     <string name="setting_contact_list">快速联系人设置</string>
-    <string name="setting_protection_feature">保护功能</string>
-    <string name="setting_protection_feature_desc">为老年人保护设备并自动删除陌生的安装文件</string>
 
     <string name="setting_pocket_mode">口袋模式</string>
 
@@ -64,10 +62,7 @@
     <string name="done">完成</string>
     <string name="default_launcher_highlight">Retirement Launcher</string>    <string name="setting_app_monitoring">应用监控</string>
     <string name="setting_call_block">通话拦截</string>
-    <string name="setting_auto_cleanup_apk">自动清理已下载的 APK</string>
     <!-- <string name="setting_clean_files">清理垃圾文件</string> -->
-    <!-- <string name="setting_clean_memory">清理内存</string> -->
-
     <!-- Clean Files
     <string name="clean_files_title">清理文件</string>
     <string name="clean_files_start">开始清理</string>
@@ -78,16 +73,7 @@
     -->
 
     <!-- Clean Memory
-    <string name="clean_memory_title">清理内存</string>
-    <string name="clean_memory_start">开始优化</string>
-    <string name="clean_memory_running">正在优化…</string>
-    <string name="clean_memory_retry">重试</string>
-    <string name="clean_memory_stat_used">已用</string>
-    <string name="clean_memory_stat_free">空闲</string>
-    <string name="clean_memory_stat_total">总计</string>
-    <string name="clean_memory_result_sub">内存已优化，性能更佳。</string>
-    <string name="clean_memory_optimal">您的设备处于最佳状态。</string>
-    <string name="clean_memory_toast">已清理 $number_ram MB 内存。</string>
+
     -->
 
     <string name="call_permission_title">通话权限</string>

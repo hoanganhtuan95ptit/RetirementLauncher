@@ -19,7 +19,6 @@ class PreferenceRepositoryImpl(context: Context) : PreferenceRepository {
     private var isPendingDefaultLauncherRam: Boolean = false
     private var pendingEmergencyConfigRam: com.simple.launcher.retirement.domain.model.SOSConfig? = null
     private var pendingAppBlockEnabledRam: Boolean? = null
-    private var pendingFileCleanupEnabledRam: Boolean? = null
     private var pendingCallBlockEnabledRam: Boolean? = null
 
     companion object {
@@ -28,8 +27,6 @@ class PreferenceRepositoryImpl(context: Context) : PreferenceRepository {
         private const val KEY_ONBOARDING_COMPLETED = "onboarding_completed"
         private const val KEY_APP_BLOCK_ENABLED = "app_block_enabled"
         private const val KEY_APP_BLOCK_FIRST_TIME = "app_block_first_time"
-        private const val KEY_FILE_CLEANUP_ENABLED = "file_cleanup_enabled"
-        private const val KEY_FILE_CLEANUP_FIRST_TIME = "file_cleanup_first_time"
         private const val KEY_CALL_BLOCK_ENABLED = "call_block_enabled"
         private const val KEY_CALL_BLOCK_FIRST_TIME = "call_block_first_time"
         private const val KEY_POCKET_MODE_ENABLED = "pocket_mode_enabled"
@@ -49,7 +46,6 @@ class PreferenceRepositoryImpl(context: Context) : PreferenceRepository {
     }
 
     private val _appBlockEnabled = MutableStateFlow(isAppBlockEnabled())
-    private val _fileCleanupEnabled = MutableStateFlow(isFileCleanupEnabled())
     private val _callBlockEnabled = MutableStateFlow(isCallBlockEnabled())
     private val _pocketModeEnabled = MutableStateFlow(isPocketModeEnabled())
     private val _emergencyCallEnabled = MutableStateFlow(isEmergencyCallEnabled())
@@ -108,32 +104,6 @@ class PreferenceRepositoryImpl(context: Context) : PreferenceRepository {
         pendingAppBlockEnabledRam = enabled
     }
 
-    // File Cleanup
-    override fun isFileCleanupEnabled(): Boolean =
-        sharedPrefs.getBoolean(KEY_FILE_CLEANUP_ENABLED, false)
-
-    override fun fileCleanupEnabledFlow(): Flow<Boolean> = _fileCleanupEnabled.asStateFlow()
-
-    override fun setFileCleanupEnabled(enabled: Boolean) {
-
-        sharedPrefs.edit { putBoolean(KEY_FILE_CLEANUP_ENABLED, enabled) }
-        _fileCleanupEnabled.value = enabled
-    }
-
-    override fun isFileCleanupFirstTime(): Boolean =
-        sharedPrefs.getBoolean(KEY_FILE_CLEANUP_FIRST_TIME, true)
-
-    override fun setFileCleanupFirstTime(firstTime: Boolean) {
-
-        sharedPrefs.edit { putBoolean(KEY_FILE_CLEANUP_FIRST_TIME, firstTime) }
-    }
-
-    override fun getPendingFileCleanupEnabled(): Boolean? = pendingFileCleanupEnabledRam
-
-    override fun setPendingFileCleanupEnabled(enabled: Boolean?) {
-
-        pendingFileCleanupEnabledRam = enabled
-    }
 
     // Call Block
     override fun isCallBlockEnabled(): Boolean =

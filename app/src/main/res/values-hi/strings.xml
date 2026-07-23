@@ -8,10 +8,8 @@
     <string name="setting_header_optimization">ऑप्टिमाइज़ेशन और यूटिलिटीज</string>
     <string name="setting_pin">पिन सेटअप</string>
     <string name="setting_app_list">ऐप सूची सेटअप</string>
-    <string name="setting_default_launcher">डिफ़ॉल्ट लॉन्चर सेट करें</string>
+    <string name="setting_default_launcher">डिफ़ॉल्ट लॉन्cher सेट करें</string>
     <string name="setting_contact_list">त्वरित संपर्क सेटअप</string>
-    <string name="setting_protection_feature">सुरक्षा सुविधा</string>
-    <string name="setting_protection_feature_desc">बुजुर्गों के लिए डिवाइस सुरक्षा और अपरिचित इंस्टॉलेशन फ़ाइलों को स्वचालित रूप से हटाना</string>
 
     <string name="setting_pocket_mode">पॉकेट मोड</string>
 
@@ -40,7 +38,7 @@
 
     <!-- Block -->
     <string name="block_title">ऐप ब्लॉक किया गया</string>
-    <string name="block_desc">यह एप्लिकेशन अनुमत सूची में नहीं है。 कृपया व्यवस्थापक से संपर्क करें。</string>
+    <string name="block_desc">यह एप्लिकेशन अनुमत सूची में नहीं है। कृपया व्यवस्थापक से संपर्क करें।</string>
     <string name="block_go_home">होम स्क्रीन पर जाएं</string>
 
     <!-- Permissions & Setup -->
@@ -64,10 +62,7 @@
     <string name="done">हो गया</string>
     <string name="default_launcher_highlight">Retirement Launcher</string>    <string name="setting_app_monitoring">ऐप निगरानी</string>
     <string name="setting_call_block">कॉल ब्लॉकिंग</string>
-    <string name="setting_auto_cleanup_apk">डाउनलोड किए गए APK को ऑटो क्लीन करें</string>
     <!-- <string name="setting_clean_files">जंक फाइलें साफ करें</string> -->
-    <!-- <string name="setting_clean_memory">मेमोरी साफ करें</string> -->
-
     <!-- Clean Files
     <string name="clean_files_title">फाइलें साफ करें</string>
     <string name="clean_files_start">सफाई शुरू करें</string>
@@ -78,16 +73,7 @@
     -->
 
     <!-- Clean Memory
-    <string name="clean_memory_title">मेमोरी साफ करें</string>
-    <string name="clean_memory_start">अनुकूलन शुरू करें</string>
-    <string name="clean_memory_running">अनुकूलन हो रहा है…</string>
-    <string name="clean_memory_retry">पुनः प्रयास करें</string>
-    <string name="clean_memory_stat_used">उपयोग किया गया</string>
-    <string name="clean_memory_stat_free">खाली</string>
-    <string name="clean_memory_stat_total">कुल</string>
-    <string name="clean_memory_result_sub">बेहतर प्रदर्शन के लिए मेमोरी को अनुकूलित किया गया है।</string>
-    <string name="clean_memory_optimal">आपका डिवाइस इष्टतम स्थिति में है।</string>
-    <string name="clean_memory_toast">$number_ram MB रैम साफ की गई।</string>
+
     -->
 
     <string name="call_permission_title">कॉल अनुमति</string>

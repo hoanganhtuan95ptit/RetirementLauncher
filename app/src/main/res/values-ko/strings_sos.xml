@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>\n    <string name="setting_emergency_call">자동 긴급 전화 (SOS)</string>
+<resources>
+    <string name="setting_emergency_call">자동 긴급 전화 (SOS)</string>
     <string name="emergency_call_desc">전화기를 사용하지 않으면 앱에서 자동으로 긴급 전화를 겁니다.</string>
     <!-- <string name="clean_cat_system_temp">시스템 임시 파일 (.tmp, .log…)</string> -->
     <!-- <string name="clean_cat_compressed">알 수 없는 압축 파일</string> -->
@@ -14,9 +15,6 @@
     <string name="call_block_highlight">전화 및 연락처 관리</string>
     <string name="setting_header_debug">🐛 디버그</string>
     <string name="setting_debug_block_screen">차단 화면 보기</string>
-    <string name="file_permission_title">저장소 보호</string>
-    <string name="file_permission_desc">알 수 없는 APK/AAB 파일을 자동으로 삭제하려면 앱에 모든 저장소 액세스 권한이 필요합니다. 이를 통해 장치를 깨끗하고 안전하게 유지할 수 있습니다.</string>
-    <string name="file_permission_highlight">알 수 없는 APK/AAB</string>
     <string name="usage_stats_permission_title">앱 모니터링</string>
     <string name="usage_stats_permission_desc">앱 차단 기능이 작동하려면 \'사용 정보 접근\' 권한을 허용해야 합니다. 이를 통해 앱은 승인되지 않은 앱이 언제 열리는지 알 수 있습니다.</string>
     <string name="usage_stats_permission_highlight">\'사용 정보 접근\'</string>
@@ -34,10 +32,6 @@
     <string name="emergency_call_intro_desc">안전을 보장하기 위해 휴대폰에서 사용자 상호 작용이 감지되지 않으면 앱이 자동으로 단축 번호 목록으로 전화를 겁니다.</string>
     <string name="emergency_call_intro_highlight">단축 번호 목록으로 자동 전화 걸기</string>
     <string name="emergency_call_intro_action">이해했습니다</string>
-    <string name="file_cleanup_intro_title">기능 소개</string>
-    <string name="file_cleanup_intro_desc">이 기능은 장치에 다운로드된 알 수 없는 설치 파일(APK)을 자동으로 삭제하여 인식되지 않는 애플리케이션의 설치를 방지함으로써 사용자를 보호합니다.</string>
-    <string name="file_cleanup_intro_highlight">알 수 없는 설치 파일(APK) 자동 삭제</string>
-    <string name="file_cleanup_intro_action">이해했습니다</string>
     <string name="call_block_intro_title">기능 소개</string>
     <string name="call_block_intro_desc">이 기능은 연락처에 없는 알 수 없는 번호의 전화를 자동으로 차단하여 광고나 사기로부터 방해받지 않도록 사용자를 보호합니다. </string>
     <string name="call_block_intro_highlight">알 수 없는 번호의 전화 자동 차단</string>

@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>\n    <string name="setting_emergency_call">Automatischer Notruf (SOS)</string>
+<resources>
+    <string name="setting_emergency_call">Automatischer Notruf (SOS)</string>
     <string name="emergency_call_desc">Wenn das Telefon nicht benutzt wird, setzt die App automatisch einen Notruf ab.</string>
     <string name="call_permission_highlight">Anrufe tätigen</string>
     <string name="call_block_highlight">Anrufe und Kontakte verwalten</string>
     <string name="setting_header_debug">🐛 Debug</string>
     <string name="setting_debug_block_screen">Sperrbildschirm anzeigen</string>
-    <string name="file_permission_title">Speicher-Schutz</string>
-    <string name="file_permission_desc">Damit die automatische Löschung unbekannter APK/AAB-Dateien funktioniert, benötigt die App Zugriff auf den gesamten Speicher. Dies hilft, Ihr Gerät sauber und sicher zu halten.</string>
-    <string name="file_permission_highlight">unbekannte APK/AAB</string>
     <string name="usage_stats_permission_title">App-Überwachung</string>
     <string name="usage_stats_permission_desc">Damit die App-Sperrfunktion funktioniert, müssen Sie den „Zugriff auf Nutzungsdaten“ gewähren. Dies hilft der App zu erkennen, wenn eine nicht autorisierte App geöffnet wird.</string>
     <string name="usage_stats_permission_highlight">„Zugriff auf Nutzungsdaten“</string>
@@ -25,10 +23,6 @@
     <string name="emergency_call_intro_desc">Um die Sicherheit zu gewährleisten, ruft die App automatisch die Schnellkontaktliste an, wenn keine Benutzerinteraktion auf dem Telefon erkannt wird.</string>
     <string name="emergency_call_intro_highlight">ruft automatisch die Schnellkontaktliste an</string>
     <string name="emergency_call_intro_action">Ich verstehe</string>
-    <string name="file_cleanup_intro_title">Funktions-Einführung</string>
-    <string name="file_cleanup_intro_desc">Diese Funktion schützt Benutzer, indem sie automatisch unbekannte Installationsdateien (APK) löscht, die auf das Gerät heruntergeladen wurden, um die Installation nicht erkannter Anwendungen zu vermeiden.</string>
-    <string name="file_cleanup_intro_highlight">automatisch unbekannte Installationsdateien (APK) löscht</string>
-    <string name="file_cleanup_intro_action">Ich verstehe</string>
     <string name="call_block_intro_title">Funktions-Einführung</string>
     <string name="call_block_intro_desc">Diese Funktion schützt Benutzer, indem sie automatisch Anrufe von unbekannten Nummern blockiert, die nicht in den Kontakten enthalten sind, um Belästigungen durch Werbung oder Betrug zu vermeiden.</string>
     <string name="call_block_intro_highlight">automatisch Anrufe von unbekannten Nummern blockiert</string>

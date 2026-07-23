@@ -10,8 +10,6 @@
     <string name="setting_app_list">앱 목록 설정</string>
     <string name="setting_default_launcher">기본 런처 설정</string>
     <string name="setting_contact_list">단축 번호 설정</string>
-    <string name="setting_protection_feature">보호 기능</string>
-    <string name="setting_protection_feature_desc">고령자를 위한 기기 보호 및 알 수 없는 설치 파일 자동 삭제</string>
 
     <string name="setting_pocket_mode">포켓 모드</string>
 
@@ -64,10 +62,7 @@
     <string name="done">완료</string>
     <string name="default_launcher_highlight">Retirement Launcher</string>    <string name="setting_app_monitoring">앱 모니터링</string>
     <string name="setting_call_block">전화 차단</string>
-    <string name="setting_auto_cleanup_apk">다운로드된 APK 자동 정리</string>
     <!-- <string name="setting_clean_files">정크 파일 정리</string> -->
-    <!-- <string name="setting_clean_memory">메모리 정리</string> -->
-
     <!-- Clean Files
     <string name="clean_files_title">파일 정리</string>
     <string name="clean_files_start">정리 시작</string>
@@ -78,16 +73,7 @@
     -->
 
     <!-- Clean Memory
-    <string name="clean_memory_title">메모리 정리</string>
-    <string name="clean_memory_start">최적화 시작</string>
-    <string name="clean_memory_running">최적화 중…</string>
-    <string name="clean_memory_retry">재시도</string>
-    <string name="clean_memory_stat_used">사용됨</string>
-    <string name="clean_memory_stat_free">여유</string>
-    <string name="clean_memory_stat_total">전체</string>
-    <string name="clean_memory_result_sub">더 나은 성능을 위해 메모리가 최적화되었습니다.</string>
-    <string name="clean_memory_optimal">기기가 최적의 상태입니다.</string>
-    <string name="clean_memory_toast">$number_ram MB의 RAM을 정리했습니다.</string>
+
     -->
 
     <string name="call_permission_title">전화 권한</string>

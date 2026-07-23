@@ -10,8 +10,6 @@
     <string name="setting_app_list">ตั้งค่ารายการแอป</string>
     <string name="setting_default_launcher">ตั้งค่าตัวเปิดเริ่มต้น</string>
     <string name="setting_contact_list">ตั้งค่าผู้ติดต่อด่วน</string>
-    <string name="setting_protection_feature">ฟีเจอร์การป้องกัน</string>
-    <string name="setting_protection_feature_desc">ปกป้องอุปกรณ์และลบไฟล์ติดตั้งที่ไม่รู้จักโดยอัตโนมัติสำหรับผู้สูงอายุ</string>
 
     <string name="setting_pocket_mode">โหมดพ็อกเก็ต</string>
 
@@ -64,10 +62,7 @@
     <string name="done">เสร็จสิ้น</string>
     <string name="default_launcher_highlight">Retirement Launcher</string>    <string name="setting_app_monitoring">การตรวจสอบแอป</string>
     <string name="setting_call_block">การบล็อกสายโทรเข้า</string>
-    <string name="setting_auto_cleanup_apk">ล้างไฟล์ APK ที่ดาวน์โหลดโดยอัตโนมัติ</string>
     <!-- <string name="setting_clean_files">ล้างไฟล์ขยะ</string> -->
-    <!-- <string name="setting_clean_memory">ล้างหน่วยความจำ</string> -->
-
     <!-- Clean Files
     <string name="clean_files_title">ล้างไฟล์</string>
     <string name="clean_files_start">เริ่มการล้าง</string>
@@ -78,16 +73,7 @@
     -->
 
     <!-- Clean Memory
-    <string name="clean_memory_title">ล้างหน่วยความจำ</string>
-    <string name="clean_memory_start">เริ่มการเพิ่มประสิทธิภาพ</string>
-    <string name="clean_memory_running">กำลังเพิ่มประสิทธิภาพ…</string>
-    <string name="clean_memory_retry">ลองใหม่</string>
-    <string name="clean_memory_stat_used">ใช้ไป</string>
-    <string name="clean_memory_stat_free">ว่าง</string>
-    <string name="clean_memory_stat_total">ทั้งหมด</string>
-    <string name="clean_memory_result_sub">เพิ่มประสิทธิภาพหน่วยความจำเพื่อการทำงานที่ดีขึ้นแล้ว</string>
-    <string name="clean_memory_optimal">อุปกรณ์ของคุณอยู่ในสภาพที่เหมาะสมที่สุด</string>
-    <string name="clean_memory_toast">ล้างหน่วยความจำ RAM ไป $number_ram MB</string>
+
     -->
 
     <string name="call_permission_title">สิทธิ์การโทร</string>

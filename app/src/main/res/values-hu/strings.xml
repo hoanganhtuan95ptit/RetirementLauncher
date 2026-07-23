@@ -10,8 +10,6 @@
     <string name="setting_app_list">Alkalmazáslista beállítása</string>
     <string name="setting_default_launcher">Alapértelmezett indító beállítása</string>
     <string name="setting_contact_list">Gyors kapcsolatok beállítása</string>
-    <string name="setting_protection_feature">Védelmi funkció</string>
-    <string name="setting_protection_feature_desc">Eszközvédelem és ismeretlen telepítőfájlok automatikus törlése időseknek</string>
 
     <string name="setting_pocket_mode">Zseb mód</string>
 
@@ -64,10 +62,7 @@
     <string name="done">Kész</string>
     <string name="default_launcher_highlight">Retirement Launcher</string>    <string name="setting_app_monitoring">Alkalmazásfigyelés</string>
     <string name="setting_call_block">Hívásblokkolás</string>
-    <string name="setting_auto_cleanup_apk">Letöltött APK-k automatikus törlése</string>
     <!-- <string name="setting_clean_files">Szemétfájlok törlése</string> -->
-    <!-- <string name="setting_clean_memory">Memória tisztítása</string> -->
-
     <!-- Clean Files
     <string name="clean_files_title">Fájlok tisztítása</string>
     <string name="clean_files_start">Tisztítás indítása</string>
@@ -78,16 +73,7 @@
     -->
 
     <!-- Clean Memory
-    <string name="clean_memory_title">Memória tisztítása</string>
-    <string name="clean_memory_start">Optimalizálás indítása</string>
-    <string name="clean_memory_running">Optimalizálás…</string>
-    <string name="clean_memory_retry">Újra</string>
-    <string name="clean_memory_stat_used">Használt</string>
-    <string name="clean_memory_stat_free">Szabad</string>
-    <string name="clean_memory_stat_total">Összesen</string>
-    <string name="clean_memory_result_sub">A memória optimalizálva lett a jobb teljesítmény érdekében.</string>
-    <string name="clean_memory_optimal">A készülék optimális állapotban van.</string>
-    <string name="clean_memory_toast">$number_ram MB RAM felszabadítva.</string>
+
     -->
 
     <string name="call_permission_title">Hívási engedély</string>

@@ -23,9 +23,6 @@
     <string name="setting_header_debug">🐛 Debug</string>
     <string name="setting_debug_block_screen">View Block Screen</string>
 
-    <string name="file_permission_title">Storage Protection</string>
-    <string name="file_permission_desc">For the automatic deletion of unknown APK/AAB files to work, the app needs access to all storage. This helps keep your device clean and safe.</string>
-    <string name="file_permission_highlight">unknown APK/AAB</string>
     <string name="usage_stats_permission_title">App Monitoring</string>
     <string name="usage_stats_permission_desc">For the app blocking feature to work, you need to grant \'Usage Data Access\'. This helps the app know when an unauthorized app is opened.</string>
     <string name="usage_stats_permission_highlight">\'Usage Data Access\'</string>
@@ -43,10 +40,6 @@
     <string name="emergency_call_intro_desc">To ensure safety, the app will automatically call the quick contact list if no user interaction is detected on the phone.</string>
     <string name="emergency_call_intro_highlight">automatically call the quick contact list</string>
     <string name="emergency_call_intro_action">I understand</string>
-    <string name="file_cleanup_intro_title">Feature Introduction</string>
-    <string name="file_cleanup_intro_desc">This feature helps protect users by automatically deleting unknown installation files (APK) downloaded to the device, avoiding the installation of unrecognized applications.</string>
-    <string name="file_cleanup_intro_highlight">automatically deleting unknown installation files (APK)</string>
-    <string name="file_cleanup_intro_action">I understand</string>
     <string name="call_block_intro_title">Feature Introduction</string>
     <string name="call_block_intro_desc">This feature helps protect users by automatically blocking calls from unknown numbers not in the contacts, avoiding being bothered by ads or scams.</string>
     <string name="call_block_intro_highlight">automatically blocking calls from unknown numbers</string>

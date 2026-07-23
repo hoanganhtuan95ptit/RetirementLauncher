@@ -14,9 +14,7 @@
     <string name="call_block_highlight">कॉल और संपर्क प्रबंधन</string>
     <string name="setting_header_debug">🐛 डिबग</string>
     <string name="setting_debug_block_screen">ब्लॉक स्क्रीन देखें</string>
-    <string name="file_permission_title">स्टोरेज सुरक्षा</string>
-    <string name="file_permission_desc">अज्ञात एपीके/एएबी फाइलों को ऑटो डिलीट करने के फीचर के काम करने के लिए, ऐप को सभी स्टोरेज तक पहुंच की आवश्यकता है। यह आपके डिवाइस को साफ और सुरक्षित रखने में मदद करता है।</string>
-    <string name="file_permission_highlight">अज्ञात एपीके/एएबी</string>
+
     <string name="usage_stats_permission_title">ऐप मॉनitoring</string>
     <string name="usage_stats_permission_desc">ऐप ब्लॉकिंग फीचर के काम करने के लिए, आपको \'उपयोग डेटा एक्सेस\' प्रदान करने की आवश्यकता है। यह ऐप को यह जानने में मदद करता है कि कब कोई अनधिकृत ऐप खोला जाता है।</string>
     <string name="usage_stats_permission_highlight">\'उपयोग डेटा एक्सेस\'</string>
@@ -34,10 +32,7 @@
     <string name="emergency_call_intro_desc">सुरक्षा सुनिश्चित करने के लिए, यदि फोन पर कोई उपयोगकर्ता इंटरैक्शन नहीं पाया जाता है, तो ऐप स्वचालित रूप적으로 त्वरित संपर्क सूची पर कॉल करेगा।</string>
     <string name="emergency_call_intro_highlight">स्वचालित रूप से त्वरित संपर्क सूची पर कॉल करें</string>
     <string name="emergency_call_intro_action">मैं समझता हूं</string>
-    <string name="file_cleanup_intro_title">फीचर परिचय</string>
-    <string name="file_cleanup_intro_desc">यह सुविधा डिवाइस पर डाउनलोड की गई अज्ञात इंस्टॉलेशन फ़ाइलों (APK) को स्वचालित रूप से हटाकर उपयोगकर्ताओं की सुरक्षा करने में मदद करती है, जिससे अपरिचित अनुप्रयोगों के इंस्टॉलेशन से बचा जा सके।</string>
-    <string name="file_cleanup_intro_highlight">अज्ञात इंस्टॉलेशन फाइलों (एपीके) को स्वचालित रूप से डिलीट करना</string>
-    <string name="file_cleanup_intro_action">मैं समझता हूं</string>
+
     <string name="call_block_intro_title">फीचर परिचय</string>
     <string name="call_block_intro_desc">यह फीचर संपर्कों में नहीं मौजूद अज्ञात नंबरों से आने वाली कॉल को स्वचालित रूप से ब्लॉक करके उपयोगकर्ताओं की सुरक्षा करने में मदद करता है, जिससे विज्ञापनों या घोटालों से होने वाली परेशानी से बचा जा सकता है।</string>
     <string name="call_block_intro_highlight">अज्ञात नंबरों से आने वाली कॉल को स्वचालित रूप से ब्लॉक करना</string>

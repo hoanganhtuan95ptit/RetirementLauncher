@@ -5,7 +5,6 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.activityViewModels
 import com.simple.auto.register.AutoRegister
 import com.simple.component.service.ActivityCreatedService
-import com.simple.component.service.launchCollect
 import com.simple.launcher.retirement.presentation.DeepLinks
 import com.simple.launcher.retirement.presentation.main.MainActivity
 import com.simple.launcher.retirement.presentation.sendDeeplinkWithBackStack
@@ -14,6 +13,7 @@ import com.simple.launcher.retirement.presentation.settings.adapters.SettingItem
 import com.simple.launcher.retirement.presentation.settings.services.protect.ProtectSettingService
 import com.simple.launcher.retirement.utils.AppEvent
 import com.simple.launcher.retirement.utils.AppEventBus
+import com.simple.launcher.retirement.utils.lifecycle.observe
 import com.simple.launcher.retirement.utils.permission.PermissionManager
 import kotlinx.coroutines.flow.filterIsInstance
 
@@ -24,7 +24,7 @@ class EmergencyService : ActivityCreatedService {
 
         val viewModel = fragmentActivity.viewModels<EmergencySettingViewModel>().value
 
-        viewModel.emergencyCallEnabledFlow.launchCollect(fragmentActivity) { isEnabled ->
+        viewModel.emergencyCallEnabledFlow.observe(fragmentActivity) { isEnabled ->
 
             if (isEnabled) {
 
@@ -52,7 +52,7 @@ class EmergencySettingService : ProtectSettingService() {
 
     private fun observeEmergencySettingItem(settingsFragment: SettingsFragment) {
 
-        viewModel.viewItemList.launchCollect(settingsFragment.viewLifecycleOwner) {
+        viewModel.viewItemList.observe(settingsFragment.viewLifecycleOwner) {
 
             protectSettingViewModel.updateItem(it)
         }
@@ -60,7 +60,7 @@ class EmergencySettingService : ProtectSettingService() {
 
     private fun observeEmergencySettingClick(settingsFragment: SettingsFragment) {
 
-        AppEventBus.events.filterIsInstance<AppEvent.SettingClicked>().launchCollect(settingsFragment.viewLifecycleOwner) { event ->
+        AppEventBus.events.filterIsInstance<AppEvent.SettingClicked>().observe(settingsFragment.viewLifecycleOwner) { event ->
 
             openSosSettingsIfEmergencyToggle(event.item)
         }

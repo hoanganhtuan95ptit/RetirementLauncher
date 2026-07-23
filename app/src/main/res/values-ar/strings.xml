@@ -10,11 +10,7 @@
     <string name="setting_app_list">إعداد قائمة التطبيقات</string>
     <string name="setting_default_launcher">تعيين المشغل الافتراضي</string>
     <string name="setting_contact_list">إعداد جهات الاتصال السريعة</string>
-    <string name="setting_protection_feature">ميزة الحماية</string>
-    <string name="setting_protection_feature_desc">حماية الجهاز وحذف ملفات التثبيت غير المعروفة تلقائيًا لكبار السن</string>
     <!-- <string name="setting_clean_files">تنظيف الملفات غير المرغوب فيها</string> -->
-    <!-- <string name="setting_clean_memory">تحرير الذاكرة</string> -->
-
     <string name="setting_pocket_mode">وضع الجيب</string>
 
     <!-- Onboarding -->
@@ -32,16 +28,7 @@
     -->
 
     <!-- Clean Memory
-    <string name="clean_memory_title">تحرير الذاكرة</string>
-    <string name="clean_memory_stat_used">المستخدمة</string>
-    <string name="clean_memory_stat_free">المتاحة</string>
-    <string name="clean_memory_stat_total">الإجمالي</string>
-    <string name="clean_memory_result_sub">تم تحسين النظام</string>
-    <string name="clean_memory_start">تسريع الآن</string>
-    <string name="clean_memory_running">جاري تحسين النظام…</string>
-    <string name="clean_memory_optimal">النظام في الحالة المثالية!</string>
-    <string name="clean_memory_retry">تحسين مرة أخرى</string>
-    <string name="clean_memory_toast">تم تحرير $number_ram ميجابايت</string>
+
     -->
 
     <!-- Contacts -->
@@ -89,7 +76,6 @@
     <string name="done">تم</string>
     <string name="default_launcher_highlight">Retirement Launcher</string>    <string name="setting_app_monitoring">مراقبة التطبيقات</string>
     <string name="setting_call_block">حظر المكالمات</string>
-    <string name="setting_auto_cleanup_apk">التنظيف التلقائي لملفات APK المحملة</string>
     <string name="call_permission_title">إذن المكالمات</string>
     <string name="call_permission_desc">مطلوب لإجراء المكالمات من المشغل.</string>
     <string name="call_block_title">إذن حظر المكالمات</string>

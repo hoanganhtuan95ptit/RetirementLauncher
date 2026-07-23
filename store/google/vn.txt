@@ -16,7 +16,6 @@ Dù bạn đang cài đặt điện thoại cho bản thân hay người thân, 
 ━━━━━━━━━━━━━━
 
 🛡️ Tính năng bảo vệ
-* Bảo vệ thiết bị & Tự động xóa các file cài đặt lạ cho người cao tuổi.
 * Tự động chặn cuộc gọi từ số lạ để tránh bị làm phiền và lừa đảo.
 * Ngăn chặn việc mở các ứng dụng lạ không được phép để bảo vệ người dùng.
 
@@ -46,7 +45,7 @@ Dù bạn đang cài đặt điện thoại cho bản thân hay người thân, 
 
 ✅ Ứng dụng Android đơn giản nhất cho người cao tuổi.
 ✅ Biểu tượng lớn, dễ nhìn, dễ thao tác.
-✅ Tính năng bảo vệ thông minh, tự động dọn dẹp file cài đặt lạ và tránh lừa đảo.
+✅ Tính năng bảo vệ thông minh tránh lừa đảo.
 ✅ Truy cập nhanh người thân chỉ với một chạm.
 ✅ Tích hợp công cụ cứu hộ SOS an toàn.
 ✅ Hoạt động nhẹ nhàng, mượt mà trên mọi thiết bị.

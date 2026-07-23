@@ -34,9 +34,6 @@
 *   **Cơ chế bảo vệ 11 giờ:** Đây là tính năng an toàn cốt lõi. Nếu hệ thống nhận thấy thiết bị không có bất kỳ tương tác nào từ người dùng (không chạm, không bật màn hình) trong suốt **11 tiếng**, ứng dụng sẽ tự động kích hoạt cuộc gọi khẩn cấp.
 *   Cuộc gọi sẽ được thực hiện lần lượt đến danh sách các số liên lạc thân nhân đã thiết lập, giúp kịp thời phát hiện và hỗ trợ nếu người cao tuổi gặp sự cố sức khỏe khi ở một mình.
 
-### 3. Tự động tiêu hủy file cài đặt độc hại
-*   Hệ thống theo dõi bộ nhớ máy theo thời gian thực.
-*   **Xóa bỏ tức thì:** Các file cài đặt (`.apk`) sẽ bị tự động xóa bỏ ngay khi được tải về hoặc sau khi cài đặt. Việc này giúp ngăn chặn người dùng vô tình cài đặt phải các phần mềm độc hại, mã độc thường ẩn nấp dưới dạng file tải về từ trình duyệt.
 
 ### 4. Chống lừa đảo qua điện thoại (Smart Call Screening)
 *   Tích hợp dịch vụ sàng lọc cuộc gọi thông minh dựa trên `CallScreeningService`.
@@ -49,7 +46,7 @@
 Dự án được xây dựng với kiến trúc module hóa cao, đảm bảo hiệu năng tối ưu trên các dòng máy cấu hình thấp.
 
 ### 1. Component Service Architecture
-*   Mỗi tính năng chính được đóng gói thành một **Service** độc lập (ví dụ: `EmergencyWorker`, `AppMonitoringWorker`, `InstallerCleanupWorker`).
+*   Mỗi tính năng chính được đóng gói thành một **Service** độc lập (ví dụ: `EmergencyWorker`, `AppMonitoringWorker`).
 *   Sử dụng cơ chế `@AutoRegister` để các module tự khởi động và phối hợp với nhau mà không làm rối mã nguồn chính của màn hình Launcher.
 
 ### 2. Precomputed UI (Node Engine)
@@ -73,7 +70,6 @@ Dự án tổ chức tầng hiển thị (Presentation) theo tính năng (featur
 *   **`app_monitoring/` & `app_block/`**: Chứa logic giám sát ứng dụng đang chạy và giao diện cảnh báo khi ứng dụng bị chặn.
 *   **`emergency/`**: Quản lý tính năng cuộc gọi khẩn cấp tự động và cấu hình thời gian chờ (11 giờ).
 *   **`call_block/`**: Chứa `CallScreeningService` để thực hiện lọc và chặn các cuộc gọi từ số lạ.
-*   **`installer_cleanup/`**: Xử lý việc theo dõi bộ nhớ và tự động xóa các tệp `.apk` độc hại.
 *   **`settings/`**: Màn hình cấu hình tập trung các thiết lập cho Launcher.
 *   **`pin/`**: Luồng thiết lập và xác thực mã PIN bảo vệ ứng dụng.
 *   **`permissions/`**: Module quản lý tập trung việc xin các quyền nhạy cảm (Accessibility, Usage Stats, Call...).

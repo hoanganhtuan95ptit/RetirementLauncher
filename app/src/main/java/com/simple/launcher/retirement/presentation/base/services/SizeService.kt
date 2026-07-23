@@ -4,7 +4,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.asFlow
 import com.simple.auto.register.AutoRegister
 import com.simple.component.service.ActivityCreatedService
-import com.simple.component.service.launchCollect
+import com.simple.launcher.retirement.utils.lifecycle.observe
 import com.simple.launcher.retirement.utils.view.listenerSize
 import kotlinx.coroutines.flow.MutableStateFlow
 
@@ -27,7 +27,7 @@ class SizeService : ActivityCreatedService {
 
     override fun setup(fragmentActivity: FragmentActivity) {
 
-        fragmentActivity.listenerSize()?.asFlow()?.launchCollect(fragmentActivity) {
+        fragmentActivity.listenerSize()?.asFlow()?.observe(fragmentActivity) {
 
             sizeMapFlow.value = mutableMapOf<String, Int>().apply {
 

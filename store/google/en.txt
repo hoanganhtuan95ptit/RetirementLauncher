@@ -2,7 +2,7 @@ Tên ứng dụng *
 Retirement Launcher & Protection
 
 Mô tả ngắn *
-Simple, safe Android launcher for seniors with large icons and APK protection.
+Simple, safe Android launcher for seniors with large icons.
 
 Mô tả đầy đủ *
 Retirement Launcher & Protection is an easy-to-use Android launcher designed specifically for seniors, older adults, parents, and grandparents who want a minimalist, clean, and secure phone experience. The app transforms complex Android devices into a simplified home screen with large icons, intuitive navigation, and daily protection features.
@@ -16,7 +16,6 @@ Whether you are setting up a phone for yourself or your loved ones, Retirement L
 ━━━━━━━━━━━━━━
 
 🛡️ Protection Feature
-* Protect device & automatically delete unfamiliar installation files for the elderly.
 * Automatically block calls from unknown numbers to avoid spam and scams.
 * Prevent unauthorized opening of unfamiliar apps to keep users safe.
 
@@ -46,7 +45,7 @@ Whether you are setting up a phone for yourself or your loved ones, Retirement L
 
 ✅ The simplest Android launcher for seniors.
 ✅ Large icons and clear visuals for easy operation.
-✅ Smart protection tools to automatically clean unknown setup files and prevent scams.
+✅ Smart protection tools to avoid scams.
 ✅ One-touch access to family and essential apps.
 ✅ Integrated secure SOS rescue tool.
 ✅ Lightweight and smooth performance on all devices.

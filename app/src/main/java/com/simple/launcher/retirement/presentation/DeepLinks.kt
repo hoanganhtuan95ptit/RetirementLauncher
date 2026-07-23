@@ -21,8 +21,6 @@ object DeepLinks {
     const val SETTINGS      = "app://settings"
     const val APP_LIST      = "app://app_list"
     const val CONTACT_LIST  = "app://contact_list"
-    const val CLEAN_FILES   = "app://clean_files"
-    const val CLEAN_MEMORY  = "app://clean_memory"
     const val REORDER       = "app://reorder"
     const val PIN_SETUP     = "app://pin_setup"
     const val PIN_VERIFY    = "app://pin_verify"
@@ -32,14 +30,12 @@ object DeepLinks {
     const val EMERGENCY_CALL_INTRO = "app://emergency_call_intro"
     const val EMERGENCY_CONTACT_REQUIRED = "app://emergency_contact_required"
     const val APP_LIST_REQUIRED = "app://app_list_required"
-    const val FILE_CLEANUP_INTRO = "app://file_cleanup_intro"
     const val CALL_BLOCK_INTRO = "app://call_block_intro"
     const val CLOCK_SETTING     = "app://clock_setting"
 
     // ─── Permissions ──────────────────────────────────────────────────────────
 
     const val PERMISSION_CALL            = "app://CallPermission"
-    const val PERMISSION_FILE           = "app://FilePermission"
     const val PERMISSION_OVERLAY        = "app://OverlayPermission"
     const val PERMISSION_USAGE_STATS    = "app://UsageStatsPermission"
     const val PERMISSION_CALL_BLOCK     = "app://CallBlockPermission"

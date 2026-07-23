@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>\n    <string name="setting_emergency_call">自動緊急通報 (SOS)</string>
+<resources>
+    <string name="setting_emergency_call">自動緊急通報 (SOS)</string>
     <string name="emergency_call_desc">スマートフォンが使用されない場合、アプリが自動的に緊急通報を行います。</string>
     <!-- <string name="clean_cat_system_temp">システム一時ファイル (.tmp, .log…)</string> -->
     <!-- <string name="clean_cat_compressed">未知の圧縮ファイル</string> -->
@@ -14,9 +15,6 @@
     <string name="call_block_highlight">通話と連絡先の管理</string>
     <string name="setting_header_debug">🐛 デバッグ</string>
     <string name="setting_debug_block_screen">ブロック画面を表示</string>
-    <string name="file_permission_title">ストレージ保護</string>
-    <string name="file_permission_desc">未知の APK/AAB ファイルを自動的に削除するには、アプリがすべてのストレージにアクセスできる必要があります。これにより、デバイスを清潔で安全に保つことができます。</string>
-    <string name="file_permission_highlight">未知の APK/AAB</string>
     <string name="usage_stats_permission_title">アプリの監視</string>
     <string name="usage_stats_permission_desc">アプリのブロック機能を使用するには、「使用状況へのアクセス」を許可する必要があります。これにより、許可されていないアプリがいつ開かれたかをアプリが知ることができます。</string>
     <string name="usage_stats_permission_highlight">「使用状況へのアクセス」</string>
@@ -34,10 +32,6 @@
     <string name="emergency_call_intro_desc">安全を確保するために、スマートフォンでユーザーの操作が検出されない場合、アプリは自動的にクイック連絡先リストに電話をかけます。</string>
     <string name="emergency_call_intro_highlight">クイック連絡先リストに自動的に電話をかける</string>
     <string name="emergency_call_intro_action">了解しました</string>
-    <string name="file_cleanup_intro_title">機能紹介</string>
-    <string name="file_cleanup_intro_desc">この機能は、デバイスにダウンロードされた不明なインストールファイル（APK）を自動的に削除することでユーザーを保護し、認識されないアプリケーションのインストールを回避します。</string>
-    <string name="file_cleanup_intro_highlight">未知のインストールファイル (APK) を自動的に削除</string>
-    <string name="file_cleanup_intro_action">了解しました</string>
     <string name="call_block_intro_title">機能紹介</string>
     <string name="call_block_intro_desc">この機能は、連絡先に登録されていない未知の番号からの着信を自動的にブロックし、広告や詐欺に悩まされるのを防ぐことでユーザーを保護します。</string>
     <string name="call_block_intro_highlight">未知の番号からの着信を自動的にブロック</string>

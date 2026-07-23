@@ -10,8 +10,6 @@
     <string name="setting_app_list">Pag-setup ng Listahan ng App</string>
     <string name="setting_default_launcher">I-set ang Default na Launcher</string>
     <string name="setting_contact_list">Pag-setup ng Mabilis na Contact</string>
-    <string name="setting_protection_feature">Feature ng proteksyon</string>
-    <string name="setting_protection_feature_desc">Protektahan ang device at awtomatikong i-delete ang hindi kilalang installation files para sa mga matatanda</string>
 
     <string name="setting_pocket_mode">Pocket Mode</string>
 
@@ -64,10 +62,7 @@
     <string name="done">Tapos na</string>
     <string name="default_launcher_highlight">Retirement Launcher</string>    <string name="setting_app_monitoring">Monitoring ng App</string>
     <string name="setting_call_block">Pag-block ng Tawag</string>
-    <string name="setting_auto_cleanup_apk">Auto Cleanup ng mga Na-download na APK</string>
     <!-- <string name="setting_clean_files">Linisin ang mga Junk File</string> -->
-    <!-- <string name="setting_clean_memory">Linisin ang Memory</string> -->
-
     <!-- Clean Files
     <string name="clean_files_title">Linisin ang mga File</string>
     <string name="clean_files_start">Simulan ang Paglilinis</string>
@@ -78,16 +73,7 @@
     -->
 
     <!-- Clean Memory
-    <string name="clean_memory_title">Linisin ang Memory</string>
-    <string name="clean_memory_start">Simulan ang Pag-optimize</string>
-    <string name="clean_memory_running">Nag-o-optimize…</string>
-    <string name="clean_memory_retry">Subukan muli</string>
-    <string name="clean_memory_stat_used">Ginamit</string>
-    <string name="clean_memory_stat_free">Bakante</string>
-    <string name="clean_memory_stat_total">Kabuuan</string>
-    <string name="clean_memory_result_sub">Na-optimize na ang memory para sa mas mahusay na performance.</string>
-    <string name="clean_memory_optimal">Ang iyong device ay nasa pinakamagandang kondisyon.</string>
-    <string name="clean_memory_toast">Nalinisan ang $number_ram MB ng RAM.</string>
+
     -->
 
     <string name="call_permission_title">Pahintulot sa Tawag</string>

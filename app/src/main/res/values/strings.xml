@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Retirement Launcher &amp; Protection</string>
+    <string name="app_name">Retirement Launcher</string>
 
     <!-- Settings -->
     <string name="settings_title">Settings</string>
@@ -10,8 +10,6 @@
     <string name="setting_app_list">App List Setup</string>
     <string name="setting_default_launcher">Default Launcher Setup</string>
     <string name="setting_contact_list">Quick Contact Setup</string>
-    <string name="setting_protection_feature">Protection feature</string>
-    <string name="setting_protection_feature_desc">Protect device &amp; automatically delete unfamiliar installation files for the elderly</string>
 
     <string name="setting_pocket_mode">Pocket Mode (Prevent accidental touch)</string>
 
@@ -70,10 +68,9 @@
     <!-- Optimization & Settings -->
     <string name="setting_app_monitoring">App Monitoring</string>
     <string name="setting_call_block">Call Blocking</string>
-    <string name="setting_auto_cleanup_apk">Auto Cleanup Downloaded APKs</string>
     <!--
     <string name="setting_clean_files">Clean Junk Files</string>
-    <string name="setting_clean_memory">Clean Memory</string>
+
     -->
 
 
@@ -87,16 +84,7 @@
     -->
 
     <!-- Memory Cleaner
-    <string name="clean_memory_title">Clean Memory</string>
-    <string name="clean_memory_start">Start Optimization</string>
-    <string name="clean_memory_running">Optimizing…</string>
-    <string name="clean_memory_retry">Retry</string>
-    <string name="clean_memory_stat_used">Used</string>
-    <string name="clean_memory_stat_free">Free</string>
-    <string name="clean_memory_stat_total">Total</string>
-    <string name="clean_memory_result_sub">Memory has been optimized for better performance.</string>
-    <string name="clean_memory_optimal">Your device is in optimal condition.</string>
-    <string name="clean_memory_toast">Cleaned $number_ram MB of RAM.</string>
+
     -->
 
 

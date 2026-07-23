@@ -10,11 +10,7 @@
     <string name="setting_app_list">অ্যাপ তালিকা সেটআপ</string>
     <string name="setting_default_launcher">ডিফল্ট লঞ্চার সেট করুন</string>
     <string name="setting_contact_list">দ্রুত যোগাযোগ সেটআপ</string>
-    <string name="setting_protection_feature">সুরক্ষা বৈশিষ্ট্য</string>
-    <string name="setting_protection_feature_desc">প্রবীণদের জন্য ডিভাইস সুরক্ষা এবং স্বয়ংক্রিয়ভাবে অপরিচিত ইনস্টলেশন ফাইল মুছে ফেলা</string>
     <!-- <string name="setting_clean_files">অপ্রয়োজনীয় ফাইল পরিষ্কার করুন</string> -->
-    <!-- <string name="setting_clean_memory">মেমরি খালি করুন</string> -->
-
     <string name="setting_pocket_mode">পকেট মোড</string>
 
     <!-- Onboarding -->
@@ -32,16 +28,7 @@
     -->
 
     <!-- Clean Memory
-    <string name="clean_memory_title">মেমরি খালি করুন</string>
-    <string name="clean_memory_stat_used">ব্যবহৃত</string>
-    <string name="clean_memory_stat_free">খালি</string>
-    <string name="clean_memory_stat_total">মোট</string>
-    <string name="clean_memory_result_sub">সিস্টেম অপ্টিমাইজ করা হয়েছে</string>
-    <string name="clean_memory_start">এখনই গতি বাড়ান</string>
-    <string name="clean_memory_running">সিস্টেম অপ্টিমাইজ হচ্ছে…</string>
-    <string name="clean_memory_optimal">সিস্টেম সর্বোত্তম অবস্থায় আছে!</string>
-    <string name="clean_memory_retry">আবার অপ্টিমাইজ করুন</string>
-    <string name="clean_memory_toast">$number_ram MB খালি করা হয়েছে</string>
+
     -->
 
     <!-- Contacts -->
@@ -89,7 +76,6 @@
     <string name="done">সম্পন্ন</string>
     <string name="default_launcher_highlight">Retirement Launcher</string>    <string name="setting_app_monitoring">অ্যাপ পর্যবেক্ষণ</string>
     <string name="setting_call_block">কল ব্লকিং</string>
-    <string name="setting_auto_cleanup_apk">ডাউনলোড করা APK স্বয়ংক্রিয়ভাবে পরিষ্কার করুন</string>
     <string name="call_permission_title">কল করার অনুমতি</string>
     <string name="call_permission_desc">লঞ্চার থেকে কল করার জন্য প্রয়োজন।</string>
     <string name="call_block_title">কল ব্লক করার অনুমতি</string>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>\n    <string name="setting_emergency_call">Automatické tísňové volání (SOS)</string>
+<resources>
+    <string name="setting_emergency_call">Automatické tísňové volání (SOS)</string>
     <string name="emergency_call_desc">Pokud není telefon používán, aplikace automaticky provede tísňové volání.</string>
     <!-- <string name="clean_cat_system_temp">Dočasné systémové soubory (.tmp, .log…)</string> -->
     <!-- <string name="clean_cat_compressed">Neznámé komprimované soubory</string> -->
@@ -14,9 +15,6 @@
     <string name="call_block_highlight">spravovat hovory a kontakty</string>
     <string name="setting_header_debug">🐛 Debug</string>
     <string name="setting_debug_block_screen">Zobrazit obrazovku blokování</string>
-    <string name="file_permission_title">Ochrana úložiště</string>
-    <string name="file_permission_desc">Aby fungovalo automatické mazání neznámých souborů APK/AAB, aplikace potřebuje přístup k celému úložišti. To pomáhá udržovat vaše zařízení čisté a bezpečné.</string>
-    <string name="file_permission_highlight">neznámé APK/AAB</string>
     <string name="usage_stats_permission_title">Sledování aplikací</string>
     <string name="usage_stats_permission_desc">Aby fungovala funkce blokování aplikací, musíte udělit „Přístup k datům o používání“. To aplikaci pomáhá zjistit, kdy je otevřena nepovolená aplikace.</string>
     <string name="usage_stats_permission_highlight">„Přístup k datům o používání“</string>
@@ -34,10 +32,6 @@
     <string name="emergency_call_intro_desc">Pro zajištění bezpečnosti aplikace automaticky zavolá na seznam rychlých kontaktů, pokud na telefonu nebude detekována žádná interakce uživatele.</string>
     <string name="emergency_call_intro_highlight">automaticky zavolá na seznam rychlých kontaktů</string>
     <string name="emergency_call_intro_action">Rozumím</string>
-    <string name="file_cleanup_intro_title">Představení funkce</string>
-    <string name="file_cleanup_intro_desc">Tato funkce pomáhá chránit uživatele automatickým mazáním neznámých instalačních souborů (APK) stažených do zařízení, čímž zabraňuje instalaci nerozpoznaných aplikací.</string>
-    <string name="file_cleanup_intro_highlight">automatickým mazáním neznámých instalačních souborů (APK)</string>
-    <string name="file_cleanup_intro_action">Rozumím</string>
     <string name="call_block_intro_title">Představení funkce</string>
     <string name="call_block_intro_desc">Tato funkce pomáhá chránit uživatele automatickým blokováním hovorů z neznámých čísel, která nejsou v kontaktech, čímž zabraňuje obtěžování reklamami nebo podvody.</string>
     <string name="call_block_intro_highlight">automatickým blokováním hovorů z neznámých čísel</string>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>\n    <string name="setting_emergency_call">Otomatik Acil Arama (SOS)</string>
+<resources>
+    <string name="setting_emergency_call">Otomatik Acil Arama (SOS)</string>
     <string name="emergency_call_desc">Telefon kullanılmazsa, uygulama otomatik olarak acil arama yapacaktır.</string>
     <!-- <string name="clean_cat_system_temp">Sistem geçici dosyaları (.tmp, .log…)</string> -->
     <!-- <string name="clean_cat_compressed">Bilinmeyen sıkıştırılmış dosyalar</string> -->
@@ -14,9 +15,6 @@
     <string name="call_block_highlight">aramaları ve rehberi yönet</string>
     <string name="setting_header_debug">🐛 Hata Ayıklama</string>
     <string name="setting_debug_block_screen">Engelleme Ekranını Görüntüle</string>
-    <string name="file_permission_title">Depolama Koruması</string>
-    <string name="file_permission_desc">Bilinmeyen APK/AAB dosyalarının otomatik silinmesinin çalışması için uygulamanın tüm depolama alanına erişimi olması gerekir. Bu, cihazınızın temiz ve güvenli kalmasına yardımcı olur.</string>
-    <string name="file_permission_highlight">bilinmeyen APK/AAB</string>
     <string name="usage_stats_permission_title">Uygulama İzleme</string>
     <string name="usage_stats_permission_desc">Uygulama engelleme özelliğinin çalışması için \'Kullanım Verilerine Erişim\' izni vermeniz gerekir. Bu, uygulamanın yetkisiz bir uygulama açıldığında bunu bilmesine yardımcı olur.</string>
     <string name="usage_stats_permission_highlight">\'Kullanım Verilerine Erişim\'</string>
@@ -34,14 +32,6 @@
     <string name="emergency_call_intro_desc">Güvenliği sağlamak için uygulama, telefonda kullanıcı etkileşimi algılanmazsa otomatik olarak hızlı rehber listesini arayacaktır.</string>
     <string name="emergency_call_intro_highlight">otomatik olarak hızlı rehber listesini arayacaktır</string>
     <string name="emergency_call_intro_action">Anladım</string>
-    <string name="file_cleanup_intro_title">Özellik Tanıtımı</string>
-    <string name="file_cleanup_intro_desc">Bu özellik, cihaza indirilen bilinmeyen kurulum dosyalarını (APK) otomatik olarak silerek kullanıcıları korumaya yardımcı olur ve tanınmayan uygulamaların yüklenmesini önler.</string>
-    <string name="file_cleanup_intro_highlight">bilinmeyen kurulum dosyalarını (APK) otomatik olarak silerek</string>
-    <string name="file_cleanup_intro_action">Anladım</string>
-    <string name="call_block_intro_title">Özellik Tanıtımı</string>
-    <string name="call_block_intro_desc">Bu özellik, rehberde olmayan bilinmeyen numaralardan gelen aramaları otomatik olarak engelleyerek kullanıcıları korumaya yardımcı olur, reklam veya dolandırıcılıkla rahatsız edilmeyi önler.</string>
-    <string name="call_block_intro_highlight">bilinmeyen numaralardan gelen aramaları otomatik olarak engelleyerek</string>
-    <string name="call_block_intro_action">Anladım</string>
     <string name="emergency_contact_required_title">Rehber Kurulumu Gerekiyor</string>
     <string name="emergency_contact_required_desc">Henüz hızlı rehber listenizi kurmadınız. Bu özelliğin çalışması için lütfen en az bir kişi seçin.</string>
     <string name="emergency_contact_required_highlight">lütfen en az bir kişi seçin</string>

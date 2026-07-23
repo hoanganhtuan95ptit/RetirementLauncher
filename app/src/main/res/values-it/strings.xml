@@ -10,8 +10,6 @@
     <string name="setting_app_list">Configurazione Elenco App</string>
     <string name="setting_default_launcher">Imposta Launcher Predefinito</string>
     <string name="setting_contact_list">Configurazione Contatti Rapidi</string>
-    <string name="setting_protection_feature">Funzione di protezione</string>
-    <string name="setting_protection_feature_desc">Proteggi il dispositivo ed elimina i file di installazione sconosciuti per gli anziani</string>
 
     <string name="setting_pocket_mode">Modalità Tasca</string>
 
@@ -64,10 +62,7 @@
     <string name="done">Fatto</string>
     <string name="default_launcher_highlight">Retirement Launcher</string>    <string name="setting_app_monitoring">Monitoraggio App</string>
     <string name="setting_call_block">Blocco Chiamate</string>
-    <string name="setting_auto_cleanup_apk">Pulizia Automatica APK Scaricati</string>
     <!-- <string name="setting_clean_files">Pulisci File Inutili</string> -->
-    <!-- <string name="setting_clean_memory">Pulisci Memoria</string> -->
-
     <!-- Clean Files
     <string name="clean_files_title">Pulisci File</string>
     <string name="clean_files_start">Inizia Pulizia</string>
@@ -78,16 +73,7 @@
     -->
 
     <!-- Clean Memory
-    <string name="clean_memory_title">Pulisci Memoria</string>
-    <string name="clean_memory_start">Inizia Ottimizzazione</string>
-    <string name="clean_memory_running">Ottimizzazione in corso…</string>
-    <string name="clean_memory_retry">Riprova</string>
-    <string name="clean_memory_stat_used">Usata</string>
-    <string name="clean_memory_stat_free">Libera</string>
-    <string name="clean_memory_stat_total">Totale</string>
-    <string name="clean_memory_result_sub">La memoria è stata ottimizzata per prestazioni migliori.</string>
-    <string name="clean_memory_optimal">Il tuo dispositivo è in condizioni ottimali.</string>
-    <string name="clean_memory_toast">Puliti $number_ram MB di RAM.</string>
+
     -->
 
     <string name="call_permission_title">Permesso di Chiamata</string>

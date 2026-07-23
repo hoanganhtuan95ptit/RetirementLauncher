@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>\n    <string name="setting_emergency_call">Panggilan Kecemasan Automatik (SOS)</string>
+<resources>
+    <string name="setting_emergency_call">Panggilan Kecemasan Automatik (SOS)</string>
     <string name="emergency_call_desc">Jika telefon tidak digunakan, aplikasi akan membuat panggilan kecemasan secara automatik.</string>
     <!-- <string name="clean_cat_system_temp">Fail sementara sistem (.tmp, .log…)</string> -->
     <!-- <string name="clean_cat_compressed">Fail mampat tidak dikenali</string> -->
@@ -14,9 +15,6 @@
     <string name="call_block_highlight">mengurus panggilan dan kenalan</string>
     <string name="setting_header_debug">🐛 Debug</string>
     <string name="setting_debug_block_screen">Lihat Skrin Sekatan</string>
-    <string name="file_permission_title">Perlindungan Storan</string>
-    <string name="file_permission_desc">Untuk pemadaman automatik fail APK/AAB yang tidak dikenali berfungsi, aplikasi memerlukan akses ke semua storan. Ini membantu memastikan peranti anda bersih dan selamat.</string>
-    <string name="file_permission_highlight">APK/AAB tidak dikenali</string>
     <string name="usage_stats_permission_title">Pemantauan Aplikasi</string>
     <string name="usage_stats_permission_desc">Untuk ciri penyekatan aplikasi berfungsi, anda perlu memberikan \'Akses data penggunaan\'. Ini membantu aplikasi mengetahui apabila aplikasi yang tidak dibenarkan dibuka.</string>
     <string name="usage_stats_permission_highlight">\'Akses data penggunaan\'</string>
@@ -34,10 +32,6 @@
     <string name="emergency_call_intro_desc">Untuk memastikan keselamatan, aplikasi akan secara automatik memanggil senarai kenalan pantas jika tiada interaksi pengguna dikesan pada telefon.</string>
     <string name="emergency_call_intro_highlight">secara automatik memanggil senarai kenalan pantas</string>
     <string name="emergency_call_intro_action">Saya faham</string>
-    <string name="file_cleanup_intro_title">Pengenalan Ciri</string>
-    <string name="file_cleanup_intro_desc">Ciri ini membantu melindungi pengguna dengan memadam fail pemasangan tidak dikenali (APK) yang dimuat turun ke peranti secara automatik, mengelakkan pemasangan aplikasi yang tidak dikenali.</string>
-    <string name="file_cleanup_intro_highlight">memadam secara automatik fail pemasangan tidak dikenali (APK)</string>
-    <string name="file_cleanup_intro_action">Saya faham</string>
     <string name="call_block_intro_title">Pengenalan Ciri</string>
     <string name="call_block_intro_desc">Ciri ini membantu melindungi pengguna dengan menyekat secara automatik panggilan daripada nombor tidak dikenali yang tiada dalam kenalan, mengelakkan gangguan iklan atau penipuan.</string>
     <string name="call_block_intro_highlight">menyekat secara automatik panggilan daripada nombor tidak dikenali</string>

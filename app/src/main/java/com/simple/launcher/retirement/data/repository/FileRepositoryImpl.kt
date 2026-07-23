@@ -8,7 +8,6 @@ import com.simple.launcher.retirement.data.repository.FileRepositoryImpl._fileCh
 import com.simple.launcher.retirement.data.repository.FileRepositoryImpl.isExcludedDirectory
 import com.simple.launcher.retirement.data.repository.FileRepositoryImpl.notifyFileSystemChanged
 import com.simple.launcher.retirement.domain.repository.FileRepository
-import com.simple.launcher.retirement.domain.repository.PreferenceRepository
 import com.simple.launcher.retirement.domain.repository.StrangeFileCategory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.awaitClose
@@ -73,16 +72,6 @@ object FileRepositoryImpl : FileRepository {
          * - Nếu là file unrecognized còn tồn tại → emit lên flow và trigger đếm lại.
          */
         fun processDetectedFile(file: File) {
-            val name = file.name.lowercase()
-            val isInstallerFile = name.endsWith(".apk") || name.endsWith(".aab")
-
-            if (isInstallerFile && PreferenceRepository.instance.isFileCleanupEnabled() && file.exists()) {
-                val deleted = file.delete()
-                if (deleted) {
-                    notifyFileSystemChanged()
-                    return
-                }
-            }
 
             // File unrecognized còn tồn tại → emit để UI hiển thị cảnh báo
             if (file.exists()) {

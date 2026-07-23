@@ -3,12 +3,12 @@ package com.simple.launcher.retirement.presentation.call_block
 import android.os.Build
 import androidx.fragment.app.viewModels
 import com.simple.auto.register.AutoRegister
-import com.simple.component.service.launchCollect
 import com.simple.launcher.retirement.presentation.settings.SettingsFragment
 import com.simple.launcher.retirement.presentation.settings.adapters.SettingItem
 import com.simple.launcher.retirement.presentation.settings.services.protect.ProtectSettingService
 import com.simple.launcher.retirement.utils.AppEvent
 import com.simple.launcher.retirement.utils.AppEventBus
+import com.simple.launcher.retirement.utils.lifecycle.observe
 import kotlinx.coroutines.flow.filterIsInstance
 
 @AutoRegister(apis = [SettingsFragment::class])
@@ -30,7 +30,7 @@ class CallBlockSettingService : ProtectSettingService() {
 
     private fun observeCallBlockSettingItem(settingsFragment: SettingsFragment) {
 
-        viewModel.viewItemList.launchCollect(settingsFragment) {
+        viewModel.viewItemList.observe(settingsFragment) {
 
             protectSettingViewModel.updateItem(it)
         }
@@ -40,7 +40,7 @@ class CallBlockSettingService : ProtectSettingService() {
 
         AppEventBus.events
             .filterIsInstance<AppEvent.SettingClicked>()
-            .launchCollect(settingsFragment.viewLifecycleOwner) { event ->
+            .observe(settingsFragment.viewLifecycleOwner) { event ->
 
                 setCallBlockEnabledIfToggle(event.item)
             }

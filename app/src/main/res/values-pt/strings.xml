@@ -10,14 +10,12 @@
     <string name="setting_app_list">Configuração da Lista de Apps</string>
     <string name="setting_default_launcher">Definir Lançador Padrão</string>
     <string name="setting_contact_list">Configuração de Contatos Rápidos</string>
-    <string name="setting_protection_feature">Recurso de proteção</string>
-    <string name="setting_protection_feature_desc">Proteja o dispositivo e exclua automaticamente arquivos de instalação desconhecidos para idosos</string>
 
     <string name="setting_pocket_mode">Modo Bolso</string>
 
     <!-- Onboarding -->
     <string name="onboarding_title">Bem-vindo ao Retirement Launcher</string>
-    <string name="onboarding_desc">Interface simples com proteção de dispositivo integrada para mantê-lo seguro.</string>
+    <string name="onboarding_desc">Interface simples with proteção de dispositivo integrada para mantê-lo seguro.</string>
     <string name="onboarding_start">Começar</string>
 
     <!-- Contacts -->
@@ -64,10 +62,7 @@
     <string name="done">Concluído</string>
     <string name="default_launcher_highlight">Retirement Launcher</string>    <string name="setting_app_monitoring">Monitoramento de Apps</string>
     <string name="setting_call_block">Bloqueio de Chamadas</string>
-    <string name="setting_auto_cleanup_apk">Limpeza Automática de APKs Baixados</string>
     <!-- <string name="setting_clean_files">Limpar Arquivos Inúteis</string> -->
-    <!-- <string name="setting_clean_memory">Limpar Memória</string> -->
-
     <!-- Clean Files
     <string name="clean_files_title">Limpar Arquivos</string>
     <string name="clean_files_start">Iniciar Limpeza</string>
@@ -78,16 +73,7 @@
     -->
 
     <!-- Clean Memory
-    <string name="clean_memory_title">Limpar Memória</string>
-    <string name="clean_memory_start">Iniciar Otimização</string>
-    <string name="clean_memory_running">Otimizando…</string>
-    <string name="clean_memory_retry">Tentar novamente</string>
-    <string name="clean_memory_stat_used">Utilizada</string>
-    <string name="clean_memory_stat_free">Livre</string>
-    <string name="clean_memory_stat_total">Total</string>
-    <string name="clean_memory_result_sub">A memória foi otimizada para um melhor desempenho.</string>
-    <string name="clean_memory_optimal">O seu dispositivo está em condições ideais.</string>
-    <string name="clean_memory_toast">Foram limpos $number_ram MB de RAM.</string>
+
     -->
 
     <string name="call_permission_title">Permissão de Chamada</string>

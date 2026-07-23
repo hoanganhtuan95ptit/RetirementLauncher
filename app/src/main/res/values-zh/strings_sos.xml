@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>\n    <string name="setting_emergency_call">自动紧急呼叫 (SOS)</string>
+<resources>
+    <string name="setting_emergency_call">自动紧急呼叫 (SOS)</string>
     <string name="emergency_call_desc">如果手机未使用，应用将自动进行紧急呼叫。</string>
     <!-- <string name="clean_cat_system_temp">系统临时文件 (.tmp, .log…)</string> -->
     <!-- <string name="clean_cat_compressed">未知压缩文件</string> -->
@@ -14,9 +15,6 @@
     <string name="call_block_highlight">管理通话和联系人</string>
     <string name="setting_header_debug">🐛 调试</string>
     <string name="setting_debug_block_screen">查看拦截屏幕</string>
-    <string name="file_permission_title">存储保护</string>
-    <string name="file_permission_desc">为了自动删除未知的 APK/AAB 文件，应用需要访问所有存储空间。这有助于保持设备整洁安全。</string>
-    <string name="file_permission_highlight">未知 APK/AAB</string>
     <string name="usage_stats_permission_title">应用监控</string>
     <string name="usage_stats_permission_desc">为了使应用拦截功能正常工作，您需要授予“使用情况数据访问”权限。这有助于应用识别何时打开了未经授权的应用。</string>
     <string name="usage_stats_permission_highlight">“使用情况数据访问”</string>
@@ -34,14 +32,6 @@
     <string name="emergency_call_intro_desc">为了确保安全，如果手机没有检测到用户交互，应用将自动呼叫快速联系人列表。</string>
     <string name="emergency_call_intro_highlight">自动呼叫快速联系人列表</string>
     <string name="emergency_call_intro_action">我明白了</string>
-    <string name="file_cleanup_intro_title">功能介绍</string>
-    <string name="file_cleanup_intro_desc">此功能通过自动删除下载到设备的未知安装文件 (APK) 来保护用户，避免安装无法识别的应用程序。</string>
-    <string name="file_cleanup_intro_highlight">自动删除未知安装文件 (APK)</string>
-    <string name="file_cleanup_intro_action">我明白了</string>
-    <string name="call_block_intro_title">功能介绍</string>
-    <string name="call_block_intro_desc">此功能通过自动拦截不在联系人中的未知号码来电来保护用户，避免受到广告或诈骗的骚扰。</string>
-    <string name="call_block_intro_highlight">自动拦截未知号码来电</string>
-    <string name="call_block_intro_action">我明白了</string>
     <string name="emergency_contact_required_title">需要设置联系人</string>
     <string name="emergency_contact_required_desc">您尚未设置快速联系人列表。要使此功能正常工作，请至少选择一个联系人。</string>
     <string name="emergency_contact_required_highlight">至少选择一个联系人</string>

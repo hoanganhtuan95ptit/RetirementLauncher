@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>\n    <string name="setting_emergency_call">การโทรฉุกเฉินอัตโนมัติ (SOS)</string>
+<resources>
+    <string name="setting_emergency_call">การโทรฉุกเฉินอัตโนมัติ (SOS)</string>
     <string name="emergency_call_desc">หากไม่มีการใช้งานโทรศัพท์ แอปจะทำการโทรฉุกเฉินโดยอัตโนมัติ</string>
     <!-- <string name="clean_cat_system_temp">ไฟล์ชั่วคราวของระบบ (.tmp, .log…)</string> -->
     <!-- <string name="clean_cat_compressed">ไฟล์บีบอัดที่ไม่รู้จัก</string> -->
@@ -14,9 +15,6 @@
     <string name="call_block_highlight">จัดการการโทรและผู้ติดต่อ</string>
     <string name="setting_header_debug">🐛 ดีบัก</string>
     <string name="setting_debug_block_screen">ดูหน้าจอที่ถูกบล็อก</string>
-    <string name="file_permission_title">การป้องกันพื้นที่จัดเก็บข้อมูล</string>
-    <string name="file_permission_desc">เพื่อให้การลบไฟล์ APK/AAB ที่ไม่รู้จักโดยอัตโนมัติทำงานได้ แอปจำเป็นต้องเข้าถึงพื้นที่จัดเก็บข้อมูลทั้งหมด วิธีนี้จะช่วยให้อุปกรณ์ของคุณสะอาดและปลอดภัย</string>
-    <string name="file_permission_highlight">APK/AAB ที่ไม่รู้จัก</string>
     <string name="usage_stats_permission_title">การตรวจสอบแอป</string>
     <string name="usage_stats_permission_desc">เพื่อให้ฟีเจอร์การบล็อกแอปทำงานได้ คุณต้องอนุญาต \'การเข้าถึงข้อมูลการใช้งาน\' สิ่งนี้ช่วยให้แอปทราบเมื่อมีการเปิดแอปที่ไม่ได้รับอนุญาต</string>
     <string name="usage_stats_permission_highlight">\'การเข้าถึงข้อมูลการใช้งาน\'</string>
@@ -34,14 +32,6 @@
     <string name="emergency_call_intro_desc">เพื่อความปลอดภัย แอปจะโทรไปยังรายการผู้ติดต่อด่วนโดยอัตโนมัติ หากตรวจไม่พบการโต้ตอบของผู้ใช้บนโทรศัพท์</string>
     <string name="emergency_call_intro_highlight">โทรไปยังรายการผู้ติดต่อด่วนโดยอัตโนมัติ</string>
     <string name="emergency_call_intro_action">ฉันเข้าใจแล้ว</string>
-    <string name="file_cleanup_intro_title">แนะนำฟีเจอร์</string>
-    <string name="file_cleanup_intro_desc">ฟีเจอร์นี้ช่วยปกป้องผู้ใช้โดยการลบไฟล์ติดตั้งที่ไม่รู้จัก (APK) ที่ดาวน์โหลดลงในอุปกรณ์โดยอัตโนมัติ เพื่อหลีกเลี่ยงการติดตั้งแอปพลิเคชันที่ไม่รู้จัก</string>
-    <string name="file_cleanup_intro_highlight">การลบไฟล์ติดตั้งที่ไม่รู้จัก (APK) โดยอัตโนมัติ</string>
-    <string name="file_cleanup_intro_action">ฉันเข้าใจแล้ว</string>
-    <string name="call_block_intro_title">แนะนำฟีเจอร์</string>
-    <string name="call_block_intro_desc">ฟีเจอร์นี้ช่วยปกป้องผู้ใช้โดยการบล็อกการโทรจากเบอร์ที่ไม่รู้จักซึ่งไม่มีอยู่ในรายชื่อผู้ติดต่อโดยอัตโนมัติ เพื่อหลีกเลี่ยงการถูกรบกวนจากโฆษณาหรือมิจฉาชีพ</string>
-    <string name="call_block_intro_highlight">การบล็อกการโทรจากเบอร์ที่ไม่รู้จักโดยอัตโนมัติ</string>
-    <string name="call_block_intro_action">ฉันเข้าใจแล้ว</string>
     <string name="emergency_contact_required_title">จำเป็นต้องตั้งค่าผู้ติดต่อ</string>
     <string name="emergency_contact_required_desc">คุณยังไม่ได้ตั้งค่ารายการผู้ติดต่อด่วน เพื่อให้ฟีเจอร์นี้ทำงานได้ โปรดเลือกผู้ติดต่ออย่างน้อยหนึ่งราย</string>
     <string name="emergency_contact_required_highlight">โปรดเลือกผู้ติดต่ออย่างน้อยหนึ่งราย</string>

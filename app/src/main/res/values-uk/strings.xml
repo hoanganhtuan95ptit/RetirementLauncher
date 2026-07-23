@@ -10,8 +10,6 @@
     <string name="setting_app_list">Налаштування списку додатків</string>
     <string name="setting_default_launcher">Встановити лаунчер за замовчуванням</string>
     <string name="setting_contact_list">Налаштування швидких контактів</string>
-    <string name="setting_protection_feature">Функція захисту</string>
-    <string name="setting_protection_feature_desc">Захист пристрою та автовидалення невідомих інсталяційних файлів для літніх людей</string>
 
     <string name="setting_pocket_mode">У кишені</string>
 
@@ -64,10 +62,7 @@
     <string name="done">Готово</string>
     <string name="default_launcher_highlight">Retirement Launcher</string>    <string name="setting_app_monitoring">Моніторинг додатків</string>
     <string name="setting_call_block">Блокування викликів</string>
-    <string name="setting_auto_cleanup_apk">Автоочищення завантажених APK</string>
     <!-- <string name="setting_clean_files">Очищення непотрібних файлів</string> -->
-    <!-- <string name="setting_clean_memory">Очищення пам\'яті</string> -->
-
     <!-- Clean Files
     <string name="clean_files_title">Очищення файлів</string>
     <string name="clean_files_start">Почати очищення</string>
@@ -78,16 +73,7 @@
     -->
 
     <!-- Clean Memory
-    <string name="clean_memory_title">Очищення пам\'яті</string>
-    <string name="clean_memory_start">Почати оптимізацію</string>
-    <string name="clean_memory_running">Оптимізація…</string>
-    <string name="clean_memory_retry">Повторити</string>
-    <string name="clean_memory_stat_used">Використано</string>
-    <string name="clean_memory_stat_free">Вільно</string>
-    <string name="clean_memory_stat_total">Всього</string>
-    <string name="clean_memory_result_sub">Пам\'ять оптимізовано для кращої продуктивності.</string>
-    <string name="clean_memory_optimal">Ваш пристрій у найкращому стані.</string>
-    <string name="clean_memory_toast">Очищено $number_ram МБ оперативної пам\'яті.</string>
+
     -->
 
     <string name="call_permission_title">Дозвіл на виклики</string>

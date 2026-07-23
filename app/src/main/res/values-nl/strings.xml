@@ -10,8 +10,6 @@
     <string name="setting_app_list">App-lijst instellen</string>
     <string name="setting_default_launcher">Standaard Launcher instellen</string>
     <string name="setting_contact_list">Snelcontacten instellen</string>
-    <string name="setting_protection_feature">Beschermingsfunctie</string>
-    <string name="setting_protection_feature_desc">Apparaat beschermen &amp; onbekende installatiebestanden automatisch verwijderen voor ouderen</string>
 
     <string name="setting_pocket_mode">Zakmodus</string>
 
@@ -64,10 +62,7 @@
     <string name="done">Klaar</string>
     <string name="default_launcher_highlight">Retirement Launcher</string>    <string name="setting_app_monitoring">App-monitoring</string>
     <string name="setting_call_block">Oproepblokkering</string>
-    <string name="setting_auto_cleanup_apk">Gedownloade APK\'s automatisch opschonen</string>
     <!-- <string name="setting_clean_files">Rommelbestanden opschonen</string> -->
-    <!-- <string name="setting_clean_memory">Geheugen opschonen</string> -->
-
     <!-- Clean Files
     <string name="clean_files_title">Bestanden opschonen</string>
     <string name="clean_files_start">Start opschonen</string>
@@ -78,16 +73,7 @@
     -->
 
     <!-- Clean Memory
-    <string name="clean_memory_title">Geheugen opschonen</string>
-    <string name="clean_memory_start">Start optimalisatie</string>
-    <string name="clean_memory_running">Optimaliseren…</string>
-    <string name="clean_memory_retry">Opnieuw proberen</string>
-    <string name="clean_memory_stat_used">Gebruikt</string>
-    <string name="clean_memory_stat_free">Vrij</string>
-    <string name="clean_memory_stat_total">Totaal</string>
-    <string name="clean_memory_result_sub">Geheugen is geoptimaliseerd voor betere prestaties.</string>
-    <string name="clean_memory_optimal">Uw apparaat is in optimale conditie.</string>
-    <string name="clean_memory_toast">$number_ram MB RAM opgeschoond.</string>
+
     -->
 
     <string name="call_permission_title">Oproeptoestemming</string>

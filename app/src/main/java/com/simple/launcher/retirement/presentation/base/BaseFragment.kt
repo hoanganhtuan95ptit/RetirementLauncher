@@ -13,7 +13,7 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
     var binding: VB? = null
     
     init {
-        Log.d("tuanha", "${this.javaClass.simpleName}: $this")
+        Log.d("tuanha", "init ${this.javaClass.simpleName}: $this")
     }
 
     abstract fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?): VB
@@ -41,7 +41,13 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
 
     override fun onDestroyView() {
 
+        Log.d("tuanha", "onDestroyView ${this.javaClass.simpleName}: $this")
         super.onDestroyView()
         binding = null
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("tuanha", "onDestroy ${this.javaClass.simpleName}: $this")
     }
 }

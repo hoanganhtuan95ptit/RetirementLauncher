@@ -8,7 +8,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
-import android.os.Environment
 import android.os.Process
 import android.provider.Settings
 import androidx.annotation.RequiresApi
@@ -32,25 +31,6 @@ class PermissionRepositoryImpl : PermissionRepository {
     private val context: Context
         get() = MainApplication.instance
 
-    override fun hasFilePermission(): Boolean {
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-
-            return Environment.isExternalStorageManager()
-        }
-
-        val readPermission = ContextCompat.checkSelfPermission(
-            context,
-            Manifest.permission.READ_EXTERNAL_STORAGE
-        )
-        val writePermission = ContextCompat.checkSelfPermission(
-            context,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
-        )
-
-        return readPermission == PackageManager.PERMISSION_GRANTED &&
-                writePermission == PackageManager.PERMISSION_GRANTED
-    }
 
     override fun hasUsageStatsPermission(): Boolean {
 
@@ -147,12 +127,6 @@ class PermissionRepositoryImpl : PermissionRepository {
         return awaitPermissionResult(DeepLinks.PERMISSION_USAGE_STATS)
     }
 
-    override suspend fun requireFilePermission(): Boolean {
-
-        if (hasFilePermission()) return true
-
-        return awaitPermissionResult(DeepLinks.PERMISSION_FILE)
-    }
 
     override suspend fun requireOverlayPermission(): Boolean {
 
@@ -263,19 +237,6 @@ class PermissionRepositoryImpl : PermissionRepository {
         return true
     }
 
-    override suspend fun requireFileCleanupIntro(): Boolean {
-
-        val repository = PreferenceRepository.instance
-        if (!repository.isFileCleanupFirstTime()) return true
-
-        val result = awaitEventAfterDeeplink<AppEvent.FileCleanupIntroResult>(
-            DeepLinks.FILE_CLEANUP_INTRO
-        )
-        if (result !is AppEvent.FileCleanupIntroAccept) return false
-
-        repository.setFileCleanupFirstTime(false)
-        return true
-    }
 
     override suspend fun requireCallBlockIntro(): Boolean {
 

@@ -28,18 +28,9 @@ class OptimizationSettingViewModel : BaseViewModel() {
             /*
             add(
                 settingItem(
-                    id = SettingItem.ID_CLEAN_FILES,
-                    icon = android.R.drawable.ic_menu_delete,
-                    title = R.string.setting_clean_files,
-                    resources = resources
-                )
-            )
-
-            add(
-                settingItem(
-                    id = SettingItem.ID_CLEAN_MEMORY,
-                    icon = android.R.drawable.ic_media_play,
-                    title = R.string.setting_clean_memory,
+                    id = SettingItem.ID_DEBUG_BLOCK_SCREEN,
+                    icon = R.drawable.ic_bug_report_black_24dp,
+                    title = R.string.setting_debug_block_screen,
                     resources = resources
                 )
             )

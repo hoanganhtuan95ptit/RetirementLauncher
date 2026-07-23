@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>\n    <string name="setting_emergency_call">Apel de urgență automat (SOS)</string>
+<resources>
+    <string name="setting_emergency_call">Apel de urgență automat (SOS)</string>
     <string name="emergency_call_desc">Dacă telefonul nu este folosit, aplicația va efectua automat un apel de urgență.</string>
     <!-- <string name="clean_cat_system_temp">Fișiere temporare de sistem (.tmp, .log…)</string> -->
     <!-- <string name="clean_cat_compressed">Fișiere arhivate necunoscute</string> -->
@@ -14,9 +15,6 @@
     <string name="call_block_highlight">gestionați apelurile și contactele</string>
     <string name="setting_header_debug">🐛 Debug</string>
     <string name="setting_debug_block_screen">Vizualizare ecran de blocare</string>
-    <string name="file_permission_title">Protecție stocare</string>
-    <string name="file_permission_desc">Pentru ca ștergerea automată a fișierelor APK/AAB necunoscute să funcționeze, aplicația are nevoie de acces la tot spațiul de stocare. Acest lucru ajută la menținerea dispozitivului curat și sigur.</string>
-    <string name="file_permission_highlight">APK/AAB necunoscute</string>
     <string name="usage_stats_permission_title">Monitorizare aplicații</string>
     <string name="usage_stats_permission_desc">Pentru ca funcția de blocare a aplicațiilor să funcționeze, trebuie să acordați „Acces la datele de utilizare”. Acest lucru ajută aplicația să știe când este deschisă o aplicație neautorizată.</string>
     <string name="usage_stats_permission_highlight">„Acces la datele de utilizare”</string>
@@ -34,14 +32,6 @@
     <string name="emergency_call_intro_desc">Pentru a asigura siguranța, aplicația va apela automat lista de contacte rapide dacă nu se detectează nicio interacțiune a utilizatorului pe telefon.</string>
     <string name="emergency_call_intro_highlight">va apela automat lista de contacte rapide</string>
     <string name="emergency_call_intro_action">Înțeleg</string>
-    <string name="file_cleanup_intro_title">Introducere funcție</string>
-    <string name="file_cleanup_intro_desc">Această funcție ajută la protejarea utilizatorilor prin ștergerea automată a fișierelor de instalare necunoscute (APK) descărcate pe dispozitiv, evitând instalarea aplicațiilor nerecunoscute.</string>
-    <string name="file_cleanup_intro_highlight">ștergerea automată a fișierelor de instalare necunoscute (APK)</string>
-    <string name="file_cleanup_intro_action">Înțeleg</string>
-    <string name="call_block_intro_title">Introducere funcție</string>
-    <string name="call_block_intro_desc">Această funcție ajută la protejarea utilizatorilor prin blocarea automată a apelurilor de la numere necunoscute care nu se află în contacte, evitând deranjul cauzat de reclame sau escrocherii.</string>
-    <string name="call_block_intro_highlight">blocarea automată a apelurilor de la numere necunoscute</string>
-    <string name="call_block_intro_action">Înțeleg</string>
     <string name="emergency_contact_required_title">Configurarea contactului este necesară</string>
     <string name="emergency_contact_required_desc">Nu v-ați configurat încă lista de contacte rapide. Pentru ca această funcție să funcționeze, vă rugăm să selectați cel puțin un contact.</string>
     <string name="emergency_contact_required_highlight">selectați cel puțin un contact</string>

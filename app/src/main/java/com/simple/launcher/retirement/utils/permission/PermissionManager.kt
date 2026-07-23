@@ -7,7 +7,6 @@ object PermissionManager {
     private val permissionRepository: PermissionRepository
         get() = PermissionRepository.instance
 
-    fun hasFilePermission(): Boolean = permissionRepository.hasFilePermission()
 
     fun hasUsageStatsPermission(): Boolean = permissionRepository.hasUsageStatsPermission()
 
@@ -33,7 +32,6 @@ object PermissionManager {
     suspend fun requireUsageStatsPermission(): Boolean =
         permissionRepository.requireUsageStatsPermission()
 
-    suspend fun requireFilePermission(): Boolean = permissionRepository.requireFilePermission()
 
     suspend fun requireOverlayPermission(): Boolean = permissionRepository.requireOverlayPermission()
 
@@ -59,8 +57,6 @@ object PermissionManager {
     suspend fun requireEmergencyCallIntro(): Boolean =
         permissionRepository.requireEmergencyCallIntro()
 
-    suspend fun requireFileCleanupIntro(): Boolean =
-        permissionRepository.requireFileCleanupIntro()
 
     suspend fun requireCallBlockIntro(): Boolean = permissionRepository.requireCallBlockIntro()
 }

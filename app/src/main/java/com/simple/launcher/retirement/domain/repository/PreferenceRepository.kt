@@ -31,14 +31,6 @@ interface PreferenceRepository {
     fun getPendingAppBlockEnabled(): Boolean?
     fun setPendingAppBlockEnabled(enabled: Boolean?)
 
-    // File Cleanup
-    fun isFileCleanupEnabled(): Boolean
-    fun fileCleanupEnabledFlow(): Flow<Boolean>
-    fun setFileCleanupEnabled(enabled: Boolean)
-    fun isFileCleanupFirstTime(): Boolean
-    fun setFileCleanupFirstTime(firstTime: Boolean)
-    fun getPendingFileCleanupEnabled(): Boolean?
-    fun setPendingFileCleanupEnabled(enabled: Boolean?)
 
     // Call Block
     fun isCallBlockEnabled(): Boolean

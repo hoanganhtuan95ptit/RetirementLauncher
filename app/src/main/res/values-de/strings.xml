@@ -10,11 +10,7 @@
     <string name="setting_app_list">App-Listen-Einrichtung</string>
     <string name="setting_default_launcher">Standard-Launcher festlegen</string>
     <string name="setting_contact_list">Schnellkontakt-Einrichtung</string>
-    <string name="setting_protection_feature">Schutzfunktion</string>
-    <string name="setting_protection_feature_desc">Geräteschutz &amp; automatisches Löschen unbekannter Installationsdateien für Senioren</string>
     <!-- <string name="setting_clean_files">Junk-Dateien bereinigen</string> -->
-    <!-- <string name="setting_clean_memory">Speicher freigeben</string> -->
-
     <string name="setting_pocket_mode">Taschenmodus</string>
 
     <!-- Onboarding -->
@@ -32,16 +28,7 @@
     -->
 
     <!-- Clean Memory
-    <string name="clean_memory_title">Speicher freigeben</string>
-    <string name="clean_memory_stat_used">Belegt</string>
-    <string name="clean_memory_stat_free">Frei</string>
-    <string name="clean_memory_stat_total">Gesamt</string>
-    <string name="clean_memory_result_sub">System optimiert</string>
-    <string name="clean_memory_start">Jetzt beschleunigen</string>
-    <string name="clean_memory_running">System wird optimiert…</string>
-    <string name="clean_memory_optimal">Das System ist im optimalen Zustand!</string>
-    <string name="clean_memory_retry">Erneut optimieren</string>
-    <string name="clean_memory_toast">$number_ram MB freigegeben</string>
+
     -->
 
     <!-- Contacts -->
@@ -89,7 +76,6 @@
     <string name="done">Fertig</string>
     <string name="default_launcher_highlight">Retirement Launcher</string>    <string name="setting_app_monitoring">App-Überwachung</string>
     <string name="setting_call_block">Anrufsperre</string>
-    <string name="setting_auto_cleanup_apk">Heruntergeladene APKs automatisch bereinigen</string>
     <string name="call_permission_title">Anrufberechtigung</string>
     <string name="call_permission_desc">Erforderlich, um Anrufe über den Launcher zu tätigen.</string>
     <string name="call_block_title">Anrufsperre-Berechtigung</string>

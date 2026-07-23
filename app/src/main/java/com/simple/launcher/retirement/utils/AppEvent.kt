@@ -56,9 +56,6 @@ sealed class AppEvent {
     object AppSetupAccept : AppSetupResult()
     object AppSetupCancel : AppSetupResult()
 
-    sealed class FileCleanupIntroResult : AppEvent()
-    object FileCleanupIntroAccept : FileCleanupIntroResult()
-    object FileCleanupIntroCancel : FileCleanupIntroResult()
 
     sealed class CallBlockIntroResult : AppEvent()
     object CallBlockIntroAccept : CallBlockIntroResult()
