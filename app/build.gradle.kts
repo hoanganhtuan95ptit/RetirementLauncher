@@ -155,7 +155,7 @@ fun loadLocalProperties(): Properties {
 fun applyExternalConfig(localProperties: Properties) {
 
     val retirementPath = localProperties.getProperty("module.config") ?: return
-    val configFile = file("${retirementPath}/config.gradle")
+    val configFile = file("${retirementPath}/config.gradle.kts")
     if (configFile.exists()) {
 
         apply(from = configFile)
