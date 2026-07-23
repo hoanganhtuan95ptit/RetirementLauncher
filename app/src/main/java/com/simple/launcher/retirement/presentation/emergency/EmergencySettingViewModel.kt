@@ -65,7 +65,7 @@ class EmergencySettingViewModel : BaseViewModel() {
 
         // Nhóm này được bơm vào tab Protect của Settings, cùng pattern với các setting service khác.
         return GroupViewItem(
-            order = 1.2,
+            order = 1.3,
             list = listOf(settingViewItem)
         )
     }

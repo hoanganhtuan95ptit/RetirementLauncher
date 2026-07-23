@@ -35,7 +35,7 @@
     <string name="emergency_call_intro_highlight">自动呼叫快速联系人列表</string>
     <string name="emergency_call_intro_action">我明白了</string>
     <string name="file_cleanup_intro_title">功能介绍</string>
-    <string name="file_cleanup_intro_desc">此功能通过自动删除下载到设备的未知安装文件 (APK) 来保护用户，避免意外安装恶意软件。</string>
+    <string name="file_cleanup_intro_desc">此功能通过自动删除下载到设备的未知安装文件 (APK) 来保护用户，避免安装无法识别的应用程序。</string>
     <string name="file_cleanup_intro_highlight">自动删除未知安装文件 (APK)</string>
     <string name="file_cleanup_intro_action">我明白了</string>
     <string name="call_block_intro_title">功能介绍</string>

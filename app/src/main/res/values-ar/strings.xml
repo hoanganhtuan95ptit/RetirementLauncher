@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RetirementLauncher</string>
+    <string name="app_name">واجهة كبيرة وحماية</string>
 
     <!-- Settings -->
     <string name="settings_title">الإعدادات</string>
@@ -10,6 +10,8 @@
     <string name="setting_app_list">إعداد قائمة التطبيقات</string>
     <string name="setting_default_launcher">تعيين المشغل الافتراضي</string>
     <string name="setting_contact_list">إعداد جهات الاتصال السريعة</string>
+    <string name="setting_protection_feature">ميزة الحماية</string>
+    <string name="setting_protection_feature_desc">حماية الجهاز وحذف ملفات التثبيت غير المعروفة تلقائيًا لكبار السن</string>
     <!-- <string name="setting_clean_files">تنظيف الملفات غير المرغوب فيها</string> -->
     <!-- <string name="setting_clean_memory">تحرير الذاكرة</string> -->
 
@@ -17,7 +19,7 @@
 
     <!-- Onboarding -->
     <string name="onboarding_title">مرحباً بك في Retirement Launcher</string>
-    <string name="onboarding_desc">تطبيق لتبسيط واجهة هاتفك وحماية جهازك.</string>
+    <string name="onboarding_desc">واجهة بسيطة مع حماية مدمجة للجهاز لتبقيك آمنًا.</string>
     <string name="onboarding_start">ابدأ الآن</string>
 
     <!-- Clean Files

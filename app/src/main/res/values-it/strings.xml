@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RetirementLauncher</string>
+    <string name="app_name">Interfaccia grande e protez.</string>
 
     <!-- Settings -->
     <string name="settings_title">Impostazioni</string>
@@ -10,12 +10,14 @@
     <string name="setting_app_list">Configurazione Elenco App</string>
     <string name="setting_default_launcher">Imposta Launcher Predefinito</string>
     <string name="setting_contact_list">Configurazione Contatti Rapidi</string>
+    <string name="setting_protection_feature">Funzione di protezione</string>
+    <string name="setting_protection_feature_desc">Proteggi il dispositivo ed elimina i file di installazione sconosciuti per gli anziani</string>
 
     <string name="setting_pocket_mode">Modalità Tasca</string>
 
     <!-- Onboarding -->
     <string name="onboarding_title">Benvenuto su Retirement Launcher</string>
-    <string name="onboarding_desc">Un\'applicazione per semplificare l\'interfaccia del tuo telefono e proteggere il tuo dispositivo.</string>
+    <string name="onboarding_desc">Interfaccia semplice con protezione integrata per la tua sicurezza.</string>
     <string name="onboarding_start">Inizia</string>
 
     <!-- Contacts -->

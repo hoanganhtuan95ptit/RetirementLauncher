@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RetirementLauncher</string>
+    <string name="app_name">বড় ইন্টারফেস এবং সুরক্ষা</string>
 
     <!-- Settings -->
     <string name="settings_title">সেটিংস</string>
@@ -10,6 +10,8 @@
     <string name="setting_app_list">অ্যাপ তালিকা সেটআপ</string>
     <string name="setting_default_launcher">ডিফল্ট লঞ্চার সেট করুন</string>
     <string name="setting_contact_list">দ্রুত যোগাযোগ সেটআপ</string>
+    <string name="setting_protection_feature">সুরক্ষা বৈশিষ্ট্য</string>
+    <string name="setting_protection_feature_desc">প্রবীণদের জন্য ডিভাইস সুরক্ষা এবং স্বয়ংক্রিয়ভাবে অপরিচিত ইনস্টলেশন ফাইল মুছে ফেলা</string>
     <!-- <string name="setting_clean_files">অপ্রয়োজনীয় ফাইল পরিষ্কার করুন</string> -->
     <!-- <string name="setting_clean_memory">মেমরি খালি করুন</string> -->
 
@@ -17,7 +19,7 @@
 
     <!-- Onboarding -->
     <string name="onboarding_title">Retirement Launcher-এ আপনাকে স্বাগতম</string>
-    <string name="onboarding_desc">আপনার ফোন ইন্টারফেস সহজ করতে এবং আপনার ডিভাইস সুরক্ষিত করতে একটি অ্যাপ।</string>
+    <string name="onboarding_desc">আপনাকে নিরাপদ রাখতে বিল্ট-ইন ডিভাইস সুরক্ষা সহ সহজ ইন্টারফেস।</string>
     <string name="onboarding_start">শুরু করুন</string>
 
     <!-- Clean Files

@@ -35,7 +35,7 @@
     <string name="emergency_call_intro_highlight">단축 번호 목록으로 자동 전화 걸기</string>
     <string name="emergency_call_intro_action">이해했습니다</string>
     <string name="file_cleanup_intro_title">기능 소개</string>
-    <string name="file_cleanup_intro_desc">이 기능은 장치에 다운로드된 알 수 없는 설치 파일(APK)을 자동으로 삭제하여 맬웨어가 실수로 설치되는 것을 방지함으로써 사용자를 보호합니다.</string>
+    <string name="file_cleanup_intro_desc">이 기능은 장치에 다운로드된 알 수 없는 설치 파일(APK)을 자동으로 삭제하여 인식되지 않는 애플리케이션의 설치를 방지함으로써 사용자를 보호합니다.</string>
     <string name="file_cleanup_intro_highlight">알 수 없는 설치 파일(APK) 자동 삭제</string>
     <string name="file_cleanup_intro_action">이해했습니다</string>
     <string name="call_block_intro_title">기능 소개</string>

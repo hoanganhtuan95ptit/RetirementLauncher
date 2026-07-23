@@ -32,7 +32,7 @@
     <string name="emergency_call_intro_highlight">llamará automáticamente a la lista de contactos rápidos</string>
     <string name="emergency_call_intro_action">Lo entiendo</string>
     <string name="file_cleanup_intro_title">Introducción a la Función</string>
-    <string name="file_cleanup_intro_desc">Esta función ayuda a proteger a los usuarios eliminando automáticamente los archivos de instalación desconocidos (APK) descargados al dispositivo, evitando la instalación accidental de malware.</string>
+    <string name="file_cleanup_intro_desc">Esta función ayuda a proteger a los usuarios eliminando automáticamente archivos de instalación desconocidos (APK) descargados en el dispositivo, evitando la instalación de aplicaciones no reconocidas.</string>
     <string name="file_cleanup_intro_highlight">eliminando automáticamente los archivos de instalación desconocidos (APK)</string>
     <string name="file_cleanup_intro_action">Lo entiendo</string>
     <string name="call_block_intro_title">Introducción a la Función</string>

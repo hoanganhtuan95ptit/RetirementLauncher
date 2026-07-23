@@ -2,13 +2,13 @@ package com.simple.launcher.retirement.presentation.base
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.simple.launcher.retirement.presentation.base.services.colorMapFlow
+import com.simple.launcher.retirement.presentation.base.services.sizeMapFlow
+import com.simple.launcher.retirement.presentation.base.services.stringMapFlow
 import com.simple.launcher.retirement.utils.background.Background
 import com.simple.launcher.retirement.utils.combineState
 import com.simple.launcher.retirement.utils.exts.colorBackground
 import com.simple.launcher.retirement.utils.exts.textColorSecondary
-import com.simple.launcher.retirement.presentation.base.services.colorMapFlow
-import com.simple.launcher.retirement.presentation.base.services.sizeMapFlow
-import com.simple.launcher.retirement.presentation.base.services.stringMapFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map

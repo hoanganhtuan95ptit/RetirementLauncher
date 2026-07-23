@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RetirementLauncher</string>
+    <string name="app_name">Nagy felület és védelem</string>
 
     <!-- Settings -->
     <string name="settings_title">Beállítások</string>
@@ -10,12 +10,14 @@
     <string name="setting_app_list">Alkalmazáslista beállítása</string>
     <string name="setting_default_launcher">Alapértelmezett indító beállítása</string>
     <string name="setting_contact_list">Gyors kapcsolatok beállítása</string>
+    <string name="setting_protection_feature">Védelmi funkció</string>
+    <string name="setting_protection_feature_desc">Eszközvédelem és ismeretlen telepítőfájlok automatikus törlése időseknek</string>
 
     <string name="setting_pocket_mode">Zseb mód</string>
 
     <!-- Onboarding -->
     <string name="onboarding_title">Üdvözöljük a Retirement Launcherben</string>
-    <string name="onboarding_desc">Egy alkalmazás a telefon kezelőfelületének egyszerűsítésére és a készülék védelmére.</string>
+    <string name="onboarding_desc">Egyszerű felület beépített eszközvédelemmel a biztonság érdekében.</string>
     <string name="onboarding_start">Kezdés</string>
 
     <!-- Contacts -->

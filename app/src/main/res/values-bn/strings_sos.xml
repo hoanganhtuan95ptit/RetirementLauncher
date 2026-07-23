@@ -36,7 +36,7 @@
     <string name="emergency_call_intro_highlight">স্বয়ংক্রিয়ভাবে দ্রুত যোগাযোগ তালিকায় কল করা</string>
     <string name="emergency_call_intro_action">আমি বুঝেছি</string>
     <string name="file_cleanup_intro_title">বৈশিষ্ট্যের পরিচিতি</string>
-    <string name="file_cleanup_intro_desc">এই বৈশিষ্ট্যটি ডিভাইসে ডাউনলোড করা অজানা ইনস্টলেশন ফাইল (APK) স্বয়ংক্রিয়ভাবে মুছে ফেলে ব্যবহারকারীদের সুরক্ষিত করতে সাহায্য করে, যাতে ভুলবশত ম্যালওয়্যার ইনস্টল হওয়া এড়ানো যায়।</string>
+    <string name="file_cleanup_intro_desc">এই বৈশিষ্ট্যটি ডিভাইসে ডাউনলোড করা অজানা ইনস্টলেশন ফাইল (APK) স্বয়ংক্রিয়ভাবে মুছে ফেলার মাধ্যমে ব্যবহারকারীদের সুরক্ষিত করতে সহায়তা করে, যা অপরিচিত অ্যাপ্লিকেশন ইনস্টলেশন এড়ায়।</string>
     <string name="file_cleanup_intro_highlight">অজানা ইনস্টলেশন ফাইল (APK) স্বয়ংক্রিয়ভাবে মুছে ফেলা</string>
     <string name="file_cleanup_intro_action">আমি বুঝেছি</string>
     <string name="call_block_intro_title">বৈশিষ্ট্যের পরিচিতি</string>

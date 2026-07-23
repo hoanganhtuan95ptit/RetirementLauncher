@@ -1,7 +1,6 @@
 package com.simple.launcher.retirement.data.repository
 
 import android.content.Context
-import android.content.pm.ApplicationInfo
 import android.provider.ContactsContract
 import androidx.core.content.edit
 import com.google.gson.Gson

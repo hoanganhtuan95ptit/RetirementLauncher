@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RetirementLauncher</string>
+    <string name="app_name">Antarmuka Besar &amp; Pelindung</string>
 
     <!-- Settings -->
     <string name="settings_title">Pengaturan</string>
@@ -10,12 +10,14 @@
     <string name="setting_app_list">Atur Daftar Aplikasi</string>
     <string name="setting_default_launcher">Atur Launcher Default</string>
     <string name="setting_contact_list">Atur Kontak Cepat</string>
+    <string name="setting_protection_feature">Fitur Perlindungan</string>
+    <string name="setting_protection_feature_desc">Lindungi perangkat &amp; hapus otomatis file instalasi tidak dikenal untuk lansia</string>
 
     <string name="setting_pocket_mode">Mode Saku</string>
 
     <!-- Onboarding -->
     <string name="onboarding_title">Selamat Datang di Retirement Launcher</string>
-    <string name="onboarding_desc">Aplikasi untuk menyederhanakan antarmuka ponsel Anda dan melindungi perangkat Anda.</string>
+    <string name="onboarding_desc">Antarmuka sederhana dengan perlindungan perangkat bawaan agar Anda tetap aman.</string>
     <string name="onboarding_start">Mulai</string>
 
     <!-- Contacts -->

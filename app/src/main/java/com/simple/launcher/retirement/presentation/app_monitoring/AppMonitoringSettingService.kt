@@ -1,6 +1,5 @@
 package com.simple.launcher.retirement.presentation.app_monitoring
 
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.activityViewModels

@@ -1,5 +1,5 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name">RetirementLauncher</string>
+<resources>
+    <string name="app_name">Interfaz grande y protección</string>
 
     <!-- Settings -->
     <string name="settings_title">Ajustes</string>
@@ -10,6 +10,8 @@
     <string name="setting_app_list">Configuración de Lista de Apps</string>
     <string name="setting_default_launcher">Configurar Lanzador Predeterminado</string>
     <string name="setting_contact_list">Configuración de Contactos Rápidos</string>
+    <string name="setting_protection_feature">Función de protección</string>
+    <string name="setting_protection_feature_desc">Proteja el dispositivo y elimine archivos de instalación desconocidos para personas mayores</string>
     <!-- <string name="setting_clean_files">Limpiar Archivos Basura</string> -->
     <!-- <string name="setting_clean_memory">Liberar Memoria</string> -->
 
@@ -17,7 +19,7 @@
 
     <!-- Onboarding -->
     <string name="onboarding_title">Bienvenido a Retirement Launcher</string>
-    <string name="onboarding_desc">Una aplicación para simplificar la interfaz de su teléfono y proteger su dispositivo.</string>
+    <string name="onboarding_desc">Interfaz sencilla con protección de dispositivo integrada para mantenerte seguro.</string>
     <string name="onboarding_start">Empezar</string>
 
     <!-- Clean Files

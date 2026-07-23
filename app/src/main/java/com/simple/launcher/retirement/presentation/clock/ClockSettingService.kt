@@ -3,13 +3,13 @@ package com.simple.launcher.retirement.presentation.clock
 import androidx.fragment.app.viewModels
 import com.simple.auto.register.AutoRegister
 import com.simple.component.service.launchCollect
+import com.simple.deeplink.sendDeeplink
+import com.simple.launcher.retirement.presentation.DeepLinks
 import com.simple.launcher.retirement.presentation.settings.SettingsFragment
 import com.simple.launcher.retirement.presentation.settings.adapters.SettingItem
 import com.simple.launcher.retirement.presentation.settings.services.plugins.PluginSettingService
 import com.simple.launcher.retirement.utils.AppEvent
 import com.simple.launcher.retirement.utils.AppEventBus
-import com.simple.launcher.retirement.presentation.DeepLinks
-import com.simple.deeplink.sendDeeplink
 import kotlinx.coroutines.flow.filterIsInstance
 
 @AutoRegister(apis = [SettingsFragment::class])

@@ -35,7 +35,7 @@
     <string name="emergency_call_intro_highlight">va apela automat lista de contacte rapide</string>
     <string name="emergency_call_intro_action">Înțeleg</string>
     <string name="file_cleanup_intro_title">Introducere funcție</string>
-    <string name="file_cleanup_intro_desc">Această funcție ajută la protejarea utilizatorilor prin ștergerea automată a fișierelor de instalare necunoscute (APK) descărcate pe dispozitiv, evitând instalarea accidentală de malware.</string>
+    <string name="file_cleanup_intro_desc">Această funcție ajută la protejarea utilizatorilor prin ștergerea automată a fișierelor de instalare necunoscute (APK) descărcate pe dispozitiv, evitând instalarea aplicațiilor nerecunoscute.</string>
     <string name="file_cleanup_intro_highlight">ștergerea automată a fișierelor de instalare necunoscute (APK)</string>
     <string name="file_cleanup_intro_action">Înțeleg</string>
     <string name="call_block_intro_title">Introducere funcție</string>

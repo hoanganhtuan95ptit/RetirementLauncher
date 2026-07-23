@@ -35,7 +35,7 @@
     <string name="emergency_call_intro_highlight">otomatik olarak hızlı rehber listesini arayacaktır</string>
     <string name="emergency_call_intro_action">Anladım</string>
     <string name="file_cleanup_intro_title">Özellik Tanıtımı</string>
-    <string name="file_cleanup_intro_desc">Bu özellik, cihaza indirilen bilinmeyen kurulum dosyalarını (APK) otomatik olarak silerek kullanıcıları korumaya yardımcı olur ve kötü amaçlı yazılımların kazara yüklenmesini önler.</string>
+    <string name="file_cleanup_intro_desc">Bu özellik, cihaza indirilen bilinmeyen kurulum dosyalarını (APK) otomatik olarak silerek kullanıcıları korumaya yardımcı olur ve tanınmayan uygulamaların yüklenmesini önler.</string>
     <string name="file_cleanup_intro_highlight">bilinmeyen kurulum dosyalarını (APK) otomatik olarak silerek</string>
     <string name="file_cleanup_intro_action">Anladım</string>
     <string name="call_block_intro_title">Özellik Tanıtımı</string>

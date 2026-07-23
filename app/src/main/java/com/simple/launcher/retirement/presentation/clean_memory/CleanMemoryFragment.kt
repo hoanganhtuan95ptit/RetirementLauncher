@@ -1,30 +1,5 @@
 package com.simple.launcher.retirement.presentation.clean_memory
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.core.view.isVisible
-import androidx.core.view.updatePadding
-import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.viewModels
-import androidx.transition.AutoTransition
-import androidx.transition.TransitionManager
-import com.simple.deeplink.Deeplink
-import com.simple.deeplink.DeeplinkHandler
-import com.simple.launcher.retirement.R
-import com.simple.launcher.retirement.databinding.FragmentCleanMemoryBinding
-import com.simple.launcher.retirement.presentation.DeepLinks
-import com.simple.launcher.retirement.presentation.base.BaseFragment
-import com.simple.launcher.retirement.utils.background.setBackground
-import com.simple.launcher.retirement.utils.exts.asObjectOrNull
-import com.simple.launcher.retirement.utils.lifecycle.observe
-import com.simple.launcher.retirement.utils.size.DP
-import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
-import com.simple.ui.precompute.image.setImage
-import com.simple.ui.precompute.text.setText
-import kotlinx.coroutines.delay
-
 /*class CleanMemoryFragment : BaseFragment<FragmentCleanMemoryBinding>() {
 
     private val viewModel: CleanMemoryViewModel by viewModels()

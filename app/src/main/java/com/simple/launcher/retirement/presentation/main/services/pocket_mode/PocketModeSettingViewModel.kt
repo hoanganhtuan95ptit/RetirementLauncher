@@ -32,9 +32,9 @@ class PocketModeSettingViewModel : BaseViewModel() {
 
         value = listOf(
             SettingItem(
-                SettingItem.ID_TOGGLE_POCKET_MODE,
-                resources.getString(R.string.setting_pocket_mode).with(BigForegroundColor(textColor)).build(),
-                BigImage(android.R.drawable.ic_menu_compass),
+                id = SettingItem.ID_TOGGLE_POCKET_MODE,
+                title = resources.getString(R.string.setting_pocket_mode).with(BigForegroundColor(textColor)).build(),
+                icon = BigImage(android.R.drawable.ic_menu_compass),
                 isSwitch = true,
                 isChecked = isEnabled
             )

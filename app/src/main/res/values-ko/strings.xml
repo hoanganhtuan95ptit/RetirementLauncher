@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RetirementLauncher</string>
+    <string name="app_name">큰 인터페이스 및 보호</string>
 
     <!-- Settings -->
     <string name="settings_title">설정</string>
@@ -10,12 +10,14 @@
     <string name="setting_app_list">앱 목록 설정</string>
     <string name="setting_default_launcher">기본 런처 설정</string>
     <string name="setting_contact_list">단축 번호 설정</string>
+    <string name="setting_protection_feature">보호 기능</string>
+    <string name="setting_protection_feature_desc">고령자를 위한 기기 보호 및 알 수 없는 설치 파일 자동 삭제</string>
 
     <string name="setting_pocket_mode">포켓 모드</string>
 
     <!-- Onboarding -->
     <string name="onboarding_title">Retirement Launcher에 오신 것을 환영합니다</string>
-    <string name="onboarding_desc">전화기 인터페이스를 단순화하고 장치를 보호하는 앱입니다.</string>
+    <string name="onboarding_desc">안전을 유지하기 위한 기기 보호 기능이 내장된 간편한 인터페이스。</string>
     <string name="onboarding_start">시작하기</string>
 
     <!-- Contacts -->

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RetirementLauncher</string>
+    <string name="app_name">Grote interface &amp; bescherming</string>
 
     <!-- Settings -->
     <string name="settings_title">Instellingen</string>
@@ -10,12 +10,14 @@
     <string name="setting_app_list">App-lijst instellen</string>
     <string name="setting_default_launcher">Standaard Launcher instellen</string>
     <string name="setting_contact_list">Snelcontacten instellen</string>
+    <string name="setting_protection_feature">Beschermingsfunctie</string>
+    <string name="setting_protection_feature_desc">Apparaat beschermen &amp; onbekende installatiebestanden automatisch verwijderen voor ouderen</string>
 
     <string name="setting_pocket_mode">Zakmodus</string>
 
     <!-- Onboarding -->
     <string name="onboarding_title">Welkom bij Retirement Launcher</string>
-    <string name="onboarding_desc">Een app om uw telefooninterface te vereenvoudigen en uw apparaat te beschermen.</string>
+    <string name="onboarding_desc">Eenvoudige interface met ingebouwde apparaatbescherming om u veilig te houden.</string>
     <string name="onboarding_start">Aan de slag</string>
 
     <!-- Contacts -->

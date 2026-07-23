@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RetirementLauncher</string>
+    <string name="app_name">Antarmuka besar dan perlindungan</string>
 
     <!-- Settings -->
     <string name="settings_title">Tetapan</string>
@@ -10,12 +10,14 @@
     <string name="setting_app_list">Sediakan Senarai Aplikasi</string>
     <string name="setting_default_launcher">Tetapkan Pelancar Lalai</string>
     <string name="setting_contact_list">Sediakan Kenalan Pantas</string>
+    <string name="setting_protection_feature">Ciri perlindungan</string>
+    <string name="setting_protection_feature_desc">Lindungi peranti &amp; padam fail pemasangan tidak dikenali secara automatik untuk warga emas</string>
 
     <string name="setting_pocket_mode">Mod Poket</string>
 
     <!-- Onboarding -->
     <string name="onboarding_title">Selamat Datang ke Retirement Launcher</string>
-    <string name="onboarding_desc">Aplikasi untuk memudahkan antara muka telefon anda và melindungi peranti anda.</string>
+    <string name="onboarding_desc">Antara muka mudah dengan perlindungan peranti terbina dalam untuk memastikan anda selamat.</string>
     <string name="onboarding_start">Mulakan</string>
 
     <!-- Contacts -->

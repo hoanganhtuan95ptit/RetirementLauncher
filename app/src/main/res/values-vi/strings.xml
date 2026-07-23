@@ -1,5 +1,5 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name">RetirementLauncher</string>
+<resources>
+    <string name="app_name">Giao diện lớn và bảo vệ</string>
 
     <!-- Settings -->
     <string name="settings_title">Cài đặt</string>
@@ -10,13 +10,15 @@
     <string name="setting_app_list">Thiết lập danh sách app</string>
     <string name="setting_default_launcher">Thiết lập launcher mặc định</string>
     <string name="setting_contact_list">Thiết lập liên hệ nhanh</string>
+    <string name="setting_protection_feature">Tính năng bảo vệ</string>
+    <string name="setting_protection_feature_desc">Bảo vệ thiết bị &amp; Tự động xóa các file cài đặt lạ cho người cao tuổi</string>
 
     <string name="setting_pocket_mode">Chống chạm nhầm (túi quần)</string>
 
 
     <!-- Onboarding -->
     <string name="onboarding_title">Chào mừng bạn đến với Retirement Launcher</string>
-    <string name="onboarding_desc">Ứng dụng giúp đơn giản hóa giao diện điện thoại và bảo vệ an toàn cho thiết bị của bạn.</string>
+    <string name="onboarding_desc">Giao diện đơn giản tích hợp tính năng bảo vệ thiết bị giúp bạn luôn an toàn.</string>
     <string name="onboarding_start">Bắt đầu ngay</string>
 
     <!-- Contacts -->

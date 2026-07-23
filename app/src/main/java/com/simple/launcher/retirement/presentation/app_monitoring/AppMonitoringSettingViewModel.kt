@@ -1,6 +1,5 @@
 package com.simple.launcher.retirement.presentation.app_monitoring
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.simple.adapter.ViewItem
 import com.simple.launcher.retirement.R
@@ -53,7 +52,7 @@ class AppMonitoringSettingViewModel : BaseViewModel() {
             list.add(it)
         }
 
-        value = GroupViewItem(order = 1.1, list = list)
+        value = GroupViewItem(order = 1.2, list = list)
     }
 
     init {

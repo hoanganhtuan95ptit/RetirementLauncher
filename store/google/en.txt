@@ -1,14 +1,24 @@
-# Retirement Launcher – Simple, Safe, and Friendly Android Launcher for Seniors 👴📱🛡️
+Tên ứng dụng *
+Retirement Launcher & Protection
 
-Retirement Launcher is an easy-to-use Android launcher designed specifically for seniors, older adults, parents, and grandparents who want a minimalist, clean, and secure phone experience. The app transforms complex Android devices into a simplified home screen with large icons, intuitive navigation, and daily safety protection features.
+Mô tả ngắn *
+Simple, safe Android launcher for seniors with large icons and APK protection.
 
-Unlike standard launchers cluttered with overwhelming features, Retirement Launcher focuses on simplicity, accessibility, and security. Everything is crafted to be easier to see, simpler to understand, and much safer for elderly users.
+Mô tả đầy đủ *
+Retirement Launcher & Protection is an easy-to-use Android launcher designed specifically for seniors, older adults, parents, and grandparents who want a minimalist, clean, and secure phone experience. The app transforms complex Android devices into a simplified home screen with large icons, intuitive navigation, and daily protection features.
+
+Unlike standard launchers cluttered with overwhelming features, Retirement Launcher focuses on simplicity, accessibility, and protection. Everything is crafted to be easier to see, simpler to understand, and much safer for elderly users.
 
 Whether you are setting up a phone for yourself or your loved ones, Retirement Launcher helps create a secure mobile environment, minimizing accidental taps and confusing operations.
 
 ━━━━━━━━━━━━━━
 🌟 KEY FEATURES
 ━━━━━━━━━━━━━━
+
+🛡️ Protection Feature
+* Protect device & automatically delete unfamiliar installation files for the elderly.
+* Automatically block calls from unknown numbers to avoid spam and scams.
+* Prevent unauthorized opening of unfamiliar apps to keep users safe.
 
 🏠 Simple Home Screen
 * Clean and minimalist interface with extra-large icons.
@@ -23,27 +33,22 @@ Whether you are setting up a phone for yourself or your loved ones, Retirement L
 * Add important contacts (family, caregivers) directly to the home screen.
 * One-touch calling makes communication incredibly simple for elderly users.
 
-🛡️ Smart Safety & Protection
-* Automatically block calls from unknown numbers to avoid spam and scams.
-* Prevent unauthorized opening of unfamiliar apps to keep users safe.
-
 🆘 Emergency Rescue Support (SOS)
-* Automatically performs emergency calls if abnormal inactivity is detected for a long period.
-* **IMPORTANT NOTE:** The SOS feature utilizes the AccessibilityService API to monitor user touch interactions on the screen. This allows the app to detect whether the phone is being actively used, ensuring timely rescue calls in case of emergencies. We are committed to privacy: NO screen content is read, NO personal data is collected, and NO information is shared externally.
+* Automatically performs emergency calls if abnormal inactivity is detected for a long period for timely support.
 
 👴 Accessibility-Focused Design
 * Large buttons, clear text, and high contrast.
 * Perfect for parents, grandparents, and users with mild visual impairment.
 
 ━━━━━━━━━━━━━━
-💡 WHY CHOOSE RETIREMENT LAUNCHER?
+💡 WHY CHOOSE RETIREMENT LAUNCHER & PROTECTION?
 ━━━━━━━━━━━━━━
 
 ✅ The simplest Android launcher for seniors.
 ✅ Large icons and clear visuals for easy operation.
-✅ Smart safety tools to prevent scams and unwanted interruptions.
+✅ Smart protection tools to automatically clean unknown setup files and prevent scams.
 ✅ One-touch access to family and essential apps.
 ✅ Integrated secure SOS rescue tool.
 ✅ Lightweight and smooth performance on all devices.
 
-Retirement Launcher is more than just a launcher. It is a seamless combination of a minimalist interface and robust safety tools, making smartphones more accessible and safer than ever for everyone.
+Retirement Launcher & Protection is more than just a launcher. It is a seamless combination of a minimalist interface and robust protection tools, making smartphones more accessible and safer than ever for everyone.

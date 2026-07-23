@@ -35,7 +35,7 @@
     <string name="emergency_call_intro_highlight">automatikusan hívja a gyors kapcsolatok listáját</string>
     <string name="emergency_call_intro_action">Értem</string>
     <string name="file_cleanup_intro_title">Funkció bemutatása</string>
-    <string name="file_cleanup_intro_desc">Ez a funkció segít megvédeni a felhasználókat azáltal, hogy automatikusan törli a készülékre letöltött ismeretlen telepítőfájlokat (APK), elkerülve a rosszindulatú programok véletlen telepítését.</string>
+    <string name="file_cleanup_intro_desc">Ez a funkció segít megvédeni a felhasználókat az eszközre letöltött ismeretlen telepítőfájlok (APK) automatikus törlésével, elkerülve az ismeretlen alkalmazások telepítését.</string>
     <string name="file_cleanup_intro_highlight">automatikusan törli az ismeretlen telepítőfájlokat (APK)</string>
     <string name="file_cleanup_intro_action">Értem</string>
     <string name="call_block_intro_title">Funkció bemutatása</string>

@@ -1,14 +1,12 @@
 package com.simple.launcher.retirement.presentation.clock.adapters
 
 import android.graphics.Color
-import android.util.Log
 import com.simple.adapter.Adapter
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.presentation.base.adapters.PrecomputedAdapter
 import com.simple.launcher.retirement.presentation.base.adapters.PrecomputedViewItem
 import com.simple.launcher.retirement.presentation.home.adapter.HomeItem
 import com.simple.launcher.retirement.utils.exts.dp
-import com.simple.launcher.retirement.utils.exts.getString
 import com.simple.launcher.retirement.utils.exts.sp
 import com.simple.ui.precompute.LayoutEngine
 import com.simple.ui.precompute.image.BigImage

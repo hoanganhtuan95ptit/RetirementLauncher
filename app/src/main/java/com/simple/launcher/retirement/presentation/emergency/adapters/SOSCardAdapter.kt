@@ -6,14 +6,11 @@ import androidx.core.view.isVisible
 import com.simple.adapter.Adapter
 import com.simple.adapter.ViewItem
 import com.simple.adapter.ViewItemAdapter
-import com.simple.adapter.base.BaseBindingViewHolder
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.databinding.ItemSosCardBinding
 import com.simple.launcher.retirement.utils.AppEvent
 import com.simple.launcher.retirement.utils.AppEventBus
 import com.simple.launcher.retirement.utils.exts.SpanSizeLookupViewItem
-import com.simple.launcher.retirement.utils.getItem
-import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
 import com.simple.ui.precompute.image.BigImage
 import com.simple.ui.precompute.image.setImage
 import com.simple.ui.precompute.text.BigText

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RetirementLauncher</string>
+    <string name="app_name">बड़ा इंटरफ़ेस और सुरक्षा</string>
 
     <!-- Settings -->
     <string name="settings_title">सेटिंग्स</string>
@@ -10,12 +10,14 @@
     <string name="setting_app_list">ऐप सूची सेटअप</string>
     <string name="setting_default_launcher">डिफ़ॉल्ट लॉन्चर सेट करें</string>
     <string name="setting_contact_list">त्वरित संपर्क सेटअप</string>
+    <string name="setting_protection_feature">सुरक्षा सुविधा</string>
+    <string name="setting_protection_feature_desc">बुजुर्गों के लिए डिवाइस सुरक्षा और अपरिचित इंस्टॉलेशन फ़ाइलों को स्वचालित रूप से हटाना</string>
 
     <string name="setting_pocket_mode">पॉकेट मोड</string>
 
     <!-- Onboarding -->
     <string name="onboarding_title">Retirement Launcher में आपका स्वागत है</string>
-    <string name="onboarding_desc">आपके फोन इंटरफेस को सरल बनाने और आपके डिवाइस की सुरक्षा करने के लिए एक ऐप।</string>
+    <string name="onboarding_desc">आपको सुरक्षित रखने के लिए अंतर्निहित डिवाइस सुरक्षा के साथ सरल इंटरफ़ेस।</string>
     <string name="onboarding_start">शुरू करें</string>
 
     <!-- Contacts -->

@@ -37,17 +37,17 @@ class InstallerCleanupSettingViewModel : BaseViewModel() {
         null
     ) { resources, isEnabled ->
 
-        // Tạm thời ẩn tính năng này bằng cách không thêm vào danh sách hiển thị
-        /*
         val list = arrayListOf<ViewItem>()
 
         settingItem(
             id = SettingItem.ID_TOGGLE_INSTALLER_CLEANUP,
-            icon = android.R.drawable.ic_menu_save,
-            title = R.string.setting_auto_cleanup_apk,
+            icon = R.drawable.ic_protect_black_24dp,
+            title = R.string.setting_protection_feature,
+            description = R.string.setting_protection_feature_desc,
 
             isSwitch = true,
             isChecked = isEnabled,
+            highlight = true,
 
             resources = resources
         ).let {
@@ -55,9 +55,7 @@ class InstallerCleanupSettingViewModel : BaseViewModel() {
             list.add(it)
         }
 
-        value = GroupViewItem(order = 1.3, list = list)
-        */
-        value = null
+        value = GroupViewItem(order = 1.01, list = list)
     }
 
     init {

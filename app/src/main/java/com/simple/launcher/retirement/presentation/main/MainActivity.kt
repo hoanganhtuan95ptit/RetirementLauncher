@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import androidx.activity.OnBackPressedCallback
-import androidx.lifecycle.lifecycleScope
 import com.simple.deeplink.sendDeeplink
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.databinding.ActivityMainBinding

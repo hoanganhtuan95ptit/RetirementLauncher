@@ -3,11 +3,9 @@ package com.simple.launcher.retirement.presentation.installer_cleanup
 import androidx.activity.viewModels
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import com.simple.auto.register.AutoRegister
 import com.simple.component.service.ActivityCreatedService
 import com.simple.component.service.launchCollect
-import com.simple.launcher.retirement.presentation.app_monitoring.AppMonitoringSettingViewModel
 import com.simple.launcher.retirement.presentation.main.MainActivity
 import com.simple.launcher.retirement.presentation.settings.SettingsFragment
 import com.simple.launcher.retirement.presentation.settings.adapters.SettingItem

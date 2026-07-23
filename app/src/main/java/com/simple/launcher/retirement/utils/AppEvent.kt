@@ -1,7 +1,7 @@
 package com.simple.launcher.retirement.utils
 
-import com.simple.launcher.retirement.domain.model.SelectableAppEntity
 import com.simple.launcher.retirement.domain.model.SOSConfig
+import com.simple.launcher.retirement.domain.model.SelectableAppEntity
 import com.simple.launcher.retirement.domain.model.SelectableContactEntity
 import com.simple.launcher.retirement.presentation.settings.adapters.SettingItem
 

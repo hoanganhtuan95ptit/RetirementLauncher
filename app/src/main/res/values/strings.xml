@@ -1,5 +1,5 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name">RetirementLauncher</string>
+<resources>
+    <string name="app_name">Retirement Launcher &amp; Protection</string>
 
     <!-- Settings -->
     <string name="settings_title">Settings</string>
@@ -10,13 +10,15 @@
     <string name="setting_app_list">App List Setup</string>
     <string name="setting_default_launcher">Default Launcher Setup</string>
     <string name="setting_contact_list">Quick Contact Setup</string>
+    <string name="setting_protection_feature">Protection feature</string>
+    <string name="setting_protection_feature_desc">Protect device &amp; automatically delete unfamiliar installation files for the elderly</string>
 
     <string name="setting_pocket_mode">Pocket Mode (Prevent accidental touch)</string>
 
 
     <!-- Onboarding -->
     <string name="onboarding_title">Welcome to Retirement Launcher</string>
-    <string name="onboarding_desc">An app to simplify your phone interface and protect your device.</string>
+    <string name="onboarding_desc">Simple interface with built-in device protection to keep you safe.</string>
     <string name="onboarding_start">Get Started</string>
 
     <!-- Contacts -->

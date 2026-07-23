@@ -18,6 +18,7 @@ import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.exts.asObjectOrNull
 import com.simple.launcher.retirement.utils.lifecycle.observe
 import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
+import com.simple.ui.precompute.image.setImage
 import com.simple.ui.precompute.text.setText
 
 class OnboardingFragment : BaseFragment<FragmentOnboardingBinding>() {
@@ -47,6 +48,21 @@ class OnboardingFragment : BaseFragment<FragmentOnboardingBinding>() {
         viewModel.background.observe(this) { background ->
             val binding = binding ?: return@observe
             binding.root.setBackground(background)
+        }
+
+        viewModel.title.observe(this) { title ->
+            val binding = binding ?: return@observe
+            binding.tvTitle.setText(title)
+        }
+
+        viewModel.description.observe(this) { description ->
+            val binding = binding ?: return@observe
+            binding.tvDescription.setText(description)
+        }
+
+        viewModel.image.observe(this) { image ->
+            val binding = binding ?: return@observe
+            binding.ivOnboarding.setImage(image)
         }
 
         viewModel.action.observe(this) { state ->

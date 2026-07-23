@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RetirementLauncher</string>
+    <string name="app_name">Большой интерфейс и защита</string>
 
     <!-- Settings -->
     <string name="settings_title">Настройки</string>
@@ -10,12 +10,14 @@
     <string name="setting_app_list">Настройка списка приложений</string>
     <string name="setting_default_launcher">Установить лаунчер по умолчанию</string>
     <string name="setting_contact_list">Настройка быстрых контактов</string>
+    <string name="setting_protection_feature">Функция защиты</string>
+    <string name="setting_protection_feature_desc">Защита устройства и автоудаление неизвестных установочных файлов для пожилых людей</string>
 
     <string name="setting_pocket_mode">В кармане</string>
 
     <!-- Onboarding -->
     <string name="onboarding_title">Добро пожаловать в Retirement Launcher</string>
-    <string name="onboarding_desc">Приложение для упрощения интерфейса вашего телефона и защиты устройства.</string>
+    <string name="onboarding_desc">Простой интерфейс со встроенной защитой устройства для вашей безопасности.</string>
     <string name="onboarding_start">Начать</string>
 
     <!-- Contacts -->

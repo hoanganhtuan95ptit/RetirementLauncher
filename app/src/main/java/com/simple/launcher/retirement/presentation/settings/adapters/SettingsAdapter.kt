@@ -25,6 +25,7 @@ import com.simple.ui.precompute.text.setText
 data class SettingItem(
     val id: Int,
     val title: BigText,
+    val description: BigText? = null,
 
     val icon: BigImage,
     val iconBackground: Background = Background(),
@@ -43,6 +44,7 @@ data class SettingItem(
 
     override fun getContentsCompare(): List<Pair<Any, String>> = listOf(
         title to "title",
+        (description ?: "") to "description",
 
         icon to "icon",
         iconBackground to "iconBackground",
@@ -114,6 +116,11 @@ class SettingsAdapter : ViewItemAdapter<SettingItem, ItemSettingBinding>() {
 
         if (payloads.isEmpty() || payloads.contains("title")) {
             binding.tvSettingTitle.setText(item.title)
+        }
+
+        if (payloads.isEmpty() || payloads.contains("description")) {
+            binding.tvSettingDesc.isVisible = item.description != null
+            binding.tvSettingDesc.setText(item.description)
         }
 
         if (payloads.isEmpty() || payloads.contains("icon")) {

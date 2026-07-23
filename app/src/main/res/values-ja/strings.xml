@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RetirementLauncher</string>
+    <string name="app_name">大きな画面と保護</string>
 
     <!-- Settings -->
     <string name="settings_title">設定</string>
@@ -10,12 +10,14 @@
     <string name="setting_app_list">アプリリスト設定</string>
     <string name="setting_default_launcher">デフォルトのランチャー設定</string>
     <string name="setting_contact_list">クイック連絡先設定</string>
+    <string name="setting_protection_feature">保護機能</string>
+    <string name="setting_protection_feature_desc">高齢者向けデバイス保護と不明なインストールファイルの自動削除</string>
 
     <string name="setting_pocket_mode">ポケットモード</string>
 
     <!-- Onboarding -->
     <string name="onboarding_title">Retirement Launcherへようこそ</string>
-    <string name="onboarding_desc">スマートフォンのインターフェースを簡素化し、デバイスを保護するアプリです。</string>
+    <string name="onboarding_desc">安全を保つためのデバイス保護機能を備えたシンプルなインターフェース。</string>
     <string name="onboarding_start">使ってみる</string>
 
     <!-- Contacts -->

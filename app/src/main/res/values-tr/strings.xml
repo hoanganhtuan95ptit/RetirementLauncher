@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RetirementLauncher</string>
+    <string name="app_name">Büyük arayüz ve koruma</string>
 
     <!-- Settings -->
     <string name="settings_title">Ayarlar</string>
@@ -10,12 +10,14 @@
     <string name="setting_app_list">Uygulama Listesi Kurulumu</string>
     <string name="setting_default_launcher">Varsayılan Başlatıcıyı Ayarla</string>
     <string name="setting_contact_list">Hızlı Rehber Kurulumu</string>
+    <string name="setting_protection_feature">Koruma özelliği</string>
+    <string name="setting_protection_feature_desc">Yaşlılar için cihazı koruyun ve bilinmeyen kurulum dosyalarını otomatik olarak silin</string>
 
     <string name="setting_pocket_mode">Cep Modu</string>
 
     <!-- Onboarding -->
     <string name="onboarding_title">Retirement Launcher\'a Hoş Geldiniz</string>
-    <string name="onboarding_desc">Telefon arayüzünüzü basitleştirmek ve cihazınızı korumak için bir uygulama.</string>
+    <string name="onboarding_desc">Sizi güvende tutmak için yerleşik cihaz korumasına sahip basit arayüz.</string>
     <string name="onboarding_start">Başla</string>
 
     <!-- Contacts -->

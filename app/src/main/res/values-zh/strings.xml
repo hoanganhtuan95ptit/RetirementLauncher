@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RetirementLauncher</string>
+    <string name="app_name">大界面与保护</string>
 
     <!-- Settings -->
     <string name="settings_title">设置</string>
@@ -10,12 +10,14 @@
     <string name="setting_app_list">应用列表设置</string>
     <string name="setting_default_launcher">设置默认启动器</string>
     <string name="setting_contact_list">快速联系人设置</string>
+    <string name="setting_protection_feature">保护功能</string>
+    <string name="setting_protection_feature_desc">为老年人保护设备并自动删除陌生的安装文件</string>
 
     <string name="setting_pocket_mode">口袋模式</string>
 
     <!-- Onboarding -->
     <string name="onboarding_title">欢迎使用 Retirement Launcher</string>
-    <string name="onboarding_desc">一个简化手机界面并保护您设备的应用程序。</string>
+    <string name="onboarding_desc">简单界面且内置设备保护，确保您的安全。</string>
     <string name="onboarding_start">开始使用</string>
 
     <!-- Contacts -->

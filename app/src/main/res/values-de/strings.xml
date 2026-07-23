@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RetirementLauncher</string>
+    <string name="app_name">Große Oberfläche &amp; Schutz</string>
 
     <!-- Settings -->
     <string name="settings_title">Einstellungen</string>
@@ -10,6 +10,8 @@
     <string name="setting_app_list">App-Listen-Einrichtung</string>
     <string name="setting_default_launcher">Standard-Launcher festlegen</string>
     <string name="setting_contact_list">Schnellkontakt-Einrichtung</string>
+    <string name="setting_protection_feature">Schutzfunktion</string>
+    <string name="setting_protection_feature_desc">Geräteschutz &amp; automatisches Löschen unbekannter Installationsdateien für Senioren</string>
     <!-- <string name="setting_clean_files">Junk-Dateien bereinigen</string> -->
     <!-- <string name="setting_clean_memory">Speicher freigeben</string> -->
 
@@ -17,7 +19,7 @@
 
     <!-- Onboarding -->
     <string name="onboarding_title">Willkommen bei Retirement Launcher</string>
-    <string name="onboarding_desc">Eine App, um Ihre Benutzeroberfläche zu vereinfachen und Ihr Gerät zu schützen.</string>
+    <string name="onboarding_desc">Einfache Benutzeroberfläche mit integriertem Geräteschutz für Ihre Sicherheit.</string>
     <string name="onboarding_start">Los geht\'s</string>
 
     <!-- Clean Files

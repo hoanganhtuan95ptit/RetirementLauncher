@@ -1,6 +1,7 @@
 package com.simple.launcher.retirement.presentation.base
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,10 @@ import androidx.viewbinding.ViewBinding
 abstract class BaseFragment<VB : ViewBinding> : Fragment() {
 
     var binding: VB? = null
+    
+    init {
+        Log.d("tuanha", "${this.javaClass.simpleName}: $this")
+    }
 
     abstract fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?): VB
 

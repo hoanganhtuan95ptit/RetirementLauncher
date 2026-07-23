@@ -35,7 +35,7 @@
     <string name="emergency_call_intro_highlight">クイック連絡先リストに自動的に電話をかける</string>
     <string name="emergency_call_intro_action">了解しました</string>
     <string name="file_cleanup_intro_title">機能紹介</string>
-    <string name="file_cleanup_intro_desc">この機能は、デバイスにダウンロードされた未知のインストールファイル (APK) を自動的に削除し、マルウェアの誤ったインストールを回避することでユーザーを保護します。</string>
+    <string name="file_cleanup_intro_desc">この機能は、デバイスにダウンロードされた不明なインストールファイル（APK）を自動的に削除することでユーザーを保護し、認識されないアプリケーションのインストールを回避します。</string>
     <string name="file_cleanup_intro_highlight">未知のインストールファイル (APK) を自動的に削除</string>
     <string name="file_cleanup_intro_action">了解しました</string>
     <string name="call_block_intro_title">機能紹介</string>

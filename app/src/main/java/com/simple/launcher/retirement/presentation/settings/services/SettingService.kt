@@ -14,8 +14,10 @@ import com.simple.launcher.retirement.utils.exts.colorPrimaryContainer
 import com.simple.launcher.retirement.utils.exts.dp
 import com.simple.launcher.retirement.utils.exts.getString
 import com.simple.launcher.retirement.utils.exts.textColorPrimary
+import com.simple.launcher.retirement.utils.exts.withAlpha
 import com.simple.launcher.retirement.utils.size.DP
 import com.simple.launcher.retirement.utils.text.withStyleBodyLarge
+import com.simple.launcher.retirement.utils.text.withStyleBodyMedium
 import com.simple.launcher.retirement.utils.text.withStyleTitleLarge
 import com.simple.ui.precompute.image.ColorFilter
 import com.simple.ui.precompute.image.addTransform
@@ -30,8 +32,10 @@ fun settingItem(
     id: Int,
     icon: Int,
     title: Int,
+    description: Int? = null,
     isSwitch: Boolean = false,
     isChecked: Boolean = false,
+    highlight: Boolean = false,
     resources: Map<String, Any>
 ): SettingItem = SettingItem(
     id = id,
@@ -41,22 +45,39 @@ fun settingItem(
         .with(BigForegroundColor(resources.textColorPrimary))
         .build(),
 
+    description = if (description != null) {
+        resources.getString(description)
+            .withStyleBodyMedium()
+            .with(BigForegroundColor(resources.textColorPrimary.withAlpha(0.7f)))
+            .build()
+    } else {
+        null
+    },
+
     icon = icon.toBuilder()
         .addTransform(ColorFilter(resources.colorOnPrimaryContainer))
         .build(),
     iconBackground = Background.Builder()
-        .backgroundColor(resources.colorPrimaryContainer)
+        .backgroundColor(if (highlight) resources.colorOnPrimaryContainer.withAlpha(0.2f) else resources.colorPrimaryContainer)
         .cornerRadius(DP.DP_24)
         .build(),
 
     isSwitch = isSwitch,
     isChecked = isChecked,
 
-    background = Background.Builder()
-        .backgroundColor(resources.colorBackground)
-        .cornerRadius(DP.DP_24)
-        .stroke(DP.DP_2, resources.colorPrimary, dashGap = 4.dp().toInt(), dashWidth = 4.dp().toInt())
-        .build(),
+    background = if (highlight) {
+        Background.Builder()
+            .backgroundColor(resources.colorPrimaryContainer)
+            .cornerRadius(DP.DP_24)
+            .stroke(DP.DP_2, resources.colorPrimary, dashGap = 4.dp().toInt(), dashWidth = 4.dp().toInt())
+            .build()
+    } else {
+        Background.Builder()
+            .backgroundColor(resources.colorBackground)
+            .cornerRadius(DP.DP_24)
+            .stroke(DP.DP_2, resources.colorPrimary, dashGap = 4.dp().toInt(), dashWidth = 4.dp().toInt())
+            .build()
+    },
 )
 
 // Header và item dùng chung một style để các group settings render đồng nhất.

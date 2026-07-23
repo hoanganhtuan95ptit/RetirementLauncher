@@ -1,51 +1,5 @@
 package com.simple.launcher.retirement.presentation.clean_files
 
-import androidx.core.graphics.toColorInt
-import androidx.lifecycle.viewModelScope
-import com.simple.launcher.retirement.R
-import com.simple.launcher.retirement.domain.repository.FileRepository
-import com.simple.launcher.retirement.domain.repository.StrangeFileCategory
-import com.simple.launcher.retirement.presentation.base.ActionState
-import com.simple.launcher.retirement.presentation.base.BaseViewModel
-import com.simple.launcher.retirement.presentation.base.ToolbarState
-import com.simple.launcher.retirement.presentation.base.buildBackIcon
-import com.simple.launcher.retirement.presentation.base.buildToolbarTitle
-import com.simple.launcher.retirement.utils.background.Background
-import com.simple.launcher.retirement.utils.combineState
-import com.simple.launcher.retirement.utils.exts.asObjectOrNull
-import com.simple.launcher.retirement.utils.exts.colorOnPrimary
-import com.simple.launcher.retirement.utils.exts.colorOnSurface
-import com.simple.launcher.retirement.utils.exts.colorPrimary
-import com.simple.launcher.retirement.utils.exts.colorSurface
-import com.simple.launcher.retirement.utils.exts.getString
-import com.simple.launcher.retirement.utils.exts.orZero
-import com.simple.launcher.retirement.utils.exts.textColorPrimary
-import com.simple.launcher.retirement.utils.exts.textColorSecondary
-import com.simple.launcher.retirement.utils.exts.withAlpha
-import com.simple.launcher.retirement.utils.size.DP
-import com.simple.launcher.retirement.utils.text.withStyleBodyLarge
-import com.simple.launcher.retirement.utils.text.withStyleBodyMedium
-import com.simple.launcher.retirement.utils.text.withStyleHeadlineSmall
-import com.simple.ui.precompute.image.BigImage
-import com.simple.ui.precompute.image.emptyImage
-import com.simple.ui.precompute.image.toBigImage
-import com.simple.ui.precompute.text.BigText
-import com.simple.ui.precompute.text.build
-import com.simple.ui.precompute.text.emptyText
-import com.simple.ui.precompute.text.span.BigBold
-import com.simple.ui.precompute.text.span.BigForegroundColor
-import com.simple.ui.precompute.text.span.BigTextSize
-import com.simple.ui.precompute.text.with
-import com.simple.ui.precompute.text.withFirst
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-
 /*class CleanFilesViewModel : BaseViewModel() {
 
     *//** Số file lạ hiện có trên máy — cập nhật real-time qua Flow *//*

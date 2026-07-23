@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RetirementLauncher</string>
+    <string name="app_name">Interfață mare și protecție</string>
 
     <!-- Settings -->
     <string name="settings_title">Setări</string>
@@ -10,12 +10,14 @@
     <string name="setting_app_list">Configurare Listă Aplicații</string>
     <string name="setting_default_launcher">Setare Launcher Implicit</string>
     <string name="setting_contact_list">Configurare Contacte Rapide</string>
+    <string name="setting_protection_feature">Caracteristică de protecție</string>
+    <string name="setting_protection_feature_desc">Protejați dispozitivul și ștergeți automat fișierele de instalare necunoscute pentru bătrâni</string>
 
     <string name="setting_pocket_mode">Mod Buzunar</string>
 
     <!-- Onboarding -->
     <string name="onboarding_title">Bine ați venit la Retirement Launcher</string>
-    <string name="onboarding_desc">O aplicație pentru simplificarea interfeței telefonului și protejarea dispozitivului.</string>
+    <string name="onboarding_desc">Interfață simplă cu protecție încorporată a dispozitivului pentru a vă menține în siguranță.</string>
     <string name="onboarding_start">Începe</string>
 
     <!-- Contacts -->

@@ -1,14 +1,24 @@
-# Retirement Launcher – Trình khởi chạy Android đơn giản, an toàn và thân thiện cho người lớn tuổi 👴📱🛡️
+Tên ứng dụng *
+Giao diện lớn và bảo vệ
 
-Retirement Launcher là một ứng dụng launcher Android dễ sử dụng, được thiết kế đặc biệt dành cho người cao tuổi, cha mẹ, ông bà và những người muốn có trải nghiệm điện thoại tối giản, sạch sẽ và an toàn. Ứng dụng biến điện thoại Android phức tạp thành giao diện màn hình chính tối giản với biểu tượng lớn, thao tác trực quan và các tính năng bảo vệ an toàn hằng ngày.
+Mô tả ngắn *
+Giao diện lớn, đơn giản và an toàn. Bảo vệ thiết bị cho người cao tuổi.
 
-Khác với các launcher thông thường có quá nhiều tính năng gây rối mắt, Retirement Launcher tập trung vào sự đơn giản, khả năng truy cập và bảo mật. Mọi thứ đều được thiết kế để dễ nhìn, dễ hiểu và an toàn hơn cho người dùng lớn tuổi.
+Mô tả đầy đủ *
+Giao diện lớn và bảo vệ là một ứng dụng màn hình chính Android dễ sử dụng, được thiết kế đặc biệt dành cho người cao tuổi, cha mẹ, ông bà và những người muốn có trải nghiệm điện thoại tối giản, sạch sẽ và an toàn. Ứng dụng biến điện thoại Android phức tạp thành giao diện tối giản với biểu tượng lớn, thao tác trực quan và các tính năng bảo vệ hằng ngày.
 
-Dù bạn đang cài đặt điện thoại cho bản thân hay người thân, Retirement Launcher sẽ giúp tạo ra một môi trường sử dụng điện thoại an toàn, hạn chế tối đa các thao tác nhầm lẫn không đáng có.
+Khác với các ứng dụng thông thường có quá nhiều tính năng gây rối mắt, chúng tôi tập trung vào sự đơn giản, khả năng truy cập và bảo vệ. Mọi thứ đều được thiết kế để dễ nhìn, dễ hiểu và an toàn hơn cho người dùng lớn tuổi.
+
+Dù bạn đang cài đặt điện thoại cho bản thân hay người thân, Giao diện lớn và bảo vệ sẽ giúp tạo ra một môi trường sử dụng điện thoại an toàn, hạn chế tối đa các thao tác nhầm lẫn không đáng có.
 
 ━━━━━━━━━━━━━━
 🌟 TÍNH NĂNG CHÍNH
 ━━━━━━━━━━━━━━
+
+🛡️ Tính năng bảo vệ
+* Bảo vệ thiết bị & Tự động xóa các file cài đặt lạ cho người cao tuổi.
+* Tự động chặn cuộc gọi từ số lạ để tránh bị làm phiền và lừa đảo.
+* Ngăn chặn việc mở các ứng dụng lạ không được phép để bảo vệ người dùng.
 
 🏠 Màn hình chính đơn giản
 * Giao diện sạch sẽ và tối giản, biểu tượng ứng dụng cực lớn.
@@ -23,27 +33,22 @@ Dù bạn đang cài đặt điện thoại cho bản thân hay người thân, 
 * Đưa các liên hệ quan trọng (con cái, người thân) ra màn hình chính.
 * Gọi điện chỉ với một chạm, giúp việc liên lạc trở nên vô cùng đơn giản.
 
-🛡️ Tính năng bảo vệ an toàn thông minh
-* Tự động chặn cuộc gọi từ số lạ không có trong danh bạ để tránh bị làm phiền.
-* Ngăn chặn việc mở các ứng dụng lạ không được phép để bảo vệ an toàn cho người dùng.
-
 🆘 Hỗ trợ cứu hộ khẩn cấp (SOS)
-* Tự động thực hiện cuộc gọi khẩn cấp nếu phát hiện người dùng không hoạt động trong một thời gian dài.
-* **LƯU Ý QUAN TRỌNG:** Tính năng SOS sử dụng API AccessibilityService để theo dõi các tương tác chạm của người dùng trên màn hình. Điều này giúp ứng dụng nhận biết điện thoại có đang được sử dụng hay không để kịp thời thực hiện cuộc gọi cứu trợ khi cần thiết. Chúng tôi cam kết bảo mật: KHÔNG đọc nội dung màn hình, KHÔNG thu thập dữ liệu cá nhân và KHÔNG chia sẻ thông tin ra bên ngoài.
+* Tự động thực hiện cuộc gọi khẩn cấp nếu phát hiện người dùng không hoạt động trong một thời gian dài để hỗ trợ kịp thời.
 
 👴 Thiết kế tối ưu cho khả năng truy cập
 * Nút bấm lớn, chữ rõ ràng, độ tương phản cao.
 * Phù hợp tuyệt vời cho cha mẹ, ông bà và người khiếm thị nhẹ.
 
 ━━━━━━━━━━━━━━
-💡 VÌ SAO NÊN CHỌN RETIREMENT LAUNCHER?
+💡 VÌ SAO NÊN CHỌN GIAO DIỆN LỚN VÀ BẢO VỆ?
 ━━━━━━━━━━━━━━
 
-✅ Launcher Android đơn giản nhất cho người cao tuổi.
+✅ Ứng dụng Android đơn giản nhất cho người cao tuổi.
 ✅ Biểu tượng lớn, dễ nhìn, dễ thao tác.
-✅ Tính năng bảo vệ thông minh, tránh lừa đảo và quảng cáo.
+✅ Tính năng bảo vệ thông minh, tự động dọn dẹp file cài đặt lạ và tránh lừa đảo.
 ✅ Truy cập nhanh người thân chỉ với một chạm.
 ✅ Tích hợp công cụ cứu hộ SOS an toàn.
 ✅ Hoạt động nhẹ nhàng, mượt mà trên mọi thiết bị.
 
-Retirement Launcher không chỉ là một launcher. Đây là sự kết hợp giữa giao diện tối giản và các công cụ bảo vệ an toàn, giúp smartphone trở nên gần gũi và an toàn hơn bao giờ hết cho mọi người.
+Giao diện lớn và bảo vệ không chỉ là một giao diện. Đây là giải pháp kết hợp giữa sự đơn giản và các công cụ bảo vệ an toàn, giúp smartphone trở nên gần gũi và an tâm hơn bao giờ hết.

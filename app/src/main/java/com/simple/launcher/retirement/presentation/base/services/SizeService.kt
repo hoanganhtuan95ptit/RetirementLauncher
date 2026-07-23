@@ -1,6 +1,5 @@
 package com.simple.launcher.retirement.presentation.base.services
 
-import android.util.Log
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.asFlow
 import com.simple.auto.register.AutoRegister

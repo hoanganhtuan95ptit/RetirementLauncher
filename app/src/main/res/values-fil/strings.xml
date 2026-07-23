@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RetirementLauncher</string>
+    <string name="app_name">Malaking interface at proteksyon</string>
 
     <!-- Settings -->
     <string name="settings_title">Mga Setting</string>
@@ -10,12 +10,14 @@
     <string name="setting_app_list">Pag-setup ng Listahan ng App</string>
     <string name="setting_default_launcher">I-set ang Default na Launcher</string>
     <string name="setting_contact_list">Pag-setup ng Mabilis na Contact</string>
+    <string name="setting_protection_feature">Feature ng proteksyon</string>
+    <string name="setting_protection_feature_desc">Protektahan ang device at awtomatikong i-delete ang hindi kilalang installation files para sa mga matatanda</string>
 
     <string name="setting_pocket_mode">Pocket Mode</string>
 
     <!-- Onboarding -->
     <string name="onboarding_title">Maligayang Pagdating sa Retirement Launcher</string>
-    <string name="onboarding_desc">Isang app upang gawing simple ang interface ng iyong telepono at protektahan ang iyong device.</string>
+    <string name="onboarding_desc">Simpleng interface na may built-in na proteksyon sa device para panatilihin kang ligtas.</string>
     <string name="onboarding_start">Magsimula</string>
 
     <!-- Contacts -->

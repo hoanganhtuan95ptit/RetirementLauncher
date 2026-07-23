@@ -19,7 +19,6 @@ import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.databinding.FragmentAppListBinding
 import com.simple.launcher.retirement.domain.repository.AppRepository
 import com.simple.launcher.retirement.domain.repository.ContactRepository
-import com.simple.launcher.retirement.domain.repository.PreferenceRepository
 import com.simple.launcher.retirement.presentation.DeepLinks
 import com.simple.launcher.retirement.presentation.base.BaseFragment
 import com.simple.launcher.retirement.utils.AppEvent
