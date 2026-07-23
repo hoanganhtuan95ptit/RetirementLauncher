@@ -30,6 +30,7 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
     private val gson = Gson()
 
     companion object {
+
         private const val KEY_SELECTED_APPS = "selected_apps"
 
         /**
@@ -39,9 +40,16 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
          * trước khi thực hiện bất kỳ intent resolve / binder IPC nào.
          */
         private val KNOWN_SYSTEM_PACKAGES: HashSet<String> = hashSetOf(
+
             // ── Core Android system ──
+            "android",
+            "android.keyguard",
             "com.android.systemui",
             "com.android.settings",
+            "com.android.permissioncontroller",
+            "com.google.android.permissioncontroller",
+            "com.google.android.gms",
+            "com.google.android.gsf",
             "com.android.providers.settings",
             "com.android.providers.contacts",
             "com.android.providers.telephony",
@@ -96,6 +104,7 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
             "com.samsung.android.app.watchmanager",
             "com.samsung.android.weather",
             "com.samsung.android.voicerecorder",
+            "com.sec.android.app.launcher",
 
             // ── Google ──
             "com.google.android.apps.messaging",
@@ -118,6 +127,7 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
             "com.google.android.inputmethod.latin",
             "com.google.android.apps.healthdata",
             "com.google.android.apps.fitness",
+            "com.google.android.apps.nexuslauncher",
             "com.google.android.apps.safetyhub",
             "com.google.android.settings.intelligence",
             "com.google.android.apps.weather",
@@ -136,10 +146,12 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
             "com.miui.videoplayer",
             "com.miui.cleanmaster",
             "com.miui.voiceassist",
+            "com.miui.home",
             "com.xiaomi.scanner",
             "com.xiaomi.camera",
 
             // ── OPPO / Realme / ColorOS ──
+            "com.oppo.launcher",
             "com.coloros.calculator",
             "com.coloros.weather",
             "com.coloros.filemanager",
@@ -159,6 +171,7 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
             "com.vivo.note",
 
             // ── Huawei / HarmonyOS ──
+            "com.huawei.android.launcher",
             "com.huawei.camera",
             "com.huawei.systemmanager",
             "com.huawei.health",
@@ -190,7 +203,10 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
     }
 
     // Trigger để home data (app + contact) phát lại khi có thay đổi
-    private val _dataTrigger = MutableSharedFlow<Unit>(replay = 1).also { it.tryEmit(Unit) }
+    private val _dataTrigger = MutableSharedFlow<Unit>(replay = 1).also { 
+
+        it.tryEmit(Unit) 
+    }
 
     override fun homeDataFlow(): Flow<Unit> = _dataTrigger
 
@@ -203,12 +219,14 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
     private val defaultAppCache = HashMap<String, Boolean>(16)
 
     override fun getInstalledApps(): List<AppEntity> {
+
         val pm = context.packageManager
         val apps = mutableListOf<AppEntity>()
         val i = Intent(Intent.ACTION_MAIN, null)
         i.addCategory(Intent.CATEGORY_LAUNCHER)
         val allApps = pm.queryIntentActivities(i, 0)
         for (ri in allApps) {
+
             apps.add(
                 AppEntity(
                     ri.loadLabel(pm).toString(),
@@ -221,6 +239,7 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
     }
 
     override fun getCurrentApp(): AppEntity {
+
         val pm = context.packageManager
         val info = context.applicationInfo
         return AppEntity(
@@ -231,16 +250,16 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
     }
 
     override fun getSelectedPackages(): List<String> {
+
         // Trả về cache nếu đã có, tránh Gson.fromJson() mỗi lần gọi
-        cachedSelectedPackages?.let { return it }
+        cachedSelectedPackages?.let { 
+
+            return it 
+        }
 
         val result = when (val data = sharedPrefs.all[KEY_SELECTED_APPS]) {
-            is String -> try {
-                val type = TypeToken.getParameterized(List::class.java, String::class.java).type
-                gson.fromJson(data, type)
-            } catch (_: Exception) {
-                emptyList()
-            }
+
+            is String -> parseSelectedPackages(data)
             is Set<*> -> data.filterIsInstance<String>()
             else -> emptyList()
         }
@@ -248,16 +267,36 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
         return result
     }
 
+    private fun parseSelectedPackages(data: String): List<String> {
+
+        return try {
+
+            val type = TypeToken.getParameterized(List::class.java, String::class.java).type
+            gson.fromJson(data, type)
+        } catch (_: Exception) {
+
+            emptyList()
+        }
+    }
+
     override fun saveSelectedPackages(packages: List<String>) {
+
         val json = gson.toJson(packages)
-        sharedPrefs.edit { putString(KEY_SELECTED_APPS, json) }
+        sharedPrefs.edit { 
+
+            putString(KEY_SELECTED_APPS, json) 
+        }
         cachedSelectedPackages = packages  // cập nhật cache ngay, không cần đọc lại
         _dataTrigger.tryEmit(Unit)
     }
 
     override fun isDefaultApp(packageName: String): Boolean {
+
         // Trả về cache ngay nếu đã kiểm tra trước đó — tránh 6-7 binder IPC calls mỗi 500ms
-        defaultAppCache[packageName]?.let { return it }
+        defaultAppCache[packageName]?.let { 
+
+            return it 
+        }
 
         val result = resolveIsDefaultApp(packageName)
         defaultAppCache[packageName] = result
@@ -265,251 +304,510 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
     }
 
     private fun resolveIsDefaultApp(packageName: String): Boolean {
+
         val pm = context.packageManager
         val tag = "DefaultAppCheck"
 
-        if (BuildConfig.DEBUG) Log.d(tag, "--- Checking: $packageName ---")
+        if (BuildConfig.DEBUG) {
+
+            Log.d(tag, "--- Checking: $packageName ---")
+        }
 
         // ── Fast path: O(1) HashSet lookup trước khi resolve bất kỳ intent nào ──
         if (packageName in KNOWN_SYSTEM_PACKAGES) return true
 
         // Default Launcher
-        try {
+        if (checkDefaultLauncher(pm, packageName)) return true
+
+        // Default Dialer
+        if (checkDefaultDialer(pm, packageName)) return true
+
+        // In-Call UI
+        if (checkInCallUI(pm, packageName)) return true
+
+        // Phone process check (android.uid.phone)
+        if (checkPhoneSharedUid(pm, packageName)) return true
+
+        // Default SMS
+        if (checkDefaultSms(packageName)) return true
+
+        // Default Browser
+        if (checkDefaultBrowser(pm, packageName)) return true
+
+        // Default Email
+        if (checkDefaultEmail(pm, packageName)) return true
+
+        // Default Camera
+        if (checkDefaultCamera(pm, packageName)) return true
+
+        // Default Calendar
+        if (checkDefaultCalendar(pm, packageName)) return true
+
+        // Default Contacts
+        if (checkDefaultContacts(pm, packageName)) return true
+
+        // Default Gallery / Photos
+        if (checkDefaultGallery(pm, packageName)) return true
+
+        // Default Maps / Navigation
+        if (checkDefaultMaps(pm, packageName)) return true
+
+        // Default Calculator
+        if (checkDefaultCalculator(pm, packageName)) return true
+
+        // Default Clock / Alarm
+        if (checkDefaultClock(pm, packageName)) return true
+
+        // Default File Manager
+        if (checkDefaultFileManager(pm, packageName)) return true
+
+        // Default Music Player
+        if (checkDefaultMusicPlayer(pm, packageName)) return true
+
+        // Default Digital Assistant
+        if (checkDefaultAssistant(pm, packageName)) return true
+
+        // Default Voice Recognition
+        if (checkVoiceRecognition(pm, packageName)) return true
+
+        // Default TTS Engine
+        if (checkTtsEngine(pm, packageName)) return true
+
+        // Default Voice Input (alternative — some OEMs register this)
+        if (checkVoiceInput(pm, packageName)) return true
+
+        // Default Settings
+        if (checkDefaultSettings(pm, packageName)) return true
+
+        // Default Video Player
+        if (checkDefaultVideoPlayer(pm, packageName)) return true
+
+        // Default PDF / Document Viewer
+        if (checkDefaultPdfViewer(pm, packageName)) return true
+
+        // Default Voice Recorder
+        if (checkDefaultVoiceRecorder(pm, packageName)) return true
+
+        // Default Keyboard (IME)
+        if (checkDefaultIme(packageName)) return true
+
+        // Default NFC Payment / Wallet
+        if (checkDefaultNfcPayment(pm, packageName)) return true
+
+        // Default Notes / Memo
+        if (checkDefaultNotes(pm, packageName)) return true
+
+        return false
+    }
+
+    private fun checkDefaultLauncher(pm: PackageManager, packageName: String): Boolean {
+
+        return try {
+
             val intent = Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME)
             val flags = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+
                 PackageManager.MATCH_ALL
             } else {
+
                 PackageManager.MATCH_DEFAULT_ONLY
             }
             val launcherPkg = pm.resolveActivity(intent, flags)?.activityInfo?.packageName
-            if (launcherPkg == packageName) return true
-        } catch (_: Exception) {}
+            launcherPkg == packageName
+        } catch (_: Exception) {
 
-        // Default Dialer
-        try {
+            false
+        }
+    }
+
+    private fun checkDefaultDialer(pm: PackageManager, packageName: String): Boolean {
+
+        return try {
+
             val telecomManager = context.getSystemService(Context.TELECOM_SERVICE) as? TelecomManager
             val dialerPkg = telecomManager?.defaultDialerPackage
             if (dialerPkg == packageName) return true
 
-            // sharedUserId check: Samsung tách dialer + incallui thành 2 package
-            // nhưng cùng sharedUserId → đều thuộc nhóm "phone default"
-            if (dialerPkg != null) {
-                try {
-                    val dialerSharedUid = pm.getPackageInfo(dialerPkg, 0).sharedUserId
-                    val targetSharedUid = pm.getPackageInfo(packageName, 0).sharedUserId
-                    if (dialerSharedUid != null && dialerSharedUid == targetSharedUid) return true
-                } catch (_: Exception) {}
-            }
-        } catch (_: Exception) {}
+            checkSharedUid(pm, dialerPkg, packageName)
+        } catch (_: Exception) {
 
-        // In-Call UI
-        try {
+            false
+        }
+    }
+
+    private fun checkSharedUid(pm: PackageManager, dialerPkg: String?, packageName: String): Boolean {
+
+        val dialer = dialerPkg ?: return false
+        return try {
+
+            val dialerSharedUid = pm.getPackageInfo(dialer, 0).sharedUserId
+            val targetSharedUid = pm.getPackageInfo(packageName, 0).sharedUserId
+            dialerSharedUid != null && dialerSharedUid == targetSharedUid
+        } catch (_: Exception) {
+
+            false
+        }
+    }
+
+    private fun checkInCallUI(pm: PackageManager, packageName: String): Boolean {
+
+        return try {
+
             val inCallIntent = Intent("android.telecom.InCallService")
-            val inCallPackages = pm.queryIntentServices(inCallIntent, PackageManager.MATCH_ALL)
-                .map { it.serviceInfo.packageName }
-            if (inCallPackages.contains(packageName)) return true
-        } catch (_: Exception) {}
+            pm.queryIntentServices(inCallIntent, PackageManager.MATCH_ALL)
+                .any { it.serviceInfo.packageName == packageName }
+        } catch (_: Exception) {
 
-        // Phone process check (android.uid.phone)
-        try {
+            false
+        }
+    }
+
+    private fun checkPhoneSharedUid(pm: PackageManager, packageName: String): Boolean {
+
+        return try {
+
             val sharedUid = pm.getPackageInfo(packageName, 0).sharedUserId
-            if (sharedUid == "android.uid.phone") return true
-        } catch (_: Exception) {}
+            sharedUid == "android.uid.phone"
+        } catch (_: Exception) {
 
-        // Default SMS
-        try {
-            if (Telephony.Sms.getDefaultSmsPackage(context) == packageName) return true
-        } catch (_: Exception) {}
+            false
+        }
+    }
 
-        // Default Browser
-        try {
+    private fun checkDefaultSms(packageName: String): Boolean {
+
+        return try {
+
+            Telephony.Sms.getDefaultSmsPackage(context) == packageName
+        } catch (_: Exception) {
+
+            false
+        }
+    }
+
+    private fun checkDefaultBrowser(pm: PackageManager, packageName: String): Boolean {
+
+        return try {
+
             val browserIntent = Intent(Intent.ACTION_VIEW, "https://www.example.com".toUri())
             val browserPkg = pm.resolveActivity(browserIntent, PackageManager.MATCH_DEFAULT_ONLY)
                 ?.activityInfo?.packageName
-            if (browserPkg == packageName) return true
-        } catch (_: Exception) {}
+            browserPkg == packageName
+        } catch (_: Exception) {
 
-        // Default Email
-        try {
+            false
+        }
+    }
+
+    private fun checkDefaultEmail(pm: PackageManager, packageName: String): Boolean {
+
+        return try {
+
             val emailIntent = Intent(Intent.ACTION_SENDTO, "mailto:".toUri())
             val emailPkg = pm.resolveActivity(emailIntent, PackageManager.MATCH_DEFAULT_ONLY)
                 ?.activityInfo?.packageName
-            if (emailPkg == packageName) return true
-        } catch (_: Exception) {}
+            emailPkg == packageName
+        } catch (_: Exception) {
 
-        // Default Camera
-        try {
+            false
+        }
+    }
+
+    private fun checkDefaultCamera(pm: PackageManager, packageName: String): Boolean {
+
+        return try {
+
             val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             val cameraPkg = pm.resolveActivity(cameraIntent, PackageManager.MATCH_DEFAULT_ONLY)
                 ?.activityInfo?.packageName
-            if (cameraPkg == packageName) return true
-        } catch (_: Exception) {}
+            cameraPkg == packageName
+        } catch (_: Exception) {
 
-        // Default Calendar
-        try {
+            false
+        }
+    }
+
+    private fun checkDefaultCalendar(pm: PackageManager, packageName: String): Boolean {
+
+        return try {
+
             val calendarIntent = Intent(Intent.ACTION_INSERT)
                 .setData(CalendarContract.Events.CONTENT_URI)
             val calendarPkg = pm.resolveActivity(calendarIntent, PackageManager.MATCH_DEFAULT_ONLY)
                 ?.activityInfo?.packageName
-            if (calendarPkg == packageName) return true
-        } catch (_: Exception) {}
+            calendarPkg == packageName
+        } catch (_: Exception) {
 
-        // Default Contacts
-        try {
+            false
+        }
+    }
+
+    private fun checkDefaultContacts(pm: PackageManager, packageName: String): Boolean {
+
+        return try {
+
             val contactsIntent = Intent(Intent.ACTION_VIEW, ContactsContract.Contacts.CONTENT_URI)
             val contactsPkg = pm.resolveActivity(contactsIntent, PackageManager.MATCH_DEFAULT_ONLY)
                 ?.activityInfo?.packageName
-            if (contactsPkg == packageName) return true
-        } catch (_: Exception) {}
+            contactsPkg == packageName
+        } catch (_: Exception) {
 
-        // Default Gallery / Photos
-        try {
+            false
+        }
+    }
+
+    private fun checkDefaultGallery(pm: PackageManager, packageName: String): Boolean {
+
+        return try {
+
             val galleryIntent = Intent(Intent.ACTION_VIEW)
                 .setDataAndType("content://media/external/images/media/1".toUri(), "image/*")
             val galleryPkg = pm.resolveActivity(galleryIntent, PackageManager.MATCH_DEFAULT_ONLY)
                 ?.activityInfo?.packageName
-            if (galleryPkg == packageName) return true
-        } catch (_: Exception) {}
+            galleryPkg == packageName
+        } catch (_: Exception) {
 
-        // Default Maps / Navigation
-        try {
+            false
+        }
+    }
+
+    private fun checkDefaultMaps(pm: PackageManager, packageName: String): Boolean {
+
+        return try {
+
             val mapIntent = Intent(Intent.ACTION_VIEW, "geo:0,0".toUri())
             val mapPkg = pm.resolveActivity(mapIntent, PackageManager.MATCH_DEFAULT_ONLY)
                 ?.activityInfo?.packageName
-            if (mapPkg == packageName) return true
-        } catch (_: Exception) {}
+            mapPkg == packageName
+        } catch (_: Exception) {
 
-        // Default Calculator
-        try {
+            false
+        }
+    }
+
+    private fun checkDefaultCalculator(pm: PackageManager, packageName: String): Boolean {
+
+        return try {
+
             val calcIntent = Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_APP_CALCULATOR)
             val calcPkg = pm.resolveActivity(calcIntent, PackageManager.MATCH_DEFAULT_ONLY)
                 ?.activityInfo?.packageName
-            if (calcPkg == packageName) return true
-        } catch (_: Exception) {}
+            calcPkg == packageName
+        } catch (_: Exception) {
 
-        // Default Clock / Alarm
-        try {
+            false
+        }
+    }
+
+    private fun checkDefaultClock(pm: PackageManager, packageName: String): Boolean {
+
+        return try {
+
             val clockIntent = Intent(AlarmClock.ACTION_SHOW_ALARMS)
             val clockPkg = pm.resolveActivity(clockIntent, PackageManager.MATCH_DEFAULT_ONLY)
                 ?.activityInfo?.packageName
-            if (clockPkg == packageName) return true
-        } catch (_: Exception) {}
+            clockPkg == packageName
+        } catch (_: Exception) {
 
-        // Default File Manager
-        try {
+            false
+        }
+    }
+
+    private fun checkDefaultFileManager(pm: PackageManager, packageName: String): Boolean {
+
+        return try {
+
             val filesIntent = Intent(Intent.ACTION_VIEW)
                 .setDataAndType("content://com.android.externalstorage.documents/root/primary".toUri(), "vnd.android.document/root")
             val filesPkg = pm.resolveActivity(filesIntent, PackageManager.MATCH_DEFAULT_ONLY)
                 ?.activityInfo?.packageName
-            if (filesPkg == packageName) return true
-        } catch (_: Exception) {}
+            filesPkg == packageName
+        } catch (_: Exception) {
 
-        // Default Music Player
-        try {
+            false
+        }
+    }
+
+    private fun checkDefaultMusicPlayer(pm: PackageManager, packageName: String): Boolean {
+
+        return try {
+
             val musicIntent = Intent(Intent.ACTION_VIEW)
                 .setDataAndType("content://media/external/audio/media/1".toUri(), "audio/*")
             val musicPkg = pm.resolveActivity(musicIntent, PackageManager.MATCH_DEFAULT_ONLY)
                 ?.activityInfo?.packageName
-            if (musicPkg == packageName) return true
-        } catch (_: Exception) {}
+            musicPkg == packageName
+        } catch (_: Exception) {
 
-        // Default Digital Assistant
-        try {
+            false
+        }
+    }
+
+    private fun checkDefaultAssistant(pm: PackageManager, packageName: String): Boolean {
+
+        return try {
+
             val assistIntent = Intent(Intent.ACTION_ASSIST)
             val assistPkg = pm.resolveActivity(assistIntent, PackageManager.MATCH_DEFAULT_ONLY)
                 ?.activityInfo?.packageName
-            if (assistPkg == packageName) return true
-        } catch (_: Exception) {}
+            assistPkg == packageName
+        } catch (_: Exception) {
 
-        // Default Voice Recognition
-        try {
+            false
+        }
+    }
+
+    private fun checkVoiceRecognition(pm: PackageManager, packageName: String): Boolean {
+
+        return try {
+
             val voiceIntent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
             val voicePkg = pm.resolveActivity(voiceIntent, PackageManager.MATCH_DEFAULT_ONLY)
                 ?.activityInfo?.packageName
-            if (voicePkg == packageName) return true
-        } catch (_: Exception) {}
+            voicePkg == packageName
+        } catch (_: Exception) {
 
-        // Default TTS Engine
-        try {
+            false
+        }
+    }
+
+    private fun checkTtsEngine(pm: PackageManager, packageName: String): Boolean {
+
+        return try {
+
             val ttsIntent = Intent(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA)
             val ttsResolves = pm.queryIntentActivities(ttsIntent, PackageManager.MATCH_DEFAULT_ONLY)
-            if (ttsResolves.any { it.activityInfo.packageName == packageName }) return true
-        } catch (_: Exception) {}
+            ttsResolves.any { it.activityInfo.packageName == packageName }
+        } catch (_: Exception) {
 
-        // Default Voice Input (alternative — some OEMs register this)
-        try {
+            false
+        }
+    }
+
+    private fun checkVoiceInput(pm: PackageManager, packageName: String): Boolean {
+
+        return try {
+
             val voiceInputIntent = Intent("android.speech.action.VOICE_SEARCH_RESULTS")
             val voiceInputPkg = pm.resolveActivity(voiceInputIntent, PackageManager.MATCH_DEFAULT_ONLY)
                 ?.activityInfo?.packageName
-            if (voiceInputPkg == packageName) return true
-        } catch (_: Exception) {}
+            voiceInputPkg == packageName
+        } catch (_: Exception) {
 
-        // Default Settings
-        try {
+            false
+        }
+    }
+
+    private fun checkDefaultSettings(pm: PackageManager, packageName: String): Boolean {
+
+        return try {
+
             val settingsIntent = Intent(Settings.ACTION_SETTINGS)
             val settingsPkg = pm.resolveActivity(settingsIntent, PackageManager.MATCH_DEFAULT_ONLY)
                 ?.activityInfo?.packageName
-            if (settingsPkg == packageName) return true
-        } catch (_: Exception) {}
+            settingsPkg == packageName
+        } catch (_: Exception) {
 
-        // Default Video Player
-        try {
+            false
+        }
+    }
+
+    private fun checkDefaultVideoPlayer(pm: PackageManager, packageName: String): Boolean {
+
+        return try {
+
             val videoIntent = Intent(Intent.ACTION_VIEW)
                 .setDataAndType("content://media/external/video/media/1".toUri(), "video/*")
             val videoPkg = pm.resolveActivity(videoIntent, PackageManager.MATCH_DEFAULT_ONLY)
                 ?.activityInfo?.packageName
-            if (videoPkg == packageName) return true
-        } catch (_: Exception) {}
+            videoPkg == packageName
+        } catch (_: Exception) {
 
-        // Default PDF / Document Viewer
-        try {
+            false
+        }
+    }
+
+    private fun checkDefaultPdfViewer(pm: PackageManager, packageName: String): Boolean {
+
+        return try {
+
             val pdfIntent = Intent(Intent.ACTION_VIEW)
                 .setDataAndType("content://com.android.providers.downloads.documents/document/1".toUri(), "application/pdf")
             val pdfPkg = pm.resolveActivity(pdfIntent, PackageManager.MATCH_DEFAULT_ONLY)
                 ?.activityInfo?.packageName
-            if (pdfPkg == packageName) return true
-        } catch (_: Exception) {}
+            pdfPkg == packageName
+        } catch (_: Exception) {
 
-        // Default Voice Recorder
-        try {
+            false
+        }
+    }
+
+    private fun checkDefaultVoiceRecorder(pm: PackageManager, packageName: String): Boolean {
+
+        return try {
+
             val recorderIntent = Intent(MediaStore.Audio.Media.RECORD_SOUND_ACTION)
             val recorderPkg = pm.resolveActivity(recorderIntent, PackageManager.MATCH_DEFAULT_ONLY)
                 ?.activityInfo?.packageName
-            if (recorderPkg == packageName) return true
-        } catch (_: Exception) {}
+            recorderPkg == packageName
+        } catch (_: Exception) {
 
-        // Default Keyboard (IME)
-        try {
+            false
+        }
+    }
+
+    private fun checkDefaultIme(packageName: String): Boolean {
+
+        return try {
+
             val currentIme = android.provider.Settings.Secure.getString(
                 context.contentResolver, android.provider.Settings.Secure.DEFAULT_INPUT_METHOD
             )
-            if (currentIme != null) {
-                // DEFAULT_INPUT_METHOD format: "com.package.name/.ClassName"
-                val imePkg = currentIme.substringBefore("/")
-                if (imePkg == packageName) return true
-            }
-        } catch (_: Exception) {}
+            val imePkg = currentIme?.substringBefore("/")
+            imePkg == packageName
+        } catch (_: Exception) {
 
-        // Default NFC Payment / Wallet
-        try {
+            false
+        }
+    }
+
+    private fun checkDefaultNfcPayment(pm: PackageManager, packageName: String): Boolean {
+
+        return try {
+
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+
                 val nfcPaymentIntent = Intent("android.nfc.cardemulation.action.ACTION_CHANGE_DEFAULT")
                 val nfcPayPkg = pm.resolveActivity(nfcPaymentIntent, PackageManager.MATCH_DEFAULT_ONLY)
                     ?.activityInfo?.packageName
-                if (nfcPayPkg == packageName) return true
-            }
-        } catch (_: Exception) {}
+                nfcPayPkg == packageName
+            } else {
 
-        // Default Notes / Memo
-        try {
+                false
+            }
+        } catch (_: Exception) {
+
+            false
+        }
+    }
+
+    private fun checkDefaultNotes(pm: PackageManager, packageName: String): Boolean {
+
+        return try {
+
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+
                 val noteIntent = Intent(Intent.ACTION_CREATE_NOTE)
                 val notePkg = pm.resolveActivity(noteIntent, PackageManager.MATCH_DEFAULT_ONLY)
                     ?.activityInfo?.packageName
-                if (notePkg == packageName) return true
-            }
-        } catch (_: Exception) {}
+                notePkg == packageName
+            } else {
 
-        return false
+                false
+            }
+        } catch (_: Exception) {
+
+            false
+        }
     }
 }

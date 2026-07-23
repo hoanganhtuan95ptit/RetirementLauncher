@@ -23,7 +23,6 @@ class AppMonitoringWorker(context: Context) : BackgroundWorker(context) {
     private val appRepository = AppRepository.instance
     private val powerManager = context.getSystemService(Context.POWER_SERVICE) as PowerManager
     private val usageStatsManager = context.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
-    private val systemPackages = STATIC_SYSTEM_PACKAGES + context.packageName
 
     private val monitorRunnable = object : Runnable {
 
@@ -83,7 +82,6 @@ class AppMonitoringWorker(context: Context) : BackgroundWorker(context) {
         if (isKeyguardVisible) return
 
         val resolvedPackage = foregroundPackage ?: return
-        if (resolvedPackage == KEYGUARD_PACKAGE) return
         if (shouldIgnorePackage(resolvedPackage)) return
 
         logDebug("Foreground App detected: $resolvedPackage")
@@ -109,7 +107,7 @@ class AppMonitoringWorker(context: Context) : BackgroundWorker(context) {
     private fun shouldIgnorePackage(packageName: String): Boolean {
 
         // Bỏ qua app hệ thống, launcher OEM, và mọi package đang được OS coi là "default app".
-        if (packageName in systemPackages) return true
+        if (packageName == context.packageName) return true
         if (packageName.contains(LAUNCHER_KEYWORD, ignoreCase = true)) return true
 
         return appRepository.isDefaultApp(packageName)
@@ -137,25 +135,6 @@ class AppMonitoringWorker(context: Context) : BackgroundWorker(context) {
         private const val MONITOR_THREAD_NAME = "AppMonitorThread"
         private const val MONITOR_INTERVAL_MILLIS = 500L
         private const val QUERY_WINDOW_MILLIS = 5_000L
-        private const val KEYGUARD_PACKAGE = "android.keyguard"
         private const val LAUNCHER_KEYWORD = "launcher"
-
-        val STATIC_SYSTEM_PACKAGES = setOf(
-            "com.android.settings",
-            "com.android.systemui",
-            "android",
-            "android.keyguard",
-            "com.google.android.gms",
-            "com.google.android.gsf",
-            "com.google.android.apps.nexuslauncher",
-            "com.sec.android.app.launcher",
-            "com.miui.home",
-            "com.oppo.launcher",
-            "com.huawei.android.launcher",
-            "com.android.permissioncontroller",
-            "com.google.android.permissioncontroller",
-//            "com.android.packageinstaller",
-//            "com.google.android.packageinstaller"
-        )
     }
 }
