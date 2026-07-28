@@ -22,9 +22,10 @@ fun <T> Flow<T>.observe(lifecycleOwner: LifecycleOwner, action: suspend (T) -> U
 
 fun <T> Flow<T>.observe(fragment: Fragment, action: suspend (T) -> Unit) {
 
-    fragment.viewLifecycleOwner.lifecycleScope.launch {
+    val viewLifecycleOwner = fragment.viewLifecycleOwner
+    viewLifecycleOwner.lifecycleScope.launch {
 
-        fragment.viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+        viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
 
             collectLatest(action)
         }

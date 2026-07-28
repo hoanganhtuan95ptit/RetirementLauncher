@@ -98,7 +98,6 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
             binding.rvSettings.submitListAndAwait(items, adapters, true)
         }
 
-        Log.d("tuanha", "observeData ${this@SettingsFragment}")
         // Adapter chỉ phát event; Fragment giữ trách nhiệm điều hướng và xin quyền.
         AppEventBus.events.filterIsInstance<AppEvent.SettingClicked>().observe(this@SettingsFragment) { event ->
 
@@ -107,8 +106,6 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
     }
 
     private fun handleSettingItemClick(item: SettingItem) {
-
-        Log.d("tuanha", "handleSettingItemClick: $this")
 
         when (item.id) {
 

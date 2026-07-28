@@ -51,3 +51,12 @@ Dù bạn đang cài đặt điện thoại cho bản thân hay người thân, 
 ✅ Hoạt động nhẹ nhàng, mượt mà trên mọi thiết bị.
 
 Giao diện lớn và bảo vệ không chỉ là một giao diện. Đây là giải pháp kết hợp giữa sự đơn giản và các công cụ bảo vệ an toàn, giúp smartphone trở nên gần gũi và an tâm hơn bao giờ hết.
+
+━━━━━━━━━━━━━━
+Công bố về API AccessibilityService
+━━━━━━━━━━━━━━
+Giao diện lớn và bảo vệ sử dụng API AccessibilityService để cung cấp tính năng an toàn "Tự động gọi khẩn cấp (SOS)".
+* Mục đích: Dịch vụ này giám sát các tương tác chạm để phát hiện các khoảng thời gian không hoạt động bất thường.
+* Cách sử dụng: Khi phát hiện không có hoạt động vượt quá ngưỡng do người dùng thiết lập, ứng dụng sẽ tự động thực hiện cuộc gọi khẩn cấp đến các liên hệ đã chọn trước.
+* Quyền riêng tư: Dịch vụ này KHÔNG đọc, thu thập hoặc chia sẻ bất kỳ nội dung màn hình, dữ liệu nhập từ người dùng (mật khẩu, tin nhắn) hay dữ liệu cá nhân nào. Nó chỉ được sử dụng duy nhất để cập nhật dấu thời gian "hoạt động lần cuối" trên thiết bị cho tính năng SOS.
+* Sự đồng ý: Dịch vụ này là tùy chọn và chỉ được kích hoạt nếu người dùng bật tính năng SOS và cấp quyền thông qua bảng thông báo rõ ràng trong ứng dụng.

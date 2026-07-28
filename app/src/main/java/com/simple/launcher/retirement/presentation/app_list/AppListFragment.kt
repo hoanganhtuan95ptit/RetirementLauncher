@@ -57,18 +57,15 @@ class AppListFragment : BaseFragment<FragmentAppListBinding>() {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
-        requireActivity().onBackPressedDispatcher.addCallback(
-            viewLifecycleOwner,
-            object : OnBackPressedCallback(true) {
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
 
-                override fun handleOnBackPressed() {
+            override fun handleOnBackPressed() {
 
-                    if (isFlowSetup) AppEventBus.post(AppEvent.AppSetupCancel)
-                    isEnabled = false
-                    requireActivity().onBackPressedDispatcher.onBackPressed()
-                }
+                if (isFlowSetup) AppEventBus.post(AppEvent.AppSetupCancel)
+                isEnabled = false
+                requireActivity().onBackPressedDispatcher.onBackPressed()
             }
-        )
+        })
 
         binding.layoutSearch.etSearch.doAfterTextChanged { editable ->
 
@@ -91,17 +88,19 @@ class AppListFragment : BaseFragment<FragmentAppListBinding>() {
     }
 
     override fun observeData() {
-
         super.observeData()
+
         viewModel.background.observe(this) { background ->
 
             val binding = binding ?: return@observe
+
             binding.root.setBackground(background)
         }
 
         viewModel.toolbar.observe(this) { state ->
 
             val binding = binding ?: return@observe
+            
             binding.toolbar.tvTitle.setText(state.title)
             val backIcon = state.backIcon
             if (backIcon != null) {

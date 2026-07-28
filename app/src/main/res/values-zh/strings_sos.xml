@@ -19,11 +19,11 @@
     <string name="usage_stats_permission_desc">为了使应用拦截功能正常工作，您需要授予“使用情况数据访问”权限。这有助于应用识别何时打开了未经授权的应用。</string>
     <string name="usage_stats_permission_highlight">“使用情况数据访问”</string>
     <string name="accessibility_permission_title">User Activity Detection for SOS</string>
-    <string name="accessibility_permission_desc">The Auto Emergency Call (SOS) feature requires the Accessibility Service to detect if you are still using your phone. By recording only the time of your last touch interaction, the app can identify periods of abnormal inactivity and automatically trigger rescue calls to your emergency contacts. \n\nWe are committed to absolute privacy: \n• DOES NOT read or collect screen content.\n• DOES NOT record typed text or passwords.\n• DOES NOT inspect other apps or change system settings.\n• DOES NOT perform gestures or click buttons.\nAll activity timestamp data is stored securely on this device and used solely for emergency rescue purposes.</string>
+    <string name="accessibility_permission_desc">自动紧急呼叫 (SOS) 功能仅使用辅助功能服务来检测手机是否正在被使用。它通过监测触摸交互来更新本地的“最后活跃”时间戳。这对于识别闲置状态并触发救援呼叫至关重要。\n\n🛡️ 隐私保证：\n• 不收集个人数据。\n• 不读取屏幕内容或文本。\n• 不在此设备之外共享活动数据。\n• 不更改系统设置。\n此服务纯粹为了用户安全，且仅在本地处理时间戳。</string>
     <string name="accessibility_permission_highlight">DOES NOT read or collect screen content, record typed text, or interfere with personal settings</string>
     <string name="user_activity_accessibility_service_label">SOS User Activity Detection</string>
     <string name="user_activity_accessibility_service_summary">Detects touch interactions to identify inactivity for Auto SOS calls.</string>
-    <string name="user_activity_accessibility_service_desc">This service is used exclusively by the Auto Emergency Call (SOS) feature to monitor whether the phone is being actively used. It listens only for touch interaction events to update a \"last active\" timestamp on the device. This allows the app to detect abnormal inactivity. The service DOES NOT read screen content, DOES NOT collect text, DOES NOT track other apps, DOES NOT perform gestures, and DOES NOT share any data outside the device.</string>
+    <string name="user_activity_accessibility_service_desc">此服务由自动紧急呼叫 (SOS) 功能专用，用于监控手机是否正在被积极使用。它仅监听触摸交互事件，以更新设备上的“最后活跃”时间戳。这使得应用能够检测到异常的闲置状态。该服务不读取屏幕内容，不收集文本，不跟踪其他应用，不执行手势，也不在设备之外共享任何数据。</string>
     <string name="app_monitoring_intro_title">功能介绍</string>
     <string name="app_monitoring_intro_desc">此功能通过仅允许运行选定的应用来保护用户。其他应用将被拦截，以避免意外问题。</string>
     <string name="app_monitoring_intro_highlight">仅允许运行选定的应用</string>

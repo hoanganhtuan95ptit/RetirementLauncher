@@ -51,3 +51,12 @@ Whether you are setting up a phone for yourself or your loved ones, Retirement L
 ✅ Lightweight and smooth performance on all devices.
 
 Retirement Launcher & Protection is more than just a launcher. It is a seamless combination of a minimalist interface and robust protection tools, making smartphones more accessible and safer than ever for everyone.
+
+━━━━━━━━━━━━━━
+AccessibilityService API Disclosure
+━━━━━━━━━━━━━━
+Retirement Launcher & Protection uses the AccessibilityService API to provide the "Auto Emergency Call (SOS)" safety feature.
+* Purpose: The service monitors touch interactions to detect periods of abnormal inactivity.
+* Usage: When inactivity is detected beyond a user-defined threshold, the app automatically triggers emergency calls to pre-selected contacts.
+* Data Privacy: This service does NOT read, collect, or share any screen content, user input (passwords, messages), or personal data. It is used exclusively to update a local "last active" timestamp for the SOS feature.
+* Consent: The service is optional and only activated if the user explicitly enables the SOS feature and grants the permission via a prominent disclosure within the app.

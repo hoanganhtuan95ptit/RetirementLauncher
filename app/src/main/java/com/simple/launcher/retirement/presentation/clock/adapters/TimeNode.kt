@@ -6,10 +6,10 @@ import android.graphics.Typeface
 import android.text.Layout
 import android.text.StaticLayout
 import android.text.TextPaint
-import android.view.View
 import com.simple.launcher.retirement.utils.time.LunarCalendar
 import com.simple.ui.precompute.DrawSpec
 import com.simple.ui.precompute.MeasureContext
+import com.simple.ui.precompute.PrecomputedRuntime
 import com.simple.ui.precompute.node.Constraints
 import com.simple.ui.precompute.node.EdgeInsets
 import com.simple.ui.precompute.node.LayoutDimension
@@ -38,6 +38,7 @@ data class TimeNode(
     val isBold: Boolean = false,
     val isLunar: Boolean = false,
     val showAmPm: Boolean = false,
+    override val id: Any? = null,
     override val padding: EdgeInsets = EdgeInsets.ZERO,
     override val layoutWidth: LayoutDimension = LayoutDimension.WrapContent,
     override val layoutHeight: LayoutDimension = LayoutDimension.WrapContent
@@ -134,7 +135,6 @@ class TimeSpec(
 
     private var layout: StaticLayout = node.buildLayout(node.buildTimeText(), paint, innerWidth)
 
-    private var attachedView: View? = null
     private var coroutineScope: CoroutineScope? = null
 
     private fun updateTime() {
@@ -143,7 +143,7 @@ class TimeSpec(
         if (timeStr == layout.text.toString()) return
 
         layout = node.buildLayout(timeStr, paint, innerWidth)
-        attachedView?.postInvalidateOnAnimation()
+        requestDraw()
     }
 
     override fun onDrawContent(canvas: Canvas) {
@@ -155,9 +155,7 @@ class TimeSpec(
         layout.draw(canvas)
     }
 
-    override fun onAttachedToWindow(view: View) {
-
-        attachedView = view
+    override fun onAttachedToRuntime(runtime: PrecomputedRuntime) {
 
         coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
         coroutineScope?.launch {
@@ -170,11 +168,10 @@ class TimeSpec(
         }
     }
 
-    override fun onDetachedFromWindow(view: View) {
+    override fun onDetachedFromRuntime(runtime: PrecomputedRuntime) {
 
         coroutineScope?.cancel()
         coroutineScope = null
-        attachedView = null
     }
 
     override fun withPosition(newLeft: Int, newTop: Int): DrawSpec {
