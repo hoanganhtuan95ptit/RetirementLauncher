@@ -12,9 +12,6 @@
     <!-- <string name="clean_files_count_unit">archivos basura</string> -->
     <string name="call_permission_highlight">hacer llamadas</string>
     <string name="call_block_highlight">gestionar llamadas y contactos</string>
-    <string name="emergency_call_desc">Si el teléfono no se usa, la aplicación realizará automáticamente una llamada de emergencia.</string>
-    <string name="setting_header_debug">🐛 Depuración</string>
-    <string name="setting_debug_block_screen">Ver Pantalla de Bloqueo</string>
     <string name="usage_stats_permission_title">Monitoreo de Aplicaciones</string>
     <string name="usage_stats_permission_desc">Para que la función de bloqueo de aplicaciones funcione, debe otorgar \'Acceso a datos de uso\'. Esto ayuda a la aplicación a saber cuándo se abre una aplicación no autorizada.</string>
     <string name="usage_stats_permission_highlight">\'Acceso a datos de uso\'</string>
@@ -43,13 +40,10 @@
     <string name="overlay_permission_title">Mostrar Sobre Otras Aplicaciones</string>
     <string name="overlay_permission_desc">La aplicación necesita el permiso de \'Mostrar sobre otras aplicaciones\' para mostrar la pantalla de bloqueo cuando se abre una aplicación bloqueada.</string>
     <string name="overlay_permission_highlight">\'Mostrar sobre otras aplicaciones\'</string>
-    <string name="clean_cat_file_count">$number_file archivos</string>
     <string name="reorder_apps_title">Reordenar Aplicaciones</string>
     <string name="reorder_contacts_title">Reordenar Contactos</string>
     <string name="app_list_empty_error">Por favor, seleccione al menos una aplicación</string>
     <string name="contact_list_empty_error">Por favor, seleccione al menos un contacto</string>
-    <string name="emergency_call_permission_denied">Se requiere permiso de llamada para esta función</string>
-    <string name="setting_emergency_advanced">Ajustes Avanzados de SOS</string>
     <string name="sos_settings_title">SOS Avanzado</string>
     <string name="sos_master_toggle">Activar Llamada de Emergencia Automática</string>
     <string name="sos_save_changes">Guardar Cambios</string>
@@ -61,11 +55,6 @@
     <string name="sos_add_exclusion_period">Añadir Período de Exclusión</string>
     <string name="sos_add_exclusion_period_desc">Este tiempo (p. ej., el tiempo de sueño) no se contará para el tiempo de espera de inactividad.</string>
     <string name="sos_exclusion_period_format">%1$02d:%2$02d - %3$02d:%4$02d</string>
-    <string name="sos_delete_exclusion_period">Eliminar</string>
     <string name="sos_select_start_time">Seleccionar Hora de Inicio</string>
     <string name="sos_select_end_time">Seleccionar Hora de Fin</string>
-    <string name="emergency_call_enable">Activar función</string>
-    <string name="emergency_call_phone_number">Número de teléfono de emergencia</string>
-    <string name="emergency_call_phone_number_hint">Introduce el número de teléfono</string>
-    <string name="emergency_call_save_success">Configuración de llamada de emergencia guardada</string>
 </resources>

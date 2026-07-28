@@ -1,6 +1,5 @@
 <resources>
     <string name="setting_header_plugins">插件与工具</string>
-    <string name="setting_lunar_calendar">显示农历</string>
     <string name="setting_clock_title">时钟设置</string>
     <string name="setting_clock_format_header">时间格式</string>
     <string name="setting_clock_12h">12小时制</string>

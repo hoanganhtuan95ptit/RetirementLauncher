@@ -46,7 +46,6 @@
     <string name="default_launcher_title">Установить лаунчер по умолчанию</string>
     <string name="default_launcher_desc">Чтобы использовать Retirement Launcher в качестве главного экрана, вам нужно установить его в качестве приложения по умолчанию в системных настройках.</string>
     <string name="permission_grant">Предоставить разрешение</string>
-    <string name="understood">Понятно</string>
     <string name="pin_verify_title">Подтверждение PIN-кода</string>
     <string name="pin_verify_desc">Пожалуйста, введите свой PIN-код, чтобы изменить эту настройку.</string>
     <string name="pin_key_delete_desc">Удалить</string>

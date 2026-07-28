@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="setting_emergency_call">Awtomatikong Tawag sa Emergency (SOS)</string>
-    <string name="emergency_call_desc">Kung hindi ginamit ang telepono, awtomatikong tatawag ang app sa emergency.</string>
     <!-- <string name="clean_cat_system_temp">Mga pansamantalang file ng system (.tmp, .log…)</string> -->
     <!-- <string name="clean_cat_compressed">Hindi kilalang mga compressed file</string> -->
     <!-- <string name="clean_cat_no_extension">Mga dokumento (.pdf, .doc, .txt…)</string> -->
@@ -13,8 +12,6 @@
     <!-- <string name="clean_files_count_unit">mga junk file</string> -->
     <string name="call_permission_highlight">tumawag</string>
     <string name="call_block_highlight">pamahalaan ang mga tawag at contact</string>
-    <string name="setting_header_debug">🐛 Debug</string>
-    <string name="setting_debug_block_screen">Tingnan ang Block Screen</string>
     <string name="usage_stats_permission_title">Pagsubaybay sa App</string>
     <string name="usage_stats_permission_desc">Para gumana ang feature na pag-block ng app, kailangan mong ibigay ang \'Access sa Data ng Paggamit\'. Nakakatulong ito sa app na malaman kung kailan binubuksan ang isang hindi awtorisadong app.</string>
     <string name="usage_stats_permission_highlight">\'Access sa Data ng Paggamit\'</string>
@@ -43,13 +40,10 @@
     <string name="overlay_permission_title">I-display sa Ibabaw ng Ibang mga App</string>
     <string name="overlay_permission_desc">Kailangan ng app ng pahintulot na \'I-display sa ibabaw ng ibang mga app\' para ipakita ang lock screen kapag binuksan ang isang naka-block na app.</string>
     <string name="overlay_permission_highlight">\'I-display sa ibabaw ng ibang mga app\'</string>
-    <string name="clean_cat_file_count">$number_file na mga file</string>
     <string name="reorder_apps_title">I-reorder ang mga App</string>
     <string name="reorder_contacts_title">I-reorder ang mga Contact</string>
     <string name="app_list_empty_error">Mangyaring pumili ng kahit isang app</string>
     <string name="contact_list_empty_error">Mangyaring pumili ng kahit isang contact</string>
-    <string name="emergency_call_permission_denied">Kailangan ng pahintulot sa pagtawag para sa feature na ito</string>
-    <string name="setting_emergency_advanced">Mga Advanced na Setting ng SOS</string>
     <string name="sos_settings_title">Advanced na SOS</string>
     <string name="sos_master_toggle">I-enable ang Awtomatikong Tawag sa Emergency</string>
     <string name="sos_save_changes">I-save ang mga Pagbabago</string>
@@ -61,11 +55,6 @@
     <string name="sos_add_exclusion_period">Magdagdag ng Panahon ng Exclusion</string>
     <string name="sos_add_exclusion_period_desc">Ang oras na ito (hal., oras ng pagtulog) ay hindi bibilangin sa oras ng paghihintay sa kawalan ng aktibidad.</string>
     <string name="sos_exclusion_period_format">%1$02d:%2$02d - %3$02d:%4$02d</string>
-    <string name="sos_delete_exclusion_period">Burahin</string>
     <string name="sos_select_start_time">Pumili ng Oras ng Pagsisimula</string>
     <string name="sos_select_end_time">Pumili ng Oras ng Pagtatapos</string>
-    <string name="emergency_call_enable">I-enable ang feature</string>
-    <string name="emergency_call_phone_number">Emergency phone number</string>
-    <string name="emergency_call_phone_number_hint">Ilagay ang phone number</string>
-    <string name="emergency_call_save_success">Na-save ang emergency call configuration</string>
 </resources>

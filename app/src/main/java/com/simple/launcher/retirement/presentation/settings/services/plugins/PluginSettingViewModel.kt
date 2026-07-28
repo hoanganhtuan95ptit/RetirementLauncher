@@ -7,7 +7,7 @@ import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.presentation.base.ViewItemViewModel
 import com.simple.launcher.retirement.presentation.settings.adapters.SettingHeaderItem
 import com.simple.launcher.retirement.presentation.settings.services.settingHeader
-import com.simple.launcher.retirement.utils.combineState
+import com.simple.launcher.retirement.utils.exts.combineState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterNotNull

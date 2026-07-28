@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="setting_emergency_call">Automatické tísňové volání (SOS)</string>
-    <string name="emergency_call_desc">Pokud není telefon používán, aplikace automaticky provede tísňové volání.</string>
     <!-- <string name="clean_cat_system_temp">Dočasné systémové soubory (.tmp, .log…)</string> -->
     <!-- <string name="clean_cat_compressed">Neznámé komprimované soubory</string> -->
     <!-- <string name="clean_cat_no_extension">Dokumenty (.pdf, .doc, .txt…)</string> -->
@@ -13,8 +12,6 @@
     <!-- <string name="clean_files_count_unit">nepotřebné soubory</string> -->
     <string name="call_permission_highlight">telefonovat</string>
     <string name="call_block_highlight">spravovat hovory a kontakty</string>
-    <string name="setting_header_debug">🐛 Debug</string>
-    <string name="setting_debug_block_screen">Zobrazit obrazovku blokování</string>
     <string name="usage_stats_permission_title">Sledování aplikací</string>
     <string name="usage_stats_permission_desc">Aby fungovala funkce blokování aplikací, musíte udělit „Přístup k datům o používání“. To aplikaci pomáhá zjistit, kdy je otevřena nepovolená aplikace.</string>
     <string name="usage_stats_permission_highlight">„Přístup k datům o používání“</string>
@@ -43,13 +40,10 @@
     <string name="overlay_permission_title">Zobrazit přes ostatní aplikace</string>
     <string name="overlay_permission_desc">Aplikace potřebuje oprávnění „Zobrazit přes ostatní aplikace“, aby mohla zobrazit obrazovku uzamčení při otevření zablokované aplikace.</string>
     <string name="overlay_permission_highlight">„Zobrazit přes ostatní aplikace“</string>
-    <string name="clean_cat_file_count">$number_file souborů</string>
     <string name="reorder_apps_title">Změnit pořadí aplikací</string>
     <string name="reorder_contacts_title">Změnit pořadí kontaktů</string>
     <string name="app_list_empty_error">Vyberte prosím alespoň jednu aplikaci</string>
     <string name="contact_list_empty_error">Vyberte prosím alespoň jeden kontakt</string>
-    <string name="emergency_call_permission_denied">Pro tuto funkci je vyžadováno oprávnění k volání</string>
-    <string name="setting_emergency_advanced">Pokročilá nastavení SOS</string>
     <string name="sos_settings_title">Pokročilé SOS</string>
     <string name="sos_master_toggle">Aktivovat automatické tísňové volání</string>
     <string name="sos_save_changes">Uložit změny</string>
@@ -61,11 +55,6 @@
     <string name="sos_add_exclusion_period">Přidat období vyloučení</string>
     <string name="sos_add_exclusion_period_desc">Tento čas (např. čas spánku) se nebude započítávat do doby čekání na neaktivitu. </string>
     <string name="sos_exclusion_period_format">%1$02d:%2$02d - %3$02d:%4$02d</string>
-    <string name="sos_delete_exclusion_period">Smazat</string>
     <string name="sos_select_start_time">Vybrat čas začátku</string>
     <string name="sos_select_end_time">Vybrat čas konce</string>
-    <string name="emergency_call_enable">Zapnout funkci</string>
-    <string name="emergency_call_phone_number">Nouzové telefonní číslo</string>
-    <string name="emergency_call_phone_number_hint">Zadejte telefonní číslo</string>
-    <string name="emergency_call_save_success">Nastavení nouzového volání uloženo</string>
 </resources>

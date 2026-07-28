@@ -1,4 +1,4 @@
-package com.simple.launcher.retirement.utils.lifecycle
+package com.simple.launcher.retirement.utils.exts
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle

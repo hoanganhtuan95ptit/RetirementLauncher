@@ -15,7 +15,8 @@ import com.simple.launcher.retirement.presentation.base.buildActionState
 import com.simple.launcher.retirement.presentation.base.buildBackIcon
 import com.simple.launcher.retirement.presentation.base.buildSearchState
 import com.simple.launcher.retirement.presentation.base.buildToolbarTitle
-import com.simple.launcher.retirement.utils.combineState
+import com.simple.launcher.retirement.utils.VietnameseStringUtils
+import com.simple.launcher.retirement.utils.exts.combineState
 import com.simple.launcher.retirement.utils.exts.colorOnPrimary
 import com.simple.launcher.retirement.utils.exts.colorPrimary
 import com.simple.launcher.retirement.utils.exts.colorSurface
@@ -90,9 +91,28 @@ class AppListViewModel(
         initialValue = emptyList()
     ) { apps, query, selectedIds ->
 
-        value = apps
-            .filter { query.isBlank() || it.app.label.contains(query, ignoreCase = true) }
-            .map { entity ->
+        val filtered = if (query.isBlank()) {
+
+            apps.map { it to 0 }
+        } else {
+
+            apps.mapNotNull { entity ->
+
+                val label = entity.app.label
+                val priority = when {
+
+                    VietnameseStringUtils.equalsIgnoreDiacritics(label, query) -> 0
+                    VietnameseStringUtils.startsWithIgnoreDiacritics(label, query) -> 1
+                    VietnameseStringUtils.containsIgnoreDiacritics(label, query) -> 2
+                    else -> return@mapNotNull null
+                }
+                entity to priority
+            }
+        }
+
+        value = filtered
+            .sortedWith(compareBy({ it.second }, { it.first.app.label.lowercase() }))
+            .map { (entity, _) ->
 
                 SelectableAppItem(
                     label = entity.app.label.toBig(),

@@ -1,6 +1,5 @@
 <resources>
     <string name="setting_header_plugins">Eklentiler ve Araçlar</string>
-    <string name="setting_lunar_calendar">Ay Takvimini Göster</string>
     <string name="setting_clock_title">Saat Ayarları</string>
     <string name="setting_clock_format_header">Zaman Biçimi</string>
     <string name="setting_clock_12h">12 Saat</string>

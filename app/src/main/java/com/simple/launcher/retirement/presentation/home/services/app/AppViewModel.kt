@@ -3,11 +3,11 @@ package com.simple.launcher.retirement.presentation.home.services.app
 import com.simple.adapter.ViewItem
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.domain.model.HomeContentEntity
-import com.simple.launcher.retirement.domain.usecase.GetHomeAppsUseCase2
+import com.simple.launcher.retirement.domain.usecase.GetHomeAppsUseCase
 import com.simple.launcher.retirement.presentation.base.BaseViewModel
 import com.simple.launcher.retirement.presentation.base.GroupViewItem
 import com.simple.launcher.retirement.presentation.home.adapter.HeaderHomeItem
-import com.simple.launcher.retirement.utils.combineState
+import com.simple.launcher.retirement.utils.exts.combineState
 import com.simple.launcher.retirement.utils.exts.dp
 import com.simple.launcher.retirement.utils.exts.getString
 import kotlinx.coroutines.flow.StateFlow
@@ -16,7 +16,7 @@ class AppViewModel : BaseViewModel() {
 
     val appViewItemList: StateFlow<GroupViewItem?> = combineState(
         flow1 = resources,
-        flow2 = GetHomeAppsUseCase2.instance.invoke(),
+        flow2 = GetHomeAppsUseCase.instance.invoke(),
         initialValue = null
     ) { resources, apps ->
 

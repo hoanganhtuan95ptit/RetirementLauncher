@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
 
     <!-- Block screen -->
     <color name="block_icon_bg">#EEEDFE</color>
@@ -13,7 +12,6 @@
     <!-- Clean Files – category icon backgrounds -->
     <color name="clean_cat_purple_bg">#EEEDFE</color>
     <!-- Clean Files – category icon tints -->
-    <color name="clean_cat_purple">#534AB7</color>
     <!-- Scanner ring -->
     <color name="scanner_ring_idle">#AFA9EC</color>
     <color name="scanner_ring_scanning">#7F77DD</color>
@@ -21,11 +19,7 @@
     <color name="scanner_ring_track">#E0E0E0</color>
     <!-- Clean Memory – light UI -->
     <color name="memory_bg">#F5F5FA</color>
-    <color name="memory_card_bg">#FFFFFF</color>
-    <color name="memory_card_border">#E0DFF0</color>
     <color name="memory_text_primary">#1A1A2E</color>
-    <color name="memory_result_bg">#E1F5EE</color>
-    <color name="memory_result_border">#9FE1CB</color>
 
     <!-- SOS Redesign -->
     <color name="sos_green">#2E7D32</color>

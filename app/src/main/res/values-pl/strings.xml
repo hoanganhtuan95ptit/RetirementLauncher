@@ -46,7 +46,6 @@
     <string name="default_launcher_title">Ustaw domyślny launcher</string>
     <string name="default_launcher_desc">Aby używać Retirement Launcher jako ekranu głównego, musisz ustawić go jako aplikację domyślną w ustawieniach systemu.</string>
     <string name="permission_grant">Udziel uprawnienia</string>
-    <string name="understood">Zrozumiałem</string>
     <string name="pin_verify_title">Potwierdź PIN</string>
     <string name="pin_verify_desc">Wprowadź swój PIN, aby zmienić to ustawienie.</string>
     <string name="pin_key_delete_desc">Usuń</string>

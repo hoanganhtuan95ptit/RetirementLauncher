@@ -5,7 +5,7 @@ import androidx.fragment.app.viewModels
 import com.simple.auto.register.AutoRegister
 import com.simple.launcher.retirement.presentation.settings.SettingsFragment
 import com.simple.launcher.retirement.presentation.settings.services.SettingService
-import com.simple.launcher.retirement.utils.lifecycle.observe
+import com.simple.launcher.retirement.utils.exts.observe
 
 @AutoRegister(apis = [SettingsFragment::class])
 open class ProtectSettingService : SettingService() {

@@ -6,7 +6,7 @@ import android.graphics.Typeface
 import android.text.Layout
 import android.text.StaticLayout
 import android.text.TextPaint
-import com.simple.launcher.retirement.utils.time.LunarCalendar
+import com.simple.launcher.retirement.utils.LunarCalendarUtils
 import com.simple.ui.precompute.DrawSpec
 import com.simple.ui.precompute.MeasureContext
 import com.simple.ui.precompute.PrecomputedRuntime
@@ -89,7 +89,7 @@ data class TimeNode(
 
     fun buildTimeText(): String {
         return if (isLunar) {
-            LunarCalendar.getLunarDateString(Date(), pattern)
+            LunarCalendarUtils.getLunarDateString(Date(), pattern)
         } else {
             val formatPattern = if (showAmPm) "$pattern a" else pattern
             SimpleDateFormat(formatPattern, Locale.getDefault()).format(Date())

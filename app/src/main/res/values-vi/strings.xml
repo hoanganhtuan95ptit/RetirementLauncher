@@ -50,7 +50,6 @@
     <string name="permission_grant">Cấp quyền ngay</string>
     <string name="permission_decline">Từ chối</string>
     <string name="permission_checkbox_understand">Tôi đã đọc và hiểu rõ sự cần thiết của quyền này đối với tính năng</string>
-    <string name="understood">Đã hiểu</string>
     <string name="pin_verify_title">Xác nhận mã PIN</string>
     <string name="pin_verify_desc">Vui lòng nhập mã PIN để thay đổi thiết lập này.</string>
     <string name="pin_key_delete_desc">Xoá</string>

@@ -1,7 +1,7 @@
 package com.simple.launcher.retirement.presentation.base
 
 import com.simple.launcher.retirement.R
-import com.simple.launcher.retirement.utils.text.withStyleTitleLarge
+import com.simple.launcher.retirement.utils.exts.withStyleTitleLarge
 import com.simple.ui.precompute.image.BigImage
 import com.simple.ui.precompute.image.ColorFilter
 import com.simple.ui.precompute.image.addTransform

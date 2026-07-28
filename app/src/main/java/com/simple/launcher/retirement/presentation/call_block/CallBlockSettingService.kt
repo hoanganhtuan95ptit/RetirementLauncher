@@ -8,7 +8,7 @@ import com.simple.launcher.retirement.presentation.settings.adapters.SettingItem
 import com.simple.launcher.retirement.presentation.settings.services.protect.ProtectSettingService
 import com.simple.launcher.retirement.utils.AppEvent
 import com.simple.launcher.retirement.utils.AppEventBus
-import com.simple.launcher.retirement.utils.lifecycle.observe
+import com.simple.launcher.retirement.utils.exts.observe
 import kotlinx.coroutines.flow.filterIsInstance
 
 @AutoRegister(apis = [SettingsFragment::class])

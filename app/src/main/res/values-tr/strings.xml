@@ -46,7 +46,6 @@
     <string name="default_launcher_title">Varsayılan Başlatıcıyı Ayarla</string>
     <string name="default_launcher_desc">Retirement Launcher\'ı ana ekranınız olarak kullanmak için sistem ayarlarından varsayılan uygulama olarak ayarlamanız gerekir.</string>
     <string name="permission_grant">İzin Ver</string>
-    <string name="understood">Anladım</string>
     <string name="pin_verify_title">PIN Onayla</string>
     <string name="pin_verify_desc">Bu ayarı değiştirmek için lütfen PIN kodunuzu girin.</string>
     <string name="pin_key_delete_desc">Sil</string>

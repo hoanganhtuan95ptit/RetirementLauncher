@@ -1,6 +1,5 @@
 <resources>
     <string name="setting_header_plugins">Mga Plugin at Mga Utility</string>
-    <string name="setting_lunar_calendar">Ipakita ang Lunar Calendar</string>
     <string name="setting_clock_title">Mga Setting ng Orasan</string>
     <string name="setting_clock_format_header">Format ng Oras</string>
     <string name="setting_clock_12h">12-Oras</string>

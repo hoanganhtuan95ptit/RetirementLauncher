@@ -1,6 +1,5 @@
 <resources>
     <string name="setting_header_plugins">प्लगइन्स और उपयोगिताएं</string>
-    <string name="setting_lunar_calendar">चंद्र कैलेंडर दिखाएं</string>
     <string name="setting_clock_title">घड़ी सेटिंग्स</string>
     <string name="setting_clock_format_header">समय प्रारूप</string>
     <string name="setting_clock_12h">12-घंटे</string>

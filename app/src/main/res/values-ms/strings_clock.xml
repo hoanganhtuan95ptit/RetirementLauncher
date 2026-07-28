@@ -1,6 +1,5 @@
 <resources>
     <string name="setting_header_plugins">Plugin &amp; Utiliti</string>
-    <string name="setting_lunar_calendar">Papar Kalendar Lunar</string>
     <string name="setting_clock_title">Tetapan Jam</string>
     <string name="setting_clock_format_header">Format Masa</string>
     <string name="setting_clock_12h">12 Jam</string>

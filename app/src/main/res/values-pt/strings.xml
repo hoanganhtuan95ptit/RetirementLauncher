@@ -46,7 +46,6 @@
     <string name="default_launcher_title">Definir Lançador Padrão</string>
     <string name="default_launcher_desc">Para usar le Retirement Launcher como sua tela inicial, você precisa defini-lo como o aplicativo padrão nas configurações do sistema.</string>
     <string name="permission_grant">Conceder Permissão</string>
-    <string name="understood">Entendido</string>
     <string name="pin_verify_title">Confirmar PIN</string>
     <string name="pin_verify_desc">Por favor, insira o seu PIN para alterar esta configuração.</string>
     <string name="pin_key_delete_desc">Excluir</string>

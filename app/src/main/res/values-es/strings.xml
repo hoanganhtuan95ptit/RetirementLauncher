@@ -60,7 +60,6 @@
     <string name="default_launcher_desc">Para usar Retirement Launcher como su pantalla de inicio, debe establecerlo como la aplicación predeterminada en los ajustes del sistema.</string>
     <string name="default_launcher_highlight">Retirement Launcher</string>
     <string name="permission_grant">Otorgar Permiso</string>
-    <string name="understood">Entendido</string>
     <string name="pin_verify_title">Confirmar PIN</string>
     <string name="pin_verify_desc">Por favor, introduzca su PIN para cambiar este ajuste.</string>
     <string name="pin_key_delete_desc">Eliminar</string>

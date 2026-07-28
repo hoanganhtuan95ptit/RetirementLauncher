@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>\n    <string name="setting_emergency_call">Automatikus segélyhívás (SOS)</string>
-    <string name="emergency_call_desc">Ha a telefont nem használják, az alkalmazás automatikusan segélyhívást indít.</string>
     <!-- <string name="clean_cat_system_temp">Rendszer ideiglenes fájlok (.tmp, .log…)</string> -->
     <!-- <string name="clean_cat_compressed">Ismeretlen tömörített fájlok</string> -->
     <!-- <string name="clean_cat_no_extension">Dokumentumok (.pdf, .doc, .txt…)</string> -->
@@ -12,8 +11,6 @@
     <!-- <string name="clean_files_count_unit">szemétfájlok</string> -->
     <string name="call_permission_highlight">hívások kezdeményezése</string>
     <string name="call_block_highlight">hívások és névjegyek kezelése</string>
-    <string name="setting_header_debug">🐛 Debug</string>
-    <string name="setting_debug_block_screen">Blokkolási képernyő megtekintése</string>
 
     <string name="usage_stats_permission_title">Alkalmazásfigyelés</string>
     <string name="usage_stats_permission_desc">Az alkalmazásblokkoló funkció működéséhez engedélyeznie kell a „Használati adatokhoz való hozzáférést”. Ez segít az alkalmazásnak felismerni, ha egy nem engedélyezett alkalmazást nyitnak meg.</string>
@@ -44,13 +41,10 @@
     <string name="overlay_permission_title">Megjelenítés más alkalmazások felett</string>
     <string name="overlay_permission_desc">Az alkalmazásnak szüksége van a „Megjelenítés más alkalmazások felett” engedélyre, hogy megmutathassa a lezárási képernyőt egy blokkolt alkalmazás megnyitásakor.</string>
     <string name="overlay_permission_highlight">„Megjelenítés más alkalmazások felett”</string>
-    <string name="clean_cat_file_count">$number_file fájl</string>
     <string name="reorder_apps_title">Alkalmazások sorrendjének módosítása</string>
     <string name="reorder_contacts_title">Névjegyek sorrendjének módosítása</string>
     <string name="app_list_empty_error">Válasszon ki legalább egy alkalmazást</string>
     <string name="contact_list_empty_error">Válasszon ki legalább egy névjegyet</string>
-    <string name="emergency_call_permission_denied">Ehhez a funkcióhoz hívásindítási engedély szükséges</string>
-    <string name="setting_emergency_advanced">Speciális SOS beállítások</string>
     <string name="sos_settings_title">Speciális SOS</string>
     <string name="sos_master_toggle">Automatikus segélyhívás engedélyezése</string>
     <string name="sos_save_changes">Módosítások mentése</string>
@@ -62,11 +56,6 @@
     <string name="sos_add_exclusion_period">Kizárási időszak hozzáadása</string>
     <string name="sos_add_exclusion_period_desc">Ez az idő (pl. alvásidő) nem számít bele az inaktivitási várakozási időbe.</string>
     <string name="sos_exclusion_period_format">%1$02d:%2$02d - %3$02d:%4$02d</string>
-    <string name="sos_delete_exclusion_period">Törlés</string>
     <string name="sos_select_start_time">Kezdési idő kiválasztása</string>
     <string name="sos_select_end_time">Befejezési idő kiválasztása</string>
-    <string name="emergency_call_enable">Funkció bekapcsolása</string>
-    <string name="emergency_call_phone_number">Vészhelyzeti telefonszám</string>
-    <string name="emergency_call_phone_number_hint">Adja meg a telefonszámot</string>
-    <string name="emergency_call_save_success">Vészhelyzeti hívás beállítása mentve</string>
 </resources>

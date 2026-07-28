@@ -14,13 +14,13 @@ import com.simple.launcher.retirement.presentation.base.ToolbarState
 import com.simple.launcher.retirement.presentation.base.buildActionState
 import com.simple.launcher.retirement.presentation.base.buildBackIcon
 import com.simple.launcher.retirement.presentation.base.buildToolbarTitle
-import com.simple.launcher.retirement.utils.combineState
+import com.simple.launcher.retirement.utils.exts.combineState
 import com.simple.launcher.retirement.utils.exts.colorOnPrimary
 import com.simple.launcher.retirement.utils.exts.colorOnSurface
 import com.simple.launcher.retirement.utils.exts.colorPrimary
 import com.simple.launcher.retirement.utils.exts.getString
 import com.simple.launcher.retirement.utils.exts.textColorPrimary
-import com.simple.launcher.retirement.utils.text.withStyleBodyLarge
+import com.simple.launcher.retirement.utils.exts.withStyleBodyLarge
 import com.simple.ui.precompute.image.BigImage
 import com.simple.ui.precompute.text.BigText
 import com.simple.ui.precompute.text.build

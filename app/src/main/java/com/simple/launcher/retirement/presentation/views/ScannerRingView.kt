@@ -10,7 +10,7 @@ import android.view.View
 import android.view.animation.LinearInterpolator
 import androidx.core.content.ContextCompat
 import com.simple.launcher.retirement.R
-import com.simple.launcher.retirement.utils.size.DP
+import com.simple.launcher.retirement.utils.exts.dp
 
 /**
  * Custom view vẽ vòng tròn scanner với 3 trạng thái:
@@ -111,10 +111,10 @@ class ScannerRingView @JvmOverloads constructor(
     // ------- Drawing -------
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
-        val strokeWidth = DP.DP_20.toFloat()
+        val strokeWidth = 20.dp().toFloat()
         trackPaint.strokeWidth = strokeWidth
         arcPaint.strokeWidth = strokeWidth
-        val inset = strokeWidth / 2f + dp(2f)
+        val inset = strokeWidth / 2f + 2.dp().toFloat()
         oval.set(inset, inset, w - inset, h - inset)
     }
 
@@ -129,8 +129,6 @@ class ScannerRingView @JvmOverloads constructor(
         stopAnimations()
         super.onDetachedFromWindow()
     }
-
-    private fun dp(value: Float) = value * resources.displayMetrics.density
 
     companion object {
         private const val IDLE_SWEEP = 290f

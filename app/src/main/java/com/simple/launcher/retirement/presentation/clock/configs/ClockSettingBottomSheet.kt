@@ -13,7 +13,7 @@ import com.simple.launcher.retirement.databinding.BottomSheetClockSettingBinding
 import com.simple.launcher.retirement.presentation.DeepLinks
 import com.simple.launcher.retirement.presentation.base.BaseBottomSheetDialogFragment
 import com.simple.launcher.retirement.utils.exts.setOnSafeClickListener
-import com.simple.launcher.retirement.utils.lifecycle.observe
+import com.simple.launcher.retirement.utils.exts.observe
 import com.simple.ui.precompute.text.setText
 
 class ClockSettingBottomSheet : BaseBottomSheetDialogFragment<BottomSheetClockSettingBinding, ClockSettingBottomSheetViewModel>() {

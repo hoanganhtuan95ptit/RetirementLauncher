@@ -6,7 +6,7 @@ import com.simple.launcher.retirement.domain.repository.PreferenceRepository
 import com.simple.launcher.retirement.presentation.base.BaseViewModel
 import com.simple.launcher.retirement.presentation.base.GroupViewItem
 import com.simple.launcher.retirement.presentation.clock.adapters.ClockHomeItem
-import com.simple.launcher.retirement.utils.combineState
+import com.simple.launcher.retirement.utils.exts.combineState
 import com.simple.launcher.retirement.utils.exts.dp
 import com.simple.launcher.retirement.utils.exts.getString
 import kotlinx.coroutines.flow.StateFlow

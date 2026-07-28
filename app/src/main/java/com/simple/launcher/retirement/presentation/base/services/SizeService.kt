@@ -5,7 +5,7 @@ import androidx.lifecycle.asFlow
 import com.simple.auto.register.AutoRegister
 import com.simple.component.service.ActivityCreatedService
 import com.simple.launcher.retirement.presentation.views.listenerSize
-import com.simple.launcher.retirement.utils.lifecycle.observe
+import com.simple.launcher.retirement.utils.exts.observe
 import kotlinx.coroutines.flow.MutableStateFlow
 
 val sizeMapFlow = MutableStateFlow<Map<String, Int>>(emptyMap())

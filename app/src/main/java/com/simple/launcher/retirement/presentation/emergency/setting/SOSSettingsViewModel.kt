@@ -18,7 +18,7 @@ import com.simple.launcher.retirement.presentation.emergency.adapters.SOSCardVie
 import com.simple.launcher.retirement.presentation.emergency.adapters.SOSHeaderViewItem
 import com.simple.launcher.retirement.presentation.emergency.adapters.SOSSectionHeaderViewItem
 import com.simple.launcher.retirement.utils.background.Background
-import com.simple.launcher.retirement.utils.combineState
+import com.simple.launcher.retirement.utils.exts.combineState
 import com.simple.launcher.retirement.utils.exts.colorOnPrimary
 import com.simple.launcher.retirement.utils.exts.colorOutline
 import com.simple.launcher.retirement.utils.exts.colorPrimary
@@ -27,9 +27,9 @@ import com.simple.launcher.retirement.utils.exts.dp
 import com.simple.launcher.retirement.utils.exts.getString
 import com.simple.launcher.retirement.utils.exts.textColorPrimary
 import com.simple.launcher.retirement.utils.exts.textColorSecondary
-import com.simple.launcher.retirement.utils.text.withStyleBodyLarge
-import com.simple.launcher.retirement.utils.text.withStyleBodyMedium
-import com.simple.launcher.retirement.utils.text.withStyleTitleLarge
+import com.simple.launcher.retirement.utils.exts.withStyleBodyLarge
+import com.simple.launcher.retirement.utils.exts.withStyleBodyMedium
+import com.simple.launcher.retirement.utils.exts.withStyleTitleLarge
 import com.simple.ui.precompute.image.BigImage
 import com.simple.ui.precompute.text.BigText
 import com.simple.ui.precompute.text.build

@@ -1,6 +1,5 @@
 <resources>
     <string name="setting_header_plugins">ปลั๊กอินและยูทิลิตี้</string>
-    <string name="setting_lunar_calendar">แสดงปฏิทินจันทรคติ</string>
     <string name="setting_clock_title">การตั้งค่านาฬิกา</string>
     <string name="setting_clock_format_header">รูปแบบเวลา</string>
     <string name="setting_clock_12h">12 ชั่วโมง</string>

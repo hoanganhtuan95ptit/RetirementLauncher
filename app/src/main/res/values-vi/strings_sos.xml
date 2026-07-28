@@ -16,8 +16,6 @@
 
     <string name="call_permission_highlight">thực hiện cuộc gọi</string>
     <string name="call_block_highlight">quản lý cuộc gọi và danh bạ</string>
-    <string name="setting_header_debug">🐛 Debug</string>
-    <string name="setting_debug_block_screen">Xem màn hình chặn</string>
 
     <string name="usage_stats_permission_title">Giám sát ứng dụng</string>
     <string name="usage_stats_permission_desc">Để tính năng chặn ứng dụng hoạt động, bạn cần cấp quyền \'Truy cập dữ liệu sử dụng\'. Điều này giúp ứng dụng biết khi nào một ứng dụng không được phép được mở.</string>
@@ -47,14 +45,10 @@
     <string name="overlay_permission_title">Hiển thị trên ứng dụng khác</string>
     <string name="overlay_permission_desc">Ứng dụng cần quyền \'Hiển thị trên các ứng dụng khác\' để có thể hiển thị màn hình khóa khi một ứng dụng bị chặn được mở.</string>
     <string name="overlay_permission_highlight">\'Hiển thị trên các ứng dụng khác\'</string>
-    <string name="clean_cat_file_count" tools:ignore="PluralsCandidate" xmlns:tools="http://schemas.android.com/tools">$number_file file</string>
     <string name="reorder_apps_title">Sắp xếp lại ứng dụng</string>
     <string name="reorder_contacts_title">Sắp xếp lại liên hệ</string>
     <string name="app_list_empty_error">Vui lòng chọn ít nhất một ứng dụng</string>
     <string name="contact_list_empty_error">Vui lòng chọn ít nhất một liên hệ</string>
-    <string name="emergency_call_permission_denied">Cần quyền gọi điện để thực hiện tính năng này</string>
-    <string name="emergency_call_desc">Nếu không sử dụng điện thoại, ứng dụng sẽ tự động thực hiện cuộc gọi khẩn cấp.</string>
-    <string name="setting_emergency_advanced">Cài đặt SOS nâng cao</string>
     <string name="sos_settings_title">SOS nâng cao</string>
     <string name="sos_master_toggle">Bật Cuộc gọi Khẩn cấp Tự động</string>
     <string name="sos_save_changes">Lưu Thay đổi</string>
@@ -66,11 +60,6 @@
     <string name="sos_add_exclusion_period">Thêm Khoảng thời gian loại trừ</string>
     <string name="sos_add_exclusion_period_desc">Thời gian này (ví dụ: giờ đi ngủ) sẽ không được tính vào thời gian chờ không hoạt động.</string>
     <string name="sos_exclusion_period_format">%1$02d:%2$02d - %3$02d:%4$02d</string>
-    <string name="sos_delete_exclusion_period">Xóa</string>
     <string name="sos_select_start_time">Chọn Giờ Bắt đầu</string>
     <string name="sos_select_end_time">Chọn Giờ Kết thúc</string>
-    <string name="emergency_call_enable">Bật tính năng</string>
-    <string name="emergency_call_phone_number">Số điện thoại khẩn cấp</string>
-    <string name="emergency_call_phone_number_hint">Nhập số điện thoại</string>
-    <string name="emergency_call_save_success">Đã lưu cấu hình cuộc gọi khẩn cấp</string>
 </resources>

@@ -1,6 +1,5 @@
 <resources>
     <string name="setting_header_plugins">Plugin &amp; Utilitas</string>
-    <string name="setting_lunar_calendar">Tampilkan Kalender Lunar</string>
     <string name="setting_clock_title">Pengaturan Jam</string>
     <string name="setting_clock_format_header">Format Waktu</string>
     <string name="setting_clock_12h">12 Jam</string>

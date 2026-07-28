@@ -69,7 +69,7 @@ data class ContactHomeItem(
                 id = "background",
                 node = BackgroundNode(
                     backgroundColor = Color.WHITE,
-                    cornerRadius = 24.dp()
+                    cornerRadius = 24.dp().toFloat()
                 ),
                 startToStartOf = "content",
                 endToEndOf = "content",
@@ -83,8 +83,8 @@ data class ContactHomeItem(
                 node = LinearNode(
                     orientation = Orientation.VERTICAL,
                     crossAlign = CrossAlign.CENTER,
-                    padding = EdgeInsets.all(16.dp().toInt()),
-                    gap = 12.dp().toInt(),
+                    padding = EdgeInsets.all(16.dp()),
+                    gap = 12.dp(),
                     children = listOf(
                         createPhotoNode(),
                         createNameNode(textColor),
@@ -97,7 +97,7 @@ data class ContactHomeItem(
                 width = LayoutDimension.MatchParent
             )
         ),
-        padding = EdgeInsets.symmetric(h = 8.dp().toInt(), v = 8.dp().toInt()),
+        padding = EdgeInsets.symmetric(h = 8.dp(), v = 8.dp()),
         layoutWidth = LayoutDimension.MatchParent
     )
 
@@ -105,13 +105,13 @@ data class ContactHomeItem(
         source = BigImageBuilder(entity.photoUri ?: R.drawable.ic_home_contact_24dp)
             .addTransform(CircleCrop)
             .build(),
-        layoutWidth = LayoutDimension.Fixed(80.dp().toInt()),
-        layoutHeight = LayoutDimension.Fixed(80.dp().toInt())
+        layoutWidth = LayoutDimension.Fixed(80.dp()),
+        layoutHeight = LayoutDimension.Fixed(80.dp())
     )
 
     private fun createNameNode(textColor: Int): LayoutNode = TextNode(
         text = entity.name.toBuilder()
-            .with(BigForegroundColor(textColor), BigTextSize(18.sp()), BigBold)
+            .with(BigForegroundColor(textColor), BigTextSize(18.sp().toFloat()), BigBold)
             .build(),
         maxLines = 1
     )
@@ -125,7 +125,7 @@ data class ContactHomeItem(
                 id = "tapToCallBackground",
                 node = BackgroundNode(
                     backgroundColor = "#F0F0F0".toColorInt(),
-                    cornerRadius = 24.dp()
+                    cornerRadius = 24.dp().toFloat()
                 ),
                 startToStartOf = "tapToCallContent",
                 endToEndOf = "tapToCallContent",
@@ -139,19 +139,19 @@ data class ContactHomeItem(
                 node = LinearNode(
                     orientation = Orientation.HORIZONTAL,
                     crossAlign = CrossAlign.CENTER,
-                    gap = 8.dp().toInt(),
-                    padding = EdgeInsets.symmetric(h = 16.dp().toInt(), v = 8.dp().toInt()),
+                    gap = 8.dp(),
+                    padding = EdgeInsets.symmetric(h = 16.dp(), v = 8.dp()),
                     children = listOf(
                         ImageNode(
                             source = BigImageBuilder(android.R.drawable.ic_menu_call)
                                 .addTransform(ColorFilter(Color.BLACK))
                                 .build(),
-                            layoutWidth = LayoutDimension.Fixed(20.dp().toInt()),
-                            layoutHeight = LayoutDimension.Fixed(20.dp().toInt())
+                            layoutWidth = LayoutDimension.Fixed(20.dp()),
+                            layoutHeight = LayoutDimension.Fixed(20.dp())
                         ),
                         TextNode(
                             text = tapToCallLabel.toBuilder()
-                                .with(BigForegroundColor(textColor), BigTextSize(14.sp()), BigBold)
+                                .with(BigForegroundColor(textColor), BigTextSize(14.sp().toFloat()), BigBold)
                                 .build(),
                             maxLines = 1
                         )

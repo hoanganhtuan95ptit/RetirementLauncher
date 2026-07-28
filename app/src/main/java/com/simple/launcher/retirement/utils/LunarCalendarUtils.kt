@@ -1,4 +1,4 @@
-package com.simple.launcher.retirement.utils.time
+package com.simple.launcher.retirement.utils
 
 import java.util.Calendar
 import java.util.Date
@@ -13,7 +13,7 @@ import kotlin.math.sin
  *
  * All calculations use the Vietnam time zone (GMT+7).
  */
-object LunarCalendar {
+object LunarCalendarUtils {
 
     private const val TIME_ZONE_OFFSET = 7
     private val VN_TZ: TimeZone = TimeZone.getTimeZone("GMT+7")

@@ -46,7 +46,6 @@
     <string name="default_launcher_title">Définir le lanceur par défaut</string>
     <string name="default_launcher_desc">Pour utiliser Retirement Launcher comme écran d\'accueil, vous devez le définir comme application par défaut dans les paramètres du système.</string>
     <string name="permission_grant">Accorder l\'autorisation</string>
-    <string name="understood">Compris</string>
     <string name="pin_verify_title">Confirmer le code PIN</string>
     <string name="pin_verify_desc">Veuillez saisir votre code PIN pour modifier ce paramètre.</string>
     <string name="pin_key_delete_desc">Supprimer</string>

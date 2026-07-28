@@ -60,7 +60,6 @@
     <string name="default_launcher_title">Nastavit výchozí launcher</string>
     <string name="default_launcher_desc">Chcete-li používat Retirement Launcher jako domovskou obrazovku, musíte jej nastavit jako výchozí aplikaci v nastavení systému.</string>
     <string name="permission_grant">Udělit oprávnění</string>
-    <string name="understood">Rozumím</string>
     <string name="pin_verify_title">Potvrdit PIN</string>
     <string name="pin_verify_desc">Zadejte prosím svůj PIN pro změnu tohoto nastavení.</string>
     <string name="pin_key_delete_desc">Smazat</string>

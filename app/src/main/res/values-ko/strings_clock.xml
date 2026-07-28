@@ -1,6 +1,5 @@
 <resources>
     <string name="setting_header_plugins">플러그인 및 유틸리티</string>
-    <string name="setting_lunar_calendar">음력 표시</string>
     <string name="setting_clock_title">시계 설정</string>
     <string name="setting_clock_format_header">시간 형식</string>
     <string name="setting_clock_12h">12시간제</string>

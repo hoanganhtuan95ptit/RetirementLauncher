@@ -4,7 +4,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
 import com.simple.auto.register.AutoRegister
 import com.simple.component.service.ActivityCreatedService
-import com.simple.launcher.retirement.utils.coroutineExceptionHandler
+import com.simple.launcher.retirement.utils.exts.coroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow

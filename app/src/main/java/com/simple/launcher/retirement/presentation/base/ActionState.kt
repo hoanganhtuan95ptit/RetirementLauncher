@@ -3,8 +3,7 @@ package com.simple.launcher.retirement.presentation.base
 import android.graphics.Color
 import com.simple.launcher.retirement.utils.background.Background
 import com.simple.launcher.retirement.utils.background.emptyBackground
-import com.simple.launcher.retirement.utils.size.DP
-import com.simple.launcher.retirement.utils.size.toPx
+import com.simple.launcher.retirement.utils.exts.dp
 import com.simple.ui.precompute.image.BigImage
 import com.simple.ui.precompute.image.emptyImage
 import com.simple.ui.precompute.text.BigText
@@ -48,14 +47,14 @@ fun buildActionState(
     textColor: Int,
     backgroundColor: Int,
     textSize: Int = 18,
-    cornerRadius: Int = DP.DP_12,
+    cornerRadius: Int = 12.dp(),
     strokeWidth: Int = 0,
     strokeColor: Int = Color.TRANSPARENT,
     strokeDashGap: Int = 0,
     strokeDashWidth: Int = 0,
     isEnabled: Boolean = true
 ): ActionState = ActionState(
-    text = text.with(BigForegroundColor(textColor), BigTextSize(textSize.toPx()), BigBold).build(),
+    text = text.with(BigForegroundColor(textColor), BigTextSize(textSize.dp()), BigBold).build(),
     isEnabled = isEnabled,
     background = Background.Builder()
         .backgroundColor(backgroundColor)

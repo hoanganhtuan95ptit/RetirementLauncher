@@ -2,7 +2,7 @@ package com.simple.launcher.retirement.presentation.base
 
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.utils.background.Background
-import com.simple.launcher.retirement.utils.size.DP
+import com.simple.launcher.retirement.utils.exts.dp
 import com.simple.ui.precompute.image.BigImage
 import com.simple.ui.precompute.image.ColorFilter
 import com.simple.ui.precompute.image.addTransform
@@ -34,7 +34,7 @@ fun buildSearchState(
     textColor: Int,
     hintColor: Int,
     backgroundColor: Int,
-    cornerRadius: Int = DP.DP_12,
+    cornerRadius: Int = 12.dp(),
     clearIconColor: Int = textColor
 ): SearchState = SearchState(
     hint = hint,

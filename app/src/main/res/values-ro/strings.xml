@@ -46,7 +46,6 @@
     <string name="default_launcher_title">Setare Launcher Implicit</string>
     <string name="default_launcher_desc">Pentru a folosi Retirement Launcher ca ecran principal, trebuie să îl setați ca aplicație implicită în setările sistemului.</string>
     <string name="permission_grant">Acordă permisiunea</string>
-    <string name="understood">Am înțeles</string>
     <string name="pin_verify_title">Confirmă PIN</string>
     <string name="pin_verify_desc">Vvă rugăm să introduceți PIN-ul pentru a modifica această setare.</string>
     <string name="pin_key_delete_desc">Șterge</string>

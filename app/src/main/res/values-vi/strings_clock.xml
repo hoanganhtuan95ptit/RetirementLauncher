@@ -1,6 +1,5 @@
 <resources>
     <string name="setting_header_plugins">Tiện ích bổ sung</string>
-    <string name="setting_lunar_calendar">Hiển thị ngày âm lịch</string>
     <string name="setting_clock_title">Cài đặt thời gian</string>
     <string name="setting_clock_format_header">Định dạng thời gian</string>
     <string name="setting_clock_12h">12 giờ</string>

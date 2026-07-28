@@ -9,8 +9,8 @@ import com.simple.launcher.retirement.presentation.base.BaseViewModel
 import com.simple.launcher.retirement.presentation.base.GroupViewItem
 import com.simple.launcher.retirement.presentation.settings.adapters.SettingItem
 import com.simple.launcher.retirement.presentation.settings.services.settingItem
-import com.simple.launcher.retirement.utils.combineState
-import com.simple.launcher.retirement.utils.coroutineExceptionHandler
+import com.simple.launcher.retirement.utils.exts.combineState
+import com.simple.launcher.retirement.utils.exts.coroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow

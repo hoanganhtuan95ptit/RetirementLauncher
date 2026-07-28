@@ -8,7 +8,7 @@ import com.simple.launcher.retirement.presentation.base.GroupViewItem
 import com.simple.launcher.retirement.presentation.settings.adapters.SettingItem
 import com.simple.launcher.retirement.presentation.settings.services.settingHeader
 import com.simple.launcher.retirement.presentation.settings.services.settingItem
-import com.simple.launcher.retirement.utils.combineState
+import com.simple.launcher.retirement.utils.exts.combineState
 import com.simple.launcher.retirement.utils.permission.PermissionManager
 import kotlinx.coroutines.flow.StateFlow
 

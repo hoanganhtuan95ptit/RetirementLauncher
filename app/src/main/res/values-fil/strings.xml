@@ -46,7 +46,6 @@
     <string name="default_launcher_title">I-set ang Default na Launcher</string>
     <string name="default_launcher_desc">Upang gamitin ang Retirement Launcher bilang iyong home screen, kailangan mong i-set ito bilang default na app sa mga setting ng system.</string>
     <string name="permission_grant">Ibigay ang Pahintulot</string>
-    <string name="understood">Naintindihan</string>
     <string name="pin_verify_title">I-confirm ang PIN</string>
     <string name="pin_verify_desc">Mangyaring ilagay ang iyong PIN upang baguhin ang setting na ito.</string>
     <string name="pin_key_delete_desc">Burahin</string>

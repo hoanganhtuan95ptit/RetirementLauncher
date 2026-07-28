@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="setting_emergency_call">การโทรฉุกเฉินอัตโนมัติ (SOS)</string>
-    <string name="emergency_call_desc">หากไม่มีการใช้งานโทรศัพท์ แอปจะทำการโทรฉุกเฉินโดยอัตโนมัติ</string>
     <!-- <string name="clean_cat_system_temp">ไฟล์ชั่วคราวของระบบ (.tmp, .log…)</string> -->
     <!-- <string name="clean_cat_compressed">ไฟล์บีบอัดที่ไม่รู้จัก</string> -->
     <!-- <string name="clean_cat_no_extension">เอกสาร (.pdf, .doc, .txt…)</string> -->
@@ -13,8 +12,6 @@
     <!-- <string name="clean_files_count_unit">ไฟล์ขยะ</string> -->
     <string name="call_permission_highlight">โทรออก</string>
     <string name="call_block_highlight">จัดการการโทรและผู้ติดต่อ</string>
-    <string name="setting_header_debug">🐛 ดีบัก</string>
-    <string name="setting_debug_block_screen">ดูหน้าจอที่ถูกบล็อก</string>
     <string name="usage_stats_permission_title">การตรวจสอบแอป</string>
     <string name="usage_stats_permission_desc">เพื่อให้ฟีเจอร์การบล็อกแอปทำงานได้ คุณต้องอนุญาต \'การเข้าถึงข้อมูลการใช้งาน\' สิ่งนี้ช่วยให้แอปทราบเมื่อมีการเปิดแอปที่ไม่ได้รับอนุญาต</string>
     <string name="usage_stats_permission_highlight">\'การเข้าถึงข้อมูลการใช้งาน\'</string>
@@ -39,13 +36,10 @@
     <string name="overlay_permission_title">แสดงทับแอปอื่น</string>
     <string name="overlay_permission_desc">แอปต้องการสิทธิ์ \'แสดงทับแอปอื่น\' เพื่อแสดงหน้าจอล็อกเมื่อมีการเปิดแอปที่ถูกบล็อก</string>
     <string name="overlay_permission_highlight">\'แสดงทับแอปอื่น\'</string>
-    <string name="clean_cat_file_count">$number_file ไฟล์</string>
     <string name="reorder_apps_title">จัดลำดับแอปใหม่</string>
     <string name="reorder_contacts_title">จัดลำดับผู้ติดต่อใหม่</string>
     <string name="app_list_empty_error">โปรดเลือกอย่างน้อยหนึ่งแอป</string>
     <string name="contact_list_empty_error">โปรดเลือกอย่างน้อยหนึ่งรายชื่อ</string>
-    <string name="emergency_call_permission_denied">จำเป็นต้องได้รับอนุญาตการโทรสำหรับฟีเจอร์นี้</string>
-    <string name="setting_emergency_advanced">การตั้งค่า SOS ขั้นสูง</string>
     <string name="sos_settings_title">SOS ขั้นสูง</string>
     <string name="sos_master_toggle">เปิดใช้งานการโทรฉุกเฉินอัตโนมัติ</string>
     <string name="sos_save_changes">บันทึกการเปลี่ยนแปลง</string>
@@ -57,11 +51,6 @@
     <string name="sos_add_exclusion_period">เพิ่มช่วงเวลาที่ยกเว้น</string>
     <string name="sos_add_exclusion_period_desc">เวลานี้ (เช่น เวลานอน) จะไม่ถูกนับรวมในเวลารอการไม่ใช้งาน</string>
     <string name="sos_exclusion_period_format">%1$02d:%2$02d - %3$02d:%4$02d</string>
-    <string name="sos_delete_exclusion_period">ลบ</string>
     <string name="sos_select_start_time">เลือกเวลาเริ่ม</string>
     <string name="sos_select_end_time">เลือกเวลาสิ้นสุด</string>
-    <string name="emergency_call_enable">เปิดฟีเจอร์</string>
-    <string name="emergency_call_phone_number">หมายเลขโทรศัพท์ฉุกเฉิน</string>
-    <string name="emergency_call_phone_number_hint">ป้อนหมายเลขโทรศัพท์</string>
-    <string name="emergency_call_save_success">บันทึกการตั้งค่าการโทรฉุกเฉินแล้ว</string>
 </resources>

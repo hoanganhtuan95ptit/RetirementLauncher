@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="setting_emergency_call">اتصال طوارئ تلقائي (SOS)</string>
-    <string name="emergency_call_desc">إذا لم يتم استخدام الهاتف، سيقوم التطبيق بإجراء اتصال طوارئ تلقائياً.</string>
     <!-- <string name="clean_cat_system_temp">ملفات النظام المؤقتة (.tmp, .log…)</string> -->
     <!-- <string name="clean_cat_compressed">ملفات مضغوطة مجهولة</string> -->
     <!-- <string name="clean_cat_no_extension">المستندات (.pdf, .doc, .txt…)</string> -->
@@ -13,8 +12,6 @@
     <!-- <string name="clean_files_count_unit">ملفات غير مرغوب فيها</string> -->
     <string name="call_permission_highlight">إجراء المكالمات</string>
     <string name="call_block_highlight">إدارة المكالمات وجهات الاتصال</string>
-    <string name="setting_header_debug">🐛 تصحيح الأخطاء</string>
-    <string name="setting_debug_block_screen">عرض شاشة الحظر</string>
     <string name="usage_stats_permission_title">مراقبة التطبيقات</string>
     <string name="usage_stats_permission_desc">لكي تعمل ميزة حظر التطبيقات، يجب منح "الوصول إلى بيانات الاستخدام". يساعد هذا التطبيق في معرفة وقت فتح تطبيق غير مصرح به.</string>
     <string name="usage_stats_permission_highlight">"الوصول إلى بيانات الاستخدام"</string>
@@ -43,13 +40,10 @@
     <string name="overlay_permission_title">العرض فوق التطبيقات الأخرى</string>
     <string name="overlay_permission_desc">يحتاج التطبيق إلى إذن "العرض فوق التطبيقات الأخرى" لإظهار شاشة القفل عند فتح تطبيق محظور.</string>
     <string name="overlay_permission_highlight">"العرض فوق التطبيقات الأخرى"</string>
-    <string name="clean_cat_file_count">$number_file ملفات</string>
     <string name="reorder_apps_title">إعادة ترتيب التطبيقات</string>
     <string name="reorder_contacts_title">إعادة ترتيب جهات الاتصال</string>
     <string name="app_list_empty_error">يرجى اختيار تطبيق واحد على الأقل</string>
     <string name="contact_list_empty_error">يرجى اختيار جهة اتصال واحدة على الأقل</string>
-    <string name="emergency_call_permission_denied">مطلوب إذن الاتصال لهذه الميزة</string>
-    <string name="setting_emergency_advanced">إعدادات SOS المتقدمة</string>
     <string name="sos_settings_title">SOS المتقدم</string>
     <string name="sos_master_toggle">تفعيل اتصال الطوارئ التلقائي</string>
     <string name="sos_save_changes">حفظ التغييرات</string>
@@ -61,11 +55,6 @@
     <string name="sos_add_exclusion_period">إضافة فترة استبعاد</string>
     <string name="sos_add_exclusion_period_desc">لن يتم احتساب هذا الوقت (مثلاً وقت النوم) ضمن وقت انتظار عدم النشاط.</string>
     <string name="sos_exclusion_period_format">%1$02d:%2$02d - %3$02d:%4$02d</string>
-    <string name="sos_delete_exclusion_period">حذف</string>
     <string name="sos_select_start_time">اختر وقت البدء</string>
     <string name="sos_select_end_time">اختر وقت الانتهاء</string>
-    <string name="emergency_call_enable">تفعيل الميزة</string>
-    <string name="emergency_call_phone_number">رقم هاتف الطوارئ</string>
-    <string name="emergency_call_phone_number_hint">أدخل رقم الهاتف</string>
-    <string name="emergency_call_save_success">تم حفظ إعدادات مكالمة الطوارئ</string>
 </resources>

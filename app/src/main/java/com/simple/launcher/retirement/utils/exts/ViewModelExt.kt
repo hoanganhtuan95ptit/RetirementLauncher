@@ -1,4 +1,4 @@
-package com.simple.launcher.retirement.utils
+package com.simple.launcher.retirement.utils.exts
 
 import android.util.Log
 import androidx.lifecycle.ViewModel

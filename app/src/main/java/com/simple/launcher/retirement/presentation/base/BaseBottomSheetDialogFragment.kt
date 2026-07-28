@@ -21,7 +21,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.simple.launcher.retirement.utils.background.Background
 import com.simple.launcher.retirement.utils.background.setBackground
-import com.simple.launcher.retirement.utils.size.toPx
+import com.simple.launcher.retirement.utils.exts.dp
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -76,13 +76,13 @@ abstract class BaseBottomSheetDialogFragment<VB : ViewBinding, VM : BaseViewMode
 
         return View(context).apply {
 
-            val width = 40.toPx()
-            val height = 4.toPx()
+            val width = 40.dp()
+            val height = 4.dp()
             layoutParams = LinearLayout.LayoutParams(width, height).apply {
 
                 gravity = Gravity.CENTER_HORIZONTAL
-                topMargin = 12.toPx()
-                bottomMargin = 8.toPx()
+                topMargin = 12.dp()
+                bottomMargin = 8.dp()
             }
             visibility = View.GONE
         }

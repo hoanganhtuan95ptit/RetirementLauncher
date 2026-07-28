@@ -15,10 +15,9 @@ import com.simple.launcher.retirement.utils.exts.dp
 import com.simple.launcher.retirement.utils.exts.getString
 import com.simple.launcher.retirement.utils.exts.textColorPrimary
 import com.simple.launcher.retirement.utils.exts.withAlpha
-import com.simple.launcher.retirement.utils.size.DP
-import com.simple.launcher.retirement.utils.text.withStyleBodyLarge
-import com.simple.launcher.retirement.utils.text.withStyleBodyMedium
-import com.simple.launcher.retirement.utils.text.withStyleTitleLarge
+import com.simple.launcher.retirement.utils.exts.withStyleBodyLarge
+import com.simple.launcher.retirement.utils.exts.withStyleBodyMedium
+import com.simple.launcher.retirement.utils.exts.withStyleTitleLarge
 import com.simple.ui.precompute.image.ColorFilter
 import com.simple.ui.precompute.image.addTransform
 import com.simple.ui.precompute.image.build
@@ -59,7 +58,7 @@ fun settingItem(
         .build(),
     iconBackground = Background.Builder()
         .backgroundColor(if (highlight) resources.colorOnPrimaryContainer.withAlpha(0.2f) else resources.colorPrimaryContainer)
-        .cornerRadius(DP.DP_24)
+        .cornerRadius(24.dp())
         .build(),
 
     isSwitch = isSwitch,
@@ -68,14 +67,14 @@ fun settingItem(
     background = if (highlight) {
         Background.Builder()
             .backgroundColor(resources.colorPrimaryContainer)
-            .cornerRadius(DP.DP_24)
-            .stroke(DP.DP_2, resources.colorPrimary, dashGap = 4.dp().toInt(), dashWidth = 4.dp().toInt())
+            .cornerRadius(24.dp())
+            .stroke(2.dp(), resources.colorPrimary, dashGap = 4.dp().toInt(), dashWidth = 4.dp().toInt())
             .build()
     } else {
         Background.Builder()
             .backgroundColor(resources.colorBackground)
-            .cornerRadius(DP.DP_24)
-            .stroke(DP.DP_2, resources.colorPrimary, dashGap = 4.dp().toInt(), dashWidth = 4.dp().toInt())
+            .cornerRadius(24.dp())
+            .stroke(2.dp(), resources.colorPrimary, dashGap = 4.dp().toInt(), dashWidth = 4.dp().toInt())
             .build()
     },
 )

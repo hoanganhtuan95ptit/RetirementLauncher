@@ -12,7 +12,7 @@ import com.simple.launcher.retirement.presentation.main.MainActivity
 import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.exts.asObjectOrNull
 import com.simple.launcher.retirement.utils.exts.setOnSafeClickListener
-import com.simple.launcher.retirement.utils.lifecycle.observe
+import com.simple.launcher.retirement.utils.exts.observe
 import com.simple.ui.precompute.text.setText
 
 class BlockActivity : BaseActivity<ActivityBlockBinding>() {

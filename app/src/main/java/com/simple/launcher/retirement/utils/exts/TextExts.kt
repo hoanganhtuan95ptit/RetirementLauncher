@@ -1,9 +1,9 @@
-package com.simple.launcher.retirement.utils.text
+package com.simple.launcher.retirement.utils.exts
 
 import android.widget.TextView
-import com.simple.launcher.retirement.utils.exts.sp
 import com.simple.ui.precompute.text.BigText
 import com.simple.ui.precompute.text.BigTextBuilder
+import com.simple.ui.precompute.text.emptyText
 import com.simple.ui.precompute.text.span.BigTextSize
 import com.simple.ui.precompute.text.toBuilder
 import com.simple.ui.precompute.text.with
@@ -12,7 +12,7 @@ fun TextView.setText(text: BigText?) {
     this.setText(text)
 }
 
-fun emptyText(): BigText = com.simple.ui.precompute.text.emptyText()
+fun emptyText(): BigText = emptyText()
 
 fun String.withStyleDisplayLarge(): BigTextBuilder {
     return toBuilder().with(BigTextSize(57.sp()))

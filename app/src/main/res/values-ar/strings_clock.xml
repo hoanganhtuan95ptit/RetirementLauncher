@@ -1,6 +1,5 @@
 <resources>
     <string name="setting_header_plugins">المكونات الإضافية والأدوات</string>
-    <string name="setting_lunar_calendar">عرض التقويم القمري</string>
     <string name="setting_clock_title">إعدادات الساعة</string>
     <string name="setting_clock_format_header">تنسيق الوقت</string>
     <string name="setting_clock_12h">12 ساعة</string>

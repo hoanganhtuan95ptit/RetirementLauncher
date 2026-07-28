@@ -4,7 +4,7 @@ import androidx.fragment.app.viewModels
 import com.simple.auto.register.AutoRegister
 import com.simple.launcher.retirement.presentation.home.HomeFragment
 import com.simple.launcher.retirement.presentation.home.services.HomeService
-import com.simple.launcher.retirement.utils.lifecycle.observe
+import com.simple.launcher.retirement.utils.exts.observe
 import kotlinx.coroutines.flow.filterNotNull
 
 @AutoRegister([HomeFragment::class])

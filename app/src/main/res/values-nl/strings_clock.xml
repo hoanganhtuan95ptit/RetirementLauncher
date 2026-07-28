@@ -1,6 +1,5 @@
 <resources>
     <string name="setting_header_plugins">Plug-ins &amp; hulpprogramma\'s</string>
-    <string name="setting_lunar_calendar">Maan-kalender weergeven</string>
     <string name="setting_clock_title">Klokinstellingen</string>
     <string name="setting_clock_format_header">Tijdnotatie</string>
     <string name="setting_clock_12h">12-uurs</string>

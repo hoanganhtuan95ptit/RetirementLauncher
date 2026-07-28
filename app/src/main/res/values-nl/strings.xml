@@ -46,7 +46,6 @@
     <string name="default_launcher_title">Standaard Launcher instellen</string>
     <string name="default_launcher_desc">Om Retirement Launcher als uw startscherm te gebruiken, moet u deze als standaard-app instellen in de systeeminstellingen.</string>
     <string name="permission_grant">Toestemming verlenen</string>
-    <string name="understood">Begrepen</string>
     <string name="pin_verify_title">PIN bevestigen</string>
     <string name="pin_verify_desc">Voer uw PIN in om deze instelling te wijzigen.</string>
     <string name="pin_key_delete_desc">Verwijderen</string>

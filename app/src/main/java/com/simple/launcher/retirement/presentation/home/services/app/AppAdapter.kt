@@ -46,7 +46,7 @@ data class AppHomeItem(
 
     override fun buildDrawSpec(resources: Map<String, Any>) {
         spec = LayoutEngine.measure(
-            node = createAppCardNode(itemWidth = screenWidth / 3 - 2 * 8.dp().toInt(), resources = resources),
+            node = createAppCardNode(itemWidth = screenWidth / 3 - 2 * 8.dp(), resources = resources),
             constraints = Constraints(maxWidth = screenWidth / 3),
             id = entity.packageName
         )
@@ -61,7 +61,7 @@ data class AppHomeItem(
             createIconChild(),
             createLabelChild(resources)
         ),
-        padding = EdgeInsets.symmetric(h = 8.dp().toInt(), v = 8.dp().toInt()),
+        padding = EdgeInsets.symmetric(h = 8.dp(), v = 8.dp()),
         layoutWidth = LayoutDimension.MatchParent
     )
 
@@ -69,7 +69,7 @@ data class AppHomeItem(
         id = "background",
         node = BackgroundNode(
             backgroundColor = Color.WHITE,
-            cornerRadius = 24.dp()
+            cornerRadius = 24.dp().toFloat()
         ),
         startToStartOf = ConstraintNode.PARENT,
         endToEndOf = ConstraintNode.PARENT,
@@ -82,8 +82,8 @@ data class AppHomeItem(
         id = "icon",
         node = ImageNode(
             source = BigImage(entity.icon),
-            layoutWidth = LayoutDimension.Fixed(56.dp().toInt()),
-            layoutHeight = LayoutDimension.Fixed(56.dp().toInt())
+            layoutWidth = LayoutDimension.Fixed(56.dp()),
+            layoutHeight = LayoutDimension.Fixed(56.dp())
         ),
         startToStartOf = "background",
         endToEndOf = "background",
@@ -95,15 +95,15 @@ data class AppHomeItem(
         id = "label",
         node = TextNode(
             text = entity.label.toBuilder()
-                .with(BigBold, BigTextSize(18.sp()), BigForegroundColor(Color.WHITE))
+                .with(BigBold, BigTextSize(18.sp().toFloat()), BigForegroundColor(Color.WHITE))
                 .build(),
             maxLines = 1
         ),
         startToStartOf = ConstraintNode.PARENT,
         endToEndOf = ConstraintNode.PARENT,
         topToBottomOf = "background",
-        marginTop = 12.dp().toInt(),
-        marginBottom = 12.dp().toInt(),
+        marginTop = 12.dp(),
+        marginBottom = 12.dp(),
         horizontalBias = 0.5f
     )
 }

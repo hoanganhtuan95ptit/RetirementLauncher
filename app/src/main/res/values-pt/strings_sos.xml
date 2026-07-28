@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="setting_emergency_call">Chamada de emergência automática (SOS)</string>
-    <string name="emergency_call_desc">Se o telefone não for usado, o aplicativo fará automaticamente uma chamada de emegência.</string>
     <!-- <string name="clean_cat_system_temp">Arquivos temporários do sistema (.tmp, .log…)</string> -->
     <!-- <string name="clean_cat_compressed">Arquivos compactados desconhecidos</string> -->
     <!-- <string name="clean_cat_no_extension">Documentos (.pdf, .doc, .txt…)</string> -->
@@ -13,8 +12,6 @@
     <!-- <string name="clean_files_count_unit">arquivos inúteis</string> -->
     <string name="call_permission_highlight">fazer chamadas</string>
     <string name="call_block_highlight">gerenciar chamadas e contatos</string>
-    <string name="setting_header_debug">🐛 Depuração</string>
-    <string name="setting_debug_block_screen">Ver Tela de Bloqueio</string>
     <string name="usage_stats_permission_title">Monitoramento de Aplicativos</string>
     <string name="usage_stats_permission_desc">Para que o recurso de bloqueio de aplicativos funcione, você precisa conceder o \'Acesso aos dados de uso\'. Isso ajuda o aplicativo a saber quando um aplicativo não autorizado é aberto.</string>
     <string name="usage_stats_permission_highlight">\'Acesso aos dados de uso\'</string>
@@ -39,13 +36,10 @@
     <string name="overlay_permission_title">Exibir sobre outros aplicativos</string>
     <string name="overlay_permission_desc">O aplicativo precisa da permissão de \'Exibir sobre outros aplicativos\' para mostrar a tela de bloqueio quando um aplicativo bloqueado é aberto.</string>
     <string name="overlay_permission_highlight">\'Exibir sobre outros aplicativos\'</string>
-    <string name="clean_cat_file_count">$number_file arquivos</string>
     <string name="reorder_apps_title">Reordenar Aplicativos</string>
     <string name="reorder_contacts_title">Reordenar Contatos</string>
     <string name="app_list_empty_error">Selecione pelo menos um aplicativo</string>
     <string name="contact_list_empty_error">Selecione pelo menos um contato</string>
-    <string name="emergency_call_permission_denied">É necessária permissão de chamada para este recurso</string>
-    <string name="setting_emergency_advanced">Configurações Avançadas de SOS</string>
     <string name="sos_settings_title">SOS Avançado</string>
     <string name="sos_master_toggle">Ativar Chamada de Emergência Automática</string>
     <string name="sos_save_changes">Salvar Alterações</string>
@@ -57,11 +51,6 @@
     <string name="sos_add_exclusion_period">Adicionar Período de Exclusão</string>
     <string name="sos_add_exclusion_period_desc">Este tempo (ex: tempo de sono) não será contabilizado para o tempo de espera de inatividades.</string>
     <string name="sos_exclusion_period_format">%1$02d:%2$02d - %3$02d:%4$02d</string>
-    <string name="sos_delete_exclusion_period">Excluir</string>
     <string name="sos_select_start_time">Selecionar Hora de Início</string>
     <string name="sos_select_end_time">Selecionar Hora de Término</string>
-    <string name="emergency_call_enable">Ativar recurso</string>
-    <string name="emergency_call_phone_number">Número de telefone de emergência</string>
-    <string name="emergency_call_phone_number_hint">Digite o número de telefone</string>
-    <string name="emergency_call_save_success">Configuração de chamada de emergência salva</string>
 </resources>

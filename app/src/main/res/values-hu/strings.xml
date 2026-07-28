@@ -46,7 +46,6 @@
     <string name="default_launcher_title">Alapértelmezett indító beállítása</string>
     <string name="default_launcher_desc">A Retirement Launcher kezdőképernyőként való használatához alapértelmezett alkalmazásként kell beállítania a rendszerbeállításokban.</string>
     <string name="permission_grant">Engedély megadása</string>
-    <string name="understood">Értem</string>
     <string name="pin_verify_title">PIN megerősítése</string>
     <string name="pin_verify_desc">A beállítás módosításához adja meg a PIN-kódját.</string>
     <string name="pin_key_delete_desc">Törlés</string>

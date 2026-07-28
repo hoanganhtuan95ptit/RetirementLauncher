@@ -1,6 +1,5 @@
 <resources>
     <string name="setting_header_plugins">Module și Utilitare</string>
-    <string name="setting_lunar_calendar">Afișează Calendarul Lunar</string>
     <string name="setting_clock_title">Setări Ceas</string>
     <string name="setting_clock_format_header">Format Oră</string>
     <string name="setting_clock_12h">12 ore</string>

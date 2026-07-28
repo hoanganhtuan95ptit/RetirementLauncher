@@ -1,6 +1,5 @@
 <resources>
     <string name="setting_header_plugins">Pluginy a nástroje</string>
-    <string name="setting_lunar_calendar">Zobrazit lunární kalendář</string>
     <string name="setting_clock_title">Nastavení hodin</string>
     <string name="setting_clock_format_header">Formát času</string>
     <string name="setting_clock_12h">12hodinový</string>

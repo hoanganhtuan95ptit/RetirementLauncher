@@ -2,7 +2,7 @@ package com.simple.launcher.retirement.presentation.pin.verify
 
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.presentation.base.BaseViewModel
-import com.simple.launcher.retirement.utils.combineState
+import com.simple.launcher.retirement.utils.exts.combineState
 import com.simple.launcher.retirement.utils.exts.getString
 import com.simple.launcher.retirement.utils.exts.textColorPrimary
 import com.simple.launcher.retirement.utils.exts.textColorSecondary

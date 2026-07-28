@@ -1,6 +1,7 @@
-package com.simple.launcher.retirement.utils.string
+package com.simple.launcher.retirement.utils
 
 import java.text.Normalizer
+import kotlin.text.iterator
 
 /**
  * Tiện ích xử lý chuỗi tiếng Việt — bỏ dấu (normalize), so sánh không dấu.

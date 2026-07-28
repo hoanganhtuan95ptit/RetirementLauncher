@@ -1,6 +1,5 @@
 <resources>
     <string name="setting_header_plugins">Bővítmények és segédprogramok</string>
-    <string name="setting_lunar_calendar">Holdnaptár megjelenítése</string>
     <string name="setting_clock_title">Óra beállításai</string>
     <string name="setting_clock_format_header">Időformátum</string>
     <string name="setting_clock_12h">12 órás</string>

@@ -46,7 +46,6 @@
     <string name="default_launcher_title">デフォルトのランチャーに設定</string>
     <string name="default_launcher_desc">Retirement Launcherをホーム画面として使用するには、システム設定でデフォルトのアプリに設定する必要があります。</string>
     <string name="permission_grant">許可を与える</string>
-    <string name="understood">了解</string>
     <string name="pin_verify_title">PINの確認</string>
     <string name="pin_verify_desc">設定を変更するにはPINを入力してください。</string>
     <string name="pin_key_delete_desc">削除</string>

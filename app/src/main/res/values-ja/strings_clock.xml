@@ -1,6 +1,5 @@
 <resources>
     <string name="setting_header_plugins">プラグインとユーティリティ</string>
-    <string name="setting_lunar_calendar">旧暦を表示</string>
     <string name="setting_clock_title">時計の設定</string>
     <string name="setting_clock_format_header">時刻形式</string>
     <string name="setting_clock_12h">12時間制</string>

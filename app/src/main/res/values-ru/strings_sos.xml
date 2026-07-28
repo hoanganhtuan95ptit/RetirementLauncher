@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="setting_emergency_call">Автоматический экстренный вызов (SOS)</string>
-    <string name="emergency_call_desc">Если телефон не используется, приложение автоматически совершит экстренный вызов.</string>
     <!-- <string name="clean_cat_system_temp">Временные системные файлы (.tmp, .log…)</string> -->
     <!-- <string name="clean_cat_compressed">Неизвестные сжатые файлы</string> -->
     <!-- <string name="clean_cat_no_extension">Документы (.pdf, .doc, .txt…)</string> -->
@@ -13,8 +12,6 @@
     <!-- <string name="clean_files_count_unit">мусорных файлов</string> -->
     <string name="call_permission_highlight">совершать звонки</string>
     <string name="call_block_highlight">управлять звонками и контактами</string>
-    <string name="setting_header_debug">🐛 Отладка</string>
-    <string name="setting_debug_block_screen">Просмотр экрана блокировки</string>
     <string name="usage_stats_permission_title">Мониторинг приложений</string>
     <string name="usage_stats_permission_desc">Для работы функции блокировки приложений необходимо предоставить «Доступ к данным об использовании». Это помогает приложению узнавать, когда открывается неавторизованное приложение.</string>
     <string name="usage_stats_permission_highlight">«Доступ к данным об использовании»</string>
@@ -39,13 +36,10 @@
     <string name="overlay_permission_title">Отображение поверх других приложений</string>
     <string name="overlay_permission_desc">Приложению требуется разрешение «Отображение поверх других приложений», чтобы показывать экран блокировки при открытии заблокированного приложения.</string>
     <string name="overlay_permission_highlight">«Отображение поверх других приложений»</string>
-    <string name="clean_cat_file_count">$number_file файлов</string>
     <string name="reorder_apps_title">Изменить порядок приложений</string>
     <string name="reorder_contacts_title">Изменить порядок контактов</string>
     <string name="app_list_empty_error">Выберите хотя бы одно приложение</string>
     <string name="contact_list_empty_error">Выберите хотя бы один контакт</string>
-    <string name="emergency_call_permission_denied">Для этой функции требуется разрешение на звонки</string>
-    <string name="setting_emergency_advanced">Расширенные настройки SOS</string>
     <string name="sos_settings_title">Расширенный SOS</string>
     <string name="sos_master_toggle">Включить автоматический экстренный вызов</string>
     <string name="sos_save_changes">Сохранить изменения</string>
@@ -57,11 +51,6 @@
     <string name="sos_add_exclusion_period">Добавить период исключения</string>
     <string name="sos_add_exclusion_period_desc">Это время (например, время сна) не будет учитываться в времени ожидания бездействия.</string>
     <string name="sos_exclusion_period_format">%1$02d:%2$02d - %3$02d:%4$02d</string>
-    <string name="sos_delete_exclusion_period">Удалить</string>
     <string name="sos_select_start_time">Выберите время начала</string>
     <string name="sos_select_end_time">Выберите время окончания</string>
-    <string name="emergency_call_enable">Включить функцию</string>
-    <string name="emergency_call_phone_number">Номер телефона для экстренной связи</string>
-    <string name="emergency_call_phone_number_hint">Введите номер телефона</string>
-    <string name="emergency_call_save_success">Настройки экстренного вызова сохранены</string>
 </resources>

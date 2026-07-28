@@ -2,7 +2,7 @@ package com.simple.launcher.retirement.presentation.base
 
 import com.simple.adapter.ViewItem
 import com.simple.launcher.retirement.utils.JobQueue
-import com.simple.launcher.retirement.utils.combineState
+import com.simple.launcher.retirement.utils.exts.combineState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 

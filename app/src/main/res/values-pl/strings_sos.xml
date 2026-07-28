@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="setting_emergency_call">Automatyczne połączenie alarmowe (SOS)</string>
-    <string name="emergency_call_desc">Jeśli telefon nie będzie używany, aplikacja automatycznie wykona połączenie alarmowe.</string>
     <!-- <string name="clean_cat_system_temp">Systemowe pliki tymczasowe (.tmp, .log…)</string> -->
     <!-- <string name="clean_cat_compressed">Nieznane pliki skompresowane</string> -->
     <!-- <string name="clean_cat_no_extension">Dokumenty (.pdf, .doc, .txt…)</string> -->
@@ -13,8 +12,6 @@
     <!-- <string name="clean_files_count_unit">pliki śmieci</string> -->
     <string name="call_permission_highlight">wykonywanie połączeń</string>
     <string name="call_block_highlight">zarządzanie połączeniami i kontaktami</string>
-    <string name="setting_header_debug">🐛 Debug</string>
-    <string name="setting_debug_block_screen">Wyświetl ekran blokady</string>
     <string name="usage_stats_permission_title">Monitorowanie aplikacji</string>
     <string name="usage_stats_permission_desc">Aby funkcja blokowania aplikacji działała, musisz przyznać „Dostęp do danych o użyciu”. Pomaga to aplikacji dowiedzieć się, kiedy otwierana jest nieautoryzowana aplikacja.</string>
     <string name="usage_stats_permission_highlight">„Dostęp do danych o użyciu”</string>
@@ -39,13 +36,10 @@
     <string name="overlay_permission_title">Wyświetlanie nad innymi aplikacjami</string>
     <string name="overlay_permission_desc">Aplikacja potrzebuje uprawnienia „Wyświetlanie nad innymi aplikacjami”, aby wyświetlać ekran blokady po otwarciu zablokowanej aplikacji.</string>
     <string name="overlay_permission_highlight">„Wyświetlanie nad innymi aplikacjami”</string>
-    <string name="clean_cat_file_count">$number_file plików</string>
     <string name="reorder_apps_title">Zmień kolejność aplikacji</string>
     <string name="reorder_contacts_title">Zmień kolejność kontaktów</string>
     <string name="app_list_empty_error">Wybierz co najmniej jedną aplikację</string>
     <string name="contact_list_empty_error">Wybierz co najmniej jeden kontakt</string>
-    <string name="emergency_call_permission_denied">Do korzystania z tej funkcji wymagane jest uprawnienie do wykonywania połączeń</string>
-    <string name="setting_emergency_advanced">Zaawansowane ustawienia SOS</string>
     <string name="sos_settings_title">Zaawansowane SOS</string>
     <string name="sos_master_toggle">Włącz automatyczne połączenie alarmowe</string>
     <string name="sos_save_changes">Zapisz zmiany</string>
@@ -57,11 +51,6 @@
     <string name="sos_add_exclusion_period">Dodaj okres wykluczenia</string>
     <string name="sos_add_exclusion_period_desc">Ten czas (np. czas snu) nie będzie wliczany do czasu oczekiwania na brak aktywności.</string>
     <string name="sos_exclusion_period_format">%1$02d:%2$02d - %3$02d:%4$02d</string>
-    <string name="sos_delete_exclusion_period">Usuń</string>
     <string name="sos_select_start_time">Wybierz godzinę rozpoczęcia</string>
     <string name="sos_select_end_time">Wybierz godzinę zakończenia</string>
-    <string name="emergency_call_enable">Włącz funkcję</string>
-    <string name="emergency_call_phone_number">Alarmowy numer telefonu</string>
-    <string name="emergency_call_phone_number_hint">Wpisz numer telefonu</string>
-    <string name="emergency_call_save_success">Konfiguracja połączenia alarmowego zapisana</string>
 </resources>

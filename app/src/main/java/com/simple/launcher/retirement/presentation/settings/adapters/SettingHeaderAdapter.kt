@@ -7,15 +7,15 @@ import com.simple.adapter.ViewItem
 import com.simple.adapter.ViewItemAdapter
 import com.simple.launcher.retirement.databinding.ItemSettingHeaderBinding
 import com.simple.launcher.retirement.utils.exts.SpanSizeLookupViewItem
+import com.simple.launcher.retirement.utils.exts.dp
 import com.simple.launcher.retirement.utils.exts.setPadding
-import com.simple.launcher.retirement.utils.size.DP
 import com.simple.launcher.retirement.utils.size.Padding
 import com.simple.ui.precompute.text.BigText
 import com.simple.ui.precompute.text.setText
 
 data class SettingHeaderItem(
     val title: BigText,
-    val padding: Padding = Padding(DP.DP_16, DP.DP_24, DP.DP_16, DP.DP_8)
+    val padding: Padding = Padding(16.dp(), 24.dp(), 16.dp(), 8.dp())
 ) : ViewItem, SpanSizeLookupViewItem {
 
     override fun getSpanSize(): Int = 2

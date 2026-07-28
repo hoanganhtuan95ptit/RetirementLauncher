@@ -85,6 +85,11 @@ android {
         buildConfig = true
     }
 
+    lint {
+        disable.add("UnsafeOptInUsageError")
+        disable.add("UnsafeOptInUsageWarning")
+    }
+
     compileOptions {
 
         sourceCompatibility = JavaVersion.VERSION_17

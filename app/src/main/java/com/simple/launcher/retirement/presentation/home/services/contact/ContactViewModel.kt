@@ -7,7 +7,7 @@ import com.simple.launcher.retirement.domain.usecase.GetHomeContactUseCase
 import com.simple.launcher.retirement.presentation.base.BaseViewModel
 import com.simple.launcher.retirement.presentation.base.GroupViewItem
 import com.simple.launcher.retirement.presentation.home.adapter.HeaderHomeItem
-import com.simple.launcher.retirement.utils.combineState
+import com.simple.launcher.retirement.utils.exts.combineState
 import com.simple.launcher.retirement.utils.exts.dp
 import com.simple.launcher.retirement.utils.exts.getString
 import kotlinx.coroutines.flow.StateFlow

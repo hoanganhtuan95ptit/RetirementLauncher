@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>\n    <string name="setting_emergency_call">ऑटो इमरजेंसी कॉल (SOS)</string>
-    <string name="emergency_call_desc">यदि फोन का उपयोग नहीं किया जाता है, तो ऐप स्वचालित रूप से आपातकालीन कॉल करेगा।</string>
     <!-- <string name="clean_cat_system_temp">सिस्टम अस्थायी फाइलें (.tmp, .log…)</string> -->
     <!-- <string name="clean_cat_compressed">अज्ञात संकुचित फाइलें</string> -->
     <!-- <string name="clean_cat_no_extension">दस्तावेज़ (.pdf, .doc, .txt…)</string> -->
@@ -12,8 +11,6 @@
     <!-- <string name="clean_files_count_unit">जंक फाइलें</string> -->
     <string name="call_permission_highlight">कॉल करें</string>
     <string name="call_block_highlight">कॉल और संपर्क प्रबंधन</string>
-    <string name="setting_header_debug">🐛 डिबग</string>
-    <string name="setting_debug_block_screen">ब्लॉक स्क्रीन देखें</string>
 
     <string name="usage_stats_permission_title">ऐप मॉनitoring</string>
     <string name="usage_stats_permission_desc">ऐप ब्लॉकिंग फीचर के काम करने के लिए, आपको \'उपयोग डेटा एक्सेस\' प्रदान करने की आवश्यकता है। यह ऐप को यह जानने में मदद करता है कि कब कोई अनधिकृत ऐप खोला जाता है।</string>
@@ -44,13 +41,10 @@
     <string name="overlay_permission_title">अन्य ऐप्स के ऊपर प्रदर्शित करें</string>
     <string name="overlay_permission_desc">ब्लॉक किए गए ऐप को खोलने पर लॉक स्क्रीन दिखाने के लिए ऐप को \'अन्य ऐप्स के ऊपर प्रदर्शित करें\' अनुमति की आवश्यकता है।</string>
     <string name="overlay_permission_highlight">\'अन्य ऐप्स के ऊपर प्रदर्शित करें\'</string>
-    <string name="clean_cat_file_count">$number_file फाइलें</string>
     <string name="reorder_apps_title">ऐप्स को फिर से व्यवस्थित करें</string>
     <string name="reorder_contacts_title">संपर्कों को फिर से व्यवस्थित करें</string>
     <string name="app_list_empty_error">कृपया कम से कम एक ऐप चुनें</string>
     <string name="contact_list_empty_error">कृपया कम से कम एक संपर्क चुनें</string>
-    <string name="emergency_call_permission_denied">इस फीचर के लिए कॉल करने की अनुमति आवश्यक है</string>
-    <string name="setting_emergency_advanced">उन्नत एसओएस सेटिंग्स</string>
     <string name="sos_settings_title">उन्नत एसओएस</string>
     <string name="sos_master_toggle">ऑटो इमरजेंसी कॉल सक्षम करें</string>
     <string name="sos_save_changes">परिवर्तन सहेजें</string>
@@ -62,11 +56,6 @@
     <string name="sos_add_exclusion_period">अपवर्जन अवधि जोड़ें</string>
     <string name="sos_add_exclusion_period_desc">यह समय (जैसे सोने का समय) निष्क्रियता प्रतीक्षा समय में नहीं गिना जाएगा।</string>
     <string name="sos_exclusion_period_format">%1$02d:%2$02d - %3$02d:%4$02d</string>
-    <string name="sos_delete_exclusion_period">हटाएं</string>
     <string name="sos_select_start_time">आरंभ समय चुनें</string>
     <string name="sos_select_end_time">समाप्ति समय चुनें</string>
-    <string name="emergency_call_enable">सुविधा चालू करें</string>
-    <string name="emergency_call_phone_number">आपातकालीन फोन नंबर</string>
-    <string name="emergency_call_phone_number_hint">फोन नंबर दर्ज करें</string>
-    <string name="emergency_call_save_success">आपातकालीन कॉल कॉन्फ़िगरेशन सहेजा गया</string>
 </resources>

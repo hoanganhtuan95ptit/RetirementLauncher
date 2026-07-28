@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="setting_emergency_call">Otomatik Acil Arama (SOS)</string>
-    <string name="emergency_call_desc">Telefon kullanılmazsa, uygulama otomatik olarak acil arama yapacaktır.</string>
     <!-- <string name="clean_cat_system_temp">Sistem geçici dosyaları (.tmp, .log…)</string> -->
     <!-- <string name="clean_cat_compressed">Bilinmeyen sıkıştırılmış dosyalar</string> -->
     <!-- <string name="clean_cat_no_extension">Belgeler (.pdf, .doc, .txt…)</string> -->
@@ -13,8 +12,6 @@
     <!-- <string name="clean_files_count_unit">gereksiz dosya</string> -->
     <string name="call_permission_highlight">arama yap</string>
     <string name="call_block_highlight">aramaları ve rehberi yönet</string>
-    <string name="setting_header_debug">🐛 Hata Ayıklama</string>
-    <string name="setting_debug_block_screen">Engelleme Ekranını Görüntüle</string>
     <string name="usage_stats_permission_title">Uygulama İzleme</string>
     <string name="usage_stats_permission_desc">Uygulama engelleme özelliğinin çalışması için \'Kullanım Verilerine Erişim\' izni vermeniz gerekir. Bu, uygulamanın yetkisiz bir uygulama açıldığında bunu bilmesine yardımcı olur.</string>
     <string name="usage_stats_permission_highlight">\'Kullanım Verilerine Erişim\'</string>
@@ -39,13 +36,10 @@
     <string name="overlay_permission_title">Diğer Uygulamaların Üzerinde Görüntüle</string>
     <string name="overlay_permission_desc">Uygulamanın, engellenen bir uygulama açıldığında kilit ekranını göstermek için \'Diğer uygulamaların üzerinde görüntüle\' iznine ihtiyacı vardır.</string>
     <string name="overlay_permission_highlight">\'Diğer uygulamaların üzerinde görüntüle\'</string>
-    <string name="clean_cat_file_count">$number_file dosya</string>
     <string name="reorder_apps_title">Uygulamaları Yeniden Sırala</string>
     <string name="reorder_contacts_title">Kişileri Yeniden Sırala</string>
     <string name="app_list_empty_error">Lütfen en az bir uygulama seçin</string>
     <string name="contact_list_empty_error">Lütfen en az bir kişi seçin</string>
-    <string name="emergency_call_permission_denied">Bu özellik için arama izni gereklidir</string>
-    <string name="setting_emergency_advanced">Gelişmiş SOS Ayarları</string>
     <string name="sos_settings_title">Gelişmiş SOS</string>
     <string name="sos_master_toggle">Otomatik Acil Aramayı Etkinleştir</string>
     <string name="sos_save_changes">Değişiklikleri Kaydet</string>
@@ -57,11 +51,6 @@
     <string name="sos_add_exclusion_period">Hariç Tutma Dönemi Ekle</string>
     <string name="sos_add_exclusion_period_desc">Bu süre (örneğin uyku süresi) hareketsizlik bekleme süresine dahil edilmeyecektir.</string>
     <string name="sos_exclusion_period_format">%1$02d:%2$02d - %3$02d:%4$02d</string>
-    <string name="sos_delete_exclusion_period">Sil</string>
     <string name="sos_select_start_time">Başlangıç Zamanını Seç</string>
     <string name="sos_select_end_time">Bitiş Zamanını Seç</string>
-    <string name="emergency_call_enable">Özelliği aç</string>
-    <string name="emergency_call_phone_number">Acil telefon numarası</string>
-    <string name="emergency_call_phone_number_hint">Telefon numarasını girin</string>
-    <string name="emergency_call_save_success">Acil arama yapılandırması kaydedildi</string>
 </resources>

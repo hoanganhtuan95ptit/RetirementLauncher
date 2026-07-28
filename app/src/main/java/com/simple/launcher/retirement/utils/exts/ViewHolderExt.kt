@@ -1,4 +1,4 @@
-package com.simple.launcher.retirement.utils
+package com.simple.launcher.retirement.utils.exts
 
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView

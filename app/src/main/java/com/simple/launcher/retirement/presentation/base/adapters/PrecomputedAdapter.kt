@@ -7,7 +7,7 @@ import com.simple.adapter.ViewItemAdapter
 import com.simple.adapter.base.BaseBindingViewHolder
 import com.simple.launcher.retirement.databinding.ItemNodeBinding
 import com.simple.launcher.retirement.utils.exts.setOnSafeWithPerformHapticFeedbackClickListener
-import com.simple.launcher.retirement.utils.getItem
+import com.simple.launcher.retirement.utils.exts.getItem
 import com.simple.ui.precompute.DrawSpec
 import com.simple.ui.precompute.PrecomputedView
 

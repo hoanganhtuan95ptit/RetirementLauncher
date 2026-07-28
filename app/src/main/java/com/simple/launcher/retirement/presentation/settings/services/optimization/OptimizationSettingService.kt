@@ -3,7 +3,7 @@ package com.simple.launcher.retirement.presentation.settings.services.optimizati
 import androidx.fragment.app.viewModels
 import com.simple.launcher.retirement.presentation.settings.SettingsFragment
 import com.simple.launcher.retirement.presentation.settings.services.SettingService
-import com.simple.launcher.retirement.utils.lifecycle.observe
+import com.simple.launcher.retirement.utils.exts.observe
 import kotlinx.coroutines.flow.filterNotNull
 
 //@AutoRegister(apis = [SettingsFragment::class])

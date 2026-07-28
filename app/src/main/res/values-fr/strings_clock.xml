@@ -1,6 +1,5 @@
 <resources>
     <string name="setting_header_plugins">Extensions &amp; Utilitaires</string>
-    <string name="setting_lunar_calendar">Afficher le calendrier lunaire</string>
     <string name="setting_clock_title">Paramètres de l\'horloge</string>
     <string name="setting_clock_format_header">Format de l\'heure</string>
     <string name="setting_clock_12h">12 heures</string>

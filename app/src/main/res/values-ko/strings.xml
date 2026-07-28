@@ -46,7 +46,6 @@
     <string name="default_launcher_title">기본 런처 설정</string>
     <string name="default_launcher_desc">Retirement Launcher를 홈 화면으로 사용하려면 시스템 설정에서 기본 앱으로 설정해야 합니다.</string>
     <string name="permission_grant">권한 허용</string>
-    <string name="understood">확인</string>
     <string name="pin_verify_title">PIN 확인</string>
     <string name="pin_verify_desc">이 설정을 변경하려면 PIN을 입력하세요.</string>
     <string name="pin_key_delete_desc">삭제</string>

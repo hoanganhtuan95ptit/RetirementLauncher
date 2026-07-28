@@ -1,49 +1,21 @@
 package com.simple.launcher.retirement.domain.usecase
 
-import android.util.Log
 import com.simple.launcher.retirement.domain.model.AppEntity
 import com.simple.launcher.retirement.domain.model.HomeContentEntity
 import com.simple.launcher.retirement.domain.repository.AppRepository
-import com.simple.launcher.retirement.domain.repository.ContactRepository
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.merge
-import kotlinx.coroutines.flow.shareIn
 
 class GetHomeAppsUseCase(
     private val appRepository: AppRepository,
-    private val contactRepository: ContactRepository
 ) {
 
-    // Scope riêng cho usecase singleton để shared upstream không bị tạo lại theo từng collector.
-    private val usecaseScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+    fun invoke(): Flow<List<HomeContentEntity.App>> = appRepository.homeDataFlow().map {
 
-    private val sharedFlow: Flow<List<HomeContentEntity>> =
-        merge(appRepository.homeDataFlow(), contactRepository.homeDataFlow())
-            .map { invoke() }
-            .flowOn(Dispatchers.IO)
-            .shareIn(
-                scope = usecaseScope,
-                started = SharingStarted.WhileSubscribed(5_000),
-                replay = 1
-            )
-
-    fun asFlow(): Flow<List<HomeContentEntity>> = sharedFlow
-
-    operator fun invoke(): List<HomeContentEntity> {
-
-        Log.d("tuanha", "invoke: ")
-
-        val apps = buildHomeApps()
-        val contacts = buildHomeContacts()
-
-        return apps + contacts
-    }
+        buildHomeApps()
+    }.flowOn(Dispatchers.IO)
 
     private fun buildHomeApps(): List<HomeContentEntity.App> {
 
@@ -80,17 +52,10 @@ class GetHomeAppsUseCase(
         apps.add(HomeContentEntity.App(currentApp))
     }
 
-    private fun buildHomeContacts(): List<HomeContentEntity.Contact> {
-
-        return contactRepository
-            .getSelectedContacts()
-            .map { HomeContentEntity.Contact(it) }
-    }
-
     companion object {
 
         val instance: GetHomeAppsUseCase by lazy {
-            GetHomeAppsUseCase(AppRepository.instance, ContactRepository.instance)
+            GetHomeAppsUseCase(AppRepository.instance)
         }
     }
 }

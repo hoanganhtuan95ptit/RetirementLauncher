@@ -60,7 +60,6 @@
     <string name="default_launcher_title">تعيين المشغل الافتراضي</string>
     <string name="default_launcher_desc">لاستخدام Retirement Launcher كشاشة رئيسية، يجب تعيينه كالتطبيق الافتراضي في إعدادات النظام.</string>
     <string name="permission_grant">منح الإذن</string>
-    <string name="understood">مفهوم</string>
     <string name="pin_verify_title">تأكيد رمز PIN</string>
     <string name="pin_verify_desc">يرجى إدخال رمز PIN لتغيير هذا الإعداد.</string>
     <string name="pin_key_delete_desc">حذف</string>

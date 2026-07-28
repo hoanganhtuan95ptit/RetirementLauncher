@@ -1,6 +1,5 @@
 <resources>
     <string name="setting_header_plugins">Плагіни та утиліти</string>
-    <string name="setting_lunar_calendar">Показувати місячний календар</string>
     <string name="setting_clock_title">Налаштування годинника</string>
     <string name="setting_clock_format_header">Формат часу</string>
     <string name="setting_clock_12h">12-годинний</string>

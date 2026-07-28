@@ -46,7 +46,6 @@
     <string name="default_launcher_title">Tetapkan Pelancar Lalai</string>
     <string name="default_launcher_desc">Untuk menggunakan Retirement Launcher sebagai skrin utama anda, anda perlu menetapkannya sebagai aplikasi lalai dalam tetapan sistem.</string>
     <string name="permission_grant">Berikan Kebenaran</string>
-    <string name="understood">Faham</string>
     <string name="pin_verify_title">Sahkan PIN</string>
     <string name="pin_verify_desc">Sila masukkan PIN anda untuk menukar tetapan ini.</string>
     <string name="pin_key_delete_desc">Padam</string>

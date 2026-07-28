@@ -46,7 +46,6 @@
     <string name="default_launcher_title">Atur Launcher Default</string>
     <string name="default_launcher_desc">Untuk menggunakan Retirement Launcher sebagai layar utama, Anda harus mengaturnya sebagai aplikasi default di pengaturan sistem.</string>
     <string name="permission_grant">Berikan Izin</string>
-    <string name="understood">Paham</string>
     <string name="pin_verify_title">Konfirmasi PIN</string>
     <string name="pin_verify_desc">Masukkan PIN Anda untuk mengubah pengaturan ini.</string>
     <string name="pin_key_delete_desc">Hapus</string>

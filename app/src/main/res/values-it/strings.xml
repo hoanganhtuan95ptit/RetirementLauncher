@@ -46,7 +46,6 @@
     <string name="default_launcher_title">Imposta Launcher Predefinito</string>
     <string name="default_launcher_desc">Per usare Retirement Launcher come schermata iniziale, devi impostarlo come app predefinita nelle impostazioni di sistema.</string>
     <string name="permission_grant">Concedi Permesso</string>
-    <string name="understood">Capito</string>
     <string name="pin_verify_title">Conferma PIN</string>
     <string name="pin_verify_desc">Inserisci il tuo PIN per modificare questa impostazione.</string>
     <string name="pin_key_delete_desc">Elimina</string>

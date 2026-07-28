@@ -1,6 +1,7 @@
 package com.simple.launcher.retirement.presentation.clock.adapters
 
 import android.graphics.Color
+import androidx.core.graphics.toColorInt
 import com.simple.adapter.Adapter
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.presentation.base.adapters.PrecomputedAdapter
@@ -47,7 +48,7 @@ data class ClockHomeItem(
                 id = "background",
                 node = BackgroundNode(
                     backgroundColor = Color.WHITE,
-                    cornerRadius = 24.dp()
+                    cornerRadius = 24.dp().toFloat()
                 ),
                 width = LayoutDimension.MatchParent,
                 height = LayoutDimension.MatchParent,
@@ -65,7 +66,7 @@ data class ClockHomeItem(
                             TimeNode(
                                 pattern = if (is24h) "HH:mm" else "hh:mm",
                                 showAmPm = !is24h && isAmPm,
-                                textSizePx = 60.sp(),
+                                textSizePx = 60.sp().toFloat(),
                                 color = Color.BLACK,
                                 isBold = true
                             )
@@ -78,14 +79,14 @@ data class ClockHomeItem(
                                     children = listOf(
                                         ImageNode(
                                             source = BigImage(R.drawable.ic_sun),
-                                            layoutWidth = LayoutDimension.Fixed(20.dp().toInt()),
-                                            layoutHeight = LayoutDimension.Fixed(20.dp().toInt()),
-                                            padding = EdgeInsets(right = 8.dp().toInt())
+                                            layoutWidth = LayoutDimension.Fixed(20.dp()),
+                                            layoutHeight = LayoutDimension.Fixed(20.dp()),
+                                            padding = EdgeInsets(right = 8.dp())
                                         ),
                                         TimeNode(
                                             pattern = solarPattern,
-                                            textSizePx = 18.sp(),
-                                            color = Color.parseColor("#58C27D"),
+                                            textSizePx = 18.sp().toFloat(),
+                                            color = "#58C27D".toColorInt(),
                                             isBold = true,
                                             layoutWidth = LayoutDimension.MatchParent,
                                         )
@@ -97,19 +98,19 @@ data class ClockHomeItem(
                             add(
                                 LinearNode(
                                     orientation = Orientation.HORIZONTAL,
-                                    padding = EdgeInsets(top = 8.dp().toInt()),
+                                    padding = EdgeInsets(top = 8.dp()),
                                     children = listOf(
                                         ImageNode(
                                             source = BigImage(R.drawable.ic_moon),
-                                            layoutWidth = LayoutDimension.Fixed(20.dp().toInt()),
-                                            layoutHeight = LayoutDimension.Fixed(20.dp().toInt()),
-                                            padding = EdgeInsets(right = 8.dp().toInt())
+                                            layoutWidth = LayoutDimension.Fixed(20.dp()),
+                                            layoutHeight = LayoutDimension.Fixed(20.dp()),
+                                            padding = EdgeInsets(right = 8.dp())
                                         ),
                                         TimeNode(
                                             pattern = lunarPattern,
                                             isLunar = true,
-                                            textSizePx = 20.sp(),
-                                            color = Color.parseColor("#6C63FF"),
+                                            textSizePx = 20.sp().toFloat(),
+                                            color = "#6C63FF".toColorInt(),
                                             isBold = true,
                                             layoutWidth = LayoutDimension.MatchParent,
                                         )
@@ -118,7 +119,7 @@ data class ClockHomeItem(
                             )
                         }
                     },
-                    padding = EdgeInsets.all(24.dp().toInt())
+                    padding = EdgeInsets.all(24.dp())
                 ),
                 width = LayoutDimension.MatchParent,
                 startToStartOf = ConstraintNode.PARENT,
@@ -127,7 +128,7 @@ data class ClockHomeItem(
             )
         ),
         layoutWidth = LayoutDimension.MatchParent,
-        padding = EdgeInsets.symmetric(h = 8.dp().toInt(), v = 8.dp().toInt())
+        padding = EdgeInsets.symmetric(h = 8.dp(), v = 8.dp())
     )
 
     override fun areItemsTheSame(): List<Any> = listOf("Clock")

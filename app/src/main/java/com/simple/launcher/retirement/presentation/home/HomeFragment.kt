@@ -17,7 +17,7 @@ import com.simple.launcher.retirement.databinding.FragmentHomeBinding
 import com.simple.launcher.retirement.presentation.DeepLinks
 import com.simple.launcher.retirement.presentation.base.BaseFragment
 import com.simple.launcher.retirement.presentation.home.adapter.HomeItem
-import com.simple.launcher.retirement.utils.lifecycle.observe
+import com.simple.launcher.retirement.utils.exts.observe
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 

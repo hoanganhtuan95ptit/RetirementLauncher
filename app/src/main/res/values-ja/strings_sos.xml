@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="setting_emergency_call">自動緊急通報 (SOS)</string>
-    <string name="emergency_call_desc">スマートフォンが使用されない場合、アプリが自動的に緊急通報を行います。</string>
     <!-- <string name="clean_cat_system_temp">システム一時ファイル (.tmp, .log…)</string> -->
     <!-- <string name="clean_cat_compressed">未知の圧縮ファイル</string> -->
     <!-- <string name="clean_cat_no_extension">ドキュメント (.pdf, .doc, .txt…)</string> -->
@@ -13,8 +12,6 @@
     <!-- <string name="clean_files_count_unit">不要なファイル</string> -->
     <string name="call_permission_highlight">通話</string>
     <string name="call_block_highlight">通話と連絡先の管理</string>
-    <string name="setting_header_debug">🐛 デバッグ</string>
-    <string name="setting_debug_block_screen">ブロック画面を表示</string>
     <string name="usage_stats_permission_title">アプリの監視</string>
     <string name="usage_stats_permission_desc">アプリのブロック機能を使用するには、「使用状況へのアクセス」を許可する必要があります。これにより、許可されていないアプリがいつ開かれたかをアプリが知ることができます。</string>
     <string name="usage_stats_permission_highlight">「使用状況へのアクセス」</string>
@@ -43,13 +40,10 @@
     <string name="overlay_permission_title">他のアプリの上に重ねて表示</string>
     <string name="overlay_permission_desc">ブロックされたアプリが開かれたときにロック画面を表示するには、アプリに「他のアプリの上に重ねて表示」の許可が必要です。</string>
     <string name="overlay_permission_highlight">「他のアプリの上に重ねて表示」</string>
-    <string name="clean_cat_file_count">$number_file 個のファイル</string>
     <string name="reorder_apps_title">アプリの並べ替え</string>
     <string name="reorder_contacts_title">連絡先の並べ替え</string>
     <string name="app_list_empty_error">少なくとも 1 つのアプリを選択してください</string>
     <string name="contact_list_empty_error">少なくとも 1 つの連絡先を選択してください</string>
-    <string name="emergency_call_permission_denied">この機能には通話許可が必要です</string>
-    <string name="setting_emergency_advanced">高度な SOS 設定</string>
     <string name="sos_settings_title">高度な SOS</string>
     <string name="sos_master_toggle">自動緊急通報を有効にする</string>
     <string name="sos_save_changes">変更を保存</string>
@@ -61,11 +55,6 @@
     <string name="sos_add_exclusion_period">除外期間を追加</string>
     <string name="sos_add_exclusion_period_desc">この時間（睡眠時間など）は、非アクティブ待機時間にはカウントされません。</string>
     <string name="sos_exclusion_period_format">%1$02d:%2$02d - %3$02d:%4$02d</string>
-    <string name="sos_delete_exclusion_period">削除</string>
     <string name="sos_select_start_time">開始時間を選択</string>
     <string name="sos_select_end_time">終了時間を選択</string>
-    <string name="emergency_call_enable">機能を有効にする</string>
-    <string name="emergency_call_phone_number">緊急電話番号</string>
-    <string name="emergency_call_phone_number_hint">電話番号を入力</string>
-    <string name="emergency_call_save_success">緊急通話設定を保存しました</string>
 </resources>

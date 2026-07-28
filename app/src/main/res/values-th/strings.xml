@@ -46,7 +46,6 @@
     <string name="default_launcher_title">ตั้งค่าตัวเปิดเริ่มต้น</string>
     <string name="default_launcher_desc">หากต้องการใช้ Retirement Launcher เป็นหน้าหลัก คุณต้องตั้งค่าให้เป็นแอปเริ่มต้นในการตั้งค่าระบบ</string>
     <string name="permission_grant">ให้สิทธิ์</string>
-    <string name="understood">เข้าใจแล้ว</string>
     <string name="pin_verify_title">ยืนยัน PIN</string>
     <string name="pin_verify_desc">โปรดป้อน PIN ของคุณเพื่อเปลี่ยนการตั้งค่านี้</string>
     <string name="pin_key_delete_desc">ลบ</string>

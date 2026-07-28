@@ -1,8 +1,7 @@
 package com.simple.launcher.retirement.presentation.base
 
 import com.simple.launcher.retirement.utils.background.Background
-import com.simple.launcher.retirement.utils.size.DP
-import com.simple.launcher.retirement.utils.size.toPx
+import com.simple.launcher.retirement.utils.exts.dp
 
 data class BottomSheetState(
     val background: Background? = null,
@@ -26,7 +25,7 @@ fun buildBottomSheetState(
     backgroundColor: Int,
     anchorColor: Int,
     showAnchor: Boolean = true,
-    cornerRadius: Int = DP.DP_24.toInt()
+    cornerRadius: Int = 24.dp()
 ): BottomSheetState = BottomSheetState(
     background = Background.Builder()
         .backgroundColor(backgroundColor)
@@ -34,7 +33,7 @@ fun buildBottomSheetState(
         .build(),
     anchorBackground = Background.Builder()
         .backgroundColor(anchorColor)
-        .cornerRadius(100.toPx())
+        .cornerRadius(100.dp())
         .build(),
     showAnchor = showAnchor
 )

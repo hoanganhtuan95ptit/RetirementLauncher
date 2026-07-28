@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="setting_emergency_call">Panggilan Kecemasan Automatik (SOS)</string>
-    <string name="emergency_call_desc">Jika telefon tidak digunakan, aplikasi akan membuat panggilan kecemasan secara automatik.</string>
     <!-- <string name="clean_cat_system_temp">Fail sementara sistem (.tmp, .log…)</string> -->
     <!-- <string name="clean_cat_compressed">Fail mampat tidak dikenali</string> -->
     <!-- <string name="clean_cat_no_extension">Dokumen (.pdf, .doc, .txt…)</string> -->
@@ -13,8 +12,6 @@
     <!-- <string name="clean_files_count_unit">fail sampah</string> -->
     <string name="call_permission_highlight">membuat panggilan</string>
     <string name="call_block_highlight">mengurus panggilan dan kenalan</string>
-    <string name="setting_header_debug">🐛 Debug</string>
-    <string name="setting_debug_block_screen">Lihat Skrin Sekatan</string>
     <string name="usage_stats_permission_title">Pemantauan Aplikasi</string>
     <string name="usage_stats_permission_desc">Untuk ciri penyekatan aplikasi berfungsi, anda perlu memberikan \'Akses data penggunaan\'. Ini membantu aplikasi mengetahui apabila aplikasi yang tidak dibenarkan dibuka.</string>
     <string name="usage_stats_permission_highlight">\'Akses data penggunaan\'</string>
@@ -43,13 +40,10 @@
     <string name="overlay_permission_title">Paparkan Di Atas Aplikasi Lain</string>
     <string name="overlay_permission_desc">Aplikasi memerlukan kebenaran \'Paparkan di atas aplikasi lain\' untuk menunjukkan skrin kunci apabila aplikasi yang disekat dibuka.</string>
     <string name="overlay_permission_highlight">\'Paparkan di atas aplikasi lain\'</string>
-    <string name="clean_cat_file_count">$number_file fail</string>
     <string name="reorder_apps_title">Susun Semula Aplikasi</string>
     <string name="reorder_contacts_title">Susun Semula Kenalan</string>
     <string name="app_list_empty_error">Sila pilih sekurang-kurangnya satu aplikasi</string>
     <string name="contact_list_empty_error">Sila pilih sekurang-kurangnya satu kenalan</string>
-    <string name="emergency_call_permission_denied">Kebenaran panggilan diperlukan untuk ciri ini</string>
-    <string name="setting_emergency_advanced">Tetapan SOS Lanjutan</string>
     <string name="sos_settings_title">SOS Lanjutan</string>
     <string name="sos_master_toggle">Dayakan Panggilan Kecemasan Automatik</string>
     <string name="sos_save_changes">Simpan Perubahan</string>
@@ -61,11 +55,6 @@
     <string name="sos_add_exclusion_period">Tambah Tempoh Pengecualian</string>
     <string name="sos_add_exclusion_period_desc">Masa ini (cth., masa tidur) tidak akan dikira dalam masa menunggu ketidakaktifan.</string>
     <string name="sos_exclusion_period_format">%1$02d:%2$02d - %3$02d:%4$02d</string>
-    <string name="sos_delete_exclusion_period">Padam</string>
     <string name="sos_select_start_time">Pilih Masa Mula</string>
     <string name="sos_select_end_time">Pilih Masa Tamat</string>
-    <string name="emergency_call_enable">Hidupkan ciri</string>
-    <string name="emergency_call_phone_number">Nombor telefon kecemasan</string>
-    <string name="emergency_call_phone_number_hint">Masukkan nombor telefon</string>
-    <string name="emergency_call_save_success">Konfigurasi panggilan kecemasan disimpan</string>
 </resources>

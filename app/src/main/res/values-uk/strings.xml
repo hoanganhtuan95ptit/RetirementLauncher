@@ -46,7 +46,6 @@
     <string name="default_launcher_title">Встановити лаунчер за замовчуванням</string>
     <string name="default_launcher_desc">Щоб використовувати Retirement Launcher як головний екран, вам потрібно встановити його як додаток за замовчуванням у системних налаштуваннях.</string>
     <string name="permission_grant">Надати дозвіл</string>
-    <string name="understood">Зрозуміло</string>
     <string name="pin_verify_title">Підтвердження PIN-коду</string>
     <string name="pin_verify_desc">Будь ласка, введіть свій PIN-код, щоб змінити це налаштування.</string>
     <string name="pin_key_delete_desc">Видалити</string>

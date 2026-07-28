@@ -60,7 +60,6 @@
     <string name="default_launcher_title">ডিফল্ট লঞ্চার সেট করুন</string>
     <string name="default_launcher_desc">Retirement Launcher আপনার হোম স্ক্রিন হিসেবে ব্যবহার করতে হলে, আপনাকে এটি সিস্টেম সেটিংসে ডিফল্ট অ্যাপ হিসেবে সেট করতে হবে।</string>
     <string name="permission_grant">অনুমতি দিন</string>
-    <string name="understood">বুঝেছি</string>
     <string name="pin_verify_title">পিন নিশ্চিত করুন</string>
     <string name="pin_verify_desc">এই সেটিং পরিবর্তন করতে অনুগ্রহ করে আপনার পিন লিখুন।</string>
     <string name="pin_key_delete_desc">মুছে ফেলুন</string>

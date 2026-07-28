@@ -10,9 +10,9 @@ import androidx.lifecycle.findViewTreeViewModelStoreOwner
 import com.simple.launcher.retirement.presentation.base.BaseViewModel
 import com.simple.launcher.retirement.utils.background.Background
 import com.simple.launcher.retirement.utils.background.setBackground
-import com.simple.launcher.retirement.utils.combineState
-import com.simple.launcher.retirement.utils.lifecycle.observe
-import com.simple.launcher.retirement.utils.size.DP
+import com.simple.launcher.retirement.utils.exts.combineState
+import com.simple.launcher.retirement.utils.exts.dp
+import com.simple.launcher.retirement.utils.exts.observe
 import kotlinx.coroutines.flow.StateFlow
 
 class BackgroundLinearLayout(context: Context, attrs: AttributeSet?) : LinearLayout(context, attrs) {
@@ -38,7 +38,7 @@ class BackgroundViewModel : BaseViewModel() {
 
         value = Background.Builder()
             .backgroundColor(Color.WHITE)
-            .cornerRadius(DP.DP_16)
+            .cornerRadius(16.dp())
             .build()
     }
 }

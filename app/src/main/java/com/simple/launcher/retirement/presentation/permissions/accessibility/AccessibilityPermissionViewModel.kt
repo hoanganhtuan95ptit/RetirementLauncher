@@ -1,10 +1,11 @@
 package com.simple.launcher.retirement.presentation.permissions.accessibility
 
+import android.graphics.Color
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.presentation.base.ActionState
 import com.simple.launcher.retirement.presentation.base.BaseViewModel
 import com.simple.launcher.retirement.presentation.base.buildActionState
-import com.simple.launcher.retirement.utils.combineState
+import com.simple.launcher.retirement.utils.exts.combineState
 import com.simple.launcher.retirement.utils.exts.colorAccent
 import com.simple.launcher.retirement.utils.exts.colorOnPrimary
 import com.simple.launcher.retirement.utils.exts.colorPrimary
@@ -90,7 +91,7 @@ class AccessibilityPermissionViewModel : BaseViewModel() {
         value = buildActionState(
             text = resources.getString(R.string.permission_decline),
             textColor = color,
-            backgroundColor = android.graphics.Color.TRANSPARENT
+            backgroundColor = Color.TRANSPARENT
         )
     }
 }

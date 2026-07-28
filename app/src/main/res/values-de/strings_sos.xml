@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="setting_emergency_call">Automatischer Notruf (SOS)</string>
-    <string name="emergency_call_desc">Wenn das Telefon nicht benutzt wird, setzt die App automatisch einen Notruf ab.</string>
     <string name="call_permission_highlight">Anrufe tätigen</string>
     <string name="call_block_highlight">Anrufe und Kontakte verwalten</string>
-    <string name="setting_header_debug">🐛 Debug</string>
-    <string name="setting_debug_block_screen">Sperrbildschirm anzeigen</string>
     <string name="usage_stats_permission_title">App-Überwachung</string>
     <string name="usage_stats_permission_desc">Damit die App-Sperrfunktion funktioniert, müssen Sie den „Zugriff auf Nutzungsdaten“ gewähren. Dies hilft der App zu erkennen, wenn eine nicht autorisierte App geöffnet wird.</string>
     <string name="usage_stats_permission_highlight">„Zugriff auf Nutzungsdaten“</string>
@@ -34,13 +31,10 @@
     <string name="overlay_permission_title">Über anderen Apps anzeigen</string>
     <string name="overlay_permission_desc">Die App benötigt die Berechtigung „Über anderen Apps anzeigen“, um den Sperrbildschirm anzuzeigen, wenn eine blockierte App geöffnet wird.</string>
     <string name="overlay_permission_highlight">„Über anderen Apps anzeigen“</string>
-    <string name="clean_cat_file_count">$number_file Dateien</string>
     <string name="reorder_apps_title">Apps neu ordnen</string>
     <string name="reorder_contacts_title">Kontakte neu ordnen</string>
     <string name="app_list_empty_error">Bitte wählen Sie mindestens eine App aus</string>
     <string name="contact_list_empty_error">Bitte wählen Sie mindestens einen Kontakt aus</string>
-    <string name="emergency_call_permission_denied">Für diese Funktion ist eine Anrufberechtigung erforderlich</string>
-    <string name="setting_emergency_advanced">Erweiterte SOS-Einstellungen</string>
     <string name="sos_settings_title">Erweitertes SOS</string>
     <string name="sos_master_toggle">Automatischer Notruf aktivieren</string>
     <string name="sos_save_changes">Änderungen speichern</string>
@@ -52,7 +46,6 @@
     <string name="sos_add_exclusion_period">Ausschlusszeitraum hinzufügen</string>
     <string name="sos_add_exclusion_period_desc">Diese Zeit (z. B. Schlafzeit) wird nicht auf die Inaktivitätswartezeit angerechnet.</string>
     <string name="sos_exclusion_period_format">%1$02d:%2$02d - %3$02d:%4$02d</string>
-    <string name="emergency_call_save_success">Notrufkonfiguration gespeichert</string>
     <!-- <string name="clean_cat_system_temp">Temporäre Systemdateien (.tmp, .log…)</string> -->
     <!-- <string name="clean_cat_compressed">Unbekannte komprimierte Dateien</string> -->
     <!-- <string name="clean_cat_no_extension">Dokumente (.pdf, .doc, .txt…)</string> -->
@@ -62,10 +55,6 @@
     <!-- <string name="clean_result_space_freed">Speicherplatz freigegeben</string> -->
     <!-- <string name="clean_files_idle_desc">$number_file Junk-Dateien erkannt – zum Bereinigen tippen</string> -->
     <!-- <string name="clean_files_count_unit">Junk-Dateien</string> -->
-    <string name="sos_delete_exclusion_period">Löschen</string>
     <string name="sos_select_start_time">Startzeit wählen</string>
     <string name="sos_select_end_time">Endzeit wählen</string>
-    <string name="emergency_call_enable">Funktion aktivieren</string>
-    <string name="emergency_call_phone_number">Notrufnummer</string>
-    <string name="emergency_call_phone_number_hint">Telefonnummer eingeben</string>
 </resources>
