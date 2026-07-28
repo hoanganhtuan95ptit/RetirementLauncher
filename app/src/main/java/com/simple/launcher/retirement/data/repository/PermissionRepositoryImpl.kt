@@ -13,7 +13,6 @@ import android.provider.Settings
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import com.simple.deeplink.sendDeeplink
-import com.simple.launcher.retirement.MainApplication
 import com.simple.launcher.retirement.domain.repository.AppRepository
 import com.simple.launcher.retirement.domain.repository.ContactRepository
 import com.simple.launcher.retirement.domain.repository.PermissionRepository
@@ -26,11 +25,7 @@ import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.onSubscription
 
-class PermissionRepositoryImpl : PermissionRepository {
-
-    private val context: Context
-        get() = MainApplication.instance
-
+class PermissionRepositoryImpl(private val context: Context) : PermissionRepository {
 
     override fun hasUsageStatsPermission(): Boolean {
 
@@ -44,9 +39,106 @@ class PermissionRepositoryImpl : PermissionRepository {
         return mode == AppOpsManager.MODE_ALLOWED
     }
 
+    override suspend fun requireUsageStatsPermission(): Boolean {
+
+        if (hasUsageStatsPermission()) return true
+
+        return awaitPermissionResult(DeepLinks.PERMISSION_USAGE_STATS)
+    }
+
     override fun hasOverlayPermission(): Boolean {
 
         return Settings.canDrawOverlays(context)
+    }
+
+    override suspend fun requireOverlayPermission(): Boolean {
+
+        if (hasOverlayPermission()) return true
+
+        return awaitPermissionResult(DeepLinks.PERMISSION_OVERLAY)
+    }
+
+    override fun isDefaultLauncher(): Boolean {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+
+            return hasHomeRole()
+        }
+
+        return isLegacyDefaultLauncher()
+    }
+
+    override suspend fun requireDefaultLauncher(): Boolean {
+
+        if (isDefaultLauncher()) {
+
+            PreferenceRepository.instance.setPendingDefaultLauncher(false)
+            return true
+        }
+
+        PreferenceRepository.instance.setPendingDefaultLauncher(true)
+        val result = awaitPermissionResult(DeepLinks.PERMISSION_DEFAULT_LAUNCHER)
+
+        if (result) {
+
+            PreferenceRepository.instance.setPendingDefaultLauncher(false)
+        }
+
+        return result
+    }
+
+    @RequiresApi(Build.VERSION_CODES.Q)
+    private fun hasHomeRole(): Boolean {
+
+        val roleManager = context.getSystemService(Context.ROLE_SERVICE) as RoleManager
+
+        return roleManager.isRoleHeld(RoleManager.ROLE_HOME)
+    }
+
+    private fun isLegacyDefaultLauncher(): Boolean {
+
+        val intent = Intent(Intent.ACTION_MAIN)
+        intent.addCategory(Intent.CATEGORY_HOME)
+
+        val resolveInfo = context.packageManager.resolveActivity(intent, 0)
+
+        return resolveInfo?.activityInfo?.packageName == context.packageName
+    }
+
+    override fun hasCallPermission(): Boolean {
+
+        return ContextCompat.checkSelfPermission(
+            context,
+            Manifest.permission.CALL_PHONE
+        ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    override suspend fun requireCallPermission(): Boolean {
+
+        if (hasCallPermission()) return true
+
+        return awaitPermissionResult(DeepLinks.PERMISSION_CALL)
+    }
+
+    override fun hasUserActivityAccessibilityPermission(): Boolean {
+
+        val expectedComponent = ComponentName(context, UserActivityAccessibilityService::class.java)
+        val enabledServices = Settings.Secure.getString(
+            context.contentResolver,
+            Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES
+        ) ?: return false
+
+        return enabledServices
+            .split(ACCESSIBILITY_SERVICE_SEPARATOR)
+            .mapNotNull(ComponentName::unflattenFromString)
+            .any { it == expectedComponent }
+    }
+
+    override suspend fun requireUserActivityAccessibilityPermission(): Boolean {
+
+        if (hasUserActivityAccessibilityPermission()) return true
+
+        return awaitPermissionResult(DeepLinks.PERMISSION_USER_ACTIVITY_ACCESSIBILITY)
     }
 
     override fun hasCallBlockPermissions(): Boolean {
@@ -75,14 +167,25 @@ class PermissionRepositoryImpl : PermissionRepository {
         return arrayOf(Manifest.permission.READ_CONTACTS)
     }
 
-    override fun isDefaultLauncher(): Boolean {
+    override suspend fun requireCallBlockPermissions(): Boolean {
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        if (hasCallBlockPermissions()) return true
 
-            return hasHomeRole()
-        }
+        return awaitPermissionResult(DeepLinks.PERMISSION_CALL_BLOCK)
+    }
 
-        return isLegacyDefaultLauncher()
+    override suspend fun requireCallBlockIntro(): Boolean {
+
+        val repository = PreferenceRepository.instance
+        if (!repository.isCallBlockFirstTime()) return true
+
+        val result = awaitEventAfterDeeplink<AppEvent.CallBlockIntroResult>(
+            DeepLinks.CALL_BLOCK_INTRO
+        )
+        if (result !is AppEvent.CallBlockIntroAccept) return false
+
+        repository.setCallBlockFirstTime(false)
+        return true
     }
 
     override fun hasContactPermission(): Boolean {
@@ -91,81 +194,6 @@ class PermissionRepositoryImpl : PermissionRepository {
             context,
             Manifest.permission.READ_CONTACTS
         ) == PackageManager.PERMISSION_GRANTED
-    }
-
-    override fun hasPinPermission(): Boolean {
-
-        return PreferenceRepository.instance.hasPin()
-    }
-
-    override fun hasCallPermission(): Boolean {
-
-        return ContextCompat.checkSelfPermission(
-            context,
-            Manifest.permission.CALL_PHONE
-        ) == PackageManager.PERMISSION_GRANTED
-    }
-
-    override fun hasUserActivityAccessibilityPermission(): Boolean {
-
-        val expectedComponent = ComponentName(context, UserActivityAccessibilityService::class.java)
-        val enabledServices = Settings.Secure.getString(
-            context.contentResolver,
-            Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES
-        ) ?: return false
-
-        return enabledServices
-            .split(ACCESSIBILITY_SERVICE_SEPARATOR)
-            .mapNotNull(ComponentName::unflattenFromString)
-            .any { it == expectedComponent }
-    }
-
-    override suspend fun requireUsageStatsPermission(): Boolean {
-
-        if (hasUsageStatsPermission()) return true
-
-        return awaitPermissionResult(DeepLinks.PERMISSION_USAGE_STATS)
-    }
-
-
-    override suspend fun requireOverlayPermission(): Boolean {
-
-        if (hasOverlayPermission()) return true
-
-        return awaitPermissionResult(DeepLinks.PERMISSION_OVERLAY)
-    }
-
-    override suspend fun requireDefaultLauncher(): Boolean {
-
-        if (isDefaultLauncher()) {
-
-            PreferenceRepository.instance.setPendingDefaultLauncher(false)
-            return true
-        }
-
-        PreferenceRepository.instance.setPendingDefaultLauncher(true)
-        val result = awaitPermissionResult(DeepLinks.PERMISSION_DEFAULT_LAUNCHER)
-
-        if (result) {
-
-            PreferenceRepository.instance.setPendingDefaultLauncher(false)
-        }
-
-        return result
-    }
-
-    override suspend fun requireCallPermission(): Boolean {
-
-        if (hasCallPermission()) return true
-
-        return awaitPermissionResult(DeepLinks.PERMISSION_CALL)
-    }
-
-    override suspend fun requireUserActivityAccessibilityPermission(): Boolean {
-
-        if (hasUserActivityAccessibilityPermission()) return true
-
-        return awaitPermissionResult(DeepLinks.PERMISSION_USER_ACTIVITY_ACCESSIBILITY)
     }
 
     override suspend fun requireEmergencyContact(): Boolean {
@@ -181,6 +209,17 @@ class PermissionRepositoryImpl : PermissionRepository {
         return awaitEmergencyContactSetup()
     }
 
+    private suspend fun awaitEmergencyContactSetup(): Boolean {
+
+        val result = awaitEventAfterDeeplink<AppEvent.ContactSetupResult>(
+            DeepLinks.CONTACT_LIST,
+            DeepLinks.withBackStack(DeepLinks.Extras.IS_FLOW_SETUP to true)
+        )
+
+        return result is AppEvent.ContactSetupAccept &&
+                ContactRepository.instance.getSelectedContacts().isNotEmpty()
+    }
+
     override suspend fun requireAppList(): Boolean {
 
         if (AppRepository.instance.getSelectedPackages().isNotEmpty()) return true
@@ -194,11 +233,20 @@ class PermissionRepositoryImpl : PermissionRepository {
         return awaitAppListSetup()
     }
 
-    override suspend fun requireCallBlockPermissions(): Boolean {
+    private suspend fun awaitAppListSetup(): Boolean {
 
-        if (hasCallBlockPermissions()) return true
+        val result = awaitEventAfterDeeplink<AppEvent.AppSetupResult>(
+            DeepLinks.APP_LIST,
+            DeepLinks.withBackStack(DeepLinks.Extras.IS_FLOW_SETUP to true)
+        )
 
-        return awaitPermissionResult(DeepLinks.PERMISSION_CALL_BLOCK)
+        return result is AppEvent.AppSetupAccept &&
+                AppRepository.instance.getSelectedPackages().isNotEmpty()
+    }
+
+    override fun hasPinPermission(): Boolean {
+
+        return PreferenceRepository.instance.hasPin()
     }
 
     override suspend fun requirePinPermissions(): Boolean {
@@ -237,66 +285,11 @@ class PermissionRepositoryImpl : PermissionRepository {
         return true
     }
 
-
-    override suspend fun requireCallBlockIntro(): Boolean {
-
-        val repository = PreferenceRepository.instance
-        if (!repository.isCallBlockFirstTime()) return true
-
-        val result = awaitEventAfterDeeplink<AppEvent.CallBlockIntroResult>(
-            DeepLinks.CALL_BLOCK_INTRO
-        )
-        if (result !is AppEvent.CallBlockIntroAccept) return false
-
-        repository.setCallBlockFirstTime(false)
-        return true
-    }
-
-    @RequiresApi(Build.VERSION_CODES.Q)
-    private fun hasHomeRole(): Boolean {
-
-        val roleManager = context.getSystemService(Context.ROLE_SERVICE) as RoleManager
-
-        return roleManager.isRoleHeld(RoleManager.ROLE_HOME)
-    }
-
-    private fun isLegacyDefaultLauncher(): Boolean {
-
-        val intent = Intent(Intent.ACTION_MAIN)
-        intent.addCategory(Intent.CATEGORY_HOME)
-
-        val resolveInfo = context.packageManager.resolveActivity(intent, 0)
-
-        return resolveInfo?.activityInfo?.packageName == context.packageName
-    }
-
     private suspend fun awaitPermissionResult(deeplink: String): Boolean {
 
         val result = awaitEventAfterDeeplink<AppEvent.PermissionResult>(deeplink)
 
         return result is AppEvent.PermissionAccept
-    }
-
-    private suspend fun awaitEmergencyContactSetup(): Boolean {
-
-        val result = awaitEventAfterDeeplink<AppEvent.ContactSetupResult>(
-            DeepLinks.CONTACT_LIST,
-            DeepLinks.withBackStack(DeepLinks.Extras.IS_FLOW_SETUP to true)
-        )
-
-        return result is AppEvent.ContactSetupAccept &&
-                ContactRepository.instance.getSelectedContacts().isNotEmpty()
-    }
-
-    private suspend fun awaitAppListSetup(): Boolean {
-
-        val result = awaitEventAfterDeeplink<AppEvent.AppSetupResult>(
-            DeepLinks.APP_LIST,
-            DeepLinks.withBackStack(DeepLinks.Extras.IS_FLOW_SETUP to true)
-        )
-
-        return result is AppEvent.AppSetupAccept &&
-                AppRepository.instance.getSelectedPackages().isNotEmpty()
     }
 
     private suspend inline fun <reified T : AppEvent> awaitEventAfterDeeplink(
