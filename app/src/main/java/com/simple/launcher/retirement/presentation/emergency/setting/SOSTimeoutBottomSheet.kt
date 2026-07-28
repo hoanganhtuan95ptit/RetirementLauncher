@@ -24,8 +24,8 @@ import com.simple.launcher.retirement.utils.exts.colorOnPrimary
 import com.simple.launcher.retirement.utils.exts.colorOutline
 import com.simple.launcher.retirement.utils.exts.colorPrimary
 import com.simple.launcher.retirement.utils.exts.dp
+import com.simple.launcher.retirement.utils.exts.setOnSafeClickListener
 import com.simple.launcher.retirement.utils.exts.textColorPrimary
-import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
 
 class SOSTimeoutBottomSheet(
     currentTimeoutMillis: Long

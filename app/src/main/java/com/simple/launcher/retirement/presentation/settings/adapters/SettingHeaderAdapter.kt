@@ -7,9 +7,9 @@ import com.simple.adapter.ViewItem
 import com.simple.adapter.ViewItemAdapter
 import com.simple.launcher.retirement.databinding.ItemSettingHeaderBinding
 import com.simple.launcher.retirement.utils.exts.SpanSizeLookupViewItem
+import com.simple.launcher.retirement.utils.exts.setPadding
 import com.simple.launcher.retirement.utils.size.DP
 import com.simple.launcher.retirement.utils.size.Padding
-import com.simple.launcher.retirement.utils.view.setPadding
 import com.simple.ui.precompute.text.BigText
 import com.simple.ui.precompute.text.setText
 

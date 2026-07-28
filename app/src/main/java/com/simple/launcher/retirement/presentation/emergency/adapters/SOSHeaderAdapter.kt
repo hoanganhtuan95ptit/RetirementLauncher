@@ -13,7 +13,7 @@ import com.simple.launcher.retirement.utils.AppEventBus
 import com.simple.launcher.retirement.utils.background.Background
 import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.exts.SpanSizeLookupViewItem
-import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
+import com.simple.launcher.retirement.utils.exts.setOnSafeClickListener
 import com.simple.ui.precompute.image.BigImage
 import com.simple.ui.precompute.image.setImage
 import com.simple.ui.precompute.text.BigText

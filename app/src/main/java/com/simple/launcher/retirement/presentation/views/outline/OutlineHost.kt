@@ -1,6 +1,4 @@
-package com.simple.phonetics.ui.view.outline
-
-import com.simple.launcher.retirement.utils.view.outline.OutlineDelegate
+package com.simple.launcher.retirement.presentation.views.outline
 
 /**
  * Interface dùng chung cho mọi View muốn có outline bo góc.

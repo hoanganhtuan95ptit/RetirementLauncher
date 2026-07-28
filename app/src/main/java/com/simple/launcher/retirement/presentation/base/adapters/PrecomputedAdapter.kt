@@ -6,9 +6,10 @@ import com.simple.adapter.ViewItem
 import com.simple.adapter.ViewItemAdapter
 import com.simple.adapter.base.BaseBindingViewHolder
 import com.simple.launcher.retirement.databinding.ItemNodeBinding
+import com.simple.launcher.retirement.utils.exts.setOnSafeWithPerformHapticFeedbackClickListener
 import com.simple.launcher.retirement.utils.getItem
-import com.simple.launcher.retirement.utils.view.setOnSafeWithPerformHapticFeedbackClickListener
 import com.simple.ui.precompute.DrawSpec
+import com.simple.ui.precompute.PrecomputedView
 
 abstract class PrecomputedViewItem : ViewItem {
 
@@ -25,24 +26,32 @@ abstract class PrecomputedAdapter<T : PrecomputedViewItem> : ViewItemAdapter<T, 
     }
 
     override fun createViewHolder(parent: ViewGroup, viewType: Int): BaseBindingViewHolder<ItemNodeBinding> {
-
         val viewHolder = super.createViewHolder(parent, viewType)
+
         viewHolder.itemView.setOnSafeWithPerformHapticFeedbackClickListener {
 
             val item = viewHolder.getItem<PrecomputedViewItem>() ?: return@setOnSafeWithPerformHapticFeedbackClickListener
+
             if (!viewItemClass.isInstance(item)) {
 
                 return@setOnSafeWithPerformHapticFeedbackClickListener
             }
 
             @Suppress("UNCHECKED_CAST")
-            onItemCLick(item as T)
+            onItemCLick(viewHolder.binding.root, item as T)
         }
 
         return viewHolder
     }
 
-    abstract fun onItemCLick(item: T)
+    open fun onItemCLick(viewItem: PrecomputedView, item: T) {
+
+        onItemCLick(item)
+    }
+
+    open fun onItemCLick(item: T) {
+
+    }
 
     override fun onBindViewHolder(binding: ItemNodeBinding, viewType: Int, position: Int, item: T, payloads: List<String>) {
 

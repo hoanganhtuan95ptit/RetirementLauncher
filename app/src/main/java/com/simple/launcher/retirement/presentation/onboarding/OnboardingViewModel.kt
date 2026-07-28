@@ -15,9 +15,11 @@ import com.simple.launcher.retirement.utils.text.withStyleBodyLarge
 import com.simple.launcher.retirement.utils.text.withStyleTitleLarge
 import com.simple.ui.precompute.image.BigImage
 import com.simple.ui.precompute.image.toBigImage
-import com.simple.ui.precompute.text.*
+import com.simple.ui.precompute.text.BigText
+import com.simple.ui.precompute.text.build
 import com.simple.ui.precompute.text.span.BigBold
 import com.simple.ui.precompute.text.span.BigForegroundColor
+import com.simple.ui.precompute.text.with
 import kotlinx.coroutines.flow.StateFlow
 
 class OnboardingViewModel : BaseViewModel() {

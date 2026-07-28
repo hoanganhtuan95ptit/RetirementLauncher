@@ -5,6 +5,11 @@
         <attr name="insetNavigationBars" format="boolean" />
     </declare-styleable>
 
+    <declare-styleable name="SpaceWindowInsetsView">
+        <attr name="applyStatusBars" format="boolean" />
+        <attr name="applyNavigationBars" format="boolean" />
+    </declare-styleable>
+
     <!-- Home stat card backgrounds -->
     <attr name="colorCleanFilesStatCardBgActive" format="color" />
     <attr name="colorCleanFilesStatCardOnBgActive" format="color" />

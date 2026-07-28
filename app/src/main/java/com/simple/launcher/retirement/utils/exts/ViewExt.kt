@@ -1,4 +1,4 @@
-package com.simple.launcher.retirement.utils.view
+package com.simple.launcher.retirement.utils.exts
 
 import android.view.HapticFeedbackConstants
 import android.view.View

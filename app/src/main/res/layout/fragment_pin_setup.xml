@@ -49,8 +49,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/layoutPinDots" />
 
-    <!-- Numpad: 4 hàng x 3 cột -->
-    <com.simple.launcher.retirement.utils.view.numpad.NumpadView
+    <com.simple.launcher.retirement.presentation.views.numpad.NumpadView
         android:id="@+id/numpadView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

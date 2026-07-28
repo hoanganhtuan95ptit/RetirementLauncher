@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.simple.launcher.retirement.utils.view.WindowInsetsFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.simple.launcher.retirement.presentation.views.WindowInsetsFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -37,4 +37,4 @@
         tools:src="@drawable/ic_back"
         tools:tint="@color/black"
         tools:visibility="visible" />
-</com.simple.launcher.retirement.utils.view.WindowInsetsFrameLayout>
+</com.simple.launcher.retirement.presentation.views.WindowInsetsFrameLayout>

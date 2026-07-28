@@ -1,4 +1,4 @@
-package com.simple.launcher.retirement.utils.view.outline
+package com.simple.launcher.retirement.presentation.views.outline
 
 import android.animation.ValueAnimator
 import android.content.Context

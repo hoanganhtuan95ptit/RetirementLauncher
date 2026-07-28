@@ -35,15 +35,14 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="28dp" />
 
-    <!-- Numpad: 4 hàng x 3 cột -->
-    <com.simple.launcher.retirement.utils.view.numpad.NumpadView
+    <com.simple.launcher.retirement.presentation.views.numpad.NumpadView
         android:id="@+id/numpadView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="24dp" />
 
-    <com.simple.launcher.retirement.utils.view.WindowInsetsFrameLayout
+    <com.simple.launcher.retirement.presentation.views.WindowInsetsFrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:insetNavigationBars="true" />

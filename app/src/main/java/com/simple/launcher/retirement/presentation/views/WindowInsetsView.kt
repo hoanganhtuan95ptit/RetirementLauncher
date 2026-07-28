@@ -1,4 +1,4 @@
-package com.simple.launcher.retirement.utils.view
+package com.simple.launcher.retirement.presentation.views
 
 import android.app.Activity
 import android.content.Context

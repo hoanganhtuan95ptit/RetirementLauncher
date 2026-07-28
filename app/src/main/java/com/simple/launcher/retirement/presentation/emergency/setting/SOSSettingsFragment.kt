@@ -25,8 +25,8 @@ import com.simple.launcher.retirement.utils.AppEventBus
 import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.exts.SpanSizeLookupViewItem
 import com.simple.launcher.retirement.utils.exts.asObjectOrNull
+import com.simple.launcher.retirement.utils.exts.setOnSafeClickListener
 import com.simple.launcher.retirement.utils.lifecycle.observe
-import com.simple.launcher.retirement.utils.view.setOnSafeClickListener
 import com.simple.ui.precompute.image.setImage
 import com.simple.ui.precompute.text.setText
 import kotlinx.coroutines.flow.filterIsInstance
