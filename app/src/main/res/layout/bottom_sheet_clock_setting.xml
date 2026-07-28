@@ -2,19 +2,14 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@android:color/white"
-    android:padding="24dp">
+    android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/setting_clock_title"
-        android:textColor="@android:color/black"
-        android:textSize="20sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -23,11 +18,6 @@
         android:id="@+id/tvFormatHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="@string/setting_clock_format_header"
-        android:textColor="@android:color/black"
-        android:textSize="16sp"
-        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvTitle" />
 
@@ -36,10 +26,7 @@
         android:id="@+id/cl12h"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="8dp"
         android:background="@drawable/bg_clock_format_card"
-        android:padding="16dp"
         app:layout_constraintEnd_toStartOf="@+id/cl24h"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvFormatHeader">
@@ -57,22 +44,14 @@
             android:id="@+id/tv12hTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:text="@string/setting_clock_12h"
-            android:textColor="@android:color/black"
-            android:textSize="16sp"
-            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@id/ivRadio12h"
             app:layout_constraintStart_toEndOf="@id/ivRadio12h"
             app:layout_constraintTop_toTopOf="@id/ivRadio12h" />
 
         <TextView
+            android:id="@+id/tv12hExample"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="@string/setting_clock_12h_example"
-            android:textColor="#8E8E93"
-            android:textSize="12sp"
             app:layout_constraintStart_toStartOf="@id/tv12hTitle"
             app:layout_constraintTop_toBottomOf="@id/tv12hTitle" />
 
@@ -83,9 +62,7 @@
         android:id="@+id/cl24h"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:background="@drawable/bg_clock_format_card"
-        android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="@id/cl12h"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/cl12h"
@@ -104,22 +81,14 @@
             android:id="@+id/tv24hTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:text="@string/setting_clock_24h"
-            android:textColor="@android:color/black"
-            android:textSize="16sp"
-            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@id/ivRadio24h"
             app:layout_constraintStart_toEndOf="@id/ivRadio24h"
             app:layout_constraintTop_toTopOf="@id/ivRadio24h" />
 
         <TextView
+            android:id="@+id/tv24hExample"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="@string/setting_clock_24h_example"
-            android:textColor="#8E8E93"
-            android:textSize="12sp"
             app:layout_constraintStart_toStartOf="@id/tv24hTitle"
             app:layout_constraintTop_toBottomOf="@id/tv24hTitle" />
 
@@ -129,7 +98,6 @@
         android:id="@+id/divider1"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="24dp"
         android:background="#F2F2F7"
         app:layout_constraintTop_toBottomOf="@id/cl12h" />
 
@@ -138,7 +106,6 @@
         android:id="@+id/ivAmPm"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginTop="16dp"
         android:background="@drawable/bg_clock_icon_green"
         android:contentDescription="@null"
         android:padding="8dp"
@@ -150,12 +117,6 @@
         android:id="@+id/tvAmPmTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/setting_clock_am_pm"
-        android:textColor="@android:color/black"
-        android:textSize="16sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/swAmPm"
         app:layout_constraintStart_toEndOf="@id/ivAmPm"
         app:layout_constraintTop_toTopOf="@id/ivAmPm" />
@@ -164,9 +125,6 @@
         android:id="@+id/tvAmPmDesc"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/setting_clock_am_pm_desc"
-        android:textColor="#8E8E93"
-        android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="@id/tvAmPmTitle"
         app:layout_constraintStart_toStartOf="@id/tvAmPmTitle"
         app:layout_constraintTop_toBottomOf="@id/tvAmPmTitle" />
@@ -183,7 +141,6 @@
         android:id="@+id/divider2"
         android:layout_width="0dp"
         android:layout_height="1dp"
-        android:layout_marginTop="16dp"
         android:background="#F2F2F7"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/tvAmPmTitle"
@@ -194,7 +151,6 @@
         android:id="@+id/ivSolar"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginTop="16dp"
         android:background="@drawable/bg_clock_icon_green"
         android:contentDescription="@null"
         android:padding="8dp"
@@ -206,12 +162,6 @@
         android:id="@+id/tvSolarTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/setting_clock_solar"
-        android:textColor="@android:color/black"
-        android:textSize="16sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/swSolar"
         app:layout_constraintStart_toEndOf="@id/ivSolar"
         app:layout_constraintTop_toTopOf="@id/ivSolar" />
@@ -220,9 +170,6 @@
         android:id="@+id/tvSolarDesc"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/setting_clock_solar_desc"
-        android:textColor="#8E8E93"
-        android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="@id/tvSolarTitle"
         app:layout_constraintStart_toStartOf="@id/tvSolarTitle"
         app:layout_constraintTop_toBottomOf="@id/tvSolarTitle" />
@@ -239,7 +186,6 @@
         android:id="@+id/divider3"
         android:layout_width="0dp"
         android:layout_height="1dp"
-        android:layout_marginTop="16dp"
         android:background="#F2F2F7"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/tvSolarTitle"
@@ -250,7 +196,6 @@
         android:id="@+id/ivLunar"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginTop="16dp"
         android:background="@drawable/bg_clock_icon_purple"
         android:contentDescription="@null"
         android:padding="8dp"
@@ -262,12 +207,6 @@
         android:id="@+id/tvLunarTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/setting_clock_lunar"
-        android:textColor="@android:color/black"
-        android:textSize="16sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/swLunar"
         app:layout_constraintStart_toEndOf="@id/ivLunar"
         app:layout_constraintTop_toTopOf="@id/ivLunar" />
@@ -276,9 +215,6 @@
         android:id="@+id/tvLunarDesc"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/setting_clock_lunar_desc"
-        android:textColor="#8E8E93"
-        android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="@id/tvLunarTitle"
         app:layout_constraintStart_toStartOf="@id/tvLunarTitle"
         app:layout_constraintTop_toBottomOf="@id/tvLunarTitle" />
@@ -296,7 +232,6 @@
         android:id="@+id/frame_action"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@id/tvLunarDesc">
 
@@ -304,28 +239,18 @@
             android:id="@+id/btnCancel"
             android:layout_width="0dp"
             android:layout_height="56dp"
-            android:layout_marginEnd="8dp"
             android:layout_weight="1"
             android:background="@drawable/bg_block_app_pill"
-            android:gravity="center"
-            android:text="@string/back"
-            android:textColor="#58C27D"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:gravity="center" />
 
         <TextView
             android:id="@+id/btnSave"
             android:layout_width="0dp"
             android:layout_height="56dp"
-            android:layout_marginStart="8dp"
             android:layout_weight="1"
             android:background="@drawable/bg_block_app_pill"
             android:backgroundTint="#58C27D"
-            android:gravity="center"
-            android:text="@string/save"
-            android:textColor="@android:color/white"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:gravity="center" />
 
     </LinearLayout>
 

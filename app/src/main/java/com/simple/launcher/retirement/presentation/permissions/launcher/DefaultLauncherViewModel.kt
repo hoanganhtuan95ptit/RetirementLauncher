@@ -17,16 +17,41 @@ import com.simple.ui.precompute.text.span.BigBold
 import com.simple.ui.precompute.text.span.BigForegroundColor
 import com.simple.ui.precompute.text.with
 import com.simple.ui.precompute.text.withFirst
+import com.simple.launcher.retirement.utils.exts.dp
+import com.simple.launcher.retirement.utils.exts.withStyleBodyMedium
+import com.simple.launcher.retirement.utils.exts.withStyleTitleLarge
 import kotlinx.coroutines.flow.StateFlow
 
 class DefaultLauncherViewModel : BaseViewModel() {
+
+    val horizontalPadding: StateFlow<Int> = combineState(resources, 24.dp()) {
+
+        value = 24.dp()
+    }
+
+    val topPadding: StateFlow<Int> = combineState(resources, 24.dp()) {
+
+        value = 24.dp()
+    }
+
+    val descriptionMarginTop: StateFlow<Int> = combineState(resources, 16.dp()) {
+
+        value = 16.dp()
+    }
+
+    val grantButtonMarginTop: StateFlow<Int> = combineState(resources, 24.dp()) {
+
+        value = 24.dp()
+    }
 
     val title: StateFlow<BigText> = combineState(
         flow1 = resources,
         initialValue = BigText("")
     ) { resources ->
+
         val color = resources.textColorPrimary
         value = resources.getString(R.string.default_launcher_title)
+            .withStyleTitleLarge()
             .with(BigForegroundColor(color), BigBold)
             .build()
     }
@@ -35,10 +60,12 @@ class DefaultLauncherViewModel : BaseViewModel() {
         flow1 = resources,
         initialValue = BigText("")
     ) { resources ->
+
         val color = resources.textColorSecondary
         val highlightColor = resources.colorAccent
 
         value = resources.getString(R.string.default_launcher_desc)
+            .withStyleBodyMedium()
             .with(BigForegroundColor(color))
             .withFirst(resources.getString(R.string.default_launcher_highlight), BigBold, BigForegroundColor(highlightColor))
             .build()

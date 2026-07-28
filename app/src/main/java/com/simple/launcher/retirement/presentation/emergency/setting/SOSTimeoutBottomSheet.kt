@@ -11,10 +11,10 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.simple.launcher.retirement.BuildConfig
 import com.simple.launcher.retirement.R
+import androidx.core.view.updateLayoutParams
 import com.simple.launcher.retirement.databinding.BottomSheetSosTimeoutBinding
 import com.simple.launcher.retirement.databinding.ItemSosTimeoutBinding
 import com.simple.launcher.retirement.presentation.base.BaseBottomSheetDialogFragment
-import com.simple.launcher.retirement.presentation.base.BaseViewModel
 import com.simple.launcher.retirement.utils.AppEvent
 import com.simple.launcher.retirement.utils.AppEventBus
 import com.simple.launcher.retirement.utils.background.Background
@@ -24,14 +24,16 @@ import com.simple.launcher.retirement.utils.exts.colorOnPrimary
 import com.simple.launcher.retirement.utils.exts.colorOutline
 import com.simple.launcher.retirement.utils.exts.colorPrimary
 import com.simple.launcher.retirement.utils.exts.dp
+import com.simple.launcher.retirement.utils.exts.observe
 import com.simple.launcher.retirement.utils.exts.setOnSafeClickListener
 import com.simple.launcher.retirement.utils.exts.textColorPrimary
+import com.simple.ui.precompute.text.setText
 
 class SOSTimeoutBottomSheet(
     currentTimeoutMillis: Long
-) : BaseBottomSheetDialogFragment<BottomSheetSosTimeoutBinding, BaseViewModel>() {
+) : BaseBottomSheetDialogFragment<BottomSheetSosTimeoutBinding, SOSTimeoutViewModel>() {
 
-    override val viewModel: BaseViewModel by viewModels()
+    override val viewModel: SOSTimeoutViewModel by viewModels()
 
     private val selectedTimeoutState = SelectedTimeoutState(currentTimeoutMillis)
 
@@ -48,6 +50,51 @@ class SOSTimeoutBottomSheet(
 
         setupTimeoutOptionGrid(binding)
         setupConfirmAction(binding)
+    }
+
+    override fun observeData() {
+        super.observeData()
+
+        val binding = binding ?: return
+
+        viewModel.title.observe(this) {
+
+            binding.tvTitle.setText(it)
+            binding.tvTitle.setPadding(0, 20.dp().toInt(), 0, 20.dp().toInt())
+        }
+
+        viewModel.confirmLabel.observe(this) {
+
+            binding.btnChange.tvAction.setText(it)
+            binding.btnChange.tvAction.parent.asObject<View>().setBackground(
+                Background.Builder()
+                    .backgroundColor(viewModel.resources.value.colorPrimary)
+                    .cornerRadius(12.dp().toInt())
+                    .stroke(1.dp().toInt(), viewModel.resources.value.colorOutline)
+                    .build()
+            )
+        }
+
+        viewModel.horizontalPadding.observe(this) { padding ->
+
+            binding.rvTimeout.setPadding(padding, 0, padding, 0)
+            binding.btnChange.root.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                marginStart = padding
+                marginEnd = padding
+            }
+        }
+
+        viewModel.bottomPadding.observe(this) { padding ->
+
+            binding.root.setPadding(0, 0, 0, padding)
+        }
+
+        viewModel.listMarginBottom.observe(this) { margin ->
+
+            binding.rvTimeout.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                bottomMargin = margin
+            }
+        }
     }
 
     private fun setupTimeoutOptionGrid(binding: BottomSheetSosTimeoutBinding) {
@@ -67,18 +114,6 @@ class SOSTimeoutBottomSheet(
     }
 
     private fun setupConfirmAction(binding: BottomSheetSosTimeoutBinding) {
-
-        val resources = viewModel.resources.value
-
-        binding.btnChange.tvAction.text = getString(R.string.sos_save_changes)
-        binding.btnChange.tvAction.setTextColor(resources.colorOnPrimary)
-        binding.btnChange.tvAction.parent.asObject<View>().setBackground(
-            Background.Builder()
-                .backgroundColor(resources.colorPrimary)
-                .cornerRadius(12.dp().toInt())
-                .stroke(1.dp().toInt(), resources.colorOutline)
-                .build()
-        )
 
         binding.btnChange.root.setOnSafeClickListener {
 
@@ -141,6 +176,8 @@ class SOSTimeoutBottomSheet(
             val binding = holder.binding
 
             binding.tvTimeout.text = binding.root.context.getString(item.labelRes, item.labelValue)
+            binding.tvTimeout.setPadding(16.dp().toInt(), 16.dp().toInt(), 16.dp().toInt(), 16.dp().toInt())
+            binding.tvTimeout.minHeight = 56.dp().toInt()
 
             binding.tvTimeout.setOnClickListener {
 

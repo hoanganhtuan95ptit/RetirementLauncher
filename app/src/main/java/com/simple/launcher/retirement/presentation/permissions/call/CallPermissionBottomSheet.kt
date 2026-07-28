@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
 import com.simple.deeplink.Deeplink
 import com.simple.deeplink.DeeplinkHandler
+import androidx.core.view.updateLayoutParams
 import com.simple.launcher.retirement.databinding.BottomSheetCallPermissionBinding
 import com.simple.launcher.retirement.presentation.DeepLinks
 import com.simple.launcher.retirement.presentation.base.BaseBottomSheetDialogFragment
@@ -58,14 +59,46 @@ class CallPermissionBottomSheet : BaseBottomSheetDialogFragment<BottomSheetCallP
     override fun observeData() {
         super.observeData()
 
-        viewModel.title.observe(this) {
+        viewModel.title.observe(this) { title ->
+
             val binding = binding ?: return@observe
-            binding.tvTitle.setText(it)
+            binding.tvTitle.setText(title)
         }
 
-        viewModel.description.observe(this) {
+        viewModel.description.observe(this) { description ->
+
             val binding = binding ?: return@observe
-            binding.tvDescription.setText(it)
+            binding.tvDescription.setText(description)
+        }
+
+        viewModel.horizontalPadding.observe(this) { padding ->
+
+            val binding = binding ?: return@observe
+            binding.root.setPadding(padding, binding.root.paddingTop, padding, binding.root.paddingBottom)
+        }
+
+        viewModel.topPadding.observe(this) { padding ->
+
+            val binding = binding ?: return@observe
+            binding.root.setPadding(binding.root.paddingLeft, padding, binding.root.paddingRight, binding.root.paddingBottom)
+        }
+
+        viewModel.descriptionMarginTop.observe(this) { margin ->
+
+            val binding = binding ?: return@observe
+            binding.tvDescription.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+
+                topMargin = margin
+            }
+        }
+
+        viewModel.grantButtonMarginTop.observe(this) { margin ->
+
+            val binding = binding ?: return@observe
+            binding.btnGrant.root.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+
+                topMargin = margin
+            }
         }
 
         viewModel.action.observe(this) { state ->

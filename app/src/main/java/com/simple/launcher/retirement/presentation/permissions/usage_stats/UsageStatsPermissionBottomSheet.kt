@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
 import com.simple.deeplink.Deeplink
 import com.simple.deeplink.DeeplinkHandler
+import androidx.core.view.updateLayoutParams
 import com.simple.launcher.retirement.databinding.BottomSheetUsageStatsPermissionBinding
 import com.simple.launcher.retirement.presentation.DeepLinks
 import com.simple.launcher.retirement.presentation.base.BaseBottomSheetDialogFragment
@@ -32,6 +33,7 @@ class UsageStatsPermissionBottomSheet : BaseBottomSheetDialogFragment<BottomShee
     private var permissionGranted = false
 
     private val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+
         if (PermissionManager.hasUsageStatsPermission()) {
             permissionGranted = true
             AppEventBus.post(AppEvent.PermissionAccept)
@@ -52,16 +54,19 @@ class UsageStatsPermissionBottomSheet : BaseBottomSheetDialogFragment<BottomShee
         binding.btnDecline.root.visibility = View.VISIBLE
 
         binding.cbUnderstand.setOnCheckedChangeListener { _, isChecked ->
+
             viewModel.isAgreed.value = isChecked
         }
 
         binding.btnGrant.root.setOnSafeClickListener {
+
             if (viewModel.isAgreed.value) {
                 requestUsageStatsPermission()
             }
         }
 
         binding.btnDecline.root.setOnSafeClickListener {
+
             dismiss()
         }
     }
@@ -70,24 +75,78 @@ class UsageStatsPermissionBottomSheet : BaseBottomSheetDialogFragment<BottomShee
         super.observeData()
 
         viewModel.title.observe(this) { title ->
+
             val binding = binding ?: return@observe
             binding.tvTitle.setText(title)
         }
         viewModel.description.observe(this) { description ->
+
             val binding = binding ?: return@observe
             binding.tvDescription.setText(description)
         }
         viewModel.checkboxText.observe(this) { text ->
+
             val binding = binding ?: return@observe
             binding.cbUnderstand.setText(text)
         }
+
+        viewModel.horizontalPadding.observe(this) { padding ->
+
+            val binding = binding ?: return@observe
+            binding.root.setPadding(padding, binding.root.paddingTop, padding, binding.root.paddingBottom)
+        }
+
+        viewModel.topPadding.observe(this) { padding ->
+
+            val binding = binding ?: return@observe
+            binding.root.setPadding(binding.root.paddingLeft, padding, binding.root.paddingRight, binding.root.paddingBottom)
+        }
+
+        viewModel.descriptionMarginTop.observe(this) { margin ->
+
+            val binding = binding ?: return@observe
+            binding.tvDescription.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+
+                topMargin = margin
+            }
+        }
+
+        viewModel.checkboxMarginTop.observe(this) { margin ->
+
+            val binding = binding ?: return@observe
+            binding.cbUnderstand.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+
+                topMargin = margin
+            }
+        }
+
+        viewModel.grantButtonMarginTop.observe(this) { margin ->
+
+            val binding = binding ?: return@observe
+            binding.btnGrant.root.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+
+                topMargin = margin
+            }
+        }
+
+        viewModel.declineButtonMarginTop.observe(this) { margin ->
+
+            val binding = binding ?: return@observe
+            binding.btnDecline.root.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+
+                topMargin = margin
+            }
+        }
+
         viewModel.action.observe(this) { state ->
+
             val binding = binding ?: return@observe
             binding.btnGrant.tvAction.setText(state.text)
             binding.btnGrant.tvAction.parent.asObjectOrNull<View>()?.setBackground(state.background)
             binding.btnGrant.root.isEnabled = state.isEnabled
         }
         viewModel.declineAction.observe(this) { state ->
+
             val binding = binding ?: return@observe
             binding.btnDecline.tvAction.setText(state.text)
             binding.btnDecline.tvAction.parent.asObjectOrNull<View>()?.setBackground(state.background)

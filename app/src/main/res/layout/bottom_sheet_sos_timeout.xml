@@ -1,33 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:paddingBottom="24dp">
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="20dp"
-        android:text="@string/sos_timeout_label"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:gravity="center" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_timeout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:clipToPadding="false"
-        android:paddingHorizontal="16dp" />
+        android:clipToPadding="false" />
 
     <include
         android:id="@+id/btn_change"
         layout="@layout/layout_action"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <com.simple.launcher.retirement.presentation.views.SpaceWindowInsetsView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp" />
+        app:applyNavigationBars="true"
+        tools:layout_height="50dp" />
 
 </LinearLayout>

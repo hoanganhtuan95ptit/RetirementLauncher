@@ -19,6 +19,9 @@ import com.simple.ui.precompute.text.span.BigBold
 import com.simple.ui.precompute.text.span.BigForegroundColor
 import com.simple.ui.precompute.text.with
 import com.simple.ui.precompute.text.withFirst
+import com.simple.launcher.retirement.utils.exts.dp
+import com.simple.launcher.retirement.utils.exts.withStyleBodyMedium
+import com.simple.launcher.retirement.utils.exts.withStyleTitleLarge
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -26,12 +29,44 @@ class UsageStatsPermissionViewModel : BaseViewModel() {
 
     val isAgreed = MutableStateFlow(false)
 
+    val horizontalPadding: StateFlow<Int> = combineState(resources, 24.dp()) {
+
+        value = 24.dp()
+    }
+
+    val topPadding: StateFlow<Int> = combineState(resources, 16.dp()) {
+
+        value = 16.dp()
+    }
+
+    val descriptionMarginTop: StateFlow<Int> = combineState(resources, 16.dp()) {
+
+        value = 16.dp()
+    }
+
+    val checkboxMarginTop: StateFlow<Int> = combineState(resources, 16.dp()) {
+
+        value = 16.dp()
+    }
+
+    val grantButtonMarginTop: StateFlow<Int> = combineState(resources, 24.dp()) {
+
+        value = 24.dp()
+    }
+
+    val declineButtonMarginTop: StateFlow<Int> = combineState(resources, 8.dp()) {
+
+        value = 8.dp()
+    }
+
     val title: StateFlow<BigText> = combineState(
         flow1 = resources,
         initialValue = BigText("")
     ) { resources ->
+
         val color = resources.textColorPrimary
         value = resources.getString(R.string.usage_stats_permission_title)
+            .withStyleTitleLarge()
             .with(BigForegroundColor(color), BigBold)
             .build()
     }
@@ -40,12 +75,18 @@ class UsageStatsPermissionViewModel : BaseViewModel() {
         flow1 = resources,
         initialValue = BigText("")
     ) { resources ->
+
         val color = resources.textColorSecondary
         val highlightColor = resources.colorAccent
 
         value = resources.getString(R.string.usage_stats_permission_desc)
+            .withStyleBodyMedium()
             .with(BigForegroundColor(color))
-            .withFirst(resources.getString(R.string.usage_stats_permission_highlight), BigBold, BigForegroundColor(highlightColor))
+            .withFirst(
+                resources.getString(R.string.usage_stats_permission_highlight),
+                BigBold,
+                BigForegroundColor(highlightColor)
+            )
             .build()
     }
 
@@ -56,6 +97,7 @@ class UsageStatsPermissionViewModel : BaseViewModel() {
 
         val color = resources.textColorPrimary
         value = resources.getString(R.string.permission_checkbox_understand)
+            .withStyleBodyMedium()
             .with(BigForegroundColor(color))
             .build()
     }
@@ -75,6 +117,7 @@ class UsageStatsPermissionViewModel : BaseViewModel() {
             backgroundColor = backgroundColor,
             isEnabled = isAgreed
         ).run {
+
             if (isAgreed) this
             else copy(background = background?.copy(backgroundColor = backgroundColor.withAlpha(0.5f))?.refresh())
         }

@@ -67,8 +67,18 @@
         android:layout_marginHorizontal="16dp"
         android:layout_marginBottom="24dp"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/vSpaceNavigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <com.simple.launcher.retirement.presentation.views.SpaceWindowInsetsView
+        android:id="@+id/vSpaceNavigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:applyNavigationBars="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_height="50dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
