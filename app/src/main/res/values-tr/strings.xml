@@ -85,4 +85,7 @@
     <string name="app_list_required_desc">Uygulama İzleme açılmadan önce kullanıcının açabileceği uygulamaları seçin.</string>
     <string name="app_list_required_highlight">uygulamaları seçin</string>
     <string name="app_list_required_action">Uygulama seç</string>
+
+    <string name="permission_decline">Reddet</string>
+    <string name="permission_checkbox_understand">Bu özellik için bu iznin gerekliliğini okudum ve anladım</string>
 </resources>

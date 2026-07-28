@@ -85,4 +85,7 @@
     <string name="app_list_required_desc">اختر التطبيقات التي يمكن للمستخدم فتحها قبل تفعيل مراقبة التطبيقات.</string>
     <string name="app_list_required_highlight">اختر التطبيقات</string>
     <string name="app_list_required_action">اختيار التطبيقات</string>
+
+    <string name="permission_decline">رفض</string>
+    <string name="permission_checkbox_understand">لقد قرأت وفهمت ضرورة هذا الإذن للميزة</string>
 </resources>

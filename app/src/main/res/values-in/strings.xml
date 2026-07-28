@@ -85,4 +85,7 @@
     <string name="app_list_required_desc">Pilih aplikasi yang dapat dibuka pengguna sebelum mengaktifkan Pemantauan Aplikasi.</string>
     <string name="app_list_required_highlight">Pilih aplikasi</string>
     <string name="app_list_required_action">Pilih aplikasi</string>
+
+    <string name="permission_decline">Tolak</string>
+    <string name="permission_checkbox_understand">Saya telah membaca dan memahami perlunya izin ini cho tính năng này</string>
 </resources>

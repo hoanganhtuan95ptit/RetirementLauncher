@@ -11,6 +11,8 @@ import com.simple.launcher.retirement.utils.exts.colorPrimary
 import com.simple.launcher.retirement.utils.exts.getString
 import com.simple.launcher.retirement.utils.exts.textColorPrimary
 import com.simple.launcher.retirement.utils.exts.textColorSecondary
+import com.simple.launcher.retirement.utils.exts.withStyleTitleLarge
+import com.simple.launcher.retirement.utils.exts.withStyleTitleMedium
 import com.simple.ui.precompute.text.BigText
 import com.simple.ui.precompute.text.build
 import com.simple.ui.precompute.text.span.BigBold
@@ -28,6 +30,7 @@ class EmergencyCallIntroViewModel : BaseViewModel() {
 
         val color = resources.textColorPrimary
         value = resources.getString(R.string.emergency_call_intro_title)
+            .withStyleTitleLarge()
             .with(BigForegroundColor(color), BigBold)
             .build()
     }
@@ -43,6 +46,7 @@ class EmergencyCallIntroViewModel : BaseViewModel() {
         // Nhấn mạnh phần mô tả quan trọng để người dùng hiểu quyền
         // và hành vi gọi khẩn cấp.
         value = resources.getString(R.string.emergency_call_intro_desc)
+            .withStyleTitleMedium()
             .with(BigForegroundColor(color))
             .withFirst(
                 resources.getString(R.string.emergency_call_intro_highlight),

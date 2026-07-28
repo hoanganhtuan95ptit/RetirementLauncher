@@ -85,4 +85,7 @@
     <string name="app_list_required_desc">Escolha os apps que o usuário pode abrir antes de ativar o Monitoramento de apps.</string>
     <string name="app_list_required_highlight">Escolha os apps</string>
     <string name="app_list_required_action">Selecionar apps</string>
+
+    <string name="permission_decline">Recusar</string>
+    <string name="permission_checkbox_understand">Li e compreendi a necessidade desta permissão para a funcionalidade</string>
 </resources>

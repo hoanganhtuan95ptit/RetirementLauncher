@@ -85,4 +85,7 @@
     <string name="app_list_required_desc">Scegli le app che l’utente può aprire prima di attivare il Monitoraggio app.</string>
     <string name="app_list_required_highlight">Scegli le app</string>
     <string name="app_list_required_action">Seleziona app</string>
+
+    <string name="permission_decline">Rifiuta</string>
+    <string name="permission_checkbox_understand">Ho letto e compreso la necessità di questa autorizzazione per la funzionalità</string>
 </resources>

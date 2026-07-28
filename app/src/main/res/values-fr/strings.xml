@@ -85,4 +85,7 @@
     <string name="app_list_required_desc">Choisissez les applications que l’utilisateur peut ouvrir avant d’activer la surveillance des applications.</string>
     <string name="app_list_required_highlight">Choisissez les applications</string>
     <string name="app_list_required_action">Sélectionner des applications</string>
+
+    <string name="permission_decline">Refuser</string>
+    <string name="permission_checkbox_understand">J\'ai lu et compris la nécessité de cette autorisation pour la fonctionnalité</string>
 </resources>

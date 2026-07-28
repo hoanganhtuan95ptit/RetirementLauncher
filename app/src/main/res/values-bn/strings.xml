@@ -85,4 +85,7 @@
     <string name="app_list_required_desc">অ্যাপ মনিটরিং চালু করার আগে ব্যবহারকারী যে অ্যাপ খুলতে পারবেন তা বেছে নিন।</string>
     <string name="app_list_required_highlight">অ্যাপ বেছে নিন</string>
     <string name="app_list_required_action">অ্যাপ নির্বাচন করুন</string>
+
+    <string name="permission_decline">প্রত্যাख्यान करें</string>
+    <string name="permission_checkbox_understand">আমি এই ফিচারের জন্য এই অনুমতির প্রয়োজনীয়তা পড়েছি এবং বুঝেছি</string>
 </resources>

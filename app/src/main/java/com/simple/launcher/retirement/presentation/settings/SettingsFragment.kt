@@ -2,6 +2,7 @@ package com.simple.launcher.retirement.presentation.settings
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,8 +25,9 @@ import com.simple.launcher.retirement.utils.AppEvent
 import com.simple.launcher.retirement.utils.AppEventBus
 import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.exts.SpanSizeLookupViewItem
-import com.simple.launcher.retirement.utils.exts.setOnSafeClickListener
+import com.simple.launcher.retirement.utils.exts.asObjectOrNull
 import com.simple.launcher.retirement.utils.exts.observe
+import com.simple.launcher.retirement.utils.exts.setOnSafeClickListener
 import com.simple.launcher.retirement.utils.permission.PermissionManager
 import com.simple.ui.precompute.image.setImage
 import com.simple.ui.precompute.text.setText
@@ -34,7 +36,6 @@ import kotlinx.coroutines.launch
 
 class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
 
-    // Service layer dùng chung instance này để ghép từng nhóm setting vào một list duy nhất.
     val viewModel: SettingsViewModel by viewModels<SettingsViewModel>()
 
     override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentSettingsBinding {
@@ -97,7 +98,6 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
             binding.rvSettings.submitListAndAwait(items, adapters, true)
         }
 
-        // Adapter chỉ phát event; Fragment giữ trách nhiệm điều hướng và xin quyền.
         AppEventBus.events.filterIsInstance<AppEvent.SettingClicked>().observe(this@SettingsFragment) { event ->
 
             handleSettingItemClick(event.item)
@@ -115,31 +115,18 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
         }
     }
 
-    private fun openPinSetup() {
+    private fun openPinSetup() = viewLifecycleOwner.lifecycleScope.launch {
 
-        viewLifecycleOwner.lifecycleScope.launch {
+        val hasPin = PermissionManager.hasPinPermission()
+        if (PermissionManager.requirePinPermissions() && hasPin) {
 
-            val hasPin = PermissionManager.hasPinPermission()
-            if (PermissionManager.requirePinPermissions() && hasPin) {
-
-                sendDeeplinkWithBackStack(DeepLinks.PIN_SETUP)
-            }
+            sendDeeplinkWithBackStack(DeepLinks.PIN_SETUP)
         }
     }
 
-    private fun requireDefaultLauncher() {
+    private fun requireDefaultLauncher() = viewLifecycleOwner.lifecycleScope.launch {
 
-        viewLifecycleOwner.lifecycleScope.launch {
-
-            PermissionManager.requireDefaultLauncher()
-        }
-    }
-
-    private fun openDebugBlockScreen() {
-
-        Intent(requireContext(), BlockActivity::class.java)
-            .putExtra(BlockActivity.EXTRA_APP_NAME, "Facebook (demo)")
-            .let(::startActivity)
+        PermissionManager.requireDefaultLauncher()
     }
 }
 

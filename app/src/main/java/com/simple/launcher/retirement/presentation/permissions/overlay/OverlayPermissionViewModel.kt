@@ -18,7 +18,7 @@ import com.simple.ui.precompute.text.span.BigForegroundColor
 import com.simple.ui.precompute.text.with
 import com.simple.ui.precompute.text.withFirst
 import com.simple.launcher.retirement.utils.exts.dp
-import com.simple.launcher.retirement.utils.exts.withStyleBodyMedium
+import com.simple.launcher.retirement.utils.exts.withStyleTitleMedium
 import com.simple.launcher.retirement.utils.exts.withStyleTitleLarge
 import kotlinx.coroutines.flow.StateFlow
 
@@ -65,7 +65,7 @@ class OverlayPermissionViewModel : BaseViewModel() {
         val highlightColor = resources.colorAccent
 
         value = resources.getString(R.string.overlay_permission_desc)
-            .withStyleBodyMedium()
+            .withStyleTitleMedium()
             .with(BigForegroundColor(color))
             .withFirst(resources.getString(R.string.overlay_permission_highlight), BigBold, BigForegroundColor(highlightColor))
             .build()

@@ -85,4 +85,7 @@
     <string name="app_list_required_desc">Виберіть програми, які користувач може відкривати, перш ніж увімкнути моніторинг програм.</string>
     <string name="app_list_required_highlight">Виберіть програми</string>
     <string name="app_list_required_action">Вибрати програми</string>
+
+    <string name="permission_decline">Відхилити</string>
+    <string name="permission_checkbox_understand">Я прочитав і зрозумів необхідність цього дозволу для функції</string>
 </resources>

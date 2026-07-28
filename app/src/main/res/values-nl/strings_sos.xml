@@ -29,6 +29,10 @@
     <string name="emergency_call_intro_desc">Om de veiligheid te garanderen, belt de app automatisch de snelcontactlijst als er geen gebruikersinteractie op de telefoon wordt gedetecteerd.</string>
     <string name="emergency_call_intro_highlight">belt automatisch de snelcontactlijst</string>
     <string name="emergency_call_intro_action">Ik begrijp het</string>
+    <string name="call_block_intro_title">Introductie functie</string>
+    <string name="call_block_intro_desc">Deze functie helpt gebruikers te beschermen door automatisch oproepen van onbekende nummers die niet in de contacten staan te blokkeren, waardoor wordt voorkomen dat u wordt gestoord door advertenties of oplichting.</string>
+    <string name="call_block_intro_highlight">automatisch oproepen van onbekende nummers te blokkeren</string>
+    <string name="call_block_intro_action">Ik begrijp het</string>
     <string name="emergency_contact_required_title">Contact instellen vereist</string>
     <string name="emergency_contact_required_desc">U heeft uw snelcontactlijst nog niet ingesteld. Om deze functie te laten werken, selecteert u ten minste één contact.</string>
     <string name="emergency_contact_required_highlight">selecteert u ten minste één contact</string>

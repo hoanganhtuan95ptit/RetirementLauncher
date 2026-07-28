@@ -20,7 +20,7 @@ import com.simple.ui.precompute.text.span.BigForegroundColor
 import com.simple.ui.precompute.text.with
 import com.simple.ui.precompute.text.withFirst
 import com.simple.launcher.retirement.utils.exts.dp
-import com.simple.launcher.retirement.utils.exts.withStyleBodyMedium
+import com.simple.launcher.retirement.utils.exts.withStyleTitleMedium
 import com.simple.launcher.retirement.utils.exts.withStyleTitleLarge
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -80,7 +80,7 @@ class UsageStatsPermissionViewModel : BaseViewModel() {
         val highlightColor = resources.colorAccent
 
         value = resources.getString(R.string.usage_stats_permission_desc)
-            .withStyleBodyMedium()
+            .withStyleTitleMedium()
             .with(BigForegroundColor(color))
             .withFirst(
                 resources.getString(R.string.usage_stats_permission_highlight),
@@ -97,7 +97,7 @@ class UsageStatsPermissionViewModel : BaseViewModel() {
 
         val color = resources.textColorPrimary
         value = resources.getString(R.string.permission_checkbox_understand)
-            .withStyleBodyMedium()
+            .withStyleTitleMedium()
             .with(BigForegroundColor(color))
             .build()
     }

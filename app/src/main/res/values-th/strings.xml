@@ -85,4 +85,7 @@
     <string name="app_list_required_desc">เลือกแอปที่ผู้ใช้สามารถเปิดได้ก่อนเปิดการตรวจสอบแอป</string>
     <string name="app_list_required_highlight">เลือกแอป</string>
     <string name="app_list_required_action">เลือกแอป</string>
+
+    <string name="permission_decline">ปฏิเสธ</string>
+    <string name="permission_checkbox_understand">ฉันได้อ่าน và เข้าใจถึงความจำเป็นของสิทธิ์นี้สำหรับฟีเจอร์นี้แล้ว</string>
 </resources>

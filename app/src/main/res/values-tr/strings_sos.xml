@@ -29,6 +29,10 @@
     <string name="emergency_call_intro_desc">Güvenliği sağlamak için uygulama, telefonda kullanıcı etkileşimi algılanmazsa otomatik olarak hızlı rehber listesini arayacaktır.</string>
     <string name="emergency_call_intro_highlight">otomatik olarak hızlı rehber listesini arayacaktır</string>
     <string name="emergency_call_intro_action">Anladım</string>
+    <string name="call_block_intro_title">Özellik Tanıtımı</string>
+    <string name="call_block_intro_desc">Bu özellik, rehberde olmayan bilinmeyen numaralardan gelen aramaları otomatik olarak engelleyerek kullanıcıların reklamlar veya dolandırıcılıklar tarafından rahatsız edilmesini önlemeye yardımcı olur.</string>
+    <string name="call_block_intro_highlight">bilinmeyen numaralardan gelen aramaları otomatik olarak engelleyerek</string>
+    <string name="call_block_intro_action">Anladım</string>
     <string name="emergency_contact_required_title">Rehber Kurulumu Gerekiyor</string>
     <string name="emergency_contact_required_desc">Henüz hızlı rehber listenizi kurmadınız. Bu özelliğin çalışması için lütfen en az bir kişi seçin.</string>
     <string name="emergency_contact_required_highlight">lütfen en az bir kişi seçin</string>

@@ -1,4 +1,4 @@
-package com.simple.launcher.retirement.presentation.call_block
+package com.simple.launcher.retirement.presentation.call_block.intro
 
 import android.content.DialogInterface
 import android.os.Bundle

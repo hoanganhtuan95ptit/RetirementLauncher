@@ -85,4 +85,7 @@
     <string name="app_list_required_desc">Wybierz aplikacje, które użytkownik może otworzyć przed włączeniem Monitorowania aplikacji.</string>
     <string name="app_list_required_highlight">Wybierz aplikacje</string>
     <string name="app_list_required_action">Wybierz aplikacje</string>
+
+    <string name="permission_decline">Odrzuć</string>
+    <string name="permission_checkbox_understand">Przeczytałem i zrozumiałem konieczność nadania tego uprawnienia dla tej funkcji</string>
 </resources>

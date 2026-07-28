@@ -85,4 +85,7 @@
     <string name="app_list_required_desc">Před zapnutím sledování aplikací vyberte aplikace, které může uživatel otevřít.</string>
     <string name="app_list_required_highlight">vyberte aplikace</string>
     <string name="app_list_required_action">Vybrat aplikace</string>
+
+    <string name="permission_decline">Odmítnout</string>
+    <string name="permission_checkbox_understand">Přečetl jsem si a pochopil nezbytnost tohoto oprávnění pro tuto funkci</string>
 </resources>

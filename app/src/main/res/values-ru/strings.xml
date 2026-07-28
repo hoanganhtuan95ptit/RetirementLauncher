@@ -85,4 +85,7 @@
     <string name="app_list_required_desc">Выберите приложения, которые пользователь сможет открывать, перед включением мониторинга приложений.</string>
     <string name="app_list_required_highlight">Выберите приложения</string>
     <string name="app_list_required_action">Выбрать приложения</string>
+
+    <string name="permission_decline">Отклонить</string>
+    <string name="permission_checkbox_understand">Я прочитал и понял необходимость этого разрешения для функции</string>
 </resources>

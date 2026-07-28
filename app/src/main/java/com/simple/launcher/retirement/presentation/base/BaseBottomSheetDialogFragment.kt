@@ -88,15 +88,12 @@ abstract class BaseBottomSheetDialogFragment<VB : ViewBinding, VM : BaseViewMode
         }
     }
 
-    private fun observeBottomSheetState() {
+    private fun observeBottomSheetState() = viewLifecycleOwner.lifecycleScope.launch {
 
-        viewLifecycleOwner.lifecycleScope.launch {
+        viewModel.bottomSheet.collectLatest { state ->
 
-            viewModel.bottomSheet.collectLatest { state ->
-
-                updateAnchor(state.showAnchor, state.anchorBackground)
-                updateDialogState(state.background)
-            }
+            updateAnchor(state.showAnchor, state.anchorBackground)
+            updateDialogState(state.background)
         }
     }
 
@@ -165,9 +162,15 @@ abstract class BaseBottomSheetDialogFragment<VB : ViewBinding, VM : BaseViewMode
         super.onStart()
 
         val bottomSheetDialog = dialog as? BottomSheetDialog ?: return
+
         configureWindow(bottomSheetDialog)
-        configureGestureInset(bottomSheetDialog)
         configureInsets(bottomSheetDialog)
+        configureGestureInset(bottomSheetDialog)
+
+        bottomSheetDialog.behavior.apply {
+            state = BottomSheetBehavior.STATE_EXPANDED
+            skipCollapsed = true
+        }
     }
 
     private fun configureWindow(bottomSheetDialog: BottomSheetDialog) {

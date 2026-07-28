@@ -85,4 +85,7 @@
     <string name="app_list_required_desc">앱 모니터링을 켜기 전에 사용자가 열 수 있는 앱을 선택하세요.</string>
     <string name="app_list_required_highlight">앱을 선택</string>
     <string name="app_list_required_action">앱 선택</string>
+
+    <string name="permission_decline">거절</string>
+    <string name="permission_checkbox_understand">이 기능에 대한 이 권한의 필요성을 읽고 이해했습니다</string>
 </resources>

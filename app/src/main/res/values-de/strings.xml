@@ -85,4 +85,7 @@
     <string name="app_list_required_desc">Wählen Sie Apps aus, die der Nutzer öffnen darf, bevor Sie die App-Überwachung aktivieren.</string>
     <string name="app_list_required_highlight">Wählen Sie Apps aus</string>
     <string name="app_list_required_action">Apps auswählen</string>
+
+    <string name="permission_decline">Ablehnen</string>
+    <string name="permission_checkbox_understand">Ich habe die Notwendigkeit dieser Berechtigung für die Funktion gelesen und verstanden</string>
 </resources>

@@ -34,10 +34,10 @@
     <string name="emergency_call_intro_desc">To ensure safety, the app will automatically call the quick contact list if no user interaction is detected on the phone.</string>
     <string name="emergency_call_intro_highlight">automatically call the quick contact list</string>
     <string name="emergency_call_intro_action">I understand</string>
-    <string name="call_block_intro_title" tools:ignore="MissingTranslation">Feature Introduction</string>
-    <string name="call_block_intro_desc" tools:ignore="MissingTranslation">This feature helps protect users by automatically blocking calls from unknown numbers not in the contacts, avoiding being bothered by ads or scams.</string>
-    <string name="call_block_intro_highlight" tools:ignore="MissingTranslation">automatically blocking calls from unknown numbers</string>
-    <string name="call_block_intro_action" tools:ignore="MissingTranslation">I understand</string>
+    <string name="call_block_intro_title">Feature Introduction</string>
+    <string name="call_block_intro_desc">This feature helps protect users by automatically blocking calls from unknown numbers not in the contacts, avoiding being bothered by ads or scams.</string>
+    <string name="call_block_intro_highlight">automatically blocking calls from unknown numbers</string>
+    <string name="call_block_intro_action">I understand</string>
     <string name="emergency_contact_required_title">Contact Setup Required</string>
     <string name="emergency_contact_required_desc">You haven\'t set up your quick contact list yet. For this feature to work, please select at least one contact.</string>
     <string name="emergency_contact_required_highlight">select at least one contact</string>

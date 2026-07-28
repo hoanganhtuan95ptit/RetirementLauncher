@@ -1,4 +1,4 @@
-package com.simple.launcher.retirement.presentation.app_monitoring
+package com.simple.launcher.retirement.presentation.app_monitoring.intro
 
 import android.content.DialogInterface
 import android.os.Bundle

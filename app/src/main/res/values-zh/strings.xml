@@ -85,4 +85,7 @@
     <string name="app_list_required_desc">启用应用监控前，请选择用户可以打开的应用。</string>
     <string name="app_list_required_highlight">选择用户可以打开的应用</string>
     <string name="app_list_required_action">选择应用</string>
+
+    <string name="permission_decline">拒绝</string>
+    <string name="permission_checkbox_understand">我已阅读并理解此权限对该功能的必要性</string>
 </resources>

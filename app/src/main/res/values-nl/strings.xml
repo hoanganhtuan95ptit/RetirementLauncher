@@ -85,4 +85,7 @@
     <string name="app_list_required_desc">Kies de apps die de gebruiker mag openen voordat Appbewaking wordt ingeschakeld.</string>
     <string name="app_list_required_highlight">Kies de apps</string>
     <string name="app_list_required_action">Apps selecteren</string>
+
+    <string name="permission_decline">Weigeren</string>
+    <string name="permission_checkbox_understand">Ik heb de noodzaak van deze toestemming voor de functie gelezen en begrepen</string>
 </resources>

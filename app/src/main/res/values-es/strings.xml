@@ -85,4 +85,7 @@
     <string name="app_list_required_desc">Elige las apps que el usuario puede abrir antes de activar la supervisión de aplicaciones.</string>
     <string name="app_list_required_highlight">Elige las apps</string>
     <string name="app_list_required_action">Seleccionar apps</string>
+
+    <string name="permission_decline">Rechazar</string>
+    <string name="permission_checkbox_understand">He leído y comprendido la necesidad de este permiso para la función</string>
 </resources>

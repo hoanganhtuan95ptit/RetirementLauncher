@@ -31,9 +31,12 @@ abstract class ViewItemViewModel : BaseViewModel() {
         initialValue = emptyList()
     ) { itemMap ->
 
-        value = itemMap.toList()
+        val values = itemMap.toList()
             .sortedBy { it.first }
             .flatMap { it.second }
+            .toMutableList()
+
+        value = wrapViewItem(values)
     }
 
     fun updateItem(groupViewItem: GroupViewItem?) {
@@ -57,5 +60,10 @@ abstract class ViewItemViewModel : BaseViewModel() {
 
             put(order, list)
         }
+    }
+
+    open protected suspend fun wrapViewItem(values: MutableList<ViewItem>): List<ViewItem> {
+
+        return values
     }
 }

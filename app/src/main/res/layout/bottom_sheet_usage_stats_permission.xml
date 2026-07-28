@@ -5,7 +5,9 @@
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingHorizontal="24dp"
+    android:paddingTop="16dp">
 
     <TextView
         android:id="@+id/tvTitle"
@@ -17,6 +19,7 @@
         android:id="@+id/tvDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:gravity="center" />
 
     <CheckBox
@@ -25,19 +28,29 @@
         android:layout_height="wrap_content"
         android:visibility="gone" />
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="16dp" />
+
     <include
         android:id="@+id/btnGrant"
         layout="@layout/layout_action"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp" />
 
     <include
         android:id="@+id/btnDecline"
         layout="@layout/layout_action"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:visibility="gone"
         tools:visibility="visible" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="24dp" />
 
     <com.simple.launcher.retirement.presentation.views.SpaceWindowInsetsView
         android:layout_width="match_parent"

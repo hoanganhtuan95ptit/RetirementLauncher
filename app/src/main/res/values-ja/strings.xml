@@ -85,4 +85,7 @@
     <string name="app_list_required_desc">アプリ監視を有効にする前に、ユーザーが開けるアプリを選択してください。</string>
     <string name="app_list_required_highlight">アプリを選択</string>
     <string name="app_list_required_action">アプリを選択</string>
+
+    <string name="permission_decline">拒否</string>
+    <string name="permission_checkbox_understand">この機能に対するこの権限の必要性を読み、理解しました</string>
 </resources>

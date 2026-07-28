@@ -1,4 +1,4 @@
-package com.simple.launcher.retirement.presentation.call_block
+package com.simple.launcher.retirement.presentation.call_block.intro
 
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.presentation.base.ActionState
@@ -11,6 +11,8 @@ import com.simple.launcher.retirement.utils.exts.colorPrimary
 import com.simple.launcher.retirement.utils.exts.getString
 import com.simple.launcher.retirement.utils.exts.textColorPrimary
 import com.simple.launcher.retirement.utils.exts.textColorSecondary
+import com.simple.launcher.retirement.utils.exts.withStyleTitleLarge
+import com.simple.launcher.retirement.utils.exts.withStyleTitleMedium
 import com.simple.ui.precompute.text.BigText
 import com.simple.ui.precompute.text.build
 import com.simple.ui.precompute.text.span.BigBold
@@ -25,8 +27,10 @@ class CallBlockIntroViewModel : BaseViewModel() {
         flow1 = resources,
         initialValue = BigText("")
     ) { resources ->
+
         val color = resources.textColorPrimary
         value = resources.getString(R.string.call_block_intro_title)
+            .withStyleTitleLarge()
             .with(BigForegroundColor(color), BigBold)
             .build()
     }
@@ -35,10 +39,12 @@ class CallBlockIntroViewModel : BaseViewModel() {
         flow1 = resources,
         initialValue = BigText("")
     ) { resources ->
+
         val color = resources.textColorSecondary
         val highlightColor = resources.colorAccent
 
         value = resources.getString(R.string.call_block_intro_desc)
+            .withStyleTitleMedium()
             .with(BigForegroundColor(color))
             .withFirst(resources.getString(R.string.call_block_intro_highlight), BigBold, BigForegroundColor(highlightColor))
             .build()

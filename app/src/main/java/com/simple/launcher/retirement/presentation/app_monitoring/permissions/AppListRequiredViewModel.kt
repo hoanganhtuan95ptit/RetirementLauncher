@@ -11,6 +11,8 @@ import com.simple.launcher.retirement.utils.exts.colorPrimary
 import com.simple.launcher.retirement.utils.exts.getString
 import com.simple.launcher.retirement.utils.exts.textColorPrimary
 import com.simple.launcher.retirement.utils.exts.textColorSecondary
+import com.simple.launcher.retirement.utils.exts.withStyleTitleLarge
+import com.simple.launcher.retirement.utils.exts.withStyleTitleMedium
 import com.simple.ui.precompute.text.BigText
 import com.simple.ui.precompute.text.build
 import com.simple.ui.precompute.text.span.BigBold
@@ -28,6 +30,7 @@ class AppListRequiredViewModel : BaseViewModel() {
 
         val color = resources.textColorPrimary
         value = resources.getString(R.string.app_list_required_title)
+            .withStyleTitleLarge()
             .with(BigForegroundColor(color), BigBold)
             .build()
     }
@@ -41,6 +44,7 @@ class AppListRequiredViewModel : BaseViewModel() {
         val highlightColor = resources.colorAccent
 
         value = resources.getString(R.string.app_list_required_desc)
+            .withStyleTitleMedium()
             .with(BigForegroundColor(color))
             .withFirst(
                 resources.getString(R.string.app_list_required_highlight),

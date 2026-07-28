@@ -13,6 +13,8 @@ import com.simple.launcher.retirement.utils.exts.getString
 import com.simple.launcher.retirement.utils.exts.textColorPrimary
 import com.simple.launcher.retirement.utils.exts.textColorSecondary
 import com.simple.launcher.retirement.utils.exts.withAlpha
+import com.simple.launcher.retirement.utils.exts.withStyleTitleLarge
+import com.simple.launcher.retirement.utils.exts.withStyleTitleMedium
 import com.simple.ui.precompute.text.BigText
 import com.simple.ui.precompute.text.build
 import com.simple.ui.precompute.text.span.BigBold
@@ -33,6 +35,7 @@ class AccessibilityPermissionViewModel : BaseViewModel() {
 
         val color = resources.textColorPrimary
         value = resources.getString(R.string.accessibility_permission_title)
+            .withStyleTitleLarge()
             .with(BigForegroundColor(color), BigBold)
             .build()
     }
@@ -46,6 +49,7 @@ class AccessibilityPermissionViewModel : BaseViewModel() {
         val highlightColor = resources.colorAccent
 
         value = resources.getString(R.string.accessibility_permission_desc)
+            .withStyleTitleMedium()
             .with(BigForegroundColor(color))
             .withFirst(resources.getString(R.string.accessibility_permission_highlight), BigBold, BigForegroundColor(highlightColor))
             .build()

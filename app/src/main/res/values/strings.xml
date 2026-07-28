@@ -48,8 +48,8 @@
     <string name="default_launcher_desc">To use Retirement Launcher as your home screen, you need to set it as the default app in system settings.</string>
     <string name="default_launcher_highlight">Retirement Launcher</string>
     <string name="permission_grant">Grant Permission</string>
-    <string name="permission_decline" tools:ignore="MissingTranslation">Decline</string>
-    <string name="permission_checkbox_understand" tools:ignore="MissingTranslation">I have read and understood the necessity of this permission for the feature</string>
+    <string name="permission_decline">Decline</string>
+    <string name="permission_checkbox_understand">I have read and understood the necessity of this permission for the feature</string>
     <string name="pin_verify_title">Confirm PIN</string>
     <string name="pin_verify_desc">Please enter your PIN to change this setting.</string>
     <string name="pin_key_delete_desc">Delete</string>

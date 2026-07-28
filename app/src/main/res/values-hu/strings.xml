@@ -85,4 +85,7 @@
     <string name="app_list_required_desc">Válassza ki, mely alkalmazásokat nyithatja meg a felhasználó az Alkalmazásfigyelés bekapcsolása előtt.</string>
     <string name="app_list_required_highlight">Válassza ki</string>
     <string name="app_list_required_action">Alkalmazások kiválasztása</string>
+
+    <string name="permission_decline">Elutasítás</string>
+    <string name="permission_checkbox_understand">Elolvastam és megértettem a jogosultság szükségességét a funkcióhoz</string>
 </resources>

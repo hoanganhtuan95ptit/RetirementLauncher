@@ -85,4 +85,7 @@
     <string name="app_list_required_desc">ऐप निगरानी चालू करने से पहले वे ऐप्स चुनें जिन्हें उपयोगकर्ता खोल सकता है।</string>
     <string name="app_list_required_highlight">ऐप्स चुनें</string>
     <string name="app_list_required_action">ऐप्स चुनें</string>
+
+    <string name="permission_decline">अस्वीकार करें</string>
+    <string name="permission_checkbox_understand">मैंने इस फीचर के लिए इस अनुमति की आवश्यकता को पढ़ और समझ लिया है</string>
 </resources>

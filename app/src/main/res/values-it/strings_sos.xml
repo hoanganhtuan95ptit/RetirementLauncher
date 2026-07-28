@@ -30,6 +30,10 @@
     <string name="emergency_call_intro_desc">Per garantire la sicurezza, l\'app chiamerà automaticamente l\'elenco dei contatti rapidi se non viene rilevata alcuna interazione dell\'utente sul telefono.</string>
     <string name="emergency_call_intro_highlight">chiamerà automaticamente l\'elenco dei contatti rapidi</string>
     <string name="emergency_call_intro_action">Ho capito</string>
+    <string name="call_block_intro_title">Presentazione Funzionalità</string>
+    <string name="call_block_intro_desc">Questa funzionalità aiuta a proteggere gli utenti bloccando automaticamente le chiamate da numeri sconosciuti non presenti nei contatti, evitando di essere disturbati da pubblicità o truffe.</string>
+    <string name="call_block_intro_highlight">bloccando automaticamente le chiamate da numeri sconosciuti</string>
+    <string name="call_block_intro_action">Ho capito</string>
     <string name="emergency_contact_required_title">Configurazione Contatto Richiesta</string>
     <string name="emergency_contact_required_desc">Non hai ancora configurato il tuo elenco di contatti rapidi. Affinché questa funzione sia attiva, seleziona almeno un contatto.</string>
     <string name="emergency_contact_required_highlight">seleziona almeno un contatto</string>

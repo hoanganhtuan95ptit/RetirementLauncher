@@ -11,6 +11,8 @@ import com.simple.launcher.retirement.utils.exts.colorPrimary
 import com.simple.launcher.retirement.utils.exts.getString
 import com.simple.launcher.retirement.utils.exts.textColorPrimary
 import com.simple.launcher.retirement.utils.exts.textColorSecondary
+import com.simple.launcher.retirement.utils.exts.withStyleTitleLarge
+import com.simple.launcher.retirement.utils.exts.withStyleTitleMedium
 import com.simple.ui.precompute.text.BigText
 import com.simple.ui.precompute.text.build
 import com.simple.ui.precompute.text.span.BigBold
@@ -28,6 +30,7 @@ class EmergencyContactRequiredViewModel : BaseViewModel() {
 
         val color = resources.textColorPrimary
         value = resources.getString(R.string.emergency_contact_required_title)
+            .withStyleTitleLarge()
             .with(BigForegroundColor(color), BigBold)
             .build()
     }
@@ -43,6 +46,7 @@ class EmergencyContactRequiredViewModel : BaseViewModel() {
         // Highlight tên hành động chọn liên hệ để người dùng biết
         // cần cấu hình trước khi bật SOS.
         value = resources.getString(R.string.emergency_contact_required_desc)
+            .withStyleTitleMedium()
             .with(BigForegroundColor(color))
             .withFirst(
                 resources.getString(R.string.emergency_contact_required_highlight),

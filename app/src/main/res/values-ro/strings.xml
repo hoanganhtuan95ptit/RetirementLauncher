@@ -85,4 +85,7 @@
     <string name="app_list_required_desc">Alegeți aplicațiile pe care utilizatorul le poate deschide înainte de activarea Monitorizării aplicațiilor.</string>
     <string name="app_list_required_highlight">Alegeți aplicațiile</string>
     <string name="app_list_required_action">Selectați aplicații</string>
+
+    <string name="permission_decline">Refuză</string>
+    <string name="permission_checkbox_understand">Am citit și am înțeles necesitatea acestei permisiuni pentru funcție</string>
 </resources>

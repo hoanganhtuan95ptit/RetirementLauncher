@@ -29,6 +29,10 @@
     <string name="emergency_call_intro_desc">Aby zapewnić bezpieczeństwo, aplikacja automatycznie zadzwoni do listy szybkich kontaktów, jeśli nie zostanie wykryta żadna interakcja użytkownika z telefonem.</string>
     <string name="emergency_call_intro_highlight">automatycznie zadzwoni do listy szybkich kontaktów</string>
     <string name="emergency_call_intro_action">Rozumiem</string>
+    <string name="call_block_intro_title">Wprowadzenie do funkcji</string>
+    <string name="call_block_intro_desc">Ta funkcja pomaga chronić użytkowników, automatycznie blokując połączenia od nieznanych numerów, których nie ma w kontaktach, co pozwala uniknąć nękania reklamami lub oszustwami.</string>
+    <string name="call_block_intro_highlight">automatycznie blokując połączenia od nieznanych numerów</string>
+    <string name="call_block_intro_action">Rozumiem</string>
     <string name="emergency_contact_required_title">Wymagana konfiguracja kontaktu</string>
     <string name="emergency_contact_required_desc">Nie skonfigurowano jeszcze listy szybkich kontaktów. Aby ta funkcja działała, wybierz co najmniej jeden kontakt.</string>
     <string name="emergency_contact_required_highlight">wybierz co najmniej jeden kontakt</string>

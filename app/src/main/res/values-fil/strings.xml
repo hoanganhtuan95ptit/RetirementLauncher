@@ -85,4 +85,7 @@
     <string name="app_list_required_desc">Piliin ang apps na maaaring buksan ng user bago i-enable ang Pagsubaybay ng App.</string>
     <string name="app_list_required_highlight">Piliin ang apps</string>
     <string name="app_list_required_action">Pumili ng apps</string>
+
+    <string name="permission_decline">Tanggihan</string>
+    <string name="permission_checkbox_understand">Nabasa ko at nauunawaan ang pangangailangan ng pahintulot na ito para sa tampok</string>
 </resources>
