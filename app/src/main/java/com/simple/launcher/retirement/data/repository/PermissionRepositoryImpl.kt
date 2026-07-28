@@ -251,10 +251,11 @@ class PermissionRepositoryImpl(private val context: Context) : PermissionReposit
 
     override suspend fun requirePinPermissions(): Boolean {
 
-        val deeplink = if (hasPinPermission()) DeepLinks.PIN_VERIFY else DeepLinks.PIN_SETUP
-        val result = awaitEventAfterDeeplink<AppEvent.PinResult>(deeplink)
-
-        return result !is AppEvent.PinCancel
+        return true // todo tắt tính năng pin
+//        val deeplink = if (hasPinPermission()) DeepLinks.PIN_VERIFY else DeepLinks.PIN_SETUP
+//        val result = awaitEventAfterDeeplink<AppEvent.PinResult>(deeplink)
+//
+//        return result !is AppEvent.PinCancel
     }
 
     override suspend fun requireAppMonitoringIntro(): Boolean {

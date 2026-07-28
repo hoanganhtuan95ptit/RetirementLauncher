@@ -145,6 +145,7 @@ class UsageStatsPermissionBottomSheet : BaseBottomSheetDialogFragment<BottomShee
             binding.btnGrant.tvAction.parent.asObjectOrNull<View>()?.setBackground(state.background)
             binding.btnGrant.root.isEnabled = state.isEnabled
         }
+
         viewModel.declineAction.observe(this) { state ->
 
             val binding = binding ?: return@observe
