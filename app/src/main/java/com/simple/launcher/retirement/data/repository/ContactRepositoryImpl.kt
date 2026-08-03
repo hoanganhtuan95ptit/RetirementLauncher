@@ -7,22 +7,18 @@ import android.os.Looper
 import android.provider.ContactsContract
 import android.util.Log
 import androidx.core.content.edit
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.asFlow
 import com.google.gson.reflect.TypeToken
 import com.simple.launcher.retirement.BuildConfig
 import com.simple.launcher.retirement.data.AppPrefs
 import com.simple.launcher.retirement.domain.model.ContactEntity
 import com.simple.launcher.retirement.domain.repository.ContactRepository
-import kotlinx.coroutines.CoroutineScope
+import com.simple.launcher.retirement.utils.exts.ActiveStateFlow
+import com.simple.launcher.retirement.utils.exts.mutableStateFlow
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class ContactRepositoryImpl(private val context: Context) : ContactRepository {
 
@@ -35,15 +31,9 @@ class ContactRepositoryImpl(private val context: Context) : ContactRepository {
         private const val TAG = "ContactRepositoryImpl"
     }
 
-    // LiveData tự cập nhật khi có thay đổi trong ContactsContract.
+    // ActiveStateFlow tự cập nhật khi có thay đổi trong ContactsContract.
     // ContentObserver register chỉ khi có observer (onActive) và huỷ khi rời (onInactive).
-    private val contactAll: MutableLiveData<List<ContactEntity>> = object : MutableLiveData<List<ContactEntity>>() {
-
-        @Volatile
-        private var reloadJob: Job? = null
-
-        // Scope riêng — mọi query cursor chạy IO, SupervisorJob để 1 job lỗi không kéo sập cả scope.
-        private val contactScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+    private val contactAll: ActiveStateFlow<List<ContactEntity>?> = object : ActiveStateFlow<List<ContactEntity>?>(null) {
 
         private var observerRegistered = false
 
@@ -56,25 +46,22 @@ class ContactRepositoryImpl(private val context: Context) : ContactRepository {
             }
         }
 
-        override fun onActive() {
-            super.onActive()
-            registerObserver()
+        override suspend fun onActive() {
+
+            withContext(Dispatchers.Main) { registerObserver() }
             reloadAll()
         }
 
-        override fun onInactive() {
-            super.onInactive()
-            reloadJob?.cancel()
-            reloadJob = null
-            unregisterObserver()
+        override suspend fun onInactive() {
+
+            withContext(Dispatchers.Main) { unregisterObserver() }
         }
 
         private fun reloadAll() {
 
-            reloadJob?.cancel()
-            reloadJob = contactScope.launch {
+            scope.launch(Dispatchers.IO) {
 
-                postValue(queryContacts(context))
+                value = queryContacts(context)
             }
         }
 
@@ -109,24 +96,24 @@ class ContactRepositoryImpl(private val context: Context) : ContactRepository {
         }
     }
 
-    // Bump khi saveSelectedContacts được gọi — trigger getSelectedContactsFlow phát lại.
-    private val contactSelected = MutableStateFlow(0L)
+    // Load lại danh sách đã chọn khi flow active, và update trực tiếp sau mỗi lần save.
+    private val contactSelected = mutableStateFlow<List<ContactEntity>?>(null) {
 
-    override fun getAllContactsFlow(): Flow<List<ContactEntity>> = contactAll.asFlow()
+        value = readSelectedContacts()
+    }
+
+    override fun getAllContactsFlow(): Flow<List<ContactEntity>> = contactAll.filterNotNull()
 
     override fun getSelectedContactsFlow(): Flow<List<ContactEntity>> {
 
-        return contactSelected.map {
-
-            readSelectedContacts()
-        }.flowOn(Dispatchers.Default)
+        return contactSelected.filterNotNull()
     }
 
     override fun saveSelectedContacts(contacts: List<ContactEntity>) {
 
         val json = gson.toJson(contacts)
         sharedPrefs.edit { putString(KEY_SELECTED_CONTACTS, json) }
-        contactSelected.value = System.currentTimeMillis()
+        contactSelected.value = contacts
     }
 
     /**

@@ -5,11 +5,9 @@ import com.google.gson.reflect.TypeToken
 import com.simple.launcher.retirement.data.AppPrefs
 import com.simple.launcher.retirement.domain.model.ExclusionPeriod
 import com.simple.launcher.retirement.domain.repository.PreferenceRepository
-import kotlinx.coroutines.Dispatchers
+import com.simple.launcher.retirement.utils.exts.mutableStateFlow
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.filterNotNull
 
 class PreferenceRepositoryImpl : PreferenceRepository {
 
@@ -45,30 +43,55 @@ class PreferenceRepositoryImpl : PreferenceRepository {
         private const val DEFAULT_EMERGENCY_TIMEOUT = 10 * 60 * 60 * 1000L // 10h
     }
 
-    // Tick flow: giá trị chỉ là timestamp mỗi lần thay đổi, không đọc SharedPreferences
-    // tại constructor. Read thực sự nằm trong `.map { isXxx() }` — chạy trong context
-    // của collector (thường là Dispatchers.IO qua combineState), nên không block main.
-    private val _appBlockEnabled = MutableStateFlow(0L)
-    private val _callBlockEnabled = MutableStateFlow(0L)
-    private val _pocketModeEnabled = MutableStateFlow(0L)
-    private val _emergencyCallEnabled = MutableStateFlow(0L)
-    private val _lunarCalendarEnabled = MutableStateFlow(0L)
-    private val _is24HourFormat = MutableStateFlow(0L)
-    private val _isAmPmEnabled = MutableStateFlow(0L)
-    private val _isSolarCalendarEnabled = MutableStateFlow(0L)
-    private val _hasPin = MutableStateFlow(0L)
+    // Load lại preference khi flow active, và update trực tiếp sau mỗi lần save.
+    private val _appBlockEnabled = mutableStateFlow<Boolean?>(null) {
+
+        value = isAppBlockEnabled()
+    }
+    private val _callBlockEnabled = mutableStateFlow<Boolean?>(null) {
+
+        value = isCallBlockEnabled()
+    }
+    private val _pocketModeEnabled = mutableStateFlow<Boolean?>(null) {
+
+        value = isPocketModeEnabled()
+    }
+    private val _emergencyCallEnabled = mutableStateFlow<Boolean?>(null) {
+
+        value = isEmergencyCallEnabled()
+    }
+    private val _lunarCalendarEnabled = mutableStateFlow<Boolean?>(null) {
+
+        value = isLunarCalendarEnabled()
+    }
+    private val _is24HourFormat = mutableStateFlow<Boolean?>(null) {
+
+        value = is24HourFormat()
+    }
+    private val _isAmPmEnabled = mutableStateFlow<Boolean?>(null) {
+
+        value = isAmPmEnabled()
+    }
+    private val _isSolarCalendarEnabled = mutableStateFlow<Boolean?>(null) {
+
+        value = isSolarCalendarEnabled()
+    }
+    private val _hasPin = mutableStateFlow<Boolean?>(null) {
+
+        value = hasPin()
+    }
 
     // PIN
     override fun hasPin(): Boolean = sharedPrefs.contains(KEY_PIN)
 
-    override fun hasPinFlow(): Flow<Boolean> = _hasPin.map { hasPin() }.flowOn(Dispatchers.Default)
+    override fun hasPinFlow(): Flow<Boolean> = _hasPin.filterNotNull()
 
     override fun getPin(): String? = sharedPrefs.getString(KEY_PIN, null)
 
     override fun setPin(pin: String) {
 
         sharedPrefs.edit { putString(KEY_PIN, pin) }
-        _hasPin.value = System.currentTimeMillis()
+        _hasPin.value = true
     }
 
     // Onboarding
@@ -85,12 +108,12 @@ class PreferenceRepositoryImpl : PreferenceRepository {
         sharedPrefs.getBoolean(KEY_APP_BLOCK_ENABLED, false)
 
     override fun appBlockEnabledFlow(): Flow<Boolean> =
-        _appBlockEnabled.map { isAppBlockEnabled() }.flowOn(Dispatchers.Default)
+        _appBlockEnabled.filterNotNull()
 
     override fun setAppBlockEnabled(enabled: Boolean) {
 
         sharedPrefs.edit { putBoolean(KEY_APP_BLOCK_ENABLED, enabled) }
-        _appBlockEnabled.value = System.currentTimeMillis()
+        _appBlockEnabled.value = enabled
     }
 
     override fun isAppBlockFirstTime(): Boolean =
@@ -114,12 +137,12 @@ class PreferenceRepositoryImpl : PreferenceRepository {
         sharedPrefs.getBoolean(KEY_CALL_BLOCK_ENABLED, false)
 
     override fun callBlockEnabledFlow(): Flow<Boolean> =
-        _callBlockEnabled.map { isCallBlockEnabled() }.flowOn(Dispatchers.Default)
+        _callBlockEnabled.filterNotNull()
 
     override fun setCallBlockEnabled(enabled: Boolean) {
 
         sharedPrefs.edit { putBoolean(KEY_CALL_BLOCK_ENABLED, enabled) }
-        _callBlockEnabled.value = System.currentTimeMillis()
+        _callBlockEnabled.value = enabled
     }
 
     override fun isCallBlockFirstTime(): Boolean =
@@ -142,12 +165,12 @@ class PreferenceRepositoryImpl : PreferenceRepository {
         sharedPrefs.getBoolean(KEY_POCKET_MODE_ENABLED, false)
 
     override fun pocketModeEnabledFlow(): Flow<Boolean> =
-        _pocketModeEnabled.map { isPocketModeEnabled() }.flowOn(Dispatchers.Default)
+        _pocketModeEnabled.filterNotNull()
 
     override fun setPocketModeEnabled(enabled: Boolean) {
 
         sharedPrefs.edit { putBoolean(KEY_POCKET_MODE_ENABLED, enabled) }
-        _pocketModeEnabled.value = System.currentTimeMillis()
+        _pocketModeEnabled.value = enabled
     }
 
     // Emergency Call
@@ -155,12 +178,12 @@ class PreferenceRepositoryImpl : PreferenceRepository {
         sharedPrefs.getBoolean(KEY_EMERGENCY_CALL_ENABLED, false)
 
     override fun emergencyCallEnabledFlow(): Flow<Boolean> =
-        _emergencyCallEnabled.map { isEmergencyCallEnabled() }.flowOn(Dispatchers.Default)
+        _emergencyCallEnabled.filterNotNull()
 
     override fun setEmergencyCallEnabled(enabled: Boolean) {
 
         sharedPrefs.edit { putBoolean(KEY_EMERGENCY_CALL_ENABLED, enabled) }
-        _emergencyCallEnabled.value = System.currentTimeMillis()
+        _emergencyCallEnabled.value = enabled
     }
 
     override fun isEmergencyCallFirstTime(): Boolean =
@@ -242,12 +265,12 @@ class PreferenceRepositoryImpl : PreferenceRepository {
         sharedPrefs.getBoolean(KEY_LUNAR_CALENDAR_ENABLED, false)
 
     override fun lunarCalendarEnabledFlow(): Flow<Boolean> =
-        _lunarCalendarEnabled.map { isLunarCalendarEnabled() }.flowOn(Dispatchers.Default)
+        _lunarCalendarEnabled.filterNotNull()
 
     override fun setLunarCalendarEnabled(enabled: Boolean) {
 
         sharedPrefs.edit { putBoolean(KEY_LUNAR_CALENDAR_ENABLED, enabled) }
-        _lunarCalendarEnabled.value = System.currentTimeMillis()
+        _lunarCalendarEnabled.value = enabled
     }
 
     // Clock Format
@@ -255,35 +278,35 @@ class PreferenceRepositoryImpl : PreferenceRepository {
         sharedPrefs.getBoolean(KEY_CLOCK_24H_FORMAT, false)
 
     override fun is24HourFormatFlow(): Flow<Boolean> =
-        _is24HourFormat.map { is24HourFormat() }.flowOn(Dispatchers.Default)
+        _is24HourFormat.filterNotNull()
 
     override fun set24HourFormat(is24Hour: Boolean) {
 
         sharedPrefs.edit { putBoolean(KEY_CLOCK_24H_FORMAT, is24Hour) }
-        _is24HourFormat.value = System.currentTimeMillis()
+        _is24HourFormat.value = is24Hour
     }
 
     override fun isAmPmEnabled(): Boolean =
         sharedPrefs.getBoolean(KEY_CLOCK_AM_PM_ENABLED, false)
 
     override fun isAmPmEnabledFlow(): Flow<Boolean> =
-        _isAmPmEnabled.map { isAmPmEnabled() }.flowOn(Dispatchers.Default)
+        _isAmPmEnabled.filterNotNull()
 
     override fun setAmPmEnabled(enabled: Boolean) {
 
         sharedPrefs.edit { putBoolean(KEY_CLOCK_AM_PM_ENABLED, enabled) }
-        _isAmPmEnabled.value = System.currentTimeMillis()
+        _isAmPmEnabled.value = enabled
     }
 
     override fun isSolarCalendarEnabled(): Boolean =
         sharedPrefs.getBoolean(KEY_SOLAR_CALENDAR_ENABLED, true)
 
     override fun isSolarCalendarEnabledFlow(): Flow<Boolean> =
-        _isSolarCalendarEnabled.map { isSolarCalendarEnabled() }.flowOn(Dispatchers.Default)
+        _isSolarCalendarEnabled.filterNotNull()
 
     override fun setSolarCalendarEnabled(enabled: Boolean) {
 
         sharedPrefs.edit { putBoolean(KEY_SOLAR_CALENDAR_ENABLED, enabled) }
-        _isSolarCalendarEnabled.value = System.currentTimeMillis()
+        _isSolarCalendarEnabled.value = enabled
     }
 }

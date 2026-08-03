@@ -19,24 +19,18 @@ import android.telecom.TelecomManager
 import android.util.Log
 import androidx.core.content.edit
 import androidx.core.net.toUri
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.asFlow
 import com.google.gson.reflect.TypeToken
 import com.simple.launcher.retirement.BuildConfig
 import com.simple.launcher.retirement.data.AppPrefs
 import com.simple.launcher.retirement.domain.model.AppEntity
 import com.simple.launcher.retirement.domain.repository.AppRepository
+import com.simple.launcher.retirement.utils.exts.ActiveStateFlow
 import com.simple.launcher.retirement.utils.exts.mutableStateFlow
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.concurrent.ConcurrentHashMap
 
 class AppRepositoryImpl(private val context: Context) : AppRepository {
@@ -384,15 +378,7 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
     private val gson = AppPrefs.gson
 
 
-    private val appAll: MutableLiveData<List<AppEntity>> = object : MutableLiveData<List<AppEntity>>() {
-
-        // Job của lần reload toàn bộ đang chạy — cancel khi có reload mới hoặc onInactive.
-        @Volatile
-        private var reloadJob: Job? = null
-
-        // Scope dùng riêng cho appList — mọi load / diff / query PackageManager đều chạy IO.
-        // SupervisorJob để 1 job con lỗi không kéo sập cả scope.
-        private val appListScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+    private val appAll: ActiveStateFlow<List<AppEntity>?> = object : ActiveStateFlow<List<AppEntity>?>(null) {
 
         // Cờ trạng thái receiver để tránh unregister 2 lần (crash IllegalArgumentException).
         private var receiverRegistered = false
@@ -434,27 +420,23 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
             }
         }
 
-        override fun onActive() {
-            super.onActive()
-            registerReceiver()
+        override suspend fun onActive() {
+
+            withContext(Dispatchers.Main) { registerReceiver() }
             // Load danh sách app lần đầu (hoặc refresh sau khi bị inactive) ở background.
             reloadAll()
         }
 
-        override fun onInactive() {
-            super.onInactive()
-            reloadJob?.cancel()
-            reloadJob = null
-            unregisterReceiver()
+        override suspend fun onInactive() {
+
+            withContext(Dispatchers.Main) { unregisterReceiver() }
         }
 
         private fun reloadAll() {
 
-            reloadJob?.cancel()
-            reloadJob = appListScope.launch {
+            scope.launch(Dispatchers.IO) {
 
-                val apps = queryLauncherApps(context.packageManager)
-                postValue(apps)
+                value = queryLauncherApps(context.packageManager)
             }
         }
 
@@ -465,7 +447,7 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
          */
         private fun upsertPackageInBackground(packageName: String) {
 
-            appListScope.launch {
+            scope.launch(Dispatchers.IO) {
 
                 val pm = context.packageManager
                 val intent = Intent(Intent.ACTION_MAIN, null)
@@ -492,17 +474,17 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
                 )
                 val current = value.orEmpty().filterNot { it.packageName == packageName }
                 val updated = (current + newApp).sortedBy { it.label.lowercase() }
-                postValue(updated)
+                value = updated
             }
         }
 
         private fun removePackageInBackground(packageName: String) {
 
-            appListScope.launch {
+            scope.launch(Dispatchers.IO) {
 
                 val current = value.orEmpty()
                 val updated = current.filterNot { it.packageName == packageName }
-                if (updated.size != current.size) postValue(updated)
+                if (updated.size != current.size) value = updated
             }
         }
 
@@ -582,7 +564,7 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
 
     override fun getAllAppFlow(): Flow<List<AppEntity>> {
 
-        return appAll.asFlow()
+        return appAll.filterNotNull()
     }
 
     override fun getCurrentApp(): AppEntity {
