@@ -103,7 +103,7 @@ class ContactListFragment : BaseFragment<FragmentAppListBinding>() {
     override fun observeData() {
 
         super.observeData()
-        viewModel.background.observe(this) { background ->
+        viewModel.background.filterNotNull().observe(this) { background ->
 
             val binding = binding ?: return@observe
             binding.root.setBackground(background)

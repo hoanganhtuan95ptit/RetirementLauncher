@@ -84,7 +84,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
             }
         }
 
-        background.observe(this@SettingsFragment) { background ->
+        background.filterNotNull().observe(this@SettingsFragment) { background ->
 
             val binding = binding ?: return@observe
 

@@ -15,6 +15,7 @@ import com.simple.launcher.retirement.utils.exts.backPressedFlow
 import com.simple.launcher.retirement.utils.exts.setOnSafeClickListener
 import com.simple.launcher.retirement.utils.exts.observe
 import com.simple.ui.precompute.text.setText
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 
 class BlockActivity : BaseActivity<ActivityBlockBinding>() {
@@ -58,7 +59,7 @@ class BlockActivity : BaseActivity<ActivityBlockBinding>() {
         super.observeData()
 
         // Apply background từ theme — không hardcode màu trong XML
-        viewModel.background.observe(this) { background ->
+        viewModel.background.filterNotNull().observe(this) { background ->
 
             val binding = binding ?: return@observe
 

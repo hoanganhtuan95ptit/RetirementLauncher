@@ -1,7 +1,9 @@
 package com.simple.launcher.retirement.data.repository
 
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.os.Build
@@ -24,6 +26,7 @@ import com.simple.launcher.retirement.domain.model.AppEntity
 import com.simple.launcher.retirement.domain.repository.AppRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
+import java.util.concurrent.ConcurrentHashMap
 
 class AppRepositoryImpl(private val context: Context) : AppRepository {
 
@@ -379,13 +382,92 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
 
     // In-memory cache cho getSelectedPackages() — tránh Gson deserialize mỗi lần đọc.
     // Được invalidate khi saveSelectedPackages() được gọi.
+    @Volatile
     private var cachedSelectedPackages: List<String>? = null
 
     // Cache kết quả isDefaultApp() — mỗi lần check tốn 6-7 binder IPC calls.
     // Default apps gần như không đổi trong một session; cache tránh gọi lại mỗi 500ms.
-    private val defaultAppCache = HashMap<String, Boolean>(16)
+    // Dùng ConcurrentHashMap vì read từ nhiều thread (Worker + ViewModel IO), write từ
+    // broadcast receiver (main) khi có PACKAGE_ADDED/REMOVED.
+    private val defaultAppCache = ConcurrentHashMap<String, Boolean>(16)
+
+    // Cache list installed apps + icon. Query PackageManager + loadIcon() cho ~100 app
+    // có thể tốn 500ms–2s trên máy yếu; cache giữ lại giữa các lần navigate.
+    // Invalidate khi có broadcast PACKAGE_ADDED/REMOVED/REPLACED/CHANGED.
+    @Volatile
+    private var cachedInstalledApps: List<AppEntity>? = null
+
+    // Cache app hiện tại (chính app này) — label/package/icon gần như không đổi runtime.
+    @Volatile
+    private var cachedCurrentApp: AppEntity? = null
+
+    // Broadcast receiver theo dõi thay đổi package để invalidate 2 cache trên
+    // và bắn _dataTrigger cho UI refresh danh sách.
+    private val packageChangeReceiver = object : BroadcastReceiver() {
+
+        override fun onReceive(ctx: Context?, intent: Intent?) {
+
+            val action = intent?.action ?: return
+            // Bỏ qua thay đổi của chính app này để tránh vòng lặp không cần thiết.
+            val changedPackage = intent.data?.schemeSpecificPart
+            if (changedPackage != null && changedPackage == context.packageName) return
+
+            if (BuildConfig.DEBUG) {
+
+                Log.d("AppRepositoryImpl", "packageChangeReceiver: action=$action pkg=$changedPackage")
+            }
+
+            invalidateAppCaches()
+            _dataTrigger.tryEmit(Unit)
+        }
+    }
+
+    init {
+
+        registerPackageChangeReceiver()
+    }
+
+    private fun registerPackageChangeReceiver() {
+
+        // Package broadcasts đòi hỏi data scheme "package" trong filter.
+        val filter = IntentFilter().apply {
+
+            addAction(Intent.ACTION_PACKAGE_ADDED)
+            addAction(Intent.ACTION_PACKAGE_REMOVED)
+            addAction(Intent.ACTION_PACKAGE_REPLACED)
+            addAction(Intent.ACTION_PACKAGE_CHANGED)
+            addDataScheme("package")
+        }
+        // Từ API 33 (T) cần chỉ định exported explicit. Đây là broadcast hệ thống nên
+        // đăng ký RECEIVER_NOT_EXPORTED không phù hợp — hệ thống broadcast không đi kèm
+        // caller package của app khác. Dùng try/catch để an toàn đa version.
+        try {
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+
+                context.registerReceiver(packageChangeReceiver, filter, Context.RECEIVER_EXPORTED)
+            } else {
+
+                @Suppress("UnspecifiedRegisterReceiverFlag")
+                context.registerReceiver(packageChangeReceiver, filter)
+            }
+        } catch (e: Exception) {
+
+            Log.w("AppRepositoryImpl", "Failed to register packageChangeReceiver", e)
+        }
+    }
+
+    private fun invalidateAppCaches() {
+
+        cachedInstalledApps = null
+        cachedCurrentApp = null
+        defaultAppCache.clear()
+    }
 
     override fun getInstalledApps(): List<AppEntity> {
+
+        // Trả cache nếu đã có — tránh query PackageManager + loadIcon() lặp lại.
+        cachedInstalledApps?.let { return it }
 
         val pm = context.packageManager
         val apps = mutableListOf<AppEntity>()
@@ -402,18 +484,24 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
                 )
             )
         }
-        return apps.sortedBy { it.label.lowercase() }
+        val sorted = apps.sortedBy { it.label.lowercase() }
+        cachedInstalledApps = sorted
+        return sorted
     }
 
     override fun getCurrentApp(): AppEntity {
 
+        cachedCurrentApp?.let { return it }
+
         val pm = context.packageManager
         val info = context.applicationInfo
-        return AppEntity(
+        val entity = AppEntity(
             label = info.loadLabel(pm).toString(),
             packageName = context.packageName,
             icon = info.loadIcon(pm)
         )
+        cachedCurrentApp = entity
+        return entity
     }
 
     override fun getSelectedPackages(): List<String> {

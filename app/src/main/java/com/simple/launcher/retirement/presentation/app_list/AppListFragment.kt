@@ -89,7 +89,7 @@ class AppListFragment : BaseFragment<FragmentAppListBinding>() {
 
         super.observeData()
 
-        viewModel.background.observe(this) { background ->
+        viewModel.background.filterNotNull()observe(this) { background ->
 
             val binding = binding ?: return@observe
 

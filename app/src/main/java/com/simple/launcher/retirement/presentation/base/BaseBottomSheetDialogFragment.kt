@@ -23,6 +23,7 @@ import com.simple.launcher.retirement.utils.background.Background
 import com.simple.launcher.retirement.utils.background.setBackground
 import com.simple.launcher.retirement.utils.exts.dp
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 
 abstract class BaseBottomSheetDialogFragment<VB : ViewBinding, VM : BaseViewModel> : BottomSheetDialogFragment() {
@@ -90,7 +91,7 @@ abstract class BaseBottomSheetDialogFragment<VB : ViewBinding, VM : BaseViewMode
 
     private fun observeBottomSheetState() = viewLifecycleOwner.lifecycleScope.launch {
 
-        viewModel.bottomSheet.collectLatest { state ->
+        viewModel.bottomSheet.filterNotNull().collectLatest { state ->
 
             updateAnchor(state.showAnchor, state.anchorBackground)
             updateDialogState(state.background)
