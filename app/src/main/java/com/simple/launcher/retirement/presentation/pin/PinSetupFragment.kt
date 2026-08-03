@@ -22,6 +22,7 @@ import com.simple.launcher.retirement.utils.exts.observe
 import com.simple.ui.precompute.image.setImage
 import com.simple.ui.precompute.text.BigText
 import com.simple.ui.precompute.text.setText
+import kotlinx.coroutines.flow.filterNotNull
 
 class PinSetupFragment : BaseFragment<FragmentPinSetupBinding>() {
 

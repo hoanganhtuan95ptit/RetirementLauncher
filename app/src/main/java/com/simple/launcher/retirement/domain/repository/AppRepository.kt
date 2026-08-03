@@ -10,14 +10,14 @@ import kotlinx.coroutines.flow.Flow
  */
 interface AppRepository {
 
-    fun getInstalledApps(): List<AppEntity>
-    fun getCurrentApp(): AppEntity
-    fun getSelectedPackages(): List<String>
-    fun saveSelectedPackages(packages: List<String>)
-    fun isDefaultApp(packageName: String): Boolean
+    fun getAllAppFlow(): Flow<List<AppEntity>>
 
-    // Flow phát lại khi danh sách app / contact thay đổi
-    fun homeDataFlow(): Flow<Unit>
+    fun getCurrentApp(): AppEntity
+
+    fun getSelectedPackagesFlow(): Flow<List<String>>
+    fun saveSelectedPackages(packages: List<String>)
+
+    fun isDefaultApp(packageName: String): Boolean
 
     companion object {
 

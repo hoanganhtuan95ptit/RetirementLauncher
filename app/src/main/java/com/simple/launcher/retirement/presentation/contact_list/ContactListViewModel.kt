@@ -20,16 +20,16 @@ import com.simple.launcher.retirement.utils.exts.colorOnPrimary
 import com.simple.launcher.retirement.utils.exts.colorPrimary
 import com.simple.launcher.retirement.utils.exts.colorSurface
 import com.simple.launcher.retirement.utils.exts.getString
+import com.simple.launcher.retirement.utils.exts.mutableStateFlow
 import com.simple.launcher.retirement.utils.exts.textColorPrimary
 import com.simple.launcher.retirement.utils.exts.textColorSecondary
 import com.simple.launcher.retirement.utils.VietnameseStringUtils
 import com.simple.ui.precompute.image.BigImage
 import com.simple.ui.precompute.text.toBig
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class ContactListViewModel(
     private val repository: ContactRepository
@@ -82,9 +82,12 @@ class ContactListViewModel(
     private val _contacts = MutableStateFlow<List<ContactEntity>>(emptyList())
     private val _query = MutableStateFlow("")
 
-    private val _selectedIds = MutableStateFlow<Set<String>>(
-        repository.getSelectedContacts().map { it.id }.toSet()
-    )
+    // Khởi tạo rỗng rồi nạp từ flow trong background. Toggle sau đó cập nhật trực tiếp
+    // _selectedIds — không cần re-collect flow.
+    private val _selectedIds: MutableStateFlow<Set<String>> = mutableStateFlow(emptySet()) {
+
+        value = repository.getSelectedContactsFlow().first().map { it.id }.toSet()
+    }
 
     val items: StateFlow<List<SelectableContactItem>> = combineState(
         flow1 = _contacts,
@@ -149,13 +152,11 @@ class ContactListViewModel(
 
     fun loadContacts() {
 
+        // Collect chỉ 1 lần: getAllContactsFlow đã tự cập nhật khi ContentObserver bắn thay đổi,
+        // nhưng ở màn hình này ta chỉ cần snapshot 1 lần lúc mở.
         viewModelScope.launch {
 
-            val result = withContext(Dispatchers.IO) {
-
-                repository.getAllContacts()
-            }
-            _contacts.value = result
+            _contacts.value = repository.getAllContactsFlow().first()
         }
     }
 
@@ -180,6 +181,20 @@ class ContactListViewModel(
     }
 
     fun getAllSelectedIds(): Set<String> = _selectedIds.value
+
+    /**
+     * Xây danh sách contact id đã chọn theo đúng thứ tự cũ đã lưu:
+     * - Giữ nguyên thứ tự các contact cũ vẫn đang chọn
+     * - Contact mới toggle thêm sẽ nằm cuối
+     */
+    suspend fun buildOrderedSelectedIds(): List<String> {
+
+        val currentSelected = _selectedIds.value
+        val savedIds = repository.getSelectedContactsFlow().first().map { it.id }
+        val ordered = savedIds.filter { it in currentSelected }.toMutableList()
+        ordered.addAll(currentSelected.filter { it !in savedIds })
+        return ordered
+    }
 }
 
 class ContactListViewModelFactory(

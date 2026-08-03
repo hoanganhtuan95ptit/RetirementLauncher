@@ -7,12 +7,10 @@ import kotlinx.coroutines.flow.Flow
 
 interface ContactRepository {
 
-    fun getAllContacts(): List<ContactEntity>
-    fun getSelectedContacts(): List<ContactEntity>
-    fun saveSelectedContacts(contacts: List<ContactEntity>)
+    fun getAllContactsFlow(): Flow<List<ContactEntity>>
+    fun getSelectedContactsFlow(): Flow<List<ContactEntity>>
 
-    // Flow phát lại khi danh sách contact thay đổi
-    fun homeDataFlow(): Flow<Unit>
+    fun saveSelectedContacts(contacts: List<ContactEntity>)
 
     companion object {
 

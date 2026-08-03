@@ -11,6 +11,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.simple.adapter.utils.attachAdapter
 import com.simple.adapter.utils.submitListAndAwait
 import com.simple.deeplink.Deeplink
@@ -31,6 +32,8 @@ import com.simple.launcher.retirement.utils.permission.PermissionManager
 import com.simple.ui.precompute.image.setImage
 import com.simple.ui.precompute.text.setText
 import kotlinx.coroutines.flow.filterIsInstance
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.launch
 
 class ContactListFragment : BaseFragment<FragmentAppListBinding>() {
 
@@ -146,22 +149,21 @@ class ContactListFragment : BaseFragment<FragmentAppListBinding>() {
         val binding = binding ?: return
         binding.layoutSearch.etSearch.setText("")
 
-        val currentSelected = viewModel.getAllSelectedIds()
-        if (currentSelected.isEmpty()) {
+        if (viewModel.getAllSelectedIds().isEmpty()) {
 
             Toast.makeText(context, R.string.contact_list_empty_error, Toast.LENGTH_SHORT).show()
             return
         }
 
-        // Giữ đúng thứ tự cũ cho các contact đã lưu, thêm mới vào cuối
-        val savedIds = ContactRepository.instance.getSelectedContacts().map { it.id }
-        val orderedIds = savedIds.filter { it in currentSelected }.toMutableList()
-        orderedIds.addAll(currentSelected.filter { it !in savedIds })
+        // Đọc thứ tự cũ (từ SharedPreferences qua flow) ở background, rồi mới navigate.
+        viewLifecycleOwner.lifecycleScope.launch {
 
-        sendReorderContactsDeeplink(
-            orderedIds,
-            mapOf(DeepLinks.Extras.IS_FLOW_SETUP to isFlowSetup)
-        )
+            val orderedIds = viewModel.buildOrderedSelectedIds()
+            sendReorderContactsDeeplink(
+                orderedIds,
+                mapOf(DeepLinks.Extras.IS_FLOW_SETUP to isFlowSetup)
+            )
+        }
     }
 
     private fun checkPermissionAndLoad() {

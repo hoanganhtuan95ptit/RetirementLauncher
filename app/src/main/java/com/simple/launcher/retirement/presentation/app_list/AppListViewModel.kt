@@ -29,6 +29,7 @@ import com.simple.ui.precompute.text.toBig
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.first
 
 class AppListViewModel(
     private val getSelectableAppsUseCase: GetSelectableAppsUseCase,
@@ -86,9 +87,12 @@ class AppListViewModel(
         value = getSelectableAppsUseCase.invoke()
     }
 
-    private val _selectedIds = MutableStateFlow<Set<String>>(
-        AppRepository.instance.getSelectedPackages().toSet()
-    )
+    // Khởi tạo rỗng rồi nạp từ flow trong background. Sau lần load đầu, mọi thao tác
+    // toggle của user tự cập nhật _selectedIds — không cần re-collect flow.
+    private val _selectedIds: MutableStateFlow<Set<String>> = mutableStateFlow(emptySet()) {
+
+        value = AppRepository.instance.getSelectedPackagesFlow().first().toSet()
+    }
 
     val items: StateFlow<List<SelectableAppItem>> = combineState(
         flow1 = apps.filterNotNull(),
@@ -157,6 +161,20 @@ class AppListViewModel(
     }
 
     fun getAllSelectedIds(): Set<String> = _selectedIds.value
+
+    /**
+     * Xây danh sách package đã chọn theo đúng thứ tự cũ đã lưu:
+     * - Giữ nguyên thứ tự các app cũ vẫn đang chọn
+     * - App mới toggle thêm sẽ nằm cuối
+     */
+    suspend fun buildOrderedSelectedIds(): List<String> {
+
+        val currentSelected = _selectedIds.value
+        val savedIds = AppRepository.instance.getSelectedPackagesFlow().first()
+        val ordered = savedIds.filter { it in currentSelected }.toMutableList()
+        ordered.addAll(currentSelected.filter { it !in savedIds })
+        return ordered
+    }
 
     fun saveSelection() {
 

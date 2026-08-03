@@ -27,6 +27,7 @@ import com.simple.ui.precompute.text.build
 import com.simple.ui.precompute.text.span.BigForegroundColor
 import com.simple.ui.precompute.text.with
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.first
 
 enum class ReorderType {
 
@@ -81,9 +82,9 @@ class ReorderViewModel(
         value = if (type == ReorderType.APPS) loadAppItems() else loadContactItems()
     }
 
-    private fun loadAppItems(): List<ReorderItem> {
+    private suspend fun loadAppItems(): List<ReorderItem> {
 
-        val allApps = appRepository.getInstalledApps()
+        val allApps = appRepository.getAllAppFlow().first()
         val selectedApps = initialIds.mapNotNull { pkg -> allApps.find { it.packageName == pkg } }
         return selectedApps.map { app -> toAppReorderItem(app) }
     }
@@ -97,9 +98,9 @@ class ReorderViewModel(
         icon = BigImage(app.icon)
     )
 
-    private fun loadContactItems(): List<ReorderItem> {
+    private suspend fun loadContactItems(): List<ReorderItem> {
 
-        val allContacts = contactRepository.getAllContacts()
+        val allContacts = contactRepository.getAllContactsFlow().first()
         val orderedContacts = initialIds.mapNotNull { id -> allContacts.find { it.id == id } }
         return orderedContacts.map { toContactReorderItem(it) }
     }

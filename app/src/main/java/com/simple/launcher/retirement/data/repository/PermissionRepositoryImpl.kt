@@ -198,7 +198,7 @@ class PermissionRepositoryImpl(private val context: Context) : PermissionReposit
 
     override suspend fun requireEmergencyContact(): Boolean {
 
-        if (ContactRepository.instance.getSelectedContacts().isNotEmpty()) return true
+        if (ContactRepository.instance.getSelectedContactsFlow().first().isNotEmpty()) return true
 
         val result = awaitEventAfterDeeplink<AppEvent.EmergencyContactRequiredResult>(
             DeepLinks.EMERGENCY_CONTACT_REQUIRED
@@ -217,12 +217,12 @@ class PermissionRepositoryImpl(private val context: Context) : PermissionReposit
         )
 
         return result is AppEvent.ContactSetupAccept &&
-                ContactRepository.instance.getSelectedContacts().isNotEmpty()
+                ContactRepository.instance.getSelectedContactsFlow().first().isNotEmpty()
     }
 
     override suspend fun requireAppList(): Boolean {
 
-        if (AppRepository.instance.getSelectedPackages().isNotEmpty()) return true
+        if (AppRepository.instance.getSelectedPackagesFlow().first().isNotEmpty()) return true
 
         val result = awaitEventAfterDeeplink<AppEvent.AppListRequiredResult>(
             DeepLinks.APP_LIST_REQUIRED
@@ -241,7 +241,7 @@ class PermissionRepositoryImpl(private val context: Context) : PermissionReposit
         )
 
         return result is AppEvent.AppSetupAccept &&
-                AppRepository.instance.getSelectedPackages().isNotEmpty()
+                AppRepository.instance.getSelectedPackagesFlow().first().isNotEmpty()
     }
 
     override fun hasPinPermission(): Boolean {

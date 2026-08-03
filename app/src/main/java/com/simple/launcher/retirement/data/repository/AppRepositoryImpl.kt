@@ -19,19 +19,25 @@ import android.telecom.TelecomManager
 import android.util.Log
 import androidx.core.content.edit
 import androidx.core.net.toUri
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.asFlow
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simple.launcher.retirement.BuildConfig
 import com.simple.launcher.retirement.domain.model.AppEntity
 import com.simple.launcher.retirement.domain.repository.AppRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import java.util.concurrent.ConcurrentHashMap
 
 class AppRepositoryImpl(private val context: Context) : AppRepository {
-
-    private val sharedPrefs = context.getSharedPreferences("launcher_prefs", Context.MODE_PRIVATE)
-    private val gson = Gson()
 
     companion object {
 
@@ -372,121 +378,206 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
         )
     }
 
-    // Trigger để home data (app + contact) phát lại khi có thay đổi
-    private val _dataTrigger = MutableSharedFlow<Unit>(replay = 1).also { 
+    private val sharedPrefs = context.getSharedPreferences("launcher_prefs", Context.MODE_PRIVATE)
+    private val gson = Gson()
 
-        it.tryEmit(Unit) 
+
+    private val appAll: MutableLiveData<List<AppEntity>> = object : MutableLiveData<List<AppEntity>>() {
+
+        // Job của lần reload toàn bộ đang chạy — cancel khi có reload mới hoặc onInactive.
+        @Volatile
+        private var reloadJob: Job? = null
+
+        // Scope dùng riêng cho appList — mọi load / diff / query PackageManager đều chạy IO.
+        // SupervisorJob để 1 job con lỗi không kéo sập cả scope.
+        private val appListScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+
+        // Cờ trạng thái receiver để tránh unregister 2 lần (crash IllegalArgumentException).
+        private var receiverRegistered = false
+
+        private val packageChangeReceiver = object : BroadcastReceiver() {
+
+            override fun onReceive(ctx: Context?, intent: Intent?) {
+
+                val action = intent?.action ?: return
+                // Bỏ qua thay đổi của chính app này để tránh vòng lặp không cần thiết.
+                val changedPackage = intent.data?.schemeSpecificPart
+                if (changedPackage != null && changedPackage == context.packageName) return
+
+                // ACTION_PACKAGE_REMOVED kèm EXTRA_REPLACING = true chỉ là bước 1 của quá trình
+                // "replace" — sẽ có ACTION_PACKAGE_ADDED tiếp theo. Bỏ qua để list không bị nhấp nháy.
+                if (action == Intent.ACTION_PACKAGE_REMOVED &&
+                    intent.getBooleanExtra(Intent.EXTRA_REPLACING, false)
+                ) return
+
+                if (BuildConfig.DEBUG) {
+
+                    Log.d("AppRepositoryImpl", "packageChangeReceiver: action=$action pkg=$changedPackage")
+                }
+
+                if (changedPackage == null) {
+                    // Broadcast không kèm package cụ thể → không thể xử lý incremental, reload toàn bộ.
+                    reloadAll()
+                    return
+                }
+
+                when (action) {
+
+                    Intent.ACTION_PACKAGE_REMOVED -> removePackageInBackground(changedPackage)
+
+                    Intent.ACTION_PACKAGE_ADDED,
+                    Intent.ACTION_PACKAGE_REPLACED,
+                    Intent.ACTION_PACKAGE_CHANGED -> upsertPackageInBackground(changedPackage)
+                }
+            }
+        }
+
+        override fun onActive() {
+            super.onActive()
+            registerReceiver()
+            // Load danh sách app lần đầu (hoặc refresh sau khi bị inactive) ở background.
+            reloadAll()
+        }
+
+        override fun onInactive() {
+            super.onInactive()
+            reloadJob?.cancel()
+            reloadJob = null
+            unregisterReceiver()
+        }
+
+        private fun reloadAll() {
+
+            reloadJob?.cancel()
+            reloadJob = appListScope.launch {
+
+                val apps = queryLauncherApps(context.packageManager)
+                postValue(apps)
+            }
+        }
+
+        /**
+         * Xử lý PACKAGE_ADDED / REPLACED / CHANGED: query lại 1 package,
+         * thay entry cũ (nếu có) bằng entry mới rồi sort. Nếu package không còn
+         * launcher activity (bị disable/hide) → coi như remove.
+         */
+        private fun upsertPackageInBackground(packageName: String) {
+
+            appListScope.launch {
+
+                val pm = context.packageManager
+                val intent = Intent(Intent.ACTION_MAIN, null)
+                    .addCategory(Intent.CATEGORY_LAUNCHER)
+                    .setPackage(packageName)
+                val resolveInfo = try {
+
+                    pm.queryIntentActivities(intent, 0).firstOrNull()
+                } catch (_: Exception) {
+
+                    null
+                }
+
+                if (resolveInfo == null) {
+
+                    removePackageInBackground(packageName)
+                    return@launch
+                }
+
+                val newApp = AppEntity(
+                    label = resolveInfo.loadLabel(pm).toString(),
+                    packageName = packageName,
+                    icon = resolveInfo.activityInfo.loadIcon(pm)
+                )
+                val current = value.orEmpty().filterNot { it.packageName == packageName }
+                val updated = (current + newApp).sortedBy { it.label.lowercase() }
+                postValue(updated)
+            }
+        }
+
+        private fun removePackageInBackground(packageName: String) {
+
+            appListScope.launch {
+
+                val current = value.orEmpty()
+                val updated = current.filterNot { it.packageName == packageName }
+                if (updated.size != current.size) postValue(updated)
+            }
+        }
+
+        private fun registerReceiver() {
+
+            if (receiverRegistered) return
+
+            val filter = IntentFilter().apply {
+
+                addAction(Intent.ACTION_PACKAGE_ADDED)
+                addAction(Intent.ACTION_PACKAGE_REMOVED)
+                addAction(Intent.ACTION_PACKAGE_REPLACED)
+                addAction(Intent.ACTION_PACKAGE_CHANGED)
+                addDataScheme("package")
+            }
+            try {
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+
+                    context.registerReceiver(packageChangeReceiver, filter, Context.RECEIVER_EXPORTED)
+                } else {
+
+                    @Suppress("UnspecifiedRegisterReceiverFlag")
+                    context.registerReceiver(packageChangeReceiver, filter)
+                }
+                receiverRegistered = true
+            } catch (e: Exception) {
+
+                Log.w("AppRepositoryImpl", "Failed to register packageChangeReceiver", e)
+            }
+        }
+
+        private fun unregisterReceiver() {
+
+            if (!receiverRegistered) return
+            try {
+
+                context.unregisterReceiver(packageChangeReceiver)
+            } catch (e: Exception) {
+
+                Log.w("AppRepositoryImpl", "Failed to unregister packageChangeReceiver", e)
+            } finally {
+
+                receiverRegistered = false
+            }
+        }
+
+        /**
+         * Query PackageManager lấy tất cả launcher activities → dựng list AppEntity đã sort.
+         * Chạy trên IO. Dùng cho reloadAll().
+         */
+        private fun queryLauncherApps(pm: PackageManager): List<AppEntity> {
+
+            val intent = Intent(Intent.ACTION_MAIN, null).addCategory(Intent.CATEGORY_LAUNCHER)
+            return pm.queryIntentActivities(intent, 0).map { ri ->
+
+                AppEntity(
+                    label = ri.loadLabel(pm).toString(),
+                    packageName = ri.activityInfo.packageName,
+                    icon = ri.activityInfo.loadIcon(pm)
+                )
+            }.sortedBy { it.label.lowercase() }
+        }
     }
 
-    override fun homeDataFlow(): Flow<Unit> = _dataTrigger
+    private val appSelected = MutableStateFlow(0L)
 
-    // In-memory cache cho getSelectedPackages() — tránh Gson deserialize mỗi lần đọc.
-    // Được invalidate khi saveSelectedPackages() được gọi.
-    @Volatile
-    private var cachedSelectedPackages: List<String>? = null
 
-    // Cache kết quả isDefaultApp() — mỗi lần check tốn 6-7 binder IPC calls.
-    // Default apps gần như không đổi trong một session; cache tránh gọi lại mỗi 500ms.
-    // Dùng ConcurrentHashMap vì read từ nhiều thread (Worker + ViewModel IO), write từ
-    // broadcast receiver (main) khi có PACKAGE_ADDED/REMOVED.
     private val defaultAppCache = ConcurrentHashMap<String, Boolean>(16)
 
-    // Cache list installed apps + icon. Query PackageManager + loadIcon() cho ~100 app
-    // có thể tốn 500ms–2s trên máy yếu; cache giữ lại giữa các lần navigate.
-    // Invalidate khi có broadcast PACKAGE_ADDED/REMOVED/REPLACED/CHANGED.
-    @Volatile
-    private var cachedInstalledApps: List<AppEntity>? = null
-
-    // Cache app hiện tại (chính app này) — label/package/icon gần như không đổi runtime.
     @Volatile
     private var cachedCurrentApp: AppEntity? = null
 
-    // Broadcast receiver theo dõi thay đổi package để invalidate 2 cache trên
-    // và bắn _dataTrigger cho UI refresh danh sách.
-    private val packageChangeReceiver = object : BroadcastReceiver() {
 
-        override fun onReceive(ctx: Context?, intent: Intent?) {
+    override fun getAllAppFlow(): Flow<List<AppEntity>> {
 
-            val action = intent?.action ?: return
-            // Bỏ qua thay đổi của chính app này để tránh vòng lặp không cần thiết.
-            val changedPackage = intent.data?.schemeSpecificPart
-            if (changedPackage != null && changedPackage == context.packageName) return
-
-            if (BuildConfig.DEBUG) {
-
-                Log.d("AppRepositoryImpl", "packageChangeReceiver: action=$action pkg=$changedPackage")
-            }
-
-            invalidateAppCaches()
-            _dataTrigger.tryEmit(Unit)
-        }
-    }
-
-    init {
-
-        registerPackageChangeReceiver()
-    }
-
-    private fun registerPackageChangeReceiver() {
-
-        // Package broadcasts đòi hỏi data scheme "package" trong filter.
-        val filter = IntentFilter().apply {
-
-            addAction(Intent.ACTION_PACKAGE_ADDED)
-            addAction(Intent.ACTION_PACKAGE_REMOVED)
-            addAction(Intent.ACTION_PACKAGE_REPLACED)
-            addAction(Intent.ACTION_PACKAGE_CHANGED)
-            addDataScheme("package")
-        }
-        // Từ API 33 (T) cần chỉ định exported explicit. Đây là broadcast hệ thống nên
-        // đăng ký RECEIVER_NOT_EXPORTED không phù hợp — hệ thống broadcast không đi kèm
-        // caller package của app khác. Dùng try/catch để an toàn đa version.
-        try {
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-
-                context.registerReceiver(packageChangeReceiver, filter, Context.RECEIVER_EXPORTED)
-            } else {
-
-                @Suppress("UnspecifiedRegisterReceiverFlag")
-                context.registerReceiver(packageChangeReceiver, filter)
-            }
-        } catch (e: Exception) {
-
-            Log.w("AppRepositoryImpl", "Failed to register packageChangeReceiver", e)
-        }
-    }
-
-    private fun invalidateAppCaches() {
-
-        cachedInstalledApps = null
-        cachedCurrentApp = null
-        defaultAppCache.clear()
-    }
-
-    override fun getInstalledApps(): List<AppEntity> {
-
-        // Trả cache nếu đã có — tránh query PackageManager + loadIcon() lặp lại.
-        cachedInstalledApps?.let { return it }
-
-        val pm = context.packageManager
-        val apps = mutableListOf<AppEntity>()
-        val i = Intent(Intent.ACTION_MAIN, null)
-        i.addCategory(Intent.CATEGORY_LAUNCHER)
-        val allApps = pm.queryIntentActivities(i, 0)
-        for (ri in allApps) {
-
-            apps.add(
-                AppEntity(
-                    ri.loadLabel(pm).toString(),
-                    ri.activityInfo.packageName,
-                    ri.activityInfo.loadIcon(pm)
-                )
-            )
-        }
-        val sorted = apps.sortedBy { it.label.lowercase() }
-        cachedInstalledApps = sorted
-        return sorted
+        return appAll.asFlow()
     }
 
     override fun getCurrentApp(): AppEntity {
@@ -504,22 +595,25 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
         return entity
     }
 
-    override fun getSelectedPackages(): List<String> {
+    override fun getSelectedPackagesFlow(): Flow<List<String>> {
 
-        // Trả về cache nếu đã có, tránh Gson.fromJson() mỗi lần gọi
-        cachedSelectedPackages?.let { 
+        return appSelected.map {
+            readSelectedPackages()
+        }.flowOn(Dispatchers.Default)
+    }
 
-            return it 
-        }
+    /**
+     * Đọc list package đã chọn từ SharedPreferences.
+     * Chỉ dùng nội bộ — bên ngoài đi qua getSelectedPackagesFlow().
+     */
+    private fun readSelectedPackages(): List<String> {
 
-        val result = when (val data = sharedPrefs.all[KEY_SELECTED_APPS]) {
+        return when (val data = sharedPrefs.all[KEY_SELECTED_APPS]) {
 
             is String -> parseSelectedPackages(data)
             is Set<*> -> data.filterIsInstance<String>()
             else -> emptyList()
         }
-        cachedSelectedPackages = result
-        return result
     }
 
     private fun parseSelectedPackages(data: String): List<String> {
@@ -541,8 +635,7 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
 
             putString(KEY_SELECTED_APPS, json) 
         }
-        cachedSelectedPackages = packages  // cập nhật cache ngay, không cần đọc lại
-        _dataTrigger.tryEmit(Unit)
+        appSelected.value = System.currentTimeMillis()
     }
 
     override fun isDefaultApp(packageName: String): Boolean {

@@ -13,16 +13,38 @@ import com.simple.launcher.retirement.domain.repository.AppRepository
 import com.simple.launcher.retirement.domain.repository.PreferenceRepository
 import com.simple.launcher.retirement.presentation.app_block.BlockActivity
 import com.simple.launcher.retirement.presentation.services.worker.BackgroundWorker
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
 
 class AppMonitoringWorker(context: Context) : BackgroundWorker(context) {
 
     private var handlerThread: HandlerThread? = null
     private var handler: Handler? = null
 
+    private var resolvedPackageCurrent: String? = null
+
+    // Snapshot của selected packages, cập nhật liên tục từ getSelectedPackagesFlow().
+    // Đọc từ Handler thread trong checkForegroundApp() nên phải @Volatile.
+    @Volatile
+    private var allowedPackages: List<String> = emptyList()
+
     private val appRepository = AppRepository.instance
     private val powerManager = context.getSystemService(Context.POWER_SERVICE) as PowerManager
     private val usageStatsManager = context.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
+
+    override fun attach(scope: CoroutineScope) {
+
+        super.attach(scope)
+        // Collect selected packages theo dõi thay đổi thay vì đọc đồng bộ mỗi lần poll.
+        scope.launch {
+
+            appRepository.getSelectedPackagesFlow().collect { packages ->
+
+                allowedPackages = packages
+            }
+        }
+    }
 
     private val monitorRunnable = object : Runnable {
 
@@ -82,11 +104,15 @@ class AppMonitoringWorker(context: Context) : BackgroundWorker(context) {
         if (isKeyguardVisible) return
 
         val resolvedPackage = foregroundPackage ?: return
+
+        if (resolvedPackageCurrent == resolvedPackage) return
+        resolvedPackageCurrent = resolvedPackage
+
         if (shouldIgnorePackage(resolvedPackage)) return
 
         logDebug("Foreground App detected: $resolvedPackage")
 
-        val allowedApps = appRepository.getSelectedPackages()
+        val allowedApps = allowedPackages
         if (allowedApps.isEmpty()) return
         if (allowedApps.contains(resolvedPackage)) return
 

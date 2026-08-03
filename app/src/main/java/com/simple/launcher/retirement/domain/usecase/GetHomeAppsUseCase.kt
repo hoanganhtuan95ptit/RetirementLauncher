@@ -5,27 +5,24 @@ import com.simple.launcher.retirement.domain.model.HomeContentEntity
 import com.simple.launcher.retirement.domain.repository.AppRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.map
 
 class GetHomeAppsUseCase(
     private val appRepository: AppRepository,
 ) {
 
-    fun invoke(): Flow<List<HomeContentEntity.App>> = appRepository.homeDataFlow().map {
+    fun invoke(): Flow<List<HomeContentEntity.App>> = combine(
+        appRepository.getAllAppFlow(),
+        appRepository.getSelectedPackagesFlow()
+    ) { allApps, selectedPackages ->
 
-        buildHomeApps()
-    }.flowOn(Dispatchers.IO)
-
-    private fun buildHomeApps(): List<HomeContentEntity.App> {
-
-        val allApps = appRepository.getInstalledApps()
-        val selectedPackages = appRepository.getSelectedPackages()
         val apps = createSelectedHomeApps(allApps, selectedPackages).toMutableList()
 
         appendCurrentAppIfMissing(apps)
-        return apps
-    }
+
+        apps
+    }.flowOn(Dispatchers.IO)
 
     private fun createSelectedHomeApps(
         allApps: List<AppEntity>,

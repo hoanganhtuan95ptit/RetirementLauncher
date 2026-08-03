@@ -32,6 +32,7 @@ import com.simple.launcher.retirement.utils.permission.PermissionManager
 import com.simple.ui.precompute.image.setImage
 import com.simple.ui.precompute.text.setText
 import kotlinx.coroutines.flow.filterIsInstance
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 
 class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {

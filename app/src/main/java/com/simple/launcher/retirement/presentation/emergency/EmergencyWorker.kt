@@ -11,12 +11,15 @@ import android.telephony.TelephonyManager
 import android.util.Log
 import androidx.core.content.ContextCompat
 import com.simple.launcher.retirement.BuildConfig
+import com.simple.launcher.retirement.domain.model.ContactEntity
 import com.simple.launcher.retirement.domain.repository.ContactRepository
 import com.simple.launcher.retirement.domain.repository.PreferenceRepository
 import com.simple.launcher.retirement.presentation.emergency.utils.EmergencyUtils
 import com.simple.launcher.retirement.presentation.services.worker.BackgroundWorker
 import com.simple.launcher.retirement.utils.permission.PermissionManager
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
 
 /**
  * Worker theo doi muc do tuong tac voi thiet bi de tu dong goi lien he khan cap
@@ -29,6 +32,23 @@ class EmergencyWorker(context: Context) : BackgroundWorker(context) {
     private val contactRepository = ContactRepository.instance
     private val telephonyManager = context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
     private val telecomManager = context.getSystemService(Context.TELECOM_SERVICE) as TelecomManager
+
+    // Snapshot của contact được chọn, cập nhật liên tục từ getSelectedContactsFlow().
+    // Đọc từ Handler thread trong callNextEmergencyContactIfPossible() nên @Volatile.
+    @Volatile
+    private var selectedContacts: List<ContactEntity> = emptyList()
+
+    override fun attach(scope: CoroutineScope) {
+
+        super.attach(scope)
+        scope.launch {
+
+            contactRepository.getSelectedContactsFlow().collect { contacts ->
+
+                selectedContacts = contacts
+            }
+        }
+    }
 
     private var isStarted = false
     private var isSosSessionActive = false
@@ -179,7 +199,7 @@ class EmergencyWorker(context: Context) : BackgroundWorker(context) {
 
     private fun callNextEmergencyContactIfPossible() {
 
-        val contacts = contactRepository.getSelectedContacts()
+        val contacts = selectedContacts
         logDebug {
 
             "callNextEmergencyContactIfPossible: contactCount=${contacts.size}, " +

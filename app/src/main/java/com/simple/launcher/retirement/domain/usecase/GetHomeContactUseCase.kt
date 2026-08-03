@@ -14,17 +14,10 @@ class GetHomeContactUseCase {
         ContactRepository.instance
     }
 
-    fun invoke(): Flow<List<HomeContentEntity.Contact>> = contactRepository.homeDataFlow().map {
-
-        buildHomeContacts()
-    }.flowOn(Dispatchers.IO)
-
-    private fun buildHomeContacts(): List<HomeContentEntity.Contact> {
-
-        return contactRepository
-            .getSelectedContacts()
-            .map { HomeContentEntity.Contact(it) }
-    }
+    fun invoke(): Flow<List<HomeContentEntity.Contact>> = contactRepository
+        .getSelectedContactsFlow()
+        .map { contacts -> contacts.map { HomeContentEntity.Contact(it) } }
+        .flowOn(Dispatchers.IO)
 
     companion object {
 

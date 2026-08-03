@@ -9,6 +9,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.simple.adapter.utils.attachAdapter
 import com.simple.adapter.utils.submitListAndAwait
 import com.simple.deeplink.Deeplink
@@ -29,6 +30,8 @@ import com.simple.launcher.retirement.utils.exts.observe
 import com.simple.ui.precompute.image.setImage
 import com.simple.ui.precompute.text.setText
 import kotlinx.coroutines.flow.filterIsInstance
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.launch
 
 class AppListFragment : BaseFragment<FragmentAppListBinding>() {
 
@@ -81,15 +84,13 @@ class AppListFragment : BaseFragment<FragmentAppListBinding>() {
 
             navigateToReorder()
         }
-
-        viewModel.loadApps()
     }
 
     override fun observeData() {
 
         super.observeData()
 
-        viewModel.background.filterNotNull()observe(this) { background ->
+        viewModel.background.filterNotNull().observe(this) { background ->
 
             val binding = binding ?: return@observe
 
@@ -148,25 +149,21 @@ class AppListFragment : BaseFragment<FragmentAppListBinding>() {
         val binding = binding ?: return
         binding.layoutSearch.etSearch.setText("")
 
-        val currentSelected = viewModel.getAllSelectedIds()
-        if (currentSelected.isEmpty()) {
+        if (viewModel.getAllSelectedIds().isEmpty()) {
 
             Toast.makeText(context, R.string.app_list_empty_error, Toast.LENGTH_SHORT).show()
             return
         }
 
-        // Lấy danh sách đã lưu để giữ đúng thứ tự cũ
-        val savedIds = com.simple.launcher.retirement.domain.repository.AppRepository.instance.getSelectedPackages()
+        // Đọc thứ tự cũ (từ SharedPreferences qua flow) ở background, rồi mới navigate.
+        viewLifecycleOwner.lifecycleScope.launch {
 
-        // 1. Giữ lại những app cũ vẫn đang được chọn (đúng thứ tự cũ)
-        val orderedIds = savedIds.filter { it in currentSelected }.toMutableList()
-        // 2. Thêm những app mới được chọn vào cuối
-        orderedIds.addAll(currentSelected.filter { it !in savedIds })
-
-        sendReorderAppsDeeplink(
-            orderedIds,
-            mapOf(DeepLinks.Extras.IS_FLOW_SETUP to isFlowSetup)
-        )
+            val orderedIds = viewModel.buildOrderedSelectedIds()
+            sendReorderAppsDeeplink(
+                orderedIds,
+                mapOf(DeepLinks.Extras.IS_FLOW_SETUP to isFlowSetup)
+            )
+        }
     }
 }
 
