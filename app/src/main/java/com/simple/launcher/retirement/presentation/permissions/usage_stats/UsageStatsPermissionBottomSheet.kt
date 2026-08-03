@@ -35,6 +35,7 @@ class UsageStatsPermissionBottomSheet : BaseBottomSheetDialogFragment<BottomShee
     private val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
 
         if (PermissionManager.hasUsageStatsPermission()) {
+
             permissionGranted = true
             AppEventBus.post(AppEvent.PermissionAccept)
             dismiss()
@@ -42,10 +43,12 @@ class UsageStatsPermissionBottomSheet : BaseBottomSheetDialogFragment<BottomShee
     }
 
     override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?): BottomSheetUsageStatsPermissionBinding {
+
         return BottomSheetUsageStatsPermissionBinding.inflate(inflater, container, false)
     }
 
     override fun setupViews(view: View, savedInstanceState: Bundle?) {
+
         super.setupViews(view, savedInstanceState)
 
         val binding = binding ?: return
@@ -61,6 +64,7 @@ class UsageStatsPermissionBottomSheet : BaseBottomSheetDialogFragment<BottomShee
         binding.btnGrant.root.setOnSafeClickListener {
 
             if (viewModel.isAgreed.value) {
+
                 requestUsageStatsPermission()
             }
         }
@@ -72,6 +76,7 @@ class UsageStatsPermissionBottomSheet : BaseBottomSheetDialogFragment<BottomShee
     }
 
     override fun observeData() {
+
         super.observeData()
 
         viewModel.title.observe(this) { title ->
@@ -155,18 +160,22 @@ class UsageStatsPermissionBottomSheet : BaseBottomSheetDialogFragment<BottomShee
     }
 
     private fun requestUsageStatsPermission() {
+
         startForResult.launch(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS))
     }
 
     override fun onDismiss(dialog: DialogInterface) {
+
         super.onDismiss(dialog)
         // Chỉ post Cancel khi người dùng thực sự huỷ (không phải sau khi grant permission)
         if (!permissionGranted) {
+
             AppEventBus.post(AppEvent.PermissionCancel)
         }
     }
 
     companion object {
+
         const val TAG = "UsageStatsPermissionBottomSheet"
     }
 }

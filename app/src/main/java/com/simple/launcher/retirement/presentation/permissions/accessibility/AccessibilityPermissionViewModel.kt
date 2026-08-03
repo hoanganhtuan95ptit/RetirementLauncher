@@ -81,6 +81,7 @@ class AccessibilityPermissionViewModel : BaseViewModel() {
             backgroundColor = backgroundColor,
             isEnabled = isAgreed
         ).run {
+
             if (isAgreed) this
             else copy(background = background?.copy(backgroundColor = backgroundColor.withAlpha(0.5f))?.refresh())
         }

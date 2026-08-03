@@ -58,6 +58,7 @@ data class SettingItem(
     )
 
     companion object {
+
         // ── Item IDs ─────────────────────────────────────────────────────────
         const val ID_PIN = 1
         const val ID_APP_LIST = 2
@@ -88,14 +89,17 @@ data class SettingItem(
 class SettingsAdapter : ViewItemAdapter<SettingItem, ItemSettingBinding>() {
 
     override val viewItemClass: Class<SettingItem> by lazy {
+
         SettingItem::class.java
     }
 
     override fun createViewBinding(layoutInflater: LayoutInflater, parent: ViewGroup, viewType: Int): ItemSettingBinding {
+
         return ItemSettingBinding.inflate(layoutInflater, parent, false)
     }
 
     override fun createViewHolder(parent: ViewGroup, viewType: Int): BaseBindingViewHolder<ItemSettingBinding> {
+
         val viewHolder = super.createViewHolder(parent, viewType)
 
         viewHolder.binding.swSetting.disableUserChange()
@@ -111,38 +115,47 @@ class SettingsAdapter : ViewItemAdapter<SettingItem, ItemSettingBinding>() {
     }
 
     override fun onBindViewHolder(binding: ItemSettingBinding, viewType: Int, position: Int, item: SettingItem, payloads: List<String>) {
+
         super.onBindViewHolder(binding, viewType, position, item, payloads)
 
         if (payloads.isEmpty() || payloads.contains("title")) {
+
             binding.tvSettingTitle.setText(item.title)
         }
 
         if (payloads.isEmpty() || payloads.contains("description")) {
+
             binding.tvSettingDesc.isVisible = item.description != null
             binding.tvSettingDesc.setText(item.description)
         }
 
         if (payloads.isEmpty() || payloads.contains("icon")) {
+
             binding.ivSettingIcon.setImage(item.icon)
         }
 
         if (payloads.isEmpty() || payloads.contains("iconBackground")) {
+
             binding.ivSettingIcon.setBackground(item.iconBackground)
         }
 
         if (payloads.isEmpty() || payloads.contains("isSwitch")) {
+
             binding.swSetting.isVisible = item.isSwitch
         }
 
         if (payloads.isEmpty() || payloads.contains("isChecked")) {
+
             binding.swSetting.isChecked = item.isChecked
         }
 
         if (payloads.isEmpty() || payloads.contains("background")) {
+
             binding.vBackground.setBackground(item.background)
         }
 
         if (payloads.isEmpty() || payloads.contains("isEnabled")) {
+
             binding.root.alpha = if (item.isEnabled) 1f else 0.5f
         }
     }

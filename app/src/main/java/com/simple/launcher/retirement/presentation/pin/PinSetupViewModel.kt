@@ -24,6 +24,7 @@ import kotlinx.coroutines.flow.StateFlow
 class PinSetupViewModel : BaseViewModel() {
 
     enum class State {
+
         ENTER_NEW_PIN,
         CONFIRM_NEW_PIN,
         SUCCESS
@@ -54,6 +55,7 @@ class PinSetupViewModel : BaseViewModel() {
 
         val color = resources.textColorPrimary
         val resId = when (state) {
+
             State.ENTER_NEW_PIN -> R.string.pin_enter_new
             State.CONFIRM_NEW_PIN -> R.string.pin_confirm_new
             State.SUCCESS -> R.string.pin_enter_new
@@ -102,28 +104,29 @@ class PinSetupViewModel : BaseViewModel() {
         _error.value = null
 
         when (_state.value) {
-            State.ENTER_NEW_PIN -> {
 
-                tempPin = pin
-                _state.value = State.CONFIRM_NEW_PIN
-                _actionRes.value = R.string.save
-            }
-
-            State.CONFIRM_NEW_PIN -> {
-
-                if (pin == tempPin) {
-
-                    SavePinUseCase.instance(pin)
-                    _state.value = State.SUCCESS
-                } else {
-
-                    _error.value = R.string.pin_error_confirm_mismatch
-                }
-            }
-
-            else -> {
-
-            }
+            State.ENTER_NEW_PIN -> onEnterNewPin(pin)
+            State.CONFIRM_NEW_PIN -> onConfirmNewPin(pin)
+            else -> Unit
         }
+    }
+
+    private fun onEnterNewPin(pin: String) {
+
+        tempPin = pin
+        _state.value = State.CONFIRM_NEW_PIN
+        _actionRes.value = R.string.save
+    }
+
+    private fun onConfirmNewPin(pin: String) {
+
+        if (pin != tempPin) {
+
+            _error.value = R.string.pin_error_confirm_mismatch
+            return
+        }
+
+        SavePinUseCase.instance(pin)
+        _state.value = State.SUCCESS
     }
 }

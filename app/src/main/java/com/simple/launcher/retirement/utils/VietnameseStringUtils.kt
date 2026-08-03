@@ -29,8 +29,10 @@ object VietnameseStringUtils {
      * Bỏ toàn bộ dấu tiếng Việt, trả về chuỗi ASCII-friendly, giữ nguyên case.
      */
     fun removeDiacritics(input: String): String {
+
         val sb = StringBuilder(input.length)
         for (c in input) {
+
             sb.append(SPECIAL_CHARS[c] ?: c)
         }
         val normalized = Normalizer.normalize(sb.toString(), Normalizer.Form.NFD)
@@ -43,6 +45,7 @@ object VietnameseStringUtils {
      * @return `true` nếu `source` chứa `query` (case-insensitive, diacritics-insensitive).
      */
     fun containsIgnoreDiacritics(source: String, query: String): Boolean {
+
         // Fast path: so sánh trực tiếp trước (có dấu khớp có dấu)
         if (source.contains(query, ignoreCase = true)) return true
         // Slow path: bỏ dấu rồi so sánh
@@ -56,6 +59,7 @@ object VietnameseStringUtils {
      * Dùng để ưu tiên kết quả "khớp đầu" trước "chứa giữa/cuối".
      */
     fun startsWithIgnoreDiacritics(source: String, query: String): Boolean {
+
         if (source.startsWith(query, ignoreCase = true)) return true
         val normalizedSource = removeDiacritics(source).lowercase()
         val normalizedQuery = removeDiacritics(query).lowercase()
@@ -66,6 +70,7 @@ object VietnameseStringUtils {
      * Kiểm tra `source` có **khớp chính xác** `query` không (diacritics-insensitive).
      */
     fun equalsIgnoreDiacritics(source: String, query: String): Boolean {
+
         if (source.equals(query, ignoreCase = true)) return true
         val normalizedSource = removeDiacritics(source).lowercase()
         val normalizedQuery = removeDiacritics(query).lowercase()

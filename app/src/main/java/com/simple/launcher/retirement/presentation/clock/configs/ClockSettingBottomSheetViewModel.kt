@@ -176,25 +176,31 @@ class ClockSettingBottomSheetViewModel : BaseViewModel() {
     val isLunarCalendarEnabled = _isLunarCalendarEnabled.asStateFlow()
 
     fun toggle24HourFormat(is24Hour: Boolean) {
+
         _is24HourFormat.value = is24Hour
         if (is24Hour) {
+
             _isAmPmEnabled.value = false
         }
     }
 
     fun toggleAmPmEnabled(enabled: Boolean) {
+
         _isAmPmEnabled.value = enabled
     }
 
     fun toggleSolarCalendarEnabled(enabled: Boolean) {
+
         _isSolarCalendarEnabled.value = enabled
     }
 
     fun toggleLunarCalendarEnabled(enabled: Boolean) {
+
         _isLunarCalendarEnabled.value = enabled
     }
 
     fun onSave() {
+
         preferenceRepository.set24HourFormat(_is24HourFormat.value)
         preferenceRepository.setAmPmEnabled(_isAmPmEnabled.value)
         preferenceRepository.setSolarCalendarEnabled(_isSolarCalendarEnabled.value)

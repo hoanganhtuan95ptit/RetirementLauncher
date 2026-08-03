@@ -24,17 +24,21 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     val viewModel: HomeViewModel by activityViewModels<HomeViewModel>()
 
     override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentHomeBinding {
+
         return FragmentHomeBinding.inflate(inflater, container, false)
     }
 
     override fun setupViews(view: View, savedInstanceState: Bundle?) {
+
         super.setupViews(view, savedInstanceState)
 
         val binding = binding ?: return
 
         val layoutManager = GridLayoutManager(requireContext(), HomeItem.TOTAL_COLUMNS)
         layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+
             override fun getSpanSize(position: Int): Int {
+
                 return ((binding.rvApps.adapter as? MultiAdapter)?.currentList?.getOrNull(position) as? HomeItem)?.spanSize ?: 2
             }
         }
@@ -42,8 +46,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     override fun observeData() {
+
         super.observeData()
         with(viewModel) {
+
             viewItemList.attachAdapter().observe(viewLifecycleOwner) { (items, adapters) ->
                 val binding = binding ?: return@observe
                 binding.rvApps.submitListAndAwait(items, adapters, true)
@@ -61,11 +67,13 @@ class HomeDeeplinkHandler : DeeplinkHandler {
 
         val fragmentManager = fragmentActivity.supportFragmentManager
         while (fragmentManager.backStackEntryCount > 0) {
+
             fragmentManager.popBackStackImmediate()
         }
 
         val fragment = fragmentManager.findFragmentById(R.id.fragment_container)
         if (fragment != null) {
+
             fragmentManager.beginTransaction().remove(fragment).commit()
         }
 

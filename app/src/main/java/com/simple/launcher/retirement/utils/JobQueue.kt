@@ -17,7 +17,9 @@ class JobQueue {
     private val queue = Channel<Job>(Channel.UNLIMITED)
 
     init { 
+
         scope.launch(Dispatchers.Default) {
+
             for (job in queue) job.join()
         }
     }
@@ -26,13 +28,16 @@ class JobQueue {
         context: CoroutineContext = EmptyCoroutineContext,
         block: suspend CoroutineScope.() -> Unit
     ) {
+
         synchronized(this) {
+
             val job = scope.launch(context, CoroutineStart.LAZY, block)
             queue.trySend(job)
         }
     }
 
     fun cancel() {
+
         queue.cancel()
         scope.cancel()
     }

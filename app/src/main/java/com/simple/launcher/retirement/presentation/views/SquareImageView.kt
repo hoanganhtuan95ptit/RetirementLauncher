@@ -11,6 +11,7 @@ class SquareImageView @JvmOverloads constructor(
 ) : AppCompatImageView(context, attrs, defStyleAttr) {
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
         val side = minOf(measuredWidth, measuredHeight)
         setMeasuredDimension(side, side)

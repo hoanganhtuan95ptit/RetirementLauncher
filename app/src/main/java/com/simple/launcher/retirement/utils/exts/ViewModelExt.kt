@@ -30,9 +30,11 @@ fun <T1, R> ViewModel.combineState(
     context: CoroutineContext = coroutineExceptionHandler + Dispatchers.IO,
     transform: suspend MutableStateFlow<R>.(T1) -> Unit
 ): StateFlow<R> {
+
     val state = MutableStateFlow(initialValue)
     flow1.flatMapLatest { v1 ->
         flow<Unit> {
+
             state.transform(v1)
         }
     }
@@ -49,12 +51,14 @@ fun <T1, T2, R> ViewModel.combineState(
     context: CoroutineContext = coroutineExceptionHandler + Dispatchers.IO,
     transform: suspend MutableStateFlow<R>.(T1, T2) -> Unit
 ): StateFlow<R> {
+
     val state = MutableStateFlow(initialValue)
     combine(flow1, flow2) { v1, v2 ->
         v1 to v2
     }
         .flatMapLatest { (v1, v2) ->
             flow<Unit> {
+
                 state.transform(v1, v2)
             }
         }
@@ -72,12 +76,14 @@ fun <T1, T2, T3, R> ViewModel.combineState(
     context: CoroutineContext = coroutineExceptionHandler + Dispatchers.IO,
     transform: suspend MutableStateFlow<R>.(T1, T2, T3) -> Unit
 ): StateFlow<R> {
+
     val state = MutableStateFlow(initialValue)
     combine(flow1, flow2, flow3) { v1, v2, v3 ->
         Triple(v1, v2, v3)
     }
         .flatMapLatest { (v1, v2, v3) ->
             flow<Unit> {
+
                 state.transform(v1, v2, v3)
             }
         }
@@ -96,11 +102,13 @@ fun <T1, T2, T3, T4, R> ViewModel.combineState(
     context: CoroutineContext = coroutineExceptionHandler + Dispatchers.IO,
     transform: suspend MutableStateFlow<R>.(T1, T2, T3, T4) -> Unit
 ): StateFlow<R> {
+
     val state = MutableStateFlow(initialValue)
     combine(flow1, flow2, flow3, flow4) { v1, v2, v3, v4 ->
         arrayOf(v1, v2, v3, v4)
     }.flatMapLatest { (v1, v2, v3, v4) ->
         flow<Unit> {
+
             @Suppress("UNCHECKED_CAST")
             state.transform(v1 as T1, v2 as T2, v3 as T3, v4 as T4)
         }
@@ -120,12 +128,14 @@ fun <T1, T2, T3, T4, T5, R> ViewModel.combineState(
     context: CoroutineContext = coroutineExceptionHandler + Dispatchers.IO,
     transform: suspend MutableStateFlow<R>.(T1, T2, T3, T4, T5) -> Unit
 ): StateFlow<R> {
+
     val state = MutableStateFlow(initialValue)
     combine(flow1, flow2, flow3, flow4, flow5) { v1, v2, v3, v4, v5 ->
         arrayOf(v1, v2, v3, v4, v5)
     }
         .flatMapLatest { (v1, v2, v3, v4, v5) ->
             flow<Unit> {
+
                 @Suppress("UNCHECKED_CAST")
                 state.transform(v1 as T1, v2 as T2, v3 as T3, v4 as T4, v5 as T5)
             }
@@ -147,6 +157,7 @@ fun <T1, T2, T3, T4, T5, T6, R> ViewModel.combineState(
     context: CoroutineContext = coroutineExceptionHandler + Dispatchers.IO,
     transform: suspend MutableStateFlow<R>.(T1, T2, T3, T4, T5, T6) -> Unit
 ): StateFlow<R> {
+
     val state = MutableStateFlow(initialValue)
     combine(
         combine(flow1, flow2, flow3) { t1, t2, t3 -> Triple(t1, t2, t3) },
@@ -156,6 +167,7 @@ fun <T1, T2, T3, T4, T5, T6, R> ViewModel.combineState(
     }
         .flatMapLatest { (t123, t456) ->
             flow<Unit> {
+
                 val (t1, t2, t3) = t123
                 val (t4, t5, t6) = t456
                 state.transform(t1, t2, t3, t4, t5, t6)
@@ -179,6 +191,7 @@ fun <T1, T2, T3, T4, T5, T6, T7, R> ViewModel.combineState(
     context: CoroutineContext = coroutineExceptionHandler + Dispatchers.IO,
     transform: suspend MutableStateFlow<R>.(T1, T2, T3, T4, T5, T6, T7) -> Unit
 ): StateFlow<R> {
+
     val state = MutableStateFlow(initialValue)
     combine(
         combine(flow1, flow2, flow3, flow4) { v1, v2, v3, v4 -> arrayOf(v1, v2, v3, v4) },
@@ -188,6 +201,7 @@ fun <T1, T2, T3, T4, T5, T6, T7, R> ViewModel.combineState(
     }
         .flatMapLatest { (v1234, v567) ->
             flow<Unit> {
+
                 val (v1, v2, v3, v4) = v1234
                 val (v5, v6, v7) = v567
                 @Suppress("UNCHECKED_CAST")
@@ -213,6 +227,7 @@ fun <T1, T2, T3, T4, T5, T6, T7, T8, R> ViewModel.combineState(
     context: CoroutineContext = coroutineExceptionHandler + Dispatchers.IO,
     transform: suspend MutableStateFlow<R>.(T1, T2, T3, T4, T5, T6, T7, T8) -> Unit
 ): StateFlow<R> {
+
     val state = MutableStateFlow(initialValue)
     combine(
         combine(flow1, flow2, flow3, flow4) { v1, v2, v3, v4 -> arrayOf(v1, v2, v3, v4) },
@@ -222,6 +237,7 @@ fun <T1, T2, T3, T4, T5, T6, T7, T8, R> ViewModel.combineState(
     }
         .flatMapLatest { (v1234, v5678) ->
             flow<Unit> {
+
                 val (v1, v2, v3, v4) = v1234
                 val (v5, v6, v7, v8) = v5678
                 @Suppress("UNCHECKED_CAST")
@@ -248,6 +264,7 @@ fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, R> ViewModel.combineState(
     context: CoroutineContext = coroutineExceptionHandler + Dispatchers.IO,
     transform: suspend MutableStateFlow<R>.(T1, T2, T3, T4, T5, T6, T7, T8, T9) -> Unit
 ): StateFlow<R> {
+
     val state = MutableStateFlow(initialValue)
     combine(
         combine(flow1, flow2, flow3, flow4, flow5) { v1, v2, v3, v4, v5 -> arrayOf(v1, v2, v3, v4, v5) },
@@ -257,6 +274,7 @@ fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, R> ViewModel.combineState(
     }
         .flatMapLatest { (v12345, v6789) ->
             flow<Unit> {
+
                 val (v1, v2, v3, v4, v5) = v12345
                 val (v6, v7, v8, v9) = v6789
                 @Suppress("UNCHECKED_CAST")

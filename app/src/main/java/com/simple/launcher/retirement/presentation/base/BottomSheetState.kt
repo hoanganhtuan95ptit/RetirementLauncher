@@ -8,7 +8,9 @@ data class BottomSheetState(
     val anchorBackground: Background? = null,
     val showAnchor: Boolean = false
 ) {
+
     companion object {
+
         fun empty() = BottomSheetState()
     }
 }

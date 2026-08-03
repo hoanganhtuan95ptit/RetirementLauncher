@@ -34,7 +34,9 @@ class OverlayPermissionBottomSheet : BaseBottomSheetDialogFragment<BottomSheetOv
     private var permissionGranted = false
 
     private val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+
         if (PermissionManager.hasOverlayPermission()) {
+
             permissionGranted = true
             AppEventBus.post(AppEvent.PermissionAccept)
             dismiss()
@@ -45,20 +47,24 @@ class OverlayPermissionBottomSheet : BaseBottomSheetDialogFragment<BottomSheetOv
         inflater: LayoutInflater,
         container: ViewGroup?
     ): BottomSheetOverlayPermissionBinding {
+
         return BottomSheetOverlayPermissionBinding.inflate(inflater, container, false)
     }
 
     override fun setupViews(view: View, savedInstanceState: Bundle?) {
+
         super.setupViews(view, savedInstanceState)
 
         val binding = binding ?: return
 
         binding.btnGrant.root.setOnSafeClickListener {
+
             requestOverlayPermission()
         }
     }
 
     override fun observeData() {
+
         super.observeData()
 
         viewModel.title.observe(this) { title ->
@@ -110,7 +116,9 @@ class OverlayPermissionBottomSheet : BaseBottomSheetDialogFragment<BottomSheetOv
     }
 
     private fun requestOverlayPermission() {
+
         if (PermissionManager.hasOverlayPermission()) {
+
             permissionGranted = true
             AppEventBus.post(AppEvent.PermissionAccept)
             dismiss()
@@ -122,14 +130,17 @@ class OverlayPermissionBottomSheet : BaseBottomSheetDialogFragment<BottomSheetOv
     }
 
     override fun onDismiss(dialog: DialogInterface) {
+
         super.onDismiss(dialog)
         // Chỉ post Cancel khi người dùng thực sự huỷ (không phải sau khi grant permission)
         if (!permissionGranted) {
+
             AppEventBus.post(AppEvent.PermissionCancel)
         }
     }
 
     companion object {
+
         const val TAG = "OverlayPermissionBottomSheet"
     }
 }

@@ -32,32 +32,40 @@ class StringService : ActivityCreatedService {
 
     private fun load(context: FragmentActivity) = context.lifecycleScope.launch(coroutineExceptionHandler + Dispatchers.Default) {
 
-        val resources = context.resources
-        val packageName = context.packageName
-
         val nameMap = mutableMapOf<String, String>()
         val idMap = mutableMapOf<Int, String>()
 
-        runCatching {
-
-            val stringClass = Class.forName("$packageName.R\$string")
-            stringClass.fields.forEach { field ->
-
-                runCatching {
-
-                    val resId = field.getInt(null)
-                    val value = resources.getString(resId)
-
-                    nameMap[field.name] = value
-                    idMap[resId] = field.name
-                }
-            }
-        }
+        collectStringResources(context, nameMap, idMap)
 
         idAndNameMap.clear()
         idAndNameMap.putAll(idMap)
 
         stringMapFlow.value = nameMap
+    }
+
+    private fun collectStringResources(
+        context: FragmentActivity,
+        nameMap: MutableMap<String, String>,
+        idMap: MutableMap<Int, String>
+    ) = runCatching {
+
+        val stringClass = Class.forName("${context.packageName}.R\$string")
+        stringClass.fields.forEach { field ->
+            readStringField(context, field, nameMap, idMap)
+        }
+    }
+
+    private fun readStringField(
+        context: FragmentActivity,
+        field: java.lang.reflect.Field,
+        nameMap: MutableMap<String, String>,
+        idMap: MutableMap<Int, String>
+    ) = runCatching {
+
+        val resId = field.getInt(null)
+        val value = context.resources.getString(resId)
+        nameMap[field.name] = value
+        idMap[resId] = field.name
     }
 }
 

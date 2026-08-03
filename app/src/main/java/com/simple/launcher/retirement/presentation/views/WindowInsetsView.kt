@@ -23,6 +23,7 @@ class WindowInsetsView @JvmOverloads constructor(
     val size = MediatorLiveData<SizeData>()
 
     init {
+
         ViewCompat.setOnApplyWindowInsetsListener(this) { _, insets ->
 
             val statusBars = insets.getInsets(WindowInsetsCompat.Type.statusBars())
@@ -52,6 +53,7 @@ fun Activity.listenerSize(): LiveData<WindowInsetsView.SizeData>? {
     val rootView = window.decorView.asObjectOrNull<ViewGroup>() ?: return null
 
     val windowInsetsView = rootView.findViewById(R.id.window_insets_view_item_id) ?: WindowInsetsView(this).apply {
+
         id = R.id.window_insets_view_item_id
         rootView.addView(this)
     }

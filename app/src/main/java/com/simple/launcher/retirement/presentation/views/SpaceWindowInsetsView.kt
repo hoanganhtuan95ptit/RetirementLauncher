@@ -23,6 +23,7 @@ class SpaceWindowInsetsView @JvmOverloads constructor(
     init {
 
         context.withStyledAttributes(attrs, R.styleable.SpaceWindowInsetsView) {
+
             applyStatusBars = getBoolean(R.styleable.SpaceWindowInsetsView_applyStatusBars, false)
             applyNavigationBars = getBoolean(R.styleable.SpaceWindowInsetsView_applyNavigationBars, false)
         }
@@ -34,13 +35,16 @@ class SpaceWindowInsetsView @JvmOverloads constructor(
 
             var height = 0
             if (applyStatusBars) {
+
                 height += statusBars.top
             }
             if (applyNavigationBars) {
+
                 height += navigationBars.bottom
             }
 
             updateLayoutParams {
+
                 this.height = height
             }
 

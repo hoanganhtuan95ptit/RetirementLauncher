@@ -21,6 +21,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
         enableEdgeToEdge()
 
         WindowCompat.getInsetsController(window, window.decorView).apply {
+
             // true = icon tối, phù hợp với nền sáng
             isAppearanceLightStatusBars = true
             isAppearanceLightNavigationBars = true
@@ -28,6 +29,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
         // Bỏ lớp nền mờ của navigation bar khi dùng chế độ 3 nút.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+
             window.isNavigationBarContrastEnforced = false
         }
 
@@ -42,6 +44,7 @@ abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
     open fun observeData() {}
 
     override fun onDestroy() {
+
         super.onDestroy()
         binding = null
     }

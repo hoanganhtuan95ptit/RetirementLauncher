@@ -18,6 +18,7 @@ class ClockSettingService : PluginSettingService() {
     private lateinit var viewModel: ClockSettingViewModel
 
     override fun setup(settingsFragment: SettingsFragment) {
+
         super.setup(settingsFragment)
 
         viewModel = settingsFragment.viewModels<ClockSettingViewModel>().value

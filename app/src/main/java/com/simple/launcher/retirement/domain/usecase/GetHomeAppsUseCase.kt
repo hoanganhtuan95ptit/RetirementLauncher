@@ -33,6 +33,7 @@ class GetHomeAppsUseCase(
     ): List<HomeContentEntity.App> {
 
         if (selectedPackages.isEmpty()) {
+
             return allApps
                 .map { HomeContentEntity.App(it) }
                 .sortedBy { it.entity.label.lowercase() }
@@ -55,6 +56,7 @@ class GetHomeAppsUseCase(
     companion object {
 
         val instance: GetHomeAppsUseCase by lazy {
+
             GetHomeAppsUseCase(AppRepository.instance)
         }
     }

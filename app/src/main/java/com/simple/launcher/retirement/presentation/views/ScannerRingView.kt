@@ -29,11 +29,13 @@ class ScannerRingView @JvmOverloads constructor(
     // ------- Paints -------
 
     private val trackPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+
         style = Paint.Style.STROKE
         color = ContextCompat.getColor(context, R.color.scanner_ring_track)
     }
 
     private val arcPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+
         style = Paint.Style.STROKE
         strokeCap = Paint.Cap.ROUND
     }
@@ -49,6 +51,7 @@ class ScannerRingView @JvmOverloads constructor(
 
     var ringState: RingState = RingState.IDLE
         set(value) {
+
             if (field == value) return
             field = value
             applyState(value)
@@ -57,20 +60,25 @@ class ScannerRingView @JvmOverloads constructor(
     // ------- State transitions -------
 
     private fun applyState(state: RingState) {
+
         stopAnimations()
         when (state) {
+
             RingState.IDLE -> {
+
                 arcPaint.color = ContextCompat.getColor(context, R.color.scanner_ring_idle)
                 sweepAngle = IDLE_SWEEP
                 startAngle = -90f
                 invalidate()
             }
             RingState.SCANNING -> {
+
                 arcPaint.color = ContextCompat.getColor(context, R.color.scanner_ring_scanning)
                 sweepAngle = SCAN_SWEEP
                 startSpinAnimation()
             }
             RingState.DONE -> {
+
                 arcPaint.color = ContextCompat.getColor(context, R.color.scanner_ring_done)
                 startAngle = -90f
                 startFillAnimation()
@@ -79,11 +87,14 @@ class ScannerRingView @JvmOverloads constructor(
     }
 
     private fun startSpinAnimation() {
+
         spinAnimator = ValueAnimator.ofFloat(0f, 360f).apply {
+
             duration = 1400
             repeatCount = ValueAnimator.INFINITE
             interpolator = LinearInterpolator()
             addUpdateListener {
+
                 startAngle = -90f + it.animatedValue as Float
                 invalidate()
             }
@@ -92,10 +103,13 @@ class ScannerRingView @JvmOverloads constructor(
     }
 
     private fun startFillAnimation() {
+
         fillAnimator = ValueAnimator.ofFloat(sweepAngle, 360f).apply {
+
             duration = 700
             interpolator = LinearInterpolator()
             addUpdateListener {
+
                 sweepAngle = it.animatedValue as Float
                 invalidate()
             }
@@ -104,6 +118,7 @@ class ScannerRingView @JvmOverloads constructor(
     }
 
     private fun stopAnimations() {
+
         spinAnimator?.cancel(); spinAnimator = null
         fillAnimator?.cancel(); fillAnimator = null
     }
@@ -111,6 +126,7 @@ class ScannerRingView @JvmOverloads constructor(
     // ------- Drawing -------
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+
         val strokeWidth = 20.dp().toFloat()
         trackPaint.strokeWidth = strokeWidth
         arcPaint.strokeWidth = strokeWidth
@@ -119,6 +135,7 @@ class ScannerRingView @JvmOverloads constructor(
     }
 
     override fun onDraw(canvas: Canvas) {
+
         // Track ring
         canvas.drawArc(oval, -90f, 360f, false, trackPaint)
         // Animated arc
@@ -126,11 +143,13 @@ class ScannerRingView @JvmOverloads constructor(
     }
 
     override fun onDetachedFromWindow() {
+
         stopAnimations()
         super.onDetachedFromWindow()
     }
 
     companion object {
+
         private const val IDLE_SWEEP = 290f
         private const val SCAN_SWEEP = 90f
     }

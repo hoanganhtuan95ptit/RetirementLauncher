@@ -18,15 +18,18 @@ import kotlinx.coroutines.flow.StateFlow
 class BackgroundLinearLayout(context: Context, attrs: AttributeSet?) : LinearLayout(context, attrs) {
 
     private val viewModel: BackgroundViewModel by lazy {
+
         ViewModelProvider(findViewTreeViewModelStoreOwner()!!)["PhoneticLayout:$id", BackgroundViewModel::class.java]
     }
 
     override fun onAttachedToWindow() {
+
         super.onAttachedToWindow()
 
         val lifecycleOwner = findViewTreeLifecycleOwner() ?: return
 
         viewModel.background2.observe(lifecycleOwner) {
+
             setBackground(it)
         }
     }

@@ -14,21 +14,25 @@ open class OutlineFrameLayout @JvmOverloads constructor(
     override val outline = OutlineDelegate(this, context, attrs)
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+
         super.onSizeChanged(w, h, oldw, oldh)
         outline.onSizeChanged(w, h)
     }
 
     override fun onAttachedToWindow() {
+
         super.onAttachedToWindow()
         outline.onAttachedToWindow()
     }
 
     override fun onDetachedFromWindow() {
+
         outline.onDetachedFromWindow()
         super.onDetachedFromWindow()
     }
 
     override fun onDraw(canvas: Canvas) {
+
         super.onDraw(canvas)
         outline.onDraw(canvas)
     }

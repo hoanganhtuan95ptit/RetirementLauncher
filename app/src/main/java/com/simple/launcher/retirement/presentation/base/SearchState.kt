@@ -16,7 +16,9 @@ data class SearchState(
     val background: Background,
     val clearIcon: BigImage? = null
 ) {
+
     companion object {
+
         fun empty() = SearchState(
             hint = "",
             textColor = 0,

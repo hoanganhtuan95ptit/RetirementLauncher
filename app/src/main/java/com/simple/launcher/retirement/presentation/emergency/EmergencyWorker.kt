@@ -37,23 +37,27 @@ class EmergencyWorker(context: Context) : BackgroundWorker(context) {
 
     private val checkRunnable = object : Runnable {
 
-        override fun run() {
+        override fun run() = runCheckCycle(this)
+    }
 
-            if (!isStarted) {
+    private fun runCheckCycle(runnable: Runnable) {
 
-                logDebug { "checkRunnable ignored because worker is stopped" to null }
-                return
-            }
+        if (!isStarted) {
 
-            // Poll dinh ky thay vi dung alarm vi worker nay chi can chay khi background service dang bat.
-            checkEmergencyTriggerConditions()
-            if (isStarted) {
-
-                val nextInterval = resolveNextPollingInterval()
-                logDebug { "Scheduling next inactivity check in ${nextInterval / 1000}s" to null }
-                handler.postDelayed(this, nextInterval)
-            }
+            logDebug { "checkRunnable ignored because worker is stopped" to null }
+            return
         }
+
+        // Poll dinh ky thay vi dung alarm vi worker nay chi can chay khi background service dang bat.
+        checkEmergencyTriggerConditions()
+        if (isStarted) scheduleNextCheck(runnable)
+    }
+
+    private fun scheduleNextCheck(runnable: Runnable) {
+
+        val nextInterval = resolveNextPollingInterval()
+        logDebug { "Scheduling next inactivity check in ${nextInterval / 1000}s" to null }
+        handler.postDelayed(runnable, nextInterval)
     }
 
     override fun observeEnabled(): Flow<Boolean> = repository.emergencyCallEnabledFlow()
@@ -199,36 +203,43 @@ class EmergencyWorker(context: Context) : BackgroundWorker(context) {
         // Thu lan luot tung contact de tranh ket o mot so bi thieu hoac khong the goi.
         while (sosCallAttemptCount < contacts.size) {
 
-            val nextIndex = resolveNextContactIndex(contacts.size)
-            val phoneNumber = contacts.getOrNull(nextIndex)?.phoneNumber
-
-            // Luu index truoc khi goi de lan sau tiep tuc qua contact ke tiep trong vong tron.
-            repository.setLastEmergencyIndex(nextIndex)
-            sosCallAttemptCount++
-            logDebug {
-
-                "Trying emergency contact index=$nextIndex, " +
-                    "attempt=$sosCallAttemptCount/${contacts.size}, " +
-                    "phone=${maskPhoneNumberForLog(phoneNumber)}" to null
-            }
-
-            if (phoneNumber.isNullOrEmpty()) {
-
-                logDebug { "Contact at index=$nextIndex has empty phone number, skipping" to null }
-                continue
-            }
-
-            if (!placeEmergencyCall(phoneNumber)) {
-
-                logDebug { "Failed to call contact at index=$nextIndex, trying next contact" to null }
-                continue
-            }
-
-            return
+            if (tryCallNextContact(contacts)) return
         }
 
         logDebug { "Unable to place emergency call to any selected contact" to null }
         finishSosCallingSession()
+    }
+
+    private fun tryCallNextContact(
+        contacts: List<com.simple.launcher.retirement.domain.model.ContactEntity>
+    ): Boolean {
+
+        val nextIndex = resolveNextContactIndex(contacts.size)
+        val phoneNumber = contacts.getOrNull(nextIndex)?.phoneNumber
+
+        // Luu index truoc khi goi de lan sau tiep tuc qua contact ke tiep trong vong tron.
+        repository.setLastEmergencyIndex(nextIndex)
+        sosCallAttemptCount++
+        logDebug {
+
+            "Trying emergency contact index=$nextIndex, " +
+                "attempt=$sosCallAttemptCount/${contacts.size}, " +
+                "phone=${maskPhoneNumberForLog(phoneNumber)}" to null
+        }
+
+        if (phoneNumber.isNullOrEmpty()) {
+
+            logDebug { "Contact at index=$nextIndex has empty phone number, skipping" to null }
+            return false
+        }
+
+        if (!placeEmergencyCall(phoneNumber)) {
+
+            logDebug { "Failed to call contact at index=$nextIndex, trying next contact" to null }
+            return false
+        }
+
+        return true
     }
 
     private fun resolveNextContactIndex(contactCount: Int): Int {

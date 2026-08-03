@@ -53,6 +53,7 @@ class SOSCardAdapter : ViewItemAdapter<SOSCardViewItem, ItemSosCardBinding>() {
     }
 
     override fun onViewItemClick(item: SOSCardViewItem) {
+
         super.onViewItemClick(item)
 
         AppEventBus.post(AppEvent.SOSItemClicked(item.id))

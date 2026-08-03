@@ -18,8 +18,10 @@ data class ExclusionPeriod(
 
         val t = totalMinutes % 1440
         return if (startTotalMinutes <= endTotalMinutes) {
+
             t in startTotalMinutes..endTotalMinutes
         } else {
+
             // Trường hợp qua đêm (ví dụ: 22:00 đến 07:00)
             t >= startTotalMinutes || t <= endTotalMinutes
         }

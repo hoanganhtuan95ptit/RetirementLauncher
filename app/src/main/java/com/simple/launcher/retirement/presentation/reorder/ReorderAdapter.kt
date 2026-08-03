@@ -12,6 +12,7 @@ import com.simple.ui.precompute.text.setText
 class ReorderAdapter : ViewItemAdapter<ReorderItem, ItemReorderBinding>() {
 
     override val viewItemClass: Class<ReorderItem> by lazy {
+
         ReorderItem::class.java
     }
 

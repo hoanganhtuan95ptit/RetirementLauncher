@@ -47,6 +47,7 @@ data class ContactHomeItem(
     override val spanSize: Int = HomeItem.TOTAL_COLUMNS / 2 // half width
 
     override fun buildDrawSpec(resources: Map<String, Any>) {
+
         val textColor = resources.textColorPrimary
         val tapToCallLabel = resources.getString(R.string.contact_tap_to_call)
 
@@ -185,6 +186,7 @@ class ContactAdapter : PrecomputedAdapter<ContactHomeItem>() {
     }
 
     override fun onItemCLick(item: ContactHomeItem) {
+
         sendDeeplink(DeepLinks.CALL, mapOf("entity" to item.entity))
     }
 }

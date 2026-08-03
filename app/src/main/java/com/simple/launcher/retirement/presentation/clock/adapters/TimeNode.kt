@@ -49,11 +49,14 @@ data class TimeNode(
         val p = padding
 
         val paint = TextPaint(Paint.ANTI_ALIAS_FLAG).apply {
+
             textSize = textSizePx
             color = this@TimeNode.color
             typeface = if (isBold) {
+
                 Typeface.create(this@TimeNode.typeface, Typeface.BOLD)
             } else {
+
                 this@TimeNode.typeface
             }
         }
@@ -69,6 +72,7 @@ data class TimeNode(
 
         // Nếu width là WrapContent thì mới cần measure thực tế để lấy độ rộng
         val usedWidth = if (layoutWidth is LayoutDimension.WrapContent) {
+
             val timeStr = buildTimeText()
             val layout = buildLayout(timeStr, paint, innerWidth)
             (0 until layout.lineCount)
@@ -76,6 +80,7 @@ data class TimeNode(
                 ?.let { ceil(it.toDouble()).toInt() }
                 ?: 0
         } else {
+
             0
         }
 
@@ -88,9 +93,12 @@ data class TimeNode(
     }
 
     fun buildTimeText(): String {
+
         return if (isLunar) {
+
             LunarCalendarUtils.getLunarDateString(Date(), pattern)
         } else {
+
             val formatPattern = if (showAmPm) "$pattern a" else pattern
             SimpleDateFormat(formatPattern, Locale.getDefault()).format(Date())
         }
@@ -98,13 +106,16 @@ data class TimeNode(
 
     private fun LayoutDimension.maxForMeasure(parentMax: Int): Int =
         when (this) {
+
             is LayoutDimension.Fixed -> if (parentMax == Int.MAX_VALUE) px else px.coerceAtMost(parentMax)
             LayoutDimension.MatchParent -> parentMax
             LayoutDimension.WrapContent -> parentMax
         }.coerceAtLeast(0)
 
     private fun LayoutDimension.resolveSize(contentSize: Int, parentMax: Int): Int {
+
         val resolved = when (this) {
+
             is LayoutDimension.Fixed -> px
             LayoutDimension.MatchParent -> if (parentMax == Int.MAX_VALUE) contentSize else parentMax
             LayoutDimension.WrapContent -> contentSize
@@ -113,6 +124,7 @@ data class TimeNode(
     }
 
     fun buildLayout(text: String, paint: TextPaint, width: Int): StaticLayout {
+
         return StaticLayout.Builder
             .obtain(text, 0, text.length, paint, width.coerceAtLeast(0))
             .setAlignment(Layout.Alignment.ALIGN_NORMAL)
@@ -149,6 +161,7 @@ class TimeSpec(
     override fun onDrawContent(canvas: Canvas) {
 
         if (contentLeft != 0 || contentTop != 0) {
+
             canvas.translate(contentLeft.toFloat(), contentTop.toFloat())
         }
 
@@ -181,6 +194,7 @@ class TimeSpec(
         return TimeSpec(
             newLeft, newTop, width, height, contentLeft, contentTop, node, paint, innerWidth
         ).apply {
+
             // Giữ lại layout hiện tại để tránh nháy khi reposition
             this.layout = this@TimeSpec.layout
         }

@@ -36,7 +36,9 @@ class DefaultLauncherBottomSheet : BaseBottomSheetDialogFragment<BottomSheetDefa
     private var permissionGranted = false
 
     private val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+
         if (PermissionManager.isDefaultLauncher()) {
+
             permissionGranted = true
             AppEventBus.post(AppEvent.PermissionAccept)
             dismiss()
@@ -47,20 +49,24 @@ class DefaultLauncherBottomSheet : BaseBottomSheetDialogFragment<BottomSheetDefa
         inflater: LayoutInflater,
         container: ViewGroup?
     ): BottomSheetDefaultLauncherBinding {
+
         return BottomSheetDefaultLauncherBinding.inflate(inflater, container, false)
     }
 
     override fun setupViews(view: View, savedInstanceState: Bundle?) {
+
         super.setupViews(view, savedInstanceState)
 
         val binding = binding ?: return
 
         binding.btnSetDefault.root.setOnSafeClickListener {
+
             openDefaultLauncherSettings()
         }
     }
 
     override fun observeData() {
+
         super.observeData()
 
         viewModel.title.observe(this) { title ->
@@ -112,7 +118,9 @@ class DefaultLauncherBottomSheet : BaseBottomSheetDialogFragment<BottomSheetDefa
     }
 
     private fun openDefaultLauncherSettings() {
+
         if (PermissionManager.isDefaultLauncher()) {
+
             permissionGranted = true
             AppEventBus.post(AppEvent.PermissionAccept)
             dismiss()
@@ -120,32 +128,40 @@ class DefaultLauncherBottomSheet : BaseBottomSheetDialogFragment<BottomSheetDefa
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+
             val roleManager = requireContext().getSystemService(Context.ROLE_SERVICE) as RoleManager
             if (roleManager.isRoleAvailable(RoleManager.ROLE_HOME)) {
+
                 val intent = roleManager.createRequestRoleIntent(RoleManager.ROLE_HOME)
                 startForResult.launch(intent)
             } else {
+
                 openHomeSettingsFallback()
             }
         } else {
+
             openHomeSettingsFallback()
         }
     }
 
     private fun openHomeSettingsFallback() {
+
         val intent = Intent(Settings.ACTION_HOME_SETTINGS)
         startForResult.launch(intent)
     }
 
     override fun onDismiss(dialog: DialogInterface) {
+
         super.onDismiss(dialog)
         // Chỉ post Cancel khi người dùng thực sự huỷ (không phải sau khi grant permission)
         if (!permissionGranted) {
+
             AppEventBus.post(AppEvent.PermissionCancel)
         }
     }
 
     companion object {
+
         const val TAG = "DefaultLauncherBottomSheet"
     }
 }

@@ -6,10 +6,12 @@ import android.graphics.drawable.GradientDrawable
 import android.view.View
 
 fun View.setBackground(background: Background?) {
+
     this.background = background?.drawable
 }
 
 private val EMPTY by lazy {
+
     Background()
 }
 
@@ -32,6 +34,7 @@ data class Background(
     var drawable: Drawable? = null
 
     init {
+
         refresh()
     }
 

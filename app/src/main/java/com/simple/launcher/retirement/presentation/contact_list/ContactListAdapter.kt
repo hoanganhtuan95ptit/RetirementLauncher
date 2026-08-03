@@ -37,6 +37,7 @@ data class SelectableContactItem(
 class ContactListAdapter : ViewItemAdapter<SelectableContactItem, ItemSelectableAppBinding>() {
 
     override val viewItemClass: Class<SelectableContactItem> by lazy {
+
         SelectableContactItem::class.java
     }
 

@@ -29,6 +29,7 @@ class BlockViewModel : BaseViewModel() {
     private val _appName = MutableStateFlow<String?>(null)
 
     fun setAppName(name: String?) {
+
         _appName.value = name
     }
 

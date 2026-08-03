@@ -40,33 +40,37 @@ class ReorderFragment : BaseFragment<FragmentAppListBinding>() {
             type: ReorderType,
             ids: List<String>,
             isFlowSetup: Boolean = false
-        ): ReorderFragment {
+        ): ReorderFragment = ReorderFragment().apply { arguments = buildArgs(type, ids, isFlowSetup) }
 
-            return ReorderFragment().apply {
+        private fun buildArgs(
+            type: ReorderType,
+            ids: List<String>,
+            isFlowSetup: Boolean
+        ): Bundle = Bundle().apply {
 
-                arguments = Bundle().apply {
-
-                    putSerializable("type", type)
-                    putStringArrayList("ids", ArrayList(ids))
-                    putBoolean(DeepLinks.Extras.IS_FLOW_SETUP, isFlowSetup)
-                }
-            }
+            putSerializable("type", type)
+            putStringArrayList("ids", ArrayList(ids))
+            putBoolean(DeepLinks.Extras.IS_FLOW_SETUP, isFlowSetup)
         }
     }
 
     private val type: ReorderType by lazy {
+
         arguments?.getSerializable("type") as? ReorderType ?: ReorderType.APPS
     }
 
     private val isFlowSetup: Boolean by lazy {
+
         arguments?.getBoolean(DeepLinks.Extras.IS_FLOW_SETUP) ?: false
     }
 
     private val initialIds: List<String> by lazy {
+
         arguments?.getStringArrayList("ids") ?: emptyList()
     }
 
     private val viewModel: ReorderViewModel by viewModels {
+
         ReorderViewModelFactory(type, initialIds, AppRepository.instance, ContactRepository.instance)
     }
 
@@ -91,29 +95,7 @@ class ReorderFragment : BaseFragment<FragmentAppListBinding>() {
 
         binding.rvAppList.layoutManager = LinearLayoutManager(requireContext())
 
-        val itemTouchHelper = ItemTouchHelper(
-            object : ItemTouchHelper.SimpleCallback(
-                ItemTouchHelper.UP or ItemTouchHelper.DOWN,
-                0
-            ) {
-
-                override fun onMove(
-                    recyclerView: RecyclerView,
-                    viewHolder: RecyclerView.ViewHolder,
-                    target: RecyclerView.ViewHolder
-                ): Boolean {
-
-                    val fromPos = viewHolder.bindingAdapterPosition
-                    val toPos = target.bindingAdapterPosition
-                    viewModel.moveItem(fromPos, toPos)
-                    return true
-                }
-
-                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                }
-            }
-        )
-        itemTouchHelper.attachToRecyclerView(binding.rvAppList)
+        createReorderTouchHelper().attachToRecyclerView(binding.rvAppList)
 
         binding.btnSave.root.setOnSafeClickListener {
 
@@ -132,20 +114,7 @@ class ReorderFragment : BaseFragment<FragmentAppListBinding>() {
             binding.root.setBackground(background)
         }
 
-        viewModel.toolbar.observe(this) { state ->
-
-            val binding = binding ?: return@observe
-            binding.toolbar.tvTitle.setText(state.title)
-            val backIcon = state.backIcon
-            if (backIcon != null) {
-
-                binding.toolbar.ivLeft.visibility = View.VISIBLE
-                binding.toolbar.ivLeft.setImage(backIcon)
-            } else {
-
-                binding.toolbar.ivLeft.visibility = View.GONE
-            }
-        }
+        viewModel.toolbar.observe(this) { state -> renderToolbar(state) }
 
         viewModel.doneAction.observe(this) { state ->
 
@@ -195,6 +164,38 @@ class ReorderFragment : BaseFragment<FragmentAppListBinding>() {
         if (!PermissionManager.requireDefaultLauncher()) return
 
         onSaveSuccess()
+    }
+
+    private fun renderToolbar(state: com.simple.launcher.retirement.presentation.base.ToolbarState) {
+
+        val binding = binding ?: return
+        binding.toolbar.tvTitle.setText(state.title)
+        val backIcon = state.backIcon
+        binding.toolbar.ivLeft.visibility = if (backIcon != null) View.VISIBLE else View.GONE
+        if (backIcon != null) binding.toolbar.ivLeft.setImage(backIcon)
+    }
+
+    private fun createReorderTouchHelper(): ItemTouchHelper {
+
+        val callback = object : ItemTouchHelper.SimpleCallback(
+            ItemTouchHelper.UP or ItemTouchHelper.DOWN, 0
+        ) {
+
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean = onMoveItem(viewHolder, target)
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) = Unit
+        }
+        return ItemTouchHelper(callback)
+    }
+
+    private fun onMoveItem(viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
+
+        viewModel.moveItem(viewHolder.bindingAdapterPosition, target.bindingAdapterPosition)
+        return true
     }
 
     private fun onSaveSuccess() {

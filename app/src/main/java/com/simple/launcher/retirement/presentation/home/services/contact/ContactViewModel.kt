@@ -66,6 +66,7 @@ class ContactViewModel : BaseViewModel() {
             title = title,
             screenWidth = screenWidth
         ).apply {
+
             buildDrawSpec(resources)
         }
     }

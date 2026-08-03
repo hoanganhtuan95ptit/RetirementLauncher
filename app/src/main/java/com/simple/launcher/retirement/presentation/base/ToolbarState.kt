@@ -25,7 +25,9 @@ data class ToolbarState(
     val title: BigText = emptyText(),
     val backIcon: BigImage? = null
 ) {
+
     companion object {
+
         fun empty() = ToolbarState(title = emptyText())
     }
 }

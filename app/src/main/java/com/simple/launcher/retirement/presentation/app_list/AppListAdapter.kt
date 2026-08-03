@@ -37,6 +37,7 @@ data class SelectableAppItem(
 class AppListAdapter : ViewItemAdapter<SelectableAppItem, ItemSelectableAppBinding>() {
 
     override val viewItemClass: Class<SelectableAppItem> by lazy {
+
         SelectableAppItem::class.java
     }
 

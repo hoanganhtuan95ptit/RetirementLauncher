@@ -39,6 +39,7 @@ class OutlineDelegate(private val view: View, context: Context, attrs: Attribute
 
     var strokeColor: Int = Color.BLACK
         set(value) {
+
             field = value
             paint.color = value
             view.invalidate()
@@ -46,6 +47,7 @@ class OutlineDelegate(private val view: View, context: Context, attrs: Attribute
 
     var strokeWidth: Float = 1f
         set(value) {
+
             field = value
             paint.strokeWidth = value
             updatePath()
@@ -54,6 +56,7 @@ class OutlineDelegate(private val view: View, context: Context, attrs: Attribute
 
     var cornerRadius: Float = 0f
         set(value) {
+
             field = value
             updatePath()
             view.invalidate()
@@ -61,6 +64,7 @@ class OutlineDelegate(private val view: View, context: Context, attrs: Attribute
 
     var dashWidth: Float = 0f
         set(value) {
+
             field = value
             updateDashEffect()
             view.invalidate()
@@ -68,6 +72,7 @@ class OutlineDelegate(private val view: View, context: Context, attrs: Attribute
 
     var dashGap: Float = 0f
         set(value) {
+
             field = value
             updateDashEffect()
             view.invalidate()
@@ -77,12 +82,14 @@ class OutlineDelegate(private val view: View, context: Context, attrs: Attribute
 
     var loadingSegmentRatio: Float = 0.5f
         set(value) {
+
             field = value.coerceIn(0.05f, 1f)
             view.invalidate()
         }
 
     var loadingDuration: Long = 1200L
         set(value) {
+
             field = value.coerceAtLeast(50L)
         }
 
@@ -92,6 +99,7 @@ class OutlineDelegate(private val view: View, context: Context, attrs: Attribute
     // ---------- Nội bộ ----------
 
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+
         style = Paint.Style.STROKE
         strokeCap = Paint.Cap.ROUND
         strokeJoin = Paint.Join.ROUND
@@ -112,6 +120,7 @@ class OutlineDelegate(private val view: View, context: Context, attrs: Attribute
     private var lastFrameMs: Long = 0L
 
     init {
+
         // ViewGroup mặc định không gọi onDraw() để tối ưu — bật lại để vẽ outline.
         view.setWillNotDraw(false)
 
@@ -122,8 +131,10 @@ class OutlineDelegate(private val view: View, context: Context, attrs: Attribute
     }
 
     private fun readAttrs(context: Context, attrs: AttributeSet) {
+
         val a = context.obtainStyledAttributes(attrs, R.styleable.OutlineView)
         try {
+
             strokeColor = a.getColor(R.styleable.OutlineView_ov_strokeColor, strokeColor)
             strokeWidth = a.getDimension(R.styleable.OutlineView_ov_strokeWidth, strokeWidth)
             cornerRadius = a.getDimension(R.styleable.OutlineView_ov_cornerRadius, cornerRadius)
@@ -141,6 +152,7 @@ class OutlineDelegate(private val view: View, context: Context, attrs: Attribute
             val initialShow = a.getBoolean(R.styleable.OutlineView_ov_show, true)
             setLoading(loading = initialLoading, show = initialShow, animate = false)
         } finally {
+
             a.recycle()
         }
     }
@@ -149,7 +161,9 @@ class OutlineDelegate(private val view: View, context: Context, attrs: Attribute
 
     @JvmOverloads
     fun setLoading(loading: Boolean, show: Boolean = true, animate: Boolean = true) {
+
         val target: State = when {
+
             !show -> State.HIDDEN
             loading -> State.LOADING
             else -> State.IDLE
@@ -157,11 +171,13 @@ class OutlineDelegate(private val view: View, context: Context, attrs: Attribute
         state = target
 
         val targetLen: Float = when (target) {
+
             State.HIDDEN -> 0f
             State.LOADING -> loadingSegmentRatio
             State.IDLE -> 1f
         }
         val settled: InternalState = when (target) {
+
             State.HIDDEN -> InternalState.HIDDEN
             State.LOADING -> InternalState.LOADING
             State.IDLE -> InternalState.IDLE
@@ -171,6 +187,7 @@ class OutlineDelegate(private val view: View, context: Context, attrs: Attribute
         settledInternalState = settled
 
         if (!animate) {
+
             segLen = targetLen
             internalState = settled
             if (needsAnimating(settled)) startAnimating() else stopAnimating()
@@ -179,12 +196,14 @@ class OutlineDelegate(private val view: View, context: Context, attrs: Attribute
         }
 
         internalState = when {
+
             segLen > targetLen + EPS -> InternalState.SHRINKING
             segLen < targetLen - EPS -> InternalState.GROWING
             else -> settled
         }
 
         if (needsAnimating(internalState)) startAnimating() else {
+
             stopAnimating()
             view.invalidate()
         }
@@ -197,22 +216,27 @@ class OutlineDelegate(private val view: View, context: Context, attrs: Attribute
     // ---------- Lifecycle hooks — gọi từ View ----------
 
     fun onSizeChanged(w: Int, h: Int) {
+
         updatePath(w.toFloat(), h.toFloat())
     }
 
     fun onAttachedToWindow() {
+
         if (needsAnimating(internalState)) startAnimating()
     }
 
     fun onDetachedFromWindow() {
+
         stopAnimating()
     }
 
     fun onDraw(canvas: Canvas) {
+
         if (pathLength <= 0f) return
         if (internalState == InternalState.HIDDEN || segLen <= 0f) return
 
         if (segLen >= 1f) {
+
             canvas.drawPath(fullPath, paint)
             return
         }
@@ -222,8 +246,10 @@ class OutlineDelegate(private val view: View, context: Context, attrs: Attribute
 
         segmentPath.reset()
         if (end <= pathLength) {
+
             pathMeasure.getSegment(start, end, segmentPath, true)
         } else {
+
             pathMeasure.getSegment(start, pathLength, segmentPath, true)
             pathMeasure.getSegment(0f, end - pathLength, segmentPath, true)
         }
@@ -233,11 +259,14 @@ class OutlineDelegate(private val view: View, context: Context, attrs: Attribute
     // ---------- Path / Effect ----------
 
     private fun updatePath() {
+
         updatePath(view.width.toFloat(), view.height.toFloat())
     }
 
     private fun updatePath(w: Float, h: Float) {
+
         if (w <= 0f || h <= 0f) {
+
             pathLength = 0f
             return
         }
@@ -254,9 +283,12 @@ class OutlineDelegate(private val view: View, context: Context, attrs: Attribute
     }
 
     private fun updateDashEffect() {
+
         paint.pathEffect = if (dashWidth > 0f && dashGap > 0f) {
+
             DashPathEffect(floatArrayOf(dashWidth, dashGap), 0f)
         } else {
+
             null
         }
     }
@@ -264,14 +296,17 @@ class OutlineDelegate(private val view: View, context: Context, attrs: Attribute
     // ---------- Animation loop ----------
 
     private fun needsAnimating(s: InternalState): Boolean = when (s) {
+
         InternalState.IDLE, InternalState.HIDDEN -> false
         InternalState.LOADING, InternalState.SHRINKING, InternalState.GROWING -> true
     }
 
     private fun startAnimating() {
+
         if (animator != null) return
         lastFrameMs = SystemClock.elapsedRealtime()
         animator = ValueAnimator.ofFloat(0f, 1f).apply {
+
             duration = 1000L
             repeatCount = ValueAnimator.INFINITE
             interpolator = LinearInterpolator()
@@ -281,11 +316,13 @@ class OutlineDelegate(private val view: View, context: Context, attrs: Attribute
     }
 
     private fun stopAnimating() {
+
         animator?.cancel()
         animator = null
     }
 
     private fun onFrame() {
+
         val now = SystemClock.elapsedRealtime()
         val dt = (now - lastFrameMs).coerceAtLeast(0L)
         lastFrameMs = now
@@ -294,44 +331,45 @@ class OutlineDelegate(private val view: View, context: Context, attrs: Attribute
         val delta = speed * dt
 
         when (internalState) {
-            InternalState.IDLE, InternalState.HIDDEN -> {
-                stopAnimating()
-                return
-            }
 
-            InternalState.LOADING -> {
-                tailPos = wrap(tailPos + delta)
-            }
-
-            InternalState.SHRINKING -> {
-                tailPos = wrap(tailPos + delta)
-                segLen -= delta
-                if (segLen <= targetSegLen) {
-                    segLen = targetSegLen
-                    internalState = settledInternalState
-                    if (!needsAnimating(internalState)) stopAnimating()
-                }
-            }
-
-            InternalState.GROWING -> {
-                segLen += delta
-                if (segLen >= targetSegLen) {
-                    segLen = targetSegLen
-                    internalState = settledInternalState
-                    if (!needsAnimating(internalState)) stopAnimating()
-                }
-            }
+            InternalState.IDLE, InternalState.HIDDEN -> { stopAnimating(); return }
+            InternalState.LOADING -> tailPos = wrap(tailPos + delta)
+            InternalState.SHRINKING -> tickShrinking(delta)
+            InternalState.GROWING -> tickGrowing(delta)
         }
         view.invalidate()
     }
 
+    private fun tickShrinking(delta: Float) {
+
+        tailPos = wrap(tailPos + delta)
+        segLen -= delta
+        settleIfReached(reached = segLen <= targetSegLen)
+    }
+
+    private fun tickGrowing(delta: Float) {
+
+        segLen += delta
+        settleIfReached(reached = segLen >= targetSegLen)
+    }
+
+    private fun settleIfReached(reached: Boolean) {
+
+        if (!reached) return
+        segLen = targetSegLen
+        internalState = settledInternalState
+        if (!needsAnimating(internalState)) stopAnimating()
+    }
+
     private fun wrap(v: Float): Float {
+
         var x = v % 1f
         if (x < 0f) x += 1f
         return x
     }
 
     companion object {
+
         private const val EPS = 1e-4f
     }
 }

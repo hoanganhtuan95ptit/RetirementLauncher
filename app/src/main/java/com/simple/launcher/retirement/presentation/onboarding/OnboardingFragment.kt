@@ -26,15 +26,18 @@ class OnboardingFragment : BaseFragment<FragmentOnboardingBinding>() {
     private val viewModel: OnboardingViewModel by viewModels()
 
     override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentOnboardingBinding {
+
         return FragmentOnboardingBinding.inflate(inflater, container, false)
     }
 
     override fun setupViews(view: View, savedInstanceState: Bundle?) {
+
         super.setupViews(view, savedInstanceState)
 
         val binding = binding ?: return
 
         binding.btnStart.root.setOnSafeClickListener {
+
             val repository = PreferenceRepository.instance
             repository.setOnboardingCompleted(true)
 
@@ -43,6 +46,7 @@ class OnboardingFragment : BaseFragment<FragmentOnboardingBinding>() {
     }
 
     override fun observeData() {
+
         super.observeData()
 
         viewModel.background.observe(this) { background ->
@@ -76,6 +80,7 @@ class OnboardingFragment : BaseFragment<FragmentOnboardingBinding>() {
 
 @Deeplink
 class OnboardingDeeplinkHandler : DeeplinkHandler {
+
     override val deeplink: String = DeepLinks.ONBOARDING
 
     override suspend fun navigate(
@@ -84,6 +89,7 @@ class OnboardingDeeplinkHandler : DeeplinkHandler {
         extras: Map<String, Any?>?,
         sharedElement: Map<String, View>?
     ): Boolean {
+
         fragmentActivity.supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, OnboardingFragment())
             .commit()

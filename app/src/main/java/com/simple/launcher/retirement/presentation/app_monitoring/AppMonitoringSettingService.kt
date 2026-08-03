@@ -34,6 +34,7 @@ class AppMonitoringSettingService : ProtectSettingService() {
     private lateinit var viewModel: AppMonitoringSettingViewModel
 
     override fun setup(settingsFragment: SettingsFragment) {
+
         super.setup(settingsFragment)
 
         viewModel = settingsFragment.activityViewModels<AppMonitoringSettingViewModel>().value

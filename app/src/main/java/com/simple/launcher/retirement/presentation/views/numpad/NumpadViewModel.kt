@@ -45,7 +45,9 @@ class NumpadViewModel : BaseViewModel() {
         val textSize: Float,
         val keys: List<NumpadKeyItem>
     ) {
+
         companion object {
+
             fun empty() = NumpadState(
                 textColor = 0,
                 rippleColor = 0,

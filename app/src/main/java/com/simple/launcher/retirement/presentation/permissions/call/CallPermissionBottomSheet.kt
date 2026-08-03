@@ -33,6 +33,7 @@ class CallPermissionBottomSheet : BaseBottomSheetDialogFragment<BottomSheetCallP
         ActivityResultContracts.RequestPermission()
     ) { isGranted ->
         if (isGranted) {
+
             permissionGranted = true
             AppEventBus.post(AppEvent.PermissionAccept)
             dismiss()
@@ -43,20 +44,24 @@ class CallPermissionBottomSheet : BaseBottomSheetDialogFragment<BottomSheetCallP
         inflater: LayoutInflater,
         container: ViewGroup?
     ): BottomSheetCallPermissionBinding {
+
         return BottomSheetCallPermissionBinding.inflate(inflater, container, false)
     }
 
     override fun setupViews(view: View, savedInstanceState: Bundle?) {
+
         super.setupViews(view, savedInstanceState)
 
         val binding = binding ?: return
 
         binding.btnGrant.root.setOnSafeClickListener {
+
             requestPermissionLauncher.launch(Manifest.permission.CALL_PHONE)
         }
     }
 
     override fun observeData() {
+
         super.observeData()
 
         viewModel.title.observe(this) { title ->
@@ -109,13 +114,16 @@ class CallPermissionBottomSheet : BaseBottomSheetDialogFragment<BottomSheetCallP
     }
 
     override fun onDismiss(dialog: DialogInterface) {
+
         super.onDismiss(dialog)
         if (!permissionGranted) {
+
             AppEventBus.post(AppEvent.PermissionCancel)
         }
     }
 
     companion object {
+
         const val TAG = "CallPermissionBottomSheet"
     }
 }

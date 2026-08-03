@@ -9,6 +9,7 @@ import com.simple.launcher.retirement.BuildConfig
 class FpsTrackingService : ActivityCreatedService {
 
     override fun setup(fragmentActivity: FragmentActivity) {
+
         if (!BuildConfig.DEBUG) return
     }
 }

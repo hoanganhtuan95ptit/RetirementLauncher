@@ -91,37 +91,46 @@ class AppListViewModel(
         initialValue = emptyList()
     ) { apps, query, selectedIds ->
 
-        val filtered = if (query.isBlank()) {
-
-            apps.map { it to 0 }
-        } else {
-
-            apps.mapNotNull { entity ->
-
-                val label = entity.app.label
-                val priority = when {
-
-                    VietnameseStringUtils.equalsIgnoreDiacritics(label, query) -> 0
-                    VietnameseStringUtils.startsWithIgnoreDiacritics(label, query) -> 1
-                    VietnameseStringUtils.containsIgnoreDiacritics(label, query) -> 2
-                    else -> return@mapNotNull null
-                }
-                entity to priority
-            }
-        }
-
+        val filtered = filterByQuery(apps, query)
         value = filtered
             .sortedWith(compareBy({ it.second }, { it.first.app.label.lowercase() }))
-            .map { (entity, _) ->
-
-                SelectableAppItem(
-                    label = entity.app.label.toBig(),
-                    icon = BigImage(entity.app.icon),
-                    isSelected = entity.app.packageName in selectedIds,
-                    entity = entity
-                )
-            }
+            .map { (entity, _) -> toSelectableAppItem(entity, selectedIds) }
     }
+
+    private fun filterByQuery(
+        apps: List<SelectableAppEntity>,
+        query: String
+    ): List<Pair<SelectableAppEntity, Int>> {
+
+        if (query.isBlank()) return apps.map { it to 0 }
+        return apps.mapNotNull { entity -> matchWithPriority(entity, query) }
+    }
+
+    private fun matchWithPriority(
+        entity: SelectableAppEntity,
+        query: String
+    ): Pair<SelectableAppEntity, Int>? {
+
+        val label = entity.app.label
+        val priority = when {
+
+            VietnameseStringUtils.equalsIgnoreDiacritics(label, query) -> 0
+            VietnameseStringUtils.startsWithIgnoreDiacritics(label, query) -> 1
+            VietnameseStringUtils.containsIgnoreDiacritics(label, query) -> 2
+            else -> return null
+        }
+        return entity to priority
+    }
+
+    private fun toSelectableAppItem(
+        entity: SelectableAppEntity,
+        selectedIds: Set<String>
+    ): SelectableAppItem = SelectableAppItem(
+        label = entity.app.label.toBig(),
+        icon = BigImage(entity.app.icon),
+        isSelected = entity.app.packageName in selectedIds,
+        entity = entity
+    )
 
     fun search(text: String) {
 

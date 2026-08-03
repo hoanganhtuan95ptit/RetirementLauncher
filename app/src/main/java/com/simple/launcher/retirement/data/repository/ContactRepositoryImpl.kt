@@ -20,6 +20,7 @@ class ContactRepositoryImpl(private val context: Context) : ContactRepository {
     override fun homeDataFlow() = _dataTrigger
 
     override fun getAllContacts(context: Context): List<ContactEntity> {
+
         val contentResolver = context.contentResolver
         val projection = arrayOf(
             ContactsContract.CommonDataKinds.Phone.CONTACT_ID,
@@ -35,6 +36,7 @@ class ContactRepositoryImpl(private val context: Context) : ContactRepository {
 
         val contactsList = mutableListOf<ContactEntity>()
         cursor?.use {
+
             val idIndex = it.getColumnIndex(ContactsContract.CommonDataKinds.Phone.CONTACT_ID)
             val nameIndex = it.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)
             val numberIndex = it.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)
@@ -43,6 +45,7 @@ class ContactRepositoryImpl(private val context: Context) : ContactRepository {
             val processedIds = mutableSetOf<String>()
 
             while (it.moveToNext()) {
+
                 val id = it.getString(idIndex)
                 if (processedIds.contains(id)) continue
 
@@ -58,6 +61,7 @@ class ContactRepositoryImpl(private val context: Context) : ContactRepository {
     }
 
     companion object {
+
         private const val KEY_SELECTED_CONTACTS = "selected_contacts"
     }
 
@@ -66,6 +70,7 @@ class ContactRepositoryImpl(private val context: Context) : ContactRepository {
     private var cachedContacts: List<ContactEntity>? = null
 
     override fun getSelectedContacts(): List<ContactEntity> {
+
         // Trả về cache nếu đã có
         cachedContacts?.let { cached ->
             // Vẫn trả về debug list nếu cache rỗng ở debug build
@@ -77,13 +82,17 @@ class ContactRepositoryImpl(private val context: Context) : ContactRepository {
 
         val data = sharedPrefs.all[KEY_SELECTED_CONTACTS]
         val contacts: List<ContactEntity> = if (data is String) {
+
             val type = TypeToken.getParameterized(List::class.java, ContactEntity::class.java).type
             try {
+
                 gson.fromJson(data, type)
             } catch (_: Exception) {
+
                 emptyList()
             }
         } else {
+
             emptyList()
         }
 
@@ -95,6 +104,7 @@ class ContactRepositoryImpl(private val context: Context) : ContactRepository {
     }
 
     override fun saveSelectedContacts(contacts: List<ContactEntity>) {
+
         val json = gson.toJson(contacts)
         sharedPrefs.edit { putString(KEY_SELECTED_CONTACTS, json) }
         cachedContacts = contacts  // cập nhật cache ngay

@@ -192,9 +192,11 @@ class PreferenceRepositoryImpl(context: Context) : PreferenceRepository {
 
         val json = sharedPrefs.getString(KEY_EXCLUSION_PERIODS, null) ?: return emptyList()
         return try {
+
             val type = object : TypeToken<List<ExclusionPeriod>>() {}.type
             gson.fromJson(json, type)
         } catch (e: Exception) {
+
             emptyList()
         }
     }

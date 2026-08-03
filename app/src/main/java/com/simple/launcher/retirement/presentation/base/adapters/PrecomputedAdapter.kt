@@ -26,6 +26,7 @@ abstract class PrecomputedAdapter<T : PrecomputedViewItem> : ViewItemAdapter<T, 
     }
 
     override fun createViewHolder(parent: ViewGroup, viewType: Int): BaseBindingViewHolder<ItemNodeBinding> {
+
         val viewHolder = super.createViewHolder(parent, viewType)
 
         viewHolder.itemView.setOnSafeWithPerformHapticFeedbackClickListener {

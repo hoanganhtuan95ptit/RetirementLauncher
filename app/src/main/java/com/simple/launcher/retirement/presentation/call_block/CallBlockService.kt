@@ -26,6 +26,7 @@ class CallBlockService : CallScreeningService() {
         logDebug("Call block enabled setting: $isEnabled")
 
         if (!isEnabled) {
+
             respondToCall(callDetails, CallResponse.Builder().build())
             return
         }
@@ -34,6 +35,7 @@ class CallBlockService : CallScreeningService() {
         val incomingNumber = handle?.schemeSpecificPart ?: ""
 
         if (incomingNumber.isEmpty()) {
+
             logDebug("Incoming number is empty, allowing call.")
             respondToCall(callDetails, CallResponse.Builder().build())
             return
@@ -42,6 +44,7 @@ class CallBlockService : CallScreeningService() {
         logDebug("Incoming call from: $incomingNumber")
 
         if (isNumberInContacts(incomingNumber)) {
+
             logDebug("Number $incomingNumber found in contacts, allowing call.")
             respondToCall(callDetails, CallResponse.Builder().build())
             return
@@ -74,6 +77,7 @@ class CallBlockService : CallScreeningService() {
             cursor = contentResolver.query(uri, projection, null, null, null)
             return cursor?.count?.let { it > 0 } == true
         } catch (exception: Exception) {
+
             Log.e(TAG, "Error checking contacts", exception)
         } finally {
 

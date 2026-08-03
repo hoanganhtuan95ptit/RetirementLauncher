@@ -33,10 +33,12 @@ import kotlinx.coroutines.flow.filterIsInstance
 class AppListFragment : BaseFragment<FragmentAppListBinding>() {
 
     private val viewModel: AppListViewModel by viewModels {
+
         AppListViewModelFactory(GetSelectableAppsUseCase.instance, SaveSelectedAppsUseCase.instance)
     }
 
     private val isFlowSetup: Boolean by lazy {
+
         arguments?.getBoolean(DeepLinks.Extras.IS_FLOW_SETUP) ?: false
     }
 
@@ -57,15 +59,11 @@ class AppListFragment : BaseFragment<FragmentAppListBinding>() {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+        val backCallback = object : OnBackPressedCallback(true) {
 
-            override fun handleOnBackPressed() {
-
-                if (isFlowSetup) AppEventBus.post(AppEvent.AppSetupCancel)
-                isEnabled = false
-                requireActivity().onBackPressedDispatcher.onBackPressed()
-            }
-        })
+            override fun handleOnBackPressed() = onBackPressedIntercepted(this)
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, backCallback)
 
         binding.layoutSearch.etSearch.doAfterTextChanged { editable ->
 
@@ -88,6 +86,7 @@ class AppListFragment : BaseFragment<FragmentAppListBinding>() {
     }
 
     override fun observeData() {
+
         super.observeData()
 
         viewModel.background.observe(this) { background ->
@@ -97,21 +96,7 @@ class AppListFragment : BaseFragment<FragmentAppListBinding>() {
             binding.root.setBackground(background)
         }
 
-        viewModel.toolbar.observe(this) { state ->
-
-            val binding = binding ?: return@observe
-            
-            binding.toolbar.tvTitle.setText(state.title)
-            val backIcon = state.backIcon
-            if (backIcon != null) {
-
-                binding.toolbar.ivLeft.visibility = View.VISIBLE
-                binding.toolbar.ivLeft.setImage(backIcon)
-            } else {
-
-                binding.toolbar.ivLeft.visibility = View.GONE
-            }
-        }
+        viewModel.toolbar.observe(this) { state -> renderToolbar(state) }
 
         viewModel.searchState.observe(this) { state ->
 
@@ -140,6 +125,22 @@ class AppListFragment : BaseFragment<FragmentAppListBinding>() {
 
             viewModel.updateItem(event.entity)
         }
+    }
+
+    private fun renderToolbar(state: com.simple.launcher.retirement.presentation.base.ToolbarState) {
+
+        val binding = binding ?: return
+        binding.toolbar.tvTitle.setText(state.title)
+        val backIcon = state.backIcon
+        binding.toolbar.ivLeft.visibility = if (backIcon != null) View.VISIBLE else View.GONE
+        if (backIcon != null) binding.toolbar.ivLeft.setImage(backIcon)
+    }
+
+    private fun onBackPressedIntercepted(callback: OnBackPressedCallback) {
+
+        if (isFlowSetup) AppEventBus.post(AppEvent.AppSetupCancel)
+        callback.isEnabled = false
+        requireActivity().onBackPressedDispatcher.onBackPressed()
     }
 
     private fun navigateToReorder() {

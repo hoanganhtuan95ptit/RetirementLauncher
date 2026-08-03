@@ -45,11 +45,13 @@ fun settingItem(
         .build(),
 
     description = if (description != null) {
+
         resources.getString(description)
             .withStyleBodyMedium()
             .with(BigForegroundColor(resources.textColorPrimary.withAlpha(0.7f)))
             .build()
     } else {
+
         null
     },
 
@@ -65,12 +67,14 @@ fun settingItem(
     isChecked = isChecked,
 
     background = if (highlight) {
+
         Background.Builder()
             .backgroundColor(resources.colorPrimaryContainer)
             .cornerRadius(24.dp())
             .stroke(2.dp(), resources.colorPrimary, dashGap = 4.dp().toInt(), dashWidth = 4.dp().toInt())
             .build()
     } else {
+
         Background.Builder()
             .backgroundColor(resources.colorBackground)
             .cornerRadius(24.dp())

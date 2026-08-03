@@ -33,6 +33,7 @@ class PinVerifyBottomSheet : BaseBottomSheetDialogFragment<BottomSheetPinVerifyB
     private val PIN_LENGTH = 6
 
     private val pinDots: List<View> by lazy {
+
         val binding = binding ?: return@lazy emptyList()
         listOf(
             binding.layoutPinDots.vPin1, binding.layoutPinDots.vPin2, binding.layoutPinDots.vPin3,
@@ -140,6 +141,7 @@ class PinVerifyBottomSheet : BaseBottomSheetDialogFragment<BottomSheetPinVerifyB
     }
 
     private fun resetPin() = viewLifecycleOwner.lifecycleScope.launch {
+
         val binding = binding ?: return@launch
         binding.numpadView.setIsClickable(false)
         delay(500)
@@ -158,6 +160,7 @@ class PinVerifyBottomSheet : BaseBottomSheetDialogFragment<BottomSheetPinVerifyB
     }
 
     companion object {
+
         const val TAG = "PinVerifyBottomSheet"
     }
 }

@@ -5,6 +5,7 @@ import android.view.View
 import com.simple.launcher.retirement.utils.size.Padding
 
 fun View.setPadding(padding: Padding) {
+
     setPadding(padding.start, padding.top, padding.end, padding.bottom)
 }
 
@@ -24,6 +25,7 @@ fun View.setOnSafeClickListener(onSafeClick: (View) -> Unit) {
 fun View.setOnSafeWithPerformHapticFeedbackClickListener(onSafeClick: (View) -> Unit) {
 
     setOnSafeClickListener {
+
         it.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
         onSafeClick(it)
     }

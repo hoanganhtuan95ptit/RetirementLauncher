@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
-import androidx.activity.OnBackPressedCallback
+import androidx.lifecycle.lifecycleScope
 import com.simple.deeplink.sendDeeplink
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.databinding.ActivityMainBinding
@@ -13,7 +13,9 @@ import com.simple.launcher.retirement.presentation.DeepLinks
 import com.simple.launcher.retirement.presentation.base.BaseActivity
 import com.simple.launcher.retirement.presentation.home.HomeFragment
 import com.simple.launcher.retirement.presentation.services.BackgroundService
+import com.simple.launcher.retirement.utils.exts.backPressedFlow
 import com.simple.launcher.retirement.utils.permission.PermissionManager
+import kotlinx.coroutines.launch
 
 var a = true
 
@@ -45,10 +47,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
         val isDefaultLauncher = PermissionManager.isDefaultLauncher()
         if (isDefaultLauncher) {
+
             repository.setPendingDefaultLauncher(false)
         }
 
         return when {
+
             !isOnboardingCompleted -> DeepLinks.ONBOARDING
             isHomeIntent && repository.isPendingDefaultLauncher() && !isDefaultLauncher -> DeepLinks.SETTINGS
             isHomeIntent -> DeepLinks.HOME
@@ -64,17 +68,20 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     private fun registerBackPressedHandler() {
 
-        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+        lifecycleScope.launch {
 
-            override fun handleOnBackPressed() {
+            onBackPressedDispatcher.backPressedFlow(this@MainActivity).collect { dispatchBackPressed() }
+        }
+    }
 
-                when {
-                    shouldPopBackStack() -> supportFragmentManager.popBackStack()
-                    shouldReturnToHome() -> sendDeeplink(DeepLinks.HOME)
-                    else -> finish()
-                }
-            }
-        })
+    private fun dispatchBackPressed() {
+
+        when {
+
+            shouldPopBackStack() -> supportFragmentManager.popBackStack()
+            shouldReturnToHome() -> sendDeeplink(DeepLinks.HOME)
+            else -> finish()
+        }
     }
 
     private fun shouldPopBackStack(): Boolean {
@@ -98,12 +105,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     }
 
     override fun onNewIntent(intent: Intent) {
+
         super.onNewIntent(intent)
 
         navigateInitialScreen()
     }
 
     fun startBackgroundService() {
+
         BackgroundService.start(this)
     }
 

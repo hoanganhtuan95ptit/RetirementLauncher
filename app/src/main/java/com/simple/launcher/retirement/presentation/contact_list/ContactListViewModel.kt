@@ -94,46 +94,53 @@ class ContactListViewModel(
         initialValue = emptyList()
     ) { contacts, query, selectedIds ->
 
-        val filtered = if (query.isBlank()) {
-
-            contacts.map { it to 0 }
-        } else {
-
-            contacts.mapNotNull { contact ->
-
-                val name = contact.name
-                val phone = contact.phoneNumber
-
-                val priority = when {
-
-                    VietnameseStringUtils.equalsIgnoreDiacritics(name, query) -> 0
-                    VietnameseStringUtils.startsWithIgnoreDiacritics(name, query) -> 1
-                    VietnameseStringUtils.containsIgnoreDiacritics(name, query) -> 2
-                    phone.contains(query) -> 3
-                    else -> return@mapNotNull null
-                }
-                contact to priority
-            }
-        }
-
+        val filtered = filterByQuery(contacts, query)
         value = filtered
             .sortedWith(compareBy({ it.second }, { it.first.name.lowercase() }))
-            .map { (contact, _) ->
-                val isSelected = contact.id in selectedIds
-                val photo = if (contact.photoUri != null) {
+            .map { (contact, _) -> toSelectableContactItem(contact, selectedIds) }
+    }
 
-                    BigImage(contact.photoUri)
-                } else {
+    private fun filterByQuery(
+        contacts: List<ContactEntity>,
+        query: String
+    ): List<Pair<ContactEntity, Int>> {
 
-                    BigImage(R.drawable.ic_home_contact_24dp)
-                }
-                SelectableContactItem(
-                    name = contact.name.toBig(),
-                    photo = photo,
-                    isSelected = isSelected,
-                    entity = SelectableContactEntity(contact, isSelected)
-                )
-            }
+        if (query.isBlank()) return contacts.map { it to 0 }
+        return contacts.mapNotNull { contact -> matchWithPriority(contact, query) }
+    }
+
+    private fun matchWithPriority(
+        contact: ContactEntity,
+        query: String
+    ): Pair<ContactEntity, Int>? {
+
+        val name = contact.name
+        val phone = contact.phoneNumber
+        val priority = when {
+
+            VietnameseStringUtils.equalsIgnoreDiacritics(name, query) -> 0
+            VietnameseStringUtils.startsWithIgnoreDiacritics(name, query) -> 1
+            VietnameseStringUtils.containsIgnoreDiacritics(name, query) -> 2
+            phone.contains(query) -> 3
+            else -> return null
+        }
+        return contact to priority
+    }
+
+    private fun toSelectableContactItem(
+        contact: ContactEntity,
+        selectedIds: Set<String>
+    ): SelectableContactItem {
+
+        val isSelected = contact.id in selectedIds
+        val photo = if (contact.photoUri != null) BigImage(contact.photoUri)
+        else BigImage(R.drawable.ic_home_contact_24dp)
+        return SelectableContactItem(
+            name = contact.name.toBig(),
+            photo = photo,
+            isSelected = isSelected,
+            entity = SelectableContactEntity(contact, isSelected)
+        )
     }
 
     fun search(text: String) {

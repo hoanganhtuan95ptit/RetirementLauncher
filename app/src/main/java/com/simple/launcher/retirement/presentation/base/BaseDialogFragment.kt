@@ -18,11 +18,13 @@ abstract class BaseDialogFragment<VB : ViewBinding> : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         binding = inflateBinding(inflater, container)
         return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
         super.onViewCreated(view, savedInstanceState)
         setupViews(view, savedInstanceState)
         observeData()
@@ -33,6 +35,7 @@ abstract class BaseDialogFragment<VB : ViewBinding> : DialogFragment() {
     open fun observeData() {}
 
     override fun onDestroyView() {
+
         super.onDestroyView()
         binding = null
     }

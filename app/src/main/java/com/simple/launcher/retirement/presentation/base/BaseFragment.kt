@@ -13,6 +13,7 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
     var binding: VB? = null
     
     init {
+
         Log.d("tuanha", "init ${this.javaClass.simpleName}: $this")
     }
 
@@ -47,6 +48,7 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
     }
 
     override fun onDestroy() {
+
         super.onDestroy()
         Log.d("tuanha", "onDestroy ${this.javaClass.simpleName}: $this")
     }

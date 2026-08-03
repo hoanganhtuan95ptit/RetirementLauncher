@@ -46,6 +46,7 @@ interface PermissionRepository {
     companion object {
 
         val instance: PermissionRepository by lazy {
+
             PermissionRepositoryImpl(MainApplication.instance)
         }
     }

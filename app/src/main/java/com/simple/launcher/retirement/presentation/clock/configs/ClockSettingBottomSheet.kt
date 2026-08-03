@@ -23,19 +23,23 @@ class ClockSettingBottomSheet : BaseBottomSheetDialogFragment<BottomSheetClockSe
     override val viewModel: ClockSettingBottomSheetViewModel by viewModels()
 
     override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?): BottomSheetClockSettingBinding {
+
         return BottomSheetClockSettingBinding.inflate(inflater, container, false)
     }
 
     override fun setupViews(view: View, savedInstanceState: Bundle?) {
+
         super.setupViews(view, savedInstanceState)
 
         val binding = binding ?: return
 
         binding.cl12h.setOnSafeClickListener {
+
             viewModel.toggle24HourFormat(false)
         }
 
         binding.cl24h.setOnSafeClickListener {
+
             viewModel.toggle24HourFormat(true)
         }
 
@@ -52,16 +56,19 @@ class ClockSettingBottomSheet : BaseBottomSheetDialogFragment<BottomSheetClockSe
         }
 
         binding.btnCancel.setOnSafeClickListener {
+
             dismiss()
         }
 
         binding.btnSave.setOnSafeClickListener {
+
             viewModel.onSave()
             dismiss()
         }
     }
 
     override fun observeData() {
+
         super.observeData()
 
         viewModel.horizontalPadding.observe(this) { padding ->
@@ -86,6 +93,7 @@ class ClockSettingBottomSheet : BaseBottomSheetDialogFragment<BottomSheetClockSe
             val binding = binding ?: return@observe
             binding.tvFormatHeader.setText(it)
             binding.tvFormatHeader.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+
                 topMargin = 24.dp().toInt()
             }
         }
@@ -196,83 +204,102 @@ class ClockSettingBottomSheet : BaseBottomSheetDialogFragment<BottomSheetClockSe
     private fun setupLayoutMargins(binding: BottomSheetClockSettingBinding) {
 
         binding.cl12h.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+
             topMargin = 12.dp().toInt()
             marginEnd = 8.dp().toInt()
         }
         binding.cl12h.setPadding(16.dp().toInt(), 16.dp().toInt(), 16.dp().toInt(), 16.dp().toInt())
 
         binding.cl24h.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+
             marginStart = 8.dp().toInt()
         }
         binding.cl24h.setPadding(16.dp().toInt(), 16.dp().toInt(), 16.dp().toInt(), 16.dp().toInt())
 
         binding.ivRadio12h.updateLayoutParams<ViewGroup.MarginLayoutParams> { }
         binding.tv12hTitle.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+
             marginStart = 12.dp().toInt()
         }
         binding.tv12hExample.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+
             topMargin = 4.dp().toInt()
         }
 
         binding.ivRadio24h.updateLayoutParams<ViewGroup.MarginLayoutParams> { }
         binding.tv24hTitle.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+
             marginStart = 12.dp().toInt()
         }
         binding.tv24hExample.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+
             topMargin = 4.dp().toInt()
         }
 
         binding.divider1.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+
             topMargin = 24.dp().toInt()
         }
 
         binding.ivAmPm.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+
             topMargin = 16.dp().toInt()
         }
         binding.tvAmPmTitle.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+
             marginStart = 16.dp().toInt()
             marginEnd = 16.dp().toInt()
         }
         binding.tvAmPmDesc.updateLayoutParams<ViewGroup.MarginLayoutParams> { }
 
         binding.divider2.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+
             topMargin = 16.dp().toInt()
         }
 
         binding.ivSolar.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+
             topMargin = 16.dp().toInt()
         }
         binding.tvSolarTitle.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+
             marginStart = 16.dp().toInt()
             marginEnd = 16.dp().toInt()
         }
         binding.tvSolarDesc.updateLayoutParams<ViewGroup.MarginLayoutParams> { }
 
         binding.divider3.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+
             topMargin = 16.dp().toInt()
         }
 
         binding.ivLunar.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+
             topMargin = 16.dp().toInt()
         }
         binding.tvLunarTitle.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+
             marginStart = 16.dp().toInt()
             marginEnd = 16.dp().toInt()
         }
         binding.tvLunarDesc.updateLayoutParams<ViewGroup.MarginLayoutParams> { }
 
         binding.frameAction.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+
             topMargin = 32.dp().toInt()
         }
         binding.btnCancel.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+
             marginEnd = 8.dp().toInt()
         }
         binding.btnSave.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+
             marginStart = 8.dp().toInt()
         }
     }
 
     companion object {
+
         const val TAG = "ClockSettingBottomSheet"
     }
 }
@@ -283,6 +310,7 @@ class ClockSettingDeeplinkHandler : DeeplinkHandler {
     override val deeplink: String = DeepLinks.CLOCK_SETTING
 
     override suspend fun navigate(fragmentActivity: FragmentActivity, deeplink: String, extras: Map<String, Any?>?, sharedElement: Map<String, View>?): Boolean {
+
         ClockSettingBottomSheet().show(fragmentActivity.supportFragmentManager, ClockSettingBottomSheet.TAG)
         return true
     }

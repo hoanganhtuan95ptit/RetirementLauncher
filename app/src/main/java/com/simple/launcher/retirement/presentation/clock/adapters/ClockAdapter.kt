@@ -62,6 +62,7 @@ data class ClockHomeItem(
                 node = LinearNode(
                     orientation = Orientation.VERTICAL,
                     children = buildList {
+
                         add(
                             TimeNode(
                                 pattern = if (is24h) "HH:mm" else "hh:mm",
@@ -72,6 +73,7 @@ data class ClockHomeItem(
                             )
                         )
                         if (isSolar) {
+
                             add(
                                 LinearNode(
                                     orientation = Orientation.HORIZONTAL,
@@ -95,6 +97,7 @@ data class ClockHomeItem(
                             )
                         }
                         if (isLunar) {
+
                             add(
                                 LinearNode(
                                     orientation = Orientation.HORIZONTAL,

@@ -53,6 +53,7 @@ class CallBlockPermissionBottomSheet : BaseBottomSheetDialogFragment<BottomSheet
 
         logDebug("role request resultCode=${result.resultCode} | hasCallBlockPermissions=${PermissionManager.hasCallBlockPermissions()}")
         if (PermissionManager.hasCallBlockPermissions()) {
+
             onPermissionAccepted()
         }
     }
@@ -64,8 +65,10 @@ class CallBlockPermissionBottomSheet : BaseBottomSheetDialogFragment<BottomSheet
 
         logDebug("back from app settings | hasRuntimePermissions=${hasRuntimePermissions()}")
         if (PermissionManager.hasCallBlockPermissions()) {
+
             onPermissionAccepted()
         } else if (hasRuntimePermissions()) {
+
             requestCallScreeningRole()
         }
     }
@@ -95,6 +98,7 @@ class CallBlockPermissionBottomSheet : BaseBottomSheetDialogFragment<BottomSheet
 
         val context = context ?: return false
         return PermissionManager.getCallBlockPermissions().all {
+
             ContextCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED
         }
     }
@@ -148,10 +152,12 @@ class CallBlockPermissionBottomSheet : BaseBottomSheetDialogFragment<BottomSheet
         inflater: LayoutInflater,
         container: ViewGroup?
     ): BottomSheetCallPermissionBinding {
+
         return BottomSheetCallPermissionBinding.inflate(inflater, container, false)
     }
 
     override fun setupViews(view: View, savedInstanceState: Bundle?) {
+
         super.setupViews(view, savedInstanceState)
 
         val binding = binding ?: return
@@ -162,22 +168,27 @@ class CallBlockPermissionBottomSheet : BaseBottomSheetDialogFragment<BottomSheet
             logDebug("btnGrant clicked | hasRuntimePermissions=$allGranted")
 
             if (allGranted) {
+
                 requestCallScreeningRole()
             } else {
+
                 requestPermissionLauncher.launch(PermissionManager.getCallBlockPermissions())
             }
         }
     }
 
     override fun observeData() {
+
         super.observeData()
 
         viewModel.title.observe(this) {
+
             val binding = binding ?: return@observe
             binding.tvTitle.setText(it)
         }
 
         viewModel.description.observe(this) {
+
             val binding = binding ?: return@observe
             binding.tvDescription.setText(it)
         }
@@ -190,14 +201,17 @@ class CallBlockPermissionBottomSheet : BaseBottomSheetDialogFragment<BottomSheet
     }
 
     override fun onDismiss(dialog: DialogInterface) {
+
         super.onDismiss(dialog)
         // Chỉ post Cancel khi người dùng thực sự huỷ (không phải sau khi grant permission)
         if (!permissionGranted) {
+
             AppEventBus.post(AppEvent.PermissionCancel)
         }
     }
 
     companion object {
+
         const val TAG = "CallBlockPermissionBottomSheet"
     }
 }

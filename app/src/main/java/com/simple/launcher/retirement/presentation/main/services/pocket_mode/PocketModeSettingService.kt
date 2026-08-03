@@ -29,21 +29,26 @@ class PocketModeSettingService : FragmentCreatedService {
         }
 
         AppEventBus.events.filterIsInstance<AppEvent.SettingClicked>().observe(fragment) { event ->
-            val item = event.item
-            if (item.id == SettingItem.ID_TOGGLE_POCKET_MODE) {
-                val isTurningOn = item.isChecked
-
-                // Tắt tính năng yêu cầu xác thực PIN
-                if (!isTurningOn && !PermissionManager.requirePinPermissions()) {
-                    // Revert toggle về ON vì user huỷ nhập PIN
-                    pocketModeSettingViewModel.refresh()
-                    return@observe
-                }
-
-                PreferenceRepository.instance.setPocketModeEnabled(isTurningOn)
-                // Đồng bộ UI sau khi thay đổi trạng thái
-                pocketModeSettingViewModel.refresh()
-            }
+            handleSettingClicked(event.item)
         }
+    }
+
+    private suspend fun handleSettingClicked(item: SettingItem) {
+
+        if (item.id != SettingItem.ID_TOGGLE_POCKET_MODE) return
+
+        val isTurningOn = item.isChecked
+
+        // Tắt tính năng yêu cầu xác thực PIN
+        if (!isTurningOn && !PermissionManager.requirePinPermissions()) {
+
+            // Revert toggle về ON vì user huỷ nhập PIN
+            pocketModeSettingViewModel.refresh()
+            return
+        }
+
+        PreferenceRepository.instance.setPocketModeEnabled(isTurningOn)
+        // Đồng bộ UI sau khi thay đổi trạng thái
+        pocketModeSettingViewModel.refresh()
     }
 }

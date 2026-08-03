@@ -29,6 +29,7 @@ class GetHomeContactUseCase {
     companion object {
 
         val instance: GetHomeContactUseCase by lazy {
+
             GetHomeContactUseCase()
         }
     }

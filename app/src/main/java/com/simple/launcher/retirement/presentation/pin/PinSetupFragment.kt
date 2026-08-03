@@ -32,6 +32,7 @@ class PinSetupFragment : BaseFragment<FragmentPinSetupBinding>() {
     private val PIN_LENGTH = 6
 
     private val pinDots: List<View> by lazy {
+
         val binding = binding ?: return@lazy emptyList()
         listOf(
             binding.layoutPinDots.vPin1, binding.layoutPinDots.vPin2, binding.layoutPinDots.vPin3,
@@ -136,17 +137,7 @@ class PinSetupFragment : BaseFragment<FragmentPinSetupBinding>() {
         viewModel.state.observe(this) { state ->
 
             resetPin()
-            when (state) {
-                PinSetupViewModel.State.SUCCESS -> {
-
-                    pinSetupCompleted = true
-                    Toast.makeText(context, R.string.pin_setup_success, Toast.LENGTH_SHORT).show()
-                    AppEventBus.post(AppEvent.PinSetupSuccess)
-                    requireActivity().onBackPressedDispatcher.onBackPressed()
-                }
-
-                else -> Unit
-            }
+            if (state == PinSetupViewModel.State.SUCCESS) onPinSetupSuccess()
         }
 
         viewModel.error.observe(this) { errorRes ->
@@ -155,20 +146,7 @@ class PinSetupFragment : BaseFragment<FragmentPinSetupBinding>() {
             binding.tvError.setText(errorRes?.let { BigText(getString(it)) })
         }
 
-        viewModel.toolbar.observe(this) { state ->
-            val binding = binding ?: return@observe
-
-            binding.toolbar.tvTitle.setText(state.title)
-            val backIcon = state.backIcon
-            if (backIcon != null) {
-
-                binding.toolbar.ivLeft.visibility = View.VISIBLE
-                binding.toolbar.ivLeft.setImage(backIcon)
-            } else {
-
-                binding.toolbar.ivLeft.visibility = View.GONE
-            }
-        }
+        viewModel.toolbar.observe(this) { state -> renderToolbar(state) }
 
         viewModel.action.observe(this) { state ->
             val binding = binding ?: return@observe
@@ -181,10 +159,24 @@ class PinSetupFragment : BaseFragment<FragmentPinSetupBinding>() {
     override fun onDestroy() {
 
         super.onDestroy()
-        if (!pinSetupCompleted) {
+        if (!pinSetupCompleted) AppEventBus.post(AppEvent.PinCancel)
+    }
 
-            AppEventBus.post(AppEvent.PinCancel)
-        }
+    private fun onPinSetupSuccess() {
+
+        pinSetupCompleted = true
+        Toast.makeText(context, R.string.pin_setup_success, Toast.LENGTH_SHORT).show()
+        AppEventBus.post(AppEvent.PinSetupSuccess)
+        requireActivity().onBackPressedDispatcher.onBackPressed()
+    }
+
+    private fun renderToolbar(state: com.simple.launcher.retirement.presentation.base.ToolbarState) {
+
+        val binding = binding ?: return
+        binding.toolbar.tvTitle.setText(state.title)
+        val backIcon = state.backIcon
+        binding.toolbar.ivLeft.visibility = if (backIcon != null) View.VISIBLE else View.GONE
+        if (backIcon != null) binding.toolbar.ivLeft.setImage(backIcon)
     }
 }
 

@@ -6,6 +6,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.lifecycle.findViewTreeViewModelStoreOwner
@@ -36,6 +37,7 @@ class NumpadView @JvmOverloads constructor(
      * 1, 2, 3, 4, 5, 6, 7, 8, 9, 0
      */
     private val orderedButtons by lazy {
+
         listOf(
             binding.btnKey1, binding.btnKey2, binding.btnKey3,
             binding.btnKey4, binding.btnKey5, binding.btnKey6,
@@ -45,32 +47,41 @@ class NumpadView @JvmOverloads constructor(
     }
 
     init {
+
         orientation = VERTICAL
         binding.btnKeyDelete.setOnClickListener { onDeleteClick?.invoke() }
     }
 
     override fun onAttachedToWindow() {
+
         super.onAttachedToWindow()
         val lifecycleOwner = findViewTreeLifecycleOwner() ?: return
         val vmOwner = findViewTreeViewModelStoreOwner() ?: return
         val viewModel = ViewModelProvider(vmOwner)[NumpadViewModel::class.java]
 
         observeJob = lifecycleOwner.lifecycleScope.launch {
-            lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.numpadState.collect { state ->
-                    applyState(state)
-                }
-            }
+
+            observeNumpadState(lifecycleOwner, viewModel)
+        }
+    }
+
+    private suspend fun observeNumpadState(owner: LifecycleOwner, viewModel: NumpadViewModel) {
+
+        owner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+
+            viewModel.numpadState.collect { applyState(it) }
         }
     }
 
     override fun onDetachedFromWindow() {
+
         super.onDetachedFromWindow()
         observeJob?.cancel()
         observeJob = null
     }
 
     private fun applyState(state: NumpadViewModel.NumpadState) {
+
         state.keys.forEachIndexed { index, key ->
             val btn = orderedButtons.getOrNull(index) ?: return@forEachIndexed
             btn.text = key.label
@@ -86,6 +97,7 @@ class NumpadView @JvmOverloads constructor(
     fun setIsClickable(isClickable: Boolean) {
 
         orderedButtons.forEach {
+
             it.isClickable = isClickable
         }
     }

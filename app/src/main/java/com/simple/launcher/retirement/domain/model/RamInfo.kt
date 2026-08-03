@@ -5,6 +5,7 @@ data class StorageInfo(
     val usedMB: Long,
     val freeMB: Long
 ) {
+
     val percent: Float
         get() = if (totalMB == 0L) 0f else usedMB.toFloat() / totalMB.toFloat()
 

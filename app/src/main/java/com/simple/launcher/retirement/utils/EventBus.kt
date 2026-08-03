@@ -14,6 +14,7 @@ open class EventBus<T> {
     val events: SharedFlow<T> = _events
 
     fun post(item: T) {
+
         _events.tryEmit(item)
     }
 }

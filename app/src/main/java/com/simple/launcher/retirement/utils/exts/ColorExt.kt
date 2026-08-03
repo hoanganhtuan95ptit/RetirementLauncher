@@ -6,6 +6,7 @@ import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.presentation.base.services.getColor
 
 fun Int.withAlpha(alpha: Float): Int {
+
     return ColorUtils.setAlphaComponent(this, (alpha * 255).toInt().coerceIn(0, 255))
 }
 

@@ -16,6 +16,7 @@ data class SpaceViewItem(
 ) : PrecomputedViewItem(), SpanSizeLookupViewItem {
 
     override fun buildDrawSpec(resources: Map<String, Any>) {
+
         spec = LayoutEngine.measure(
             node = SpaceNode(
                 layoutWidth = width.toLayoutDimension(),
@@ -27,6 +28,7 @@ data class SpaceViewItem(
     }
 
     override fun getSpanSize(): Int {
+
         return span
     }
 
@@ -44,6 +46,7 @@ data class SpaceViewItem(
 class SpaceAdapter : PrecomputedAdapter<SpaceViewItem>() {
 
     override val viewItemClass: Class<SpaceViewItem> by lazy {
+
         SpaceViewItem::class.java
     }
 

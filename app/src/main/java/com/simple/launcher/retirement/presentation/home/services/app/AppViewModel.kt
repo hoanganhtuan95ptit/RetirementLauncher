@@ -66,6 +66,7 @@ class AppViewModel : BaseViewModel() {
             title = title,
             screenWidth = screenWidth
         ).apply {
+
             buildDrawSpec(resources)
         }
     }

@@ -53,6 +53,7 @@ class SOSTimeoutBottomSheet(
     }
 
     override fun observeData() {
+
         super.observeData()
 
         val binding = binding ?: return
@@ -79,6 +80,7 @@ class SOSTimeoutBottomSheet(
 
             binding.rvTimeout.setPadding(padding, 0, padding, 0)
             binding.btnChange.root.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+
                 marginStart = padding
                 marginEnd = padding
             }
@@ -92,6 +94,7 @@ class SOSTimeoutBottomSheet(
         viewModel.listMarginBottom.observe(this) { margin ->
 
             binding.rvTimeout.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+
                 bottomMargin = margin
             }
         }

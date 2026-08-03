@@ -27,13 +27,16 @@ class CallBlockIntroBottomSheet : BaseBottomSheetDialogFragment<BottomSheetUsage
     private var isAccepted = false
 
     override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?): BottomSheetUsageStatsPermissionBinding {
+
         return BottomSheetUsageStatsPermissionBinding.inflate(inflater, container, false)
     }
 
     override fun setupViews(view: View, savedInstanceState: Bundle?) {
+
         super.setupViews(view, savedInstanceState)
 
         binding?.btnGrant?.root?.setOnSafeClickListener {
+
             isAccepted = true
             AppEventBus.post(AppEvent.CallBlockIntroAccept)
             dismiss()
@@ -41,6 +44,7 @@ class CallBlockIntroBottomSheet : BaseBottomSheetDialogFragment<BottomSheetUsage
     }
 
     override fun observeData() {
+
         super.observeData()
 
         viewModel.title.observe(this) { title ->
@@ -56,13 +60,16 @@ class CallBlockIntroBottomSheet : BaseBottomSheetDialogFragment<BottomSheetUsage
     }
 
     override fun onDismiss(dialog: DialogInterface) {
+
         super.onDismiss(dialog)
         if (!isAccepted) {
+
             AppEventBus.post(AppEvent.CallBlockIntroCancel)
         }
     }
 
     companion object {
+
         const val TAG = "CallBlockIntroBottomSheet"
     }
 }

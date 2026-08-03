@@ -116,10 +116,12 @@ class AppMonitoringWorker(context: Context) : BackgroundWorker(context) {
     private fun getAppLabel(packageName: String): String? {
 
         return try {
+
             context.packageManager.getApplicationLabel(
                 context.packageManager.getApplicationInfo(packageName, 0)
             ).toString()
         } catch (_: Exception) {
+
             null
         }
     }

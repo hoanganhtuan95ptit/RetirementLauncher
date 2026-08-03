@@ -25,6 +25,7 @@ data class HeaderHomeItem(
     override val spanSize: Int = HomeItem.TOTAL_COLUMNS
 
     override fun buildDrawSpec(resources: Map<String, Any>) {
+
         spec = LayoutEngine.measure(
             node = TextNode(
                 text = title

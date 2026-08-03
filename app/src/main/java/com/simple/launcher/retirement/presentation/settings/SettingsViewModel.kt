@@ -42,13 +42,16 @@ class SettingsViewModel : ViewItemViewModel() {
 
             span = 2
         ).apply {
+
             buildDrawSpec(resources)
         }.let {
+
             listOf(it)
         }
     }
 
     init {
+
         bottomViewItem.launchCollect(viewModelScope) {
 
             updateItem(Double.MAX_VALUE, it)

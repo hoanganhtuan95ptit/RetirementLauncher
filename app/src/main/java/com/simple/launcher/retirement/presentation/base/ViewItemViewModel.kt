@@ -52,6 +52,7 @@ abstract class ViewItemViewModel : BaseViewModel() {
     fun updateItem(order: Double, list: List<ViewItem>?) = jobQueue.submit {
 
         viewItemMap.value = viewItemMap.value.toMutableMap().apply {
+
             if (list.isNullOrEmpty()) {
 
                 remove(order)

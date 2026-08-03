@@ -28,7 +28,9 @@ data class ActionState(
 
     val background: Background? = emptyBackground()
 ) {
+
     companion object {
+
         fun empty() = ActionState(text = emptyText())
     }
 }

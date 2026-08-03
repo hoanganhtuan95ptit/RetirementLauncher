@@ -19,8 +19,10 @@ abstract class BackgroundWorker(protected val context: Context) {
 
     @CallSuper
     open fun attach(scope: CoroutineScope) {
+
         this.scope = scope
         scope.launch {
+
             observeEnabled().collect { isEnabled ->
                 if (isEnabled) onStart() else onStop()
             }
@@ -28,6 +30,7 @@ abstract class BackgroundWorker(protected val context: Context) {
     }
 
     fun detach() {
+
         onStop()
         scope = null
     }

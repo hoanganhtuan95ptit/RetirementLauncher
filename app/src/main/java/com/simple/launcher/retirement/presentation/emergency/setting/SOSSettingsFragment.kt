@@ -65,21 +65,26 @@ class SOSSettingsFragment : BaseFragment<FragmentSosSettingsBinding>() {
 
     private fun setupSettingsGrid(binding: FragmentSosSettingsBinding) {
 
-        binding.rvSettings.apply {
+        binding.rvSettings.layoutManager = createSettingsLayoutManager()
+    }
 
-            layoutManager = GridLayoutManager(requireContext(), 2).apply {
+    private fun createSettingsLayoutManager(): GridLayoutManager {
 
-                spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+        val layoutManager = GridLayoutManager(requireContext(), 2)
+        layoutManager.spanSizeLookup = createSpanSizeLookup()
+        return layoutManager
+    }
 
-                    override fun getSpanSize(position: Int): Int {
+    private fun createSpanSizeLookup(): GridLayoutManager.SpanSizeLookup =
+        object : GridLayoutManager.SpanSizeLookup() {
 
-                        val viewItem = viewModel.viewItemList.value.getOrNull(position)
-
-                        return (viewItem as? SpanSizeLookupViewItem)?.getSpanSize() ?: 2
-                    }
-                }
-            }
+            override fun getSpanSize(position: Int): Int = resolveSpanSize(position)
         }
+
+    private fun resolveSpanSize(position: Int): Int {
+
+        val viewItem = viewModel.viewItemList.value.getOrNull(position)
+        return (viewItem as? SpanSizeLookupViewItem)?.getSpanSize() ?: 2
     }
 
     private fun setupSaveConfigButton(binding: FragmentSosSettingsBinding) {
@@ -104,23 +109,16 @@ class SOSSettingsFragment : BaseFragment<FragmentSosSettingsBinding>() {
 
     private fun observeToolbar() {
 
-        viewModel.toolbar.observe(this@SOSSettingsFragment) { state ->
+        viewModel.toolbar.observe(this@SOSSettingsFragment) { state -> renderToolbar(state) }
+    }
 
-            val binding = binding ?: return@observe
+    private fun renderToolbar(state: com.simple.launcher.retirement.presentation.base.ToolbarState) {
 
-            binding.toolbar.tvTitle.setText(state.title)
-
-            val backIcon = state.backIcon
-
-            if (backIcon != null) {
-
-                binding.toolbar.ivLeft.isVisible = true
-                binding.toolbar.ivLeft.setImage(backIcon)
-            } else {
-
-                binding.toolbar.ivLeft.isVisible = false
-            }
-        }
+        val binding = binding ?: return
+        binding.toolbar.tvTitle.setText(state.title)
+        val backIcon = state.backIcon
+        binding.toolbar.ivLeft.isVisible = backIcon != null
+        if (backIcon != null) binding.toolbar.ivLeft.setImage(backIcon)
     }
 
     private fun observeSettingItems() {
@@ -213,22 +211,23 @@ class SOSSettingsFragment : BaseFragment<FragmentSosSettingsBinding>() {
 
     private fun showAddExclusionPeriodPicker() {
 
-        viewLifecycleOwner.lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch { pickAndAddExclusionPeriod() }
+    }
 
-            // Chọn hai mốc liên tiếp để tạo khung giờ không tính vào timeout SOS.
-            val startTime = pickClockTime(R.string.sos_select_start_time, 22, 0) ?: return@launch
-            val endTime = pickClockTime(R.string.sos_select_end_time, 7, 0) ?: return@launch
+    private suspend fun pickAndAddExclusionPeriod() {
 
-            val period = ExclusionPeriod(
-                id = UUID.randomUUID().toString(),
-                startHour = startTime.first,
-                startMinute = startTime.second,
-                endHour = endTime.first,
-                endMinute = endTime.second
-            )
+        // Chọn hai mốc liên tiếp để tạo khung giờ không tính vào timeout SOS.
+        val startTime = pickClockTime(R.string.sos_select_start_time, 22, 0) ?: return
+        val endTime = pickClockTime(R.string.sos_select_end_time, 7, 0) ?: return
 
-            viewModel.addExclusionPeriodDraft(period)
-        }
+        val period = ExclusionPeriod(
+            id = UUID.randomUUID().toString(),
+            startHour = startTime.first,
+            startMinute = startTime.second,
+            endHour = endTime.first,
+            endMinute = endTime.second
+        )
+        viewModel.addExclusionPeriodDraft(period)
     }
 
     private suspend fun pickClockTime(

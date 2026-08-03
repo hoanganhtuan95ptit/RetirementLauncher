@@ -168,12 +168,14 @@ abstract class BaseBottomSheetDialogFragment<VB : ViewBinding, VM : BaseViewMode
         configureGestureInset(bottomSheetDialog)
 
         bottomSheetDialog.behavior.apply {
+
             state = BottomSheetBehavior.STATE_EXPANDED
             skipCollapsed = true
         }
     }
 
     private fun configureWindow(bottomSheetDialog: BottomSheetDialog) {
+
         val window = bottomSheetDialog.window ?: return
 
         // Thay thế việc tự set statusBarColor/navigationBarColor.
@@ -182,6 +184,7 @@ abstract class BaseBottomSheetDialogFragment<VB : ViewBinding, VM : BaseViewMode
 
         // Bỏ lớp scrim mặc định khi dùng điều hướng 3 nút.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+
             window.isNavigationBarContrastEnforced = false
         }
     }

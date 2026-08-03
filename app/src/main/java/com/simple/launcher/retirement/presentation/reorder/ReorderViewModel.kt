@@ -82,47 +82,46 @@ class ReorderViewModel(
 
     fun loadItems(context: Context) {
 
-        if (type == ReorderType.APPS) {
+        _items.value = if (type == ReorderType.APPS) loadAppItems() else loadContactItems(context)
+    }
 
-            val allApps = appRepository.getInstalledApps()
-            val selectedApps = initialIds.mapNotNull { pkg -> allApps.find { it.packageName == pkg } }
-            _items.value = selectedApps.map { app ->
+    private fun loadAppItems(): List<ReorderItem> {
 
-                ReorderItem(
-                    id = app.packageName,
-                    label = app.label
-                        .withStyleBodyLarge()
-                        .with(BigForegroundColor(resources.value.colorOnSurface))
-                        .build(),
-                    icon = BigImage(app.icon)
-                )
-            }
-        } else {
+        val allApps = appRepository.getInstalledApps()
+        val selectedApps = initialIds.mapNotNull { pkg -> allApps.find { it.packageName == pkg } }
+        return selectedApps.map { app -> toAppReorderItem(app) }
+    }
 
-            val allContacts = contactRepository.getAllContacts(context)
-            val orderedContacts = initialIds.mapNotNull { id -> allContacts.find { it.id == id } }
+    private fun toAppReorderItem(app: com.simple.launcher.retirement.domain.model.AppEntity): ReorderItem = ReorderItem(
+        id = app.packageName,
+        label = app.label
+            .withStyleBodyLarge()
+            .with(BigForegroundColor(resources.value.colorOnSurface))
+            .build(),
+        icon = BigImage(app.icon)
+    )
 
-            _items.value = orderedContacts.map { contact ->
+    private fun loadContactItems(context: Context): List<ReorderItem> {
 
-                val photo = if (contact.photoUri != null) {
+        val allContacts = contactRepository.getAllContacts(context)
+        val orderedContacts = initialIds.mapNotNull { id -> allContacts.find { it.id == id } }
+        return orderedContacts.map { toContactReorderItem(it) }
+    }
 
-                    BigImage(contact.photoUri)
-                } else {
+    private fun toContactReorderItem(contact: ContactEntity): ReorderItem {
 
-                    BigImage(R.drawable.ic_home_contact_24dp)
-                }
+        val photo = if (contact.photoUri != null) BigImage(contact.photoUri)
+        else BigImage(R.drawable.ic_home_contact_24dp)
 
-                ReorderItem(
-                    id = contact.id,
-                    label = contact.name
-                        .withStyleBodyLarge()
-                        .with(BigForegroundColor(resources.value.colorOnSurface))
-                        .build(),
-                    icon = photo,
-                    data = contact
-                )
-            }
-        }
+        return ReorderItem(
+            id = contact.id,
+            label = contact.name
+                .withStyleBodyLarge()
+                .with(BigForegroundColor(resources.value.colorOnSurface))
+                .build(),
+            icon = photo,
+            data = contact
+        )
     }
 
     fun moveItem(from: Int, to: Int) {

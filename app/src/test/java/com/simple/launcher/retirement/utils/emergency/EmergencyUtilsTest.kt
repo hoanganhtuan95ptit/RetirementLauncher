@@ -26,6 +26,7 @@ class EmergencyUtilsTest {
         calendar.set(2026, Calendar.JULY, 17, hour, minute, 0)
         calendar.set(Calendar.MILLISECOND, 0)
         if (dayOffset != 0) {
+
             calendar.add(Calendar.DAY_OF_YEAR, dayOffset)
         }
         return calendar.timeInMillis

@@ -49,6 +49,7 @@ class EmergencySettingViewModel : BaseViewModel() {
     }
 
     fun refreshStatus() {
+
         refresh.value = System.currentTimeMillis()
     }
 

@@ -45,6 +45,7 @@ data class AppHomeItem(
     )
 
     override fun buildDrawSpec(resources: Map<String, Any>) {
+
         spec = LayoutEngine.measure(
             node = createAppCardNode(itemWidth = screenWidth / 3 - 2 * 8.dp(), resources = resources),
             constraints = Constraints(maxWidth = screenWidth / 3),
@@ -117,6 +118,7 @@ class AppAdapter : PrecomputedAdapter<AppHomeItem>() {
     }
 
     override fun onItemCLick(item: AppHomeItem) {
+
         sendDeeplink(DeepLinks.APP, mapOf("entity" to item.entity))
     }
 }

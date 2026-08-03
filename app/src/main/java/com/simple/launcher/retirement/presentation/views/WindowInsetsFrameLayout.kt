@@ -19,7 +19,9 @@ class WindowInsetsFrameLayout @JvmOverloads constructor(
     private var insetNavigationBars = false
 
     init {
+
         context.withStyledAttributes(attrs, R.styleable.WindowInsetsFrameLayout) {
+
             insetStatusBars = getBoolean(R.styleable.WindowInsetsFrameLayout_insetStatusBars, false)
             insetNavigationBars = getBoolean(R.styleable.WindowInsetsFrameLayout_insetNavigationBars, false)
         }
@@ -28,6 +30,7 @@ class WindowInsetsFrameLayout @JvmOverloads constructor(
     }
 
     private fun setupInsets() {
+
         ViewCompat.setOnApplyWindowInsetsListener(this) { view, insets ->
             val statusBars = insets.getInsets(WindowInsetsCompat.Type.statusBars())
             val navigationBars = insets.getInsets(WindowInsetsCompat.Type.navigationBars())

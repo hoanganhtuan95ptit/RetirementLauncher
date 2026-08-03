@@ -19,6 +19,7 @@ class BackgroundBuilder {
     // ── Background color ────────────────────────────────────────────────
 
     fun backgroundColor(color: Int): BackgroundBuilder {
+
         this.backgroundColor = color
         return this
     }
@@ -27,6 +28,7 @@ class BackgroundBuilder {
 
     /** Bo tròn tất cả 4 góc cùng giá trị. */
     fun cornerRadius(radius: Int): BackgroundBuilder {
+
         this.cornerRadius_TL = radius
         this.cornerRadius_TR = radius
         this.cornerRadius_BL = radius
@@ -36,6 +38,7 @@ class BackgroundBuilder {
 
     /** Bo tròn 2 góc trên. */
     fun cornerRadiusTop(radius: Int): BackgroundBuilder {
+
         this.cornerRadius_TL = radius
         this.cornerRadius_TR = radius
         return this
@@ -43,6 +46,7 @@ class BackgroundBuilder {
 
     /** Bo tròn 2 góc dưới. */
     fun cornerRadiusBottom(radius: Int): BackgroundBuilder {
+
         this.cornerRadius_BL = radius
         this.cornerRadius_BR = radius
         return this
@@ -55,6 +59,7 @@ class BackgroundBuilder {
         bottomLeft: Int = 0,
         bottomRight: Int = 0
     ): BackgroundBuilder {
+
         this.cornerRadius_TL = topLeft
         this.cornerRadius_TR = topRight
         this.cornerRadius_BL = bottomLeft
@@ -70,6 +75,7 @@ class BackgroundBuilder {
         dashWidth: Int = 0,
         dashGap: Int = 0
     ): BackgroundBuilder {
+
         this.strokeWidth = width
         this.strokeColor = color
         this.strokeDashWidth = dashWidth
