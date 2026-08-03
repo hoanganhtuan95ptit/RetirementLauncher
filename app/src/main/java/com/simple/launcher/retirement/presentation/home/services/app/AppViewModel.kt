@@ -10,17 +10,36 @@ import com.simple.launcher.retirement.presentation.home.adapter.HeaderHomeItem
 import com.simple.launcher.retirement.utils.exts.combineState
 import com.simple.launcher.retirement.utils.exts.dp
 import com.simple.launcher.retirement.utils.exts.getString
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.filterNotNull
 
 class AppViewModel : BaseViewModel() {
 
+    val refresh = MutableStateFlow(1L)
+
+    val apps: StateFlow<List<HomeContentEntity.App>?> = combineState(
+        refresh,
+        null
+    ) {
+
+        GetHomeAppsUseCase.instance.invoke().collect {
+
+            value = it
+        }
+    }
+
     val appViewItemList: StateFlow<GroupViewItem?> = combineState(
         flow1 = resources,
-        flow2 = GetHomeAppsUseCase.instance.invoke(),
+        flow2 = apps.filterNotNull(),
         initialValue = null
     ) { resources, apps ->
 
         value = buildAppGroup(resources = resources, apps = apps)
+    }
+
+    fun refresh() {
+        refresh.value = System.currentTimeMillis()
     }
 
     private fun buildAppGroup(
