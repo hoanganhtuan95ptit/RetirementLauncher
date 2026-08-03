@@ -2,6 +2,7 @@ package com.simple.launcher.retirement.data.repository
 
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.os.Build
 import android.provider.AlarmClock
@@ -34,6 +35,54 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
         private const val KEY_SELECTED_APPS = "selected_apps"
 
         /**
+         * Các keyword trong package name PHẢI bị chặn — kể cả khi package đó là
+         * system app (FLAG_SYSTEM) hoặc trùng prefix hệ thống. Dùng để ngăn user
+         * cài APK lạ / bên thứ 3 qua trình cài đặt sẵn của máy.
+         *
+         * Đặc biệt chặn *packageinstaller* — trên nhiều máy đây là app xử lý
+         * intent VIEW file .apk, nên block nó = block sideload APK.
+         */
+        private val BLOCKED_INSTALLER_KEYWORDS: Array<String> = arrayOf(
+            "packageinstaller",     // com.android.packageinstaller, com.google.android.packageinstaller,
+                                    // com.miui.packageinstaller, com.samsung.android.packageinstaller…
+            "packageinstall"        // biến thể hiếm
+        )
+
+        /**
+         * Prefix namespace của các package hệ thống / OEM. Dùng cho fallback
+         * isSystemAppByFlagAndPrefix() — chỉ chấp nhận package FLAG_SYSTEM khi
+         * package name nằm trong 1 trong các namespace này.
+         */
+        private val SYSTEM_PACKAGE_PREFIXES: Array<String> = arrayOf(
+            "com.android.",
+            "com.google.android.",
+            "com.samsung.",
+            "com.sec.android.",
+            "com.miui.",
+            "com.xiaomi.",
+            "com.mi.",
+            "com.oppo.",
+            "com.coloros.",
+            "com.heytap.",
+            "com.realme.",
+            "com.vivo.",
+            "com.iqoo.",
+            "com.bbk.",
+            "com.huawei.",
+            "com.hihonor.",
+            "com.oneplus.",
+            "com.lge.",
+            "com.sonymobile.",
+            "com.asus.",
+            "com.motorola.",
+            "com.lenovo.",
+            "com.nokia.",
+            "com.transsion.",
+            "com.tecno.",
+            "com.infinix."
+        )
+
+        /**
          * Tập hợp tất cả package names hệ thống / OEM đã biết.
          * Dùng HashSet để lookup O(1), khởi tạo 1 lần duy nhất trong companion.
          * Được kiểm tra ĐẦU TIÊN trong resolveIsDefaultApp() để short-circuit
@@ -46,6 +95,7 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
             "android.keyguard",
             "com.android.systemui",
             "com.android.settings",
+            "com.android.settings.intelligence",
             "com.android.permissioncontroller",
             "com.google.android.permissioncontroller",
             "com.google.android.gms",
@@ -59,6 +109,10 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
             "com.android.bluetooth",
             "com.android.nfc",
             "com.android.shell",
+            "com.android.stk",                     // SIM Toolkit
+            "com.android.stk2",
+            "com.android.phone",
+            "com.android.server.telecom",
             "com.android.inputdevices",
             "com.android.location.fused",
             "com.android.wallpaper",
@@ -67,7 +121,10 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
             "com.android.vpndialogs",
             "com.android.htmlviewer",
             "com.android.certinstaller",
-//            "com.android.packageinstaller",
+            // CỐ TÌNH KHÔNG whitelist bất kỳ *.packageinstaller nào (com.android.packageinstaller,
+            // com.google.android.packageinstaller, com.miui.packageinstaller, com.samsung.android.packageinstaller…)
+            // → khi user mở file APK lạ, packageinstaller sẽ bị block như app thường.
+            // Xem thêm BLOCKED_INSTALLER_KEYWORDS + isSystemAppByFlagAndPrefix() để không lọt qua fallback.
             "com.android.intentresolver",          // System share sheet / intent chooser
             "com.android.backupconfirm",
             "com.android.managedprovisioning",
@@ -75,6 +132,29 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
             "com.android.vending",              // Google Play Store
             "com.android.providers.userdictionary",
             "com.android.emergency",            // Emergency Information
+            "com.android.setupwizard",
+            "com.google.android.setupwizard",
+            "com.android.documentsui",          // File picker / SAF
+            "com.android.externalstorage",
+            "com.android.mtp",
+            "com.android.captiveportallogin",
+            "com.android.contacts",
+            "com.android.dialer",
+            "com.android.mms",
+            "com.android.messaging",
+            "com.android.email",
+            "com.android.calendar",
+            "com.android.deskclock",
+            "com.android.calculator2",
+            "com.android.camera",
+            "com.android.camera2",
+            "com.android.gallery3d",
+            "com.android.music",
+            "com.android.soundrecorder",
+            "com.android.chrome",
+            "com.android.hotspot2",
+            "com.android.se",                   // Secure Element
+            "com.android.simappdialog",
 
             // ── Samsung ──
             "com.samsung.android.incallui",
@@ -104,7 +184,19 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
             "com.samsung.android.app.watchmanager",
             "com.samsung.android.weather",
             "com.samsung.android.voicerecorder",
+            "com.samsung.android.app.settings",
+            "com.samsung.android.app.settings.bixby",
+            "com.samsung.android.settings.wifi",
+            "com.samsung.android.settings.external",
             "com.sec.android.app.launcher",
+            "com.sec.android.app.setupwizard",
+            "com.sec.android.app.camera",
+            "com.sec.android.gallery3d",
+            "com.sec.android.app.clockpackage",
+            "com.sec.android.app.myfiles",
+            "com.sec.android.app.popupcalculator",
+            "com.sec.android.app.samsungapps",
+            "com.sec.android.easyMover.Agent",
 
             // ── Google ──
             "com.google.android.apps.messaging",
@@ -135,6 +227,12 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
 
             // ── Xiaomi / MIUI ──
             "com.miui.securitycenter",
+            "com.miui.securityadd",
+            "com.miui.securitycore",
+            "com.miui.system",
+            "com.miui.core",
+            "com.miui.contentcatcher",
+            "com.miui.contentextension",
             "com.miui.weather2",
             "com.miui.calculator",
             "com.miui.notes",
@@ -147,20 +245,47 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
             "com.miui.cleanmaster",
             "com.miui.voiceassist",
             "com.miui.home",
+            "com.miui.contacts",
+            "com.miui.phone",
+            "com.miui.mms",
+            "com.miui.dialer",
+            "com.miui.settings",
+            "com.xiaomi.settings",
             "com.xiaomi.scanner",
             "com.xiaomi.camera",
+            "com.xiaomi.simactivate.service",
+            "com.xiaomi.finddevice",
+            "com.mi.android.globallauncher",
+            "com.mi.globalbrowser",
+            "com.mi.globalTrendNews",
 
             // ── OPPO / Realme / ColorOS ──
             "com.oppo.launcher",
+            "com.oppo.settings",
+            "com.oppo.camera",
+            "com.oppo.contacts",
+            "com.oppo.dialer",
+            "com.oppo.mms",
             "com.coloros.calculator",
             "com.coloros.weather",
+            "com.coloros.weather2",
             "com.coloros.filemanager",
             "com.coloros.compass2",
             "com.coloros.note",
             "com.coloros.gallery3d",
             "com.coloros.soundrecorder",
+            "com.coloros.securepay",
+            "com.coloros.safecenter",
+            "com.coloros.settings",
+            "com.coloros.simsettings",
+            "com.coloros.phonemanager",
+            "com.coloros.oppoguardelf",
             "com.heytap.browser",
             "com.heytap.music",
+            "com.heytap.pictorial",
+            "com.heytap.themestore",
+            "com.realme.securitycheck",
+            "com.realme.wellbeing",
 
             // ── Vivo / FuntouchOS ──
             "com.vivo.weather",
@@ -169,6 +294,19 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
             "com.vivo.gallery",
             "com.vivo.filemanager",
             "com.vivo.note",
+            "com.vivo.settings",
+            "com.vivo.simsettings",
+            "com.vivo.dialer",
+            "com.vivo.contacts",
+            "com.vivo.email",
+            "com.vivo.easyshare",
+            "com.vivo.smartshot",
+            "com.vivo.magazine",
+            "com.iqoo.secure",
+            "com.iqoo.settings",
+            "com.bbk.calendar",
+            "com.bbk.launcher2",
+            "com.bbk.appstore",
 
             // ── Huawei / HarmonyOS ──
             "com.huawei.android.launcher",
@@ -182,6 +320,18 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
             "com.huawei.compass",
             "com.huawei.appmarket",
             "com.huawei.android.totemweather",
+            "com.huawei.contacts",
+            "com.huawei.mms",
+            "com.huawei.email",
+            "com.huawei.gallery",
+            "com.huawei.filemanager",
+            "com.huawei.himovie",
+            "com.huawei.music",
+            "com.huawei.hwid",
+            "com.huawei.systemserver",
+            "com.hihonor.systemmanager",
+            "com.hihonor.contacts",
+            "com.hihonor.dialer",
 
             // ── OnePlus / OxygenOS ──
             "com.oneplus.camera",
@@ -190,15 +340,32 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
             "com.oneplus.calculator",
             "com.oneplus.note",
             "com.oneplus.weather",
+            "com.oneplus.contacts",
+            "com.oneplus.dialer",
+            "com.oneplus.mms",
+            "com.oneplus.setupwizard",
+            "com.oneplus.security",
 
             // ── LG ──
             "com.lge.camera",
             "com.lge.clock",
             "com.lge.calculator",
+            "com.lge.launcher3",
+            "com.lge.settings",
+            "com.lge.contacts",
 
             // ── Sony ──
             "com.sonymobile.camera",
-            "com.sonymobile.album"
+            "com.sonymobile.album",
+            "com.sonymobile.settings",
+
+            // ── ASUS / Lenovo / Motorola / Nokia ──
+            "com.asus.launcher",
+            "com.asus.settings",
+            "com.motorola.launcher3",
+            "com.motorola.settings",
+            "com.lenovo.launcher",
+            "com.nokia.settings"
         )
     }
 
@@ -313,8 +480,18 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
             Log.d(tag, "--- Checking: $packageName ---")
         }
 
+        // ── Hard block: các trình cài đặt APK — LUÔN LUÔN không phải default,
+        //    kể cả khi khớp prefix hệ thống hoặc lỡ tay vào KNOWN_SYSTEM_PACKAGES.
+        //    Mục đích: ngăn user cài APK lạ / sideload.
+        if (isBlockedInstaller(packageName)) return false
+
         // ── Fast path: O(1) HashSet lookup trước khi resolve bất kỳ intent nào ──
         if (packageName in KNOWN_SYSTEM_PACKAGES) return true
+
+        // Fallback theo pattern prefix: nếu package thuộc namespace hệ thống điển hình
+        // và được cài đặt như system app (FLAG_SYSTEM) → coi là default để tránh khóa
+        // Settings / core apps của OEM mà mình chưa liệt kê thủ công.
+        if (isSystemAppByFlagAndPrefix(pm, packageName)) return true
 
         // Default Launcher
         if (checkDefaultLauncher(pm, packageName)) return true
@@ -398,6 +575,48 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
         if (checkDefaultNotes(pm, packageName)) return true
 
         return false
+    }
+
+    /**
+     * Trả về true nếu package name chứa bất kỳ keyword nào trong BLOCKED_INSTALLER_KEYWORDS.
+     * Dùng để cấm cửa mọi trình cài đặt APK (packageinstaller) — bất kể của Google,
+     * Samsung, MIUI hay OEM nào — nhằm chặn sideload APK lạ.
+     */
+    private fun isBlockedInstaller(packageName: String): Boolean {
+
+        val lower = packageName.lowercase()
+        return BLOCKED_INSTALLER_KEYWORDS.any { lower.contains(it) }
+    }
+
+    /**
+     * Fallback check cho các package hệ thống chưa được liệt kê trong KNOWN_SYSTEM_PACKAGES.
+     *
+     * Chỉ chấp nhận nếu THỎA cả 2 điều kiện:
+     *  1. Package có FLAG_SYSTEM hoặc FLAG_UPDATED_SYSTEM_APP (được cài như system app,
+     *     không phải user app cài từ Play Store).
+     *  2. Package name khớp với 1 trong các namespace hệ thống / OEM đã biết
+     *     (com.android.*, com.google.android.*, com.samsung.*, com.miui.*, com.xiaomi.*,
+     *      com.oppo.*, com.coloros.*, com.heytap.*, com.realme.*, com.vivo.*, com.iqoo.*,
+     *      com.bbk.*, com.huawei.*, com.hihonor.*, com.oneplus.*, com.lge.*,
+     *      com.sonymobile.*, com.asus.*, com.motorola.*, com.lenovo.*, com.nokia.*, com.sec.*).
+     *
+     * Điều kiện #2 tránh việc app 3rd-party (dù bằng cách nào đó có FLAG_SYSTEM ở ROM cook)
+     * cũng được coi là default. FLAG_SYSTEM đơn thuần cũng có thể match với OEM bloatware,
+     * nên gộp thêm prefix để giữ danh sách "trắng" trong phạm vi các OEM lớn.
+     */
+    private fun isSystemAppByFlagAndPrefix(pm: PackageManager, packageName: String): Boolean {
+
+        return try {
+
+            val info = pm.getApplicationInfo(packageName, 0)
+            val flags = info.flags and (ApplicationInfo.FLAG_SYSTEM or ApplicationInfo.FLAG_UPDATED_SYSTEM_APP)
+            if (flags == 0) return false
+
+            SYSTEM_PACKAGE_PREFIXES.any { packageName.startsWith(it) }
+        } catch (_: Exception) {
+
+            false
+        }
     }
 
     private fun checkDefaultLauncher(pm: PackageManager, packageName: String): Boolean {
@@ -702,10 +921,32 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
 
         return try {
 
-            val settingsIntent = Intent(Settings.ACTION_SETTINGS)
-            val settingsPkg = pm.resolveActivity(settingsIntent, PackageManager.MATCH_DEFAULT_ONLY)
-                ?.activityInfo?.packageName
-            settingsPkg == packageName
+            // Nhiều thiết bị OEM (Xiaomi/Samsung/OPPO/Vivo…) có nhiều package cùng handle
+            // ACTION_SETTINGS (settings.intelligence, securityadd, shim OEM…).
+            // resolveActivity() chỉ trả 1 package "top" → dễ bỏ sót Settings thật.
+            // → Dùng queryIntentActivities() quét TẤT CẢ, đồng thời check thêm nhiều
+            //   action Settings khác nhau để phủ hết trường hợp Settings phụ.
+            val actions = arrayOf(
+                Settings.ACTION_SETTINGS,
+                Settings.ACTION_APPLICATION_SETTINGS,
+                Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                Settings.ACTION_WIRELESS_SETTINGS,
+                Settings.ACTION_WIFI_SETTINGS,
+                Settings.ACTION_BLUETOOTH_SETTINGS,
+                Settings.ACTION_DISPLAY_SETTINGS,
+                Settings.ACTION_SOUND_SETTINGS,
+                Settings.ACTION_LOCALE_SETTINGS,
+                Settings.ACTION_ACCESSIBILITY_SETTINGS,
+                Settings.ACTION_SECURITY_SETTINGS,
+                Settings.ACTION_DATE_SETTINGS,
+                Settings.ACTION_LOCATION_SOURCE_SETTINGS,
+                Settings.ACTION_MANAGE_APPLICATIONS_SETTINGS
+            )
+            actions.any { action ->
+
+                pm.queryIntentActivities(Intent(action), PackageManager.MATCH_DEFAULT_ONLY)
+                    .any { it.activityInfo.packageName == packageName }
+            }
         } catch (_: Exception) {
 
             false
