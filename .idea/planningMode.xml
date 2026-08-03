@@ -4,12 +4,14 @@
     <option name="approvalStates">
       <map>
         <entry key="1dca3d0b-7120-439b-afcc-b0b2763d6c2b" value="false" />
+        <entry key="24350a17-8da2-4395-bb69-0df6d3a2f4a3" value="false" />
         <entry key="252af00c-6af4-44ad-a6d7-8a5dd539c7d9" value="false" />
         <entry key="3d3414b8-97e3-4bef-b17a-d200a5e75472" value="false" />
         <entry key="66a94607-ff90-42a7-968c-d11cf7ce4fa0" value="false" />
         <entry key="8ebbbed5-579e-4027-8f35-4ffcb40856bb" value="false" />
         <entry key="b0909dc3-7f8e-4a08-ad1c-562c1b813b1f" value="false" />
         <entry key="b4afa015-2bda-442b-9fde-c61ee822dc06" value="false" />
+        <entry key="eec8e5f1-4715-43c7-bc4e-04ea3c002284" value="false" />
       </map>
     </option>
   </component>

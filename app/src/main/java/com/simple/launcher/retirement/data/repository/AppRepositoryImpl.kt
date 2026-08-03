@@ -21,9 +21,9 @@ import androidx.core.content.edit
 import androidx.core.net.toUri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asFlow
-import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simple.launcher.retirement.BuildConfig
+import com.simple.launcher.retirement.data.AppPrefs
 import com.simple.launcher.retirement.domain.model.AppEntity
 import com.simple.launcher.retirement.domain.repository.AppRepository
 import kotlinx.coroutines.CoroutineScope
@@ -378,8 +378,8 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
         )
     }
 
-    private val sharedPrefs = context.getSharedPreferences("launcher_prefs", Context.MODE_PRIVATE)
-    private val gson = Gson()
+    private val sharedPrefs = AppPrefs.sharedPrefs
+    private val gson = AppPrefs.gson
 
 
     private val appAll: MutableLiveData<List<AppEntity>> = object : MutableLiveData<List<AppEntity>>() {

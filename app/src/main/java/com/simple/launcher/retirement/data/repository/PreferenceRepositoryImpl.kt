@@ -1,9 +1,8 @@
 package com.simple.launcher.retirement.data.repository
 
-import android.content.Context
 import androidx.core.content.edit
-import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.simple.launcher.retirement.data.AppPrefs
 import com.simple.launcher.retirement.domain.model.ExclusionPeriod
 import com.simple.launcher.retirement.domain.repository.PreferenceRepository
 import kotlinx.coroutines.Dispatchers
@@ -12,10 +11,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 
-class PreferenceRepositoryImpl(context: Context) : PreferenceRepository {
+class PreferenceRepositoryImpl : PreferenceRepository {
 
-    private val sharedPrefs = context.getSharedPreferences("launcher_prefs", Context.MODE_PRIVATE)
-    private val gson = Gson()
+    private val sharedPrefs = AppPrefs.sharedPrefs
+    private val gson = AppPrefs.gson
 
     private var isPendingDefaultLauncherRam: Boolean = false
     private var pendingEmergencyConfigRam: com.simple.launcher.retirement.domain.model.SOSConfig? = null

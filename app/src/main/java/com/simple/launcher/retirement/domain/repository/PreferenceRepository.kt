@@ -1,6 +1,5 @@
 package com.simple.launcher.retirement.domain.repository
 
-import com.simple.launcher.retirement.MainApplication
 import com.simple.launcher.retirement.data.repository.PreferenceRepositoryImpl
 import com.simple.launcher.retirement.domain.model.ExclusionPeriod
 import kotlinx.coroutines.flow.Flow
@@ -93,6 +92,6 @@ interface PreferenceRepository {
 
     companion object {
 
-        val instance: PreferenceRepository by lazy { PreferenceRepositoryImpl(MainApplication.instance) }
+        val instance: PreferenceRepository by lazy { PreferenceRepositoryImpl() }
     }
 }

@@ -9,9 +9,9 @@ import android.util.Log
 import androidx.core.content.edit
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asFlow
-import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simple.launcher.retirement.BuildConfig
+import com.simple.launcher.retirement.data.AppPrefs
 import com.simple.launcher.retirement.domain.model.ContactEntity
 import com.simple.launcher.retirement.domain.repository.ContactRepository
 import kotlinx.coroutines.CoroutineScope
@@ -26,8 +26,8 @@ import kotlinx.coroutines.launch
 
 class ContactRepositoryImpl(private val context: Context) : ContactRepository {
 
-    private val sharedPrefs = context.getSharedPreferences("launcher_prefs", Context.MODE_PRIVATE)
-    private val gson = Gson()
+    private val sharedPrefs = AppPrefs.sharedPrefs
+    private val gson = AppPrefs.gson
 
     companion object {
 
