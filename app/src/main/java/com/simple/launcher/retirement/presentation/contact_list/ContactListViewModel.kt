@@ -1,6 +1,5 @@
 package com.simple.launcher.retirement.presentation.contact_list
 
-import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -148,13 +147,13 @@ class ContactListViewModel(
         _query.value = text
     }
 
-    fun loadContacts(context: Context) {
+    fun loadContacts() {
 
         viewModelScope.launch {
 
             val result = withContext(Dispatchers.IO) {
 
-                repository.getAllContacts(context)
+                repository.getAllContacts()
             }
             _contacts.value = result
         }

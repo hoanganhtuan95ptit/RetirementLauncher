@@ -1,6 +1,5 @@
 package com.simple.launcher.retirement.presentation.reorder
 
-import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.simple.adapter.ViewItem
@@ -14,11 +13,12 @@ import com.simple.launcher.retirement.presentation.base.ToolbarState
 import com.simple.launcher.retirement.presentation.base.buildActionState
 import com.simple.launcher.retirement.presentation.base.buildBackIcon
 import com.simple.launcher.retirement.presentation.base.buildToolbarTitle
-import com.simple.launcher.retirement.utils.exts.combineState
 import com.simple.launcher.retirement.utils.exts.colorOnPrimary
 import com.simple.launcher.retirement.utils.exts.colorOnSurface
 import com.simple.launcher.retirement.utils.exts.colorPrimary
+import com.simple.launcher.retirement.utils.exts.combineState
 import com.simple.launcher.retirement.utils.exts.getString
+import com.simple.launcher.retirement.utils.exts.mutableStateFlow
 import com.simple.launcher.retirement.utils.exts.textColorPrimary
 import com.simple.launcher.retirement.utils.exts.withStyleBodyLarge
 import com.simple.ui.precompute.image.BigImage
@@ -26,7 +26,6 @@ import com.simple.ui.precompute.text.BigText
 import com.simple.ui.precompute.text.build
 import com.simple.ui.precompute.text.span.BigForegroundColor
 import com.simple.ui.precompute.text.with
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
 enum class ReorderType {
@@ -77,12 +76,9 @@ class ReorderViewModel(
         )
     }
 
-    private val _items = MutableStateFlow<List<ReorderItem>>(emptyList())
-    val items: StateFlow<List<ReorderItem>> = _items
+    val items: StateFlow<List<ReorderItem>> = mutableStateFlow(emptyList()) {
 
-    fun loadItems(context: Context) {
-
-        _items.value = if (type == ReorderType.APPS) loadAppItems() else loadContactItems(context)
+        value = if (type == ReorderType.APPS) loadAppItems() else loadContactItems()
     }
 
     private fun loadAppItems(): List<ReorderItem> {
@@ -101,9 +97,9 @@ class ReorderViewModel(
         icon = BigImage(app.icon)
     )
 
-    private fun loadContactItems(context: Context): List<ReorderItem> {
+    private fun loadContactItems(): List<ReorderItem> {
 
-        val allContacts = contactRepository.getAllContacts(context)
+        val allContacts = contactRepository.getAllContacts()
         val orderedContacts = initialIds.mapNotNull { id -> allContacts.find { it.id == id } }
         return orderedContacts.map { toContactReorderItem(it) }
     }
@@ -126,15 +122,15 @@ class ReorderViewModel(
 
     fun moveItem(from: Int, to: Int) {
 
-        val list = _items.value.toMutableList()
+        val list = items.value.toMutableList()
         val item = list.removeAt(from)
         list.add(to, item)
-        _items.value = list
+        items.currentValue = list
     }
 
-    fun getFinalIds(): List<String> = _items.value.map { it.id }
+    fun getFinalIds(): List<String> = items.value.map { it.id }
 
-    fun getFinalContacts(): List<ContactEntity> = _items.value.mapNotNull { it.data as? ContactEntity }
+    fun getFinalContacts(): List<ContactEntity> = items.value.mapNotNull { it.data as? ContactEntity }
 }
 
 data class ReorderItem(

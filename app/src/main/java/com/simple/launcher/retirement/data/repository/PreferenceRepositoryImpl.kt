@@ -6,10 +6,11 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simple.launcher.retirement.domain.model.ExclusionPeriod
 import com.simple.launcher.retirement.domain.repository.PreferenceRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 
 class PreferenceRepositoryImpl(context: Context) : PreferenceRepository {
 
@@ -45,27 +46,30 @@ class PreferenceRepositoryImpl(context: Context) : PreferenceRepository {
         private const val DEFAULT_EMERGENCY_TIMEOUT = 10 * 60 * 60 * 1000L // 10h
     }
 
-    private val _appBlockEnabled = MutableStateFlow(isAppBlockEnabled())
-    private val _callBlockEnabled = MutableStateFlow(isCallBlockEnabled())
-    private val _pocketModeEnabled = MutableStateFlow(isPocketModeEnabled())
-    private val _emergencyCallEnabled = MutableStateFlow(isEmergencyCallEnabled())
-    private val _lunarCalendarEnabled = MutableStateFlow(isLunarCalendarEnabled())
-    private val _is24HourFormat = MutableStateFlow(is24HourFormat())
-    private val _isAmPmEnabled = MutableStateFlow(isAmPmEnabled())
-    private val _isSolarCalendarEnabled = MutableStateFlow(isSolarCalendarEnabled())
-    private val _hasPin = MutableStateFlow(hasPin())
+    // Tick flow: giá trị chỉ là timestamp mỗi lần thay đổi, không đọc SharedPreferences
+    // tại constructor. Read thực sự nằm trong `.map { isXxx() }` — chạy trong context
+    // của collector (thường là Dispatchers.IO qua combineState), nên không block main.
+    private val _appBlockEnabled = MutableStateFlow(0L)
+    private val _callBlockEnabled = MutableStateFlow(0L)
+    private val _pocketModeEnabled = MutableStateFlow(0L)
+    private val _emergencyCallEnabled = MutableStateFlow(0L)
+    private val _lunarCalendarEnabled = MutableStateFlow(0L)
+    private val _is24HourFormat = MutableStateFlow(0L)
+    private val _isAmPmEnabled = MutableStateFlow(0L)
+    private val _isSolarCalendarEnabled = MutableStateFlow(0L)
+    private val _hasPin = MutableStateFlow(0L)
 
     // PIN
     override fun hasPin(): Boolean = sharedPrefs.contains(KEY_PIN)
 
-    override fun hasPinFlow(): Flow<Boolean> = _hasPin.asStateFlow()
+    override fun hasPinFlow(): Flow<Boolean> = _hasPin.map { hasPin() }.flowOn(Dispatchers.Default)
 
     override fun getPin(): String? = sharedPrefs.getString(KEY_PIN, null)
 
     override fun setPin(pin: String) {
 
         sharedPrefs.edit { putString(KEY_PIN, pin) }
-        _hasPin.value = true
+        _hasPin.value = System.currentTimeMillis()
     }
 
     // Onboarding
@@ -81,12 +85,13 @@ class PreferenceRepositoryImpl(context: Context) : PreferenceRepository {
     override fun isAppBlockEnabled(): Boolean =
         sharedPrefs.getBoolean(KEY_APP_BLOCK_ENABLED, false)
 
-    override fun appBlockEnabledFlow(): Flow<Boolean> = _appBlockEnabled.asStateFlow()
+    override fun appBlockEnabledFlow(): Flow<Boolean> =
+        _appBlockEnabled.map { isAppBlockEnabled() }.flowOn(Dispatchers.Default)
 
     override fun setAppBlockEnabled(enabled: Boolean) {
 
         sharedPrefs.edit { putBoolean(KEY_APP_BLOCK_ENABLED, enabled) }
-        _appBlockEnabled.value = enabled
+        _appBlockEnabled.value = System.currentTimeMillis()
     }
 
     override fun isAppBlockFirstTime(): Boolean =
@@ -109,12 +114,13 @@ class PreferenceRepositoryImpl(context: Context) : PreferenceRepository {
     override fun isCallBlockEnabled(): Boolean =
         sharedPrefs.getBoolean(KEY_CALL_BLOCK_ENABLED, false)
 
-    override fun callBlockEnabledFlow(): Flow<Boolean> = _callBlockEnabled.asStateFlow()
+    override fun callBlockEnabledFlow(): Flow<Boolean> =
+        _callBlockEnabled.map { isCallBlockEnabled() }.flowOn(Dispatchers.Default)
 
     override fun setCallBlockEnabled(enabled: Boolean) {
 
         sharedPrefs.edit { putBoolean(KEY_CALL_BLOCK_ENABLED, enabled) }
-        _callBlockEnabled.value = enabled
+        _callBlockEnabled.value = System.currentTimeMillis()
     }
 
     override fun isCallBlockFirstTime(): Boolean =
@@ -136,24 +142,26 @@ class PreferenceRepositoryImpl(context: Context) : PreferenceRepository {
     override fun isPocketModeEnabled(): Boolean =
         sharedPrefs.getBoolean(KEY_POCKET_MODE_ENABLED, false)
 
-    override fun pocketModeEnabledFlow(): Flow<Boolean> = _pocketModeEnabled.asStateFlow()
+    override fun pocketModeEnabledFlow(): Flow<Boolean> =
+        _pocketModeEnabled.map { isPocketModeEnabled() }.flowOn(Dispatchers.Default)
 
     override fun setPocketModeEnabled(enabled: Boolean) {
 
         sharedPrefs.edit { putBoolean(KEY_POCKET_MODE_ENABLED, enabled) }
-        _pocketModeEnabled.value = enabled
+        _pocketModeEnabled.value = System.currentTimeMillis()
     }
 
     // Emergency Call
     override fun isEmergencyCallEnabled(): Boolean =
         sharedPrefs.getBoolean(KEY_EMERGENCY_CALL_ENABLED, false)
 
-    override fun emergencyCallEnabledFlow(): Flow<Boolean> = _emergencyCallEnabled.asStateFlow()
+    override fun emergencyCallEnabledFlow(): Flow<Boolean> =
+        _emergencyCallEnabled.map { isEmergencyCallEnabled() }.flowOn(Dispatchers.Default)
 
     override fun setEmergencyCallEnabled(enabled: Boolean) {
 
         sharedPrefs.edit { putBoolean(KEY_EMERGENCY_CALL_ENABLED, enabled) }
-        _emergencyCallEnabled.value = enabled
+        _emergencyCallEnabled.value = System.currentTimeMillis()
     }
 
     override fun isEmergencyCallFirstTime(): Boolean =
@@ -234,45 +242,49 @@ class PreferenceRepositoryImpl(context: Context) : PreferenceRepository {
     override fun isLunarCalendarEnabled(): Boolean =
         sharedPrefs.getBoolean(KEY_LUNAR_CALENDAR_ENABLED, false)
 
-    override fun lunarCalendarEnabledFlow(): StateFlow<Boolean> = _lunarCalendarEnabled.asStateFlow()
+    override fun lunarCalendarEnabledFlow(): Flow<Boolean> =
+        _lunarCalendarEnabled.map { isLunarCalendarEnabled() }.flowOn(Dispatchers.Default)
 
     override fun setLunarCalendarEnabled(enabled: Boolean) {
 
         sharedPrefs.edit { putBoolean(KEY_LUNAR_CALENDAR_ENABLED, enabled) }
-        _lunarCalendarEnabled.value = enabled
+        _lunarCalendarEnabled.value = System.currentTimeMillis()
     }
 
     // Clock Format
     override fun is24HourFormat(): Boolean =
         sharedPrefs.getBoolean(KEY_CLOCK_24H_FORMAT, false)
 
-    override fun is24HourFormatFlow(): StateFlow<Boolean> = _is24HourFormat.asStateFlow()
+    override fun is24HourFormatFlow(): Flow<Boolean> =
+        _is24HourFormat.map { is24HourFormat() }.flowOn(Dispatchers.Default)
 
     override fun set24HourFormat(is24Hour: Boolean) {
 
         sharedPrefs.edit { putBoolean(KEY_CLOCK_24H_FORMAT, is24Hour) }
-        _is24HourFormat.value = is24Hour
+        _is24HourFormat.value = System.currentTimeMillis()
     }
 
     override fun isAmPmEnabled(): Boolean =
         sharedPrefs.getBoolean(KEY_CLOCK_AM_PM_ENABLED, false)
 
-    override fun isAmPmEnabledFlow(): StateFlow<Boolean> = _isAmPmEnabled.asStateFlow()
+    override fun isAmPmEnabledFlow(): Flow<Boolean> =
+        _isAmPmEnabled.map { isAmPmEnabled() }.flowOn(Dispatchers.Default)
 
     override fun setAmPmEnabled(enabled: Boolean) {
 
         sharedPrefs.edit { putBoolean(KEY_CLOCK_AM_PM_ENABLED, enabled) }
-        _isAmPmEnabled.value = enabled
+        _isAmPmEnabled.value = System.currentTimeMillis()
     }
 
     override fun isSolarCalendarEnabled(): Boolean =
         sharedPrefs.getBoolean(KEY_SOLAR_CALENDAR_ENABLED, true)
 
-    override fun isSolarCalendarEnabledFlow(): StateFlow<Boolean> = _isSolarCalendarEnabled.asStateFlow()
+    override fun isSolarCalendarEnabledFlow(): Flow<Boolean> =
+        _isSolarCalendarEnabled.map { isSolarCalendarEnabled() }.flowOn(Dispatchers.Default)
 
     override fun setSolarCalendarEnabled(enabled: Boolean) {
 
         sharedPrefs.edit { putBoolean(KEY_SOLAR_CALENDAR_ENABLED, enabled) }
-        _isSolarCalendarEnabled.value = enabled
+        _isSolarCalendarEnabled.value = System.currentTimeMillis()
     }
 }

@@ -101,8 +101,6 @@ class ReorderFragment : BaseFragment<FragmentAppListBinding>() {
 
             lifecycleScope.launch { checkPermissionsAndSave() }
         }
-
-        viewModel.loadItems(requireContext())
     }
 
     override fun observeData() {

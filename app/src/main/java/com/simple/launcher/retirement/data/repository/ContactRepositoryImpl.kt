@@ -19,7 +19,7 @@ class ContactRepositoryImpl(private val context: Context) : ContactRepository {
 
     override fun homeDataFlow() = _dataTrigger
 
-    override fun getAllContacts(context: Context): List<ContactEntity> {
+    override fun getAllContacts(): List<ContactEntity> {
 
         val contentResolver = context.contentResolver
         val projection = arrayOf(

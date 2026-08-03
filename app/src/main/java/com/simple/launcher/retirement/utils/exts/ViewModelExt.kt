@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
 val coroutineExceptionHandler = CoroutineExceptionHandler { _: CoroutineContext, throwable: Throwable ->
@@ -22,6 +23,19 @@ val coroutineExceptionHandler = CoroutineExceptionHandler { _: CoroutineContext,
     Log.d("tuanha", "coroutineExceptionHandler: ", throwable)
 }
 
+fun <R> ViewModel.mutableStateFlow(
+    initialValue: R,
+    context: CoroutineContext = coroutineExceptionHandler + Dispatchers.IO,
+    transform: suspend MutableStateFlow<R>.() -> Unit
+): MutableStateFlow<R> {
+    val state = MutableStateFlow(initialValue)
+
+    viewModelScope.launch(context) {
+        state.transform()
+    }
+
+    return state
+}
 
 @OptIn(ExperimentalCoroutinesApi::class)
 fun <T1, R> ViewModel.combineState(

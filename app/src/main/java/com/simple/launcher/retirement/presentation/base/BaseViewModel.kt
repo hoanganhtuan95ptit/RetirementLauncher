@@ -6,9 +6,10 @@ import com.simple.launcher.retirement.presentation.base.services.colorMapFlow
 import com.simple.launcher.retirement.presentation.base.services.sizeMapFlow
 import com.simple.launcher.retirement.presentation.base.services.stringMapFlow
 import com.simple.launcher.retirement.utils.background.Background
-import com.simple.launcher.retirement.utils.exts.combineState
 import com.simple.launcher.retirement.utils.exts.colorBackground
+import com.simple.launcher.retirement.utils.exts.combineState
 import com.simple.launcher.retirement.utils.exts.textColorSecondary
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
@@ -53,4 +54,15 @@ open class BaseViewModel : ViewModel() {
             showAnchor = true
         )
     }.stateIn(viewModelScope, SharingStarted.Eagerly, BottomSheetState.empty())
+
+    protected var <T> StateFlow<T>.currentValue: T
+        get() = value
+        set(value) {
+
+            val mutable = this as? MutableStateFlow<*>
+                ?: error("not support ${this.javaClass.name}")
+
+            @Suppress("UNCHECKED_CAST")
+            (mutable as MutableStateFlow<T>).value = value
+        }
 }

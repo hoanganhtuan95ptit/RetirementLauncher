@@ -16,17 +16,19 @@ import com.simple.launcher.retirement.presentation.base.buildBackIcon
 import com.simple.launcher.retirement.presentation.base.buildSearchState
 import com.simple.launcher.retirement.presentation.base.buildToolbarTitle
 import com.simple.launcher.retirement.utils.VietnameseStringUtils
-import com.simple.launcher.retirement.utils.exts.combineState
 import com.simple.launcher.retirement.utils.exts.colorOnPrimary
 import com.simple.launcher.retirement.utils.exts.colorPrimary
 import com.simple.launcher.retirement.utils.exts.colorSurface
+import com.simple.launcher.retirement.utils.exts.combineState
 import com.simple.launcher.retirement.utils.exts.getString
+import com.simple.launcher.retirement.utils.exts.mutableStateFlow
 import com.simple.launcher.retirement.utils.exts.textColorPrimary
 import com.simple.launcher.retirement.utils.exts.textColorSecondary
 import com.simple.ui.precompute.image.BigImage
 import com.simple.ui.precompute.text.toBig
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.filterNotNull
 
 class AppListViewModel(
     private val getSelectableAppsUseCase: GetSelectableAppsUseCase,
@@ -77,16 +79,20 @@ class AppListViewModel(
         )
     }
 
-    private val _apps = MutableStateFlow<List<SelectableAppEntity>>(emptyList())
-    private val _query = MutableStateFlow("")
+    val query = MutableStateFlow("")
+
+    val apps: StateFlow<List<SelectableAppEntity>?> = mutableStateFlow(null) {
+
+        value = getSelectableAppsUseCase.invoke()
+    }
 
     private val _selectedIds = MutableStateFlow<Set<String>>(
         AppRepository.instance.getSelectedPackages().toSet()
     )
 
     val items: StateFlow<List<SelectableAppItem>> = combineState(
-        flow1 = _apps,
-        flow2 = _query,
+        flow1 = apps.filterNotNull(),
+        flow2 = query,
         flow3 = _selectedIds,
         initialValue = emptyList()
     ) { apps, query, selectedIds ->
@@ -134,12 +140,7 @@ class AppListViewModel(
 
     fun search(text: String) {
 
-        _query.value = text
-    }
-
-    fun loadApps() {
-
-        _apps.value = getSelectableAppsUseCase()
+        query.value = text
     }
 
     fun updateItem(entity: SelectableAppEntity) {

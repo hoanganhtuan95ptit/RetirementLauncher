@@ -45,7 +45,7 @@ class ContactListFragment : BaseFragment<FragmentAppListBinding>() {
 
         if (isGranted) {
 
-            viewModel.loadContacts(requireContext())
+            viewModel.loadContacts()
         } else {
 
             Toast.makeText(context, R.string.contact_permission_denied, Toast.LENGTH_SHORT).show()
@@ -167,7 +167,7 @@ class ContactListFragment : BaseFragment<FragmentAppListBinding>() {
     private fun checkPermissionAndLoad() {
 
         if (!PermissionManager.hasContactPermission()) requestPermissionLauncher.launch(Manifest.permission.READ_CONTACTS)
-        else viewModel.loadContacts(requireContext())
+        else viewModel.loadContacts()
     }
 
     private fun renderToolbar(state: com.simple.launcher.retirement.presentation.base.ToolbarState) {
