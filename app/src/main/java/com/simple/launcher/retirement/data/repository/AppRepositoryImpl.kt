@@ -26,12 +26,14 @@ import com.simple.launcher.retirement.BuildConfig
 import com.simple.launcher.retirement.data.AppPrefs
 import com.simple.launcher.retirement.domain.model.AppEntity
 import com.simple.launcher.retirement.domain.repository.AppRepository
+import com.simple.launcher.retirement.utils.exts.mutableStateFlow
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -566,7 +568,10 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
         }
     }
 
-    private val appSelected = MutableStateFlow(0L)
+    private val appSelected = mutableStateFlow<List<String>?>(null){
+
+        value = readSelectedPackages()
+    }
 
 
     private val defaultAppCache = ConcurrentHashMap<String, Boolean>(16)
@@ -597,9 +602,7 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
 
     override fun getSelectedPackagesFlow(): Flow<List<String>> {
 
-        return appSelected.map {
-            readSelectedPackages()
-        }.flowOn(Dispatchers.Default)
+        return appSelected.filterNotNull()
     }
 
     /**
@@ -635,7 +638,7 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
 
             putString(KEY_SELECTED_APPS, json) 
         }
-        appSelected.value = System.currentTimeMillis()
+        appSelected.value = packages
     }
 
     override fun isDefaultApp(packageName: String): Boolean {

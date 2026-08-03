@@ -30,6 +30,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.collect
 
 class AppListViewModel(
     private val getSelectableAppsUseCase: GetSelectableAppsUseCase,
@@ -84,7 +85,7 @@ class AppListViewModel(
 
     val apps: StateFlow<List<SelectableAppEntity>?> = mutableStateFlow(null) {
 
-        value = getSelectableAppsUseCase.invoke()
+        getSelectableAppsUseCase.invoke().collect { value = it }
     }
 
     // Khởi tạo rỗng rồi nạp từ flow trong background. Sau lần load đầu, mọi thao tác
