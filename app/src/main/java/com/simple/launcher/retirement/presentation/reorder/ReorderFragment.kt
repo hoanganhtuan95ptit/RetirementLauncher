@@ -35,45 +35,20 @@ import kotlinx.coroutines.launch
 
 class ReorderFragment : BaseFragment<FragmentAppListBinding>() {
 
-    companion object {
+    // ── 1. Fields ─────────────────────────────────────────────────────────
 
-        fun newInstance(
-            type: ReorderType,
-            ids: List<String>,
-            isFlowSetup: Boolean = false
-        ): ReorderFragment = ReorderFragment().apply { arguments = buildArgs(type, ids, isFlowSetup) }
-
-        private fun buildArgs(
-            type: ReorderType,
-            ids: List<String>,
-            isFlowSetup: Boolean
-        ): Bundle = Bundle().apply {
-
-            putSerializable("type", type)
-            putStringArrayList("ids", ArrayList(ids))
-            putBoolean(DeepLinks.Extras.IS_FLOW_SETUP, isFlowSetup)
-        }
-    }
-
-    private val type: ReorderType by lazy {
-
-        arguments?.getSerializable("type") as? ReorderType ?: ReorderType.APPS
-    }
+    // `type` giờ được ViewModel tự đọc từ SavedStateHandle; Fragment chỉ cần khi
+    // hiển thị hoặc điều hướng → đọc lại từ viewModel.type.
+    private val type: ReorderType get() = viewModel.type
 
     private val isFlowSetup: Boolean by lazy {
 
         arguments?.getBoolean(DeepLinks.Extras.IS_FLOW_SETUP) ?: false
     }
 
-    private val initialIds: List<String> by lazy {
-
-        arguments?.getStringArrayList("ids") ?: emptyList()
-    }
-
-    private val viewModel: ReorderViewModel by viewModels {
-
-        ReorderViewModelFactory(type, initialIds, AppRepository.instance, ContactRepository.instance)
-    }
+    // No-arg VM: dùng `by viewModels()` mặc định — args từ Fragment.arguments
+    // được framework nạp vào SavedStateHandle của VM.
+    private val viewModel: ReorderViewModel by viewModels()
 
     override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentAppListBinding {
 
@@ -203,6 +178,30 @@ class ReorderFragment : BaseFragment<FragmentAppListBinding>() {
         android.widget.Toast.makeText(context, messageRes, android.widget.Toast.LENGTH_SHORT).show()
 
         requireActivity().onBackPressedDispatcher.onBackPressed()
+    }
+
+    // ── 6. Companion object ───────────────────────────────────────────────
+
+    companion object {
+
+        fun newInstance(
+            type: ReorderType,
+            ids: List<String>,
+            isFlowSetup: Boolean = false
+        ): ReorderFragment = ReorderFragment().apply { arguments = buildArgs(type, ids, isFlowSetup) }
+
+        private fun buildArgs(
+            type: ReorderType,
+            ids: List<String>,
+            isFlowSetup: Boolean
+        ): Bundle = Bundle().apply {
+
+            // Keys phải khớp ReorderViewModel.ARG_TYPE / ARG_IDS để framework tự
+            // đổ vào SavedStateHandle của VM (SavedStateViewModelFactory).
+            putSerializable(ReorderViewModel.ARG_TYPE, type)
+            putStringArrayList(ReorderViewModel.ARG_IDS, ArrayList(ids))
+            putBoolean(DeepLinks.Extras.IS_FLOW_SETUP, isFlowSetup)
+        }
     }
 }
 

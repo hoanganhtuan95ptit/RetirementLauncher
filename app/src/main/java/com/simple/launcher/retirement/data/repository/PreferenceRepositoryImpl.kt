@@ -4,6 +4,7 @@ import androidx.core.content.edit
 import com.google.gson.reflect.TypeToken
 import com.simple.launcher.retirement.data.AppPrefs
 import com.simple.launcher.retirement.domain.model.ExclusionPeriod
+import com.simple.launcher.retirement.domain.model.SOSConfig
 import com.simple.launcher.retirement.domain.repository.PreferenceRepository
 import com.simple.launcher.retirement.utils.exts.mutableStateFlow
 import kotlinx.coroutines.flow.Flow
@@ -11,39 +12,20 @@ import kotlinx.coroutines.flow.filterNotNull
 
 class PreferenceRepositoryImpl : PreferenceRepository {
 
+    // ── 1. Fields ─────────────────────────────────────────────────────────
+
     private val sharedPrefs = AppPrefs.sharedPrefs
     private val gson = AppPrefs.gson
 
+    // RAM-only flags — không persist qua process kill.
     private var isPendingDefaultLauncherRam: Boolean = false
-    private var pendingEmergencyConfigRam: com.simple.launcher.retirement.domain.model.SOSConfig? = null
+    private var pendingEmergencyConfigRam: SOSConfig? = null
     private var pendingAppBlockEnabledRam: Boolean? = null
     private var pendingCallBlockEnabledRam: Boolean? = null
 
-    companion object {
-
-        private const val KEY_PIN = "app_pin"
-        private const val KEY_ONBOARDING_COMPLETED = "onboarding_completed"
-        private const val KEY_APP_BLOCK_ENABLED = "app_block_enabled"
-        private const val KEY_APP_BLOCK_FIRST_TIME = "app_block_first_time"
-        private const val KEY_CALL_BLOCK_ENABLED = "call_block_enabled"
-        private const val KEY_CALL_BLOCK_FIRST_TIME = "call_block_first_time"
-        private const val KEY_POCKET_MODE_ENABLED = "pocket_mode_enabled"
-        private const val KEY_EMERGENCY_CALL_ENABLED = "emergency_call_enabled"
-        private const val KEY_EMERGENCY_CALL_FIRST_TIME = "emergency_call_first_time"
-        private const val KEY_EMERGENCY_PHONE_NUMBER = "emergency_phone_number"
-        private const val KEY_LAST_USER_ACTIVITY = "last_user_activity"
-        private const val KEY_LAST_EMERGENCY_INDEX = "last_emergency_index"
-        private const val KEY_LUNAR_CALENDAR_ENABLED = "lunar_calendar_enabled"
-        private const val KEY_CLOCK_24H_FORMAT = "clock_24h_format"
-        private const val KEY_CLOCK_AM_PM_ENABLED = "clock_am_pm_enabled"
-        private const val KEY_SOLAR_CALENDAR_ENABLED = "solar_calendar_enabled"
-        private const val KEY_EMERGENCY_TIMEOUT = "emergency_timeout"
-        private const val KEY_EXCLUSION_PERIODS = "exclusion_periods"
-
-        private const val DEFAULT_EMERGENCY_TIMEOUT = 10 * 60 * 60 * 1000L // 10h
-    }
-
+    // ── 2. Flows ──────────────────────────────────────────────────────────
     // Load lại preference khi flow active, và update trực tiếp sau mỗi lần save.
+
     private val _appBlockEnabled = mutableStateFlow<Boolean?>(null) {
 
         value = isAppBlockEnabled()
@@ -81,7 +63,9 @@ class PreferenceRepositoryImpl : PreferenceRepository {
         value = hasPin()
     }
 
-    // PIN
+    // ── 3. Public API ─────────────────────────────────────────────────────
+
+    // ── PIN ──
     override fun hasPin(): Boolean = sharedPrefs.contains(KEY_PIN)
 
     override fun hasPinFlow(): Flow<Boolean> = _hasPin.filterNotNull()
@@ -94,7 +78,7 @@ class PreferenceRepositoryImpl : PreferenceRepository {
         _hasPin.value = true
     }
 
-    // Onboarding
+    // ── Onboarding ──
     override fun isOnboardingCompleted(): Boolean =
         sharedPrefs.getBoolean(KEY_ONBOARDING_COMPLETED, false)
 
@@ -103,7 +87,7 @@ class PreferenceRepositoryImpl : PreferenceRepository {
         sharedPrefs.edit { putBoolean(KEY_ONBOARDING_COMPLETED, completed) }
     }
 
-    // App Block
+    // ── App Block ──
     override fun isAppBlockEnabled(): Boolean =
         sharedPrefs.getBoolean(KEY_APP_BLOCK_ENABLED, false)
 
@@ -131,8 +115,7 @@ class PreferenceRepositoryImpl : PreferenceRepository {
         pendingAppBlockEnabledRam = enabled
     }
 
-
-    // Call Block
+    // ── Call Block ──
     override fun isCallBlockEnabled(): Boolean =
         sharedPrefs.getBoolean(KEY_CALL_BLOCK_ENABLED, false)
 
@@ -160,7 +143,7 @@ class PreferenceRepositoryImpl : PreferenceRepository {
         pendingCallBlockEnabledRam = enabled
     }
 
-    // Pocket Mode
+    // ── Pocket Mode ──
     override fun isPocketModeEnabled(): Boolean =
         sharedPrefs.getBoolean(KEY_POCKET_MODE_ENABLED, false)
 
@@ -173,7 +156,7 @@ class PreferenceRepositoryImpl : PreferenceRepository {
         _pocketModeEnabled.value = enabled
     }
 
-    // Emergency Call
+    // ── Emergency Call ──
     override fun isEmergencyCallEnabled(): Boolean =
         sharedPrefs.getBoolean(KEY_EMERGENCY_CALL_ENABLED, false)
 
@@ -210,6 +193,14 @@ class PreferenceRepositoryImpl : PreferenceRepository {
         sharedPrefs.edit { putInt(KEY_LAST_EMERGENCY_INDEX, index) }
     }
 
+    override fun getSosCallAttemptCount(): Int =
+        sharedPrefs.getInt(KEY_SOS_CALL_ATTEMPT_COUNT, 0)
+
+    override fun setSosCallAttemptCount(count: Int) {
+
+        sharedPrefs.edit { putInt(KEY_SOS_CALL_ATTEMPT_COUNT, count) }
+    }
+
     override fun getEmergencyTimeout(): Long =
         sharedPrefs.getLong(KEY_EMERGENCY_TIMEOUT, DEFAULT_EMERGENCY_TIMEOUT)
 
@@ -237,9 +228,9 @@ class PreferenceRepositoryImpl : PreferenceRepository {
         sharedPrefs.edit { putString(KEY_EXCLUSION_PERIODS, json) }
     }
 
-    override fun getPendingEmergencyConfig(): com.simple.launcher.retirement.domain.model.SOSConfig? = pendingEmergencyConfigRam
+    override fun getPendingEmergencyConfig(): SOSConfig? = pendingEmergencyConfigRam
 
-    override fun setPendingEmergencyConfig(config: com.simple.launcher.retirement.domain.model.SOSConfig?) {
+    override fun setPendingEmergencyConfig(config: SOSConfig?) {
 
         pendingEmergencyConfigRam = config
     }
@@ -251,16 +242,28 @@ class PreferenceRepositoryImpl : PreferenceRepository {
         isPendingDefaultLauncherRam = pending
     }
 
-    // User Activity
-    override fun getLastUserActivity(): Long =
-        sharedPrefs.getLong(KEY_LAST_USER_ACTIVITY, System.currentTimeMillis())
+    // ── User Activity ──
+    // Trả về giá trị ổn định khi key chưa tồn tại — dùng thời điểm khởi tạo repository
+    // (~ app process start) thay vì `System.currentTimeMillis()` mỗi call. Nếu dùng
+    // `currentTimeMillis()` làm default, mỗi lần call sẽ trả giá trị khác nhau
+    // → elapsed luôn ~ 0 → SOS không bao giờ trigger cho tới khi có setLastUserActivity đầu tiên.
+    override fun getLastUserActivity(): Long {
+
+        val stored = sharedPrefs.getLong(KEY_LAST_USER_ACTIVITY, Long.MIN_VALUE)
+        if (stored != Long.MIN_VALUE) return stored
+
+        // Seed lần đầu: coi như user vừa hoạt động ngay lúc install/enable SOS.
+        val seed = System.currentTimeMillis()
+        sharedPrefs.edit { putLong(KEY_LAST_USER_ACTIVITY, seed) }
+        return seed
+    }
 
     override fun setLastUserActivity(timestamp: Long) {
 
         sharedPrefs.edit { putLong(KEY_LAST_USER_ACTIVITY, timestamp) }
     }
 
-    // Lunar Calendar
+    // ── Lunar Calendar ──
     override fun isLunarCalendarEnabled(): Boolean =
         sharedPrefs.getBoolean(KEY_LUNAR_CALENDAR_ENABLED, false)
 
@@ -273,7 +276,7 @@ class PreferenceRepositoryImpl : PreferenceRepository {
         _lunarCalendarEnabled.value = enabled
     }
 
-    // Clock Format
+    // ── Clock Format ──
     override fun is24HourFormat(): Boolean =
         sharedPrefs.getBoolean(KEY_CLOCK_24H_FORMAT, false)
 
@@ -308,5 +311,32 @@ class PreferenceRepositoryImpl : PreferenceRepository {
 
         sharedPrefs.edit { putBoolean(KEY_SOLAR_CALENDAR_ENABLED, enabled) }
         _isSolarCalendarEnabled.value = enabled
+    }
+
+    // ── 6. Companion object ───────────────────────────────────────────────
+
+    companion object {
+
+        private const val KEY_PIN = "app_pin"
+        private const val KEY_ONBOARDING_COMPLETED = "onboarding_completed"
+        private const val KEY_APP_BLOCK_ENABLED = "app_block_enabled"
+        private const val KEY_APP_BLOCK_FIRST_TIME = "app_block_first_time"
+        private const val KEY_CALL_BLOCK_ENABLED = "call_block_enabled"
+        private const val KEY_CALL_BLOCK_FIRST_TIME = "call_block_first_time"
+        private const val KEY_POCKET_MODE_ENABLED = "pocket_mode_enabled"
+        private const val KEY_EMERGENCY_CALL_ENABLED = "emergency_call_enabled"
+        private const val KEY_EMERGENCY_CALL_FIRST_TIME = "emergency_call_first_time"
+        private const val KEY_EMERGENCY_PHONE_NUMBER = "emergency_phone_number"
+        private const val KEY_LAST_USER_ACTIVITY = "last_user_activity"
+        private const val KEY_LAST_EMERGENCY_INDEX = "last_emergency_index"
+        private const val KEY_SOS_CALL_ATTEMPT_COUNT = "sos_call_attempt_count"
+        private const val KEY_LUNAR_CALENDAR_ENABLED = "lunar_calendar_enabled"
+        private const val KEY_CLOCK_24H_FORMAT = "clock_24h_format"
+        private const val KEY_CLOCK_AM_PM_ENABLED = "clock_am_pm_enabled"
+        private const val KEY_SOLAR_CALENDAR_ENABLED = "solar_calendar_enabled"
+        private const val KEY_EMERGENCY_TIMEOUT = "emergency_timeout"
+        private const val KEY_EXCLUSION_PERIODS = "exclusion_periods"
+
+        private const val DEFAULT_EMERGENCY_TIMEOUT = 10 * 60 * 60 * 1000L // 10h
     }
 }

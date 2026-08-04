@@ -19,6 +19,8 @@ import kotlinx.coroutines.launch
 
 class AppMonitoringWorker(context: Context) : BackgroundWorker(context) {
 
+    // ── 1. Fields ─────────────────────────────────────────────────────────
+
     private var handlerThread: HandlerThread? = null
     private var handler: Handler? = null
 
@@ -33,6 +35,19 @@ class AppMonitoringWorker(context: Context) : BackgroundWorker(context) {
     private val powerManager = context.getSystemService(Context.POWER_SERVICE) as PowerManager
     private val usageStatsManager = context.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
 
+    private val monitorRunnable = object : Runnable {
+
+        override fun run() {
+
+            checkForegroundApp()
+            handler?.postDelayed(this, MONITOR_INTERVAL_MILLIS)
+        }
+    }
+
+    // ── 3. Public API (overrides từ BackgroundWorker) ─────────────────────
+
+    override fun observeEnabled(): Flow<Boolean> = PreferenceRepository.instance.appBlockEnabledFlow()
+
     override fun attach(scope: CoroutineScope) {
 
         super.attach(scope)
@@ -45,17 +60,6 @@ class AppMonitoringWorker(context: Context) : BackgroundWorker(context) {
             }
         }
     }
-
-    private val monitorRunnable = object : Runnable {
-
-        override fun run() {
-
-            checkForegroundApp()
-            handler?.postDelayed(this, MONITOR_INTERVAL_MILLIS)
-        }
-    }
-
-    override fun observeEnabled(): Flow<Boolean> = PreferenceRepository.instance.appBlockEnabledFlow()
 
     override fun onStart() {
 
@@ -76,6 +80,8 @@ class AppMonitoringWorker(context: Context) : BackgroundWorker(context) {
         handler = null
         handlerThread = null
     }
+
+    // ── 4. Private helpers ────────────────────────────────────────────────
 
     private fun checkForegroundApp() {
 
@@ -156,6 +162,8 @@ class AppMonitoringWorker(context: Context) : BackgroundWorker(context) {
 
         if (BuildConfig.DEBUG) Log.d(TAG, message)
     }
+
+    // ── 6. Companion object ───────────────────────────────────────────────
 
     companion object {
 

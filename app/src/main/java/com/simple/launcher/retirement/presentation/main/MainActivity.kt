@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import androidx.lifecycle.lifecycleScope
 import com.simple.deeplink.sendDeeplink
+import com.simple.launcher.retirement.BuildConfig
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.databinding.ActivityMainBinding
 import com.simple.launcher.retirement.domain.repository.PreferenceRepository
@@ -17,21 +18,38 @@ import com.simple.launcher.retirement.utils.exts.backPressedFlow
 import com.simple.launcher.retirement.utils.permission.PermissionManager
 import kotlinx.coroutines.launch
 
-var a = true
-
 class MainActivity : BaseActivity<ActivityMainBinding>() {
+
+    // ── 3. Public API ─────────────────────────────────────────────────────
 
     override fun inflateBinding(inflater: LayoutInflater) = ActivityMainBinding.inflate(inflater)
 
     override fun setupViews(savedInstanceState: Bundle?) {
 
-        Log.d(TAG, "setupViews | a=$a | savedInstanceState=${savedInstanceState != null} | action=${intent.action} | categories=${intent.categories}")
-        a = false
+        logDebug {
+
+            "setupViews | savedInstanceState=${savedInstanceState != null} | " +
+                    "action=${intent.action} | categories=${intent.categories}"
+        }
 
         navigateInitialScreen()
 
         registerBackPressedHandler()
     }
+
+    override fun onNewIntent(intent: Intent) {
+
+        super.onNewIntent(intent)
+
+        navigateInitialScreen()
+    }
+
+    fun startBackgroundService() {
+
+        BackgroundService.start(this)
+    }
+
+    // ── 4. Private helpers ────────────────────────────────────────────────
 
     private fun navigateInitialScreen() {
 
@@ -58,11 +76,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             isHomeIntent -> DeepLinks.HOME
             else -> DeepLinks.SETTINGS
         }.also { deeplink ->
-            Log.d(
-                TAG,
+
+            logDebug {
+
                 "resolveInitialDeeplink | isOnboardingCompleted=$isOnboardingCompleted | " +
-                        "isHomeIntent=$isHomeIntent | deeplink=$deeplink | isPendingDefaultLauncher=${repository.isPendingDefaultLauncher()}"
-            )
+                        "isHomeIntent=$isHomeIntent | deeplink=$deeplink | " +
+                        "isPendingDefaultLauncher=${repository.isPendingDefaultLauncher()}"
+            }
         }
     }
 
@@ -87,13 +107,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     private fun shouldPopBackStack(): Boolean {
 
         val backStackCount = supportFragmentManager.backStackEntryCount
-        val currentFragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
 
-        Log.d(
-            TAG,
+        logDebug {
+
+            val currentFragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
             "onBackPressed | backStackCount=$backStackCount | " +
                     "currentFragment=${currentFragment?.javaClass?.simpleName}"
-        )
+        }
 
         return backStackCount > 0
     }
@@ -104,20 +124,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         return intent.hasCategory(Intent.CATEGORY_HOME) && currentFragment !is HomeFragment
     }
 
-    override fun onNewIntent(intent: Intent) {
+    private inline fun logDebug(message: () -> String) {
 
-        super.onNewIntent(intent)
-
-        navigateInitialScreen()
+        if (BuildConfig.DEBUG) Log.d(TAG, message())
     }
 
-    fun startBackgroundService() {
-
-        BackgroundService.start(this)
-    }
+    // ── 6. Companion object ───────────────────────────────────────────────
 
     companion object {
 
-        private const val TAG = "tuanha"
+        private const val TAG = "MainActivity"
     }
 }

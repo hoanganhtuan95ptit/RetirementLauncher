@@ -16,8 +16,6 @@ import com.simple.deeplink.Deeplink
 import com.simple.deeplink.DeeplinkHandler
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.databinding.FragmentAppListBinding
-import com.simple.launcher.retirement.domain.usecase.GetSelectableAppsUseCase
-import com.simple.launcher.retirement.domain.usecase.SaveSelectedAppsUseCase
 import com.simple.launcher.retirement.presentation.DeepLinks
 import com.simple.launcher.retirement.presentation.base.BaseFragment
 import com.simple.launcher.retirement.presentation.sendReorderAppsDeeplink
@@ -35,10 +33,9 @@ import kotlinx.coroutines.launch
 
 class AppListFragment : BaseFragment<FragmentAppListBinding>() {
 
-    private val viewModel: AppListViewModel by viewModels {
-
-        AppListViewModelFactory(GetSelectableAppsUseCase.instance, SaveSelectedAppsUseCase.instance)
-    }
+    // No-arg VM: `by viewModels()` mặc định của Fragment (SavedStateViewModelFactory)
+    // tự dựng bằng constructor không tham số — không cần Factory riêng.
+    private val viewModel: AppListViewModel by viewModels()
 
     private val isFlowSetup: Boolean by lazy {
 

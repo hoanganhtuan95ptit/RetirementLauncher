@@ -1,7 +1,5 @@
 package com.simple.launcher.retirement.presentation.app_list
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.domain.model.SelectableAppEntity
 import com.simple.launcher.retirement.domain.repository.AppRepository
@@ -25,6 +23,7 @@ import com.simple.launcher.retirement.utils.exts.mutableStateFlow
 import com.simple.launcher.retirement.utils.exts.textColorPrimary
 import com.simple.launcher.retirement.utils.exts.textColorSecondary
 import com.simple.ui.precompute.image.BigImage
+import com.simple.ui.precompute.text.BigText
 import com.simple.ui.precompute.text.toBig
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -32,10 +31,21 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.collect
 
-class AppListViewModel(
-    private val getSelectableAppsUseCase: GetSelectableAppsUseCase,
-    private val saveSelectedAppsUseCase: SaveSelectedAppsUseCase
-) : BaseViewModel() {
+/**
+ * No-arg constructor để dùng được với `by viewModels()` mặc định (không cần Factory).
+ * Dependencies là các singleton nội bộ nên đọc thẳng từ `.instance` — tránh phải khai báo
+ * & truyền qua `ViewModelProvider.Factory`.
+ */
+class AppListViewModel : BaseViewModel() {
+
+    // ── 1. Fields ─────────────────────────────────────────────────────────
+
+    private val getSelectableAppsUseCase: GetSelectableAppsUseCase = GetSelectableAppsUseCase.instance
+    private val saveSelectedAppsUseCase: SaveSelectedAppsUseCase = SaveSelectedAppsUseCase.instance
+
+    // ── 2. Flows ──────────────────────────────────────────────────────────
+
+    val query = MutableStateFlow("")
 
     val toolbar: StateFlow<ToolbarState> = combineState(
         flow1 = resources,
@@ -81,8 +91,6 @@ class AppListViewModel(
         )
     }
 
-    val query = MutableStateFlow("")
-
     val apps: StateFlow<List<SelectableAppEntity>?> = mutableStateFlow(null) {
 
         getSelectableAppsUseCase.invoke().collect { value = it }
@@ -95,53 +103,38 @@ class AppListViewModel(
         value = AppRepository.instance.getSelectedPackagesFlow().first().toSet()
     }
 
-    val items: StateFlow<List<SelectableAppItem>> = combineState(
+    private val preparedApps: StateFlow<List<PreparedAppEntry>?> = combineState(
         flow1 = apps.filterNotNull(),
+        initialValue = null
+    ) { apps ->
+
+        value = apps.map { entity ->
+
+            val rawLabel = entity.app.label
+            PreparedAppEntry(
+                entity = entity,
+                lowerLabel = rawLabel.lowercase(),
+                normalizedLabel = VietnameseStringUtils.normalizeForSearch(rawLabel),
+                bigLabel = rawLabel.toBig(),
+                bigIcon = BigImage(entity.app.icon)
+            )
+        }
+    }
+
+    val items: StateFlow<List<SelectableAppItem>> = combineState(
+        flow1 = preparedApps.filterNotNull(),
         flow2 = query,
         flow3 = _selectedIds,
         initialValue = emptyList()
-    ) { apps, query, selectedIds ->
+    ) { prepared, query, selectedIds ->
 
-        val filtered = filterByQuery(apps, query)
+        val filtered = filterByQuery(prepared, query)
         value = filtered
-            .sortedWith(compareBy({ it.second }, { it.first.app.label.lowercase() }))
-            .map { (entity, _) -> toSelectableAppItem(entity, selectedIds) }
+            .sortedWith(compareBy({ it.second }, { it.first.lowerLabel }))
+            .map { (entry, _) -> toSelectableAppItem(entry, selectedIds) }
     }
 
-    private fun filterByQuery(
-        apps: List<SelectableAppEntity>,
-        query: String
-    ): List<Pair<SelectableAppEntity, Int>> {
-
-        if (query.isBlank()) return apps.map { it to 0 }
-        return apps.mapNotNull { entity -> matchWithPriority(entity, query) }
-    }
-
-    private fun matchWithPriority(
-        entity: SelectableAppEntity,
-        query: String
-    ): Pair<SelectableAppEntity, Int>? {
-
-        val label = entity.app.label
-        val priority = when {
-
-            VietnameseStringUtils.equalsIgnoreDiacritics(label, query) -> 0
-            VietnameseStringUtils.startsWithIgnoreDiacritics(label, query) -> 1
-            VietnameseStringUtils.containsIgnoreDiacritics(label, query) -> 2
-            else -> return null
-        }
-        return entity to priority
-    }
-
-    private fun toSelectableAppItem(
-        entity: SelectableAppEntity,
-        selectedIds: Set<String>
-    ): SelectableAppItem = SelectableAppItem(
-        label = entity.app.label.toBig(),
-        icon = BigImage(entity.app.icon),
-        isSelected = entity.app.packageName in selectedIds,
-        entity = entity
-    )
+    // ── 3. Public API ─────────────────────────────────────────────────────
 
     fun search(text: String) {
 
@@ -177,25 +170,70 @@ class AppListViewModel(
         return ordered
     }
 
-    fun saveSelection() {
+    /**
+     * Lưu list app đã chọn — TRỰC TIẾP dùng thứ tự cũ đã save + append app mới ở cuối.
+     * Trước đây gọi `_selectedIds.value.toList()` — Set không đảm bảo order → Home
+     * shuffle random sau mỗi lần save.
+     */
+    suspend fun saveSelection() {
 
-        saveSelectedAppsUseCase(_selectedIds.value.toList())
+        saveSelectedAppsUseCase(buildOrderedSelectedIds())
     }
-}
 
-class AppListViewModelFactory(
-    private val getSelectableAppsUseCase: GetSelectableAppsUseCase,
-    private val saveSelectedAppsUseCase: SaveSelectedAppsUseCase
-) : ViewModelProvider.Factory {
+    // ── 4. Private helpers ────────────────────────────────────────────────
 
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+    private fun filterByQuery(
+        apps: List<PreparedAppEntry>,
+        query: String
+    ): List<Pair<PreparedAppEntry, Int>> {
 
-        if (modelClass.isAssignableFrom(AppListViewModel::class.java)) {
+        if (query.isBlank()) return apps.map { it to 0 }
 
-            @Suppress("UNCHECKED_CAST")
-            return AppListViewModel(getSelectableAppsUseCase, saveSelectedAppsUseCase) as T
+        // Normalize query 1 lần duy nhất (thay vì mỗi item x 3 lần).
+        val normalizedQuery = VietnameseStringUtils.normalizeForSearch(query)
+        return apps.mapNotNull { entry -> matchWithPriority(entry, normalizedQuery) }
+    }
+
+    private fun matchWithPriority(
+        entry: PreparedAppEntry,
+        normalizedQuery: String
+    ): Pair<PreparedAppEntry, Int>? {
+
+        val normalizedLabel = entry.normalizedLabel
+        val priority = when {
+
+            normalizedLabel == normalizedQuery -> 0
+            normalizedLabel.startsWith(normalizedQuery) -> 1
+            normalizedLabel.contains(normalizedQuery) -> 2
+            else -> return null
         }
-
-        throw IllegalArgumentException("Unknown ViewModel class")
+        return entry to priority
     }
+
+    private fun toSelectableAppItem(
+        entry: PreparedAppEntry,
+        selectedIds: Set<String>
+    ): SelectableAppItem = SelectableAppItem(
+        label = entry.bigLabel,
+        icon = entry.bigIcon,
+        isSelected = entry.entity.app.packageName in selectedIds,
+        entity = entry.entity
+    )
+
+    // ── 5. Nested classes ─────────────────────────────────────────────────
+
+    /**
+     * Wrapper cache toàn bộ giá trị precomputed / normalize cho 1 entry.
+     * Chỉ tính khi `apps` thay đổi, KHÔNG tính lại mỗi keystroke như trước —
+     * trước đó `combineState { apps, query, selectedIds -> map { toBig() } }`
+     * tạo lại BigText/BigImage mỗi lần user gõ 1 ký tự → phá tác dụng của
+     * "Precomputed UI Node Engine".
+     */
+    private data class PreparedAppEntry(
+        val entity: SelectableAppEntity,
+        val lowerLabel: String,
+        val normalizedLabel: String,
+        val bigLabel: BigText,
+        val bigIcon: BigImage
+    )
 }

@@ -12,6 +12,8 @@ import kotlinx.coroutines.flow.stateIn
 
 class NumpadViewModel : BaseViewModel() {
 
+    // ── 2. Flows ──────────────────────────────────────────────────────────
+
     val numpadState: StateFlow<NumpadState> = themes.map { themeMap ->
         NumpadState(
             textColor = themeMap.textColorPrimary,
@@ -32,6 +34,8 @@ class NumpadViewModel : BaseViewModel() {
             )
         )
     }.stateIn(viewModelScope, SharingStarted.Eagerly, NumpadState.empty())
+
+    // ── 5. Nested classes ─────────────────────────────────────────────────
 
     data class NumpadKeyItem(
         val label: String,

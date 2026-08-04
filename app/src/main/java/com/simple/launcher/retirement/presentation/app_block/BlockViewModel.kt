@@ -26,12 +26,9 @@ data class BlockContentState(
 
 class BlockViewModel : BaseViewModel() {
 
+    // ── 2. Flows ──────────────────────────────────────────────────────────
+
     private val _appName = MutableStateFlow<String?>(null)
-
-    fun setAppName(name: String?) {
-
-        _appName.value = name
-    }
 
     val content: StateFlow<BlockContentState> = combineState(
         flow1 = resources,
@@ -64,5 +61,12 @@ class BlockViewModel : BaseViewModel() {
             textColor = color,
             backgroundColor = backgroundColor
         )
+    }
+
+    // ── 3. Public API ─────────────────────────────────────────────────────
+
+    fun setAppName(name: String?) {
+
+        _appName.value = name
     }
 }

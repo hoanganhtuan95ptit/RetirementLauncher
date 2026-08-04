@@ -35,348 +35,17 @@ import java.util.concurrent.ConcurrentHashMap
 
 class AppRepositoryImpl(private val context: Context) : AppRepository {
 
-    companion object {
-
-        private const val KEY_SELECTED_APPS = "selected_apps"
-
-        /**
-         * Các keyword trong package name PHẢI bị chặn — kể cả khi package đó là
-         * system app (FLAG_SYSTEM) hoặc trùng prefix hệ thống. Dùng để ngăn user
-         * cài APK lạ / bên thứ 3 qua trình cài đặt sẵn của máy.
-         *
-         * Đặc biệt chặn *packageinstaller* — trên nhiều máy đây là app xử lý
-         * intent VIEW file .apk, nên block nó = block sideload APK.
-         */
-        private val BLOCKED_INSTALLER_KEYWORDS: Array<String> = arrayOf(
-            "packageinstaller",     // com.android.packageinstaller, com.google.android.packageinstaller,
-                                    // com.miui.packageinstaller, com.samsung.android.packageinstaller…
-            "packageinstall"        // biến thể hiếm
-        )
-
-        /**
-         * Prefix namespace của các package hệ thống / OEM. Dùng cho fallback
-         * isSystemAppByFlagAndPrefix() — chỉ chấp nhận package FLAG_SYSTEM khi
-         * package name nằm trong 1 trong các namespace này.
-         */
-        private val SYSTEM_PACKAGE_PREFIXES: Array<String> = arrayOf(
-            "com.android.",
-            "com.google.android.",
-            "com.samsung.",
-            "com.sec.android.",
-            "com.miui.",
-            "com.xiaomi.",
-            "com.mi.",
-            "com.oppo.",
-            "com.coloros.",
-            "com.heytap.",
-            "com.realme.",
-            "com.vivo.",
-            "com.iqoo.",
-            "com.bbk.",
-            "com.huawei.",
-            "com.hihonor.",
-            "com.oneplus.",
-            "com.lge.",
-            "com.sonymobile.",
-            "com.asus.",
-            "com.motorola.",
-            "com.lenovo.",
-            "com.nokia.",
-            "com.transsion.",
-            "com.tecno.",
-            "com.infinix."
-        )
-
-        /**
-         * Tập hợp tất cả package names hệ thống / OEM đã biết.
-         * Dùng HashSet để lookup O(1), khởi tạo 1 lần duy nhất trong companion.
-         * Được kiểm tra ĐẦU TIÊN trong resolveIsDefaultApp() để short-circuit
-         * trước khi thực hiện bất kỳ intent resolve / binder IPC nào.
-         */
-        private val KNOWN_SYSTEM_PACKAGES: HashSet<String> = hashSetOf(
-
-            // ── Core Android system ──
-            "android",
-            "android.keyguard",
-            "com.android.systemui",
-            "com.android.settings",
-            "com.android.settings.intelligence",
-            "com.android.permissioncontroller",
-            "com.google.android.permissioncontroller",
-            "com.google.android.gms",
-            "com.google.android.gsf",
-            "com.android.providers.settings",
-            "com.android.providers.contacts",
-            "com.android.providers.telephony",
-            "com.android.providers.media",
-            "com.android.providers.downloads",
-            "com.android.providers.calendar",
-            "com.android.bluetooth",
-            "com.android.nfc",
-            "com.android.shell",
-            "com.android.stk",                     // SIM Toolkit
-            "com.android.stk2",
-            "com.android.phone",
-            "com.android.server.telecom",
-            "com.android.inputdevices",
-            "com.android.location.fused",
-            "com.android.wallpaper",
-            "com.android.wallpapercropper",
-            "com.android.printspooler",
-            "com.android.vpndialogs",
-            "com.android.htmlviewer",
-            "com.android.certinstaller",
-            // CỐ TÌNH KHÔNG whitelist bất kỳ *.packageinstaller nào (com.android.packageinstaller,
-            // com.google.android.packageinstaller, com.miui.packageinstaller, com.samsung.android.packageinstaller…)
-            // → khi user mở file APK lạ, packageinstaller sẽ bị block như app thường.
-            // Xem thêm BLOCKED_INSTALLER_KEYWORDS + isSystemAppByFlagAndPrefix() để không lọt qua fallback.
-            "com.android.intentresolver",          // System share sheet / intent chooser
-            "com.android.backupconfirm",
-            "com.android.managedprovisioning",
-            "com.android.storagemanager",
-            "com.android.vending",              // Google Play Store
-            "com.android.providers.userdictionary",
-            "com.android.emergency",            // Emergency Information
-            "com.android.setupwizard",
-            "com.google.android.setupwizard",
-            "com.android.documentsui",          // File picker / SAF
-            "com.android.externalstorage",
-            "com.android.mtp",
-            "com.android.captiveportallogin",
-            "com.android.contacts",
-            "com.android.dialer",
-            "com.android.mms",
-            "com.android.messaging",
-            "com.android.email",
-            "com.android.calendar",
-            "com.android.deskclock",
-            "com.android.calculator2",
-            "com.android.camera",
-            "com.android.camera2",
-            "com.android.gallery3d",
-            "com.android.music",
-            "com.android.soundrecorder",
-            "com.android.chrome",
-            "com.android.hotspot2",
-            "com.android.se",                   // Secure Element
-            "com.android.simappdialog",
-
-            // ── Samsung ──
-            "com.samsung.android.incallui",
-            "com.samsung.android.dialer",
-            "com.samsung.android.messaging",
-            "com.samsung.android.contacts",
-            "com.samsung.android.calendar",
-            "com.samsung.android.app.camera",
-            "com.samsung.android.gallery",
-            "com.samsung.android.sm",
-            "com.samsung.android.lool",
-            "com.samsung.android.app.notes",
-            "com.samsung.android.app.reminder",
-            "com.samsung.android.app.clockpack",
-            "com.samsung.android.app.calculator",
-            "com.samsung.android.app.sbrowseredge",
-            "com.samsung.android.themestore",
-            "com.samsung.android.app.spage",
-            "com.samsung.android.bixby.agent",
-            "com.samsung.android.visionintelligence",
-            "com.samsung.android.spay",
-            "com.samsung.android.svoiceime",
-            "com.samsung.android.app.soundpicker",
-            "com.samsung.android.app.myfiles",
-            "com.samsung.android.app.phone",
-            "com.samsung.android.forest",
-            "com.samsung.android.app.watchmanager",
-            "com.samsung.android.weather",
-            "com.samsung.android.voicerecorder",
-            "com.samsung.android.app.settings",
-            "com.samsung.android.app.settings.bixby",
-            "com.samsung.android.settings.wifi",
-            "com.samsung.android.settings.external",
-            "com.sec.android.app.launcher",
-            "com.sec.android.app.setupwizard",
-            "com.sec.android.app.camera",
-            "com.sec.android.gallery3d",
-            "com.sec.android.app.clockpackage",
-            "com.sec.android.app.myfiles",
-            "com.sec.android.app.popupcalculator",
-            "com.sec.android.app.samsungapps",
-            "com.sec.android.easyMover.Agent",
-
-            // ── Google ──
-            "com.google.android.apps.messaging",
-            "com.google.android.dialer",
-            "com.google.android.contacts",
-            "com.google.android.calendar",
-            "com.google.android.apps.photos",
-            "com.google.android.apps.maps",
-            "com.google.android.apps.nbu.files",
-            "com.google.android.calculator",
-            "com.google.android.deskclock",
-            "com.google.android.apps.walletnfcrel",
-            "com.google.android.apps.wellbeing",
-            "com.google.android.apps.recorder",
-            "com.google.android.keep",
-            "com.google.android.apps.docs",
-            "com.google.android.gm",
-            "com.google.android.googlequicksearchbox",
-            "com.google.android.apps.googleassistant",
-            "com.google.android.inputmethod.latin",
-            "com.google.android.apps.healthdata",
-            "com.google.android.apps.fitness",
-            "com.google.android.apps.nexuslauncher",
-            "com.google.android.apps.safetyhub",
-            "com.google.android.settings.intelligence",
-            "com.google.android.apps.weather",
-            "com.google.android.tts",
-
-            // ── Xiaomi / MIUI ──
-            "com.miui.securitycenter",
-            "com.miui.securityadd",
-            "com.miui.securitycore",
-            "com.miui.system",
-            "com.miui.core",
-            "com.miui.contentcatcher",
-            "com.miui.contentextension",
-            "com.miui.weather2",
-            "com.miui.calculator",
-            "com.miui.notes",
-            "com.miui.compass",
-            "com.miui.player",
-            "com.miui.gallery",
-            "com.miui.fm",
-            "com.miui.screenrecorder",
-            "com.miui.videoplayer",
-            "com.miui.cleanmaster",
-            "com.miui.voiceassist",
-            "com.miui.home",
-            "com.miui.contacts",
-            "com.miui.phone",
-            "com.miui.mms",
-            "com.miui.dialer",
-            "com.miui.settings",
-            "com.xiaomi.settings",
-            "com.xiaomi.scanner",
-            "com.xiaomi.camera",
-            "com.xiaomi.simactivate.service",
-            "com.xiaomi.finddevice",
-            "com.mi.android.globallauncher",
-            "com.mi.globalbrowser",
-            "com.mi.globalTrendNews",
-
-            // ── OPPO / Realme / ColorOS ──
-            "com.oppo.launcher",
-            "com.oppo.settings",
-            "com.oppo.camera",
-            "com.oppo.contacts",
-            "com.oppo.dialer",
-            "com.oppo.mms",
-            "com.coloros.calculator",
-            "com.coloros.weather",
-            "com.coloros.weather2",
-            "com.coloros.filemanager",
-            "com.coloros.compass2",
-            "com.coloros.note",
-            "com.coloros.gallery3d",
-            "com.coloros.soundrecorder",
-            "com.coloros.securepay",
-            "com.coloros.safecenter",
-            "com.coloros.settings",
-            "com.coloros.simsettings",
-            "com.coloros.phonemanager",
-            "com.coloros.oppoguardelf",
-            "com.heytap.browser",
-            "com.heytap.music",
-            "com.heytap.pictorial",
-            "com.heytap.themestore",
-            "com.realme.securitycheck",
-            "com.realme.wellbeing",
-
-            // ── Vivo / FuntouchOS ──
-            "com.vivo.weather",
-            "com.vivo.calculator",
-            "com.vivo.compass",
-            "com.vivo.gallery",
-            "com.vivo.filemanager",
-            "com.vivo.note",
-            "com.vivo.settings",
-            "com.vivo.simsettings",
-            "com.vivo.dialer",
-            "com.vivo.contacts",
-            "com.vivo.email",
-            "com.vivo.easyshare",
-            "com.vivo.smartshot",
-            "com.vivo.magazine",
-            "com.iqoo.secure",
-            "com.iqoo.settings",
-            "com.bbk.calendar",
-            "com.bbk.launcher2",
-            "com.bbk.appstore",
-
-            // ── Huawei / HarmonyOS ──
-            "com.huawei.android.launcher",
-            "com.huawei.camera",
-            "com.huawei.systemmanager",
-            "com.huawei.health",
-            "com.huawei.wallet",
-            "com.huawei.calculator",
-            "com.huawei.notepad",
-            "com.huawei.calendar",
-            "com.huawei.compass",
-            "com.huawei.appmarket",
-            "com.huawei.android.totemweather",
-            "com.huawei.contacts",
-            "com.huawei.mms",
-            "com.huawei.email",
-            "com.huawei.gallery",
-            "com.huawei.filemanager",
-            "com.huawei.himovie",
-            "com.huawei.music",
-            "com.huawei.hwid",
-            "com.huawei.systemserver",
-            "com.hihonor.systemmanager",
-            "com.hihonor.contacts",
-            "com.hihonor.dialer",
-
-            // ── OnePlus / OxygenOS ──
-            "com.oneplus.camera",
-            "com.oneplus.gallery",
-            "com.oneplus.filemanager",
-            "com.oneplus.calculator",
-            "com.oneplus.note",
-            "com.oneplus.weather",
-            "com.oneplus.contacts",
-            "com.oneplus.dialer",
-            "com.oneplus.mms",
-            "com.oneplus.setupwizard",
-            "com.oneplus.security",
-
-            // ── LG ──
-            "com.lge.camera",
-            "com.lge.clock",
-            "com.lge.calculator",
-            "com.lge.launcher3",
-            "com.lge.settings",
-            "com.lge.contacts",
-
-            // ── Sony ──
-            "com.sonymobile.camera",
-            "com.sonymobile.album",
-            "com.sonymobile.settings",
-
-            // ── ASUS / Lenovo / Motorola / Nokia ──
-            "com.asus.launcher",
-            "com.asus.settings",
-            "com.motorola.launcher3",
-            "com.motorola.settings",
-            "com.lenovo.launcher",
-            "com.nokia.settings"
-        )
-    }
+    // ── 1. Fields ────────────────────────────────────────────────────────────────────
 
     private val sharedPrefs = AppPrefs.sharedPrefs
     private val gson = AppPrefs.gson
 
+    private val defaultAppCache = ConcurrentHashMap<String, Boolean>(16)
+
+    @Volatile
+    private var cachedCurrentApp: AppEntity? = null
+
+    // ── 2. Flows ─────────────────────────────────────────────────────────────────────
 
     private val appAll: ActiveStateFlow<List<AppEntity>?> = object : ActiveStateFlow<List<AppEntity>?>(null) {
 
@@ -555,12 +224,7 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
         value = readSelectedPackages()
     }
 
-
-    private val defaultAppCache = ConcurrentHashMap<String, Boolean>(16)
-
-    @Volatile
-    private var cachedCurrentApp: AppEntity? = null
-
+    // ── 3. Public API ─────────────────────────────────────────────────────────────────
 
     override fun getAllAppFlow(): Flow<List<AppEntity>> {
 
@@ -587,17 +251,25 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
         return appSelected.filterNotNull()
     }
 
+    // ── 4. Private helpers ──────────────────────────────────────────────────────────────
+
     /**
      * Đọc list package đã chọn từ SharedPreferences.
      * Chỉ dùng nội bộ — bên ngoài đi qua getSelectedPackagesFlow().
+     *
+     * Dùng getString() thay vì sharedPrefs.all[KEY] — .all copy toàn bộ pref map
+     * (memcpy tất cả entry), trong khi ta chỉ cần 1 key.
+     * Fallback qua getStringSet() để migrate dữ liệu cũ (từng lưu Set<String>).
      */
     private fun readSelectedPackages(): List<String> {
 
-        return when (val data = sharedPrefs.all[KEY_SELECTED_APPS]) {
+        sharedPrefs.getString(KEY_SELECTED_APPS, null)?.let { return parseSelectedPackages(it) }
+        return try {
 
-            is String -> parseSelectedPackages(data)
-            is Set<*> -> data.filterIsInstance<String>()
-            else -> emptyList()
+            sharedPrefs.getStringSet(KEY_SELECTED_APPS, null)?.toList().orEmpty()
+        } catch (_: ClassCastException) {
+
+            emptyList()
         }
     }
 
@@ -747,11 +419,14 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
      * Trả về true nếu package name chứa bất kỳ keyword nào trong BLOCKED_INSTALLER_KEYWORDS.
      * Dùng để cấm cửa mọi trình cài đặt APK (packageinstaller) — bất kể của Google,
      * Samsung, MIUI hay OEM nào — nhằm chặn sideload APK lạ.
+     *
+     * Không gọi .lowercase() — package name Android quy định là lowercase (theo
+     * <manifest package="..."> naming rules). Tránh tạo String tạm mỗi call
+     * (hàm này chạy trong hot path isDefaultApp).
      */
     private fun isBlockedInstaller(packageName: String): Boolean {
 
-        val lower = packageName.lowercase()
-        return BLOCKED_INSTALLER_KEYWORDS.any { lower.contains(it) }
+        return BLOCKED_INSTALLER_KEYWORDS.any { packageName.contains(it) }
     }
 
     /**
@@ -1217,4 +892,346 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
             false
         }
     }
+
+    // ── 6. Companion object ──────────────────────────────────────────────────────────────────
+
+    companion object {
+
+        private const val KEY_SELECTED_APPS = "selected_apps"
+
+        /**
+         * Các keyword trong package name PHẢI bị chặn — kể cả khi package đó là
+         * system app (FLAG_SYSTEM) hoặc trùng prefix hệ thống. Dùng để ngăn user
+         * cài APK lạ / bên thứ 3 qua trình cài đặt sẵn của máy.
+         *
+         * Đặc biệt chặn *packageinstaller* — trên nhiều máy đây là app xử lý
+         * intent VIEW file .apk, nên block nó = block sideload APK.
+         */
+        private val BLOCKED_INSTALLER_KEYWORDS: Array<String> = arrayOf(
+            "packageinstaller",     // com.android.packageinstaller, com.google.android.packageinstaller,
+                                    // com.miui.packageinstaller, com.samsung.android.packageinstaller…
+            "packageinstall"        // biến thể hiếm
+        )
+
+        /**
+         * Prefix namespace của các package hệ thống / OEM. Dùng cho fallback
+         * isSystemAppByFlagAndPrefix() — chỉ chấp nhận package FLAG_SYSTEM khi
+         * package name nằm trong 1 trong các namespace này.
+         */
+        private val SYSTEM_PACKAGE_PREFIXES: Array<String> = arrayOf(
+            "com.android.",
+            "com.google.android.",
+            "com.samsung.",
+            "com.sec.android.",
+            "com.miui.",
+            "com.xiaomi.",
+            "com.mi.",
+            "com.oppo.",
+            "com.coloros.",
+            "com.heytap.",
+            "com.realme.",
+            "com.vivo.",
+            "com.iqoo.",
+            "com.bbk.",
+            "com.huawei.",
+            "com.hihonor.",
+            "com.oneplus.",
+            "com.lge.",
+            "com.sonymobile.",
+            "com.asus.",
+            "com.motorola.",
+            "com.lenovo.",
+            "com.nokia.",
+            "com.transsion.",
+            "com.tecno.",
+            "com.infinix."
+        )
+
+        /**
+         * Tập hợp tất cả package names hệ thống / OEM đã biết.
+         * Dùng HashSet để lookup O(1), khởi tạo 1 lần duy nhất trong companion.
+         * Được kiểm tra ĐẦU TIÊN trong resolveIsDefaultApp() để short-circuit
+         * trước khi thực hiện bất kỳ intent resolve / binder IPC nào.
+         */
+        private val KNOWN_SYSTEM_PACKAGES: HashSet<String> = hashSetOf(
+
+            // ── Core Android system ──
+            "android",
+            "android.keyguard",
+            "com.android.systemui",
+            "com.android.settings",
+            "com.android.settings.intelligence",
+            "com.android.permissioncontroller",
+            "com.google.android.permissioncontroller",
+            "com.google.android.gms",
+            "com.google.android.gsf",
+            "com.android.providers.settings",
+            "com.android.providers.contacts",
+            "com.android.providers.telephony",
+            "com.android.providers.media",
+            "com.android.providers.downloads",
+            "com.android.providers.calendar",
+            "com.android.bluetooth",
+            "com.android.nfc",
+            "com.android.shell",
+            "com.android.stk",                     // SIM Toolkit
+            "com.android.stk2",
+            "com.android.phone",
+            "com.android.server.telecom",
+            "com.android.inputdevices",
+            "com.android.location.fused",
+            "com.android.wallpaper",
+            "com.android.wallpapercropper",
+            "com.android.printspooler",
+            "com.android.vpndialogs",
+            "com.android.htmlviewer",
+            "com.android.certinstaller",
+            // CỐ TÌNH KHÔNG whitelist bất kỳ *.packageinstaller nào (com.android.packageinstaller,
+            // com.google.android.packageinstaller, com.miui.packageinstaller, com.samsung.android.packageinstaller…)
+            // → khi user mở file APK lạ, packageinstaller sẽ bị block như app thường.
+            // Xem thêm BLOCKED_INSTALLER_KEYWORDS + isSystemAppByFlagAndPrefix() để không lọt qua fallback.
+            "com.android.intentresolver",          // System share sheet / intent chooser
+            "com.android.backupconfirm",
+            "com.android.managedprovisioning",
+            "com.android.storagemanager",
+            "com.android.vending",              // Google Play Store
+            "com.android.providers.userdictionary",
+            "com.android.emergency",            // Emergency Information
+            "com.android.setupwizard",
+            "com.google.android.setupwizard",
+            "com.android.documentsui",          // File picker / SAF
+            "com.android.externalstorage",
+            "com.android.mtp",
+            "com.android.captiveportallogin",
+            "com.android.contacts",
+            "com.android.dialer",
+            "com.android.mms",
+            "com.android.messaging",
+            "com.android.email",
+            "com.android.calendar",
+            "com.android.deskclock",
+            "com.android.calculator2",
+            "com.android.camera",
+            "com.android.camera2",
+            "com.android.gallery3d",
+            "com.android.music",
+            "com.android.soundrecorder",
+            "com.android.chrome",
+            "com.android.hotspot2",
+            "com.android.se",                   // Secure Element
+            "com.android.simappdialog",
+
+            // ── Samsung ──
+            "com.samsung.android.incallui",
+            "com.samsung.android.dialer",
+            "com.samsung.android.messaging",
+            "com.samsung.android.contacts",
+            "com.samsung.android.calendar",
+            "com.samsung.android.app.camera",
+            "com.samsung.android.gallery",
+            "com.samsung.android.sm",
+            "com.samsung.android.lool",
+            "com.samsung.android.app.notes",
+            "com.samsung.android.app.reminder",
+            "com.samsung.android.app.clockpack",
+            "com.samsung.android.app.calculator",
+            "com.samsung.android.app.sbrowseredge",
+            "com.samsung.android.themestore",
+            "com.samsung.android.app.spage",
+            "com.samsung.android.bixby.agent",
+            "com.samsung.android.visionintelligence",
+            "com.samsung.android.spay",
+            "com.samsung.android.svoiceime",
+            "com.samsung.android.app.soundpicker",
+            "com.samsung.android.app.myfiles",
+            "com.samsung.android.app.phone",
+            "com.samsung.android.forest",
+            "com.samsung.android.app.watchmanager",
+            "com.samsung.android.weather",
+            "com.samsung.android.voicerecorder",
+            "com.samsung.android.app.settings",
+            "com.samsung.android.app.settings.bixby",
+            "com.samsung.android.settings.wifi",
+            "com.samsung.android.settings.external",
+            "com.sec.android.app.launcher",
+            "com.sec.android.app.setupwizard",
+            "com.sec.android.app.camera",
+            "com.sec.android.gallery3d",
+            "com.sec.android.app.clockpackage",
+            "com.sec.android.app.myfiles",
+            "com.sec.android.app.popupcalculator",
+            "com.sec.android.app.samsungapps",
+            "com.sec.android.easyMover.Agent",
+
+            // ── Google ──
+            "com.google.android.apps.messaging",
+            "com.google.android.dialer",
+            "com.google.android.contacts",
+            "com.google.android.calendar",
+            "com.google.android.apps.photos",
+            "com.google.android.apps.maps",
+            "com.google.android.apps.nbu.files",
+            "com.google.android.calculator",
+            "com.google.android.deskclock",
+            "com.google.android.apps.walletnfcrel",
+            "com.google.android.apps.wellbeing",
+            "com.google.android.apps.recorder",
+            "com.google.android.keep",
+            "com.google.android.apps.docs",
+            "com.google.android.gm",
+            "com.google.android.googlequicksearchbox",
+            "com.google.android.apps.googleassistant",
+            "com.google.android.inputmethod.latin",
+            "com.google.android.apps.healthdata",
+            "com.google.android.apps.fitness",
+            "com.google.android.apps.nexuslauncher",
+            "com.google.android.apps.safetyhub",
+            "com.google.android.settings.intelligence",
+            "com.google.android.apps.weather",
+            "com.google.android.tts",
+
+            // ── Xiaomi / MIUI ──
+            "com.miui.securitycenter",
+            "com.miui.securityadd",
+            "com.miui.securitycore",
+            "com.miui.system",
+            "com.miui.core",
+            "com.miui.contentcatcher",
+            "com.miui.contentextension",
+            "com.miui.weather2",
+            "com.miui.calculator",
+            "com.miui.notes",
+            "com.miui.compass",
+            "com.miui.player",
+            "com.miui.gallery",
+            "com.miui.fm",
+            "com.miui.screenrecorder",
+            "com.miui.videoplayer",
+            "com.miui.cleanmaster",
+            "com.miui.voiceassist",
+            "com.miui.home",
+            "com.miui.contacts",
+            "com.miui.phone",
+            "com.miui.mms",
+            "com.miui.dialer",
+            "com.miui.settings",
+            "com.xiaomi.settings",
+            "com.xiaomi.scanner",
+            "com.xiaomi.camera",
+            "com.xiaomi.simactivate.service",
+            "com.xiaomi.finddevice",
+            "com.mi.android.globallauncher",
+            "com.mi.globalbrowser",
+            "com.mi.globalTrendNews",
+
+            // ── OPPO / Realme / ColorOS ──
+            "com.oppo.launcher",
+            "com.oppo.settings",
+            "com.oppo.camera",
+            "com.oppo.contacts",
+            "com.oppo.dialer",
+            "com.oppo.mms",
+            "com.coloros.calculator",
+            "com.coloros.weather",
+            "com.coloros.weather2",
+            "com.coloros.filemanager",
+            "com.coloros.compass2",
+            "com.coloros.note",
+            "com.coloros.gallery3d",
+            "com.coloros.soundrecorder",
+            "com.coloros.securepay",
+            "com.coloros.safecenter",
+            "com.coloros.settings",
+            "com.coloros.simsettings",
+            "com.coloros.phonemanager",
+            "com.coloros.oppoguardelf",
+            "com.heytap.browser",
+            "com.heytap.music",
+            "com.heytap.pictorial",
+            "com.heytap.themestore",
+            "com.realme.securitycheck",
+            "com.realme.wellbeing",
+
+            // ── Vivo / FuntouchOS ──
+            "com.vivo.weather",
+            "com.vivo.calculator",
+            "com.vivo.compass",
+            "com.vivo.gallery",
+            "com.vivo.filemanager",
+            "com.vivo.note",
+            "com.vivo.settings",
+            "com.vivo.simsettings",
+            "com.vivo.dialer",
+            "com.vivo.contacts",
+            "com.vivo.email",
+            "com.vivo.easyshare",
+            "com.vivo.smartshot",
+            "com.vivo.magazine",
+            "com.iqoo.secure",
+            "com.iqoo.settings",
+            "com.bbk.calendar",
+            "com.bbk.launcher2",
+            "com.bbk.appstore",
+
+            // ── Huawei / HarmonyOS ──
+            "com.huawei.android.launcher",
+            "com.huawei.camera",
+            "com.huawei.systemmanager",
+            "com.huawei.health",
+            "com.huawei.wallet",
+            "com.huawei.calculator",
+            "com.huawei.notepad",
+            "com.huawei.calendar",
+            "com.huawei.compass",
+            "com.huawei.appmarket",
+            "com.huawei.android.totemweather",
+            "com.huawei.contacts",
+            "com.huawei.mms",
+            "com.huawei.email",
+            "com.huawei.gallery",
+            "com.huawei.filemanager",
+            "com.huawei.himovie",
+            "com.huawei.music",
+            "com.huawei.hwid",
+            "com.huawei.systemserver",
+            "com.hihonor.systemmanager",
+            "com.hihonor.contacts",
+            "com.hihonor.dialer",
+
+            // ── OnePlus / OxygenOS ──
+            "com.oneplus.camera",
+            "com.oneplus.gallery",
+            "com.oneplus.filemanager",
+            "com.oneplus.calculator",
+            "com.oneplus.note",
+            "com.oneplus.weather",
+            "com.oneplus.contacts",
+            "com.oneplus.dialer",
+            "com.oneplus.mms",
+            "com.oneplus.setupwizard",
+            "com.oneplus.security",
+
+            // ── LG ──
+            "com.lge.camera",
+            "com.lge.clock",
+            "com.lge.calculator",
+            "com.lge.launcher3",
+            "com.lge.settings",
+            "com.lge.contacts",
+
+            // ── Sony ──
+            "com.sonymobile.camera",
+            "com.sonymobile.album",
+            "com.sonymobile.settings",
+
+            // ── ASUS / Lenovo / Motorola / Nokia ──
+            "com.asus.launcher",
+            "com.asus.settings",
+            "com.motorola.launcher3",
+            "com.motorola.settings",
+            "com.lenovo.launcher",
+            "com.nokia.settings"
+        )
+    }
+
 }

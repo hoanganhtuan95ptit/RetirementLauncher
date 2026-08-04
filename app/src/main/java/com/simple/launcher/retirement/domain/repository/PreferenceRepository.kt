@@ -55,6 +55,9 @@ interface PreferenceRepository {
     fun getLastEmergencyIndex(): Int
     fun setLastEmergencyIndex(index: Int)
 
+    fun getSosCallAttemptCount(): Int
+    fun setSosCallAttemptCount(count: Int)
+
     fun getPendingEmergencyConfig(): com.simple.launcher.retirement.domain.model.SOSConfig?
     fun setPendingEmergencyConfig(config: com.simple.launcher.retirement.domain.model.SOSConfig?)
 

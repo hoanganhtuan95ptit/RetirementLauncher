@@ -40,6 +40,16 @@ object VietnameseStringUtils {
     }
 
     /**
+     * Normalize sẵn 1 lần: lowercase + bỏ dấu. Dùng để cache trên item khi
+     * cần match nhiều query khác nhau (search bar) — tránh gọi
+     * removeDiacritics/lowercase mỗi keystroke.
+     */
+    fun normalizeForSearch(input: String): String {
+
+        return removeDiacritics(input).lowercase()
+    }
+
+    /**
      * So sánh `source` có chứa `query` hay không, hỗ trợ không dấu.
      *
      * @return `true` nếu `source` chứa `query` (case-insensitive, diacritics-insensitive).

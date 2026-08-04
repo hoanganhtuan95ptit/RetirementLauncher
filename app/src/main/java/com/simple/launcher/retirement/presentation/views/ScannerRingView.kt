@@ -24,9 +24,7 @@ class ScannerRingView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
 
-    enum class RingState { IDLE, SCANNING, DONE }
-
-    // ------- Paints -------
+    // ── 1. Fields — Paints & state ────────────────────────────────────────
 
     private val trackPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
 
@@ -147,6 +145,12 @@ class ScannerRingView @JvmOverloads constructor(
         stopAnimations()
         super.onDetachedFromWindow()
     }
+
+    // ── 5. Nested classes ─────────────────────────────────────────────────
+
+    enum class RingState { IDLE, SCANNING, DONE }
+
+    // ── 6. Companion object ───────────────────────────────────────────────
 
     companion object {
 

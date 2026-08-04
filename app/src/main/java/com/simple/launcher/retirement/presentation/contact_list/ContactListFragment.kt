@@ -18,7 +18,6 @@ import com.simple.deeplink.Deeplink
 import com.simple.deeplink.DeeplinkHandler
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.databinding.FragmentAppListBinding
-import com.simple.launcher.retirement.domain.repository.ContactRepository
 import com.simple.launcher.retirement.presentation.DeepLinks
 import com.simple.launcher.retirement.presentation.base.BaseFragment
 import com.simple.launcher.retirement.presentation.sendReorderContactsDeeplink
@@ -37,10 +36,8 @@ import kotlinx.coroutines.launch
 
 class ContactListFragment : BaseFragment<FragmentAppListBinding>() {
 
-    private val viewModel: ContactListViewModel by viewModels {
-
-        ContactListViewModelFactory(ContactRepository.instance)
-    }
+    // No-arg VM — `by viewModels()` mặc định. ContactRepository singleton đọc trong VM.
+    private val viewModel: ContactListViewModel by viewModels()
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()

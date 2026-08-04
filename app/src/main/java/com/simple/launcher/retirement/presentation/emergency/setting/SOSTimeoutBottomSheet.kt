@@ -33,9 +33,13 @@ class SOSTimeoutBottomSheet(
     currentTimeoutMillis: Long
 ) : BaseBottomSheetDialogFragment<BottomSheetSosTimeoutBinding, SOSTimeoutViewModel>() {
 
+    // ── 1. Fields ─────────────────────────────────────────────────────────
+
     override val viewModel: SOSTimeoutViewModel by viewModels()
 
     private val selectedTimeoutState = SelectedTimeoutState(currentTimeoutMillis)
+
+    // ── 3. Public API ─────────────────────────────────────────────────────
 
     override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?): BottomSheetSosTimeoutBinding {
 
@@ -100,6 +104,8 @@ class SOSTimeoutBottomSheet(
         }
     }
 
+    // ── 4. Private helpers ────────────────────────────────────────────────
+
     private fun setupTimeoutOptionGrid(binding: BottomSheetSosTimeoutBinding) {
 
         val resources = viewModel.resources.value
@@ -154,6 +160,8 @@ class SOSTimeoutBottomSheet(
 
         return debugOptions + hourOptions
     }
+
+    // ── 5. Nested classes ─────────────────────────────────────────────────
 
     private class TimeoutAdapter(
         private val selectedTimeoutState: SelectedTimeoutState,
@@ -260,6 +268,8 @@ class SOSTimeoutBottomSheet(
             }
         }
     }
+
+    // ── 6. Companion object ───────────────────────────────────────────────
 
     companion object {
 

@@ -1,6 +1,5 @@
 package com.simple.launcher.retirement.presentation.call_block
 
-import android.database.Cursor
 import android.net.Uri
 import android.os.Build
 import android.provider.ContactsContract
@@ -14,6 +13,8 @@ import com.simple.launcher.retirement.utils.permission.PermissionManager
 
 @RequiresApi(Build.VERSION_CODES.Q)
 class CallBlockService : CallScreeningService() {
+
+    // ── 3. Public API ─────────────────────────────────────────────────────
 
     override fun onScreenCall(callDetails: Call.Details) {
 
@@ -61,9 +62,18 @@ class CallBlockService : CallScreeningService() {
         respondToCall(callDetails, response)
     }
 
+    // ── 4. Private helpers ────────────────────────────────────────────────
+
     private fun isNumberInContacts(number: String): Boolean {
 
-        if (!PermissionManager.hasContactPermission()) return true
+        if (!PermissionManager.hasContactPermission()) {
+
+            // Fail-open: mất quyền READ_CONTACTS → không block để tránh chặn nhầm
+            // cuộc gọi hợp lệ khi user vô tình gỡ quyền. Log rõ để dev/QA biết
+            // call block đang bypass ngoài ý muốn.
+            Log.w(TAG, "READ_CONTACTS missing — allowing call as fail-open bypass")
+            return true
+        }
 
         val uri = Uri.withAppendedPath(
             ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
@@ -71,26 +81,25 @@ class CallBlockService : CallScreeningService() {
         )
         val projection = arrayOf(ContactsContract.PhoneLookup.DISPLAY_NAME)
 
-        var cursor: Cursor? = null
-        try {
+        return try {
 
-            cursor = contentResolver.query(uri, projection, null, null, null)
-            return cursor?.count?.let { it > 0 } == true
+            contentResolver.query(uri, projection, null, null, null)?.use { cursor ->
+
+                cursor.count > 0
+            } == true
         } catch (exception: Exception) {
 
             Log.e(TAG, "Error checking contacts", exception)
-        } finally {
-
-            cursor?.close()
+            false
         }
-
-        return false
     }
 
     private fun logDebug(message: String) {
 
         if (BuildConfig.DEBUG) Log.d(TAG, message)
     }
+
+    // ── 6. Companion object ───────────────────────────────────────────────
 
     companion object {
 

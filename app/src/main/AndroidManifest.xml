@@ -100,11 +100,7 @@
             android:name="androidx.startup.InitializationProvider"
             android:authorities="${applicationId}.androidx-startup"
             android:exported="false"
-            tools:node="merge">
-            <meta-data
-                android:name="com.simple.component.service.ServiceInitializer"
-                android:value="androidx.startup" />
-        </provider>
+            tools:node="merge"/>
     </application>
 
 </manifest>

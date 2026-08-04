@@ -23,17 +23,19 @@ import kotlinx.coroutines.flow.StateFlow
 
 class PinSetupViewModel : BaseViewModel() {
 
-    enum class State {
+    // ── 1. Fields ─────────────────────────────────────────────────────────
 
-        ENTER_NEW_PIN,
-        CONFIRM_NEW_PIN,
-        SUCCESS
-    }
+    private var tempPin: String = ""
+
+    // ── 2. Flows ──────────────────────────────────────────────────────────
 
     private val _state = MutableStateFlow<State>(State.ENTER_NEW_PIN)
     val state: StateFlow<State> = _state
 
     private val _actionRes = MutableStateFlow(R.string.back)
+
+    private val _error = MutableStateFlow<Int?>(null)
+    val error: StateFlow<Int?> = _error
 
     val toolbar: StateFlow<ToolbarState> = combineState(
         flow1 = resources,
@@ -82,16 +84,13 @@ class PinSetupViewModel : BaseViewModel() {
         )
     }
 
-    private val _error = MutableStateFlow<Int?>(null)
-    val error: StateFlow<Int?> = _error
-
-    private var tempPin: String = ""
-
     init {
 
         _state.value = State.ENTER_NEW_PIN
         _actionRes.value = R.string.onboarding_start
     }
+
+    // ── 3. Public API ─────────────────────────────────────────────────────
 
     fun handlePinInput(pin: String) {
 
@@ -111,6 +110,8 @@ class PinSetupViewModel : BaseViewModel() {
         }
     }
 
+    // ── 4. Private helpers ────────────────────────────────────────────────
+
     private fun onEnterNewPin(pin: String) {
 
         tempPin = pin
@@ -128,5 +129,14 @@ class PinSetupViewModel : BaseViewModel() {
 
         SavePinUseCase.instance(pin)
         _state.value = State.SUCCESS
+    }
+
+    // ── 5. Nested classes ─────────────────────────────────────────────────
+
+    enum class State {
+
+        ENTER_NEW_PIN,
+        CONFIRM_NEW_PIN,
+        SUCCESS
     }
 }

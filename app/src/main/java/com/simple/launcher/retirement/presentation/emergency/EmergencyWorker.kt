@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Handler
-import android.os.Looper
+import android.os.HandlerThread
 import android.telecom.TelecomManager
 import android.telephony.TelephonyManager
 import android.util.Log
@@ -27,7 +27,13 @@ import kotlinx.coroutines.launch
  */
 class EmergencyWorker(context: Context) : BackgroundWorker(context) {
 
-    private val handler = Handler(Looper.getMainLooper())
+    // ── 1. Fields ─────────────────────────────────────────────────────────
+
+    // Không dùng main looper — các lần poll đọc SharedPreferences + telecom IPC,
+    // không nên chiếm main thread. HandlerThread sẽ được tạo/dọn trong onStart/onStop.
+    private var handlerThread: HandlerThread? = null
+    private var handler: Handler? = null
+
     private val repository = PreferenceRepository.instance
     private val contactRepository = ContactRepository.instance
     private val telephonyManager = context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
@@ -37,6 +43,26 @@ class EmergencyWorker(context: Context) : BackgroundWorker(context) {
     // Đọc từ Handler thread trong callNextEmergencyContactIfPossible() nên @Volatile.
     @Volatile
     private var selectedContacts: List<ContactEntity> = emptyList()
+
+    @Volatile
+    private var isStarted = false
+    @Volatile
+    private var isSosSessionActive = false
+    @Volatile
+    private var sosSessionStartedAt = 0L
+    // Backed by SharedPreferences (KEY_SOS_CALL_ATTEMPT_COUNT) — persist qua process kill
+    // để session SOS đang chạy dở không bị reset về contact đầu.
+    @Volatile
+    private var sosCallAttemptCount = 0
+
+    private val checkRunnable = object : Runnable {
+
+        override fun run() = runCheckCycle(this)
+    }
+
+    // ── 3. Public API (overrides từ BackgroundWorker) ─────────────────────
+
+    override fun observeEnabled(): Flow<Boolean> = repository.emergencyCallEnabledFlow()
 
     override fun attach(scope: CoroutineScope) {
 
@@ -50,15 +76,33 @@ class EmergencyWorker(context: Context) : BackgroundWorker(context) {
         }
     }
 
-    private var isStarted = false
-    private var isSosSessionActive = false
-    private var sosSessionStartedAt = 0L
-    private var sosCallAttemptCount = 0
+    override fun onStart() {
 
-    private val checkRunnable = object : Runnable {
+        logDebug { "onStart" to null }
+        if (handlerThread?.isAlive == true) return
 
-        override fun run() = runCheckCycle(this)
+        val thread = HandlerThread(WORKER_THREAD_NAME).also { it.start() }
+        handlerThread = thread
+        handler = Handler(thread.looper)
+
+        isStarted = true
+        // Khôi phục attempt count từ preference (persist qua process kill giữa SOS session).
+        sosCallAttemptCount = repository.getSosCallAttemptCount()
+        handler?.post(checkRunnable)
     }
+
+    override fun onStop() {
+
+        logDebug { "onStop" to null }
+        isStarted = false
+        handler?.removeCallbacks(checkRunnable)
+        handlerThread?.quitSafely()
+        handler = null
+        handlerThread = null
+        resetSosCallingState()
+    }
+
+    // ── 4. Private helpers ────────────────────────────────────────────────
 
     private fun runCheckCycle(runnable: Runnable) {
 
@@ -77,25 +121,7 @@ class EmergencyWorker(context: Context) : BackgroundWorker(context) {
 
         val nextInterval = resolveNextPollingInterval()
         logDebug { "Scheduling next inactivity check in ${nextInterval / 1000}s" to null }
-        handler.postDelayed(runnable, nextInterval)
-    }
-
-    override fun observeEnabled(): Flow<Boolean> = repository.emergencyCallEnabledFlow()
-
-    override fun onStart() {
-
-        logDebug { "onStart" to null }
-        isStarted = true
-        handler.removeCallbacks(checkRunnable)
-        handler.post(checkRunnable)
-    }
-
-    override fun onStop() {
-
-        logDebug { "onStop" to null }
-        isStarted = false
-        handler.removeCallbacks(checkRunnable)
-        resetSosCallingState()
+        handler?.postDelayed(runnable, nextInterval)
     }
 
     private fun checkEmergencyTriggerConditions() {
@@ -142,18 +168,21 @@ class EmergencyWorker(context: Context) : BackgroundWorker(context) {
             return
         }
 
+        // Đọc exclusion periods 1 lần cho cả compute + log để tránh deserialize JSON 2 lần.
+        val exclusionPeriods = repository.getExclusionPeriods()
+
         // Active timeout chi tinh cac khoang nam ngoai exclusion period do nguoi dung cau hinh.
         val timeoutMillis = repository.getEmergencyTimeout()
         val activeElapsed = EmergencyUtils.calculateActiveElapsedMillis(
             lastActivity,
             currentTime,
-            repository.getExclusionPeriods()
+            exclusionPeriods
         )
         logDebug {
 
             "Active time check: activeElapsed=${activeElapsed / 1000}s, " +
                     "timeout=${timeoutMillis / 1000}s, " +
-                    "exclusionPeriods=${repository.getExclusionPeriods().size}" to null
+                    "exclusionPeriods=${exclusionPeriods.size}" to null
         }
 
         if (activeElapsed >= timeoutMillis) {
@@ -176,6 +205,7 @@ class EmergencyWorker(context: Context) : BackgroundWorker(context) {
             isSosSessionActive = true
             sosSessionStartedAt = currentTime
             sosCallAttemptCount = 0
+            repository.setSosCallAttemptCount(0)
             repository.setLastEmergencyIndex(NO_CONTACT_INDEX)
             callNextEmergencyContactIfPossible()
             return
@@ -230,9 +260,7 @@ class EmergencyWorker(context: Context) : BackgroundWorker(context) {
         finishSosCallingSession()
     }
 
-    private fun tryCallNextContact(
-        contacts: List<com.simple.launcher.retirement.domain.model.ContactEntity>
-    ): Boolean {
+    private fun tryCallNextContact(contacts: List<ContactEntity>): Boolean {
 
         val nextIndex = resolveNextContactIndex(contacts.size)
         val phoneNumber = contacts.getOrNull(nextIndex)?.phoneNumber
@@ -240,6 +268,9 @@ class EmergencyWorker(context: Context) : BackgroundWorker(context) {
         // Luu index truoc khi goi de lan sau tiep tuc qua contact ke tiep trong vong tron.
         repository.setLastEmergencyIndex(nextIndex)
         sosCallAttemptCount++
+        // Persist attempt count để nếu process bị OS kill giữa session, restart worker
+        // vẫn tiếp tục từ contact kế thay vì gọi lại từ đầu.
+        repository.setSosCallAttemptCount(sosCallAttemptCount)
         logDebug {
 
             "Trying emergency contact index=$nextIndex, " +
@@ -289,8 +320,7 @@ class EmergencyWorker(context: Context) : BackgroundWorker(context) {
             telecomManager.placeCall(uri, null)
             logDebug {
 
-                "placeCall is currently disabled in code for " +
-                    "${maskPhoneNumberForLog(phoneNumber)} uri=$uri" to null
+                "placeCall dispatched to telecom for ${maskPhoneNumberForLog(phoneNumber)} uri=$uri" to null
             }
             true
         } catch (securityException: SecurityException) {
@@ -324,6 +354,7 @@ class EmergencyWorker(context: Context) : BackgroundWorker(context) {
         isSosSessionActive = false
         sosSessionStartedAt = 0L
         sosCallAttemptCount = 0
+        repository.setSosCallAttemptCount(0)
         repository.setLastEmergencyIndex(NO_CONTACT_INDEX)
     }
 
@@ -337,6 +368,7 @@ class EmergencyWorker(context: Context) : BackgroundWorker(context) {
         isSosSessionActive = false
         sosSessionStartedAt = 0L
         sosCallAttemptCount = 0
+        repository.setSosCallAttemptCount(0)
         repository.setLastEmergencyIndex(NO_CONTACT_INDEX)
     }
 
@@ -362,13 +394,17 @@ class EmergencyWorker(context: Context) : BackgroundWorker(context) {
         }
     }
 
+    // ── 6. Companion object ───────────────────────────────────────────────
+
     companion object {
 
         private const val TAG = "EmergencyCallWorker"
+        private const val WORKER_THREAD_NAME = "EmergencyWorkerThread"
         private val DEBUG = BuildConfig.DEBUG
 
         // Gioi han theo thoi gian thuc, khong tru exclusion period.
-        private val ABSOLUTE_HARD_LIMIT_MILLIS = 10 * 60 * 60 * 1000L
+        // Đồng bộ với README (11 tiếng) — trước đây code là 10h gây lệch tài liệu.
+        private val ABSOLUTE_HARD_LIMIT_MILLIS = 11 * 60 * 60 * 1000L
 
         private val CHECK_INTERVAL_MILLIS = if (DEBUG) 30 * 1000L else 30 * 60 * 1000L
         private val SOS_CHECK_INTERVAL_MILLIS = if (DEBUG) 30 * 1000L else 5 * 60 * 1000L

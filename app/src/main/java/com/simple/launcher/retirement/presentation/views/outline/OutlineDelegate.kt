@@ -26,16 +26,7 @@ import com.simple.launcher.retirement.R
  */
 class OutlineDelegate(private val view: View, context: Context, attrs: AttributeSet?) {
 
-    enum class State { IDLE, LOADING, HIDDEN }
-
-    /**
-     *  - [SHRINKING]: đuôi tiến (head đứng yên) ⇒ segLen giảm dần về [targetSegLen].
-     *  - [GROWING]  : đầu tiến (tail đứng yên) ⇒ segLen tăng dần đến [targetSegLen].
-     *  - [LOADING]  : cả hai cùng tiến với tốc độ chuẩn ⇒ segLen giữ nguyên.
-     */
-    private enum class InternalState { IDLE, LOADING, HIDDEN, SHRINKING, GROWING }
-
-    // ---------- Cấu hình outline ----------
+    // ── 1. Fields — Cấu hình outline ──────────────────────────────────────
 
     var strokeColor: Int = Color.BLACK
         set(value) {
@@ -367,6 +358,19 @@ class OutlineDelegate(private val view: View, context: Context, attrs: Attribute
         if (x < 0f) x += 1f
         return x
     }
+
+    // ── 5. Nested classes ─────────────────────────────────────────────────
+
+    enum class State { IDLE, LOADING, HIDDEN }
+
+    /**
+     *  - [SHRINKING]: đuôi tiến (head đứng yên) ⇒ segLen giảm dần về [targetSegLen].
+     *  - [GROWING]  : đầu tiến (tail đứng yên) ⇒ segLen tăng dần đến [targetSegLen].
+     *  - [LOADING]  : cả hai cùng tiến với tốc độ chuẩn ⇒ segLen giữ nguyên.
+     */
+    private enum class InternalState { IDLE, LOADING, HIDDEN, SHRINKING, GROWING }
+
+    // ── 6. Companion object ───────────────────────────────────────────────
 
     companion object {
 

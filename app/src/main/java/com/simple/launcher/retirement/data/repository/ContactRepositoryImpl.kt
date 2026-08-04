@@ -15,6 +15,8 @@ import com.simple.launcher.retirement.domain.repository.ContactRepository
 import com.simple.launcher.retirement.utils.exts.ActiveStateFlow
 import com.simple.launcher.retirement.utils.exts.mutableStateFlow
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
@@ -22,44 +24,60 @@ import kotlinx.coroutines.withContext
 
 class ContactRepositoryImpl(private val context: Context) : ContactRepository {
 
+    // ── 1. Fields ─────────────────────────────────────────────────────────
+
     private val sharedPrefs = AppPrefs.sharedPrefs
     private val gson = AppPrefs.gson
 
-    companion object {
-
-        private const val KEY_SELECTED_CONTACTS = "selected_contacts"
-        private const val TAG = "ContactRepositoryImpl"
-    }
+    // ── 2. Flows ──────────────────────────────────────────────────────────
 
     // ActiveStateFlow tự cập nhật khi có thay đổi trong ContactsContract.
     // ContentObserver register chỉ khi có observer (onActive) và huỷ khi rời (onInactive).
     private val contactAll: ActiveStateFlow<List<ContactEntity>?> = object : ActiveStateFlow<List<ContactEntity>?>(null) {
 
         private var observerRegistered = false
+        private var pendingReloadJob: Job? = null
 
         private val contactObserver = object : ContentObserver(Handler(Looper.getMainLooper())) {
 
             override fun onChange(selfChange: Boolean) {
 
-                if (BuildConfig.DEBUG) Log.d(TAG, "contact changed → reload")
-                reloadAll()
+                if (BuildConfig.DEBUG) Log.d(TAG, "contact changed → schedule reload")
+                scheduleReload()
             }
         }
 
         override suspend fun onActive() {
 
             withContext(Dispatchers.Main) { registerObserver() }
-            reloadAll()
+            reloadAllImmediate()
         }
 
         override suspend fun onInactive() {
 
             withContext(Dispatchers.Main) { unregisterObserver() }
+            pendingReloadJob?.cancel()
+            pendingReloadJob = null
         }
 
-        private fun reloadAll() {
+        /**
+         * Gộp burst onChange thành 1 lần reload. Nếu đang có reload đang chờ, huỷ và
+         * lên lịch lại từ đầu để chờ khoảng lặng [RELOAD_DEBOUNCE_MILLIS] trước khi query.
+         */
+        private fun scheduleReload() {
 
-            scope.launch(Dispatchers.IO) {
+            pendingReloadJob?.cancel()
+            pendingReloadJob = scope.launch(Dispatchers.IO) {
+
+                delay(RELOAD_DEBOUNCE_MILLIS)
+                value = queryContacts(context)
+            }
+        }
+
+        private fun reloadAllImmediate() {
+
+            pendingReloadJob?.cancel()
+            pendingReloadJob = scope.launch(Dispatchers.IO) {
 
                 value = queryContacts(context)
             }
@@ -102,6 +120,8 @@ class ContactRepositoryImpl(private val context: Context) : ContactRepository {
         value = readSelectedContacts()
     }
 
+    // ── 3. Public API ─────────────────────────────────────────────────────
+
     override fun getAllContactsFlow(): Flow<List<ContactEntity>> = contactAll.filterNotNull()
 
     override fun getSelectedContactsFlow(): Flow<List<ContactEntity>> {
@@ -115,6 +135,8 @@ class ContactRepositoryImpl(private val context: Context) : ContactRepository {
         sharedPrefs.edit { putString(KEY_SELECTED_CONTACTS, json) }
         contactSelected.value = contacts
     }
+
+    // ── 4. Private helpers ────────────────────────────────────────────────
 
     /**
      * Query toàn bộ contact có số điện thoại từ ContactsContract.
@@ -162,10 +184,11 @@ class ContactRepositoryImpl(private val context: Context) : ContactRepository {
 
     /**
      * Đọc list contact đã chọn từ SharedPreferences. Chỉ dùng nội bộ.
+     * Dùng getString() thay vì sharedPrefs.all[KEY] để tránh copy toàn bộ preference map.
      */
     private fun readSelectedContacts(): List<ContactEntity> {
 
-        val data = sharedPrefs.all[KEY_SELECTED_CONTACTS] as? String ?: return emptyList()
+        val data = sharedPrefs.getString(KEY_SELECTED_CONTACTS, null) ?: return emptyList()
         return try {
 
             val type = TypeToken.getParameterized(List::class.java, ContactEntity::class.java).type
@@ -174,5 +197,17 @@ class ContactRepositoryImpl(private val context: Context) : ContactRepository {
 
             emptyList()
         }
+    }
+
+    // ── 6. Companion object ───────────────────────────────────────────────
+
+    companion object {
+
+        private const val KEY_SELECTED_CONTACTS = "selected_contacts"
+        private const val TAG = "ContactRepositoryImpl"
+
+        // Sync ContactsProvider có thể phát hàng chục onChange trong vài trăm ms
+        // (thêm/xóa/merge account). Gộp về 1 lần reload để tránh spam full query.
+        private const val RELOAD_DEBOUNCE_MILLIS = 300L
     }
 }

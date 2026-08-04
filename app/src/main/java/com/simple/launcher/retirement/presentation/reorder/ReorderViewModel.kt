@@ -1,9 +1,9 @@
 package com.simple.launcher.retirement.presentation.reorder
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.SavedStateHandle
 import com.simple.adapter.ViewItem
 import com.simple.launcher.retirement.R
+import com.simple.launcher.retirement.domain.model.AppEntity
 import com.simple.launcher.retirement.domain.model.ContactEntity
 import com.simple.launcher.retirement.domain.repository.AppRepository
 import com.simple.launcher.retirement.domain.repository.ContactRepository
@@ -35,12 +35,26 @@ enum class ReorderType {
     CONTACTS
 }
 
+/**
+ * Nhận tham số qua [SavedStateHandle] để `by viewModels()` mặc định
+ * (SavedStateViewModelFactory) tự dựng được — không cần Factory riêng.
+ *
+ * Fragment.arguments được framework tự đổ vào SavedStateHandle theo key,
+ * nên ReorderFragment chỉ cần put args vào Bundle như bình thường.
+ * Repository là singleton, đọc thẳng từ `.instance`.
+ */
 class ReorderViewModel(
-    val type: ReorderType,
-    private val initialIds: List<String>,
-    private val appRepository: AppRepository,
-    private val contactRepository: ContactRepository
+    savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
+
+    // ── 1. Fields ─────────────────────────────────────────────────────────
+
+    val type: ReorderType = resolveType(savedStateHandle)
+    private val initialIds: List<String> = savedStateHandle.get<ArrayList<String>?>(ARG_IDS) ?: emptyList()
+    private val appRepository: AppRepository = AppRepository.instance
+    private val contactRepository: ContactRepository = ContactRepository.instance
+
+    // ── 2. Flows ──────────────────────────────────────────────────────────
 
     val toolbar: StateFlow<ToolbarState> = combineState(
         flow1 = resources,
@@ -82,6 +96,35 @@ class ReorderViewModel(
         value = if (type == ReorderType.APPS) loadAppItems() else loadContactItems()
     }
 
+    // ── 3. Public API ─────────────────────────────────────────────────────
+
+    fun moveItem(from: Int, to: Int) {
+
+        val list = items.value.toMutableList()
+        val item = list.removeAt(from)
+        list.add(to, item)
+        items.currentValue = list
+    }
+
+    fun getFinalIds(): List<String> = items.value.map { it.id }
+
+    fun getFinalContacts(): List<ContactEntity> = items.value.mapNotNull { it.data as? ContactEntity }
+
+    // ── 4. Private helpers ────────────────────────────────────────────────
+
+    private fun resolveType(handle: SavedStateHandle): ReorderType {
+
+        // SavedStateHandle giữ nguyên object gốc (ReorderType enum) khi arguments
+        // được set bằng putSerializable, nhưng cũng phải phòng trường hợp bị serialize
+        // thành String (ví dụ khi restore từ process death).
+        return when (val raw = handle.get<Any?>(ARG_TYPE)) {
+
+            is ReorderType -> raw
+            is String -> runCatching { ReorderType.valueOf(raw) }.getOrDefault(ReorderType.APPS)
+            else -> ReorderType.APPS
+        }
+    }
+
     private suspend fun loadAppItems(): List<ReorderItem> {
 
         val allApps = appRepository.getAllAppFlow().first()
@@ -89,7 +132,7 @@ class ReorderViewModel(
         return selectedApps.map { app -> toAppReorderItem(app) }
     }
 
-    private fun toAppReorderItem(app: com.simple.launcher.retirement.domain.model.AppEntity): ReorderItem = ReorderItem(
+    private fun toAppReorderItem(app: AppEntity): ReorderItem = ReorderItem(
         id = app.packageName,
         label = app.label
             .withStyleBodyLarge()
@@ -121,17 +164,14 @@ class ReorderViewModel(
         )
     }
 
-    fun moveItem(from: Int, to: Int) {
+    // ── 6. Companion object ───────────────────────────────────────────────
 
-        val list = items.value.toMutableList()
-        val item = list.removeAt(from)
-        list.add(to, item)
-        items.currentValue = list
+    companion object {
+
+        // Key argument dùng chung giữa Fragment (put) và ViewModel (get qua SavedStateHandle).
+        const val ARG_TYPE = "type"
+        const val ARG_IDS = "ids"
     }
-
-    fun getFinalIds(): List<String> = items.value.map { it.id }
-
-    fun getFinalContacts(): List<ContactEntity> = items.value.mapNotNull { it.data as? ContactEntity }
 }
 
 data class ReorderItem(
@@ -147,17 +187,4 @@ data class ReorderItem(
         label to "label",
         icon to "icon"
     )
-}
-
-class ReorderViewModelFactory(
-    private val type: ReorderType,
-    private val initialIds: List<String>,
-    private val appRepository: AppRepository,
-    private val contactRepository: ContactRepository
-) : ViewModelProvider.Factory {
-
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-
-        return ReorderViewModel(type, initialIds, appRepository, contactRepository) as T
-    }
 }
