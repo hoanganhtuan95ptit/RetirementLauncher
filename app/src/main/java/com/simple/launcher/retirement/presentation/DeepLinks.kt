@@ -33,6 +33,7 @@ object DeepLinks {
     const val CALL_BLOCK_INTRO = "app://call_block_intro"
     const val CLOCK_SETTING = "app://clock_setting"
     const val CALENDAR = "app://calendar"
+    const val UNINSTALL_APPS = "app://uninstall_apps"
 
     // ─── Permissions ──────────────────────────────────────────────────────────
 

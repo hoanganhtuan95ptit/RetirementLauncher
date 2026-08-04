@@ -93,4 +93,10 @@
     <string name="call_block_title">Call Block Permission</string>
     <string name="call_block_desc">Required to block unwanted calls.</string>
     <string name="sos_label" translatable="false">SOS</string>
+
+    <!-- Uninstall Apps -->
+    <string name="setting_uninstall_apps">Uninstall Apps</string>
+    <string name="uninstall_apps_title">Uninstall Apps</string>
+    <string name="uninstall_apps_action">Uninstall (%1$d)</string>
+    <string name="uninstall_apps_empty_error">Please select at least one app to uninstall</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.simple.launcher.retirement.utils
 
+import com.simple.launcher.retirement.domain.model.AppEntity
 import com.simple.launcher.retirement.domain.model.SOSConfig
 import com.simple.launcher.retirement.domain.model.SelectableAppEntity
 import com.simple.launcher.retirement.domain.model.SelectableContactEntity
@@ -63,6 +64,9 @@ sealed class AppEvent {
 
     // ── Chọn app trong danh sách ────────────────────────────────────────────
     data class AppSelected(val entity: SelectableAppEntity) : AppEvent()
+
+    // ── Toggle app trong danh sách uninstall ────────────────────────────────
+    data class UninstallAppToggled(val entity: AppEntity) : AppEvent()
 
     // ── Chọn liên hệ trong danh sách ───────────────────────────────────────
     data class ContactSelected(val entity: SelectableContactEntity) : AppEvent()

@@ -88,6 +88,15 @@ class AppMonitoringWorker(context: Context) : BackgroundWorker(context) {
         // Tắt màn hình hoặc đang sleep thì không cần poll foreground app.
         if (!powerManager.isInteractive) return
 
+        // Có luồng đặc biệt đang tạm dừng monitoring (ví dụ user đang ở màn Xoá app
+        // → không được chặn packageinstaller). Reset "current" để khi resume, package
+        // đầu tiên phát hiện lại vẫn được đánh giá lại thay vì bị bỏ qua do trùng.
+        if (AppMonitoringPauser.isPaused) {
+
+            resolvedPackageCurrent = null
+            return
+        }
+
         val endTime = System.currentTimeMillis()
         val startTime = endTime - QUERY_WINDOW_MILLIS
 

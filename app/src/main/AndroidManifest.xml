@@ -31,6 +31,9 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
+    <!-- Cần cho luồng Xoá app: PackageInstaller.uninstall() yêu cầu permission này.
+         Đây là normal permission (auto-grant khi install, không cần user cho phép). -->
+    <uses-permission android:name="android.permission.REQUEST_DELETE_PACKAGES" />
 
     <uses-feature android:name="android.hardware.telephony" android:required="false" />
 

@@ -92,4 +92,10 @@
     <string name="call_permission_desc">Cần thiết để thực hiện cuộc gọi từ launcher.</string>
     <string name="call_block_title">Quyền chặn cuộc gọi</string>
     <string name="call_block_desc">Cần thiết để chặn các cuộc gọi không mong muốn.</string>
+
+    <!-- Uninstall Apps -->
+    <string name="setting_uninstall_apps">Xoá ứng dụng</string>
+    <string name="uninstall_apps_title">Xoá ứng dụng</string>
+    <string name="uninstall_apps_action">Xoá (%1$d)</string>
+    <string name="uninstall_apps_empty_error">Vui lòng chọn ít nhất một ứng dụng để xoá</string>
 </resources>
