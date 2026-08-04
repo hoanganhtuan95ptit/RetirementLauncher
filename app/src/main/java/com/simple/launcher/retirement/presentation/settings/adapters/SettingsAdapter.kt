@@ -73,11 +73,13 @@ data class SettingItem(
         const val ID_LUNAR_CALENDAR_TOGGLE = 12
         const val ID_EMERGENCY_ADVANCED = 13
         const val ID_UNINSTALL_APPS = 14
+        const val ID_NOTIFICATION_BLOCK = 15
 
         // ── Slot orders (dùng cho _itemMap trong SettingsViewModel) ──────────
         const val ORDER_TOGGLE_BLOCK = 22.0
         const val ORDER_TOGGLE_CALL_BLOCK = 23.0
         const val ORDER_TOGGLE_INSTALLER_CLEANUP = 24.0
+        const val ORDER_NOTIFICATION_BLOCK = 25.0
         const val ORDER_TOGGLE_POCKET_MODE = 33.0
         const val ORDER_PLUGIN_SETTINGS = 40.0
 

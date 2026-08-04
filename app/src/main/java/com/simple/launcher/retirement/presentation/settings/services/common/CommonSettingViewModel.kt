@@ -68,15 +68,15 @@ class CommonSettingViewModel : BaseViewModel() {
             items.add(it)
         }
 
-        if (hasPin) settingItem(
-            id = SettingItem.ID_PIN,
-            icon = R.drawable.ic_pin_black_24dp,
-            title = R.string.setting_pin,
-            resources = resources
-        ).let {
-
-            items.add(it)
-        }
+//        if (hasPin) settingItem(
+//            id = SettingItem.ID_PIN,
+//            icon = R.drawable.ic_pin_black_24dp,
+//            title = R.string.setting_pin,
+//            resources = resources
+//        ).let {
+//
+//            items.add(it)
+//        }
 
         value = GroupViewItem(order = 0, list = items)
     }

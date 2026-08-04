@@ -98,5 +98,18 @@
     <string name="setting_uninstall_apps">Uninstall Apps</string>
     <string name="uninstall_apps_title">Uninstall Apps</string>
     <string name="uninstall_apps_action">Uninstall (%1$d)</string>
+
+    <!-- Notification Block -->
+    <string name="setting_notification_block">Notification Blocking</string>
+    <string name="setting_notification_block_desc">Block app notifications and auto-clear old ones</string>
+    <string name="notification_block_title">Notification Blocking</string>
+    <string name="notification_block_apps_header">Apps whose notifications will be blocked</string>
+    <string name="notification_block_retention_title">Auto-delete notifications older than</string>
+    <string name="notification_block_retention_card_desc">Tap to change duration</string>
+    <string name="notification_block_retention_hours">%1$d hours</string>
+    <string name="notification_block_retention_off">Off</string>
+    <string name="notification_block_confirm">Confirm</string>
+    <string name="notification_block_save">Save configuration</string>
+    <string name="notification_block_service_label">Retirement Launcher notification cleanup</string>
     <string name="uninstall_apps_empty_error">Please select at least one app to uninstall</string>
 </resources>

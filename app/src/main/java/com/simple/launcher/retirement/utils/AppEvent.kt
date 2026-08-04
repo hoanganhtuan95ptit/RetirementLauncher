@@ -78,6 +78,13 @@ sealed class AppEvent {
 
     data class SOSTimeoutSelected(val timeoutMillis: Long) : AppEvent()
 
+    // ── Notification Block ──────────────────────────────────────────────────
+    data class NotificationBlockAppToggled(val entity: AppEntity) : AppEvent()
+
+    data class NotificationRetentionSelected(val retentionMillis: Long) : AppEvent()
+
+    object NotificationBlockHeaderClicked : AppEvent()
+
     data class SOSUpdate(
         val config: SOSConfig
     ) : AppEvent()

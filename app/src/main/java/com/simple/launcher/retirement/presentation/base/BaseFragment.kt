@@ -1,7 +1,6 @@
 package com.simple.launcher.retirement.presentation.base
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,11 +11,6 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
 
     var binding: VB? = null
     
-    init {
-
-        Log.d("tuanha", "init ${this.javaClass.simpleName}: $this")
-    }
-
     abstract fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?): VB
 
     override fun onCreateView(
@@ -42,14 +36,7 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
 
     override fun onDestroyView() {
 
-        Log.d("tuanha", "onDestroyView ${this.javaClass.simpleName}: $this")
         super.onDestroyView()
         binding = null
-    }
-
-    override fun onDestroy() {
-
-        super.onDestroy()
-        Log.d("tuanha", "onDestroy ${this.javaClass.simpleName}: $this")
     }
 }

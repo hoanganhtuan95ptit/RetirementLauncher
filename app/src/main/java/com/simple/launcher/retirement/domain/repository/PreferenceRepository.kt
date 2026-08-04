@@ -93,6 +93,19 @@ interface PreferenceRepository {
     fun isSolarCalendarEnabledFlow(): Flow<Boolean>
     fun setSolarCalendarEnabled(enabled: Boolean)
 
+    // Notification Block
+    fun isNotificationBlockEnabled(): Boolean
+    fun notificationBlockEnabledFlow(): Flow<Boolean>
+    fun setNotificationBlockEnabled(enabled: Boolean)
+
+    fun getNotificationBlockedPackages(): Set<String>
+    fun notificationBlockedPackagesFlow(): Flow<Set<String>>
+    fun setNotificationBlockedPackages(packages: Set<String>)
+
+    fun getNotificationRetentionMillis(): Long
+    fun notificationRetentionMillisFlow(): Flow<Long>
+    fun setNotificationRetentionMillis(millis: Long)
+
     companion object {
 
         val instance: PreferenceRepository by lazy { PreferenceRepositoryImpl() }

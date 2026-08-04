@@ -98,4 +98,17 @@
     <string name="uninstall_apps_title">Xoá ứng dụng</string>
     <string name="uninstall_apps_action">Xoá (%1$d)</string>
     <string name="uninstall_apps_empty_error">Vui lòng chọn ít nhất một ứng dụng để xoá</string>
+
+    <!-- Notification Block -->
+    <string name="setting_notification_block">Chặn thông báo</string>
+    <string name="setting_notification_block_desc">Chặn thông báo theo ứng dụng và tự xoá thông báo cũ</string>
+    <string name="notification_block_title">Chặn thông báo</string>
+    <string name="notification_block_apps_header">Ứng dụng sẽ bị chặn thông báo</string>
+    <string name="notification_block_retention_title">Tự xoá thông báo tồn tại quá</string>
+    <string name="notification_block_retention_card_desc">Chạm để đổi thời gian</string>
+    <string name="notification_block_retention_hours">%1$d giờ</string>
+    <string name="notification_block_retention_off">Không tự xoá</string>
+    <string name="notification_block_confirm">Xác nhận</string>
+    <string name="notification_block_save">Lưu cấu hình</string>
+    <string name="notification_block_service_label">Retirement Launcher dọn thông báo</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.simple.launcher.retirement.data.repository
 
+import android.util.Log
 import androidx.core.content.edit
 import com.google.gson.reflect.TypeToken
 import com.simple.launcher.retirement.data.AppPrefs
@@ -62,11 +63,26 @@ class PreferenceRepositoryImpl : PreferenceRepository {
 
         value = hasPin()
     }
+    private val _notificationBlockEnabled = mutableStateFlow<Boolean?>(null) {
+
+        value = isNotificationBlockEnabled()
+    }
+    private val _notificationBlockedPackages = mutableStateFlow<Set<String>?>(null) {
+
+        value = getNotificationBlockedPackages()
+    }
+    private val _notificationRetentionMillis = mutableStateFlow<Long?>(null) {
+
+        value = getNotificationRetentionMillis()
+    }
 
     // ── 3. Public API ─────────────────────────────────────────────────────
 
     // ── PIN ──
-    override fun hasPin(): Boolean = sharedPrefs.contains(KEY_PIN)
+    override fun hasPin(): Boolean = sharedPrefs.contains(KEY_PIN).apply {
+
+        println("tuanha: $this getPin:${getPin()}---")
+    }
 
     override fun hasPinFlow(): Flow<Boolean> = _hasPin.filterNotNull()
 
@@ -313,6 +329,47 @@ class PreferenceRepositoryImpl : PreferenceRepository {
         _isSolarCalendarEnabled.value = enabled
     }
 
+    // ── Notification Block ──
+    override fun isNotificationBlockEnabled(): Boolean =
+        sharedPrefs.getBoolean(KEY_NOTIFICATION_BLOCK_ENABLED, false)
+
+    override fun notificationBlockEnabledFlow(): Flow<Boolean> =
+        _notificationBlockEnabled.filterNotNull()
+
+    override fun setNotificationBlockEnabled(enabled: Boolean) {
+
+        sharedPrefs.edit { putBoolean(KEY_NOTIFICATION_BLOCK_ENABLED, enabled) }
+        _notificationBlockEnabled.value = enabled
+    }
+
+    override fun getNotificationBlockedPackages(): Set<String> {
+
+        return sharedPrefs.getStringSet(KEY_NOTIFICATION_BLOCKED_PACKAGES, null)
+            ?.toSet()
+            ?: emptySet()
+    }
+
+    override fun notificationBlockedPackagesFlow(): Flow<Set<String>> =
+        _notificationBlockedPackages.filterNotNull()
+
+    override fun setNotificationBlockedPackages(packages: Set<String>) {
+
+        sharedPrefs.edit { putStringSet(KEY_NOTIFICATION_BLOCKED_PACKAGES, packages) }
+        _notificationBlockedPackages.value = packages
+    }
+
+    override fun getNotificationRetentionMillis(): Long =
+        sharedPrefs.getLong(KEY_NOTIFICATION_RETENTION_MILLIS, 0L)
+
+    override fun notificationRetentionMillisFlow(): Flow<Long> =
+        _notificationRetentionMillis.filterNotNull()
+
+    override fun setNotificationRetentionMillis(millis: Long) {
+
+        sharedPrefs.edit { putLong(KEY_NOTIFICATION_RETENTION_MILLIS, millis) }
+        _notificationRetentionMillis.value = millis
+    }
+
     // ── 6. Companion object ───────────────────────────────────────────────
 
     companion object {
@@ -336,6 +393,9 @@ class PreferenceRepositoryImpl : PreferenceRepository {
         private const val KEY_SOLAR_CALENDAR_ENABLED = "solar_calendar_enabled"
         private const val KEY_EMERGENCY_TIMEOUT = "emergency_timeout"
         private const val KEY_EXCLUSION_PERIODS = "exclusion_periods"
+        private const val KEY_NOTIFICATION_BLOCK_ENABLED = "notification_block_enabled"
+        private const val KEY_NOTIFICATION_BLOCKED_PACKAGES = "notification_blocked_packages"
+        private const val KEY_NOTIFICATION_RETENTION_MILLIS = "notification_retention_millis"
 
         private const val DEFAULT_EMERGENCY_TIMEOUT = 10 * 60 * 60 * 1000L // 10h
     }
