@@ -66,8 +66,9 @@ class ContactRepositoryImpl(private val context: Context) : ContactRepository {
          */
         private fun scheduleReload() {
 
+            val s = scope ?: return
             pendingReloadJob?.cancel()
-            pendingReloadJob = scope.launch(Dispatchers.IO) {
+            pendingReloadJob = s.launch(Dispatchers.IO) {
 
                 delay(RELOAD_DEBOUNCE_MILLIS)
                 value = queryContacts(context)
@@ -76,8 +77,9 @@ class ContactRepositoryImpl(private val context: Context) : ContactRepository {
 
         private fun reloadAllImmediate() {
 
+            val s = scope ?: return
             pendingReloadJob?.cancel()
-            pendingReloadJob = scope.launch(Dispatchers.IO) {
+            pendingReloadJob = s.launch(Dispatchers.IO) {
 
                 value = queryContacts(context)
             }

@@ -103,7 +103,8 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
 
         private fun reloadAll() {
 
-            scope.launch(Dispatchers.IO) {
+            val s = scope ?: return
+            s.launch(Dispatchers.IO) {
 
                 value = queryLauncherApps(context.packageManager)
             }
@@ -116,7 +117,8 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
          */
         private fun upsertPackageInBackground(packageName: String) {
 
-            scope.launch(Dispatchers.IO) {
+            val s = scope ?: return
+            s.launch(Dispatchers.IO) {
 
                 val pm = context.packageManager
                 val intent = Intent(Intent.ACTION_MAIN, null)
@@ -149,7 +151,8 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
 
         private fun removePackageInBackground(packageName: String) {
 
-            scope.launch(Dispatchers.IO) {
+            val s = scope ?: return
+            s.launch(Dispatchers.IO) {
 
                 val current = value.orEmpty()
                 val updated = current.filterNot { it.packageName == packageName }

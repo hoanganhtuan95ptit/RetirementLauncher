@@ -9,7 +9,6 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
@@ -28,10 +27,16 @@ open class ActiveStateFlow<T>(
     // ── 1. Fields ─────────────────────────────────────────────────────────
     private val transitionMutex = Mutex()
     private var count: Int = 0
-    private var _scope: CoroutineScope? = null
+    @Volatile private var _scope: CoroutineScope? = null
 
-    protected val scope: CoroutineScope
-        get() = _scope ?: error("scope chỉ khả dụng trong onActive/onInactive")
+    /**
+     * Scope hiện tại của flow. Nullable vì callback external (observer, broadcast
+     * receiver…) không đồng bộ với coroutine flow — có thể fire sau khi cleanup đã
+     * xóa scope. Trong onActive/onInactive luôn non-null. Ngoài đó, subclass phải
+     * null-safe: `scope?.launch { ... }` — null = flow đã inactive, no-op là đúng.
+     */
+    protected val scope: CoroutineScope?
+        get() = _scope
 
     // ── 3. Public API ─────────────────────────────────────────────────────
     override suspend fun collect(collector: FlowCollector<T>): Nothing = coroutineScope {
@@ -39,11 +44,23 @@ open class ActiveStateFlow<T>(
         // Bảo vệ toàn bộ transition count/scope bằng mutex — tránh trường hợp
         // collector A giảm về 0 + cancel scope, cùng lúc collector B tăng lên 1
         // rồi bị A ghi đè `_scope = null`.
+        //
+        // onActive() gọi TRỰC TIẾP (không launch async) trong mutex → đảm bảo `scope`
+        // luôn valid xuyên suốt onActive, không có race với cleanup từ thread khác.
+        // NonCancellable ngăn onActive bị cancel giữa chừng nếu collector cancel;
+        // nếu onActive vẫn throw (do subclass) → rollback count/scope để không leak.
         transitionMutex.withLock {
             if (++count == 1) {
                 val newScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
                 _scope = newScope
-                newScope.launch { onActive() }
+                try {
+                    withContext(NonCancellable) { onActive() }
+                } catch (t: Throwable) {
+                    count--
+                    _scope = null
+                    newScope.cancel()
+                    throw t
+                }
             }
         }
         try {
@@ -54,9 +71,12 @@ open class ActiveStateFlow<T>(
                 transitionMutex.withLock {
                     if (--count == 0) {
                         val toCancel = _scope
-                        _scope = null
-                        onInactive()
-                        toCancel?.cancel()
+                        try {
+                            onInactive()
+                        } finally {
+                            _scope = null
+                            toCancel?.cancel()
+                        }
                     }
                 }
             }
