@@ -16,4 +16,18 @@
     <!-- Calendar -->
     <string name="lunar_date_format">Día %1$d/%2$d Lunar</string>
     <string name="solar_date_format">EEEE, dd/MM/yyyy</string>
+    <!-- Calendar screen -->
+    <string name="calendar_title">Calendario</string>
+    <string name="calendar_today">Hoy</string>
+    <string name="calendar_previous_month">Mes anterior</string>
+    <string name="calendar_next_month">Mes siguiente</string>
+    <string name="calendar_month_year_format">MMMM yyyy</string>
+    <string name="calendar_lunar_prefix">Lunar</string>
+    <string name="calendar_weekday_mon">Lun</string>
+    <string name="calendar_weekday_tue">Mar</string>
+    <string name="calendar_weekday_wed">Mié</string>
+    <string name="calendar_weekday_thu">Jue</string>
+    <string name="calendar_weekday_fri">Vie</string>
+    <string name="calendar_weekday_sat">Sáb</string>
+    <string name="calendar_weekday_sun">Dom</string>
 </resources>

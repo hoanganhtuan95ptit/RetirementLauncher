@@ -16,4 +16,19 @@
     <!-- Calendar -->
     <string name="lunar_date_format">Dag %1$d/%2$d Maankalender</string>
     <string name="solar_date_format">EEEE dd-MM-yyyy</string>
+
+    <!-- Calendar screen -->
+    <string name="calendar_title">Kalender</string>
+    <string name="calendar_today">Vandaag</string>
+    <string name="calendar_previous_month">Vorige maand</string>
+    <string name="calendar_next_month">Volgende maand</string>
+    <string name="calendar_month_year_format">MMMM yyyy</string>
+    <string name="calendar_lunar_prefix">Maan</string>
+    <string name="calendar_weekday_mon">Ma</string>
+    <string name="calendar_weekday_tue">Di</string>
+    <string name="calendar_weekday_wed">Wo</string>
+    <string name="calendar_weekday_thu">Do</string>
+    <string name="calendar_weekday_fri">Vr</string>
+    <string name="calendar_weekday_sat">Za</string>
+    <string name="calendar_weekday_sun">Zo</string>
 </resources>

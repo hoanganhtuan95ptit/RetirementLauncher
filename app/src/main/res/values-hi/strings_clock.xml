@@ -16,4 +16,19 @@
     <!-- Calendar -->
     <string name="lunar_date_format">दिन %1$d/%2$d चंद्र</string>
     <string name="solar_date_format">EEEE, MM/dd/yyyy</string>
+
+    <!-- Calendar screen -->
+    <string name="calendar_title">कैलेंडर</string>
+    <string name="calendar_today">आज</string>
+    <string name="calendar_previous_month">पिछला महीना</string>
+    <string name="calendar_next_month">अगला महीना</string>
+    <string name="calendar_month_year_format">MMMM yyyy</string>
+    <string name="calendar_lunar_prefix">चंद्र</string>
+    <string name="calendar_weekday_mon">सोम</string>
+    <string name="calendar_weekday_tue">मंगल</string>
+    <string name="calendar_weekday_wed">बुध</string>
+    <string name="calendar_weekday_thu">गुरु</string>
+    <string name="calendar_weekday_fri">शुक्र</string>
+    <string name="calendar_weekday_sat">शनि</string>
+    <string name="calendar_weekday_sun">रवि</string>
 </resources>

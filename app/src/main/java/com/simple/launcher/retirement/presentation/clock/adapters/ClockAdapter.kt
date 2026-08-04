@@ -4,9 +4,11 @@ import android.graphics.Color
 import androidx.core.graphics.toColorInt
 import com.simple.adapter.Adapter
 import com.simple.launcher.retirement.R
+import com.simple.launcher.retirement.presentation.DeepLinks
 import com.simple.launcher.retirement.presentation.base.adapters.PrecomputedAdapter
 import com.simple.launcher.retirement.presentation.base.adapters.PrecomputedViewItem
 import com.simple.launcher.retirement.presentation.home.adapter.HomeItem
+import com.simple.launcher.retirement.presentation.sendDeeplinkWithBackStack
 import com.simple.launcher.retirement.utils.exts.dp
 import com.simple.launcher.retirement.utils.exts.sp
 import com.simple.ui.precompute.LayoutEngine
@@ -157,5 +159,7 @@ class ClockAdapter : PrecomputedAdapter<ClockHomeItem>() {
 
     override fun onItemCLick(item: ClockHomeItem) {
 
+        // Bấm vào item đồng hồ ở màn Home → mở màn Lịch.
+        sendDeeplinkWithBackStack(DeepLinks.CALENDAR)
     }
 }

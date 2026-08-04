@@ -16,4 +16,19 @@
     <!-- Calendar -->
     <string name="lunar_date_format">วันที่ %1$d/%2$d จันทรคติ</string>
     <string name="solar_date_format">EEEE ที่ dd/MM/yyyy</string>
+
+    <!-- Calendar screen -->
+    <string name="calendar_title">ปฏิทิน</string>
+    <string name="calendar_today">วันนี้</string>
+    <string name="calendar_previous_month">เดือนก่อนหน้า</string>
+    <string name="calendar_next_month">เดือนถัดไป</string>
+    <string name="calendar_month_year_format">MMMM yyyy</string>
+    <string name="calendar_lunar_prefix">จันทรคติ</string>
+    <string name="calendar_weekday_mon">จ.</string>
+    <string name="calendar_weekday_tue">อ.</string>
+    <string name="calendar_weekday_wed">พ.</string>
+    <string name="calendar_weekday_thu">พฤ.</string>
+    <string name="calendar_weekday_fri">ศ.</string>
+    <string name="calendar_weekday_sat">ส.</string>
+    <string name="calendar_weekday_sun">อา.</string>
 </resources>

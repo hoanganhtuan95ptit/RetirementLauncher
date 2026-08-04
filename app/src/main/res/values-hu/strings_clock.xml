@@ -16,4 +16,19 @@
     <!-- Calendar -->
     <string name="lunar_date_format">%1$d/%2$d. nap Holdnaptár</string>
     <string name="solar_date_format">EEEE, yyyy.MM.dd.</string>
+
+    <!-- Calendar screen -->
+    <string name="calendar_title">Naptár</string>
+    <string name="calendar_today">Ma</string>
+    <string name="calendar_previous_month">Előző hónap</string>
+    <string name="calendar_next_month">Következő hónap</string>
+    <string name="calendar_month_year_format">yyyy. MMMM</string>
+    <string name="calendar_lunar_prefix">Hold</string>
+    <string name="calendar_weekday_mon">Hét</string>
+    <string name="calendar_weekday_tue">Kedd</string>
+    <string name="calendar_weekday_wed">Szer</string>
+    <string name="calendar_weekday_thu">Csüt</string>
+    <string name="calendar_weekday_fri">Pén</string>
+    <string name="calendar_weekday_sat">Szo</string>
+    <string name="calendar_weekday_sun">Vas</string>
 </resources>

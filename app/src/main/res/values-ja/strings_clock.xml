@@ -16,4 +16,19 @@
     <!-- Calendar -->
     <string name="lunar_date_format">旧暦 %1$d/%2$d日</string>
     <string name="solar_date_format">EEEE, yyyy/MM/dd</string>
+
+    <!-- Calendar screen -->
+    <string name="calendar_title">カレンダー</string>
+    <string name="calendar_today">今日</string>
+    <string name="calendar_previous_month">前月</string>
+    <string name="calendar_next_month">次月</string>
+    <string name="calendar_month_year_format">yyyy年MMMM</string>
+    <string name="calendar_lunar_prefix">旧暦</string>
+    <string name="calendar_weekday_mon">月</string>
+    <string name="calendar_weekday_tue">火</string>
+    <string name="calendar_weekday_wed">水</string>
+    <string name="calendar_weekday_thu">木</string>
+    <string name="calendar_weekday_fri">金</string>
+    <string name="calendar_weekday_sat">土</string>
+    <string name="calendar_weekday_sun">日</string>
 </resources>

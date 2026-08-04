@@ -14,7 +14,6 @@ class AppHomeService : HomeService() {
 
         val viewModel = homeFragment.activityViewModels<AppViewModel>().value
 
-        viewModel.refresh()
         viewModel.appViewItemList.filterNotNull().observe(homeFragment.viewLifecycleOwner) {
 
             homeViewModel.updateItem(it)

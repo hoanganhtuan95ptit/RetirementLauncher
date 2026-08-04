@@ -16,4 +16,19 @@
     <!-- Calendar -->
     <string name="lunar_date_format">Ngày %1$d/%2$d âm lịch</string>
     <string name="solar_date_format">EEEE, dd/MM/yyyy</string>
+
+    <!-- Calendar screen -->
+    <string name="calendar_title">Lịch</string>
+    <string name="calendar_today">Hôm nay</string>
+    <string name="calendar_previous_month">Tháng trước</string>
+    <string name="calendar_next_month">Tháng sau</string>
+    <string name="calendar_month_year_format">MMMM yyyy</string>
+    <string name="calendar_lunar_prefix">Âm lịch</string>
+    <string name="calendar_weekday_mon">T2</string>
+    <string name="calendar_weekday_tue">T3</string>
+    <string name="calendar_weekday_wed">T4</string>
+    <string name="calendar_weekday_thu">T5</string>
+    <string name="calendar_weekday_fri">T6</string>
+    <string name="calendar_weekday_sat">T7</string>
+    <string name="calendar_weekday_sun">CN</string>
 </resources>

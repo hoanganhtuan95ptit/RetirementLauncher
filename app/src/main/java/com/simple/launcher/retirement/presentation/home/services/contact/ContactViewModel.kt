@@ -10,13 +10,24 @@ import com.simple.launcher.retirement.presentation.home.adapter.HeaderHomeItem
 import com.simple.launcher.retirement.utils.exts.combineState
 import com.simple.launcher.retirement.utils.exts.dp
 import com.simple.launcher.retirement.utils.exts.getString
+import com.simple.launcher.retirement.utils.exts.mutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.filterNotNull
 
 class ContactViewModel : BaseViewModel() {
 
+    val contacts: StateFlow<List<HomeContentEntity.Contact>?> = mutableStateFlow(
+        null
+    ) {
+
+        GetHomeContactUseCase.instance.invoke().collect {
+            value = it
+        }
+    }
+
     val contactViewItemList: StateFlow<GroupViewItem?> = combineState(
         flow1 = resources,
-        flow2 = GetHomeContactUseCase.instance.invoke(),
+        flow2 = contacts.filterNotNull(),
         initialValue = null
     ) { resources, contacts ->
 

@@ -16,4 +16,19 @@
     <!-- Calendar -->
     <string name="lunar_date_format">음력 %1$d/%2$d일</string>
     <string name="solar_date_format">EEEE, yyyy/MM/dd</string>
+
+    <!-- Calendar screen -->
+    <string name="calendar_title">달력</string>
+    <string name="calendar_today">오늘</string>
+    <string name="calendar_previous_month">이전 달</string>
+    <string name="calendar_next_month">다음 달</string>
+    <string name="calendar_month_year_format">yyyy년 MMMM</string>
+    <string name="calendar_lunar_prefix">음력</string>
+    <string name="calendar_weekday_mon">월</string>
+    <string name="calendar_weekday_tue">화</string>
+    <string name="calendar_weekday_wed">수</string>
+    <string name="calendar_weekday_thu">목</string>
+    <string name="calendar_weekday_fri">금</string>
+    <string name="calendar_weekday_sat">토</string>
+    <string name="calendar_weekday_sun">일</string>
 </resources>

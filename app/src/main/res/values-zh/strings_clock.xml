@@ -16,4 +16,18 @@
     <!-- Calendar -->
     <string name="lunar_date_format">农历%1$d月%2$d日</string>
     <string name="solar_date_format">EEEE, yyyy/MM/dd</string>
+    <!-- Calendar screen -->
+    <string name="calendar_title">日历</string>
+    <string name="calendar_today">今天</string>
+    <string name="calendar_previous_month">上个月</string>
+    <string name="calendar_next_month">下个月</string>
+    <string name="calendar_month_year_format">yyyy年MMMM</string>
+    <string name="calendar_lunar_prefix">农历</string>
+    <string name="calendar_weekday_mon">周一</string>
+    <string name="calendar_weekday_tue">周二</string>
+    <string name="calendar_weekday_wed">周三</string>
+    <string name="calendar_weekday_thu">周四</string>
+    <string name="calendar_weekday_fri">周五</string>
+    <string name="calendar_weekday_sat">周六</string>
+    <string name="calendar_weekday_sun">周日</string>
 </resources>

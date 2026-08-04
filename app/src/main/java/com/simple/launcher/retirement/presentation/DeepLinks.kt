@@ -32,6 +32,7 @@ object DeepLinks {
     const val APP_LIST_REQUIRED = "app://app_list_required"
     const val CALL_BLOCK_INTRO = "app://call_block_intro"
     const val CLOCK_SETTING = "app://clock_setting"
+    const val CALENDAR = "app://calendar"
 
     // ─── Permissions ──────────────────────────────────────────────────────────
 

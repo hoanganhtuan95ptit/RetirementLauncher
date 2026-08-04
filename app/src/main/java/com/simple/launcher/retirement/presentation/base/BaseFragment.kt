@@ -30,7 +30,7 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
+        view.setOnClickListener {  }
         super.onViewCreated(view, savedInstanceState)
         setupViews(view, savedInstanceState)
         observeData()

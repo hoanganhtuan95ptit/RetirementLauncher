@@ -16,4 +16,19 @@
     <!-- Calendar -->
     <string name="lunar_date_format">Gün %1$d/%2$d Ay Takvimi</string>
     <string name="solar_date_format">EEEE, dd.MM.yyyy</string>
+
+    <!-- Calendar screen -->
+    <string name="calendar_title">Takvim</string>
+    <string name="calendar_today">Bugün</string>
+    <string name="calendar_previous_month">Önceki ay</string>
+    <string name="calendar_next_month">Sonraki ay</string>
+    <string name="calendar_month_year_format">MMMM yyyy</string>
+    <string name="calendar_lunar_prefix">Ay</string>
+    <string name="calendar_weekday_mon">Pzt</string>
+    <string name="calendar_weekday_tue">Sal</string>
+    <string name="calendar_weekday_wed">Çar</string>
+    <string name="calendar_weekday_thu">Per</string>
+    <string name="calendar_weekday_fri">Cum</string>
+    <string name="calendar_weekday_sat">Cmt</string>
+    <string name="calendar_weekday_sun">Paz</string>
 </resources>

@@ -16,4 +16,19 @@
     <!-- Calendar -->
     <string name="lunar_date_format">Hari %1$d/%2$d Lunar</string>
     <string name="solar_date_format">EEEE, MM/dd/yyyy</string>
+
+    <!-- Calendar screen -->
+    <string name="calendar_title">Kalendar</string>
+    <string name="calendar_today">Hari ini</string>
+    <string name="calendar_previous_month">Bulan sebelumnya</string>
+    <string name="calendar_next_month">Bulan seterusnya</string>
+    <string name="calendar_month_year_format">MMMM yyyy</string>
+    <string name="calendar_lunar_prefix">Lunar</string>
+    <string name="calendar_weekday_mon">Isn</string>
+    <string name="calendar_weekday_tue">Sel</string>
+    <string name="calendar_weekday_wed">Rab</string>
+    <string name="calendar_weekday_thu">Kha</string>
+    <string name="calendar_weekday_fri">Jum</string>
+    <string name="calendar_weekday_sat">Sab</string>
+    <string name="calendar_weekday_sun">Aha</string>
 </resources>

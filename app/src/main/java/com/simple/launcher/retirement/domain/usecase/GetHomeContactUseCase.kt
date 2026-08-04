@@ -9,12 +9,7 @@ import kotlinx.coroutines.flow.map
 
 class GetHomeContactUseCase {
 
-    val contactRepository by lazy {
-
-        ContactRepository.instance
-    }
-
-    fun invoke(): Flow<List<HomeContentEntity.Contact>> = contactRepository
+    fun invoke(): Flow<List<HomeContentEntity.Contact>> = ContactRepository.instance
         .getSelectedContactsFlow()
         .map { contacts -> contacts.map { HomeContentEntity.Contact(it) } }
         .flowOn(Dispatchers.IO)

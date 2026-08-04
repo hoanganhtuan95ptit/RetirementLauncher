@@ -16,4 +16,19 @@
     <!-- Calendar -->
     <string name="lunar_date_format">اليوم %1$d/%2$d قمري</string>
     <string name="solar_date_format">EEEE، MM/dd/yyyy</string>
+
+    <!-- Calendar screen -->
+    <string name="calendar_title">التقويم</string>
+    <string name="calendar_today">اليوم</string>
+    <string name="calendar_previous_month">الشهر السابق</string>
+    <string name="calendar_next_month">الشهر التالي</string>
+    <string name="calendar_month_year_format">MMMM yyyy</string>
+    <string name="calendar_lunar_prefix">قمري</string>
+    <string name="calendar_weekday_mon">ن</string>
+    <string name="calendar_weekday_tue">ث</string>
+    <string name="calendar_weekday_wed">ر</string>
+    <string name="calendar_weekday_thu">خ</string>
+    <string name="calendar_weekday_fri">ج</string>
+    <string name="calendar_weekday_sat">س</string>
+    <string name="calendar_weekday_sun">ح</string>
 </resources>

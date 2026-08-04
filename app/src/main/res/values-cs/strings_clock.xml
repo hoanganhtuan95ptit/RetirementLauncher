@@ -16,4 +16,19 @@
     <!-- Calendar -->
     <string name="lunar_date_format">Den %1$d/%2$d lunární</string>
     <string name="solar_date_format">EEEE, dd.MM.yyyy</string>
+
+    <!-- Calendar screen -->
+    <string name="calendar_title">Kalendář</string>
+    <string name="calendar_today">Dnes</string>
+    <string name="calendar_previous_month">Předchozí měsíc</string>
+    <string name="calendar_next_month">Příští měsíc</string>
+    <string name="calendar_month_year_format">MMMM yyyy</string>
+    <string name="calendar_lunar_prefix">Lunární</string>
+    <string name="calendar_weekday_mon">Po</string>
+    <string name="calendar_weekday_tue">Út</string>
+    <string name="calendar_weekday_wed">St</string>
+    <string name="calendar_weekday_thu">Čt</string>
+    <string name="calendar_weekday_fri">Pá</string>
+    <string name="calendar_weekday_sat">So</string>
+    <string name="calendar_weekday_sun">Ne</string>
 </resources>

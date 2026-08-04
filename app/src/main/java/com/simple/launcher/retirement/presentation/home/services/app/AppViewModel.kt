@@ -10,16 +10,14 @@ import com.simple.launcher.retirement.presentation.home.adapter.HeaderHomeItem
 import com.simple.launcher.retirement.utils.exts.combineState
 import com.simple.launcher.retirement.utils.exts.dp
 import com.simple.launcher.retirement.utils.exts.getString
+import com.simple.launcher.retirement.utils.exts.mutableStateFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterNotNull
 
 class AppViewModel : BaseViewModel() {
 
-    val refresh = MutableStateFlow(1L)
-
-    val apps: StateFlow<List<HomeContentEntity.App>?> = combineState(
-        refresh,
+    val apps: StateFlow<List<HomeContentEntity.App>?> = mutableStateFlow(
         null
     ) {
 
@@ -36,10 +34,6 @@ class AppViewModel : BaseViewModel() {
     ) { resources, apps ->
 
         value = buildAppGroup(resources = resources, apps = apps)
-    }
-
-    fun refresh() {
-        refresh.value = System.currentTimeMillis()
     }
 
     private fun buildAppGroup(

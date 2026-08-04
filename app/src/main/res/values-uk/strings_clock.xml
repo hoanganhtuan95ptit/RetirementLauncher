@@ -16,4 +16,19 @@
     <!-- Calendar -->
     <string name="lunar_date_format">День %1$d/%2$d місячного календаря</string>
     <string name="solar_date_format">EEEE, dd.MM.yyyy</string>
+
+    <!-- Calendar screen -->
+    <string name="calendar_title">Календар</string>
+    <string name="calendar_today">Сьогодні</string>
+    <string name="calendar_previous_month">Попередній місяць</string>
+    <string name="calendar_next_month">Наступний місяць</string>
+    <string name="calendar_month_year_format">MMMM yyyy</string>
+    <string name="calendar_lunar_prefix">Місячний</string>
+    <string name="calendar_weekday_mon">Пн</string>
+    <string name="calendar_weekday_tue">Вт</string>
+    <string name="calendar_weekday_wed">Ср</string>
+    <string name="calendar_weekday_thu">Чт</string>
+    <string name="calendar_weekday_fri">Пт</string>
+    <string name="calendar_weekday_sat">Сб</string>
+    <string name="calendar_weekday_sun">Нд</string>
 </resources>
