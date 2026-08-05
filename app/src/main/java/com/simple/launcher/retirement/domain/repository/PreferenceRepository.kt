@@ -106,6 +106,9 @@ interface PreferenceRepository {
     fun notificationRetentionMillisFlow(): Flow<Long>
     fun setNotificationRetentionMillis(millis: Long)
 
+    fun getPendingNotificationBlockEnabled(): Boolean?
+    fun setPendingNotificationBlockEnabled(enabled: Boolean?)
+
     companion object {
 
         val instance: PreferenceRepository by lazy { PreferenceRepositoryImpl() }

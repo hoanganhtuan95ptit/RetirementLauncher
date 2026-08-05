@@ -1,8 +1,8 @@
 package com.simple.launcher.retirement.presentation.notification_block
 
 import android.app.Notification
-import android.os.Handler
-import android.os.Looper
+import android.content.ComponentName
+import android.content.Context
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
 import com.simple.launcher.retirement.domain.repository.PreferenceRepository
@@ -16,12 +16,15 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 /**
- * Lắng nghe toàn bộ notification hệ thống để:
- * 1. Chặn ngay (dismiss) thông báo của các app nằm trong danh sách [PreferenceRepository.getNotificationBlockedPackages].
- * 2. Tự động xoá thông báo nếu tồn tại quá [PreferenceRepository.getNotificationRetentionMillis].
+ * Lắng nghe notification hệ thống để CHẶN (dismiss) thông báo của các app trong
+ * blacklist ngay khi vừa post.
+ *
+ * Việc dọn dẹp thông báo hết hạn KHÔNG do service tự xử lý — do
+ * [NotificationCleanupWorker] (BackgroundWorker chạy trong BackgroundService) poll
+ * định kỳ. Service chỉ đóng vai trò bridge tĩnh vì `activeNotifications` /
+ * `cancelNotification(key)` chỉ có thể gọi từ instance NotificationListenerService.
  *
  * Người dùng phải cấp quyền "Notification Access" thì service mới nhận được callback.
- * Khi cấu hình thay đổi, service reschedule lại toàn bộ notification hiện có.
  */
 class NotificationBlockService : NotificationListenerService() {
 
@@ -29,20 +32,12 @@ class NotificationBlockService : NotificationListenerService() {
 
     private val preferenceRepository = PreferenceRepository.instance
 
-    // Handler chạy trên main thread — cancelable Runnable là cách nhẹ nhất để hẹn giờ xoá
-    // một notification cụ thể, không cần WorkManager cho tác vụ ephemeral này.
-    private val handler = Handler(Looper.getMainLooper())
-
-    // Key = notification key duy nhất (packageName + id + tag + user). Value = Runnable đang chờ.
-    private val pendingRemovals = HashMap<String, Runnable>()
-
     private val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
     private var configJob: Job? = null
 
     private var isConnected: Boolean = false
     private var isFeatureEnabled: Boolean = false
     private var blockedPackages: Set<String> = emptySet()
-    private var retentionMillis: Long = 0L
 
     // ── 3. Public API ─────────────────────────────────────────────────────
 
@@ -50,22 +45,24 @@ class NotificationBlockService : NotificationListenerService() {
 
         super.onListenerConnected()
         isConnected = true
+        instance = this
         observeConfig()
     }
 
     override fun onListenerDisconnected() {
 
-        cancelAllPendingRemovals()
         configJob?.cancel()
         configJob = null
         isConnected = false
+        if (instance === this) instance = null
         super.onListenerDisconnected()
     }
 
     override fun onDestroy() {
 
-        cancelAllPendingRemovals()
+        configJob?.cancel()
         serviceScope.cancel()
+        if (instance === this) instance = null
         super.onDestroy()
     }
 
@@ -74,20 +71,8 @@ class NotificationBlockService : NotificationListenerService() {
         sbn ?: return
         if (!isConnected || !isFeatureEnabled) return
         if (shouldSkip(sbn)) return
-
-        if (sbn.packageName in blockedPackages) {
-
-            dismissNotification(sbn)
-            return
-        }
-
-        scheduleRemovalIfNeeded(sbn)
-    }
-
-    override fun onNotificationRemoved(sbn: StatusBarNotification?) {
-
-        sbn ?: return
-        cancelPendingRemoval(sbn.key)
+        if (sbn.packageName !in blockedPackages) return
+        dismissNotification(sbn)
     }
 
     // ── 4. Private helpers ────────────────────────────────────────────────
@@ -97,70 +82,32 @@ class NotificationBlockService : NotificationListenerService() {
         configJob?.cancel()
         configJob = combine(
             preferenceRepository.notificationBlockEnabledFlow(),
-            preferenceRepository.notificationBlockedPackagesFlow(),
-            preferenceRepository.notificationRetentionMillisFlow()
-        ) { enabled, blocked, retention ->
+            preferenceRepository.notificationBlockedPackagesFlow()
+        ) { enabled, blocked ->
 
-            Triple(enabled, blocked, retention)
-        }.onEach { (enabled, blocked, retention) ->
+            enabled to blocked
+        }.onEach { (enabled, blocked) ->
 
             isFeatureEnabled = enabled
             blockedPackages = blocked
-            retentionMillis = retention
-            applyConfigToActiveNotifications()
+            sweepBlockedFromActive()
         }.launchIn(serviceScope)
     }
 
-    private fun applyConfigToActiveNotifications() {
+    /**
+     * Duyệt lại notification hiện có để bắt kịp thay đổi blacklist / trạng thái
+     * enable — cần thiết khi user vừa bật feature hoặc thêm app vào blacklist
+     * mà thông báo đã hiển thị từ trước.
+     */
+    private fun sweepBlockedFromActive() {
 
-        cancelAllPendingRemovals()
-        if (!isFeatureEnabled) return
-
+        if (!isConnected || !isFeatureEnabled) return
         val active = runCatching { activeNotifications }.getOrNull() ?: return
-
         active.forEach { sbn ->
 
             if (shouldSkip(sbn)) return@forEach
-
-            if (sbn.packageName in blockedPackages) {
-
-                dismissNotification(sbn)
-            } else {
-
-                scheduleRemovalIfNeeded(sbn)
-            }
+            if (sbn.packageName in blockedPackages) dismissNotification(sbn)
         }
-    }
-
-    private fun scheduleRemovalIfNeeded(sbn: StatusBarNotification) {
-
-        val retention = retentionMillis
-        if (retention <= 0L) return
-
-        val elapsed = System.currentTimeMillis() - sbn.postTime
-        val delay = (retention - elapsed).coerceAtLeast(0L)
-
-        cancelPendingRemoval(sbn.key)
-
-        val runnable = Runnable {
-
-            pendingRemovals.remove(sbn.key)
-            dismissNotification(sbn)
-        }
-        pendingRemovals[sbn.key] = runnable
-        handler.postDelayed(runnable, delay)
-    }
-
-    private fun cancelPendingRemoval(key: String) {
-
-        val runnable = pendingRemovals.remove(key) ?: return
-        handler.removeCallbacks(runnable)
-    }
-
-    private fun cancelAllPendingRemovals() {
-
-        pendingRemovals.values.forEach { handler.removeCallbacks(it) }
-        pendingRemovals.clear()
     }
 
     private fun dismissNotification(sbn: StatusBarNotification) {
@@ -179,5 +126,51 @@ class NotificationBlockService : NotificationListenerService() {
             Notification.FLAG_FOREGROUND_SERVICE or
             Notification.FLAG_NO_CLEAR
         return flags and protectedFlags != 0
+    }
+
+    // ── 6. Companion object (bridge cho NotificationCleanupWorker) ───────
+
+    companion object {
+
+        @Volatile
+        private var instance: NotificationBlockService? = null
+
+        /**
+         * Snapshot notification đang hiển thị.
+         * - Trả `null` nếu service chưa bind (process bị kill, permission chưa cấp,
+         *   listener chưa reconnect). Trong trường hợp này ta gọi
+         *   [NotificationListenerService.requestRebind] để lần tick worker kế tiếp
+         *   có instance sẵn.
+         */
+        fun getActiveNotifications(context: Context): Array<StatusBarNotification>? {
+
+            val alive = instance
+            if (alive == null) {
+
+                requestRebindSilently(context)
+                return null
+            }
+            return runCatching { alive.activeNotifications }.getOrNull()
+        }
+
+        /**
+         * Xoá notification theo key. No-op nếu service chưa bind.
+         */
+        fun cancelNotificationByKey(key: String) {
+
+            instance?.let { runCatching { it.cancelNotification(key) } }
+        }
+
+        private fun requestRebindSilently(context: Context) {
+
+            runCatching {
+
+                val component = ComponentName(
+                    context.applicationContext,
+                    NotificationBlockService::class.java
+                )
+                NotificationListenerService.requestRebind(component)
+            }
+        }
     }
 }

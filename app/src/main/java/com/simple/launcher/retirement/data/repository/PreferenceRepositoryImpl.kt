@@ -23,6 +23,7 @@ class PreferenceRepositoryImpl : PreferenceRepository {
     private var pendingEmergencyConfigRam: SOSConfig? = null
     private var pendingAppBlockEnabledRam: Boolean? = null
     private var pendingCallBlockEnabledRam: Boolean? = null
+    private var pendingNotificationBlockEnabledRam: Boolean? = null
 
     // ── 2. Flows ──────────────────────────────────────────────────────────
     // Load lại preference khi flow active, và update trực tiếp sau mỗi lần save.
@@ -368,6 +369,13 @@ class PreferenceRepositoryImpl : PreferenceRepository {
 
         sharedPrefs.edit { putLong(KEY_NOTIFICATION_RETENTION_MILLIS, millis) }
         _notificationRetentionMillis.value = millis
+    }
+
+    override fun getPendingNotificationBlockEnabled(): Boolean? = pendingNotificationBlockEnabledRam
+
+    override fun setPendingNotificationBlockEnabled(enabled: Boolean?) {
+
+        pendingNotificationBlockEnabledRam = enabled
     }
 
     // ── 6. Companion object ───────────────────────────────────────────────

@@ -12,6 +12,7 @@ import com.simple.component.service.launchCollect
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.presentation.app_monitoring.AppMonitoringWorker
 import com.simple.launcher.retirement.presentation.emergency.EmergencyWorker
+import com.simple.launcher.retirement.presentation.notification_block.NotificationCleanupWorker
 import com.simple.launcher.retirement.presentation.services.worker.BackgroundWorker
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -25,7 +26,8 @@ class BackgroundService : Service() {
 
         listOf(
             AppMonitoringWorker(this),
-            EmergencyWorker(this)
+            EmergencyWorker(this),
+            NotificationCleanupWorker(this)
         )
     }
     private val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)

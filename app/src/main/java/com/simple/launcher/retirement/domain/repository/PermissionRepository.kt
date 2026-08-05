@@ -20,6 +20,9 @@ interface PermissionRepository {
     fun hasUserActivityAccessibilityPermission(): Boolean
     suspend fun requireUserActivityAccessibilityPermission(): Boolean
 
+    fun hasNotificationListenerAccess(): Boolean
+    suspend fun requireNotificationListenerAccess(): Boolean
+
     fun hasCallBlockPermissions(): Boolean
 
     fun hasCallScreeningRole(): Boolean

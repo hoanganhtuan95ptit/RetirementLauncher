@@ -19,6 +19,7 @@ import com.simple.launcher.retirement.domain.repository.PermissionRepository
 import com.simple.launcher.retirement.domain.repository.PreferenceRepository
 import com.simple.launcher.retirement.presentation.DeepLinks
 import com.simple.launcher.retirement.presentation.emergency.UserActivityAccessibilityService
+import com.simple.launcher.retirement.presentation.notification_block.NotificationBlockService
 import com.simple.launcher.retirement.utils.AppEvent
 import com.simple.launcher.retirement.utils.AppEventBus
 import kotlinx.coroutines.flow.filterIsInstance
@@ -139,6 +140,28 @@ class PermissionRepositoryImpl(private val context: Context) : PermissionReposit
         if (hasUserActivityAccessibilityPermission()) return true
 
         return awaitPermissionResult(DeepLinks.PERMISSION_USER_ACTIVITY_ACCESSIBILITY)
+    }
+
+    override fun hasNotificationListenerAccess(): Boolean {
+
+        val enabledListeners = Settings.Secure.getString(
+            context.contentResolver,
+            SETTING_ENABLED_NOTIFICATION_LISTENERS
+        ) ?: return false
+
+        val expectedComponent = ComponentName(context, NotificationBlockService::class.java)
+
+        return enabledListeners
+            .split(NOTIFICATION_LISTENER_SEPARATOR)
+            .mapNotNull(ComponentName::unflattenFromString)
+            .any { it == expectedComponent }
+    }
+
+    override suspend fun requireNotificationListenerAccess(): Boolean {
+
+        if (hasNotificationListenerAccess()) return true
+
+        return awaitPermissionResult(DeepLinks.PERMISSION_NOTIFICATION_LISTENER)
     }
 
     override fun hasCallBlockPermissions(): Boolean {
@@ -311,5 +334,7 @@ class PermissionRepositoryImpl(private val context: Context) : PermissionReposit
     private companion object {
 
         const val ACCESSIBILITY_SERVICE_SEPARATOR = ":"
+        const val NOTIFICATION_LISTENER_SEPARATOR = ":"
+        const val SETTING_ENABLED_NOTIFICATION_LISTENERS = "enabled_notification_listeners"
     }
 }
