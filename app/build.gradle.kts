@@ -48,7 +48,7 @@ android {
 
         val gitVersionName = if (isRelease) {
 
-            "1.${SimpleDateFormat("yy.MM").format(Date())}.${getGitVersionCode()}"
+            "1.${SimpleDateFormat("yy.MM").format(Date())}.${getGitCommitCountOfMonth()}"
         } else {
 
             "debug"
@@ -199,6 +199,15 @@ fun getGitVersionCode(): Int {
 
     return runGitCommand(
         listOf("git", "rev-list", "--count", "HEAD"),
+        1
+    ) as Int
+}
+
+fun getGitCommitCountOfMonth(): Int {
+
+    val sinceDate = SimpleDateFormat("yyyy-MM-01").format(Date())
+    return runGitCommand(
+        listOf("git", "rev-list", "--count", "--since=$sinceDate", "HEAD"),
         1
     ) as Int
 }

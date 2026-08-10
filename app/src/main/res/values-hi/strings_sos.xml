@@ -51,6 +51,7 @@
     <string name="sos_timeout_label">निष्क्रियता टाइमआउट</string>
     <string name="sos_timeout_value">%1$d घंटे</string>
     <string name="sos_timeout_seconds">%1$d सेकंड</string>
+    <string name="sos_timeout_minutes">%1$d मिनट</string>
     <string name="sos_timeout_desc">यदि आप इस अवधि के लिए फोन का उपयोग नहीं करते हैं, तो स्वचालित रूप से एक आपातकालीन कॉल की जाएगी।</string>
     <string name="sos_exclusion_periods_header">अपवर्जन अवधि (नींद/विश्राम)</string>
     <string name="sos_add_exclusion_period">अपवर्जन अवधि जोड़ें</string>
@@ -58,4 +59,10 @@
     <string name="sos_exclusion_period_format">%1$02d:%2$02d - %3$02d:%4$02d</string>
     <string name="sos_select_start_time">आरंभ समय चुनें</string>
     <string name="sos_select_end_time">समाप्ति समय चुनें</string>
+
+    <!-- SOS Safety Check Alert Screen -->
+    <string name="sos_alert_title">क्या आप ठीक हैं?</string>
+    <string name="sos_alert_desc">हमने कुछ समय से आपको फोन का उपयोग करते हुए नहीं देखा है। यह पुष्टि करने के लिए कि आप सुरक्षित हैं, नीचे दिए गए बटन पर टैप करें। अन्यथा, हम आपके आपातकालीन संपर्कों को कॉल करेंगे।</string>
+    <string name="sos_alert_countdown">%1$d:%2$02d में कॉल किया जा रहा है</string>
+    <string name="sos_alert_im_safe">मैं सुरक्षित हूँ</string>
 </resources>

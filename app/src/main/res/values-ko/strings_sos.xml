@@ -50,6 +50,7 @@
     <string name="sos_timeout_label">비활성 시간 초과</string>
     <string name="sos_timeout_value">%1$d 시간</string>
     <string name="sos_timeout_seconds">%1$d 초</string>
+    <string name="sos_timeout_minutes">%1$d분</string>
     <string name="sos_timeout_desc">이 기간 동안 휴대전화를 사용하지 않으면 자동으로 긴급 전화가 걸립니다.</string>
     <string name="sos_exclusion_periods_header">제외 기간 (취침/휴식)</string>
     <string name="sos_add_exclusion_period">제외 기간 추가</string>
@@ -57,4 +58,10 @@
     <string name="sos_exclusion_period_format">%1$02d:%2$02d - %3$02d:%4$02d</string>
     <string name="sos_select_start_time">시작 시간 선택</string>
     <string name="sos_select_end_time">종료 시간 선택</string>
+
+    <!-- SOS 안전 확인 알림 화면 -->
+    <string name="sos_alert_title">괜찮으신가요?</string>
+    <string name="sos_alert_desc">한동안 휴대폰을 사용하지 않으신 것 같습니다. 아래 버튼을 눌러 안전함을 확인해 주세요. 확인되지 않으면 긴급 연락처로 전화를 겁니다.</string>
+    <string name="sos_alert_countdown">%1$d:%2$02d 후 전화 발신</string>
+    <string name="sos_alert_im_safe">안전합니다</string>
 </resources>

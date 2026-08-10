@@ -50,6 +50,7 @@
     <string name="sos_timeout_label">Timp de așteptare inactivitate</string>
     <string name="sos_timeout_value">%1$d ore</string>
     <string name="sos_timeout_seconds">%1$d secunde</string>
+    <string name="sos_timeout_minutes">%1$d minute</string>
     <string name="sos_timeout_desc">Dacă nu utilizați telefonul în această perioadă, se va efectua automat un apel de urgență.</string>
     <string name="sos_exclusion_periods_header">Perioade de excludere (Somn/Odihnă)</string>
     <string name="sos_add_exclusion_period">Adaugă perioadă de excludere</string>
@@ -57,4 +58,10 @@
     <string name="sos_exclusion_period_format">%1$02d:%2$02d - %3$02d:%4$02d</string>
     <string name="sos_select_start_time">Selectați ora de început</string>
     <string name="sos_select_end_time">Selectați ora de sfârșit</string>
+
+    <!-- SOS Safety Check Alert Screen -->
+    <string name="sos_alert_title">Ești în regulă?</string>
+    <string name="sos_alert_desc">Nu am văzut să folosești telefonul de ceva timp. Atinge butonul de mai jos pentru a confirma că ești în siguranță. În caz contrar, vom apela contactele tale de urgență.</string>
+    <string name="sos_alert_countdown">Apel în %1$d:%2$02d</string>
+    <string name="sos_alert_im_safe">Sunt în siguranță</string>
 </resources>

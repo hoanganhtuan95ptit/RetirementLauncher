@@ -50,6 +50,7 @@
     <string name="sos_timeout_label">Inactivity Timeout</string>
     <string name="sos_timeout_value">%1$d oras</string>
     <string name="sos_timeout_seconds">%1$d segundo</string>
+    <string name="sos_timeout_minutes">%1$d (na) minuto</string>
     <string name="sos_timeout_desc">Kung hindi mo gagamitim ang telepono sa panahong ito, awtomatikong tatawag sa emergency.</string>
     <string name="sos_exclusion_periods_header">Mga Panahon ng Exclusion (Tulog/Pahinga)</string>
     <string name="sos_add_exclusion_period">Magdagdag ng Panahon ng Exclusion</string>
@@ -57,4 +58,10 @@
     <string name="sos_exclusion_period_format">%1$02d:%2$02d - %3$02d:%4$02d</string>
     <string name="sos_select_start_time">Pumili ng Oras ng Pagsisimula</string>
     <string name="sos_select_end_time">Pumili ng Oras ng Pagtatapos</string>
+
+    <!-- SOS Safety Check Alert Screen -->
+    <string name="sos_alert_title">Maayos ka ba?</string>
+    <string name="sos_alert_desc">Matagal-tagal na kaming walang nakikitang paggamit mo ng telepono. I-tap ang button sa ibaba para kumpirmadong ligtas ka. Kung hindi, tatawagan namin ang iyong mga emergency contact.</string>
+    <string name="sos_alert_countdown">Tatawag sa loob ng %1$d:%2$02d</string>
+    <string name="sos_alert_im_safe">Ligtas Ako</string>
 </resources>

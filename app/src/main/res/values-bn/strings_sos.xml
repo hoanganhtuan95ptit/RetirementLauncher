@@ -50,6 +50,7 @@
     <string name="sos_timeout_label">নিষ্ক্রিয়তা সময় শেষ</string>
     <string name="sos_timeout_value">%1$d ঘণ্টা</string>
     <string name="sos_timeout_seconds">%1$d সেকেন্ড</string>
+    <string name="sos_timeout_minutes">%1$d মিনিট</string>
     <string name="sos_timeout_desc">আপনি যদি এই সময়ের জন্য ফোনটি ব্যবহার না করেন তবে স্বয়ংক্রিয়ভাবে একটি জরুরি কল করা হবে।</string>
     <string name="sos_exclusion_periods_header">বর্জিত সময়কাল (ঘুম/বিশ্রাম)</string>
     <string name="sos_add_exclusion_period">বর্জিত সময়কাল যোগ করুন</string>
@@ -57,4 +58,10 @@
     <string name="sos_exclusion_period_format">%1$02d:%2$02d - %3$02d:%4$02d</string>
     <string name="sos_select_start_time">শুরু করার সময় নির্বাচন করুন</string>
     <string name="sos_select_end_time">শেষ করার সময় নির্বাচন করুন</string>
+
+    <!-- SOS Safety Check Alert Screen -->
+    <string name="sos_alert_title">আপনি কি ঠিক আছেন?</string>
+    <string name="sos_alert_desc">আমরা অনেকক্ষণ ধরে আপনাকে ফোন ব্যবহার করতে দেখিনি। আপনি নিরাপদ আছেন তা নিশ্চিত করতে নিচের বোতামটিতে ট্যাপ করুন। অন্যথায়, আমরা আপনার জরুরি পরিচিতিদের কল করব।</string>
+    <string name="sos_alert_countdown">%1$d:%2$02d সময়ের মধ্যে কল করা হচ্ছে</string>
+    <string name="sos_alert_im_safe">আমি নিরাপদ</string>
 </resources>

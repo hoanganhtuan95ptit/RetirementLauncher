@@ -41,6 +41,7 @@
     <string name="sos_timeout_label">Délai d\'inactivité</string>
     <string name="sos_timeout_value">%1$d heures</string>
     <string name="sos_timeout_seconds">%1$d secondes</string>
+    <string name="sos_timeout_minutes">%1$d minutes</string>
     <string name="sos_timeout_desc">Si vous n\'utilisez pas le téléphone pendant cette période, un appel d\'urgence sera automatiquement passé.</string>
     <string name="sos_exclusion_periods_header">Périodes d\'exclusion (Sommeil/Repos)</string>
     <string name="sos_add_exclusion_period">Ajouter une période d\'exclusion</string>
@@ -57,4 +58,10 @@
     <!-- <string name="clean_files_count_unit">fichiers inutiles</string> -->
     <string name="sos_select_start_time">Sélectionner l\'heure de début</string>
     <string name="sos_select_end_time">Sélectionner l\'heure de fin</string>
+
+    <!-- SOS Safety Check Alert Screen -->
+    <string name="sos_alert_title">Est-ce que ça va ?</string>
+    <string name="sos_alert_desc">Nous n\'avons pas vu d\'activité sur votre téléphone depuis un moment. Appuyez sur le bouton ci-dessous pour confirmer que vous êtes en sécurité. Sinon, nous appellerons vos contacts d\'urgence. </string>
+    <string name="sos_alert_countdown">Appel dans %1$d:%2$02d</string>
+    <string name="sos_alert_im_safe">Je vais bien</string>
 </resources>

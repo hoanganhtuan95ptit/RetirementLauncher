@@ -50,6 +50,7 @@
     <string name="sos_timeout_label">Inactiviteitstime-out</string>
     <string name="sos_timeout_value">%1$d uur</string>
     <string name="sos_timeout_seconds">%1$d seconden</string>
+    <string name="sos_timeout_minutes">%1$d minuten</string>
     <string name="sos_timeout_desc">Als u de telefoon gedurende deze periode niet gebruikt, wordt er automatisch een noodoproep gedaan.</string>
     <string name="sos_exclusion_periods_header">Uitsluitingsperioden (Slaap/Rust)</string>
     <string name="sos_add_exclusion_period">Uitsluitingsperiode toevoegen</string>
@@ -57,4 +58,10 @@
     <string name="sos_exclusion_period_format">%1$02d:%2$02d - %3$02d:%4$02d</string>
     <string name="sos_select_start_time">Selecteer starttijd</string>
     <string name="sos_select_end_time">Selecteer eindtijd</string>
+
+    <!-- SOS Safety Check Alert Screen -->
+    <string name="sos_alert_title">Gaat het goed?</string>
+    <string name="sos_alert_desc">We hebben je telefoon al een tijdje niet meer in gebruik gezien. Tik op de onderstaande knop om te bevestigen dat je veilig bent. Anders bellen we je contactpersonen voor noodgevallen.</string>
+    <string name="sos_alert_countdown">Bellen over %1$d:%2$02d</string>
+    <string name="sos_alert_im_safe">Ik ben veilig</string>
 </resources>

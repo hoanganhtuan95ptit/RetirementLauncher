@@ -51,6 +51,7 @@
     <string name="sos_timeout_label">Batas Waktu Inaktivitas</string>
     <string name="sos_timeout_value">%1$d jam</string>
     <string name="sos_timeout_seconds">%1$d detik</string>
+    <string name="sos_timeout_minutes">%1$d menit</string>
     <string name="sos_timeout_desc">Jika Anda tidak menggunakan ponsel selama periode ini, panggilan darurat akan dilakukan secara otomatis.</string>
     <string name="sos_exclusion_periods_header">Periode Pengecualian (Tidur/Istirahat)</string>
     <string name="sos_add_exclusion_period">Tambah Periode Pengecualian</string>
@@ -58,4 +59,10 @@
     <string name="sos_exclusion_period_format">%1$02d:%2$02d - %3$02d:%4$02d</string>
     <string name="sos_select_start_time">Pilih Waktu Mulai</string>
     <string name="sos_select_end_time">Pilih Waktu Selesai</string>
+
+    <!-- SOS Safety Check Alert Screen -->
+    <string name="sos_alert_title">Apakah Anda baik-baik saja?</string>
+    <string name="sos_alert_desc">Kami tidak melihat Anda menggunakan ponsel selama beberapa waktu. Ketuk tombol di bawah untuk mengonfirmasi bahwa Anda aman. Jika tidak, kami akan menghubungi kontak darurat Anda.</string>
+    <string name="sos_alert_countdown">Memanggil dalam %1$d:%2$02d</string>
+    <string name="sos_alert_im_safe">Saya Aman</string>
 </resources>

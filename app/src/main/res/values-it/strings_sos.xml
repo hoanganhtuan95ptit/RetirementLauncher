@@ -51,6 +51,7 @@
     <string name="sos_timeout_label">Timeout Inattività</string>
     <string name="sos_timeout_value">%1$d ore</string>
     <string name="sos_timeout_seconds">%1$d secondi</string>
+    <string name="sos_timeout_minutes">%1$d minuti</string>
     <string name="sos_timeout_desc">Se non usi il telefono per questo periodo, verrà effettuata automaticamente una chiamata di emergenza.</string>
     <string name="sos_exclusion_periods_header">Periodi di Esclusione (Sonno/Riposo)</string>
     <string name="sos_add_exclusion_period">Aggiungi Periodo di Esclusione</string>
@@ -58,4 +59,10 @@
     <string name="sos_exclusion_period_format">%1$02d:%2$02d - %3$02d:%4$02d</string>
     <string name="sos_select_start_time">Seleziona Ora Inizio</string>
     <string name="sos_select_end_time">Seleziona Ora Fine</string>
+
+    <!-- SOS Safety Check Alert Screen -->
+    <string name="sos_alert_title">Tutto bene?</string>
+    <string name="sos_alert_desc">Non abbiamo rilevato l\'uso del telefono da un po\' di tempo. Tocca il pulsante qui sotto per confermare che sei al sicuro. In caso contrario, chiameremo i tuoi contatti di emergenza.</string>
+    <string name="sos_alert_countdown">Chiamata tra %1$d:%2$02d</string>
+    <string name="sos_alert_im_safe">Sto bene</string>
 </resources>

@@ -50,6 +50,7 @@
     <string name="sos_timeout_label">หมดเวลาเมื่อไม่ใช้งาน</string>
     <string name="sos_timeout_value">%1$d ชั่วโมง</string>
     <string name="sos_timeout_seconds">%1$d วินาที</string>
+    <string name="sos_timeout_minutes">%1$d นาที</string>
     <string name="sos_timeout_desc">หากคุณไม่ใช้โทรศัพท์ในช่วงเวลานี้ ระบบจะโทรฉุกเฉินโดยอัตโนมัติ</string>
     <string name="sos_exclusion_periods_header">ช่วงเวลาที่ยกเว้น (นอนหลับ/พักผ่อน)</string>
     <string name="sos_add_exclusion_period">เพิ่มช่วงเวลาที่ยกเว้น</string>
@@ -57,4 +58,10 @@
     <string name="sos_exclusion_period_format">%1$02d:%2$02d - %3$02d:%4$02d</string>
     <string name="sos_select_start_time">เลือกเวลาเริ่ม</string>
     <string name="sos_select_end_time">เลือกเวลาสิ้นสุด</string>
+
+    <!-- SOS Safety Check Alert Screen -->
+    <string name="sos_alert_title">คุณสบายดีไหม?</string>
+    <string name="sos_alert_desc">เราไม่เห็นคุณใช้งานโทรศัพท์มาระยะหนึ่งแล้ว แตะปุ่มด้านล่างเพื่อยืนยันว่าคุณปลอดภัย มิฉะนั้นเราจะโทรหาผู้ติดต่อฉุกเฉินของคุณ</string>
+    <string name="sos_alert_countdown">จะโทรออกใน %1$d:%2$02d</string>
+    <string name="sos_alert_im_safe">ฉันปลอดภัย</string>
 </resources>

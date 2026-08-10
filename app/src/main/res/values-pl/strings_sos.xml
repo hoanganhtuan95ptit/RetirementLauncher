@@ -50,6 +50,7 @@
     <string name="sos_timeout_label">Limit czasu braku aktywności</string>
     <string name="sos_timeout_value">%1$d godz.</string>
     <string name="sos_timeout_seconds">%1$d s</string>
+    <string name="sos_timeout_minutes">%1$d min</string>
     <string name="sos_timeout_desc">Jeśli nie będziesz używać telefonu przez ten czas, automatycznie zostanie wykonane połączenie alarmowe.</string>
     <string name="sos_exclusion_periods_header">Okresy wykluczenia (Sen/Odpoczynek)</string>
     <string name="sos_add_exclusion_period">Dodaj okres wykluczenia</string>
@@ -57,4 +58,10 @@
     <string name="sos_exclusion_period_format">%1$02d:%2$02d - %3$02d:%4$02d</string>
     <string name="sos_select_start_time">Wybierz godzinę rozpoczęcia</string>
     <string name="sos_select_end_time">Wybierz godzinę zakończenia</string>
+
+    <!-- SOS Safety Check Alert Screen -->
+    <string name="sos_alert_title">Czy wszystko w porządku?</string>
+    <string name="sos_alert_desc">Od dłuższego czasu nie odnotowaliśmy aktywności na Twoim telefonie. Dotknij przycisku poniżej, aby potwierdzić, że jesteś bezpieczny. W przeciwnym razie zadzwonimy do Twoich kontaktów alarmowych.</string>
+    <string name="sos_alert_countdown">Połączenie za %1$d:%2$02d</string>
+    <string name="sos_alert_im_safe">Jestem bezpieczny</string>
 </resources>

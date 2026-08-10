@@ -41,6 +41,7 @@
     <string name="sos_timeout_label">Inaktivitäts-Timeout</string>
     <string name="sos_timeout_value">%1$d Stunden</string>
     <string name="sos_timeout_seconds">%1$d Sekunden</string>
+    <string name="sos_timeout_minutes">%1$d Minuten</string>
     <string name="sos_timeout_desc">Wenn Sie das Telefon während dieses Zeitraums nicht benutzen, wird automatisch ein Notruf abgesetzt.</string>
     <string name="sos_exclusion_periods_header">Ausschlusszeiträume (Schlaf/Ruhe)</string>
     <string name="sos_add_exclusion_period">Ausschlusszeitraum hinzufügen</string>
@@ -57,4 +58,10 @@
     <!-- <string name="clean_files_count_unit">Junk-Dateien</string> -->
     <string name="sos_select_start_time">Startzeit wählen</string>
     <string name="sos_select_end_time">Endzeit wählen</string>
+
+    <!-- SOS Safety Check Alert Screen -->
+    <string name="sos_alert_title">Alles okay bei dir?</string>
+    <string name="sos_alert_desc">Wir haben festgestellt, dass du dein Handy schon eine Weile nicht mehr benutzt hast. Tippe auf die Schaltfläche unten, um zu bestätigen, dass du in Sicherheit bist. Andernfalls rufen wir deine Notfallkontakte an.</string>
+    <string name="sos_alert_countdown">Anruf in %1$d:%2$02d</string>
+    <string name="sos_alert_im_safe">Mir geht es gut</string>
 </resources>

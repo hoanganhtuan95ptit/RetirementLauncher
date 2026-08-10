@@ -51,6 +51,7 @@
     <string name="sos_timeout_label">Inaktivitási időtúllépés</string>
     <string name="sos_timeout_value">%1$d óra</string>
     <string name="sos_timeout_seconds">%1$d másodperc</string>
+    <string name="sos_timeout_minutes">%1$d perc</string>
     <string name="sos_timeout_desc">Ha ebben az időszakban nem használja a telefont, automatikusan segélyhívást indítunk.</string>
     <string name="sos_exclusion_periods_header">Kizárási időszakok (Alvás/Pihenés)</string>
     <string name="sos_add_exclusion_period">Kizárási időszak hozzáadása</string>
@@ -58,4 +59,10 @@
     <string name="sos_exclusion_period_format">%1$02d:%2$02d - %3$02d:%4$02d</string>
     <string name="sos_select_start_time">Kezdési idő kiválasztása</string>
     <string name="sos_select_end_time">Befejezési idő kiválasztása</string>
+
+    <!-- SOS Safety Check Alert Screen -->
+    <string name="sos_alert_title">Jól vagy?</string>
+    <string name="sos_alert_desc">Egy ideje nem tapasztaltunk telefonhasználatot. Koppints az alábbi gombra a biztonságod megerősítéséhez. Ellenkező esetben felhívjuk a segélyhívó kapcsolataidat.</string>
+    <string name="sos_alert_countdown">Hívás indítása %1$d:%2$02d múlva</string>
+    <string name="sos_alert_im_safe">Biztonságban vagyok</string>
 </resources>

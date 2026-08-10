@@ -50,6 +50,7 @@
     <string name="sos_timeout_label">Тайм-аут бездействия</string>
     <string name="sos_timeout_value">%1$d часов</string>
     <string name="sos_timeout_seconds">%1$d секунд</string>
+    <string name="sos_timeout_minutes">%1$d мин.</string>
     <string name="sos_timeout_desc">Если вы не будете пользоваться телефоном в течение этого периода, будет автоматически совершен экстренный вызов.</string>
     <string name="sos_exclusion_periods_header">Периоды исключения (Сон/Отдых)</string>
     <string name="sos_add_exclusion_period">Добавить период исключения</string>
@@ -57,4 +58,10 @@
     <string name="sos_exclusion_period_format">%1$02d:%2$02d - %3$02d:%4$02d</string>
     <string name="sos_select_start_time">Выберите время начала</string>
     <string name="sos_select_end_time">Выберите время окончания</string>
+
+    <!-- Экран оповещения SOS о проверке безопасности -->
+    <string name="sos_alert_title">Вы в порядке?</string>
+    <string name="sos_alert_desc">Мы давно не видели, чтобы вы пользовались телефоном. Нажмите кнопку ниже, чтобы подтвердить, что вы в безопасности. В противном случае мы позвоним вашим экстренным контактам.</string>
+    <string name="sos_alert_countdown">Вызов через %1$d:%2$02d</string>
+    <string name="sos_alert_im_safe">Я в безопасности</string>
 </resources>
