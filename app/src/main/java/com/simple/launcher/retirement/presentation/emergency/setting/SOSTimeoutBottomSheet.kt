@@ -149,6 +149,17 @@ class SOSTimeoutBottomSheet(
             emptyList()
         }
 
+        // Mốc phút — cho phép user test end-to-end nhanh và cấu hình ngưỡng thấp
+        // (ví dụ người già hay bỏ máy quên).
+        val minuteOptions = listOf(2, 5, 15, 30).map { minutes ->
+
+            TimeoutOption(
+                valueMillis = minutes * MINUTE_MILLIS,
+                labelRes = R.string.sos_timeout_minutes,
+                labelValue = minutes
+            )
+        }
+
         val hourOptions = (1..12).map { hours ->
 
             TimeoutOption(
@@ -158,7 +169,7 @@ class SOSTimeoutBottomSheet(
             )
         }
 
-        return debugOptions + hourOptions
+        return debugOptions + minuteOptions + hourOptions
     }
 
     // ── 5. Nested classes ─────────────────────────────────────────────────
@@ -276,6 +287,7 @@ class SOSTimeoutBottomSheet(
         const val TAG = "SOSTimeoutBottomSheet"
 
         private const val SECOND_MILLIS = 1000L
+        private const val MINUTE_MILLIS = 60 * 1000L
         private const val HOUR_MILLIS = 60 * 60 * 1000L
     }
 }

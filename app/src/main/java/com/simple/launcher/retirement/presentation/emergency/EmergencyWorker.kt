@@ -254,6 +254,8 @@ class EmergencyWorker(context: Context) : BackgroundWorker(context) {
         logDebug { "Launching EmergencyAlertActivity for safety confirmation" to null }
         try {
 
+            // Overlay perm da duoc yeu cau tu SetEmergencyCallEnabledUseCase — startActivity
+            // tu background service se hoat dong nhu BlockActivity dang lam.
             val intent = EmergencyAlertActivity.createLaunchIntent(context)
             context.startActivity(intent)
         } catch (exception: Exception) {
@@ -502,8 +504,8 @@ class EmergencyWorker(context: Context) : BackgroundWorker(context) {
 
         // Neu alert launch xong ma qua thoi han nay van chua co ket qua (activity bi kill,
         // event bi mat...), coi nhu alert "chet" va cho phep chu ky ke tiep launch lai.
-        // Tinh: 5 phut countdown + 2 phut buffer.
-        private val ALERT_SAFETY_TIMEOUT_MILLIS = if (DEBUG) 90 * 1000L else 7 * 60 * 1000L
+        // Tinh: countdown + 2 phut buffer (debug 30s -> 2.5 min, release 5 min -> 7 min).
+        private val ALERT_SAFETY_TIMEOUT_MILLIS = if (DEBUG) 150 * 1000L else 7 * 60 * 1000L
 
         private const val NO_CONTACT_INDEX = -1
         private const val PHONE_MASK_SUFFIX_LENGTH = 4

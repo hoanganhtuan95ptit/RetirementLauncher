@@ -230,10 +230,18 @@ class SOSSettingsViewModel : BaseViewModel() {
 
     private fun buildTimeoutLabel(resources: Map<String, Any>, timeoutMillis: Long): String {
 
-        if (BuildConfig.DEBUG && timeoutMillis < HOUR_MILLIS) {
+        // < 1 phut (debug seconds): hien theo giay.
+        if (BuildConfig.DEBUG && timeoutMillis < MINUTE_MILLIS) {
 
             val seconds = (timeoutMillis / SECOND_MILLIS).toInt()
             return resources.getString(R.string.sos_timeout_seconds).format(seconds)
+        }
+
+        // < 1 gio: hien theo phut.
+        if (timeoutMillis < HOUR_MILLIS) {
+
+            val minutes = (timeoutMillis / MINUTE_MILLIS).toInt()
+            return resources.getString(R.string.sos_timeout_minutes).format(minutes)
         }
 
         val hours = (timeoutMillis / HOUR_MILLIS).toInt()
@@ -281,6 +289,7 @@ class SOSSettingsViewModel : BaseViewModel() {
         const val ID_PERIOD_ITEM_BASE = 1000
 
         private const val SECOND_MILLIS = 1000L
+        private const val MINUTE_MILLIS = 60 * 1000L
         private const val HOUR_MILLIS = 60 * 60 * 1000L
     }
 }

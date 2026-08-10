@@ -8,11 +8,14 @@
     android:keepScreenOn="true"
     android:padding="24dp">
 
-    <!-- Vòng đếm ngược ở trung tâm -->
+    <!-- Vòng đếm ngược ở trung tâm.
+         FrameLayout để wrap_content quanh indicator để tránh clip stroke ở 2 bên,
+         cộng thêm padding cho pen anti-alias thoát rìa. -->
     <FrameLayout
         android:id="@+id/flCountdown"
-        android:layout_width="240dp"
-        android:layout_height="240dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
         app:layout_constraintBottom_toTopOf="@+id/tvTitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,11 +24,12 @@
 
         <com.google.android.material.progressindicator.CircularProgressIndicator
             android:id="@+id/pbCountdown"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="240dp"
+            android:layout_height="240dp"
+            android:layout_gravity="center"
             android:indeterminate="false"
             app:indicatorColor="@color/sos_alert_ring"
-            app:indicatorSize="240dp"
+            app:indicatorSize="224dp"
             app:trackColor="@color/sos_alert_ring_track"
             app:trackCornerRadius="4dp"
             app:trackThickness="16dp" />

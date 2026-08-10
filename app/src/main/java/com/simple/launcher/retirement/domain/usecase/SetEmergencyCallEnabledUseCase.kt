@@ -47,6 +47,7 @@ class SetEmergencyCallEnabledUseCase(
 
         return permissionRepository.requireEmergencyContact() &&
                 permissionRepository.requireCallPermission() &&
+                permissionRepository.requireOverlayPermission() &&
                 permissionRepository.requireUserActivityAccessibilityPermission() &&
                 permissionRepository.requireDefaultLauncher()
     }

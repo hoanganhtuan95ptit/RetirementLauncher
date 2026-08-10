@@ -277,7 +277,7 @@ class EmergencyAlertActivity : BaseActivity<ActivityEmergencyAlertBinding>() {
         private const val TAG = "EmergencyAlertActivity"
 
         // 5 phut cho nguoi dung bam "Toi an toan" truoc khi thuc su goi.
-        // Debug: 30s de test nhanh.
+        // Debug: 30s de test nhanh luong "het gio -> goi khan cap".
         private val COUNTDOWN_MILLIS = if (BuildConfig.DEBUG) 30_000L else 5 * 60 * 1000L
         private const val COUNTDOWN_TICK_MILLIS = 500L
         private const val COUNTDOWN_MAX_PROGRESS = 1000
