@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Handler
 import android.os.HandlerThread
 import android.telecom.TelecomManager
+import android.telephony.PhoneNumberUtils
 import android.telephony.TelephonyManager
 import android.util.Log
 import androidx.core.content.ContextCompat
@@ -336,11 +337,15 @@ class EmergencyWorker(context: Context) : BackgroundWorker(context) {
             return
         }
 
+        // Da goi het 1 vong ma nguoi dung van khong thao tac -> bat dau vong moi.
+        // KHONG ket thuc session: chi khi nao user tuong tac voi may (accessibility
+        // ghi nhan) thi shouldStopSosSessionAfterUserActivity moi reset.
         if (sosCallAttemptCount >= contacts.size) {
 
-            logDebug { "All selected emergency contacts were attempted" to null }
-            finishSosCallingSession()
-            return
+            logDebug { "Completed one cycle, starting new cycle from first contact" to null }
+            sosCallAttemptCount = 0
+            repository.setSosCallAttemptCount(0)
+            repository.setLastEmergencyIndex(NO_CONTACT_INDEX)
         }
 
         // Thu lan luot tung contact de tranh ket o mot so bi thieu hoac khong the goi.
@@ -349,8 +354,8 @@ class EmergencyWorker(context: Context) : BackgroundWorker(context) {
             if (tryCallNextContact(contacts)) return
         }
 
-        logDebug { "Unable to place emergency call to any selected contact" to null }
-        finishSosCallingSession()
+        // Ca vong hien tai deu that bai -> giu session, cho poll ke tiep thu vong moi.
+        logDebug { "Unable to reach any contact this cycle, will retry next poll cycle" to null }
     }
 
     private fun tryCallNextContact(contacts: List<ContactEntity>): Boolean {
@@ -407,13 +412,25 @@ class EmergencyWorker(context: Context) : BackgroundWorker(context) {
             return false
         }
 
+        // Contact luu tu ContactsContract co the co dau cach / gach / ngoac
+        // (VD: "0987 654 321", "(098) 765-4321"). URI dang "tel:0987 654 321"
+        // duoc percent-encoded thanh "tel:0987%20654%20321" — nhieu telecom stack
+        // silently tu choi, khong throw, cuoc goi khong dien ra.
+        // stripSeparators() giu lai chi so + dau + * # de dam bao goi thanh cong.
+        val sanitized = PhoneNumberUtils.stripSeparators(phoneNumber)
+        if (sanitized.isNullOrEmpty()) {
+
+            logDebug { "Phone number is empty after sanitization (raw=${maskPhoneNumberForLog(phoneNumber)})" to null }
+            return false
+        }
+
         return try {
 
-            val uri = Uri.fromParts("tel", phoneNumber, null)
+            val uri = Uri.fromParts("tel", sanitized, null)
             telecomManager.placeCall(uri, null)
             logDebug {
 
-                "placeCall dispatched to telecom for ${maskPhoneNumberForLog(phoneNumber)} uri=$uri" to null
+                "placeCall dispatched to telecom for ${maskPhoneNumberForLog(sanitized)} uri=$uri" to null
             }
             true
         } catch (securityException: SecurityException) {

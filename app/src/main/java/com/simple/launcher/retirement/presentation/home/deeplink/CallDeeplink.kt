@@ -18,12 +18,7 @@ class CallDeeplinkHandler : DeeplinkHandler {
 
         val entity = extras?.get("entity") as? ContactEntity
 
-        if (entity != null) try {
-
-            val callIntent = Intent(Intent.ACTION_CALL)
-            callIntent.data = "tel:${entity.phoneNumber}".toUri()
-            fragmentActivity.startActivity(callIntent)
-        } catch (_: Exception) {
+        if (entity != null) runCatching {
 
             val dialIntent = Intent(Intent.ACTION_DIAL)
             dialIntent.data = "tel:${entity.phoneNumber}".toUri()
