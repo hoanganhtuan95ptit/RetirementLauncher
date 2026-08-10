@@ -1,6 +1,7 @@
 package com.simple.launcher.retirement.presentation.notification_block
 
 import com.simple.adapter.ViewItem
+import com.simple.launcher.retirement.BuildConfig
 import com.simple.launcher.retirement.MainApplication
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.domain.model.AppEntity
@@ -241,6 +242,13 @@ class NotificationBlockSettingsViewModel : BaseViewModel() {
             return resources.getString(R.string.notification_block_retention_off)
         }
 
+        // DEBUG cho phép chọn mốc dưới 1 giờ (2/5/15/30 phút) — hiển thị theo phút để test.
+        if (BuildConfig.DEBUG && millis < HOUR_MILLIS) {
+
+            val minutes = (millis / MINUTE_MILLIS).toInt()
+            return resources.getString(R.string.notification_block_retention_minutes).format(minutes)
+        }
+
         val hours = (millis / HOUR_MILLIS).toInt()
         return resources.getString(R.string.notification_block_retention_hours).format(hours)
     }
@@ -281,6 +289,7 @@ class NotificationBlockSettingsViewModel : BaseViewModel() {
 
         const val ID_RETENTION_CARD = 300
 
+        private const val MINUTE_MILLIS = 60 * 1000L
         private const val HOUR_MILLIS = 60 * 60 * 1000L
     }
 }

@@ -107,6 +107,7 @@
     <string name="notification_block_retention_title">Tự xoá thông báo tồn tại quá</string>
     <string name="notification_block_retention_card_desc">Chạm để đổi thời gian</string>
     <string name="notification_block_retention_hours">%1$d giờ</string>
+    <string name="notification_block_retention_minutes">%1$d phút</string>
     <string name="notification_block_retention_off">Không tự xoá</string>
     <string name="notification_block_confirm">Xác nhận</string>
     <string name="notification_block_save">Lưu cấu hình</string>

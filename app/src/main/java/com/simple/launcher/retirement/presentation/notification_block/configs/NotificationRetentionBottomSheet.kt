@@ -10,6 +10,7 @@ import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.simple.launcher.retirement.BuildConfig
 import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.databinding.BottomSheetNotificationRetentionBinding
 import com.simple.launcher.retirement.databinding.ItemSosTimeoutBinding
@@ -144,6 +145,22 @@ class NotificationRetentionBottomSheet(
             labelValue = 0
         )
 
+        // DEBUG có thêm mốc vài phút để test cleanup nhanh, production chỉ dùng mốc theo giờ.
+        val debugOptions = if (BuildConfig.DEBUG) {
+
+            listOf(2, 5, 15, 30).map { minutes ->
+
+                RetentionOption(
+                    valueMillis = minutes * MINUTE_MILLIS,
+                    labelRes = R.string.notification_block_retention_minutes,
+                    labelValue = minutes
+                )
+            }
+        } else {
+
+            emptyList()
+        }
+
         val hourOptions = listOf(1, 2, 3, 6, 12, 24, 48, 72).map { hours ->
 
             RetentionOption(
@@ -153,7 +170,7 @@ class NotificationRetentionBottomSheet(
             )
         }
 
-        return listOf(offOption) + hourOptions
+        return listOf(offOption) + debugOptions + hourOptions
     }
 
     // ── 5. Nested classes ─────────────────────────────────────────────────
@@ -268,6 +285,7 @@ class NotificationRetentionBottomSheet(
 
         const val TAG = "NotificationRetentionBottomSheet"
 
+        private const val MINUTE_MILLIS = 60 * 1000L
         private const val HOUR_MILLIS = 60 * 60 * 1000L
     }
 }

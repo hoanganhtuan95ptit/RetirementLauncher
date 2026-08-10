@@ -107,6 +107,7 @@
     <string name="notification_block_retention_title">Auto-delete notifications older than</string>
     <string name="notification_block_retention_card_desc">Tap to change duration</string>
     <string name="notification_block_retention_hours">%1$d hours</string>
+    <string name="notification_block_retention_minutes">%1$d minutes</string>
     <string name="notification_block_retention_off">Off</string>
     <string name="notification_block_confirm">Confirm</string>
     <string name="notification_block_save">Save configuration</string>
