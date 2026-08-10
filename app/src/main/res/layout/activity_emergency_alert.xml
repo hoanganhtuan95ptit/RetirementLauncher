@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/sos_alert_bg"
+    android:keepScreenOn="true"
+    android:padding="24dp">
+
+    <!-- Vòng đếm ngược ở trung tâm -->
+    <FrameLayout
+        android:id="@+id/flCountdown"
+        android:layout_width="240dp"
+        android:layout_height="240dp"
+        app:layout_constraintBottom_toTopOf="@+id/tvTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed">
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/pbCountdown"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:indeterminate="false"
+            app:indicatorColor="@color/sos_alert_ring"
+            app:indicatorSize="240dp"
+            app:trackColor="@color/sos_alert_ring_track"
+            app:trackCornerRadius="4dp"
+            app:trackThickness="16dp" />
+
+        <TextView
+            android:id="@+id/tvCountdown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/sos_alert_title"
+            android:textSize="42sp"
+            android:textStyle="bold"
+            tools:text="5:00" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:gravity="center"
+        android:text="@string/sos_alert_title"
+        android:textColor="@color/sos_alert_title"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/tvMessage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/flCountdown" />
+
+    <TextView
+        android:id="@+id/tvMessage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:lineSpacingMultiplier="1.3"
+        android:text="@string/sos_alert_desc"
+        android:textColor="@color/sos_alert_message"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/btnImSafe"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+    <TextView
+        android:id="@+id/btnImSafe"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="36dp"
+        android:background="@drawable/bg_sos_alert_button"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:minHeight="72dp"
+        android:paddingHorizontal="24dp"
+        android:paddingVertical="18dp"
+        android:text="@string/sos_alert_im_safe"
+        android:textColor="@color/sos_alert_button_text"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/vSpaceNavigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.simple.launcher.retirement.presentation.views.SpaceWindowInsetsView
+        android:id="@+id/vSpaceNavigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:applyNavigationBars="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_height="50dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

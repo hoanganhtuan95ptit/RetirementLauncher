@@ -30,6 +30,10 @@
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.TURN_SCREEN_ON" />
     <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
     <!-- Cần cho luồng Xoá app: PackageInstaller.uninstall() yêu cầu permission này.
          Đây là normal permission (auto-grant khi install, không cần user cho phép). -->
@@ -68,6 +72,15 @@
             android:launchMode="singleInstance"
             android:excludeFromRecents="true"
             android:noHistory="true"
+            android:theme="@style/Theme.RetirementLauncher.NoActionBar" />
+
+        <activity
+            android:name=".presentation.emergency.EmergencyAlertActivity"
+            android:exported="false"
+            android:launchMode="singleInstance"
+            android:excludeFromRecents="true"
+            android:showWhenLocked="true"
+            android:turnScreenOn="true"
             android:theme="@style/Theme.RetirementLauncher.NoActionBar" />
 
         <service

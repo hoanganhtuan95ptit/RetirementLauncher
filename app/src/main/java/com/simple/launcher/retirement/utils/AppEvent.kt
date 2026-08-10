@@ -92,6 +92,11 @@ sealed class AppEvent {
     object SOSUpdateSuccess : AppEvent()
     object SOSUpdateCancel : AppEvent()
 
+    // ── Emergency Alert (màn A xác nhận an toàn) ───────────────────────────
+    sealed class EmergencyAlertResult : AppEvent()
+    object EmergencyAlertConfirmedSafe : EmergencyAlertResult()
+    object EmergencyAlertTimedOut : EmergencyAlertResult()
+
     // ── Performance ─────────────────────────────────────────────────────────
     data class FpsUpdated(val screenName: String, val fps: Int) : AppEvent()
 }

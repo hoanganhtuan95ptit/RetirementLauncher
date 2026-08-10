@@ -16,9 +16,12 @@ import com.simple.launcher.retirement.domain.repository.ContactRepository
 import com.simple.launcher.retirement.domain.repository.PreferenceRepository
 import com.simple.launcher.retirement.presentation.emergency.utils.EmergencyUtils
 import com.simple.launcher.retirement.presentation.services.worker.BackgroundWorker
+import com.simple.launcher.retirement.utils.AppEvent
+import com.simple.launcher.retirement.utils.AppEventBus
 import com.simple.launcher.retirement.utils.permission.PermissionManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.launch
 
 /**
@@ -50,6 +53,15 @@ class EmergencyWorker(context: Context) : BackgroundWorker(context) {
     private var isSosSessionActive = false
     @Volatile
     private var sosSessionStartedAt = 0L
+    // Man hinh canh bao (Screen A) dang hien thi. Trong luc nay khong duoc phep
+    // launch lai activity hay chuyen thang qua SOS session — cho ket qua tu alert.
+    @Volatile
+    private var isAlertShowing = false
+    // Timestamp luc launch alert de bao ve khi event ket qua khong toi (activity bi kill
+    // giua chung...): sau ALERT_SAFETY_TIMEOUT_MILLIS ma van chua co ket qua, coi nhu
+    // co the phat hien lai timeout va lam lai.
+    @Volatile
+    private var alertLaunchedAt = 0L
     // Backed by SharedPreferences (KEY_SOS_CALL_ATTEMPT_COUNT) — persist qua process kill
     // để session SOS đang chạy dở không bị reset về contact đầu.
     @Volatile
@@ -73,6 +85,12 @@ class EmergencyWorker(context: Context) : BackgroundWorker(context) {
 
                 selectedContacts = contacts
             }
+        }
+        scope.launch {
+
+            AppEventBus.events
+                .filterIsInstance<AppEvent.EmergencyAlertResult>()
+                .collect { result -> handleAlertResult(result) }
         }
     }
 
@@ -100,6 +118,8 @@ class EmergencyWorker(context: Context) : BackgroundWorker(context) {
         handler = null
         handlerThread = null
         resetSosCallingState()
+        isAlertShowing = false
+        alertLaunchedAt = 0L
     }
 
     // ── 4. Private helpers ────────────────────────────────────────────────
@@ -160,11 +180,25 @@ class EmergencyWorker(context: Context) : BackgroundWorker(context) {
             return
         }
 
+        // Neu alert dang hien va van con trong thoi han an toan, cho ket qua tu activity.
+        if (isAlertShowing) {
+
+            if (currentTime - alertLaunchedAt < ALERT_SAFETY_TIMEOUT_MILLIS) {
+
+                logDebug { "Alert is showing, waiting for user response" to null }
+                return
+            }
+            // Vuot qua thoi han an toan — activity co the da bi kill; reset co de lan sau chay tiep.
+            logDebug { "Alert safety timeout exceeded, resetting alert flag" to null }
+            isAlertShowing = false
+            alertLaunchedAt = 0L
+        }
+
         // Gioi han cung bao ve truong hop exclusion period qua dai lam active timeout khong bao gio cham nguong.
         if (elapsed >= ABSOLUTE_HARD_LIMIT_MILLIS) {
 
             logDebug { "Hard limit reached, triggering emergency" to null }
-            startOrContinueSosCallingSession(currentTime)
+            triggerEmergencyFlow(currentTime)
             return
         }
 
@@ -192,8 +226,65 @@ class EmergencyWorker(context: Context) : BackgroundWorker(context) {
                 "Active timeout reached (${activeElapsed / 1000 / 60} min active), " +
                     "triggering emergency" to null
             }
+            triggerEmergencyFlow(currentTime)
+            return
+        }
+    }
+
+    /**
+     * Diem giao thoa moi: neu SOS session da chay (dang cycle qua cac contact),
+     * tiep tuc goi contact ke tiep. Neu chua, hien man hinh canh bao (Screen A)
+     * de nguoi dung co co hoi bam "Toi an toan" truoc khi thuc su goi.
+     */
+    private fun triggerEmergencyFlow(currentTime: Long) {
+
+        if (isSosSessionActive) {
+
             startOrContinueSosCallingSession(currentTime)
             return
+        }
+
+        launchEmergencyAlert(currentTime)
+    }
+
+    private fun launchEmergencyAlert(currentTime: Long) {
+
+        isAlertShowing = true
+        alertLaunchedAt = currentTime
+        logDebug { "Launching EmergencyAlertActivity for safety confirmation" to null }
+        try {
+
+            val intent = EmergencyAlertActivity.createLaunchIntent(context)
+            context.startActivity(intent)
+        } catch (exception: Exception) {
+
+            logDebug { "Failed to launch EmergencyAlertActivity, falling back to direct call" to exception }
+            // Neu khong the show activity (edge case hiem), fallback ve luong cu de dam bao an toan.
+            isAlertShowing = false
+            alertLaunchedAt = 0L
+            startOrContinueSosCallingSession(currentTime)
+        }
+    }
+
+    private fun handleAlertResult(result: AppEvent.EmergencyAlertResult) {
+
+        isAlertShowing = false
+        alertLaunchedAt = 0L
+
+        when (result) {
+
+            AppEvent.EmergencyAlertConfirmedSafe -> {
+
+                logDebug { "Alert result: user is safe, resetting SOS state" to null }
+                // Activity da cap nhat lastUserActivity roi; chi can bao dam SOS state sach.
+                resetSosCallingState()
+            }
+
+            AppEvent.EmergencyAlertTimedOut -> {
+
+                logDebug { "Alert result: timed out, starting SOS calling session" to null }
+                startOrContinueSosCallingSession(System.currentTimeMillis())
+            }
         }
     }
 
@@ -408,6 +499,11 @@ class EmergencyWorker(context: Context) : BackgroundWorker(context) {
 
         private val CHECK_INTERVAL_MILLIS = if (DEBUG) 30 * 1000L else 30 * 60 * 1000L
         private val SOS_CHECK_INTERVAL_MILLIS = if (DEBUG) 30 * 1000L else 5 * 60 * 1000L
+
+        // Neu alert launch xong ma qua thoi han nay van chua co ket qua (activity bi kill,
+        // event bi mat...), coi nhu alert "chet" va cho phep chu ky ke tiep launch lai.
+        // Tinh: 5 phut countdown + 2 phut buffer.
+        private val ALERT_SAFETY_TIMEOUT_MILLIS = if (DEBUG) 90 * 1000L else 7 * 60 * 1000L
 
         private const val NO_CONTACT_INDEX = -1
         private const val PHONE_MASK_SUFFIX_LENGTH = 4
