@@ -139,7 +139,7 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
                 }
 
                 val newApp = AppEntity(
-                    label = resolveInfo.loadLabel(pm).toString(),
+                    label = resolveInfo.runCatching { loadLabel(pm) }.getOrNull()?.toString() ?: "",
                     packageName = packageName,
                     icon = resolveInfo.activityInfo.loadIcon(pm)
                 )
@@ -214,7 +214,7 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
             return pm.queryIntentActivities(intent, 0).map { ri ->
 
                 AppEntity(
-                    label = ri.loadLabel(pm).toString(),
+                    label = ri.runCatching { loadLabel(pm) }.getOrNull()?.toString() ?: "",
                     packageName = ri.activityInfo.packageName,
                     icon = ri.activityInfo.loadIcon(pm)
                 )
@@ -241,7 +241,7 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
         val pm = context.packageManager
         val info = context.applicationInfo
         val entity = AppEntity(
-            label = info.loadLabel(pm).toString(),
+            label = info.runCatching { loadLabel(pm) }.getOrNull()?.toString() ?: "",
             packageName = context.packageName,
             icon = info.loadIcon(pm)
         )
