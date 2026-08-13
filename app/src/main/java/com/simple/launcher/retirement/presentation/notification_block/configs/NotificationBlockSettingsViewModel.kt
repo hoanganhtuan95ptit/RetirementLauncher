@@ -1,5 +1,6 @@
 package com.simple.launcher.retirement.presentation.notification_block
 
+import androidx.lifecycle.viewModelScope
 import com.simple.adapter.ViewItem
 import com.simple.launcher.retirement.BuildConfig
 import com.simple.launcher.retirement.MainApplication
@@ -7,6 +8,7 @@ import com.simple.launcher.retirement.R
 import com.simple.launcher.retirement.domain.model.AppEntity
 import com.simple.launcher.retirement.domain.repository.AppRepository
 import com.simple.launcher.retirement.domain.repository.PreferenceRepository
+import com.simple.launcher.retirement.domain.usecase.SetNotificationBlockEnabledUseCase
 import com.simple.launcher.retirement.presentation.base.ActionState
 import com.simple.launcher.retirement.presentation.base.BaseViewModel
 import com.simple.launcher.retirement.presentation.base.ToolbarState
@@ -21,6 +23,7 @@ import com.simple.launcher.retirement.utils.exts.colorOutline
 import com.simple.launcher.retirement.utils.exts.colorPrimary
 import com.simple.launcher.retirement.utils.exts.colorSecondaryContainer
 import com.simple.launcher.retirement.utils.exts.combineState
+import com.simple.launcher.retirement.utils.exts.coroutineExceptionHandler
 import com.simple.launcher.retirement.utils.exts.dp
 import com.simple.launcher.retirement.utils.exts.getString
 import com.simple.launcher.retirement.utils.exts.mutableStateFlow
@@ -35,10 +38,12 @@ import com.simple.ui.precompute.text.build
 import com.simple.ui.precompute.text.span.BigForegroundColor
 import com.simple.ui.precompute.text.toBig
 import com.simple.ui.precompute.text.with
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.launch
 
 class NotificationBlockSettingsViewModel : BaseViewModel() {
 
@@ -145,9 +150,11 @@ class NotificationBlockSettingsViewModel : BaseViewModel() {
         retentionMillisDraft.value = millis
     }
 
-    fun save() {
+    fun save() = viewModelScope.launch(coroutineExceptionHandler + Dispatchers.Default) {
 
-        preferenceRepository.setNotificationBlockEnabled(isFeatureEnabledDraft.value)
+        val success = SetNotificationBlockEnabledUseCase.instance(isFeatureEnabledDraft.value)
+        if (!success) return@launch
+
         preferenceRepository.setNotificationBlockedPackages(blockedPackagesDraft.value)
         preferenceRepository.setNotificationRetentionMillis(retentionMillisDraft.value)
         saveResultFlow.tryEmit(true)

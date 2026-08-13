@@ -1,9 +1,6 @@
 package com.simple.launcher.retirement.presentation.notification_block
 
-import android.content.ComponentName
-import android.content.Intent
 import android.os.Bundle
-import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -56,7 +53,6 @@ class NotificationBlockSettingsFragment : BaseFragment<FragmentNotificationBlock
 
         binding.btnSave.root.setOnSafeClickListener {
 
-            ensureListenerPermission()
             viewModel.save()
         }
     }
@@ -145,31 +141,6 @@ class NotificationBlockSettingsFragment : BaseFragment<FragmentNotificationBlock
             parentFragmentManager,
             NotificationRetentionBottomSheet.TAG
         )
-    }
-
-    /**
-     * Bật NotificationListenerService yêu cầu quyền "Notification Access" — không thể auto-grant.
-     * Mở màn hình hệ thống để user tự bật; nếu đã bật rồi thì OS mở tới đúng entry của app.
-     */
-    private fun ensureListenerPermission() {
-
-        val context = context ?: return
-        val component = ComponentName(context, NotificationBlockService::class.java).flattenToString()
-
-        val enabled = Settings.Secure.getString(
-            context.contentResolver,
-            "enabled_notification_listeners"
-        )?.contains(component) == true
-
-        if (enabled) return
-
-        runCatching {
-
-            startActivity(
-                Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS)
-                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            )
-        }
     }
 }
 

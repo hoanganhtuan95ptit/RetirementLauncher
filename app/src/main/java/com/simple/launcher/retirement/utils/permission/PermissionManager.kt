@@ -29,6 +29,9 @@ object PermissionManager {
     fun hasUserActivityAccessibilityPermission(): Boolean =
         permissionRepository.hasUserActivityAccessibilityPermission()
 
+    fun hasNotificationListenerAccess(): Boolean =
+        permissionRepository.hasNotificationListenerAccess()
+
     suspend fun requireUsageStatsPermission(): Boolean =
         permissionRepository.requireUsageStatsPermission()
 
@@ -41,6 +44,9 @@ object PermissionManager {
 
     suspend fun requireUserActivityAccessibilityPermission(): Boolean =
         permissionRepository.requireUserActivityAccessibilityPermission()
+
+    suspend fun requireNotificationListenerAccess(): Boolean =
+        permissionRepository.requireNotificationListenerAccess()
 
     suspend fun requireEmergencyContact(): Boolean = permissionRepository.requireEmergencyContact()
 

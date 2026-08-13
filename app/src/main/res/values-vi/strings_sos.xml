@@ -49,6 +49,9 @@
     <string name="overlay_permission_title">Hiển thị trên ứng dụng khác</string>
     <string name="overlay_permission_desc">Ứng dụng cần quyền \'Hiển thị trên các ứng dụng khác\' để có thể hiển thị màn hình khóa khi một ứng dụng bị chặn được mở.</string>
     <string name="overlay_permission_highlight">\'Hiển thị trên các ứng dụng khác\'</string>
+    <string name="notification_listener_permission_title">Quyền truy cập thông báo</string>
+    <string name="notification_listener_permission_desc">Để tính năng chặn thông báo và dọn dẹp thông báo cũ hoạt động, bạn cần cấp quyền \'Truy cập thông báo\' trong cài đặt hệ thống.</string>
+    <string name="notification_listener_permission_highlight">\'Truy cập thông báo\'</string>
     <string name="reorder_apps_title">Sắp xếp lại ứng dụng</string>
     <string name="reorder_contacts_title">Sắp xếp lại liên hệ</string>
     <string name="app_list_empty_error">Vui lòng chọn ít nhất một ứng dụng</string>

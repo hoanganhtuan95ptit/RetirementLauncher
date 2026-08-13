@@ -66,17 +66,10 @@ class NotificationBlockSettingService : ProtectSettingService() {
 
     private fun onNotificationBlockSettingClicked(item: SettingItem) {
 
-        if (item.id != SettingItem.ID_NOTIFICATION_BLOCK) return
-
-        // Nếu tính năng đã bật: mở màn hình chi tiết (danh sách app + retention).
-        // Nếu chưa bật: toggle sang bật — use case sẽ dẫn user qua flow xin quyền
-        // Notification Access trước khi ghi pref.
-        if (item.isChecked) {
-
-            sendDeeplinkWithBackStack(DeepLinks.NOTIFICATION_BLOCK)
-        } else {
-
-            viewModel.setNotificationBlockEnabled(true)
+        if (item.id != SettingItem.ID_NOTIFICATION_BLOCK){
+            return
         }
+
+        sendDeeplinkWithBackStack(DeepLinks.NOTIFICATION_BLOCK)
     }
 }

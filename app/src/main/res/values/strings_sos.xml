@@ -49,6 +49,9 @@
     <string name="overlay_permission_title">Display Over Other Apps</string>
     <string name="overlay_permission_desc">The app needs \'Display over other apps\' permission to show the lock screen when a blocked app is opened.</string>
     <string name="overlay_permission_highlight">\'Display over other apps\'</string>
+    <string name="notification_listener_permission_title">Notification Access</string>
+    <string name="notification_listener_permission_desc">To block unwanted app notifications and auto-clear old ones, you need to grant \'Notification Access\' permission in system settings.</string>
+    <string name="notification_listener_permission_highlight">\'Notification Access\'</string>
     <string name="reorder_apps_title">Reorder Apps</string>
     <string name="reorder_contacts_title">Reorder Contacts</string>
     <string name="app_list_empty_error">Please select at least one app</string>
