@@ -91,14 +91,20 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
 
         override suspend fun onActive() {
 
-            withContext(Dispatchers.Main) { registerReceiver() }
+            withContext(Dispatchers.Main) {
+
+                registerReceiver()
+            }
             // Load danh sách app lần đầu (hoặc refresh sau khi bị inactive) ở background.
             reloadAll()
         }
 
         override suspend fun onInactive() {
 
-            withContext(Dispatchers.Main) { unregisterReceiver() }
+            withContext(Dispatchers.Main) {
+
+                unregisterReceiver()
+            }
         }
 
         private fun reloadAll() {
@@ -138,13 +144,31 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
                     return@launch
                 }
 
+                val label = runCatching {
+                    resolveInfo.loadLabel(pm).toString()
+                }.getOrNull().orEmpty()
+
+                val className = runCatching {
+                    resolveInfo.activityInfo.name ?: ""
+                }.getOrNull().orEmpty()
+
                 val newApp = AppEntity(
-                    label = resolveInfo.runCatching { loadLabel(pm) }.getOrNull()?.toString() ?: "",
+                    label = label,
                     packageName = packageName,
+                    className = className,
                     icon = resolveInfo.activityInfo.loadIcon(pm)
                 )
-                val current = value.orEmpty().filterNot { it.packageName == packageName }
-                val updated = (current + newApp).sortedBy { it.label.lowercase() }
+
+                val current = value.orEmpty().filterNot {
+
+                    it.packageName == packageName
+                }
+
+                val updated = (current + newApp).sortedBy {
+
+                    it.label.lowercase()
+                }
+
                 value = updated
             }
         }
@@ -214,15 +238,22 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
             return pm.queryIntentActivities(intent, 0).map { ri ->
 
                 AppEntity(
-                    label = ri.runCatching { loadLabel(pm) }.getOrNull()?.toString() ?: "",
+                    label = ri.runCatching {
+
+                        loadLabel(pm)
+                    }.getOrNull()?.toString() ?: "",
                     packageName = ri.activityInfo.packageName,
+                    className = ri.activityInfo.name ?: "",
                     icon = ri.activityInfo.loadIcon(pm)
                 )
-            }.sortedBy { it.label.lowercase() }
+            }.sortedBy {
+
+                it.label.lowercase()
+            }
         }
     }
 
-    private val appSelected = mutableStateFlow<List<String>?>(null){
+    private val appSelected = mutableStateFlow<List<String>?>(null) {
 
         value = readSelectedPackages()
     }
@@ -236,13 +267,20 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
 
     override fun getCurrentApp(): AppEntity {
 
-        cachedCurrentApp?.let { return it }
+        cachedCurrentApp?.let {
+
+            return it
+        }
 
         val pm = context.packageManager
         val info = context.applicationInfo
         val entity = AppEntity(
-            label = info.runCatching { loadLabel(pm) }.getOrNull()?.toString() ?: "",
+            label = info.runCatching {
+
+                loadLabel(pm)
+            }.getOrNull()?.toString() ?: "",
             packageName = context.packageName,
+            className = "com.simple.launcher.retirement.presentation.main.MainActivity",
             icon = info.loadIcon(pm)
         )
         cachedCurrentApp = entity
@@ -266,7 +304,10 @@ class AppRepositoryImpl(private val context: Context) : AppRepository {
      */
     private fun readSelectedPackages(): List<String> {
 
-        sharedPrefs.getString(KEY_SELECTED_APPS, null)?.let { return parseSelectedPackages(it) }
+        sharedPrefs.getString(KEY_SELECTED_APPS, null)?.let {
+
+            return parseSelectedPackages(it)
+        }
         return try {
 
             sharedPrefs.getStringSet(KEY_SELECTED_APPS, null)?.toList().orEmpty()

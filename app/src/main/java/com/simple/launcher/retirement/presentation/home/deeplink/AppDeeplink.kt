@@ -1,5 +1,7 @@
 package com.simple.launcher.retirement.presentation.home.deeplink
 
+import android.content.Context
+import android.content.Intent
 import android.view.View
 import androidx.fragment.app.FragmentActivity
 import com.simple.deeplink.Deeplink
@@ -15,19 +17,63 @@ class AppDeeplinkHandler : DeeplinkHandler {
 
     override suspend fun navigate(fragmentActivity: FragmentActivity, deeplink: String, extras: Map<String, Any?>?, sharedElement: Map<String, View>?): Boolean {
 
-        val entity = extras?.get("entity") as? AppEntity
+        val entity = extras?.get("entity") as? AppEntity ?: return false
 
-        if (entity != null) if (entity.packageName == fragmentActivity.packageName) {
+        if (entity.packageName == fragmentActivity.packageName) {
 
             sendDeeplinkWithBackStack(DeepLinks.SETTINGS)
-        } else entity.let {
+            return true
+        }
 
-            fragmentActivity.packageManager.getLaunchIntentForPackage(it.packageName)
-        }?.let {
+        val intent = buildLaunchIntent(fragmentActivity, entity)
+        if (intent != null) {
 
-            fragmentActivity.startActivity(it)
+            startAppActivity(fragmentActivity, intent, entity.packageName)
         }
 
         return true
+    }
+
+    // ── 4. Private helpers ──────────────────────────────────────────────────────────────
+
+    private fun buildLaunchIntent(context: Context, entity: AppEntity): Intent? {
+
+        if (entity.className.isEmpty()) {
+
+            return context.packageManager.getLaunchIntentForPackage(entity.packageName)
+        }
+
+        return try {
+
+            Intent(Intent.ACTION_MAIN).apply {
+
+                addCategory(Intent.CATEGORY_LAUNCHER)
+                setClassName(entity.packageName, entity.className)
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            }
+        } catch (_: Exception) {
+
+            null
+        }
+    }
+
+    private fun startAppActivity(context: Context, intent: Intent, packageName: String) {
+
+        try {
+
+            context.startActivity(intent)
+        } catch (_: Exception) {
+
+            // Fallback nếu manual intent thất bại
+            try {
+
+                context.packageManager.getLaunchIntentForPackage(packageName)?.let {
+
+                    context.startActivity(it)
+                }
+            } catch (_: Exception) {
+
+            }
+        }
     }
 }
